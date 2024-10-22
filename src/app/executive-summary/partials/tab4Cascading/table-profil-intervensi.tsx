@@ -4,7 +4,7 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
-import React, { useMemo } from "react";
+import React from "react";
 import { FormatIDR } from "@/lib/utils/currency";
 import { advancedTable } from "@/app/components/table";
 import ActionColumn from "@/components/actions/action";
@@ -14,13 +14,17 @@ export default function TableProfilIntervensi({
   deleteData,
   updateData,
   toggleShowTab,
+  noActionColumn,
+  page,
 }: {
   data: RoDto[];
   deleteData?: any;
   updateData?: any;
   toggleShowTab?: boolean;
+  noActionColumn?: boolean;
+  page?: string;
 }) {
-  const columns = [
+  const columnTabelIntervensi = [
     {
       accessorKey: "tahun",
       header: "Tahun",
@@ -135,6 +139,10 @@ export default function TableProfilIntervensi({
         );
       },
     },
+  ];
+
+  const columns = [
+    ...columnTabelIntervensi,
     {
       accessorKey: "action",
       header: "Aksi",
@@ -152,7 +160,7 @@ export default function TableProfilIntervensi({
   ];
 
   const table = useMaterialReactTable({
-    columns,
+    columns: noActionColumn ? columnTabelIntervensi : columns,
     data,
     ...advancedTable,
     enableRowActions: false,
@@ -174,6 +182,10 @@ export default function TableProfilIntervensi({
           boxShadow: "none",
         },
         ".MuiTableContainer-root": {
+          maxWidth:
+            page === "konteks-strategis"
+              ? "calc(100vw - 176px) !important"
+              : undefined,
           maxHeight: toggleShowTab
             ? // ? "calc(100vh - 690px)"
               // "calc(100vh - 390px)"

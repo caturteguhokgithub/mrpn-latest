@@ -475,7 +475,7 @@ yang telah ditetapkan"
             : modal.action == "update"
             ? "Ubah"
             : "Tambah"
-        } Tambah Perlakuan Risiko`}
+        } Perlakuan Risiko`}
         dialogFooter={dialogActionFooter}
       >
         <FormTable

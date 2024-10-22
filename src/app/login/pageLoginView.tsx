@@ -10,6 +10,7 @@ import {
   DialogActions,
   FormControlLabel,
   IconButton,
+  InputAdornment,
   MenuItem,
   Stack,
   TextField,
@@ -48,6 +49,12 @@ export default function PageLoginView() {
 
   const router = useRouter();
   const { user, token, menu } = useAuthContext((state) => state);
+
+  const [togglePassword, setTogglePassword] = React.useState(false);
+
+  const handleTogglePassword = () => {
+    setTogglePassword(!togglePassword);
+  };
 
   useEffect(() => {
     if (user !== undefined && token !== undefined && menu.length > 0) {
@@ -565,9 +572,22 @@ export default function PageLoginView() {
                   }
                 />
                 <TextField
-                  type="password"
+                  type={togglePassword ? "text" : "password"}
                   InputLabelProps={{
                     shrink: true,
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleTogglePassword}>
+                          <IconFA
+                            name={togglePassword ? "eye-slash" : "eye"}
+                            size={15}
+                            sx={{ width: 20 }}
+                          />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
                   }}
                   placeholder="Password"
                   variant="outlined"

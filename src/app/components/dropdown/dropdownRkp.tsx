@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   Typography,
   MenuItem,
@@ -8,12 +8,12 @@ import {
   Autocomplete,
   TextField,
 } from "@mui/material";
-import {listSelectKp} from "@/app/executive-summary/data";
+import { listSelectKp } from "@/app/executive-summary/data";
 import theme from "@/theme";
-import {grey} from "@mui/material/colors";
-import {SxParams} from "@/app/executive-summary/types";
+import { grey } from "@mui/material/colors";
+import { SxParams } from "@/app/executive-summary/types";
 import useRkpVM from "@/components/dropdown/rkpVM";
-import {useExsumContext, useRKPContext} from "@/lib/core/hooks/useHooks";
+import { useExsumContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 
 export const SxAutocompleteTextField = (params: SxParams) => {
   return {
@@ -28,20 +28,23 @@ export const SxAutocompleteTextField = (params: SxParams) => {
 export const SxAutocomplete = (params: SxParams) => {
   return {
     minWidth: 300,
-    color: params.variant === "primary" ? "white" : theme.palette.primary.dark,
+    color:
+      params.variant === "primary" ? "white" : theme.palette.secondary.dark,
     ".MuiInputBase-root": {
       height: "38px",
       fontWeight: 600,
       fontSize: 14,
       py: 0,
       borderRadius: 6,
-      bgcolor: params.variant === "primary" ? theme.palette.primary.main : "white",
+      bgcolor:
+        params.variant === "primary" ? theme.palette.primary.main : "white",
       [theme.breakpoints.down("md")]: {
         fontSize: 12,
       },
     },
     ".MuiInputBase-input": {
-      color: params.variant === "primary" ? "white" : theme.palette.primary.dark,
+      color:
+        params.variant === "primary" ? "white" : theme.palette.secondary.dark,
     },
     ".MuiSvgIcon-root": {
       //   fill: "white",
@@ -53,19 +56,17 @@ export const SxAutocomplete = (params: SxParams) => {
   };
 };
 
-export default function DropdownRkp(
-  {
-    //  project,
-    handleChangeProject,
-    variant,
-  }: {
-    //  project?: any;
-    handleChangeProject?: any;
-    variant?: string;
-  }) {
-
-  const rkpContext = useRKPContext(state => state);
-  const {rkp, setRkp, rkpState, setRkpState, year} = rkpContext
+export default function DropdownRkp({
+  //  project,
+  handleChangeProject,
+  variant,
+}: {
+  //  project?: any;
+  handleChangeProject?: any;
+  variant?: string;
+}) {
+  const rkpContext = useRKPContext((state) => state);
+  const { rkp, setRkp, rkpState, setRkpState, year } = rkpContext;
 
   const {
     options,
@@ -74,36 +75,40 @@ export default function DropdownRkp(
     allowedSelectRKP,
     getAllowedSelectRKP,
     getData,
-    triggerChange
+    triggerChange,
   } = useRkpVM();
 
   useEffect(() => {
     if (allowedSelectRKP.length == 0) {
-      getAllowedSelectRKP()
+      getAllowedSelectRKP();
     }
   }, []);
 
   useEffect(() => {
     if (allowedSelectRKP.length > 0) {
       if (rkp.length == 0) {
-        getData()
+        getData();
       } else {
         if (rkpState) triggerChange(rkpState);
       }
     }
   }, [allowedSelectRKP]);
 
-  const sxParams: SxParams = {variant: variant};
+  const sxParams: SxParams = { variant: variant };
 
   return (
     <FormControl size="small">
       <Autocomplete
         size="small"
         value={value}
-        getOptionLabel={(option: any) => option.value ? option.level + " - " + option.code + " - " + option.value : ""}
+        getOptionLabel={(option: any) =>
+          option.value
+            ? option.level + " - " + option.code + " - " + option.value
+            : ""
+        }
         getOptionDisabled={(option: any) =>
           options.some((selectedOption) => {
-            return !allowedSelectRKP.includes(option.level)
+            return !allowedSelectRKP.includes(option.level);
           })
         }
         onChange={(event: any, newValue: any | undefined) => {
@@ -111,7 +116,11 @@ export default function DropdownRkp(
         }}
         options={options}
         renderInput={(params) => (
-          <Tooltip title={value ? value.value : ""} followCursor TransitionComponent={Grow}>
+          <Tooltip
+            title={value ? value.value : ""}
+            followCursor
+            TransitionComponent={Grow}
+          >
             <TextField
               {...params}
               InputLabelProps={{

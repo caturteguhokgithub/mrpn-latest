@@ -133,7 +133,7 @@ export default function TableShortlist({ mode }: { mode?: string }) {
               <TableCell>Sasaran</TableCell>
               <TableCell>Indikator</TableCell>
               <TableCell>Target</TableCell>
-              <TableCell width={200}>Kementerian Koordinator</TableCell>
+              {/* <TableCell width={200}>Kementerian Koordinator</TableCell>
               <TableCell width={200}>
                 <Stack direction="row" alignItems="center" gap={0.5}>
                   Entitas MRPN Sektor Utama
@@ -152,7 +152,7 @@ bersifat lintas sektor"
 Lintas Sektor termasuk yang menjadi penanggung jawab atas suatu perlakuan risiko"
                   />
                 </Stack>
-              </TableCell>
+              </TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -176,10 +176,10 @@ Lintas Sektor termasuk yang menjadi penanggung jawab atas suatu perlakuan risiko
                     </TableCell>
                   )}
                   <TableCell sx={{ verticalAlign: "top" }}>{subItem}</TableCell>
-                  <TableCell sx={{ verticalAlign: "top", textAlign: "right" }}>
+                  <TableCell sx={{ verticalAlign: "top" }}>
                     {row.target[subIndex]}
                   </TableCell>
-                  {subIndex === 0 && (
+                  {/* {subIndex === 0 && (
                     <TableCell
                       rowSpan={row.indicator.length}
                       sx={{ verticalAlign: "top" }}
@@ -283,7 +283,7 @@ Lintas Sektor termasuk yang menjadi penanggung jawab atas suatu perlakuan risiko
                         </Stack>
                       )}
                     </TableCell>
-                  )}
+                  )} */}
                 </TableRow>
               ))
             )}

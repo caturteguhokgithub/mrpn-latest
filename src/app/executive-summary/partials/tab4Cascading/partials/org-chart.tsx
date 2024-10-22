@@ -250,18 +250,18 @@ export default function CascadingOrgChart({
   const sxParamsFull: SxParams = { variant: "full" };
   const sxParamsZoom: SxParams = { variant: "zoom" };
 
-  React.useEffect(() => {
-    const element = document.querySelector(".orgchart > ul > li > .oc-node");
-    if (element) {
-      element.classList.add("isChildrenCollapsed");
-    }
-    const elementHidden = document.querySelector(
-      ".orgchart > ul > li > .oc-node + ul"
-    );
-    if (elementHidden) {
-      elementHidden.classList.add("hidden");
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   const element = document.querySelector(".orgchart > ul > li > .oc-node");
+  //   if (element) {
+  //     element.classList.add("isChildrenCollapsed");
+  //   }
+  //   const elementHidden = document.querySelector(
+  //     ".orgchart > ul > li > .oc-node + ul"
+  //   );
+  //   if (elementHidden) {
+  //     elementHidden.classList.add("hidden");
+  //   }
+  // }, []);
 
   return (
     <>

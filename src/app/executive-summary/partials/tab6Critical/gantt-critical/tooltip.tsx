@@ -1,10 +1,11 @@
 // components/CustomTooltip.js
 import React from "react";
 import dayjs from "dayjs";
-import { Box, Divider, Stack, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
+import { grey, red } from "@mui/material/colors";
 import { Task } from "gantt-task-react";
 import { TaskAdditionalData } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
+import theme from "@/theme";
 const CustomTooltip = ({ task }: { task: Task }) => {
   let taskProject: TaskAdditionalData = {
     penanggungjawab: "",
@@ -74,11 +75,28 @@ const CustomTooltip = ({ task }: { task: Task }) => {
           </Typography>
         </Typography>
         {taskProject.keterangan_kegiatan && (
-          <Typography variant="body2" component="span">
+          <Typography variant="body2" component="div">
             Status:{" "}
-            <Typography component="strong" fontWeight={600}>
-              {taskProject.keterangan_kegiatan}
-            </Typography>
+            <Box component="span">
+              <Chip
+                label={taskProject.keterangan_kegiatan}
+                size="small"
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  bgcolor:
+                    taskProject.keterangan_kegiatan === "Finish to Start"
+                      ? red[700]
+                      : theme.palette.primary.main,
+                  color: "white",
+                  span: {
+                    my: 0,
+                    py: 0,
+                    lineHeight: 1,
+                  },
+                }}
+              />
+            </Box>
           </Typography>
         )}
       </Stack>

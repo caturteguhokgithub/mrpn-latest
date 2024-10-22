@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Box,
   Button,
   Chip,
   DialogActions,
@@ -26,7 +27,7 @@ import FieldLabelInfo from "@/components/fieldLabelInfo";
 import FormPeraturan from "./form-peraturan";
 import {
   ExsumRegulationDto,
-  ExsumRegulationResDto
+  ExsumRegulationResDto,
 } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
 import DialogDelete from "@/app/components/dialogDelete";
 
@@ -37,7 +38,6 @@ export default function TablePeraturan({
   data: ExsumRegulationResDto[];
   deleteData: any;
 }) {
-
   return (
     <>
       <Stack
@@ -56,7 +56,8 @@ export default function TablePeraturan({
           <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
             <TableRow>
               <TableCell width="70px"></TableCell>
-              <TableCell>Peraturan Terkait</TableCell>
+              <TableCell>Entitas</TableCell>
+              <TableCell width={240}>Peraturan Terkait</TableCell>
               <TableCell>Amanat Peraturan yang Terkait</TableCell>
             </TableRow>
           </TableHead>
@@ -67,7 +68,7 @@ export default function TablePeraturan({
                   key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell sx={{ textAlign: "center" }}>
+                  <TableCell sx={{ textAlign: "center", verticalAlign: "top" }}>
                     <Tooltip title="Delete" placement="top">
                       <IconButton
                         aria-label="delete"
@@ -84,12 +85,40 @@ export default function TablePeraturan({
                       </IconButton>
                     </Tooltip>
                   </TableCell>
-                  <TableCell>
+                  <TableCell sx={{ verticalAlign: "top" }}>
+                    <Stack
+                      display="inline-flex"
+                      alignItems="center"
+                      direction="row"
+                      gap={0.5}
+                      flexWrap="wrap"
+                    >
+                      {[...new Array(5)].map((_, i) => (
+                        <Box component="span" key={i}>
+                          <Chip
+                            label={"Kementerian 1"}
+                            size="small"
+                            sx={{
+                              height: "auto",
+                              ".MuiChip-label": {
+                                whiteSpace: "wrap",
+                                lineHeight: 1.2,
+                                py: 0.6,
+                              },
+                            }}
+                          />
+                        </Box>
+                      ))}
+                    </Stack>
+                  </TableCell>
+                  <TableCell sx={{ verticalAlign: "top" }}>
                     {row.perpres.map((y, index2) => (
                       <Chip key={index2} size="small" label={y.title} />
                     ))}
                   </TableCell>
-                  <TableCell>{row.amanat}</TableCell>
+                  <TableCell sx={{ verticalAlign: "top" }}>
+                    {row.amanat}
+                  </TableCell>
                 </TableRow>
               </>
             ))}

@@ -12,7 +12,8 @@ import {
   ExsumCriticalData,
   ExsumCriticalReqDto,
   ExsumCriticalState,
-  initExsumCriticalReqDto, TaskAdditionalData,
+  initExsumCriticalReqDto,
+  TaskAdditionalData,
 } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
 import useCardTOWSVM from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsVM";
 import {
@@ -21,8 +22,10 @@ import {
 } from "@/app/misc/master/masterServiceModel";
 import { doGetMasterListlistKategoriProyek } from "@/app/misc/master/masterService";
 import {
-  doCreateCriticalPath, doDeleteCriticalPath,
-  doGetCriticalPath, doUpdateCriticalPath,
+  doCreateCriticalPath,
+  doDeleteCriticalPath,
+  doGetCriticalPath,
+  doUpdateCriticalPath,
 } from "@/app/executive-summary/partials/tab6Critical/cardCriticalService";
 import { Task } from "gantt-task-react";
 import dayjs from "dayjs";
@@ -43,7 +46,9 @@ const useCardCriticalVM = () => {
   const [optionProjectCategory, setOptionProjectCategory] = useState<
     MiscMasterListKategoriProyekRes[]
   >([]);
-  const initState:ExsumCriticalState = JSON.parse(JSON.stringify(initExsumCriticalReqDto))
+  const initState: ExsumCriticalState = JSON.parse(
+    JSON.stringify(initExsumCriticalReqDto)
+  );
   const [state, setState] = useState<ExsumCriticalState>(initState);
   const [optionStrategy, setOptionStrategy] = useState<string[]>([]);
   const [data, setData] = useState<ExsumCriticalData[]>([]);
@@ -99,11 +104,11 @@ const useCardCriticalVM = () => {
           endDay = startDay.add(1, "hour");
         }
 
-        const taskAdditionalData:TaskAdditionalData = {
+        const taskAdditionalData: TaskAdditionalData = {
           penanggungjawab: res.ro?.kementrian.value ?? "",
           sumber_anggaran: res.ro?.sumber_anggaran ?? "",
-          keterangan_kegiatan: res.keterangan_kegiatan
-        }
+          keterangan_kegiatan: res.keterangan_kegiatan,
+        };
 
         const t: Task = {
           id: res.id.toString(),
@@ -112,9 +117,11 @@ const useCardCriticalVM = () => {
           start: startDay.toDate(),
           end: endDay.toDate(),
           progress: 0,
-          styles: { backgroundColor: GetColor(res.kategori_proyek.id) },
+          styles: {
+            backgroundColor: GetColor(res.kategori_proyek.id),
+          },
           dependencies: [],
-          project: JSON.stringify(taskAdditionalData)
+          project: JSON.stringify(taskAdditionalData),
         };
         tasks.push(t);
       });
@@ -149,12 +156,12 @@ const useCardCriticalVM = () => {
       start_date: state.start_date,
       end_date: state.end_date,
       kategori_proyek_id: state.kategori_proyek_id,
-      keterangan_kegiatan:state.keterangan_kegiatan,
+      keterangan_kegiatan: state.keterangan_kegiatan,
       values: value,
     };
 
-    let response
-    if (request.id == 0){
+    let response;
+    if (request.id == 0) {
       response = await doCreateCriticalPath({
         body: request,
         loadingContext: loadingContext,
@@ -170,10 +177,12 @@ const useCardCriticalVM = () => {
 
     if (response?.code == API_CODE.success) {
       getData();
-      const initState:ExsumCriticalState = JSON.parse(JSON.stringify(initExsumCriticalReqDto))
-      setState(initState)
+      const initState: ExsumCriticalState = JSON.parse(
+        JSON.stringify(initExsumCriticalReqDto)
+      );
+      setState(initState);
       setModalOpen(false);
-      setModalAdd(false)
+      setModalAdd(false);
     }
   };
 
@@ -186,7 +195,7 @@ const useCardCriticalVM = () => {
       end_date: "",
       kategori_proyek_id: 0,
       keterangan_kegiatan: "",
-      values: []
+      values: [],
     };
 
     const response = await doDeleteCriticalPath({
@@ -197,28 +206,29 @@ const useCardCriticalVM = () => {
 
     if (response?.code == API_CODE.success) {
       getData();
-      const initState:ExsumCriticalState = JSON.parse(JSON.stringify(initExsumCriticalReqDto))
-      setState(initState)
+      const initState: ExsumCriticalState = JSON.parse(
+        JSON.stringify(initExsumCriticalReqDto)
+      );
+      setState(initState);
       setModalOpen(false);
-      setModalAdd(false)
+      setModalAdd(false);
       setModalDelete(false);
     }
-  }
+  };
 
   const handleModalAdd = () => {
     setModalAdd(true);
   };
 
-  const handleModalUpdate = (index:number) => {
+  const handleModalUpdate = (index: number) => {
+    const curData = data[index];
 
-    const curData = data[index]
+    let selectedStrategy: string[] = [];
+    curData.tagging_list.map((t) => {
+      selectedStrategy.push(t.value);
+    });
 
-    let selectedStrategy:string[] = []
-    curData.tagging_list.map(t => {
-      selectedStrategy.push(t.value)
-    })
-
-    const state:ExsumCriticalState = {
+    const state: ExsumCriticalState = {
       id: curData.id,
       exsum_id: exsum.id,
       ro: curData.ro,
@@ -226,11 +236,11 @@ const useCardCriticalVM = () => {
       end_date: curData.end_date,
       kategori_proyek_id: curData.kategori_proyek_id,
       strategy: selectedStrategy,
-      keterangan_kegiatan: curData.keterangan_kegiatan
-    }
-    setState(state)
-    setModalAdd(true)
-  }
+      keterangan_kegiatan: curData.keterangan_kegiatan,
+    };
+    setState(state);
+    setModalAdd(true);
+  };
 
   useEffect(() => {
     const data = useCardTows.data;
@@ -268,7 +278,7 @@ const useCardCriticalVM = () => {
     modalAdd,
     setModalAdd,
     modalDelete,
-    setModalDelete
+    setModalDelete,
   };
 };
 

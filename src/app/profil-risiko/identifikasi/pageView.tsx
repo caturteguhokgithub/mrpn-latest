@@ -4,7 +4,8 @@ import ContentPage from "@/app/components/contents";
 import React, { useEffect, useMemo } from "react";
 import {
   Box,
-  Button, Chip,
+  Button,
+  Chip,
   DialogActions,
   FormControl,
   Paper,
@@ -29,6 +30,7 @@ import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import HeaderTable from "../overview/partials/headerTable";
 import useRiskOverviewVM from "../overview/pageVM";
+import { advancedTable } from "@/app/components/table";
 
 export default function PageIdentifikasiView({}) {
   const { permission } = useAuthContext((state) => state);
@@ -85,7 +87,7 @@ export default function PageIdentifikasiView({}) {
       accessorKey: "penyebab_dampak",
       header: "Penyebab",
       enableColumnActions: false,
-      Cell: ({cell}: { cell: any }) => (
+      Cell: ({ cell }: { cell: any }) => (
         <Paper
           elevation={0}
           sx={{
@@ -98,21 +100,23 @@ export default function PageIdentifikasiView({}) {
           }}
         >
           <Stack gap={1}>
-            {cell.getValue().penyebab.map((itemDesc: any, index: any) => (
-              itemDesc &&
-              <Chip
-                  key={index}
-                  sx={{
-                    height: "auto",
-                    py: 1,
-                    "& .MuiChip-label": {
-                      overflow: "unset",
-                      whiteSpace: "wrap",
-                    },
-                  }}
-                  label={itemDesc}
-              />
-            ))}
+            {cell.getValue().penyebab.map(
+              (itemDesc: any, index: any) =>
+                itemDesc && (
+                  <Chip
+                    key={index}
+                    sx={{
+                      height: "auto",
+                      py: 1,
+                      "& .MuiChip-label": {
+                        overflow: "unset",
+                        whiteSpace: "wrap",
+                      },
+                    }}
+                    label={itemDesc}
+                  />
+                )
+            )}
           </Stack>
         </Paper>
       ),
@@ -121,7 +125,7 @@ export default function PageIdentifikasiView({}) {
       accessorKey: "penyebab_dampak",
       header: "Dampak",
       enableColumnActions: false,
-      Cell: ({cell}: { cell: any }) => (
+      Cell: ({ cell }: { cell: any }) => (
         <Paper
           elevation={0}
           sx={{
@@ -134,21 +138,23 @@ export default function PageIdentifikasiView({}) {
           }}
         >
           <Stack gap={1}>
-            {cell.getValue().dampak.map((itemDesc: any, index: any) => (
-              itemDesc &&
-              <Chip
-                  key={index}
-                  sx={{
-                    height: "auto",
-                    py: 1,
-                    "& .MuiChip-label": {
-                      overflow: "unset",
-                      whiteSpace: "wrap",
-                    },
-                  }}
-                  label={itemDesc}
-              />
-            ))}
+            {cell.getValue().dampak.map(
+              (itemDesc: any, index: any) =>
+                itemDesc && (
+                  <Chip
+                    key={index}
+                    sx={{
+                      height: "auto",
+                      py: 1,
+                      "& .MuiChip-label": {
+                        overflow: "unset",
+                        whiteSpace: "wrap",
+                      },
+                    }}
+                    label={itemDesc}
+                  />
+                )
+            )}
           </Stack>
         </Paper>
       ),
@@ -156,7 +162,7 @@ export default function PageIdentifikasiView({}) {
     {
       accessorKey: "kategori_risiko",
       header: "Action",
-      size: 200,
+      size: 100,
       enableColumnActions: false,
       Cell: (item: any) => (
         <ActionColumn
@@ -184,7 +190,8 @@ export default function PageIdentifikasiView({}) {
   const table = useMaterialReactTable({
     columns,
     data,
-    // ...advancedTable,
+    ...advancedTable,
+    enableRowActions: false,
     // displayColumnDefOptions: {
     //   "mrt-row-actions": {
     //     header: "",

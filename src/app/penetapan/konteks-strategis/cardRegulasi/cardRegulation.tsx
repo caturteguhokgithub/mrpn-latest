@@ -1,54 +1,48 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   DialogActions,
-  Paper, Stack,
+  Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  alpha,
 } from "@mui/material";
 import theme from "@/theme";
 import EmptyState from "@/components/empty";
-import {IconEmptyData} from "@/components/icons";
+import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
 import useCardRegulasi from "@/app/penetapan/konteks-strategis/cardRegulasi/vm";
 
 export default function CardRegulation() {
-
-  const {
-    objectState,
-    getData,
-    data,
-  } = useCardRegulasi()
+  const { objectState, getData, data } = useCardRegulasi();
 
   useEffect(() => {
     if (objectState !== undefined) {
-      getData()
+      getData();
     }
   }, [objectState]);
 
   return (
     <>
-      <CardItem
-        title="Daftar Regulasi, Kebijakan, Peraturan, Prosedur Terkait"
-      >
-        {data.length == 0 ?
-
+      <CardItem title="Daftar Regulasi, Kebijakan, Peraturan, Prosedur Terkait">
+        {data.length == 0 ? (
           <EmptyState
             dense
-            icon={<IconEmptyData width={100}/>}
+            icon={<IconEmptyData width={100} />}
             title="Data Kosong"
             description="Silahkan isi konten halaman ini"
           />
-
-          :
-
+        ) : (
           <TableContainer component={Paper} elevation={0} variant="outlined">
             <Table size="small">
-              <TableHead sx={{bgcolor: theme.palette.primary.light}}>
+              <TableHead
+                sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}
+              >
                 <TableRow>
                   <TableCell>
                     Regulasi, Kebijakan, Peraturan, dan Prosedur Terkait
@@ -60,7 +54,7 @@ export default function CardRegulation() {
                 {data.map((row) => (
                   <TableRow
                     key={row.id}
-                    sx={{"&:last-child td, &:last-child th": {border: 0}}}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell>{row.title}</TableCell>
                     <TableCell>{row.value}</TableCell>
@@ -69,10 +63,8 @@ export default function CardRegulation() {
               </TableBody>
             </Table>
           </TableContainer>
-
-        }
+        )}
       </CardItem>
-
     </>
   );
 }

@@ -44,65 +44,19 @@ const CustomTaskListHeader = ({
   );
 };
 
-// const customColumns = [
-//   { name: "name", label: "Task Name" },
-//   { name: "from", label: "From" },
-//   { name: "to", label: "To" },
-//   { name: "customColumn", label: "Custom Column" },
-// ];
-
-// const CustomTaskListTable = (props: any) => {
-//   return <TaskListTable columns={customColumns} {...props} />;
-// };
-
-// const CustomTaskListHeader = (props: any) => {
-//   return <TaskListHeader columns={customColumns} {...props} />;
-// };
-
-interface ExtendedTask extends Task {
-  customField: string;
-}
-
-// const tasks: ExtendedTask[] = [
-//   {
-//     start: new Date(),
-//     end: new Date(),
-//     name: "Task 1",
-//     id: "Task 1",
-//     type: "task",
-//     progress: 45,
-//     isDisabled: false,
-//     customField: "Custom Value 1",
-//   },
-//   // More tasks...
-// ];
-
-// const CustomTaskList: React.FC<{ tasks: ExtendedTask[] }> = ({ tasks }) => {
-//   return (
-//     <table>
-//       <thead>
-//         <tr>
-//           <th>Name</th>
-//           <th>Start</th>
-//           <th>End</th>
-//           <th>Custom Field</th>
-//         </tr>
-//       </thead>
-//       <tbody>
-//         {tasks.map((task) => (
-//           <tr key={task.id}>
-//             <td>{task.name}</td>
-//             <td>{task.start.toDateString()}</td>
-//             <td>{task.end.toDateString()}</td>
-//             <td>{task.customField}</td>
-//           </tr>
-//         ))}
-//       </tbody>
-//     </table>
-//   );
-// };
-
 export default function GanttChart({ tasks }: { tasks: Task[] }) {
+  React.useEffect(() => {
+    // Modify the task name colors after the Gantt chart is rendered
+    const taskElements = document.querySelectorAll(".task-name-class"); // Adjust the selector as needed
+    taskElements.forEach((element: any) => {
+      if (element.innerText === "Idea") {
+        element.style.color = "#ff0000";
+      } else {
+        element.style.color = "#000000";
+      }
+    });
+  }, []);
+
   return (
     <Box
       sx={{
@@ -134,7 +88,7 @@ export default function GanttChart({ tasks }: { tasks: Task[] }) {
             maxWidth: "90%",
             textOverflow: "ellipsis",
             overflow: "hidden",
-            lineClamp: 1,
+            "-webkit-line-clamp": "1",
           },
         },
       }}

@@ -135,16 +135,8 @@ const TableFundPPKP = (props: { row?: RoDto[]; project: string }) => {
           <TableCell>Intervansi Kunci</TableCell>
           <TableCell>Indikator</TableCell>
           <TableCell align="center">Target</TableCell>
-          <TableCell>
-            Indikasi Alokasi Tahun Rencana
-            <br />
-            (Rp Miliar)
-          </TableCell>
-          <TableCell>
-            Sumber Pendanaan
-            <br />
-            (Belanja KL/DAK/BUMN/Swasta)
-          </TableCell>
+          <TableCell>Indikasi Alokasi Tahun Rencana (Rp Miliar)</TableCell>
+          <TableCell>Sumber Pendanaan (Belanja KL/ DAK/BUMN/Swasta)</TableCell>
           <TableCell>Instansi Pelaksana RO</TableCell>
           <TableCell>
             Lokasi RO

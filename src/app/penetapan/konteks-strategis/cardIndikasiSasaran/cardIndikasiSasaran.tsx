@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import {
+  alpha,
   Box,
   Button,
   Chip,
@@ -130,7 +131,9 @@ export default function CardIndikasiSasaran() {
         ) : (
           <TableContainer component={Paper} elevation={0} variant="outlined">
             <Table size="small">
-              <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
+              <TableHead
+                sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}
+              >
                 <TableRow>
                   <TableCell>Uraian</TableCell>
                   <TableCell>Sasaran</TableCell>

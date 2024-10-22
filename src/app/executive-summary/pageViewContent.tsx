@@ -174,7 +174,7 @@ export default function PageExecutiveSummaryContent({
                 }
               />
               <Tab
-                label="Indikasi Risiko RPJMN"
+                label="Indikasi Risiko"
                 {...a11yProps(3)}
                 iconPosition="start"
                 icon={<IconFA size={16} name="rotate" sx={{ width: "auto" }} />}

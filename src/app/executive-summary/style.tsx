@@ -216,6 +216,7 @@ export const styleOrgChart = (params: SxParams) => {
           p: 0,
           m: "0 5px",
           minWidth: 300,
+          maxWidth: 500,
           "&:before, &:after": {
             bgcolor: grey[400],
             height: 15,
@@ -293,6 +294,7 @@ export const styleOrgChart2 = [
           p: 0,
           m: "0 5px",
           minWidth: 300,
+          maxWidth: 500,
           "&:before, &:after": {
             bgcolor: grey[400],
             height: 15,

@@ -1,4 +1,4 @@
-import React, {SetStateAction, useEffect, useState} from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import {
   Autocomplete,
   Box,
@@ -28,28 +28,28 @@ import {
   listPenanggungjawab,
   listPeristiwaRisiko,
 } from "../setting";
-import {grey, red} from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import {SxAutocompleteTextField} from "@/app/components/dropdown/dropdownDefault";
+import { SxAutocompleteTextField } from "@/app/components/dropdown/dropdownDefault";
 import DateRangePicker, {
   convertDateToString,
   convertStringToDate,
   DateRangeState,
 } from "@/app/components/dateRange";
 import theme from "@/theme";
-import {paramVariantDefault} from "@/app/utils/constant";
+import { paramVariantDefault } from "@/app/utils/constant";
 import Matriks from "../../analisis-evaluasi/partials/matriks";
 import {
   RiskTreatmentResDto,
   RiskTreatmentState,
 } from "@/app/profil-risiko/perlakuan/pageModel";
-import {AutocompleteSelectSingle} from "@/components/autocomplete";
-import {RiskAnalysisDto} from "@/app/profil-risiko/analisis-evaluasi/pageModel";
+import { AutocompleteSelectSingle } from "@/components/autocomplete";
+import { RiskAnalysisDto } from "@/app/profil-risiko/analisis-evaluasi/pageModel";
 import {
   MasterRiskMatrixRes,
   MiscMasterListStakeholderRes,
 } from "@/app/misc/master/masterServiceModel";
-import {RoDto} from "@/app/misc/rkp/rkpServiceModel";
+import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
 import dayjs from "dayjs";
 import DialogComponent from "@/components/dialog";
 
@@ -61,9 +61,9 @@ const highlightText = (text: any, highlight: any) => {
   const parts = text.split(regex);
   return parts.map((part: any, index: any) =>
     regex.test(part) ? (
-      <span key={index} style={{backgroundColor: "yellow"}}>
-    {part}
-   </span>
+      <span key={index} style={{ backgroundColor: "yellow" }}>
+        {part}
+      </span>
     ) : (
       part
     )
@@ -71,11 +71,11 @@ const highlightText = (text: any, highlight: any) => {
 };
 
 const TablePerlakuanMultiCheck = ({
-                                    mode,
-                                    data,
-                                    state,
-                                    setState,
-                                  }: {
+  mode,
+  data,
+  state,
+  setState,
+}: {
   mode?: string;
   data: RoDto[];
   state: RiskTreatmentState;
@@ -124,7 +124,11 @@ const TablePerlakuanMultiCheck = ({
   }
 
   return (
-    <Paper elevation={0} variant="outlined" sx={{minWidth: "100% !important"}}>
+    <Paper
+      elevation={0}
+      variant="outlined"
+      sx={{ minWidth: "100% !important" }}
+    >
       <TextField
         InputLabelProps={{
           shrink: true,
@@ -137,11 +141,11 @@ const TablePerlakuanMultiCheck = ({
         sx={SxAutocompleteTextField(paramVariantDefault)}
         size="small"
       />
-      <TableContainer sx={{maxHeight: 200}}>
+      <TableContainer sx={{ maxHeight: 200 }}>
         <Table stickyHeader size="small">
-          <TableHead sx={{bgcolor: theme.palette.primary.light}}>
+          <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
             <TableRow>
-              <TableCell sx={{width: 30}}></TableCell>
+              <TableCell sx={{ width: 30 }}></TableCell>
               <TableCell>Nomenklatur RO</TableCell>
               <TableCell>Target</TableCell>
               <TableCell>Satuan</TableCell>
@@ -173,15 +177,15 @@ const TablePerlakuanMultiCheck = ({
 };
 
 export default function FormTable({
-                                    mode,
-                                    data,
-                                    state,
-                                    setState,
-                                    optionsRiskProfile,
-                                    optionsRiskDecision,
-                                    optionsStakeholder,
-                                    optionsRiskMatrix,
-                                  }: {
+  mode,
+  data,
+  state,
+  setState,
+  optionsRiskProfile,
+  optionsRiskDecision,
+  optionsStakeholder,
+  optionsRiskMatrix,
+}: {
   mode?: string;
   data?: RiskTreatmentResDto;
   state: RiskTreatmentState;
@@ -206,18 +210,18 @@ export default function FormTable({
           src_matriks_risiko: optionsRiskMatrix[getIndex],
         };
       });
-      setClickedCell({rowIndex, colIndex, value});
+      setClickedCell({ rowIndex, colIndex, value });
     }
   };
 
-  const [modal, setModal] = useState<boolean>(false)
+  const [modal, setModal] = useState<boolean>(false);
 
   return (
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Divider>
-            <Chip label="Identifikasi Risiko" size="small"/>
+            <Chip label="Identifikasi Risiko" size="small" />
           </Divider>
         </Grid>
         <Grid item xs={12}>
@@ -229,13 +233,14 @@ export default function FormTable({
                 <>
                   <strong>Risiko Strategis</strong>
                   <p>
-                    Risiko yang terkait dengan kebijakan publik atau keputusan bisnis
-                    jangka panjang akibat dari penetapan dan penerapan strategi yang kurang
-                    tepat, ketidaktepatan dalam perencanaan strategis dan pengambilan suatu
-                    keputusan strategis dan kegagalan dalam menghadapi perubahan-perubahan
-                    di lingkungan eksternal, termasuk dan/atau pengembangan baru yang dapat
-                    dilihat pada saat pengambilan keputusan yang buruk, dan alokasi sumber
-                    daya yang tidak memadai
+                    Risiko yang terkait dengan kebijakan publik atau keputusan
+                    bisnis jangka panjang akibat dari penetapan dan penerapan
+                    strategi yang kurang tepat, ketidaktepatan dalam perencanaan
+                    strategis dan pengambilan suatu keputusan strategis dan
+                    kegagalan dalam menghadapi perubahan-perubahan di lingkungan
+                    eksternal, termasuk dan/atau pengembangan baru yang dapat
+                    dilihat pada saat pengambilan keputusan yang buruk, dan
+                    alokasi sumber daya yang tidak memadai
                   </p>
                 </>
               }
@@ -248,20 +253,20 @@ export default function FormTable({
                 getOptionLabel={(opt) => opt.peristiwa_risiko}
                 handleChange={(e: RiskAnalysisDto) => {
                   if (e && e.analisis == null) {
-                    setModal(true)
+                    setModal(true);
                     setState((prevState) => {
                       return {
                         ...prevState,
                         profil_risiko: undefined,
                       };
-                    })
-                  }else{
+                    });
+                  } else {
                     setState((prevState) => {
                       return {
                         ...prevState,
                         profil_risiko: e,
                       };
-                    })
+                    });
                   }
                 }}
                 placeHolder={"Pilih peristiwa risiko"}
@@ -282,12 +287,13 @@ export default function FormTable({
                 <>
                   <strong>Kategori Risiko</strong>
                   <p>
-                    Pengelompokan risiko misalnya berdasarkan sumber risiko (melalui metode{" "}
-                    <em>Risk Breakdown Structure</em>), area yang terkena dampak (melalui
-                    metode <em>Work Breakdown Structure</em>), atau kategori lainnya.
-                    Kategorisasi risiko pada umumnya dilakukan untuk membantu proses
-                    analisis dan evaluasi risiko serta membantu proses perumusan strategi
-                    penanganannya{" "}
+                    Pengelompokan risiko misalnya berdasarkan sumber risiko
+                    (melalui metode <em>Risk Breakdown Structure</em>), area
+                    yang terkena dampak (melalui metode{" "}
+                    <em>Work Breakdown Structure</em>), atau kategori lainnya.
+                    Kategorisasi risiko pada umumnya dilakukan untuk membantu
+                    proses analisis dan evaluasi risiko serta membantu proses
+                    perumusan strategi penanganannya{" "}
                   </p>
                 </>
               }
@@ -299,12 +305,12 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12}>
           <Divider>
-            <Chip label="Analisis & Evaluasi Risiko" size="small"/>
+            <Chip label="Analisis & Evaluasi Risiko" size="small" />
           </Divider>
         </Grid>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Level Dampak (LD)"/>
+            <FieldLabelInfo title="Level Dampak (LD)" />
             <Typography fontWeight={600}>
               {state.profil_risiko?.analisis.matriks.dampak ?? "-"}
             </Typography>
@@ -312,7 +318,7 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Level Kemungkinan (LK)"/>
+            <FieldLabelInfo title="Level Kemungkinan (LK)" />
             <Typography fontWeight={600}>
               {state.profil_risiko?.analisis.matriks.kemungkinan ?? "-"}
             </Typography>
@@ -320,7 +326,7 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Besaran Risiko (BR)"/>
+            <FieldLabelInfo title="Besaran Risiko (BR)" />
             <Typography fontWeight={600}>
               {state.profil_risiko?.analisis.matriks.nilai ?? "-"}
             </Typography>
@@ -328,7 +334,7 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Level Risiko"/>
+            <FieldLabelInfo title="Level Risiko" />
             {/*<Box>*/}
             {/*  <Chip*/}
             {/*    color="error"*/}
@@ -355,7 +361,7 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Prioritas Risiko"/>
+            <FieldLabelInfo title="Prioritas Risiko" />
             <Typography fontWeight={600}>
               {state.profil_risiko
                 ? state.profil_risiko.analisis.matriks.level.replace(/\D/g, "")
@@ -365,13 +371,13 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12}>
           <Divider>
-            <Chip label="Perlakuan Risiko" size="small"/>
+            <Chip label="Perlakuan Risiko" size="small" />
           </Divider>
         </Grid>
 
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Keputusan"/>
+            <FieldLabelInfo title="Keputusan" />
             {mode !== "read" ? (
               <AutocompleteSelectSingle
                 key={state.keputusan ? state.keputusan : "keputusan"}
@@ -403,8 +409,8 @@ export default function FormTable({
                 <>
                   <strong>Perlakuan Risiko</strong>
                   <p>
-                    Proses untuk menurunkan keterpaparan risiko yang dikaitkan dengan
-                    toleransi dan selera risiko yang telah ditetapkan
+                    Proses untuk menurunkan keterpaparan risiko yang dikaitkan
+                    dengan toleransi dan selera risiko yang telah ditetapkan
                   </p>
                 </>
               }
@@ -418,9 +424,9 @@ export default function FormTable({
           </FormControl>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Waktu Rencana"/>
+            <FieldLabelInfo title="Waktu Rencana" />
             {mode !== "read" ? (
               <DateRangePicker
                 key={state.start_date}
@@ -428,7 +434,10 @@ export default function FormTable({
                 sxInput={{
                   backgroundColor: "red",
                 }}
-                initState={convertStringToDate(state.start_date, state.end_date)}
+                initState={convertStringToDate(
+                  state.start_date,
+                  state.end_date
+                )}
                 handleChangeState={(event: DateRangeState[]) =>
                   setState((prevState) => {
                     const convertData = convertDateToString(event);
@@ -452,10 +461,14 @@ export default function FormTable({
 
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Penanggungjawab"/>
+            <FieldLabelInfo title="Penanggungjawab" />
             {mode !== "read" ? (
               <AutocompleteSelectSingle
-                key={state.src_stakeholder ? state.src_stakeholder.id : "stakeholder"}
+                key={
+                  state.src_stakeholder
+                    ? state.src_stakeholder.id
+                    : "stakeholder"
+                }
                 value={state.src_stakeholder}
                 options={optionsStakeholder}
                 getOptionLabel={(opt) => opt.value}
@@ -504,7 +517,7 @@ export default function FormTable({
 
         <Grid item xs={12}>
           <Divider>
-            <Chip label="Risiko Residual Harapan" size="small"/>
+            <Chip label="Risiko Residual Harapan" size="small" />
           </Divider>
         </Grid>
 
@@ -514,12 +527,16 @@ export default function FormTable({
               Klik kotak berwarna untuk menampilkan nilai LK & LD
             </Typography>
           </FormControl>
-          <Matriks levelId={5} handleClick={handleClick} clickedCell={clickedCell}/>
+          <Matriks
+            levelId={5}
+            handleClick={handleClick}
+            clickedCell={clickedCell}
+          />
         </Grid>
 
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Level Kemungkinan (LK)"/>
+            <FieldLabelInfo title="Level Kemungkinan (LK)" />
             <Typography fontWeight={600}>
               {state.src_matriks_risiko?.kemungkinan ?? "-"}
             </Typography>
@@ -527,7 +544,7 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Level Dampak (LD)"/>
+            <FieldLabelInfo title="Level Dampak (LD)" />
             <Typography fontWeight={600}>
               {state.src_matriks_risiko?.dampak ?? "-"}
             </Typography>
@@ -535,8 +552,8 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Besaran Risiko (BR)"/>
-            <Stack sx={{height: 40}} direction="row" alignItems="center">
+            <FieldLabelInfo title="Besaran Risiko (BR)" />
+            <Stack sx={{ height: 40 }} direction="row" alignItems="center">
               <Typography fontWeight={600}>
                 {state.src_matriks_risiko?.nilai ?? "-"}
               </Typography>
@@ -545,7 +562,7 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Level Risiko"/>
+            <FieldLabelInfo title="Level Risiko" />
             {/*<Box>*/}
             {/*  <Chip*/}
             {/*    color="error"*/}
@@ -570,7 +587,6 @@ export default function FormTable({
             </Typography>
           </FormControl>
         </Grid>
-
       </Grid>
       <DialogComponent
         width={240}
@@ -580,7 +596,5 @@ export default function FormTable({
         Harap mengisi analisis risiko terlebih dahulu
       </DialogComponent>
     </>
-
-
   );
 }
