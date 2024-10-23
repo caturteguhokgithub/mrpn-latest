@@ -6,7 +6,7 @@ export interface ExsumRegulationResDto {
   exsum_id:number
   amanat:string
   perpres:MiscMasterListPerpresRes[]
-  stakeholder: MiscMasterListStakeholderRes
+  entitas: MiscMasterListStakeholderRes
 }
 
 export interface ExsumRegulationDto {

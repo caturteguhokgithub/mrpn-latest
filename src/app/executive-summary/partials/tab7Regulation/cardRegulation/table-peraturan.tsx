@@ -93,10 +93,9 @@ export default function TablePeraturan({
                       gap={0.5}
                       flexWrap="wrap"
                     >
-                      {[...new Array(5)].map((_, i) => (
-                        <Box component="span" key={i}>
+                        <Box component="span">
                           <Chip
-                            label={"Kementerian 1"}
+                            label={row.entitas.value}
                             size="small"
                             sx={{
                               height: "auto",
@@ -108,7 +107,6 @@ export default function TablePeraturan({
                             }}
                           />
                         </Box>
-                      ))}
                     </Stack>
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>

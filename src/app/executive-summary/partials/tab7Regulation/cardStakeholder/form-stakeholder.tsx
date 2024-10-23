@@ -116,69 +116,69 @@ export default function FormStakeholder({
             )}
           </Stack>
           <Stack>
-            <Autocomplete
-              multiple
-              disableCloseOnSelect
-              filterSelectedOptions
-              freeSolo={false}
-              size="small"
-              value={columns}
-              options={listProvinsi}
-              getOptionLabel={(option) => option.nama}
-              onChange={(_e, value, reason) => {
-                if (reason === "clear" || reason === "removeOption")
-                  setSelectAll(false);
-                if (
-                  reason === "selectOption" &&
-                  value.length === listProvinsi.length
-                )
-                  setSelectAll(true);
-                setColumns(value);
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  placeholder="Pilih provinsi"
-                />
-              )}
-              PaperComponent={(paperProps) => {
-                const { children, ...restPaperProps } = paperProps;
-                return (
-                  <Paper {...restPaperProps}>
-                    <Box
-                      onMouseDown={(e) => e.preventDefault()} // prevent blur
-                      pl={1.5}
-                      py={0.5}
-                    >
-                      <FormControlLabel
-                        onClick={(e) => {
-                          e.preventDefault(); // prevent blur
-                          handleToggleSelectAll();
-                        }}
-                        label="Pilih semua provinsi"
-                        control={
-                          <Checkbox
-                            id="select-all-checkbox"
-                            checked={selectAll}
-                          />
-                        }
-                      />
-                    </Box>
-                    <Divider />
-                    {children}
-                  </Paper>
-                );
-              }}
-              sx={{
-                ...SxAutocomplete,
-                ".MuiInputBase-root": {
-                  borderRadius: 1,
-                },
-              }}
-            />
+            {/*<Autocomplete*/}
+            {/*  multiple*/}
+            {/*  disableCloseOnSelect*/}
+            {/*  filterSelectedOptions*/}
+            {/*  freeSolo={false}*/}
+            {/*  size="small"*/}
+            {/*  value={columns}*/}
+            {/*  options={listProvinsi}*/}
+            {/*  getOptionLabel={(option) => option.nama}*/}
+            {/*  onChange={(_e, value, reason) => {*/}
+            {/*    if (reason === "clear" || reason === "removeOption")*/}
+            {/*      setSelectAll(false);*/}
+            {/*    if (*/}
+            {/*      reason === "selectOption" &&*/}
+            {/*      value.length === listProvinsi.length*/}
+            {/*    )*/}
+            {/*      setSelectAll(true);*/}
+            {/*    setColumns(value);*/}
+            {/*  }}*/}
+            {/*  renderInput={(params) => (*/}
+            {/*    <TextField*/}
+            {/*      {...params}*/}
+            {/*      InputLabelProps={{*/}
+            {/*        shrink: true,*/}
+            {/*      }}*/}
+            {/*      placeholder="Pilih provinsi"*/}
+            {/*    />*/}
+            {/*  )}*/}
+            {/*  PaperComponent={(paperProps) => {*/}
+            {/*    const { children, ...restPaperProps } = paperProps;*/}
+            {/*    return (*/}
+            {/*      <Paper {...restPaperProps}>*/}
+            {/*        <Box*/}
+            {/*          onMouseDown={(e) => e.preventDefault()} // prevent blur*/}
+            {/*          pl={1.5}*/}
+            {/*          py={0.5}*/}
+            {/*        >*/}
+            {/*          <FormControlLabel*/}
+            {/*            onClick={(e) => {*/}
+            {/*              e.preventDefault(); // prevent blur*/}
+            {/*              handleToggleSelectAll();*/}
+            {/*            }}*/}
+            {/*            label="Pilih semua provinsi"*/}
+            {/*            control={*/}
+            {/*              <Checkbox*/}
+            {/*                id="select-all-checkbox"*/}
+            {/*                checked={selectAll}*/}
+            {/*              />*/}
+            {/*            }*/}
+            {/*          />*/}
+            {/*        </Box>*/}
+            {/*        <Divider />*/}
+            {/*        {children}*/}
+            {/*      </Paper>*/}
+            {/*    );*/}
+            {/*  }}*/}
+            {/*  sx={{*/}
+            {/*    ...SxAutocomplete,*/}
+            {/*    ".MuiInputBase-root": {*/}
+            {/*      borderRadius: 1,*/}
+            {/*    },*/}
+            {/*  }}*/}
+            {/*/>*/}
 
             {/* <AutocompleteSelectMultiple
               value={state.values[indexTags].stakeholder.main}
@@ -208,7 +208,7 @@ export default function FormStakeholder({
                   : "Pilih semua entitas"
               }
             /> */}
-            {/* <SearchBar onSearch={handleSearch} />
+            <SearchBar onSearch={handleSearch} />
             <Typography
               mt={1}
               variant="caption"
@@ -224,7 +224,7 @@ export default function FormStakeholder({
               searchTerm={searchTerm}
               checkedImage={convertToCheckedImage()}
               handleCheckImage={setSelectedStakeholder}
-            /> */}
+            />
           </Stack>
 
           {/* <Typography gutterBottom>Keterangan</Typography>
