@@ -15,13 +15,18 @@ import { IconEmptyData } from "@/app/components/icons";
 import {usePenetapanTopicContext} from "@/lib/core/hooks/useHooks";
 import {PenetapanObjectPrioritas, PenetapanObjectUraianDto} from "@/lib/core/context/penetapanTopicContext";
 import {DasarPemilihan} from "@/app/penetapan/objek/pageModel";
+import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 
 export default function TableLonglistStepOne({ mode }: { mode?: string }) {
 
  const {
    uraianState,
-   setUraianState
+   setUraianState,
  } = usePenetapanTopicContext(state => state)
+
+ const {
+  manipulateStateUraianPriority
+ } = usePenetapanObjectVM()
 
  const getIsChecked = (data:PenetapanObjectPrioritas[], id:number) => {
   const getIndex = data.findIndex(x => x.value == id.toString())
@@ -29,6 +34,7 @@ export default function TableLonglistStepOne({ mode }: { mode?: string }) {
  }
 
  function handleChecked(checked: boolean, i: number, id: number) {
+
   const curUraian:PenetapanObjectUraianDto[] = uraianState
   const curPrioritas = curUraian[i].prioritas
   if (checked){

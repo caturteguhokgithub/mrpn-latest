@@ -7,6 +7,9 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TableLonglistStepOne from "./table-long-step-1";
 import TableLonglistStepTwo from "./table-long-step-2";
+import {usePenetapanTopicContext} from "@/lib/core/hooks/useHooks";
+import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
+import {PenetapanObjectUraianDto} from "@/lib/core/context/penetapanTopicContext";
 
 const steps = [
  "Dasar Pemilihan Prioritas Objek MRPN Linsek",
@@ -18,6 +21,15 @@ export default function TableLonglistStepper({
 }: {
  handleOpenShortlist?: () => void;
 }) {
+
+ const {
+  uraianState,
+  setUraianState,
+ } = usePenetapanTopicContext(state => state)
+
+ const {
+  manipulateStateUraianPriority
+ } = usePenetapanObjectVM()
 
  const [activeStep, setActiveStep] = React.useState(0);
  const [skipped, setSkipped] = React.useState(new Set<number>());
@@ -36,6 +48,10 @@ export default function TableLonglistStepper({
    newSkipped = new Set(newSkipped.values());
    newSkipped.delete(activeStep);
   }
+
+  const prevUraianState = JSON.parse(JSON.stringify(uraianState))
+  const updateStateUraian = manipulateStateUraianPriority(prevUraianState)
+  setUraianState(updateStateUraian)
 
   setActiveStep((prevActiveStep) => prevActiveStep + 1);
   setSkipped(newSkipped);

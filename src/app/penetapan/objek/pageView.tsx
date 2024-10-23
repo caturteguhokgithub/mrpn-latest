@@ -132,7 +132,7 @@ export default function PageTemaView({}) {
     deleteTopic
   } = usePenetapanObjectVM();
 
-  useEffect(useEffectGenerateOption, [year, rkp]);
+  useEffect(useEffectGenerateOption, [year]);
 
   useEffect(useEffectObjectState, [year, objectState]);
 

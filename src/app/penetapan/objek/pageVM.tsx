@@ -1,31 +1,27 @@
-import {
-  useExsumContext,
-  useGlobalModalContext,
-  useLoading,
-  usePenetapanTopicContext,
-  useRKPContext
-} from "@/lib/core/hooks/useHooks";
-import React, {useEffect, useState} from "react";
-import {PNDto, ProjectDefaultDto} from "@/lib/core/context/rkpContext";
+import {useGlobalModalContext, useLoading, usePenetapanTopicContext, useRKPContext} from "@/lib/core/hooks/useHooks";
+import {useState} from "react";
+import {ProjectDefaultDto} from "@/lib/core/context/rkpContext";
 import {
   initPenetapanObjectState,
+  NotaDinasReqDto,
   PenetapanObjectEntityCheckedDto,
+  PenetapanObjectEntityDto,
+  PenetapanObjectEntityReqDto,
+  PenetapanObjectEntityValueReqDto,
   PenetapanObjectLongListAssignObjectReqDto,
   PenetapanObjectLongListReqDto,
   PenetapanObjectLongListReqValueDto,
   PenetapanObjectReqDto,
   PenetapanObjectShortListDto,
-  PenetapanObjectEntityDto,
-  PenetapanObjectVMState,
   PenetapanObjectStateEntityDto,
-  PenetapanObjectEntityReqDto,
-  PenetapanObjectEntityValueReqDto,
-  NotaDinasReqDto, RKPCascadingDto
+  PenetapanObjectVMState,
+  RKPCascadingDto
 } from "@/app/penetapan/objek/pageModel";
 import {
   doCratePenetapanObjectLongList,
   doCratePenetapanObjectLongListAssignObject,
-  doCreatePenetapanObjectTopic, doDeletePenetapanObjectTopic,
+  doCreatePenetapanObjectTopic,
+  doDeletePenetapanObjectTopic,
   doGetPenetapanObject,
   doGetPenetapanObjectCascading,
   doGetPenetapanObjectEntity,
@@ -33,7 +29,8 @@ import {
   doGetPenetapanObjectNotaDinas,
   doGetPenetapanObjectShortList,
   doUpdateOrCreateGetPenetapanObjectNotaDinas,
-  doUpdateOrCreatePenetapanObjectEntityUsulan, doUpdatePenetapanObjectTopic
+  doUpdateOrCreatePenetapanObjectEntityUsulan,
+  doUpdatePenetapanObjectTopic
 } from "@/app/penetapan/objek/pageService";
 import {API_CODE} from "@/lib/core/api/apiModel";
 import useRkpVM from "@/components/dropdown/rkpVM";
@@ -383,6 +380,45 @@ const usePenetapanObjectVM = () => {
     getPenetapanObjectTopic()
   }
 
+  const manipulateStateUraianPriority = (data:PenetapanObjectUraianDto[]) => {
+
+    const calculatePriorityCount:PenetapanObjectUraianDto[] = data.reduce<PenetapanObjectUraianDto[]>(
+      (a,b) => {
+        b.priotitas_count = b.prioritas.length
+        return [...a, b]
+      }, []
+    )
+
+    const sortedData:PenetapanObjectUraianDto[] = data.sort((a,b) => {
+      const n1 = a.prioritas.length
+      const n2 = b.prioritas.length
+      if (n1 > n2) {
+        return -1;
+      }
+      if (n1 < n2) {
+        return 1;
+      }
+      return 0;
+    })
+
+    const objGroupBy = Object.groupBy(sortedData, ({priotitas_count}) => priotitas_count)
+
+    const sorted = Object.keys(objGroupBy).sort((a,b) => (parseInt(a) < parseInt(b)) ? 1 : -1)
+
+    return sortedData.reduce<PenetapanObjectUraianDto[]>(
+      (a, b) => {
+        let prior: number = 1
+        const getIndex = sorted.findIndex(x => parseInt(x) == b.priotitas_count)
+        if (getIndex > -1) {
+          prior = getIndex + 1
+        }
+        b.priotitas_order = prior
+        return [...a, b]
+      },
+      []
+    );
+  }
+
   const useEffectObjectState = () => {
     if (objectState !== undefined){
 
@@ -394,34 +430,8 @@ const usePenetapanObjectVM = () => {
           return [...acc, ...b.uraian]
         }, []
       )
-      const sortedData:PenetapanObjectUraianDto[] = uraianDt.sort((a,b) => {
-        const n1 = a.prioritas.length
-        const n2 = b.prioritas.length
-        if (n1 > n2) {
-          return -1;
-        }
-        if (n1 < n2) {
-          return 1;
-        }
-        return 0;
-      })
 
-      const objGroupBy = Object.groupBy(sortedData, ({priotitas_count}) => priotitas_count)
-
-      const sorted = Object.keys(objGroupBy).sort((a,b) => (parseInt(a) < parseInt(b)) ? 1 : -1)
-
-      const finalData = sortedData.reduce<PenetapanObjectUraianDto[]>(
-        (a,b) => {
-          let prior:number = 1
-          const getIndex = sorted.findIndex(x => parseInt(x) == b.priotitas_count)
-          if (getIndex > -1){
-            prior = getIndex+1
-          }
-          b.priotitas_order = prior
-          return [...a,b]
-        },
-        []
-      )
+      const finalData = manipulateStateUraianPriority(uraianDt)
 
       setUraianState(finalData)
 
@@ -455,7 +465,8 @@ const usePenetapanObjectVM = () => {
     getPenetapanObjectCascading,
     getPenetapanObjectEntity,
     getPenetapanObjectNotaDinas,
-    updateOrCreateNotaDinas
+    updateOrCreateNotaDinas,
+    manipulateStateUraianPriority
   }
 }
 

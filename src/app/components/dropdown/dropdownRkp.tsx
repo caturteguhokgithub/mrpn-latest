@@ -86,7 +86,7 @@ export default function DropdownRkp({
 
   useEffect(() => {
     if (allowedSelectRKP.length > 0) {
-      if (rkp.length == 0) {
+      if (rkp.length == 0 || options.length == 0) {
         getData();
       } else {
         if (rkpState) triggerChange(rkpState);

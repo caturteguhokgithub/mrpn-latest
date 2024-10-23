@@ -12,12 +12,19 @@ import {
  useLoading,
 } from "@/lib/core/hooks/useHooks";
 import { SelectChangeEvent } from "@mui/material";
-import { AuthResDto, Menu, UserDto } from "@/lib/core/context/authContext";
+import {AuthResDto, Menu, TokenPayload, UserDto} from "@/lib/core/context/authContext";
 
 const useAuthorizationVM = () => {
- const { setUser, setToken, menu, setMenu, setPermission } = useAuthContext(
-  (state) => state
- );
+ const {
+  user,
+  setUser,
+  token,
+  setToken,
+  menu,
+  setMenu,
+  permission,
+  setPermission
+ } = useAuthContext((state) => state);
 
  const URL_SSO = process.env.NEXT_PUBLIC_SSO_URL_API;
  const router = useRouter();
@@ -52,10 +59,10 @@ const useAuthorizationVM = () => {
    Object.assign(new ResponseBaseDto(), resp);
    if (resp.code == API_CODE.success) {
     let result: AuthResDto = resp.result;
-    return processStoreUserAuthentication(result);
+    return processStoreUserAuthentication(result.access_token.token, result.user);
    }
   }
-  return false;
+  return router.replace("/login");
  }
 
  async function doLogin() {
@@ -80,9 +87,9 @@ const useAuthorizationVM = () => {
    Object.assign(new ResponseBaseDto(), response);
    if (response.code == API_CODE.success) {
     let result: AuthResDto = response.result;
-    processStoreUserAuthentication(result);
+    sessionStorage.setItem(API_CONSTANT.token, result.access_token.token)
     setIsLoading(false);
-    return;
+    return router.replace("/");
    }
   }
 
@@ -155,12 +162,11 @@ const useAuthorizationVM = () => {
    Object.assign(new ResponseBaseDto(), response);
    if (response.code == API_CODE.success) {
     let result: UserDto = response.result;
-    if (result == null) {
-     return router.replace("/login");
-    } else {
-     setUser(result);
+    if (result !== null) {
+     return result
     }
    }
+   return undefined
   }
 
   const menu = await getMenuConfig();
@@ -170,26 +176,20 @@ const useAuthorizationVM = () => {
   setPermission(permission);
  }
 
- async function processStoreUserAuthentication(authResponse: AuthResDto) {
-  sessionStorage.setItem(API_CONSTANT.token, authResponse.access_token.token);
+ async function processAuthUserFromSessionToken(token:string){
+  const user = await getCurrentUserData()
+  if (user) processStoreUserAuthentication(token, user)
+ }
 
-  setUser(authResponse.user);
-  setToken(authResponse.access_token);
-
+ async function processStoreUserAuthentication(token:string, user:UserDto) {
+  sessionStorage.setItem(API_CONSTANT.token, token);
+  setUser(user);
+  setToken({token:token});
   const menu = await getMenuConfig();
   setMenu(menu);
-
   const permission = await getPermission();
   setPermission(permission);
  }
-
- useEffect(() => {
-  const token = sessionStorage.getItem(API_CONSTANT.token);
-  if (token) {
-   setToken({ token: token });
-   if (menu.length == 0) getCurrentUserData();
-  }
- }, []);
 
  return {
   userDropdown,
@@ -203,6 +203,7 @@ const useAuthorizationVM = () => {
   modalErrorLogin,
   setModalErrorLogin,
   isLoading,
+  processAuthUserFromSessionToken
  };
 };
 

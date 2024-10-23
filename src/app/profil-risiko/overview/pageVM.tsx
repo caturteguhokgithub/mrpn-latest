@@ -29,12 +29,12 @@ const useRiskOverviewVM = () => {
     if (response?.code === API_CODE.success){
       const result:RiskOverview = response.result
 
-      const obj = Object.groupBy(result.overviews, (risk) => risk.analisis_br)
+      const obj = Object.groupBy(result.overviews, (risk) => (risk.analisis_br == null ? 0 : risk.analisis_br))
       const sorted = Object.keys(obj).sort((a,b) => (parseInt(a) < parseInt(b)) ? 1 : -1)
 
       const finalOverviewData = result.overviews.reduce<RiskOverviewData[]>(
         (a,b) => {
-          let prior:number = 1
+          let prior:number = 0
           const getIndex = sorted.findIndex(x => parseInt(x) == b.analisis_br)
           if (getIndex > -1){
             prior = getIndex+1

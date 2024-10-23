@@ -41,20 +41,20 @@ export const metadata: Metadata = {
 export default function RootLayout(props: any) {
  return (
   <AuthProvider state={defaultInitAuthState}>
-   <html lang="en">
-    <body>
-     <AppRouterCacheProvider>
-      <ThemeProvider theme={theme}>
-       <CssBaseline />
-       <RKPProvider state={defaultInitRkpState}>
-        <PenetapanProvider state={defaultPenetapanState}>
-         {props.children}
-        </PenetapanProvider>
-       </RKPProvider>
-      </ThemeProvider>
-     </AppRouterCacheProvider>
-    </body>
-   </html>
+   <RKPProvider state={defaultInitRkpState}>
+    <html lang="en">
+     <body>
+      <AppRouterCacheProvider>
+       <ThemeProvider theme={theme}>
+        <CssBaseline />
+         <PenetapanProvider state={defaultPenetapanState}>
+          {props.children}
+         </PenetapanProvider>
+       </ThemeProvider>
+      </AppRouterCacheProvider>
+     </body>
+    </html>
+   </RKPProvider>
   </AuthProvider>
  );
 }

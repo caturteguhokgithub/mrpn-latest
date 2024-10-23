@@ -22,10 +22,12 @@ export const usePermissionChecker = (endpoint?:string) => {
   const pathname = usePathname()
 
   useEffect(() => {
-    if (!hasPrivilege(permission,pathname,"list", endpoint)){
-      setTimeout(() => {
-        return router.replace("/login")
-      },2000)
+    if (permission.length > 0 && !hasPrivilege(permission,pathname,"list", endpoint)){
+      sessionStorage.clear()
+      router.replace("/login")
+    }
+    if (permission.length == 0) {
+      router.replace("/")
     }
   }, [permission]);
 }

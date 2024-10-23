@@ -224,7 +224,7 @@ export type KPDto = ProjectDefaultDto & {
 }
 
 export type PPDto = ProjectDefaultDto & {
-  kp: KPDto
+  kp: KPDto[][]
 }
 
 export type PNDto = ProjectDefaultDto & {
