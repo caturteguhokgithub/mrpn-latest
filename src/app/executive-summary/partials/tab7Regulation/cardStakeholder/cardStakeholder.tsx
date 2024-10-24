@@ -77,10 +77,6 @@ export default function CardStakeholder({ project }: { project: string }) {
               setSelectedStakeholder={(items: number[]) =>
                 handleSelectStakeholder(items, req.type)
               }
-              description={req.value}
-              setDescription={(item: string) =>
-                handleChangeDescription(item, req.type)
-              }
             />
           ))}
         </Grid>
