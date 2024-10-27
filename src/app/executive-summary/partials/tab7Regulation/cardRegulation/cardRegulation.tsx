@@ -1,5 +1,11 @@
 import React, { Fragment } from "react";
-import {Button, DialogActions, FormControl, Grid, styled} from "@mui/material";
+import {
+  Button,
+  DialogActions,
+  FormControl,
+  Grid,
+  styled,
+} from "@mui/material";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
@@ -8,7 +14,7 @@ import useCardRegulationVM from "@/app/executive-summary/partials/tab7Regulation
 import AddButton from "@/components/buttonAdd";
 import FormPeraturan from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/form-peraturan";
 import DialogComponent from "@/components/dialog";
-import {TextareaStyled} from "@/components/textarea";
+import { TextareaStyled } from "@/components/textarea";
 
 export default function CardRegulation({ project }: { project: string }) {
   const {
@@ -25,7 +31,7 @@ export default function CardRegulation({ project }: { project: string }) {
     perpresState,
     setPerpresState,
     modalPeraturan,
-    setModalPeraturan
+    setModalPeraturan,
   } = useCardRegulationVM();
 
   const handleModalOpen = () => {
@@ -37,7 +43,7 @@ export default function CardRegulation({ project }: { project: string }) {
 
   return (
     <CardItem
-      title="Kerangka Regulasi"
+      title="Kebutuhan Regulasi"
       addButton={
         <AddButton
           filled
@@ -118,13 +124,13 @@ export default function CardRegulation({ project }: { project: string }) {
                 placeholder="Peraturan"
                 minRows={2}
                 value={perpresState.title}
-                onChange={(e:any) => {
-                  setPerpresState(prevState => {
+                onChange={(e: any) => {
+                  setPerpresState((prevState) => {
                     return {
                       ...prevState,
-                      title:e.target.value
-                    }
-                  })
+                      title: e.target.value,
+                    };
+                  });
                 }}
               />
             </FormControl>
@@ -135,21 +141,19 @@ export default function CardRegulation({ project }: { project: string }) {
                 placeholder="Keterangan Peraturan"
                 minRows={3}
                 value={perpresState.value}
-                onChange={(e:any) => {
-                  setPerpresState(prevState => {
+                onChange={(e: any) => {
+                  setPerpresState((prevState) => {
                     return {
                       ...prevState,
-                      value:e.target.value
-                    }
-                  })
+                      value: e.target.value,
+                    };
+                  });
                 }}
               />
             </FormControl>
           </Grid>
         </Grid>
       </DialogComponent>
-
-
     </CardItem>
   );
 }

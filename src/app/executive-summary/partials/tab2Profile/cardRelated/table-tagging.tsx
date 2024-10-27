@@ -17,6 +17,7 @@ import {
 import theme from "@/theme";
 import { ExsumRelatedDto } from "@/app/executive-summary/partials/tab2Profile/cardRelated/cardRelatedModel";
 import DialogDelete from "@/app/components/dialogDelete";
+import ActionColumn from "@/app/components/actions/action";
 
 export default function TableTagging({
   project,
@@ -38,7 +39,7 @@ export default function TableTagging({
       <Table sx={{ minWidth: 650 }} size="small">
         <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
           <TableRow>
-            <TableCell sx={{ width: 100 }}>Action</TableCell>
+            <TableCell sx={{ width: 100 }}>Aksi</TableCell>
             <TableCell sx={{ width: 200 }}>Kebijakan</TableCell>
             <TableCell>Keterangan</TableCell>
           </TableRow>
@@ -51,21 +52,7 @@ export default function TableTagging({
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell sx={{ textAlign: "center" }}>
-                  <Tooltip title="Delete" placement="top">
-                    <IconButton
-                      aria-label="delete"
-                      color="error"
-                      onClick={handleModalDelete}
-                    >
-                      <Icon
-                        baseClassName="fas"
-                        className={`fa-trash-alt`}
-                        sx={{
-                          fontSize: "14px",
-                        }}
-                      />
-                    </IconButton>
-                  </Tooltip>
+                  <ActionColumn center deleteClick={handleModalDelete} />
                 </TableCell>
                 <TableCell>
                   {x.kebijakan.map((y, index2) => (

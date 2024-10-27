@@ -1,32 +1,8 @@
-import React, { Fragment, useEffect, useState, SetStateAction } from "react";
-import {
-  Autocomplete,
-  Box,
-  Checkbox,
-  Divider,
-  FormControlLabel,
-  Grid,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { TextareaStyled } from "@/app/components/textarea";
+import React from "react";
+import { Grid, Paper, Stack, Typography } from "@mui/material";
 import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
-import SearchBar from "@/app/executive-summary/partials/tab2Profile/partials/imageSearch/searchBar";
-import { grey } from "@mui/material/colors";
-import StakeholderOptionsForm from "@/app/components/cardStakeholder";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import { AutocompleteSelectMultiple } from "@/app/components/autocomplete";
-import {
-  ExsumCascadingStateDto,
-  PropCascadingDto,
-} from "@/app/executive-summary/partials/tab4Cascading/cardDiagram/cardDiagramModel";
-import {
-  SxAutocomplete,
-  SxAutocompleteTextField,
-} from "@/app/components/dropdown/dropdownDefault";
-import { listSelectKp } from "@/app/executive-summary/data";
 import { listProvinsi } from "@/app/utils/provinsi";
 
 type Option = (typeof listProvinsi)[number];
@@ -36,14 +12,12 @@ export default function FormStakeholder({
   listStakeholder,
   selectedStakeholder,
   setSelectedStakeholder,
-}:
-{
+}: {
   title: string;
   listStakeholder: MiscMasterListStakeholderRes[];
   selectedStakeholder: MiscMasterListStakeholderRes[];
   setSelectedStakeholder: (item: number[]) => void;
 }) {
-
   return (
     <Grid item xs={12}>
       <Paper
@@ -74,19 +48,19 @@ export default function FormStakeholder({
               key={selectedStakeholder.length}
               value={selectedStakeholder}
               options={listStakeholder}
-              getOptionLabel={opt => opt.value}
+              getOptionLabel={(opt) => opt.value}
               handleChange={(newVal: MiscMasterListStakeholderRes[]) => {
-                const selectedIds:number[] = newVal.reduce<number[]>(
-                  (acc,b) => {
-                    return [...acc, b.id]
-                  }, []
-                )
-                setSelectedStakeholder(selectedIds)
+                const selectedIds: number[] = newVal.reduce<number[]>(
+                  (acc, b) => {
+                    return [...acc, b.id];
+                  },
+                  []
+                );
+                setSelectedStakeholder(selectedIds);
               }}
               placeHolder={"Pilih K/L"}
               labelSelectAll={"Pilih semua K/L"}
             />
-
           </Stack>
         </Stack>
       </Paper>

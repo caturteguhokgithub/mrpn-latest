@@ -317,7 +317,7 @@ export default function PageExecutiveSummaryContent({
               sx={styleTab(sxParamsOutlined)}
               variant="fullWidth"
             >
-              <Tab label="Kelembagaan" {...a11yProps(0)} />
+              <Tab label="Instansi Pelaksana" {...a11yProps(0)} />
               <Tab label="Regulasi" {...a11yProps(1)} />
             </Tabs>
             <CustomTabPanel
