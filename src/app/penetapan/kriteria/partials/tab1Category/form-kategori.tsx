@@ -1,180 +1,108 @@
 import React from "react";
 import {
- Chip,
- Divider,
- FormControl,
- Grid,
- Grow,
- Icon,
- IconButton,
- MenuItem,
- Paper,
- SelectChangeEvent,
- Table,
- TableBody,
- TableCell,
- TableHead,
- TableRow,
- TextField,
- Tooltip,
- Typography,
+  Autocomplete,
+  FormControl,
+  Grid,
+  SelectChangeEvent,
+  TextField,
+  Typography,
 } from "@mui/material";
-import SelectCustomTheme from "@/app/components/select";
-import { grey } from "@mui/material/colors";
 import TextareaComponent from "@/app/components/textarea";
-import { listLevelKemungkinan } from "@/app/utils/data";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import theme from "@/theme";
+import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import { SxParams } from "@/app/executive-summary/types";
+import {
+  SxAutocomplete,
+  SxAutocompleteTextField,
+} from "@/app/components/dropdown/dropdownDefault";
+import {
+  AutocompleteSelectMultiple,
+  AutocompleteSelectSingle,
+} from "@/app/components/autocomplete";
+
+export const listKategori = [
+  {
+    id: "1",
+    value: 1,
+    name: "Ekonomi",
+  },
+  {
+    id: "2",
+    value: 2,
+    name: "Geopolitik",
+  },
+  {
+    id: "3",
+    value: 3,
+    name: "Teknologi",
+  },
+  {
+    id: "4",
+    value: 4,
+    name: "Lingkungan",
+  },
+  {
+    id: "5",
+    value: 5,
+    name: "Sosial",
+  },
+  {
+    id: "6",
+    value: 6,
+    name: "Tata Kelola",
+  },
+];
 
 export default function FormKategori({ mode }: { mode?: string }) {
- const [value, setValue] = React.useState("");
- const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  const [value, setValue] = React.useState<string | null>("");
+  const [valueMulti, setValueMulti] = React.useState<string[]>([]);
 
- const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-  setAnchorEl(event.currentTarget);
- };
+  const optionsList = listKategori.map((item) => {
+    return `${item["name"]}`;
+  });
 
- const handlePopoverClose = () => {
-  setAnchorEl(null);
- };
-
- const open = Boolean(anchorEl);
-
- const handleChangeSelect = (event: SelectChangeEvent) => {
-  setValue(event.target.value);
- };
-
- return (
-  <Paper sx={{ overflowX: "auto", minWidth: "100% !important" }} elevation={0}>
-   <Table size="small">
-    <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
-     <TableRow>
-      <TableCell>Level Kemungkinan</TableCell>
-      <TableCell>Persentase Kemungkinan Terjadi dalam 1 Periode</TableCell>
-      <TableCell>
-       Jumlah Frekuensi Kemungkinan Terjadi dalam 1 Periode
-      </TableCell>
-     </TableRow>
-    </TableHead>
-    <TableBody>
-     <TableRow>
-      <TableCell>Kemungkinan 1</TableCell>
-      <TableCell>
-       <TextField
-        variant="outlined"
-        size="small"
-        placeholder="Persentase"
-        InputLabelProps={{
-         shrink: true,
-        }}
-       />
-      </TableCell>
-      <TableCell>
-       <TextField
-        variant="outlined"
-        size="small"
-        placeholder="Jumlah Frekuensi"
-        InputLabelProps={{
-         shrink: true,
-        }}
-       />
-      </TableCell>
-     </TableRow>
-     <TableRow>
-      <TableCell>Kemungkinan 2</TableCell>
-      <TableCell>
-       <TextField
-        variant="outlined"
-        size="small"
-        placeholder="Persentase"
-        InputLabelProps={{
-         shrink: true,
-        }}
-       />
-      </TableCell>
-      <TableCell>
-       <TextField
-        variant="outlined"
-        size="small"
-        placeholder="Jumlah Frekuensi"
-        InputLabelProps={{
-         shrink: true,
-        }}
-       />
-      </TableCell>
-     </TableRow>
-     <TableRow>
-      <TableCell>Kemungkinan 3</TableCell>
-      <TableCell>
-       <TextField
-        variant="outlined"
-        size="small"
-        placeholder="Persentase"
-        InputLabelProps={{
-         shrink: true,
-        }}
-       />
-      </TableCell>
-      <TableCell>
-       <TextField
-        variant="outlined"
-        size="small"
-        placeholder="Jumlah Frekuensi"
-        InputLabelProps={{
-         shrink: true,
-        }}
-       />
-      </TableCell>
-     </TableRow>
-     <TableRow>
-      <TableCell>Kemungkinan 4</TableCell>
-      <TableCell>
-       <TextField
-        variant="outlined"
-        size="small"
-        placeholder="Persentase"
-        InputLabelProps={{
-         shrink: true,
-        }}
-       />
-      </TableCell>
-      <TableCell>
-       <TextField
-        variant="outlined"
-        size="small"
-        placeholder="Jumlah Frekuensi"
-        InputLabelProps={{
-         shrink: true,
-        }}
-       />
-      </TableCell>
-     </TableRow>
-     <TableRow>
-      <TableCell>Kemungkinan 5</TableCell>
-      <TableCell>
-       <TextField
-        variant="outlined"
-        size="small"
-        placeholder="Persentase"
-        InputLabelProps={{
-         shrink: true,
-        }}
-       />
-      </TableCell>
-      <TableCell>
-       <TextField
-        variant="outlined"
-        size="small"
-        placeholder="Jumlah Frekuensi"
-        InputLabelProps={{
-         shrink: true,
-        }}
-       />
-      </TableCell>
-     </TableRow>
-    </TableBody>
-   </Table>
-  </Paper>
- );
+  return (
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <FormControl fullWidth>
+          <FieldLabelInfo title="Kategori Risiko" />
+          <AutocompleteSelectSingle
+            value={value}
+            options={optionsList}
+            getOptionLabel={(opt: any) => opt.value}
+            handleChange={(event: any, newValue: string | null) => {
+              setValue(newValue);
+            }}
+            placeHolder={"Pilih kategori risiko"}
+          />
+        </FormControl>
+      </Grid>
+      <Grid item xs={12}>
+        <FormControl fullWidth>
+          <FieldLabelInfo title="Sub Kategori Risiko" />
+          <AutocompleteSelectMultiple
+            value={valueMulti}
+            options={optionsList}
+            getOptionLabel={(opt: any) => opt.value}
+            handleChange={(event: any, newValue: string[]) => {
+              setValueMulti(newValue);
+            }}
+            placeHolder={"Pilih sub kategori risiko"}
+            labelSelectAll={"Pilih semua sub kategori"}
+          />
+        </FormControl>
+      </Grid>
+      <Grid item xs={12}>
+        <FormControl fullWidth>
+          <FieldLabelInfo title="Uraian" />
+          {mode === "add" ? (
+            <TextareaComponent label="Uraian" placeholder="Uraian" />
+          ) : mode === "edit" ? (
+            <TextareaComponent label="Uraian" placeholder="Uraian" value="-" />
+          ) : (
+            <Typography fontWeight={600}>-</Typography>
+          )}
+        </FormControl>
+      </Grid>
+    </Grid>
+  );
 }

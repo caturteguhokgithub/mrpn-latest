@@ -98,7 +98,7 @@ export default function CardIndicator({ project }: { project: string }) {
           <Table sx={{ minWidth: 650 }} size="small">
             <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
               <TableRow>
-                <TableCell>Kode</TableCell>
+                <TableCell width={150}>Kode</TableCell>
                 <TableCell>Indikator</TableCell>
                 <TableCell>Target</TableCell>
               </TableRow>
@@ -111,7 +111,7 @@ export default function CardIndicator({ project }: { project: string }) {
                     "&:last-child td, &:last-child th": { border: 0 },
                   }}
                 >
-                  <TableCell>Kode</TableCell>
+                  <TableCell>{row.code}</TableCell>
                   <TableCell>{row.value}</TableCell>
                   <TableCell>{getTarget(row)}</TableCell>
                 </TableRow>

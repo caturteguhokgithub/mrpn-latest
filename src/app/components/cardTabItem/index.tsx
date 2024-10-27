@@ -240,8 +240,8 @@ export default function CardItem({
         <CardHeader
           action={
             <>
-              {/* {addButton} */}
-              {addButton
+              {addButton}
+              {/* {addButton
                 ? hasPrivilege(permission, pathname, "add")
                   ? addButton
                   : null
@@ -251,7 +251,7 @@ export default function CardItem({
                   hasPrivilege(permission, pathname, "delete")
                   ? settingButton
                   : null
-                : null}
+                : null} */}
             </>
           }
           title={
