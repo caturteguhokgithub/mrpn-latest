@@ -14,13 +14,13 @@ import useRiskOverviewVM from "@/app/profil-risiko/overview/pageVM";
 import HeaderTable from "./partials/headerTable";
 
 export default function PageOverviewView() {
-  const { year } = useRKPContext((state) => state);
+  const { year, rpjmn } = useRKPContext((state) => state);
 
   const { objects, objectState, setObjectState, getMasterListObject } =
     usePenetapanGlobalVM();
 
   useEffect(() => {
-    if (year > 0) getMasterListObject();
+    getMasterListObject();
   }, [year]);
 
   const { dataRiskOverview, getRiskOverviewData } = useRiskOverviewVM();
@@ -31,7 +31,7 @@ export default function PageOverviewView() {
 
   return (
     <ContentPage
-      title="Overview Risiko"
+      title={`Overview Risiko ${year == 0 ? 'RPJMN '+rpjmn?.start+"-"+rpjmn?.end : 'Tahun '+year}`}
       withCard={objectState === undefined}
       chooseObject={
         <FormControl size="small" sx={{ width: "20vw" }}>

@@ -42,15 +42,13 @@ export default function PageAnalisisEvaluasiView({}) {
       ? "/profilRisiko/analisisEvaluasiRisiko"
       : pathname;
 
-  const { year } = useRKPContext((state) => state);
+  const { year, rpjmn } = useRKPContext((state) => state);
 
   const { objects, objectState, setObjectState, getMasterListObject } =
     usePenetapanGlobalVM();
 
   useEffect(() => {
-    if (year > 0) {
       getMasterListObject();
-    }
   }, [year]);
 
   const {
@@ -279,7 +277,7 @@ export default function PageAnalisisEvaluasiView({}) {
   return (
     <>
       <ContentPage
-        title="Analisis & Evaluasi Risiko"
+        title={`Analisis & Evaluasi Risiko ${year == 0 ? 'RPJMN '+rpjmn?.start+"-"+rpjmn?.end : 'Tahun '+year}`}
         infoToolTip={
           <Stack spacing={2}>
             <div>

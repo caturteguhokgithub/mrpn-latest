@@ -5,7 +5,7 @@ import {MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel
 
 export type GetRKPServiceModel = BaseAPIServiceParam & {
     body: {
-        tahun:number
+        tahun:number|string
     };
 };
 

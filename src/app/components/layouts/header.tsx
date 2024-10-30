@@ -29,9 +29,14 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP);
 
+// const sliderContent = [
+//   "PRANALA",
+//   "Pengendali\u00A0Risiko\u00A0&\u00A0Analisis\u00A0Pembangunan",
+// ];
+
 const sliderContent = [
-  "PRANALA",
-  "Pengendali\u00A0Risiko\u00A0&\u00A0Analisis\u00A0Pembangunan",
+  "MRPN",
+  "Manajemen\u00A0Risiko\u00A0Pembangunan\u00A0Nasional",
 ];
 
 const textStyles = ["abbreviation", "full-form"];
@@ -43,7 +48,7 @@ export default function Header({}) {
 
   const optionsYear = () => {
     if (rpjmn !== undefined) {
-      let opt: number[] = [];
+      let opt: number[] = [0];
       for (let i = rpjmn.start; i <= rpjmn.end; i++) {
         opt.push(i);
       }
@@ -372,7 +377,11 @@ export default function Header({}) {
                 bgcolor: year == y ? blue[100] : null,
               }}
             >
-              <ListItemText>Tahun {y}</ListItemText>
+              {y == 0 ?
+                <ListItemText>RPJMN {rpjmn?.start+"-"+rpjmn?.end}</ListItemText>
+                :
+                <ListItemText>Tahun {y}</ListItemText>
+              }
             </MenuItem>
           ))}
 

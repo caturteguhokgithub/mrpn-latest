@@ -54,13 +54,13 @@ export default function PagePerlakuanView({}) {
       ? "/profilRisiko/perlakuanRisiko"
       : pathname;
 
-  const { year } = useRKPContext((state) => state);
+  const { year, rpjmn } = useRKPContext((state) => state);
 
   const { objects, objectState, setObjectState, getMasterListObject } =
     usePenetapanGlobalVM();
 
   useEffect(() => {
-    if (year > 0) getMasterListObject();
+    getMasterListObject();
   }, [year]);
 
   const {
@@ -423,7 +423,7 @@ export default function PagePerlakuanView({}) {
   return (
     <>
       <ContentPage
-        title="Perlakuan Risiko"
+        title={`Perlakuan Risiko ${year == 0 ? 'RPJMN '+rpjmn?.start+"-"+rpjmn?.end : 'Tahun '+year}`}
         infoToolTip="Proses untuk menurunkan keterpaparan risiko yang dikaitkan dengan toleransi dan selera risiko
 yang telah ditetapkan"
         withCard={objectState === undefined}

@@ -50,24 +50,11 @@ export default function DashboardLayout(props: {
   useEffect(() => {
     if (rpjmn == undefined) {
       getRpjmn();
-    } else {
-      if (year == 0) setYear(rpjmn.start);
     }
+    // else {
+    //   if (year == 0) setYear(rpjmn.start);
+    // }
   }, [rpjmn]);
-
-  // const [check, setCheck] = useState<number>(0)
-  //
-  // const callApi = () => {
-  //  console.log("trigger check session")
-  // }
-  //
-  // useEffect(() => {
-  //  const id = setInterval(() => {
-  //   callApi()
-  //   setCheck(check + 1)
-  //  }, 20000);
-  //  return () => clearInterval(id);
-  // }, [check])
 
   const pathname = usePathname();
   const theme = useTheme();

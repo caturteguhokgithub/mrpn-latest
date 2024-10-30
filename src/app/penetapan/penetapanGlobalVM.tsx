@@ -10,7 +10,8 @@ const usePenetapanGlobalVM = () => {
   const errorModalContext = useGlobalModalContext();
 
   const {
-    year
+    year,
+    rpjmn
   } = useRKPContext(state => state)
 
   const {
@@ -22,7 +23,9 @@ const usePenetapanGlobalVM = () => {
 
   const getMasterListObject = async () => {
     const response = await doGetMasterListObject({
-      body: {tahun: year},
+      body: {
+        tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year
+      },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext
     })
@@ -33,6 +36,9 @@ const usePenetapanGlobalVM = () => {
       if (getIndex == -1){
         setObjectState(undefined)
       }
+    }else{
+      setObjects([])
+      setObjectState(undefined)
     }
   }
 

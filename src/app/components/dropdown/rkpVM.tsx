@@ -14,7 +14,7 @@ const useRkpVM = () => {
   const rkpContext = useRKPContext(state => state);
   const exsumContext = useExsumContext();
 
-  const {rkpOption,setRkpOption, rkpState, setRkpState, year} = rkpContext
+  const {rkpOption,setRkpOption, rkpState, setRkpState, year, rpjmn} = rkpContext
   const [allowedSelectRKP, setAllowedSelectRKP] = useState<string[]>([])
 
   async function getAllowedSelectRKP() {
@@ -37,7 +37,7 @@ const useRkpVM = () => {
   async function getData() {
     const response = await doGetRKP({
       body: {
-        tahun:rkpContext.year
+        tahun:rkpContext.year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -105,6 +105,12 @@ const useRkpVM = () => {
       })
 
       setRkpOption(opt)
+      return true
+    }else{
+      rkpContext.setRkp([])
+      setRkpOption([])
+      setRkpState(undefined)
+      return false
     }
   }
 
@@ -117,14 +123,21 @@ const useRkpVM = () => {
     if (response?.code == API_CODE.success) {
       let result:ExsumDto = response.result
       exsumContext.setExsum(result)
+    }else{
+      setRkpState(undefined)
     }
   }
 
   function triggerChange(params: ProjectDefaultDto) {
+
+    const getRpjmn = () => {
+      return rpjmn?.start+"-"+rpjmn?.end;
+    }
+
     if (allowedSelectRKP.includes(params.level)) {
       let req: ExsumDto = {
         id: 0,
-        tahun: year,
+        tahun: year == 0 ? getRpjmn() : year,
         level: params.level,
         ref_id: params.id
       }

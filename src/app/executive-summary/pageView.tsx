@@ -43,11 +43,11 @@ export default function PageExecutiveSummary({}) {
   }, [year]);
 
   const handleChangeTab = (event: any, newValue: any) => {
-    if (newValue == 0) {
-      return;
-    } else {
+    // if (newValue == 0) {
+    //   return;
+    // } else {
       setYear(newValue);
-    }
+    // }
   };
 
   const handleToggleTab = () => {

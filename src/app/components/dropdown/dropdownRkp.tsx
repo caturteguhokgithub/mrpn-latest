@@ -86,19 +86,20 @@ export default function DropdownRkp({
 
   useEffect(() => {
     if (allowedSelectRKP.length > 0) {
-      if (rkp.length == 0 || options.length == 0) {
-        getData();
-      } else {
-        if (rkpState) triggerChange(rkpState);
-      }
+      getData().then(r => {
+        if (r && rkpState) {
+          triggerChange(rkpState)
+        }
+      })
     }
-  }, [allowedSelectRKP]);
+  }, [allowedSelectRKP,year]);
 
   const sxParams: SxParams = { variant: variant };
 
   return (
     <FormControl size="small">
       <Autocomplete
+        key={options.length}
         size="small"
         value={value}
         getOptionLabel={(option: any) =>

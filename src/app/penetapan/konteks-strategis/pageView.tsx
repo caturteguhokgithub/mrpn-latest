@@ -22,24 +22,23 @@ import CardStakeholderInternal from "@/app/penetapan/konteks-strategis/cardStake
 import CardStakeholderEksternal from "@/app/penetapan/konteks-strategis/cardStakeholders/cardStakeholderEksternal";
 
 export default function PageKonteksStrategisView({}) {
-  const { year } = useRKPContext((state) => state);
+  const { year, rpjmn } = useRKPContext((state) => state);
 
   const { objects, objectState, setObjectState, getMasterListObject } =
     usePenetapanGlobalVM();
 
   useEffect(() => {
-    if (year > 0) {
       getMasterListObject();
-    }
   }, [year]);
 
   return (
     <>
       <ContentPage
-        title="Eksplorasi Konteks Strategis"
+        title={`Eksplorasi Konteks Strategis ${year == 0 ? 'RPJMN '+rpjmn?.start+"-"+rpjmn?.end : 'Tahun '+year}`}
         chooseObject={
           <FormControl size="small" sx={{ width: "20vw" }}>
             <AutocompleteSelectSingle
+              key={objects.length}
               rounded
               value={objectState}
               options={objects}

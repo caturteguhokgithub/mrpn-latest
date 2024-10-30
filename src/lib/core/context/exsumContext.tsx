@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 export type ExsumDto = {
   id: number
-  tahun:number
+  tahun:number|string
   level: string
   ref_id: number
 };

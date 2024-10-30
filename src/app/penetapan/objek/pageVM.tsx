@@ -45,7 +45,8 @@ const usePenetapanObjectVM = () => {
   const errorModalContext = useGlobalModalContext();
   const {
     rkp,
-    year
+    year,
+    rpjmn
   } = useRKPContext(state => state)
   const {
     getData
@@ -106,7 +107,7 @@ const usePenetapanObjectVM = () => {
   async function getPenetapanObjectTopic(){
     const response = await doGetPenetapanObject({
       body:{
-        tahun: year
+        tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year
       },
       loadingContext:loadingContext,
       errorModalContext:errorModalContext
@@ -114,6 +115,8 @@ const usePenetapanObjectVM = () => {
     if (response?.code == API_CODE.success){
       let result:PenetapanObjectDto[] = response.result
       setObjects(result)
+    }else{
+      setObjects([])
     }
   }
 
@@ -122,7 +125,7 @@ const usePenetapanObjectVM = () => {
       id: stateTopic.id,
       code: stateTopic.code,
       topik: stateTopic.topik,
-      tahun: year,
+      tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year,
       values: stateTopic.values
     }
 
@@ -153,7 +156,7 @@ const usePenetapanObjectVM = () => {
       id: stateTopic.id,
       code: stateTopic.code,
       topik: stateTopic.topik,
-      tahun: year,
+      tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year,
       values: stateTopic.values
     }
 
@@ -372,11 +375,7 @@ const usePenetapanObjectVM = () => {
 
   const useEffectGenerateOption = () => {
     setObjectState(undefined)
-    if (rkp.length > 0 && optionPN.length == 0) {
-      generateOptionPN()
-    } else {
-      getData()
-    }
+    getData()
     getPenetapanObjectTopic()
   }
 

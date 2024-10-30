@@ -111,7 +111,7 @@ export interface MiscMasterListKategoriProyekRes {
 // LIST RKP BY OBJECT
 export type MasterListObjectReq = BaseAPIServiceParam & {
  body: {
-  tahun: number;
+  tahun: number|string;
  };
 };
 export interface MasterListObjectRes {

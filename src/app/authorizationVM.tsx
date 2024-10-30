@@ -158,27 +158,34 @@ const useAuthorizationVM = () => {
    errorModalContext: errorModalContext,
    url: "auth/me",
   });
+
   if (response) {
    Object.assign(new ResponseBaseDto(), response);
    if (response.code == API_CODE.success) {
     let result: UserDto = response.result;
     if (result !== null) {
+
+     // const menu = await getMenuConfig();
+     // setMenu(menu);
+     //
+     // const permission = await getPermission();
+     // setPermission(permission);
+
      return result
     }
    }
    return undefined
   }
 
-  const menu = await getMenuConfig();
-  setMenu(menu);
-
-  const permission = await getPermission();
-  setPermission(permission);
  }
 
  async function processAuthUserFromSessionToken(token:string){
   const user = await getCurrentUserData()
-  if (user) processStoreUserAuthentication(token, user)
+  if (user) {
+   processStoreUserAuthentication(token, user)
+  }else{
+   sessionStorage.removeItem(API_CONSTANT.token)
+  }
  }
 
  async function processStoreUserAuthentication(token:string, user:UserDto) {

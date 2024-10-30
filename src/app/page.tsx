@@ -27,14 +27,15 @@ export default function Home() {
     const token = sessionStorage.getItem(API_CONSTANT.token);
     if (token) {
       setToken({ token: token });
+      processAuthUserFromSessionToken(token)
     } else{
       doCheckSSO()
     }
   }, []);
 
-  useEffect(() => {
-    if (token) processAuthUserFromSessionToken(token.token)
-  }, [token]);
+  // useEffect(() => {
+  //   if (token) processAuthUserFromSessionToken(token.token)
+  // }, [token]);
 
   useEffect(() => {
     if (user !== undefined && token !== undefined && menu.length > 0) {

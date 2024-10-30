@@ -40,16 +40,14 @@ export default function PageIdentifikasiView({}) {
       ? "/profilRisiko/identifikasiRisiko"
       : pathname;
 
-  const { year } = useRKPContext((state) => state);
+  const { year, rpjmn } = useRKPContext((state) => state);
   const { dataRiskOverview } = useRiskOverviewVM();
 
   const { objects, objectState, setObjectState, getMasterListObject } =
     usePenetapanGlobalVM();
 
   useEffect(() => {
-    if (year > 0) {
       getMasterListObject();
-    }
   }, [year]);
 
   const {
@@ -252,7 +250,7 @@ export default function PageIdentifikasiView({}) {
   return (
     <>
       <ContentPage
-        title="Identifikasi Risiko"
+        title={`Identifikasi Risiko ${year == 0 ? 'RPJMN '+rpjmn?.start+"-"+rpjmn?.end : 'Tahun '+year}`}
         infoToolTip="Proses menemukenali dan mendeskripsikan risiko"
         withCard={objectState === undefined}
         chooseObject={

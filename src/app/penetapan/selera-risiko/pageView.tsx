@@ -12,15 +12,13 @@ import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 
 export default function PageSeleraRisikoView({}) {
-  const { year } = useRKPContext((state) => state);
+  const { year, rpjmn } = useRKPContext((state) => state);
 
   const { objects, objectState, setObjectState, getMasterListObject } =
     usePenetapanGlobalVM();
 
   useEffect(() => {
-    if (year > 0) {
       getMasterListObject();
-    }
   }, [year]);
 
   const handleModalOpenSave = () => {};
@@ -28,7 +26,7 @@ export default function PageSeleraRisikoView({}) {
   return (
     <>
       <ContentPage
-        title="Selera Risiko"
+        title={`Selera Risiko ${year == 0 ? 'RPJMN '+rpjmn?.start+"-"+rpjmn?.end : 'Tahun '+year}`}
         infoToolTip="Jumlah dan jenis risiko yang bersedia diterima oleh suatu entitas atau organisasi pemerintahan
 dalam mengejar tujuannya"
         withCard

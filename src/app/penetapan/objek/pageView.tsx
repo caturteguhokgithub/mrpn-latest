@@ -114,7 +114,7 @@ export default function PageTemaView({}) {
   const { permission } = useAuthContext((state) => state);
   const pathname = usePathname();
 
-  const { year, rkp } = useRKPContext((state) => state);
+  const { rkp, year, rpjmn } = useRKPContext((state) => state);
 
   const { objects, objectState, setObjectState } = usePenetapanTopicContext(
     (state) => state
@@ -129,12 +129,17 @@ export default function PageTemaView({}) {
     stateTopic,
     setStateTopic,
     updateOrCreateTopic,
-    deleteTopic
+    deleteTopic,
+    generateOptionPN
   } = usePenetapanObjectVM();
 
   useEffect(useEffectGenerateOption, [year]);
 
   useEffect(useEffectObjectState, [year, objectState]);
+
+  useEffect(()=> {
+    generateOptionPN()
+  }, [rkp])
 
   const handleEditTopic = (x:PenetapanObjectDto) => {
     let optState:ProjectDefaultDto[] = []
@@ -196,7 +201,7 @@ export default function PageTemaView({}) {
   return (
     <>
       <ContentPage
-        title={`Objek MRPN & UPR Linsek Tahun ${year}`}
+        title={`Objek MRPN & UPR Linsek ${year == 0 ? 'RPJMN '+rpjmn?.start+"-"+rpjmn?.end : 'Tahun '+year}`}
         infoToolTip={
           <Stack spacing={2}>
             <div>
@@ -349,6 +354,7 @@ export default function PageTemaView({}) {
         dialogFooter={dialogActionFooterAdd}
       >
         <FormTable
+          key={optionPN.length}
           state={stateTopic}
           setState={setStateTopic}
           optionPN={optionPN}

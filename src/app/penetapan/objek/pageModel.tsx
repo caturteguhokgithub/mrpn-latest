@@ -66,7 +66,7 @@ export interface PenetapanObjectReqDto {
   id:number
   code:string
   topik:string
-  tahun:number
+  tahun:number|string
   values:ProjectDefaultDto[]
 }
 
