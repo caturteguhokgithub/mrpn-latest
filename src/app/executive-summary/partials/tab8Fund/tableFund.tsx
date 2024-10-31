@@ -149,21 +149,23 @@ const TableFundPPKP = (props: { row?: RoDto[]; project: string }) => {
         {row?.map((fundRow, index) => (
           <TableRow key={index}>
             <TableCell sx={{ verticalAlign: "top" }}>{fundRow.value}</TableCell>
-            <TableCell sx={{ verticalAlign: "top" }}>{fundRow.pkkr}</TableCell>
+            <TableCell sx={{ verticalAlign: "top" }}>
+              {fundRow.pkkr ? fundRow.pkkr : "-"}
+            </TableCell>
             <TableCell align="right" sx={{ verticalAlign: "top" }}>
-              {fundRow.target}
+              {fundRow.target ? fundRow.target : "-"}
             </TableCell>
             <TableCell align="right" sx={{ verticalAlign: "top" }}>
               {fundRow.anggaran}
             </TableCell>
             <TableCell sx={{ verticalAlign: "top" }}>
-              {fundRow.sumber_anggaran}
+              {fundRow.sumber_anggaran ? fundRow.sumber_anggaran : "-"}
             </TableCell>
             <TableCell sx={{ verticalAlign: "top" }}>
-              {fundRow.kementrian.value}
+              {fundRow.kementrian.value ? fundRow.kementrian.value : "-"}
             </TableCell>
             <TableCell sx={{ verticalAlign: "top" }}>
-              {fundRow.lokasi_ro}
+              {fundRow.lokasi_ro ? fundRow.lokasi_ro : "-"}
             </TableCell>
           </TableRow>
         ))}
@@ -205,13 +207,6 @@ function Row(props: { row: ExsumFundRes; project: string }) {
     </>
   );
 }
-
-const rowPP = [createData("Penguatan intervensi spesifik stunting")];
-
-const rows = [
-  createData("Penguatan intervensi spesifik stunting"),
-  createData("Pelayanan gizi masyarakat di kab/kota"),
-];
 
 export default function TableFund({
   project,

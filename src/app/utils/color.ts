@@ -1,5 +1,5 @@
 import theme from "@/theme";
-import {blue, brown, green, orange} from "@mui/material/colors";
+import { blue, brown, green, orange } from "@mui/material/colors";
 
 export const logoOrange = "#EA6228";
 export const logoBrown = "#CC9933";
@@ -10,10 +10,10 @@ export const red = "#EF4444";
 export const yellow = "#FDE047";
 export const whiteRGB = "rgb(255, 255, 255)";
 export const blackRGB = "rgb(0, 0, 0)";
+export const bgColorTh = "#E7F2F9";
 
-export const GetColor = (i:number) => {
-
-  const colorArray:string[] = [
+export const GetColor = (i: number) => {
+  const colorArray: string[] = [
     "#522258",
     "#C63C51",
     "#8C3061",
@@ -26,5 +26,5 @@ export const GetColor = (i:number) => {
     "#FED8B1",
   ];
 
-  return colorArray[i]
-}
+  return colorArray[i];
+};

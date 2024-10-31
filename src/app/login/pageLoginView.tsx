@@ -70,6 +70,18 @@ export default function PageLoginView() {
     };
   }, []);
 
+  React.useEffect(() => {
+    const handleEnterPress = (e: any) => {
+      if (e.key === "Enter") {
+        doLogin;
+      }
+    };
+    window.addEventListener("keydown", handleEnterPress);
+    return () => {
+      window.removeEventListener("keydown", handleEnterPress);
+    };
+  }, []);
+
   const buttonLogin = (
     <Box mt={showLogin ? 0 : 5}>
       <Button
@@ -350,7 +362,10 @@ export default function PageLoginView() {
                 }}
               />
             </Collapse>
-            <Stack direction="column" alignItems="center">
+            <Stack
+              direction="column"
+              alignItems={showLogin ? "flex-start" : "center"}
+            >
               <Typography
                 fontWeight={900}
                 fontSize="clamp(3rem, 100vw, 6rem)"
@@ -368,7 +383,8 @@ export default function PageLoginView() {
                 {/* Manajemen Risiko
        <br />
        Pembangunan Nasional */}
-                Pranala
+                {/* Pranala */}
+                MRPN
               </Typography>
               <Typography
                 // fontStyle="italic"
@@ -383,7 +399,8 @@ export default function PageLoginView() {
                   },
                 }}
               >
-                National Risk Management Information System
+                {/* National Risk Management Information System */}
+                Manajemen Risiko Pembangunan Nasional
               </Typography>
             </Stack>
             {!showLogin && bappenasBlock}
@@ -572,6 +589,11 @@ export default function PageLoginView() {
                         </IconButton>
                       </InputAdornment>
                     ),
+                    onKeyPress: (e) => {
+                      if (e.key === "Enter") {
+                        doLogin();
+                      }
+                    },
                   }}
                   placeholder="Password"
                   variant="outlined"

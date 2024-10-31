@@ -17,6 +17,7 @@ import { ExsumSupportProjectRes } from "@/app/executive-summary/partials/tab2Pro
 import { ExsumDto } from "@/lib/core/context/exsumContext";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
+import { bgColorTh } from "@/app/utils/color";
 
 export const getLevel = (level: string) => {
   switch (level) {
@@ -80,17 +81,34 @@ export default function TableSupport({
   };
 
   return (
-    <TableContainer component={Paper} elevation={0} variant="outlined">
-      <Table sx={{ minWidth: 650 }} size="small">
-        <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
+    <TableContainer
+      component={Paper}
+      elevation={0}
+      variant="outlined"
+      sx={{
+        maxHeight: "40vh",
+        "&::-webkit-scrollbar": {
+          width: "6px",
+          cursor: "pointer",
+        },
+      }}
+    >
+      <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
+        <TableHead sx={{ bgcolor: bgColorTh }}>
           <TableRow>
-            <TableCell>{getLevel(exsum.level)}</TableCell>
-            <TableCell width={200}>
+            <TableCell sx={{ bgcolor: bgColorTh }}>
+              {getLevel(exsum.level)}
+            </TableCell>
+            <TableCell width={200} sx={{ bgcolor: bgColorTh }}>
               Kode Sasaran {getLevel(exsum.level)}
             </TableCell>
-            <TableCell width="40%">Sasaran {getLevel(exsum.level)}</TableCell>
-            <TableCell>Indikator</TableCell>
-            <TableCell width={200}>Target</TableCell>
+            <TableCell width="40%" sx={{ bgcolor: bgColorTh }}>
+              Sasaran {getLevel(exsum.level)}
+            </TableCell>
+            <TableCell sx={{ bgcolor: bgColorTh }}>Indikator</TableCell>
+            <TableCell width={200} sx={{ bgcolor: bgColorTh }}>
+              Target
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
