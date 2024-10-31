@@ -29,7 +29,7 @@ const useCardIndicationVM = () => {
   const errorModalContext = useGlobalModalContext();
   const {exsum} = useExsumContext()
   const useCardSWOT = useCardSWOTVM();
-  const {year} = useRKPContext(store => store)
+  const {year,rpjmn} = useRKPContext(store => store)
 
   const [optionRiskType, setOptionRiskType] = useState<string[]>([])
   const [optionStrategy, setOptionStrategy] = useState<ExsumSWOTValuesDto[]>([])
@@ -66,7 +66,7 @@ const useCardIndicationVM = () => {
       body: {
         by: exsum.level,
         id: [exsum.ref_id],
-        tahun: year
+        tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -102,7 +102,7 @@ const useCardIndicationVM = () => {
     })
 
     if (response?.code == API_CODE.success) {
-      let result: ExsumIndicationResDto[] = response.result
+      let result: ExsumIndicationResDto[] = response.result == null ? [] : response.result
 
       result.map((res,index) => {
         res.perlakuan.map((prl, indexPrl) => {
@@ -278,10 +278,12 @@ const useCardIndicationVM = () => {
   }, [useCardSWOT.data]);
 
   useEffect(() => {
-    if (optionRO.length == 0) getOptionRO()
     if (optionRiskType.length == 0) getOptionRiskType()
     if (optionStakeholder.length == 0) getOptionStakeholder()
-    if (exsum.id > 0) getData();
+    if (exsum.id > 0) {
+      getOptionRO()
+      getData()
+    };
   }, [exsum]);
 
   return {

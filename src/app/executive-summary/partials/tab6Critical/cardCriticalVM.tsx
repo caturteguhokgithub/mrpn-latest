@@ -35,7 +35,7 @@ const useCardCriticalVM = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
   const { exsum } = useExsumContext();
-  const { year } = useRKPContext((store) => store);
+  const { year, rpjmn } = useRKPContext((store) => store);
 
   const useCardTows = useCardTOWSVM();
 
@@ -59,7 +59,7 @@ const useCardCriticalVM = () => {
       body: {
         by: exsum.level,
         id: [exsum.ref_id],
-        tahun: year,
+        tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,

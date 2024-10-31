@@ -12,7 +12,8 @@ const useCardTOWSVM = () => {
   const errorModalContext = useGlobalModalContext();
   const { exsum } = useExsumContext()
 
-  const [ data, setData ] = useState<ExsumTWOSResDto>(initExsumTWOSResDto)
+  const initTows = JSON.parse(JSON.stringify(initExsumTWOSResDto))
+  const [ data, setData ] = useState<ExsumTWOSResDto>(initTows)
   const [ request, setRequest ] = useState<ExsumTWOSReqDto>(initExsumTWOSRequestDto)
   const [ options, setOptions ] = useState<ExsumTWOSOptions>()
   const [ modalOpen, setModalOpen] = React.useState(false);
@@ -26,7 +27,8 @@ const useCardTOWSVM = () => {
       errorModalContext: errorModalContext,
     });
     if (response?.code == API_CODE.success) {
-      const result:ExsumTWOSResDto = response.result
+      const initTows = JSON.parse(JSON.stringify(initExsumTWOSResDto))
+      const result:ExsumTWOSResDto = response.result == null ? initTows : response.result
       if (result) {
 
         setData(result)

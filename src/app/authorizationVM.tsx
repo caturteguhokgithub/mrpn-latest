@@ -183,8 +183,10 @@ const useAuthorizationVM = () => {
   const user = await getCurrentUserData()
   if (user) {
    processStoreUserAuthentication(token, user)
+   return true
   }else{
    sessionStorage.removeItem(API_CONSTANT.token)
+   return false
   }
  }
 

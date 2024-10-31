@@ -23,7 +23,7 @@ export type RkpDefaultReqV1Dto = {
 export type RkpDefaultReqV2Dto = {
     by: string
     id: number[]
-    tahun : number
+    tahun : number|string
 };
 
 export type RkpDefaultReqV3Dto = {

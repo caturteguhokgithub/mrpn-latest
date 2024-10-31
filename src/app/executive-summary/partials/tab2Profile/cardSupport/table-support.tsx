@@ -44,7 +44,7 @@ export default function TableSupport({
 }) {
   const { rpjmn, year } = useRKPContext((store) => store);
 
-  const getTarget = (indikator: IndikatorDto) => {
+  const getTarget = (year: number, indikator: IndikatorDto) => {
     let index = 0;
 
     if (rpjmn != undefined) {
@@ -57,22 +57,22 @@ export default function TableSupport({
     let target = "";
     switch (index) {
       case 0:
-        target = indikator.target_0 + " " + indikator.satuan;
+        target = (indikator.target_0 == "" ? "tbd" : indikator.target_0) + " " + indikator.satuan;
         break;
       case 1:
-        target = indikator.target_1 + " " + indikator.satuan;
+        target = (indikator.target_1 == "" ? "tbd" : indikator.target_1) + " " + indikator.satuan;
         break;
       case 2:
-        target = indikator.target_2 + " " + indikator.satuan;
+        target = (indikator.target_2 == "" ? "tbd" : indikator.target_2) + " " + indikator.satuan;
         break;
       case 3:
-        target = indikator.target_3 + " " + indikator.satuan;
+        target = (indikator.target_3 == "" ? "tbd" : indikator.target_3) + " " + indikator.satuan;
         break;
       case 4:
-        target = indikator.target_4 + " " + indikator.satuan;
+        target = (indikator.target_4 == "" ? "tbd" : indikator.target_4) + " " + indikator.satuan;
         break;
       default:
-        target = indikator.target_0 + " " + indikator.satuan;
+        target = (indikator.target_0 == "" ? "tbd" : indikator.target_0) + " " + indikator.satuan;
         break;
     }
 
@@ -90,7 +90,15 @@ export default function TableSupport({
             </TableCell>
             <TableCell width="40%">Sasaran {getLevel(exsum.level)}</TableCell>
             <TableCell>Indikator</TableCell>
-            <TableCell width={200}>Target</TableCell>
+            {year == 0 ? rpjmn &&
+              <>
+              {[0,1,2,3,4].map((r) =>
+                <TableCell width={200}>Target {rpjmn.start+r}</TableCell>
+              )}
+              </>
+              :
+              <TableCell width={200}>Target</TableCell>
+            }
           </TableRow>
         </TableHead>
         <TableBody>
@@ -125,20 +133,41 @@ export default function TableSupport({
                     ? sasaran.indikator[0].value
                     : ""}
                 </TableCell>
-                <TableCell sx={{ verticalAlign: "top" }}>
-                  {sasaran.indikator.length > 0
-                    ? getTarget(sasaran.indikator[0])
-                    : ""}
-                </TableCell>
+
+                {sasaran.indikator.length > 0 && year == 0 ? rpjmn &&
+                    <>
+                      {[0,1,2,3,4].map((r) =>
+                        <TableCell sx={{ verticalAlign: "top" }}>
+                          {getTarget(rpjmn.start+r,sasaran.indikator[0])}
+                        </TableCell>
+                      )}
+                    </>
+                  :
+                  <TableCell sx={{ verticalAlign: "top" }}>
+                    {getTarget(year, sasaran.indikator[0])}
+                  </TableCell>
+                }
+
+
               </TableRow>
               {sasaran.indikator.slice(1).map((indikator, i) => (
                 <TableRow key={`indikator-${index}-${i}`}>
                   <TableCell sx={{ verticalAlign: "top" }}>
                     {indikator.value}
                   </TableCell>
-                  <TableCell sx={{ verticalAlign: "top" }}>
-                    {getTarget(indikator)}
-                  </TableCell>
+
+                  {year == 0 ? rpjmn &&
+                      <>
+                        {[0,1,2,3,4].map((r) =>
+                          <TableCell sx={{ verticalAlign: "top" }}>
+                            {getTarget(rpjmn.start+r,indikator)}
+                          </TableCell>
+                        )}
+                      </>
+                    :
+                    <TableCell width={200}>{getTarget(year,indikator)}</TableCell>
+                  }
+
                 </TableRow>
               ))}
             </React.Fragment>

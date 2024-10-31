@@ -8,13 +8,15 @@ import AddButton from "@/app/components/buttonAdd";
 import TableIndication from "./partials/table";
 import FormIndication from "./partials/form";
 import useCardIndicationVM from "@/app/executive-summary/partials/tab9Indication/cardIndicationVM";
-import { useAuthContext } from "@/lib/core/hooks/useHooks";
+import {useAuthContext, useRKPContext} from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
-import useCardTOWSVM from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsVM";
 import DialogDelete from "@/app/components/dialogDelete";
 
 export default function CardIndication({ project }: { project: string }) {
+
+  const {year, rpjmn} = useRKPContext(store => store)
+
   const {
     data,
     optionRiskType,
@@ -41,7 +43,7 @@ export default function CardIndication({ project }: { project: string }) {
     <>
       <Stack gap={1}>
         <CardItem
-          title="Indikasi Risiko Objek MRPN 5 Tahunan"
+          title={`Indikasi Risiko Objek MRPN ${year == 0 ? "5 Tahunan" : "Tahun "+year}`}
           infoTooltip={
             <Stack spacing={2}>
               <div>

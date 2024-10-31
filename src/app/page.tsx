@@ -27,7 +27,10 @@ export default function Home() {
     const token = sessionStorage.getItem(API_CONSTANT.token);
     if (token) {
       setToken({ token: token });
-      processAuthUserFromSessionToken(token)
+      const validAuth = processAuthUserFromSessionToken(token)
+      if (!validAuth){
+        router.replace("/login")
+      }
     } else{
       doCheckSSO()
     }
