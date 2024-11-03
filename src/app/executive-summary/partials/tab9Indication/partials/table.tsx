@@ -21,6 +21,7 @@ import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import ActionColumn from "@/components/actions/action";
+import { bgColorTh } from "@/app/utils/color";
 
 export default function TableIndication({
   data,
@@ -47,46 +48,57 @@ export default function TableIndication({
   };
 
   return (
-    <TableContainer component={Paper} elevation={0} variant="outlined">
-      <Table sx={{ minWidth: 650 }} size="small">
-        <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
+    <TableContainer
+      component={Paper}
+      elevation={0}
+      variant="outlined"
+      sx={{
+        maxHeight: "calc(100vh - 520px)",
+        "&::-webkit-scrollbar": {
+          width: "6px",
+          cursor: "pointer",
+        },
+      }}
+    >
+      <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
+        <TableHead>
           <TableRow>
             {(hasPrivilege(permission, pathname, "update") ||
               hasPrivilege(permission, pathname, "delete")) && (
-              <TableCell>
+              <TableCell sx={{ bgcolor: bgColorTh }}>
                 <Typography variant="body1" fontWeight={600}>
                   Aksi
                 </Typography>
               </TableCell>
             )}
-            <TableCell>
+            <TableCell sx={{ bgcolor: bgColorTh }}>
               <Typography variant="body1" fontWeight={600}>
                 Analisis TOWS
               </Typography>
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ bgcolor: bgColorTh }}>
               <Typography variant="body1" fontWeight={600}>
                 Indikasi Risiko
               </Typography>
             </TableCell>
-            <TableCell width={200}>
+            <TableCell width={200} sx={{ bgcolor: bgColorTh }}>
               <Typography variant="body1" fontWeight={600}>
                 Kategori Risiko
               </Typography>
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ bgcolor: bgColorTh }}>
               <Typography variant="body1" fontWeight={600}>
                 Perlakuan Risiko
               </Typography>
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ bgcolor: bgColorTh }}>
               <Typography variant="body1" fontWeight={600}>
-                Rincian Output
+                Output
               </Typography>
             </TableCell>
-            <TableCell width={120}>
+            <TableCell width={300} sx={{ bgcolor: bgColorTh }}>
               <Typography variant="body1" fontWeight={600}>
-                Penanggungjawab
+                PJ Perlakuan
               </Typography>
             </TableCell>
           </TableRow>
@@ -159,44 +171,35 @@ export default function TableIndication({
                       {row.perlakuan.length > 0 && row.perlakuan[0].ro.value}
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{ verticalAlign: "top" }} width={120}>
+                  <TableCell sx={{ verticalAlign: "top" }}>
                     {row.perlakuan.length > 0 && (
-                      <Stack gap={0.5}>
-                        <Stack gap={0.5}>
-                          <Paper
-                            elevation={0}
-                            sx={{ width: 400, bgcolor: grey[50] }}
-                          >
-                            <Stack
-                              marginTop={"10px"}
-                              display="inline-flex"
-                              alignItems="center"
-                              direction="row"
-                              gap={0.5}
-                              flexWrap="wrap"
-                            >
-                              {row.perlakuan[0].stakeholder.map(
-                                (st, stIndex) => (
-                                  <Box key={stIndex} component="span">
-                                    <Chip
-                                      label={st.value}
-                                      size="small"
-                                      sx={{
-                                        height: "auto",
-                                        ".MuiChip-label": {
-                                          whiteSpace: "wrap",
-                                          lineHeight: 1.2,
-                                          py: 0.6,
-                                        },
-                                      }}
-                                    />
-                                  </Box>
-                                )
-                              )}
-                            </Stack>
-                          </Paper>
+                      <Box>
+                        <Stack
+                          marginTop={"10px"}
+                          display="inline-flex"
+                          alignItems="center"
+                          direction="row"
+                          gap={0.5}
+                          flexWrap="wrap"
+                        >
+                          {row.perlakuan[0].stakeholder.map((st, stIndex) => (
+                            <Box key={stIndex} component="span">
+                              <Chip
+                                label={st.value}
+                                size="small"
+                                sx={{
+                                  height: "auto",
+                                  ".MuiChip-label": {
+                                    whiteSpace: "wrap",
+                                    lineHeight: 1.2,
+                                    py: 0.6,
+                                  },
+                                }}
+                              />
+                            </Box>
+                          ))}
                         </Stack>
-                      </Stack>
+                      </Box>
                     )}
                   </TableCell>
                 </TableRow>
@@ -212,38 +215,31 @@ export default function TableIndication({
                         {perlakuan.ro.value}
                       </Typography>
                     </TableCell>
-                    <TableCell sx={{ verticalAlign: "top" }} width={120}>
-                      <Stack gap={0.5}>
-                        <Paper
-                          elevation={0}
-                          sx={{ width: 400, bgcolor: grey[50] }}
-                        >
-                          <Stack
-                            marginTop={"10px"}
-                            display="inline-flex"
-                            alignItems="center"
-                            direction="row"
-                            gap={0.5}
-                            flexWrap="wrap"
-                          >
-                            {perlakuan.stakeholder.map((st, stIndex) => (
-                              <Box key={stIndex} component="span">
-                                <Chip
-                                  label={st.value}
-                                  size="small"
-                                  sx={{
-                                    height: "auto",
-                                    ".MuiChip-label": {
-                                      whiteSpace: "wrap",
-                                      lineHeight: 1.2,
-                                      py: 0.6,
-                                    },
-                                  }}
-                                />
-                              </Box>
-                            ))}
-                          </Stack>
-                        </Paper>
+                    <TableCell sx={{ verticalAlign: "top" }}>
+                      <Stack
+                        marginTop={"10px"}
+                        display="inline-flex"
+                        alignItems="center"
+                        direction="row"
+                        gap={0.5}
+                        flexWrap="wrap"
+                      >
+                        {perlakuan.stakeholder.map((st, stIndex) => (
+                          <Box key={stIndex} component="span">
+                            <Chip
+                              label={st.value}
+                              size="small"
+                              sx={{
+                                height: "auto",
+                                ".MuiChip-label": {
+                                  whiteSpace: "wrap",
+                                  lineHeight: 1.2,
+                                  py: 0.6,
+                                },
+                              }}
+                            />
+                          </Box>
+                        ))}
                       </Stack>
                     </TableCell>
                   </TableRow>

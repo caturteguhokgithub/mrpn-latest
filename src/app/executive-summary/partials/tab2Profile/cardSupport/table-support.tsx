@@ -17,6 +17,7 @@ import { ExsumSupportProjectRes } from "@/app/executive-summary/partials/tab2Pro
 import { ExsumDto } from "@/lib/core/context/exsumContext";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
+import { bgColorTh } from "@/app/utils/color";
 
 export const getLevel = (level: string) => {
   switch (level) {
@@ -57,22 +58,40 @@ export default function TableSupport({
     let target = "";
     switch (index) {
       case 0:
-        target = (indikator.target_0 == "" ? "tbd" : indikator.target_0) + " " + indikator.satuan;
+        target =
+          (indikator.target_0 == "" ? "tbd" : indikator.target_0) +
+          " " +
+          indikator.satuan;
         break;
       case 1:
-        target = (indikator.target_1 == "" ? "tbd" : indikator.target_1) + " " + indikator.satuan;
+        target =
+          (indikator.target_1 == "" ? "tbd" : indikator.target_1) +
+          " " +
+          indikator.satuan;
         break;
       case 2:
-        target = (indikator.target_2 == "" ? "tbd" : indikator.target_2) + " " + indikator.satuan;
+        target =
+          (indikator.target_2 == "" ? "tbd" : indikator.target_2) +
+          " " +
+          indikator.satuan;
         break;
       case 3:
-        target = (indikator.target_3 == "" ? "tbd" : indikator.target_3) + " " + indikator.satuan;
+        target =
+          (indikator.target_3 == "" ? "tbd" : indikator.target_3) +
+          " " +
+          indikator.satuan;
         break;
       case 4:
-        target = (indikator.target_4 == "" ? "tbd" : indikator.target_4) + " " + indikator.satuan;
+        target =
+          (indikator.target_4 == "" ? "tbd" : indikator.target_4) +
+          " " +
+          indikator.satuan;
         break;
       default:
-        target = (indikator.target_0 == "" ? "tbd" : indikator.target_0) + " " + indikator.satuan;
+        target =
+          (indikator.target_0 == "" ? "tbd" : indikator.target_0) +
+          " " +
+          indikator.satuan;
         break;
     }
 
@@ -80,25 +99,48 @@ export default function TableSupport({
   };
 
   return (
-    <TableContainer component={Paper} elevation={0} variant="outlined">
-      <Table sx={{ minWidth: 650 }} size="small">
-        <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
+    <TableContainer
+      component={Paper}
+      elevation={0}
+      variant="outlined"
+      sx={{
+        maxHeight: "40vh",
+        "&::-webkit-scrollbar": {
+          width: "6px",
+          cursor: "pointer",
+        },
+      }}
+    >
+      <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
+        <TableHead>
           <TableRow>
-            <TableCell>{getLevel(exsum.level)}</TableCell>
-            <TableCell width={200}>
+            <TableCell sx={{ bgcolor: bgColorTh }}>
+              {getLevel(exsum.level)}
+            </TableCell>
+            <TableCell width="10%" sx={{ bgcolor: bgColorTh }}>
               Kode Sasaran {getLevel(exsum.level)}
             </TableCell>
-            <TableCell width="40%">Sasaran {getLevel(exsum.level)}</TableCell>
-            <TableCell>Indikator</TableCell>
-            {year == 0 ? rpjmn &&
-              <>
-              {[0,1,2,3,4].map((r) =>
-                <TableCell width={200}>Target {rpjmn.start+r}</TableCell>
-              )}
-              </>
-              :
-              <TableCell width={200}>Target</TableCell>
-            }
+            <TableCell width="30%" sx={{ bgcolor: bgColorTh }}>
+              Sasaran {getLevel(exsum.level)}
+            </TableCell>
+            <TableCell width="20%" sx={{ bgcolor: bgColorTh }}>
+              Indikator
+            </TableCell>
+            {year == 0 ? (
+              rpjmn && (
+                <>
+                  {[0, 1, 2, 3, 4].map((r) => (
+                    <TableCell width={200} sx={{ bgcolor: bgColorTh }}>
+                      Target {rpjmn.start + r}
+                    </TableCell>
+                  ))}
+                </>
+              )
+            ) : (
+              <TableCell width={200} sx={{ bgcolor: bgColorTh }}>
+                Target
+              </TableCell>
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -134,21 +176,21 @@ export default function TableSupport({
                     : ""}
                 </TableCell>
 
-                {sasaran.indikator.length > 0 && year == 0 ? rpjmn &&
+                {sasaran.indikator.length > 0 && year == 0 ? (
+                  rpjmn && (
                     <>
-                      {[0,1,2,3,4].map((r) =>
+                      {[0, 1, 2, 3, 4].map((r) => (
                         <TableCell sx={{ verticalAlign: "top" }}>
-                          {getTarget(rpjmn.start+r,sasaran.indikator[0])}
+                          {getTarget(rpjmn.start + r, sasaran.indikator[0])}
                         </TableCell>
-                      )}
+                      ))}
                     </>
-                  :
+                  )
+                ) : (
                   <TableCell sx={{ verticalAlign: "top" }}>
                     {getTarget(year, sasaran.indikator[0])}
                   </TableCell>
-                }
-
-
+                )}
               </TableRow>
               {sasaran.indikator.slice(1).map((indikator, i) => (
                 <TableRow key={`indikator-${index}-${i}`}>
@@ -156,18 +198,21 @@ export default function TableSupport({
                     {indikator.value}
                   </TableCell>
 
-                  {year == 0 ? rpjmn &&
+                  {year == 0 ? (
+                    rpjmn && (
                       <>
-                        {[0,1,2,3,4].map((r) =>
+                        {[0, 1, 2, 3, 4].map((r) => (
                           <TableCell sx={{ verticalAlign: "top" }}>
-                            {getTarget(rpjmn.start+r,indikator)}
+                            {getTarget(rpjmn.start + r, indikator)}
                           </TableCell>
-                        )}
+                        ))}
                       </>
-                    :
-                    <TableCell width={200}>{getTarget(year,indikator)}</TableCell>
-                  }
-
+                    )
+                  ) : (
+                    <TableCell width={200}>
+                      {getTarget(year, indikator)}
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </React.Fragment>

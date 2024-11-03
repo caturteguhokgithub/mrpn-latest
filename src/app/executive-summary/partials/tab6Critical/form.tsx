@@ -1,7 +1,16 @@
 import React, { SetStateAction, useState } from "react";
 import {
+  Box,
+  Divider,
   FormControl,
   Grid,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  Paper,
+  SelectChangeEvent,
+  Stack,
+  TextField,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
@@ -21,6 +30,24 @@ import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { MiscMasterListKategoriProyekRes } from "@/app/misc/master/masterServiceModel";
 import { GetColor } from "@/utils/color";
+import { IconFA } from "@/app/components/icons/icon-fa";
+import AddButton from "@/app/components/buttonAdd";
+import SelectCustomTheme from "@/app/components/select";
+
+const monthList = [
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember",
+];
 
 export default function FormCritical({
   optionsRO,
@@ -35,6 +62,35 @@ export default function FormCritical({
   state: ExsumCriticalState;
   setState: (value: SetStateAction<ExsumCriticalState>) => void;
 }) {
+  const [valueSelect, setValueSelect] = React.useState("");
+  const [itemMenu, setItemMenu] = React.useState([{ id: 1 }]);
+
+  const handleChangeSelect = (event: SelectChangeEvent) => {
+    setValueSelect(event.target.value);
+  };
+
+  const addMenu = () => {
+    let arr = [...itemMenu];
+    if (arr.length >= 10) {
+      return;
+    } else {
+      arr.push({ id: Math.floor(Math.random() * 1000) });
+    }
+    const newItem = arr;
+    setItemMenu(newItem);
+  };
+
+  const minusMenu = (nowId: any) => {
+    let arr = [...itemMenu];
+    let newArr = arr.filter((val) => {
+      if (nowId === val.id) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+    setItemMenu(newArr);
+  };
 
   return (
     <Grid container spacing={2}>
@@ -89,12 +145,12 @@ export default function FormCritical({
               event: React.MouseEvent<HTMLElement>,
               newAlignment: string
             ) => {
-              setState(prevState => {
+              setState((prevState) => {
                 return {
                   ...prevState,
-                  keterangan_kegiatan:newAlignment
-                }
-              })
+                  keterangan_kegiatan: newAlignment,
+                };
+              });
             }}
           >
             <ToggleButton
@@ -126,6 +182,109 @@ export default function FormCritical({
           </ToggleButtonGroup>
         </FormControl>
       </Grid>
+      {state.keterangan_kegiatan === "Finish to Start" && (
+        <>
+          <Grid item xs={12}>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Typography fontWeight={500}>Sub Kegiatan</Typography>
+                  <AddButton
+                    small
+                    title="Tambah Sub Kegiatan"
+                    noMargin
+                    onclick={() => addMenu()}
+                  />
+                </Stack>
+              </Grid>
+            </Grid>
+            <Stack>
+              {itemMenu.map((tags: any, index) => (
+                <Paper
+                  key={`${tags.id}`}
+                  variant="outlined"
+                  sx={{ mt: 1, p: 2, minWidth: "0 !important" }}
+                >
+                  <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                      <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="space-between"
+                      >
+                        <Typography>Sub Kegiatan #1</Typography>
+                        <AddButton
+                          small
+                          errorColor
+                          noMargin
+                          onclick={() => minusMenu(tags.id)}
+                        />
+                      </Stack>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <TextField
+                          variant="outlined"
+                          size="small"
+                          placeholder="Kegiatan"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <FormControl fullWidth>
+                        <TextField
+                          variant="outlined"
+                          size="small"
+                          placeholder="Target/Progress"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">%</InputAdornment>
+                            ),
+                          }}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <FormControl fullWidth>
+                        <SelectCustomTheme
+                          small
+                          defaultStyle
+                          value={valueSelect}
+                          onChange={handleChangeSelect}
+                        >
+                          <MenuItem value="" disabled>
+                            <Typography fontSize={14} fontStyle="italic">
+                              Pilih Bulan
+                            </Typography>
+                          </MenuItem>
+                          {monthList.map((monthItem, index) => (
+                            <MenuItem key={index} value={monthItem}>
+                              <Typography fontSize={14}>{monthItem}</Typography>
+                            </MenuItem>
+                          ))}
+                        </SelectCustomTheme>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+                </Paper>
+              ))}
+            </Stack>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+        </>
+      )}
       <Grid item xs={12} md={6}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Penanggungjawab" />
