@@ -268,7 +268,8 @@ export default function Header({}) {
                   },
                 }}
               >
-                Pranala
+                {/* Pranala */}
+                MRPN
               </Typography>
             </>
           )}

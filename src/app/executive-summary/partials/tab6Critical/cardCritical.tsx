@@ -12,6 +12,7 @@ import useCardCriticalVM from "@/app/executive-summary/partials/tab6Critical/car
 import { GetColor } from "@/utils/color";
 import TableCritical from "./table";
 import DialogDelete from "@/app/components/dialogDelete";
+import GanttChartMonthly from "./gantt-critical/monthly";
 
 const ProjectType = ({ label, color }: { label: string; color: string }) => {
   return (
@@ -105,7 +106,7 @@ export default function CardCritical({ project }: { project: string }) {
           />
         ) : (
           <>
-            <Stack gap={3}>
+            <Stack gap={3} maxWidth="calc(100vw - 200px)">
               <Stack direction="row" gap={1}>
                 {groupProjectCategory().map((d, index) => (
                   <ProjectType
@@ -115,8 +116,8 @@ export default function CardCritical({ project }: { project: string }) {
                   />
                 ))}
               </Stack>
-              <GanttChart tasks={ganChart} />
-              {/* <GanttChartCritical /> */}
+               <GanttChart tasks={ganChart} />
+              {/*<GanttChartMonthly />*/}
             </Stack>
           </>
         )}

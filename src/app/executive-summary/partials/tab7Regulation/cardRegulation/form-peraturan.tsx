@@ -40,21 +40,26 @@ export default function FormPeraturan(
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Entitas"/>
-            <AutocompleteSelectSingle
-              key={request.stakeholder_id}
+            <AutocompleteSelectMultiple
+              key={request.stakeholder_id.length}
               value={request.stakeholder}
               options={optionStakeholder}
               getOptionLabel={(opt) => opt.value}
-              handleChange={(e: MiscMasterListStakeholderRes) =>
-                setRequest((prevState) => {
-                  return {
-                    ...prevState,
-                    stakeholder: e,
-                    stakeholder_id: e?.id ?? 0
-                  };
-                })
-              }
+              handleChange={(e: MiscMasterListStakeholderRes[]) => setRequest((prevState) => {
+                let stID:number[] = []
+                if (e.length > 0){
+                  e.map(s => {
+                    stID.push(s.id)
+                  })
+                }
+                return {
+                  ...prevState,
+                  stakeholder: e,
+                  stakeholder_id: stID
+                };
+              })}
               placeHolder={"Pilih entitas"}
+              labelSelectAll={"Pilih semua entitas"}
             />
           </FormControl>
         </Grid>

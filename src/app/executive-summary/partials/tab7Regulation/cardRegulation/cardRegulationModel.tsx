@@ -6,7 +6,7 @@ export interface ExsumRegulationResDto {
   exsum_id:number
   amanat:string
   perpres:MiscMasterListPerpresRes[]
-  entitas: MiscMasterListStakeholderRes
+  entitas: MiscMasterListStakeholderRes[]
 }
 
 export interface ExsumRegulationDto {
@@ -15,15 +15,15 @@ export interface ExsumRegulationDto {
   amanat:string
   perpres_state:MiscMasterListPerpresRes|undefined
   perpres:{id:number}[]
-  stakeholder: MiscMasterListStakeholderRes|undefined
-  stakeholder_id:number
+  stakeholder: MiscMasterListStakeholderRes[]
+  stakeholder_id:number[]
 }
 export const initExsumRegulationDto:ExsumRegulationDto = {
   id: 0,
   exsum_id: 0,
   amanat: "",
-  stakeholder: undefined,
-  stakeholder_id: 0,
+  stakeholder: [],
+  stakeholder_id: [],
   perpres_state: undefined,
   perpres: []
 }

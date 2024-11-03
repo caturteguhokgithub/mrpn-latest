@@ -28,6 +28,7 @@ import AddButton from "@/app/components/buttonAdd";
 import { grey } from "@mui/material/colors";
 import {ExsumTWOSDto} from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
 import {Text} from "recharts";
+import {useRKPContext} from "@/lib/core/hooks/useHooks";
 
 export default function FormIndication({
   state,
@@ -46,11 +47,26 @@ export default function FormIndication({
   optionRO: RoDto[];
   optionTOWS: ExsumTWOSDto[]
 }) {
+
+  const {year,rpjmn} = useRKPContext(store => store)
+
+  const optionsYear = () => {
+    if (rpjmn !== undefined) {
+      let opt: number[] = [];
+      for (let i = rpjmn.start; i <= rpjmn.end; i++) {
+        opt.push(i);
+      }
+      return opt;
+    }
+    return [];
+  };
+
   const addMenu = () => {
     setState((prevState) => {
       const prevValues = prevState.values
       prevValues.push({
         id:prevValues.length,
+        tahun:year == 0 ? (rpjmn?.start ?? 0) : year,
         perlakuan_risiko: "",
         rincian_output: undefined,
         stakeholderMultiple:[],
@@ -202,6 +218,38 @@ export default function FormIndication({
                             />
                           </Stack>
                         </Stack>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControl fullWidth>
+                          <FieldLabelInfo
+                            title="Tahun"
+                            titleField
+                            information="Tahun"
+                          />
+                          {year == 0 ?
+                            <AutocompleteSelectSingle
+                              key={tags.tahun}
+                              value={tags.tahun}
+                              options={optionsYear()}
+                              getOptionLabel={opt => opt.toString()}
+                              handleChange={(e:number) => setState(prevState => {
+                                const prevData = {...prevState}
+                                const getIndex = prevData.values.findIndex(x => x.id === tags.id)
+                                if (getIndex > -1){
+                                  prevData.values[getIndex].tahun = e
+                                  return prevData
+                                }
+                                return prevState
+                              })}
+                              placeHolder={"Pilih Tahun"}
+                            />
+                          :
+                            <TextareaStyled
+                              value={tags.tahun}
+                              disabled
+                            />
+                          }
+                        </FormControl>
                       </Grid>
                       <Grid item xs={12}>
                         <FormControl fullWidth>

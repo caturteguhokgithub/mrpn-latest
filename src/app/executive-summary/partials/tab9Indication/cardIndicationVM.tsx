@@ -166,12 +166,16 @@ const useCardIndicationVM = () => {
       })
 
       const val:ExsumIndicationValueReqDto = {
+        tahun:value.tahun,
         perlakuan_risiko: value.perlakuan_risiko,
         rincian_output_id: value.rincian_output?.id ?? 0,
         stakeholder: stakeholders
       }
 
-      values.push(val)
+      if (val.tahun > 0 ){
+        values.push(val)
+      }
+
     })
 
     const requestDto:ExsumIndicationReqDto = {
@@ -241,6 +245,7 @@ const useCardIndicationVM = () => {
       dataByIndex.perlakuan.map(prl => {
         const val:ExsumIndicationStateValue = {
           id: prl.id,
+          tahun:prl.tahun,
           perlakuan_risiko: prl.perlakuan_risiko,
           rincian_output: prl.ro,
           stakeholderMultiple: prl.stakeholder,

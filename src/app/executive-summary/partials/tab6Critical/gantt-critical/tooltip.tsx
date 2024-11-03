@@ -6,6 +6,7 @@ import { grey, red } from "@mui/material/colors";
 import { Task } from "gantt-task-react";
 import { TaskAdditionalData } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
 import theme from "@/theme";
+
 const CustomTooltip = ({ task }: { task: Task }) => {
   let taskProject: TaskAdditionalData = {
     penanggungjawab: "",
@@ -13,6 +14,7 @@ const CustomTooltip = ({ task }: { task: Task }) => {
     keterangan_kegiatan: "",
   };
   if (task.project) {
+    console.log(task.project)
     taskProject = JSON.parse(task.project);
   }
 

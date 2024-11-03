@@ -16,6 +16,7 @@ export interface StakeholderReqDto {
   id:number
 }
 export interface ExsumIndicationValueReqDto {
+  tahun:number
   perlakuan_risiko:string
   rincian_output_id:number
   stakeholder:StakeholderReqDto[]
@@ -39,6 +40,7 @@ export type StakeholderResDto = MiscMasterListStakeholderRes & {
 }
 export interface ExsumIndicationValueRes {
   id:number
+  tahun:number
   perlakuan_risiko:string
   ro:RoDto
   stakeholder:StakeholderResDto[]
@@ -64,6 +66,7 @@ export interface OthersEntityState {
 }
 export interface ExsumIndicationStateValue {
   id:number
+  tahun:number
   perlakuan_risiko:string
   rincian_output:RoDto|undefined
   stakeholderMultiple:MiscMasterListStakeholderRes[]
@@ -87,22 +90,7 @@ export const initStateExsumIndication:ExsumIndicationState = {
   indikasi_risiko: "",
   kategori_risiko: "",
   values: [
-    {
-      id:0,
-      perlakuan_risiko: "",
-      rincian_output: undefined,
-      stakeholderMultiple: [],
-      stakeholder: {
-        coordinator: undefined,
-        main: [],
-        others: [
-          {
-            type: "",
-            entity: []
-          }
-        ]
-      }
-    }
+
   ]
 }
 
