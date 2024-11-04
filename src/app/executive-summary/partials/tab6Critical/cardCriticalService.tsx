@@ -21,10 +21,26 @@ export async function doCreateCriticalPath(param: UpdateCriticalPathByExsumIdSer
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
 
+export async function doCreateCriticalRKPPath(param: UpdateCriticalPathByExsumIdServiceModel) {
+  const resp = await post({
+    ...param,
+    url: "exsum/criticalPath/addRkp",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
 export async function doUpdateCriticalPath(param: UpdateCriticalPathByExsumIdServiceModel) {
   const resp = await post({
     ...param,
     url: "exsum/criticalPath/update",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+export async function doUpdateCriticalRKPPath(param: UpdateCriticalPathByExsumIdServiceModel) {
+  const resp = await post({
+    ...param,
+    url: "exsum/criticalPath/updateRkp",
   });
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }

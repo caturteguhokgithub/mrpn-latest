@@ -13,6 +13,7 @@ import { GetColor } from "@/utils/color";
 import TableCritical from "./table";
 import DialogDelete from "@/app/components/dialogDelete";
 import GanttChartMonthly from "./gantt-critical/monthly";
+import {useRKPContext} from "@/lib/core/hooks/useHooks";
 
 const ProjectType = ({ label, color }: { label: string; color: string }) => {
   return (
@@ -41,6 +42,8 @@ export default function CardCritical({ project }: { project: string }) {
     handleSubmit,
     data,
     ganChart,
+    tasksRKP,
+    setTaskRKP,
     handleModalAdd,
     handleModalUpdate,
     handleDelete,
@@ -49,6 +52,8 @@ export default function CardCritical({ project }: { project: string }) {
     modalDelete,
     setModalDelete,
   } = useCardCriticalVM();
+
+  const {year} = useRKPContext(store => store)
 
   const handleModalOpen = () => {
     setModalOpen(true);
@@ -116,8 +121,8 @@ export default function CardCritical({ project }: { project: string }) {
                   />
                 ))}
               </Stack>
-               <GanttChart tasks={ganChart} />
-              {/*<GanttChartMonthly />*/}
+              {year == 0 && <GanttChart key={ganChart.length} tasks={ganChart} />}
+              {year > 0 && <GanttChartMonthly key={ganChart.length} tasks={tasksRKP} setTasks={setTaskRKP} />}
             </Stack>
           </>
         )}
@@ -169,6 +174,7 @@ export default function CardCritical({ project }: { project: string }) {
         }
       >
         <FormCritical
+          dataExisting={data}
           optionsRO={optionRO}
           optionsStrategy={optionStrategy}
           optionProjectCategory={optionProjectCategory}

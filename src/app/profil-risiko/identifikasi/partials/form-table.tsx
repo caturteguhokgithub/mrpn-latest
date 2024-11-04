@@ -40,6 +40,7 @@ import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
 import { ActionIcon } from "@/components/actions/action";
 import AddButton from "@/components/buttonAdd";
 import { IconFA } from "@/components/icons/icon-fa";
+import {GetTarget} from "@/lib/utils/common";
 
 export default function FormTable({
  mode,
@@ -57,38 +58,7 @@ export default function FormTable({
  const { rpjmn, year } = useRKPContext((store) => store);
 
  const getTarget = (indikator: IndikatorDto) => {
-  let index = 0;
-
-  if (rpjmn != undefined) {
-   for (let i = rpjmn.start; i <= rpjmn.end; i++) {
-    if (i !== year && i <= year) {
-     index++;
-    }
-   }
-  }
-  let target = "";
-  switch (index) {
-   case 0:
-    target = indikator.target_0;
-    break;
-   case 1:
-    target = indikator.target_1;
-    break;
-   case 2:
-    target = indikator.target_2;
-    break;
-   case 3:
-    target = indikator.target_3;
-    break;
-   case 4:
-    target = indikator.target_4;
-    break;
-   default:
-    target = indikator.target_0;
-    break;
-  }
-
-  return target;
+  return GetTarget(rpjmn, year, indikator)
  };
 
  return (

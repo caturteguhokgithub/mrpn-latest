@@ -18,6 +18,7 @@ import { ExsumDto } from "@/lib/core/context/exsumContext";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
 import { bgColorTh } from "@/app/utils/color";
+import {GetTarget} from "@/lib/utils/common";
 
 export const getLevel = (level: string) => {
   switch (level) {
@@ -46,38 +47,7 @@ export default function TableSupport({
   const { rpjmn, year } = useRKPContext((store) => store);
 
   const getTarget = (year: number, indikator: IndikatorDto) => {
-    let index = 0;
-
-    if (rpjmn != undefined) {
-      for (let i = rpjmn.start; i <= rpjmn.end; i++) {
-        if (i !== year && i <= year) {
-          index++;
-        }
-      }
-    }
-    let target = "";
-    switch (index) {
-      case 0:
-        target = (indikator.target_0 == "" ? "tbd" : indikator.target_0) + " " + indikator.satuan;
-        break;
-      case 1:
-        target = (indikator.target_1 == "" ? "tbd" : indikator.target_1) + " " + indikator.satuan;
-        break;
-      case 2:
-        target = (indikator.target_2 == "" ? "tbd" : indikator.target_2) + " " + indikator.satuan;
-        break;
-      case 3:
-        target = (indikator.target_3 == "" ? "tbd" : indikator.target_3) + " " + indikator.satuan;
-        break;
-      case 4:
-        target = (indikator.target_4 == "" ? "tbd" : indikator.target_4) + " " + indikator.satuan;
-        break;
-      default:
-        target = (indikator.target_0 == "" ? "tbd" : indikator.target_0) + " " + indikator.satuan;
-        break;
-    }
-
-    return target;
+    return GetTarget(rpjmn, year, indikator)
   };
 
   return (

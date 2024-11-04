@@ -19,6 +19,8 @@ export interface ExsumCriticalState {
   kategori_proyek_id:number
   strategy:string[]
   keterangan_kegiatan:string
+  dependency:ExsumCriticalData|undefined
+  kegiatan:KegiatanDto[]
 }
 
 export const initExsumCriticalReqDto:ExsumCriticalState = {
@@ -29,7 +31,9 @@ export const initExsumCriticalReqDto:ExsumCriticalState = {
   end_date: "",
   kategori_proyek_id: 0,
   strategy: [],
-  keterangan_kegiatan:""
+  keterangan_kegiatan:"",
+  dependency:undefined,
+  kegiatan:[]
 }
 
 export interface ExsumCriticalReqDto {
@@ -43,6 +47,20 @@ export interface ExsumCriticalReqDto {
   values:{
     tagging:string
   }[]
+  depedencies:number
+  kegiatan:KegiatanDto[]
+}
+
+export interface TargetDto {
+  target:string
+  bulan:number
+}
+export interface KegiatanDto {
+  id:number
+  value:string
+  start_date:string
+  end_date:string
+  target:TargetDto[]
 }
 
 export interface TaskAdditionalData {
@@ -63,6 +81,8 @@ export interface ExsumCriticalData {
     id:number
     value:string
   }[]
+  dependency:ExsumCriticalData|undefined
+  kegiatan:KegiatanDto[]
 }
 
 export interface GetByExsumId {

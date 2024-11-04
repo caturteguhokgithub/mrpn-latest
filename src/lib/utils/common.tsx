@@ -1,0 +1,61 @@
+import {IndikatorDto} from "@/app/misc/rkp/rkpServiceModel";
+import {MiscMasterRPJMNRes} from "@/app/misc/master/masterServiceModel";
+
+export const GetTarget = (rpjmn: MiscMasterRPJMNRes|undefined, year: number, indikator: IndikatorDto) => {
+  let index = 0;
+
+  if (rpjmn != undefined) {
+    for (let i = rpjmn.start; i <= rpjmn.end; i++) {
+      if (i !== year && i <= year) {
+        index++;
+      }
+    }
+  }
+  let satuan = indikator.satuan.trim() == 'tanpa satuan' ? '' : indikator.satuan
+  let target = "";
+  switch (index) {
+    case 0:
+      target = (indikator.target_0 == "" ? "tbd" : indikator.target_0) + " " + satuan;
+      break;
+    case 1:
+      target = (indikator.target_1 == "" ? "tbd" : indikator.target_1) + " " + satuan;
+      break;
+    case 2:
+      target = (indikator.target_2 == "" ? "tbd" : indikator.target_2) + " " + satuan;
+      break;
+    case 3:
+      target = (indikator.target_3 == "" ? "tbd" : indikator.target_3) + " " + satuan;
+      break;
+    case 4:
+      target = (indikator.target_4 == "" ? "tbd" : indikator.target_4) + " " + satuan;
+      break;
+    default:
+      target = (indikator.target_0 == "" ? "tbd" : indikator.target_0) + " " + (indikator.satuan == 'tanpa satuan' ? '' : indikator.satuan);
+      break;
+  }
+
+  return target;
+};
+
+export const GenerateMonthFromInteger = (int:number) => {
+  const monthList = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+  ];
+
+  if (int < 1 || int > 12){
+    return "";
+  }
+
+  return monthList[(int-1)];
+}

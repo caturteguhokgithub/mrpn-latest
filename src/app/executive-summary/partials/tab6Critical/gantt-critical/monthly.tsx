@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   Gantt,
   Task,
@@ -8,7 +8,7 @@ import {
 } from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
 import CustomTooltip from "./tooltip";
-import { alpha, Box, Chip } from "@mui/material";
+import { alpha, Box, Chip, Stack } from "@mui/material";
 import theme from "@/theme";
 import { IconFA } from "@/app/components/icons/icon-fa";
 import { red } from "@mui/material/colors";
@@ -49,7 +49,7 @@ const CustomTaskListHeader = ({
 
 const currentDate = new Date();
 
-const tasks: Task[] = [
+const tasksTest: Task[] = [
   {
     start: new Date(2024, currentDate.getMonth(), 1),
     end: new Date(2024, 10, 11),
@@ -206,7 +206,19 @@ const CustomTaskListTable = ({
                 )}
                 {item.name}
               </p>
-              {!isProject && (
+              {isProject && (
+                <Stack
+                  justifyContent="center"
+                  alignItems="center"
+                  bgcolor={red[600]}
+                  borderRadius="50%"
+                  width={20}
+                  height={20}
+                >
+                  <IconFA name="arrow-down" size={12} color="white" />
+                </Stack>
+              )}
+              {/* {!isProject && (
                 <Chip
                   label="Finish to Start"
                   size="small"
@@ -226,7 +238,7 @@ const CustomTaskListTable = ({
                     },
                   }}
                 />
-              )}
+              )} */}
             </div>
           </div>
         );
@@ -235,12 +247,25 @@ const CustomTaskListTable = ({
   );
 };
 
-export default function GanttChartMonthly() {
-  const [tasksState, setTasksState] = React.useState(tasks);
+export default function GanttChartMonthly(
+  {
+    tasks,
+    setTasks
+  }: {
+    tasks: Task[]
+    setTasks:any
+  }
+) {
+
+  const [tasksState, setTasksState] = React.useState<Task[]>(tasks);
+
+  useEffect(() => {
+    setTasksState(tasks)
+  }, [tasks]);
 
   const handleExpanderClick = (task: any) => {
     setTasksState(tasks.map((t) => (t.id === task.id ? task : t)));
-  };
+  }
 
   return (
     <Box
@@ -285,7 +310,7 @@ export default function GanttChartMonthly() {
       }}
     >
       <Gantt
-        tasks={tasksState}
+        tasks={tasks}
         viewMode={ViewMode.Month}
         TooltipContent={CustomTooltip}
         preStepsCount={1}
@@ -299,7 +324,7 @@ export default function GanttChartMonthly() {
         fontSize="14px"
         TaskListHeader={CustomTaskListHeader}
         TaskListTable={(props) => <CustomTaskListTable {...props} />}
-        onExpanderClick={handleExpanderClick}
+        // onExpanderClick={handleExpanderClick}
         ganttHeight={300}
         locale="id"
       />
