@@ -1,7 +1,7 @@
 import {useExsumContext, useGlobalModalContext, useLoading, useRKPContext} from "@/lib/core/hooks/useHooks";
 import React, {useEffect, useState} from "react";
 import {
-  ExsumRoadmapDto,
+  ExsumRoadmapDto, ExsumRoadmapResDto,
   initExsumRoadmapReq
 } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
 import {MiscMasterRPJMNRes} from "@/app/misc/master/masterServiceModel";
@@ -16,8 +16,8 @@ const useCardRoadmapVM = () => {
   const { exsum } = useExsumContext()
   const { rpjmn, setRpjmn } = useRKPContext(state => state)
 
-  const [dataOutput,setDataOutput] = useState<ExsumRoadmapDto[]>([])
-  const [dataBusiness,setDataBusiness] = useState<ExsumRoadmapDto[]>([])
+  const [dataOutput,setDataOutput] = useState<ExsumRoadmapResDto[]>([])
+  const [dataBusiness,setDataBusiness] = useState<ExsumRoadmapResDto[]>([])
   const [request, setRequest] = useState<ExsumRoadmapDto>({...initExsumRoadmapReq})
   const [modal, setModal] = useState<{open:boolean,title:string}>({open:false,title:""})
   const [modalDelete, setModalDelete] = useState<{isOpen:boolean,id:number}>({isOpen:false,id:0})
@@ -78,13 +78,14 @@ const useCardRoadmapVM = () => {
     }
     const response = await doGet(params)
     if (response?.code == API_CODE.success){
-      const result:ExsumRoadmapDto[] = response.result
+      const result:ExsumRoadmapResDto[] = response.result
 
       const outputData = result.filter(x => x.type == "OUTPUT")
       setDataOutput(outputData)
 
       const businessData = result.filter(x => x.type == "BISNIS")
       setDataBusiness(businessData)
+      console.log(businessData)
     }
   }
 

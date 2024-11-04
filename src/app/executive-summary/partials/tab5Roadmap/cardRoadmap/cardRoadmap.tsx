@@ -24,7 +24,10 @@ import { grey, orange, red } from "@mui/material/colors";
 import theme from "@/theme";
 import FormRoadmap from "./form-roadmap";
 import useCardRoadmapVM from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapVM";
-import { ExsumRoadmapDto } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
+import {
+  ExsumRoadmapDto,
+  ExsumRoadmapResDto
+} from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
 import { IconFA } from "@/app/components/icons/icon-fa";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 
@@ -157,13 +160,17 @@ const BusinessTable = ({
   data,
   setModalDelete,
 }: {
-  data: ExsumRoadmapDto[];
+  data: ExsumRoadmapResDto[];
   setModalDelete: any;
 }) => {
-  const mergeRows = (rows: RowData[]) => {
+  const mergeRows = () => {
     const mergedData: RowData[] = [];
     const seen: { [key: string]: boolean } = {};
-    rows.forEach((row) => {
+    data.forEach((d) => {
+      const row:RowData = {
+        year: d.year,
+        value: d.output
+      }
       if (seen[row.value]) {
         const existingRow = mergedData.find((item) => item.value === row.value);
         if (existingRow) {
@@ -176,7 +183,7 @@ const BusinessTable = ({
     });
     return mergedData;
   };
-  const mergedRows = mergeRows(dataBisnis.rows);
+  const mergedRows = mergeRows();
 
   return (
     <>
@@ -215,7 +222,7 @@ perencanaan, pengoperasian, pengelolaan, dan evaluasi kebijakan"
             },
           }}
         >
-          {data.length !== 0 ? (
+          {data.length == 0 ? (
             <EmptyState
               dense
               icon={<IconEmptyData width={100} />}
@@ -340,7 +347,7 @@ const OutputTable = ({
   data,
   setModalDelete,
 }: {
-  data: ExsumRoadmapDto[];
+  data: ExsumRoadmapResDto[];
   setModalDelete: any;
 }) => {
   return (

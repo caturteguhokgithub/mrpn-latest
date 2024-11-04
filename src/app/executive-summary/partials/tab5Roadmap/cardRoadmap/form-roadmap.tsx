@@ -19,6 +19,7 @@ import FieldLabelInfo from "@/components/fieldLabelInfo";
 import { MiscMasterRPJMNRes } from "@/app/misc/master/masterServiceModel";
 import { ExsumRoadmapDto } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
 import { grey } from "@mui/material/colors";
+import {AutocompleteSelectMultiple} from "@/components/autocomplete";
 
 export default function FormRoadmap({
   rpjmn,
@@ -55,33 +56,46 @@ export default function FormRoadmap({
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Tahun" />
-            <SelectCustomTheme
-              defaultStyle
-              small
+            {/*<SelectCustomTheme*/}
+            {/*  defaultStyle*/}
+            {/*  small*/}
+            {/*  value={request.year}*/}
+            {/*  onChange={handleChange}*/}
+            {/*>*/}
+            {/*  <MenuItem value="none" disabled>*/}
+            {/*    <Typography fontSize={14} fontStyle="italic" color={grey[700]}>*/}
+            {/*      Pilih tahun*/}
+            {/*    </Typography>*/}
+            {/*  </MenuItem>*/}
+            {/*  {listYearRPjmn().map((tahunLabel, index) => (*/}
+            {/*    <MenuItem key={index} value={tahunLabel}>*/}
+            {/*      <Typography aria-haspopup="true" sx={{ fontSize: 14 }}>*/}
+            {/*        {tahunLabel}*/}
+            {/*      </Typography>*/}
+            {/*    </MenuItem>*/}
+            {/*  ))}*/}
+            {/*</SelectCustomTheme>*/}
+            <AutocompleteSelectMultiple
               value={request.year}
-              onChange={handleChange}
-            >
-              <MenuItem value="none" disabled>
-                <Typography fontSize={14} fontStyle="italic" color={grey[700]}>
-                  Pilih tahun
-                </Typography>
-              </MenuItem>
-              {listYearRPjmn().map((tahunLabel, index) => (
-                <MenuItem key={index} value={tahunLabel}>
-                  <Typography aria-haspopup="true" sx={{ fontSize: 14 }}>
-                    {tahunLabel}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </SelectCustomTheme>
+              options={listYearRPjmn()}
+              getOptionLabel={option => option.toString()}
+              handleChange={(newVal:number[]) => setRequest((prev: ExsumRoadmapDto) => {
+                return {
+                  ...prev,
+                  year: newVal
+                };
+              })}
+              placeHolder={"Pilih tahun"}
+              labelSelectAll={"Pilih semua tahun"}
+            />
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Output" />
-            <ReactQuill theme="snow" value={value} onChange={setValue} />
-            {/* <TextareaStyled
+            {/*<ReactQuill theme="snow" value={value} onChange={setValue} />*/}
+            <TextareaStyled
               aria-label={"Output"}
               placeholder={"Output"}
               minRows={3}
@@ -94,7 +108,7 @@ export default function FormRoadmap({
                   };
                 })
               }
-            /> */}
+            />
           </FormControl>
         </Grid>
 

@@ -144,11 +144,11 @@ export default function CardItem({
           hasPrivilege(permission, pathname, "update")) ? (
           <>
             <MenuItem onClick={settingEditBisnisClick}>
-              <ListItemDropdownMenu label="Ubah Bisnis" />
+              <ListItemDropdownMenu label="Tambah Bisnis" />
             </MenuItem>
 
             <MenuItem onClick={settingEditOutputClick}>
-              <ListItemDropdownMenu label="Ubah Output" />
+              <ListItemDropdownMenu label="Tambah Output" />
             </MenuItem>
           </>
         ) : settingAddOnclick ? (
