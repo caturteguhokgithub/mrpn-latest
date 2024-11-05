@@ -61,6 +61,7 @@ const dataBisnis = {
 };
 
 interface RowData {
+  ids:number[]
   year: number;
   value: string;
   colspan?: number;
@@ -129,13 +130,13 @@ export default function CardRoadmap() {
       <DialogComponent
         width={400}
         dialogOpen={modalDelete.isOpen}
-        dialogClose={() => setModalDelete({ isOpen: false, id: 0 })}
+        dialogClose={() => setModalDelete({ isOpen: false, id: [] })}
         title="Hapus Data"
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button
               variant="outlined"
-              onClick={() => setModalDelete({ isOpen: false, id: 0 })}
+              onClick={() => setModalDelete({ isOpen: false, id: [] })}
             >
               Batal
             </Button>
@@ -168,12 +169,14 @@ const BusinessTable = ({
     const seen: { [key: string]: boolean } = {};
     data.forEach((d) => {
       const row:RowData = {
+        ids:[d.id],
         year: d.year,
         value: d.output
       }
       if (seen[row.value]) {
         const existingRow = mergedData.find((item) => item.value === row.value);
         if (existingRow) {
+          existingRow.ids.push(d.id)
           existingRow.colspan = (existingRow.colspan || 1) + 1;
         }
       } else {
@@ -314,8 +317,8 @@ perencanaan, pengoperasian, pengelolaan, dan evaluasi kebijakan"
                                 right: -42,
                                 top: "50%",
                                 transform: "translateY(-50%) rotate(270deg)",
-                                width: 0,
-                                height: 0,
+                                // width: 0,
+                                // height: 0,
                                 borderLeft: "30px solid transparent",
                                 borderRight: "30px solid transparent",
                                 borderTop: `24px solid ${alpha(
@@ -327,7 +330,32 @@ perencanaan, pengoperasian, pengelolaan, dan evaluasi kebijakan"
                               },
                             }}
                           >
-                            {row.year === parseInt(year) ? row.value : ""}
+                            {row.year === parseInt(year) ?
+                              <>
+                                <IconButton
+                                  onClick={() =>
+                                    setModalDelete({ isOpen: true, id: row.ids })
+                                  }
+                                  sx={{
+                                    color: "white",
+                                    bgcolor: red[600],
+                                    width: 20,
+                                    height: 20,
+                                    transition: "all 500ms",
+                                    "&:hover": {
+                                      bgcolor: red[900],
+                                    },
+                                    marginRight:"15px"
+                                  }}
+                                >
+                                  <IconFA name="trash-alt" size={10} />
+                                </IconButton>
+                                <Typography>
+                                  {row.value}
+                                </Typography>
+                              </>
+                              : ""
+                            }
                           </Box>
                         </TableCell>
                       ))}
@@ -431,7 +459,7 @@ const OutputTable = ({
                   </Typography>
                   <IconButton
                     onClick={() =>
-                      setModalDelete({ isOpen: true, id: itemOutput.id })
+                      setModalDelete({ isOpen: true, id: [itemOutput.id] })
                     }
                     sx={{
                       color: "white",

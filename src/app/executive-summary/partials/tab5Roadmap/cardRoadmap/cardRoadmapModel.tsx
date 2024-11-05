@@ -30,5 +30,5 @@ export type UpdateRoadmapByExsumIdServiceModel = BaseAPIServiceParam & {
 };
 
 export type DeleteRoadmapByExsumIdServiceModel = BaseAPIServiceParam & {
-  body: { id:number };
+  body: { id:number[] };
 };

@@ -20,7 +20,7 @@ const useCardRoadmapVM = () => {
   const [dataBusiness,setDataBusiness] = useState<ExsumRoadmapResDto[]>([])
   const [request, setRequest] = useState<ExsumRoadmapDto>({...initExsumRoadmapReq})
   const [modal, setModal] = useState<{open:boolean,title:string}>({open:false,title:""})
-  const [modalDelete, setModalDelete] = useState<{isOpen:boolean,id:number}>({isOpen:false,id:0})
+  const [modalDelete, setModalDelete] = useState<{isOpen:boolean,id:number[]}>({isOpen:false,id:[]})
 
   async function getRpjmn(){
     const response = await doGetMasterListRpjmn({
@@ -109,8 +109,8 @@ const useCardRoadmapVM = () => {
   }
 
   async function deleteData(){
-    if (modalDelete.id == 0){
-      setModalDelete({isOpen:false, id:0})
+    if (modalDelete.id.length == 0){
+      setModalDelete({isOpen:false, id:[]})
       return
     }
 
@@ -122,7 +122,7 @@ const useCardRoadmapVM = () => {
 
     if (response?.code == API_CODE.success){
       getData().then(r => {
-        setModalDelete({isOpen:false, id:0})
+        setModalDelete({isOpen:false, id:[]})
       })
     }
   }
