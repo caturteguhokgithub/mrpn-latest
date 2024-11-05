@@ -30,6 +30,9 @@ import {
 } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
 import { IconFA } from "@/app/components/icons/icon-fa";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
+import {useAuthContext} from "@/lib/core/hooks/useHooks";
+import {usePathname} from "next/navigation";
+import {hasPrivilege} from "@/lib/core/helpers/authHelpers";
 
 const dataBisnis = {
   header: ["2025", "2026", "2027", "2028", "2029"],
@@ -164,6 +167,11 @@ const BusinessTable = ({
   data: ExsumRoadmapResDto[];
   setModalDelete: any;
 }) => {
+
+  const { permission } = useAuthContext((state) => state);
+  let pathname = usePathname();
+  const canDelete = hasPrivilege(permission, pathname, "delete")
+
   const mergeRows = () => {
     const mergedData: RowData[] = [];
     const seen: { [key: string]: boolean } = {};
@@ -332,6 +340,7 @@ perencanaan, pengoperasian, pengelolaan, dan evaluasi kebijakan"
                           >
                             {row.year === parseInt(year) ?
                               <>
+                              {canDelete &&
                                 <IconButton
                                   onClick={() =>
                                     setModalDelete({ isOpen: true, id: row.ids })
@@ -350,6 +359,7 @@ perencanaan, pengoperasian, pengelolaan, dan evaluasi kebijakan"
                                 >
                                   <IconFA name="trash-alt" size={10} />
                                 </IconButton>
+                              }
                                 <Typography>
                                   {row.value}
                                 </Typography>
@@ -378,6 +388,11 @@ const OutputTable = ({
   data: ExsumRoadmapResDto[];
   setModalDelete: any;
 }) => {
+
+  const { permission } = useAuthContext((state) => state);
+  let pathname = usePathname();
+  const canDelete = hasPrivilege(permission, pathname, "delete")
+
   return (
     <>
       <Box marginBottom={"20px"}>
@@ -457,27 +472,30 @@ const OutputTable = ({
                   >
                     {itemOutput.year}
                   </Typography>
-                  <IconButton
-                    onClick={() =>
-                      setModalDelete({ isOpen: true, id: [itemOutput.id] })
-                    }
-                    sx={{
-                      color: "white",
-                      bgcolor: red[600],
-                      position: "absolute",
-                      right: 8,
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      width: 20,
-                      height: 20,
-                      transition: "all 500ms",
-                      "&:hover": {
-                        bgcolor: red[900],
-                      },
-                    }}
-                  >
-                    <IconFA name="trash-alt" size={10} />
-                  </IconButton>
+                  {canDelete &&
+                    <IconButton
+                      onClick={() =>
+                        setModalDelete({ isOpen: true, id: [itemOutput.id] })
+                      }
+                      sx={{
+                        color: "white",
+                        bgcolor: red[600],
+                        position: "absolute",
+                        right: 8,
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        width: 20,
+                        height: 20,
+                        transition: "all 500ms",
+                        "&:hover": {
+                          bgcolor: red[900],
+                        },
+                      }}
+                    >
+                      <IconFA name="trash-alt" size={10} />
+                    </IconButton>
+                  }
+
                 </CardContent>
                 <CardContent>
                   <>

@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { doGetExsum, doGetRKP } from "../../misc/rkp/rkpService";
-import { useExsumContext, useGlobalModalContext, useLoading, useRKPContext } from "@/lib/core/hooks/useHooks";
+import {
+  useAuthContext,
+  useExsumContext,
+  useGlobalModalContext,
+  useLoading,
+  useRKPContext
+} from "@/lib/core/hooks/useHooks";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import { OptionsRKP } from "../../misc/rkp/rkpServiceModel";
 import { ExsumDto } from "@/lib/core/context/exsumContext";
@@ -16,6 +22,8 @@ const useRkpVM = () => {
 
   const {rkpOption,setRkpOption, rkpState, setRkpState, year, rpjmn} = rkpContext
   const [allowedSelectRKP, setAllowedSelectRKP] = useState<string[]>([])
+
+  const { permission, immutable_permission, setPermission } = useAuthContext(store => store)
 
   async function getAllowedSelectRKP() {
     const response = await doGetSystemParamByModuleAndName({
@@ -122,6 +130,17 @@ const useRkpVM = () => {
     });
     if (response?.code == API_CODE.success) {
       let result:ExsumDto = response.result
+      if (result.approval && (result.approval.status == "approved" || result.approval.status == "review")){
+        const perm:string[] = [];
+        permission.map(p => {
+          if (!p.includes("exsum.add") && !p.includes("exsum.update") && !p.includes("exsum.delete")){
+            perm.push(p)
+          }
+          setPermission(perm)
+        })
+      }else{
+        setPermission(immutable_permission)
+      }
       exsumContext.setExsum(result)
     }else{
       setRkpState(undefined)
@@ -139,7 +158,8 @@ const useRkpVM = () => {
         id: 0,
         tahun: year == 0 ? getRpjmn() : year,
         level: params.level,
-        ref_id: params.id
+        ref_id: params.id,
+        approval: undefined
       }
       getExsum(req)
     }
@@ -167,6 +187,7 @@ const useRkpVM = () => {
     handleChangeOptions,
     value:rkpState,
     getAllowedSelectRKP,
+    getExsum,
     getData,
     triggerChange
   }

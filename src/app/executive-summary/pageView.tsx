@@ -6,7 +6,7 @@ import {
   Box,
   Button,
   Chip,
-  Collapse,
+  Collapse, DialogActions,
   Grow,
   Stack,
   Tabs,
@@ -19,9 +19,21 @@ import { IconFA } from "@/components/icons/icon-fa";
 import { CustomTab, styleDownload } from "./style";
 import { useExsumContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import PageExecutiveSummaryContent from "@/app/executive-summary/pageViewContent";
+import FormCritical from "@/app/executive-summary/partials/tab6Critical/form";
+import DialogComponent from "@/components/dialog";
+import useApprovalVM from "@/app/executive-summary/approvalVM";
 
 export default function PageExecutiveSummary({}) {
   const { rkpState, rpjmn, setYear, year } = useRKPContext((state) => state);
+
+  const {
+    exsum,
+    modalApprove,
+    setModalApprove,
+    doApproval,
+    canApprove,
+    canSubmit
+  } = useApprovalVM()
 
   const [valueTab, setValueTab] = React.useState(rpjmn?.start);
   const [toogleShowTab, setToogleShowTab] = React.useState(true);
@@ -43,11 +55,7 @@ export default function PageExecutiveSummary({}) {
   }, [year]);
 
   const handleChangeTab = (event: any, newValue: any) => {
-    // if (newValue == 0) {
-    //   return;
-    // } else {
       setYear(newValue);
-    // }
   };
 
   const handleToggleTab = () => {
@@ -87,19 +95,100 @@ export default function PageExecutiveSummary({}) {
       overflowHidden
       chooseProject={rkpState !== undefined}
       dowloadAttachmentFile={
-        rkpState !== undefined && (
+        rkpState !== undefined && exsum.id > 0 && (canSubmit || canApprove) && (
           <>
-            {breakpointDownMd ? (
-              <Tooltip
-                title="Download Lampiran"
-                followCursor
-                TransitionComponent={Grow}
-              >
-                {downloadAttachment}
-              </Tooltip>
-            ) : (
-              downloadAttachment
-            )}
+
+            {canSubmit && (exsum.approval == undefined || exsum.approval.status == "rejected") &&
+                <Button
+                    onClick={() => setModalApprove({action: "review", isOpen: true})}
+                >
+                    <Chip
+                        color="primary"
+                        variant="outlined"
+                        label={
+                          <Stack direction="row" gap={1}>
+                            Ajukan Approval
+                          </Stack>
+                        }
+                        sx={styleDownload}
+                    />
+                </Button>
+            }
+
+            {canApprove && exsum.approval && exsum.approval.status == "review" &&
+                <Button
+                    onClick={() => setModalApprove({action: "approval", isOpen: true})}
+                >
+                    <Chip
+                        color="primary"
+                        variant="outlined"
+                        label={
+                          <Stack direction="row" gap={1}>
+                            {breakpointDownMd ? null : "Approval"}
+                          </Stack>
+                        }
+                        sx={styleDownload}
+                    />
+                </Button>
+            }
+
+            {exsum.approval && exsum.approval.status == "review" &&
+                  <Chip
+                      color="warning"
+                      variant={"outlined"}
+                      label={
+                        <Stack direction="row" gap={1}>
+                          status:
+                          <IconFA
+                              size={14}
+                              name="spinner"
+                              color={theme.palette.success.main}
+                            />
+                          On Review
+                        </Stack>
+                      }
+                      sx={styleDownload}
+                  />
+            }
+
+            {exsum.approval && exsum.approval.status == "approved" &&
+                <Chip
+                    color="success"
+                    variant={"outlined"}
+                    label={
+                      <Stack direction="row" gap={1}>
+                        status:
+                        <IconFA
+                          size={14}
+                          name="check"
+                          color={theme.palette.error.main}
+                        />
+                        Approved
+                      </Stack>
+                    }
+                    sx={styleDownload}
+                />
+            }
+
+            {exsum.approval && exsum.approval.status == "rejected" &&
+                <Chip
+                    color={"error"}
+                    variant={"outlined"}
+                    label={
+                      <Stack direction="row" gap={1}>
+                        status:
+                        <IconFA
+                          size={14}
+                          name="times"
+                          color={theme.palette.error.main}
+                        />
+                        Rejected
+                      </Stack>
+                    }
+                    sx={styleDownload}
+                />
+            }
+
           </>
         )
       }
@@ -156,7 +245,57 @@ export default function PageExecutiveSummary({}) {
             )}
           </Stack>
         )}
+
         <PageExecutiveSummaryContent toggleShowTab={toogleShowTab} />
+
+        <DialogComponent
+          width={320}
+          dialogOpen={modalApprove.isOpen}
+          dialogClose={() => setModalApprove({action: "", isOpen: false})}
+          title="Approval"
+          dialogFooter={modalApprove.action == "review" &&
+            <DialogActions sx={{ p: 2, px: 3 }}>
+              <Button variant="outlined" onClick={() => setModalApprove({action: "", isOpen: false})}>
+                Batal
+              </Button>
+              <Button
+                variant="contained"
+                type="submit"
+                onClick={() => doApproval("review")}
+              >
+                Ya
+              </Button>
+            </DialogActions>
+          }
+        >
+          {modalApprove.action == "approval" &&
+              <Stack display={"flex"} justifyContent={"space-between"} gap={2}>
+                  <Button
+                      variant="contained"
+                      color={"error"}
+                      type="submit"
+                      onClick={() => doApproval("rejected")}
+                  >
+                      Reject
+                  </Button>
+                  <Button
+                      variant="contained"
+                      type="submit"
+                      onClick={() => doApproval("approved")}
+                  >
+                      Approve
+                  </Button>
+              </Stack>
+          }
+
+          {modalApprove.action == "review" &&
+              <>
+                  Apakah Anda yakin untuk mengajukan approval ?
+              </>
+          }
+
+        </DialogComponent>
+
       </Box>
     </ContentPage>
   );

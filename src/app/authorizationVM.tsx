@@ -23,7 +23,8 @@ const useAuthorizationVM = () => {
   menu,
   setMenu,
   permission,
-  setPermission
+  setPermission,
+   setImmutablePermission
  } = useAuthContext((state) => state);
 
  const URL_SSO = process.env.NEXT_PUBLIC_SSO_URL_API;
@@ -198,6 +199,7 @@ const useAuthorizationVM = () => {
   setMenu(menu);
   const permission = await getPermission();
   setPermission(permission);
+  setImmutablePermission(permission);
  }
 
  return {

@@ -35,6 +35,7 @@ export type AuthState = {
     token: TokenPayload|undefined
     menu:Menu[]
     permission:string[]
+    immutable_permission:string[]
 };
 
 export type AuthActions = {
@@ -42,6 +43,7 @@ export type AuthActions = {
     setToken: (value: TokenPayload|undefined) => void;
     setMenu: (value: Menu[]) => void;
     setPermission:(value:string[]) => void;
+    setImmutablePermission:(value:string[]) => void;
 }
 
 export type AuthStore = AuthState & AuthActions
@@ -50,7 +52,8 @@ export const defaultInitAuthState: AuthState = {
     user: undefined,
     token: undefined,
     menu: [],
-    permission: []
+    permission: [],
+    immutable_permission: []
 };
 
 export const createAuthStore = (
@@ -62,6 +65,7 @@ export const createAuthStore = (
         setToken: (params: TokenPayload|undefined) => set((state) => state = {...state, token:params}),
         setMenu: (params: Menu[]) => set((state) => state = {...state, menu:params}),
         setPermission: (params: string[]) => set((state) => state = {...state, permission:params}),
+        setImmutablePermission: (params: string[]) => set((state) => state = {...state, immutable_permission:params}),
     }))
 }
 

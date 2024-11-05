@@ -18,6 +18,9 @@ import theme from "@/theme";
 import { ExsumRelatedDto } from "@/app/executive-summary/partials/tab2Profile/cardRelated/cardRelatedModel";
 import DialogDelete from "@/app/components/dialogDelete";
 import ActionColumn from "@/app/components/actions/action";
+import {useAuthContext} from "@/lib/core/hooks/useHooks";
+import {usePathname} from "next/navigation";
+import {hasPrivilege} from "@/lib/core/helpers/authHelpers";
 
 export default function TableTagging({
   project,
@@ -28,6 +31,10 @@ export default function TableTagging({
   data: ExsumRelatedDto[];
   handleDelete: any;
 }) {
+
+  const { permission } = useAuthContext((state) => state);
+  let pathname = usePathname();
+
   const [modalDelete, setModalDelete] = React.useState(false);
 
   const handleModalDelete = () => {
@@ -39,7 +46,9 @@ export default function TableTagging({
       <Table sx={{ minWidth: 650 }} size="small">
         <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
           <TableRow>
-            <TableCell sx={{ width: 100 }}>Aksi</TableCell>
+            {hasPrivilege(permission, pathname, "delete") &&
+              <TableCell sx={{ width: 100 }}>Aksi</TableCell>
+            }
             <TableCell sx={{ width: 200 }}>Kebijakan</TableCell>
             <TableCell>Keterangan</TableCell>
           </TableRow>
@@ -51,9 +60,11 @@ export default function TableTagging({
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell sx={{ textAlign: "center" }}>
-                  <ActionColumn center deleteClick={handleModalDelete} />
-                </TableCell>
+                  {hasPrivilege(permission, pathname, "delete") &&
+                    <TableCell sx={{ textAlign: "center" }}>
+                        <ActionColumn center deleteClick={handleModalDelete} />
+                    </TableCell>
+                  }
                 <TableCell>
                   {x.kebijakan.map((y, index2) => (
                     <Chip
