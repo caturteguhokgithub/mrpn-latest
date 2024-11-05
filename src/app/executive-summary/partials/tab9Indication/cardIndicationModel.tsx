@@ -19,6 +19,7 @@ export interface ExsumIndicationValueReqDto {
   tahun:number
   perlakuan_risiko:string
   rincian_output_id:number
+  value:string
   stakeholder:StakeholderReqDto[]
 }
 export interface ExsumIndicationReqDto {
@@ -38,11 +39,17 @@ export type StakeholderResDto = MiscMasterListStakeholderRes & {
     "type" : string
   }
 }
+export interface NonRoDto {
+  exsum_id:number
+  exsum_indikasi_risiko_perlakuan_id:number
+  value:string
+}
 export interface ExsumIndicationValueRes {
   id:number
   tahun:number
   perlakuan_risiko:string
-  ro:RoDto
+  ro:RoDto|undefined
+  nonro:NonRoDto|undefined
   stakeholder:StakeholderResDto[]
   groupStakeholder:StakeholderResGroupDto
 }
@@ -69,6 +76,7 @@ export interface ExsumIndicationStateValue {
   tahun:number
   perlakuan_risiko:string
   rincian_output:RoDto|undefined
+  non_rincian_output:string
   stakeholderMultiple:MiscMasterListStakeholderRes[]
   stakeholder:{
     coordinator:MiscMasterListStakeholderRes|undefined

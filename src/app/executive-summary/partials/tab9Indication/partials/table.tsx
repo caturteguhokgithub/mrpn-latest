@@ -176,9 +176,11 @@ export default function TableIndication({
                     </Typography>
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>
-                    <Typography variant="body1">
-                      {row.perlakuan.length > 0 && row.perlakuan[0].ro.value}
-                    </Typography>
+                    {row.perlakuan.length > 0 && (
+                      <Typography variant="body1" color={row.perlakuan[0].ro?.value ? "" : "#f97316"}>
+                        {row.perlakuan[0].ro?.value ?? row.perlakuan[0].nonro?.value+" (NON RO)"}
+                      </Typography>
+                    )}
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>
                     {row.perlakuan.length > 0 && (
@@ -228,7 +230,7 @@ export default function TableIndication({
                     </TableCell>
                     <TableCell>
                       <Typography variant="body1">
-                        {perlakuan.ro.value}
+                        {perlakuan.ro?.value ?? perlakuan.nonro?.value}
                       </Typography>
                     </TableCell>
                     <TableCell sx={{ verticalAlign: "top" }}>

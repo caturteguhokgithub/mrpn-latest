@@ -69,6 +69,7 @@ export default function FormIndication({
         tahun:year == 0 ? (rpjmn?.start ?? 0) : year,
         perlakuan_risiko: "",
         rincian_output: undefined,
+        non_rincian_output: "",
         stakeholderMultiple:[],
         stakeholder: {
           coordinator: undefined,
@@ -299,6 +300,26 @@ yang telah ditetapkan"
                           />
                         </FormControl>
                       </Grid>
+                      {tags.rincian_output !== undefined && tags.rincian_output?.id === 0 &&
+                          <Grid item xs={12}>
+                              <FormControl fullWidth>
+                                  <FieldLabelInfo title="Non Rincian Output" titleField />
+                                  <TextareaStyled
+                                      value={tags.non_rincian_output}
+                                      onChange={(newVal) =>
+                                        setState((prevState) => {
+                                          const prevData = {...prevState}
+                                          const getIndex = prevData.values.findIndex(x => x.id === tags.id)
+                                          if (getIndex > -1){
+                                            prevData.values[getIndex].non_rincian_output = newVal.target.value
+                                            return prevData
+                                          }
+                                          return prevState
+                                        })}
+                                  />
+                              </FormControl>
+                          </Grid>
+                      }
                       <Grid item xs={12}>
                         <FormControl fullWidth>
                           <FieldLabelInfo title="K/L PenanggungJawab" titleField />

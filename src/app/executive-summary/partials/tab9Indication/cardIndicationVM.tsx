@@ -44,6 +44,33 @@ const useCardIndicationVM = () => {
 
   const tows = useCardTOWSVM()
 
+  const roInit:RoDto = {
+    id: 0,
+    src_rkp_prop_id: 0,
+    tahun: 0,
+    code: "",
+    value: "-- Output Non RO --",
+    kementerian: "",
+    kementrian_id: "",
+    kementrian: {
+      id: 0,
+      short: "",
+      code: "",
+      value: "",
+      icon: ""
+    },
+    pkkr: "",
+    target: "",
+    fisik: "",
+    satuan: "",
+    lokasi_ro: "",
+    alokasi: 0,
+    anggaran: 0,
+    sumber_anggaran: "",
+    type: "RO",
+    intervention: false
+  }
+
   async function getOptionRiskType(){
     const response = await doGetSystemParamByModuleAndName({
       body: {
@@ -74,6 +101,8 @@ const useCardIndicationVM = () => {
 
     if (response?.code == API_CODE.success) {
       let result: RoDto[] = response.result
+
+      result.push(roInit)
       setOptionRO(result)
     }
   }
@@ -169,6 +198,7 @@ const useCardIndicationVM = () => {
         tahun:value.tahun,
         perlakuan_risiko: value.perlakuan_risiko,
         rincian_output_id: value.rincian_output?.id ?? 0,
+        value:value.non_rincian_output,
         stakeholder: stakeholders
       }
 
@@ -247,7 +277,8 @@ const useCardIndicationVM = () => {
           id: prl.id,
           tahun:prl.tahun,
           perlakuan_risiko: prl.perlakuan_risiko,
-          rincian_output: prl.ro,
+          rincian_output: prl.ro == undefined ? roInit : prl.ro,
+          non_rincian_output: prl.nonro?.value ?? "",
           stakeholderMultiple: prl.stakeholder,
           stakeholder: {
             coordinator: undefined,
