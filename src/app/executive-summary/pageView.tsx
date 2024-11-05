@@ -19,6 +19,7 @@ import { IconFA } from "@/components/icons/icon-fa";
 import { CustomTab, styleDownload } from "./style";
 import { useExsumContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import PageExecutiveSummaryContent from "@/app/executive-summary/pageViewContent";
+import { grey } from "@mui/material/colors";
 
 export default function PageExecutiveSummary({}) {
   const { rkpState, rpjmn, setYear, year } = useRKPContext((state) => state);
@@ -46,7 +47,7 @@ export default function PageExecutiveSummary({}) {
     // if (newValue == 0) {
     //   return;
     // } else {
-      setYear(newValue);
+    setYear(newValue);
     // }
   };
 
@@ -87,21 +88,39 @@ export default function PageExecutiveSummary({}) {
       overflowHidden
       chooseProject={rkpState !== undefined}
       dowloadAttachmentFile={
-        rkpState !== undefined && (
-          <>
-            {breakpointDownMd ? (
-              <Tooltip
-                title="Download Lampiran"
-                followCursor
-                TransitionComponent={Grow}
-              >
-                {downloadAttachment}
-              </Tooltip>
-            ) : (
-              downloadAttachment
-            )}
-          </>
-        )
+        <Stack direction="row" alignItems="center" gap={1}>
+          <Button
+            color="success"
+            variant="contained"
+            startIcon={<IconFA name="check-circle" size={16} />}
+            sx={{ borderRadius: 100, px: 3 }}
+          >
+            Approve
+          </Button>
+          <Button
+            color="error"
+            variant="contained"
+            startIcon={<IconFA name="xmark-circle" size={16} />}
+            sx={{ borderRadius: 100, px: 3 }}
+          >
+            Approve
+          </Button>
+          {rkpState !== undefined && (
+            <>
+              {breakpointDownMd ? (
+                <Tooltip
+                  title="Download Lampiran"
+                  followCursor
+                  TransitionComponent={Grow}
+                >
+                  {downloadAttachment}
+                </Tooltip>
+              ) : (
+                downloadAttachment
+              )}
+            </>
+          )}
+        </Stack>
       }
       tabArrow={
         <Collapse in={btnShowTab}>
@@ -122,6 +141,19 @@ export default function PageExecutiveSummary({}) {
             onClick={handleShowTab}
           />
         </Collapse>
+      }
+      titleChild={
+        <>
+          <Chip
+            size="small"
+            color="default"
+            label="Draft"
+            sx={{ bgcolor: grey[600], color: "white", px: 1 }}
+          />
+          <Chip size="small" color="error" label="Reject" sx={{ px: 1 }} />
+          <Chip size="small" color="warning" label="Review" sx={{ px: 1 }} />
+          <Chip size="small" color="success" label="Approved" sx={{ px: 1 }} />
+        </>
       }
     >
       <Box mb={2} p={1}>
