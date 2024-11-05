@@ -20,13 +20,14 @@ import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
 import DialogComponent from "@/components/dialog";
-import { grey, orange, red } from "@mui/material/colors";
+import { blue, grey, orange, red } from "@mui/material/colors";
 import theme from "@/theme";
 import FormRoadmap from "./form-roadmap";
 import useCardRoadmapVM from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapVM";
 import { ExsumRoadmapDto } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
 import { IconFA } from "@/app/components/icons/icon-fa";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
+import DialogDelete from "@/app/components/dialogDelete";
 
 const dataBisnis = {
   header: ["2025", "2026", "2027", "2028", "2029"],
@@ -87,7 +88,11 @@ export default function CardRoadmap() {
       settingEditBisnisClick={() => handleOpenModal(true, "BISNIS")}
     >
       <Box width="100%" textAlign="center">
-        <BusinessTable data={dataBusiness} setModalDelete={setModalDelete} />
+        <BusinessTable
+          data={dataBusiness}
+          setModalDelete={setModalDelete}
+          handleOpenModal={() => handleOpenModal(true, "BISNIS")}
+        />
         <OutputTable data={dataOutput} setModalDelete={setModalDelete} />
       </Box>
 
@@ -156,10 +161,18 @@ export default function CardRoadmap() {
 const BusinessTable = ({
   data,
   setModalDelete,
+  handleOpenModal,
 }: {
   data: ExsumRoadmapDto[];
-  setModalDelete: any;
+  setModalDelete?: any;
+  handleOpenModal?: any;
 }) => {
+  const [visible, setVisible] = useState(false);
+  const [modalDelete, setModalDeleteBisnis] = useState(false);
+
+  const handleMouseEnter = () => setVisible(true);
+  const handleMouseLeave = () => setVisible(false);
+
   const mergeRows = (rows: RowData[]) => {
     const mergedData: RowData[] = [];
     const seen: { [key: string]: boolean } = {};
@@ -274,6 +287,8 @@ perencanaan, pengoperasian, pengelolaan, dan evaluasi kebijakan"
                           sx={{ p: 0, borderColor: alpha(grey[600], 0.4) }}
                         >
                           <Box
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
                             sx={{
                               backgroundColor: alpha(
                                 theme.palette.primary.main,
@@ -315,12 +330,70 @@ perencanaan, pengoperasian, pengelolaan, dan evaluasi kebijakan"
                                   theme.palette.primary.main,
                                   0.1
                                 )}`,
-                                filter:
-                                  "drop-shadow(0px 2px 1px rgba(0, 0, 0, 0.15))",
                               },
                             }}
                           >
                             {row.year === parseInt(year) ? row.value : ""}
+                            {row.year === parseInt(year) && (
+                              <Stack
+                                direction="row"
+                                sx={{ position: "absolute", right: 8 }}
+                                gap={0.5}
+                              >
+                                <IconButton
+                                  aria-label="delete"
+                                  color="error"
+                                  size="small"
+                                  onClick={() => setModalDeleteBisnis(true)}
+                                  sx={{
+                                    bgcolor: red[600],
+                                    p: 1,
+
+                                    opacity:
+                                      visible && row.year === parseInt(year)
+                                        ? 1
+                                        : 0,
+                                    transition:
+                                      "opacity 300ms ease-in-out, background-color 300ms ease-in-out",
+                                    "&:hover": {
+                                      bgcolor: red[400],
+                                    },
+                                  }}
+                                >
+                                  <IconFA
+                                    name="trash-alt"
+                                    size={12}
+                                    color="white"
+                                  />
+                                </IconButton>
+                                <IconButton
+                                  aria-label="edit"
+                                  color="primary"
+                                  size="small"
+                                  onClick={handleOpenModal}
+                                  sx={{
+                                    bgcolor: blue[600],
+                                    p: 1,
+
+                                    opacity:
+                                      visible && row.year === parseInt(year)
+                                        ? 1
+                                        : 0,
+                                    transition:
+                                      "opacity 300ms ease-in-out, background-color 300ms ease-in-out",
+                                    "&:hover": {
+                                      bgcolor: blue[400],
+                                    },
+                                  }}
+                                >
+                                  <IconFA
+                                    name="pencil"
+                                    size={12}
+                                    color="white"
+                                  />
+                                </IconButton>
+                              </Stack>
+                            )}
                           </Box>
                         </TableCell>
                       ))}
@@ -332,6 +405,12 @@ perencanaan, pengoperasian, pengelolaan, dan evaluasi kebijakan"
           )}
         </Stack>
       </Box>
+      <DialogDelete
+        title="Hapus Data"
+        handleOpenModal={modalDelete}
+        handleCloseModal={() => setModalDeleteBisnis(false)}
+        handleDelete={() => {}}
+      />
     </>
   );
 };

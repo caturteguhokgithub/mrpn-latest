@@ -199,7 +199,7 @@ const CustomTaskListTable = ({
                 )}
                 {item.name}
               </p>
-              {isProject && (
+              {/* {isProject && (
                 <Stack
                   justifyContent="center"
                   alignItems="center"
@@ -210,7 +210,7 @@ const CustomTaskListTable = ({
                 >
                   <IconFA name="arrow-down" size={12} color="white" />
                 </Stack>
-              )}
+              )} */}
               {/* {!isProject && (
                 <Chip
                   label="Finish to Start"
