@@ -206,18 +206,18 @@ const CustomTaskListTable = ({
                 )}
                 {item.name}
               </p>
-              {isProject && (
-                <Stack
-                  justifyContent="center"
-                  alignItems="center"
-                  bgcolor={red[600]}
-                  borderRadius="50%"
-                  width={20}
-                  height={20}
-                >
-                  <IconFA name="arrow-down" size={12} color="white" />
-                </Stack>
-              )}
+              {/*{isProject && (*/}
+              {/*  <Stack*/}
+              {/*    justifyContent="center"*/}
+              {/*    alignItems="center"*/}
+              {/*    bgcolor={red[600]}*/}
+              {/*    borderRadius="50%"*/}
+              {/*    width={20}*/}
+              {/*    height={20}*/}
+              {/*  >*/}
+              {/*    <IconFA name="arrow-down" size={12} color="white" />*/}
+              {/*  </Stack>*/}
+              {/*)}*/}
               {/* {!isProject && (
                 <Chip
                   label="Finish to Start"

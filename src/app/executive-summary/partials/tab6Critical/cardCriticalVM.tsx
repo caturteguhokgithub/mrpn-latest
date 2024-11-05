@@ -288,6 +288,13 @@ const useCardCriticalVM = () => {
       selectedStrategy.push(t.value);
     });
 
+    let dep = undefined
+    data.map(x => {
+      if (x.id == curData.dependency?.id){
+        dep = x
+      }
+    })
+
     const state: ExsumCriticalState = {
       id: curData.id,
       exsum_id: exsum.id,
@@ -297,9 +304,11 @@ const useCardCriticalVM = () => {
       kategori_proyek_id: curData.kategori_proyek_id,
       strategy: selectedStrategy,
       keterangan_kegiatan: curData.keterangan_kegiatan,
-      dependency:curData.dependency,
+      dependency:dep,
       kegiatan:curData.kegiatan
     };
+
+    console.log(state)
     setState(state);
     setModalAdd(true);
   };
