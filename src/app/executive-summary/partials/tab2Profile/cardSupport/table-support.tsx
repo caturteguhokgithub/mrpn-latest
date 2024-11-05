@@ -69,13 +69,13 @@ export default function TableSupport({
             <TableCell sx={{ bgcolor: bgColorTh }}>
               {getLevel(exsum.level)}
             </TableCell>
-            <TableCell width={200} sx={{ bgcolor: bgColorTh }}>
+            <TableCell width="10%" sx={{ bgcolor: bgColorTh }}>
               Kode Sasaran {getLevel(exsum.level)}
             </TableCell>
-            <TableCell width="40%" sx={{ bgcolor: bgColorTh }}>
+            <TableCell width="30%" sx={{ bgcolor: bgColorTh }}>
               Sasaran {getLevel(exsum.level)}
             </TableCell>
-            <TableCell sx={{ bgcolor: bgColorTh }}>
+            <TableCell width="20%" sx={{ bgcolor: bgColorTh }}>
               Indikator
             </TableCell>
             {year == 0 ? rpjmn &&

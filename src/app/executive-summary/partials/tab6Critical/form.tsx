@@ -78,8 +78,8 @@ export default function FormCritical({
       const newKegiatan: KegiatanDto = {
         id: 0,
         value: "",
-        start_date: "",
-        end_date: "",
+        start_date: year+"-01-01",
+        end_date: year+"-01-31",
         target: [
           {
             target: "",
@@ -116,11 +116,22 @@ export default function FormCritical({
   const addMenuTarget = (iKegiatan: number) => {
     setState(prevState => {
 
+      const kegiatan = prevState.kegiatan
+      const target = kegiatan[iKegiatan].target
+
+      let curBulan = 0;
+      monthList.map((m, index) => {
+        target.map(t => {
+          if ((index+1) == t.bulan){
+            curBulan = t.bulan
+          }
+        })
+      })
+
       let newData: TargetDto = {
         target: "",
-        bulan: 1
+        bulan: curBulan+1
       }
-      const kegiatan = prevState.kegiatan
       kegiatan[iKegiatan].target.push(newData)
 
       return {
@@ -145,56 +156,72 @@ export default function FormCritical({
     })
   }
 
+  const checkOptions = (target:TargetDto[], iTarget:number, value:number) => {
+    if (target[iTarget].bulan == value){
+      return false
+    }
+
+    let existBulan = false
+    target.map(x => {
+      if (value == x.bulan){
+        existBulan = true
+      }
+    })
+
+    return existBulan
+  }
+
   return (
     <Grid container spacing={2}>
 
-      {/*{state.keterangan_kegiatan === "Finish to Start" && (*/}
-        <>
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <FieldLabelInfo title="Pilih RO/project yang berkaitan (kosongkan jika tidak ada)"/>
-              <AutocompleteSelectSingle
-                key={state.dependency?.ro?.value ?? "dependencies-ro"}
-                value={state.dependency}
-                options={dataExisting}
-                getOptionLabel={(option) => option.ro?.value ?? ''}
-                handleChange={(val: ExsumCriticalData) =>
-                  setState((prev) => {
-                    return {
-                      ...prev,
-                      dependency: val,
-                    };
-                  })
-                }
-                placeHolder={"Pilih rincian output/project"}
-              />
-            </FormControl>
-          </Grid>
-          {state.dependency &&
-            <>
-              <Grid item xs={12} md={6}>
-                <FormControl fullWidth>
-                  <FieldLabelInfo title="Waktu Mulai"/>
-                  <Typography fontWeight={600}>
-                    {dayjs(state.dependency.start_date).format("D MMM YYYY")}
-                  </Typography>
-                </FormControl>
+      {dataExisting.length > 0 &&
+          <>
+              <Grid item xs={12}>
+                  <FormControl fullWidth>
+                      <FieldLabelInfo title="Pilih RO/project yang berkaitan (kosongkan jika tidak ada)"/>
+                      <AutocompleteSelectSingle
+                          key={state.dependency?.ro?.value ?? "dependencies-ro"}
+                          value={state.dependency}
+                          options={dataExisting}
+                          getOptionLabel={(option) => option.ro?.value ?? ''}
+                          handleChange={(val: ExsumCriticalData) =>
+                            setState((prev) => {
+                              return {
+                                ...prev,
+                                dependency: val,
+                              };
+                            })
+                          }
+                          placeHolder={"Pilih rincian output/project"}
+                      />
+                  </FormControl>
               </Grid>
-              <Grid item xs={12} md={6}>
-                <FormControl fullWidth>
-                  <FieldLabelInfo title="Waktu Selesai"/>
-                  <Typography fontWeight={600}>
-                    {dayjs(state.dependency.end_date).format("D MMM YYYY")}
-                  </Typography>
-                </FormControl>
+
+            {state.dependency &&
+                <>
+                    <Grid item xs={12} md={6}>
+                        <FormControl fullWidth>
+                            <FieldLabelInfo title="Waktu Mulai"/>
+                            <Typography fontWeight={600}>
+                              {dayjs(state.dependency.start_date).format("D MMM YYYY")}
+                            </Typography>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <FormControl fullWidth>
+                            <FieldLabelInfo title="Waktu Selesai"/>
+                            <Typography fontWeight={600}>
+                              {dayjs(state.dependency.end_date).format("D MMM YYYY")}
+                            </Typography>
+                        </FormControl>
+                    </Grid>
+                </>
+            }
+              <Grid item xs={12}>
+                  <Divider/>
               </Grid>
-            </>
-          }
-          <Grid item xs={12}>
-            <Divider/>
-          </Grid>
-        </>
-      {/*)}*/}
+          </>
+      }
 
       <Grid item xs={12}>
         <FormControl fullWidth>
@@ -225,6 +252,7 @@ export default function FormCritical({
                   color: "white",
                 },
               }}
+              disabled={dataExisting.length == 0}
             >
               Start to Start
             </ToggleButton>
@@ -238,6 +266,7 @@ export default function FormCritical({
                   color: "white",
                 },
               }}
+              disabled={dataExisting.length == 0}
             >
               Finish to Start
             </ToggleButton>
@@ -455,56 +484,58 @@ export default function FormCritical({
                         />
                       </FormControl>
                     </Grid>
-                    <Grid item lg={6}>
-                      <FormControl fullWidth>
-                        <FieldLabelInfo title="Waktu Mulai Pengerjaan"/>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          <DatePicker
-                            sx={{
-                              ".MuiInputBase-root": {
-                                height: 40,
-                              },
-                            }}
-                            minDate={dayjs(state.start_date)}
-                            maxDate={dayjs(state.end_date)}
-                            format="D MMM YYYY"
-                            value={dayjs(tags.start_date)}
-                            onChange={(e: any) =>
-                              setState((prev) => {
-                                const kegiatan = prev.kegiatan
-                                kegiatan[index].start_date = dayjs(e).format("YYYY-MM-DD")
-                                return {...prev, kegiatan: kegiatan};
-                              })
-                            }
-                          />
-                        </LocalizationProvider>
-                      </FormControl>
-                    </Grid>
-                    <Grid item lg={6}>
-                      <FormControl fullWidth>
-                        <FieldLabelInfo title="Waktu Selesai Pengerjaan"/>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          <DatePicker
-                            sx={{
-                              ".MuiInputBase-root": {
-                                height: 40,
-                              },
-                            }}
-                            format="D MMM YYYY"
-                            minDate={dayjs(tags.start_date)}
-                            maxDate={dayjs(state.end_date)}
-                            value={dayjs(tags.end_date)}
-                            onChange={(e: any) =>
-                              setState((prev) => {
-                                const kegiatan = prev.kegiatan
-                                kegiatan[index].end_date = dayjs(e).format("YYYY-MM-DD")
-                                return {...prev, kegiatan: kegiatan};
-                              })
-                            }
-                          />
-                        </LocalizationProvider>
-                      </FormControl>
-                    </Grid>
+
+                    {/*<Grid item lg={6}>*/}
+                    {/*  <FormControl fullWidth>*/}
+                    {/*    <FieldLabelInfo title="Waktu Mulai Pengerjaan"/>*/}
+                    {/*    <LocalizationProvider dateAdapter={AdapterDayjs}>*/}
+                    {/*      <DatePicker*/}
+                    {/*        sx={{*/}
+                    {/*          ".MuiInputBase-root": {*/}
+                    {/*            height: 40,*/}
+                    {/*          },*/}
+                    {/*        }}*/}
+                    {/*        minDate={dayjs(state.start_date)}*/}
+                    {/*        maxDate={dayjs(state.end_date)}*/}
+                    {/*        format="D MMM YYYY"*/}
+                    {/*        value={dayjs(tags.start_date)}*/}
+                    {/*        onChange={(e: any) =>*/}
+                    {/*          setState((prev) => {*/}
+                    {/*            const kegiatan = prev.kegiatan*/}
+                    {/*            kegiatan[index].start_date = dayjs(e).format("YYYY-MM-DD")*/}
+                    {/*            return {...prev, kegiatan: kegiatan};*/}
+                    {/*          })*/}
+                    {/*        }*/}
+                    {/*      />*/}
+                    {/*    </LocalizationProvider>*/}
+                    {/*  </FormControl>*/}
+                    {/*</Grid>*/}
+
+                    {/*<Grid item lg={6}>*/}
+                    {/*  <FormControl fullWidth>*/}
+                    {/*    <FieldLabelInfo title="Waktu Selesai Pengerjaan"/>*/}
+                    {/*    <LocalizationProvider dateAdapter={AdapterDayjs}>*/}
+                    {/*      <DatePicker*/}
+                    {/*        sx={{*/}
+                    {/*          ".MuiInputBase-root": {*/}
+                    {/*            height: 40,*/}
+                    {/*          },*/}
+                    {/*        }}*/}
+                    {/*        format="D MMM YYYY"*/}
+                    {/*        minDate={dayjs(tags.start_date)}*/}
+                    {/*        maxDate={dayjs(state.end_date)}*/}
+                    {/*        value={dayjs(tags.end_date)}*/}
+                    {/*        onChange={(e: any) =>*/}
+                    {/*          setState((prev) => {*/}
+                    {/*            const kegiatan = prev.kegiatan*/}
+                    {/*            kegiatan[index].end_date = dayjs(e).format("YYYY-MM-DD")*/}
+                    {/*            return {...prev, kegiatan: kegiatan};*/}
+                    {/*          })*/}
+                    {/*        }*/}
+                    {/*      />*/}
+                    {/*    </LocalizationProvider>*/}
+                    {/*  </FormControl>*/}
+                    {/*</Grid>*/}
 
                   </Grid>
 
@@ -557,7 +588,7 @@ export default function FormCritical({
                                   </Typography>
                                 </MenuItem>
                                 {monthList.map((monthItem, index) => (
-                                  <MenuItem key={index} value={(index + 1)}>
+                                  <MenuItem key={index} value={(index + 1)} disabled={checkOptions(tags.target, iTarget, (index+1))}>
                                     <Typography fontSize={14}>{monthItem}</Typography>
                                   </MenuItem>
                                 ))}

@@ -185,6 +185,13 @@ const useCardCriticalVM = () => {
       });
     });
 
+    state.kegiatan.map((kgt,iKgt) => {
+      let startDate = kgt.target[0].bulan
+      let endDate = kgt.target[kgt.target.length-1].bulan
+      state.kegiatan[iKgt].start_date = dayjs(year+"-"+(startDate < 10 ? "0"+startDate : startDate)+"-01").format("YYYY-MM-DD")
+      state.kegiatan[iKgt].end_date = dayjs(year+"-"+(endDate < 10 ? "0"+endDate : endDate)+"-28").format("YYYY-MM-DD")
+    })
+
     const request: ExsumCriticalReqDto = {
       id: state.id,
       exsum_id: exsum.id,
@@ -238,6 +245,7 @@ const useCardCriticalVM = () => {
       setModalOpen(false);
       setModalAdd(false);
     }
+
   };
 
   const handleDelete = async () => {
@@ -276,6 +284,9 @@ const useCardCriticalVM = () => {
     const initState: ExsumCriticalState = JSON.parse(
       JSON.stringify(initExsumCriticalReqDto)
     );
+    if (data.length == 0 ){
+      initState.keterangan_kegiatan = "Finish to Start"
+    }
     setState(initState)
     setModalAdd(true);
   };
@@ -308,7 +319,6 @@ const useCardCriticalVM = () => {
       kegiatan:curData.kegiatan
     };
 
-    console.log(state)
     setState(state);
     setModalAdd(true);
   };
