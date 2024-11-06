@@ -119,7 +119,7 @@ export default function TableTows({ data }: { data: ExsumTWOSResDto }) {
               <TitleTableContent title="Strategi ST" />
               <Typography variant="body1">
                 <ul>
-                  {data.tows.map((x) => x.type == "WT" && <li>{x.value}</li>)}
+                  {data.tows.map((x) => x.type == "ST" && <li>{x.value}</li>)}
                 </ul>
               </Typography>
             </TableCell>
@@ -127,7 +127,7 @@ export default function TableTows({ data }: { data: ExsumTWOSResDto }) {
               <TitleTableContent title="Strategi WT" />
               <Typography variant="body1">
                 <ul>
-                  {data.tows.map((x) => x.type == "ST" && <li>{x.value}</li>)}
+                  {data.tows.map((x) => x.type == "WT" && <li>{x.value}</li>)}
                 </ul>
               </Typography>
             </TableCell>
