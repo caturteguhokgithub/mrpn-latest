@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import {
   Box,
   Button,
-  Chip,
+  Chip, ChipPropsColorOverrides,
   Collapse, DialogActions,
   Grow,
   Stack,
@@ -22,6 +22,9 @@ import PageExecutiveSummaryContent from "@/app/executive-summary/pageViewContent
 import FormCritical from "@/app/executive-summary/partials/tab6Critical/form";
 import DialogComponent from "@/components/dialog";
 import useApprovalVM from "@/app/executive-summary/approvalVM";
+import {grey} from "@mui/material/colors";
+import {ApprovalDto} from "@/lib/core/context/exsumContext";
+import {OverridableStringUnion} from "@mui/types";
 
 export default function PageExecutiveSummary({}) {
   const { rkpState, rpjmn, setYear, year } = useRKPContext((state) => state);
@@ -89,109 +92,78 @@ export default function PageExecutiveSummary({}) {
     />
   );
 
+  const approvalAction = (approval:ApprovalDto|undefined) => {
+
+    if(approval !== undefined && approval.status == "review"){
+        return <Button onClick={() => setModalApprove({action: "approval", isOpen: true})}>
+          <Chip
+            color="primary"
+            variant="outlined"
+            label={
+              <Stack direction="row" gap={1}>
+                {breakpointDownMd ? null : "Approval"}
+              </Stack>
+            }
+            sx={styleDownload}
+          />
+        </Button>
+    }
+
+    return <Button onClick={() => setModalApprove({action: "review", isOpen: true})}>
+      <Chip
+        color="primary"
+        variant="outlined"
+        label={
+          <Stack direction="row" gap={1}>
+            Ajukan Approval
+          </Stack>
+        }
+        sx={styleDownload}
+      />
+    </Button>
+  }
+
+  const approvalStatus = (approval:ApprovalDto|undefined) => {
+    if (approval == undefined){
+      return undefined
+    }
+
+    let label:string = "Draft";
+    let color:OverridableStringUnion<"default" | "primary" | "secondary" | "error" | "info" | "success" | "warning", ChipPropsColorOverrides> | undefined = "default";
+    let sx:any = { bgcolor: grey[600], color: "white", px: 1 };
+
+    if (approval.status == "rejected"){
+      label = "Rejected"
+      color = "error"
+      sx = {px: 1}
+    }
+    if (approval.status == "review"){
+      label = "Review"
+      color = "warning"
+      sx = {px: 1}
+    }
+    if (approval.status == "approved"){
+      label = "Approved"
+      color = "success"
+      sx = {px: 1}
+    }
+
+    return <Chip
+        size="small"
+        color={color}
+        label={label}
+        sx={sx}
+      />
+
+  }
+
   return (
     <ContentPage
       title="Executive Summary"
       overflowHidden
       chooseProject={rkpState !== undefined}
-      dowloadAttachmentFile={
-        rkpState !== undefined && exsum.id > 0 && (canSubmit || canApprove) && (
-          <>
-
-            {canSubmit && (exsum.approval == undefined || exsum.approval.status == "rejected") &&
-                <Button
-                    onClick={() => setModalApprove({action: "review", isOpen: true})}
-                >
-                    <Chip
-                        color="primary"
-                        variant="outlined"
-                        label={
-                          <Stack direction="row" gap={1}>
-                            Ajukan Approval
-                          </Stack>
-                        }
-                        sx={styleDownload}
-                    />
-                </Button>
-            }
-
-            {canApprove && exsum.approval && exsum.approval.status == "review" &&
-                <Button
-                    onClick={() => setModalApprove({action: "approval", isOpen: true})}
-                >
-                    <Chip
-                        color="primary"
-                        variant="outlined"
-                        label={
-                          <Stack direction="row" gap={1}>
-                            {breakpointDownMd ? null : "Approval"}
-                          </Stack>
-                        }
-                        sx={styleDownload}
-                    />
-                </Button>
-            }
-
-            {exsum.approval && exsum.approval.status == "review" &&
-                  <Chip
-                      color="warning"
-                      variant={"outlined"}
-                      label={
-                        <Stack direction="row" gap={1}>
-                          status:
-                          <IconFA
-                              size={14}
-                              name="spinner"
-                              color={theme.palette.success.main}
-                            />
-                          On Review
-                        </Stack>
-                      }
-                      sx={styleDownload}
-                  />
-            }
-
-            {exsum.approval && exsum.approval.status == "approved" &&
-                <Chip
-                    color="success"
-                    variant={"outlined"}
-                    label={
-                      <Stack direction="row" gap={1}>
-                        status:
-                        <IconFA
-                          size={14}
-                          name="check"
-                          color={theme.palette.error.main}
-                        />
-                        Approved
-                      </Stack>
-                    }
-                    sx={styleDownload}
-                />
-            }
-
-            {exsum.approval && exsum.approval.status == "rejected" &&
-                <Chip
-                    color={"error"}
-                    variant={"outlined"}
-                    label={
-                      <Stack direction="row" gap={1}>
-                        status:
-                        <IconFA
-                          size={14}
-                          name="times"
-                          color={theme.palette.error.main}
-                        />
-                        Rejected
-                      </Stack>
-                    }
-                    sx={styleDownload}
-                />
-            }
-
-          </>
-        )
-      }
+      dowloadAttachmentFile={rkpState !== undefined && approvalAction(exsum.approval)}
+      titleChild={approvalStatus(exsum.approval)}
       tabArrow={
         <Collapse in={btnShowTab}>
           <Chip

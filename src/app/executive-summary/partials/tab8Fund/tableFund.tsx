@@ -132,7 +132,7 @@ const TableFundPPKP = (props: { row?: RoDto[]; project: string }) => {
     <Table size="small">
       <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
         <TableRow>
-          <TableCell>Intervansi Kunci</TableCell>
+          <TableCell>Intervensi Kunci</TableCell>
           <TableCell>Indikator</TableCell>
           <TableCell align="center">Target</TableCell>
           <TableCell>Indikasi Alokasi Tahun Rencana (Rp Miliar)</TableCell>
