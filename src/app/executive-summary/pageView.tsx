@@ -94,7 +94,7 @@ export default function PageExecutiveSummary({}) {
 
   const approvalAction = (approval:ApprovalDto|undefined) => {
 
-    if(approval !== undefined && approval.status == "review"){
+    if(approval != undefined && approval.status == "review"){
         return <Button onClick={() => setModalApprove({action: "approval", isOpen: true})}>
           <Chip
             color="primary"
