@@ -15,7 +15,7 @@ export default function AddButton({
   fullWidth,
   errorColor,
 }: {
-  title: string;
+  title?: string;
   url?: string;
   filled?: boolean;
   small?: boolean;
@@ -57,10 +57,13 @@ export default function AddButton({
           bgcolor: errorColor ? red[800] : blue[800],
           color: "white",
         },
+        ".MuiButton-icon": {
+          ...(!title && { mr: 0 }),
+        },
       }}
       onClick={onclick}
     >
-      {title}
+      {title || ""}
     </Button>
   );
 

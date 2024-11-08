@@ -8,7 +8,7 @@ export default function CardInstitution({ project }: { project: string }) {
   const isEmpty = false;
 
   return (
-    <CardItem title="Institusi Pelaksana">
+    <CardItem title="Instansi Pelaksana">
       {isEmpty || project === "4" ? (
         <EmptyState
           dense
