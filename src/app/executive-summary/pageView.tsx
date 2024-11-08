@@ -5,8 +5,10 @@ import React, { useEffect } from "react";
 import {
   Box,
   Button,
-  Chip, ChipPropsColorOverrides,
-  Collapse, DialogActions,
+  Chip,
+  ChipPropsColorOverrides,
+  Collapse,
+  DialogActions,
   Grow,
   Stack,
   Tabs,
@@ -22,9 +24,9 @@ import PageExecutiveSummaryContent from "@/app/executive-summary/pageViewContent
 import FormCritical from "@/app/executive-summary/partials/tab6Critical/form";
 import DialogComponent from "@/components/dialog";
 import useApprovalVM from "@/app/executive-summary/approvalVM";
-import {grey} from "@mui/material/colors";
-import {ApprovalDto} from "@/lib/core/context/exsumContext";
-import {OverridableStringUnion} from "@mui/types";
+import { grey } from "@mui/material/colors";
+import { ApprovalDto } from "@/lib/core/context/exsumContext";
+import { OverridableStringUnion } from "@mui/types";
 
 export default function PageExecutiveSummary({}) {
   const { rkpState, rpjmn, setYear, year } = useRKPContext((state) => state);
@@ -35,8 +37,8 @@ export default function PageExecutiveSummary({}) {
     setModalApprove,
     doApproval,
     canApprove,
-    canSubmit
-  } = useApprovalVM()
+    canSubmit,
+  } = useApprovalVM();
 
   const [valueTab, setValueTab] = React.useState(rpjmn?.start);
   const [toogleShowTab, setToogleShowTab] = React.useState(true);
@@ -58,7 +60,7 @@ export default function PageExecutiveSummary({}) {
   }, [year]);
 
   const handleChangeTab = (event: any, newValue: any) => {
-      setYear(newValue);
+    setYear(newValue);
   };
 
   const handleToggleTab = () => {
@@ -92,24 +94,24 @@ export default function PageExecutiveSummary({}) {
     />
   );
 
-  const approvalAction = (approval:ApprovalDto|undefined) => {
-
-    if(approval != undefined && approval.status == "review"){
-        return <Button onClick={() => setModalApprove({action: "approval", isOpen: true})}>
-          <Chip
-            color="primary"
-            variant="outlined"
-            label={
-              <Stack direction="row" gap={1}>
-                {breakpointDownMd ? null : "Approval"}
-              </Stack>
-            }
-            sx={styleDownload}
-          />
-        </Button>
+  const approvalAction = (approval: ApprovalDto | undefined) => {
+    if (approval != undefined && approval.status == "review") {
+      return (
+        <Chip
+          color="primary"
+          variant="outlined"
+          label={
+            <Stack direction="row" gap={1}>
+              {breakpointDownMd ? null : "Approval"}
+            </Stack>
+          }
+          sx={styleDownload}
+          onClick={() => setModalApprove({ action: "approval", isOpen: true })}
+        />
+      );
     }
 
-    return <Button onClick={() => setModalApprove({action: "review", isOpen: true})}>
+    return (
       <Chip
         color="primary"
         variant="outlined"
@@ -119,50 +121,58 @@ export default function PageExecutiveSummary({}) {
           </Stack>
         }
         sx={styleDownload}
+        onClick={() => setModalApprove({ action: "review", isOpen: true })}
       />
-    </Button>
-  }
+    );
+  };
 
-  const approvalStatus = (approval:ApprovalDto|undefined) => {
-    if (approval == undefined){
-      return undefined
+  const approvalStatus = (approval: ApprovalDto | undefined) => {
+    if (approval == undefined) {
+      return undefined;
     }
 
-    let label:string = "Draft";
-    let color:OverridableStringUnion<"default" | "primary" | "secondary" | "error" | "info" | "success" | "warning", ChipPropsColorOverrides> | undefined = "default";
-    let sx:any = { bgcolor: grey[600], color: "white", px: 1 };
+    let label: string = "Draft";
+    let color:
+      | OverridableStringUnion<
+          | "default"
+          | "primary"
+          | "secondary"
+          | "error"
+          | "info"
+          | "success"
+          | "warning",
+          ChipPropsColorOverrides
+        >
+      | undefined = "default";
+    let sx: any = { bgcolor: grey[600], color: "white", px: 1 };
 
-    if (approval.status == "rejected"){
-      label = "Rejected"
-      color = "error"
-      sx = {px: 1}
+    if (approval.status == "rejected") {
+      label = "Rejected";
+      color = "error";
+      sx = { px: 1 };
     }
-    if (approval.status == "review"){
-      label = "Review"
-      color = "warning"
-      sx = {px: 1}
+    if (approval.status == "review") {
+      label = "Review";
+      color = "warning";
+      sx = { px: 1 };
     }
-    if (approval.status == "approved"){
-      label = "Approved"
-      color = "success"
-      sx = {px: 1}
+    if (approval.status == "approved") {
+      label = "Approved";
+      color = "success";
+      sx = { px: 1 };
     }
 
-    return <Chip
-        size="small"
-        color={color}
-        label={label}
-        sx={sx}
-      />
-
-  }
+    return <Chip size="small" color={color} label={label} sx={sx} />;
+  };
 
   return (
     <ContentPage
       title="Executive Summary"
       overflowHidden
       chooseProject={rkpState !== undefined}
-      dowloadAttachmentFile={rkpState !== undefined && approvalAction(exsum.approval)}
+      dowloadAttachmentFile={
+        rkpState !== undefined && approvalAction(exsum.approval)
+      }
       titleChild={approvalStatus(exsum.approval)}
       tabArrow={
         <Collapse in={btnShowTab}>
@@ -223,51 +233,52 @@ export default function PageExecutiveSummary({}) {
         <DialogComponent
           width={320}
           dialogOpen={modalApprove.isOpen}
-          dialogClose={() => setModalApprove({action: "", isOpen: false})}
+          dialogClose={() => setModalApprove({ action: "", isOpen: false })}
           title="Approval"
-          dialogFooter={modalApprove.action == "review" &&
-            <DialogActions sx={{ p: 2, px: 3 }}>
-              <Button variant="outlined" onClick={() => setModalApprove({action: "", isOpen: false})}>
-                Batal
+          dialogFooter={
+            modalApprove.action == "review" && (
+              <DialogActions sx={{ p: 2, px: 3 }}>
+                <Button
+                  variant="outlined"
+                  onClick={() => setModalApprove({ action: "", isOpen: false })}
+                >
+                  Batal
+                </Button>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  onClick={() => doApproval("review")}
+                >
+                  Ya
+                </Button>
+              </DialogActions>
+            )
+          }
+        >
+          {modalApprove.action == "approval" && (
+            <Stack display={"flex"} justifyContent={"space-between"} gap={2}>
+              <Button
+                variant="contained"
+                color={"error"}
+                type="submit"
+                onClick={() => doApproval("rejected")}
+              >
+                Reject
               </Button>
               <Button
                 variant="contained"
                 type="submit"
-                onClick={() => doApproval("review")}
+                onClick={() => doApproval("approved")}
               >
-                Ya
+                Approve
               </Button>
-            </DialogActions>
-          }
-        >
-          {modalApprove.action == "approval" &&
-              <Stack display={"flex"} justifyContent={"space-between"} gap={2}>
-                  <Button
-                      variant="contained"
-                      color={"error"}
-                      type="submit"
-                      onClick={() => doApproval("rejected")}
-                  >
-                      Reject
-                  </Button>
-                  <Button
-                      variant="contained"
-                      type="submit"
-                      onClick={() => doApproval("approved")}
-                  >
-                      Approve
-                  </Button>
-              </Stack>
-          }
+            </Stack>
+          )}
 
-          {modalApprove.action == "review" &&
-              <>
-                  Apakah Anda yakin untuk mengajukan approval ?
-              </>
-          }
-
+          {modalApprove.action == "review" && (
+            <>Apakah Anda yakin untuk mengajukan approval ?</>
+          )}
         </DialogComponent>
-
       </Box>
     </ContentPage>
   );

@@ -32,7 +32,7 @@ export default function CardStakeholder({ project }: { project: string }) {
 
   return (
     <CardItem
-      title="Institusi Pelaksana"
+      title="Instansi Pelaksana"
       setting
       settingEditOnclick={handleModalOpenStakeholder}
     >
@@ -51,7 +51,7 @@ export default function CardStakeholder({ project }: { project: string }) {
         width="800px"
         dialogOpen={modalOpenStakeholder}
         dialogClose={handleModalClose}
-        title="Ubah Institusi Pelaksana"
+        title="Ubah Instansi Pelaksana"
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button variant="outlined" onClick={handleModalClose}>
