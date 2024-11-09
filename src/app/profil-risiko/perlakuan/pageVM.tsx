@@ -156,15 +156,24 @@ const useTreatmentRiskVM = () => {
     }
 
     let valid = true;
+    let message = "";
     let t: keyof RiskTreatmentReqDto;
     for (t in req){
       if (t != "id" && (req[t] == undefined || req[t] == 0)){
         valid = false;
+
+        if (t == "profil_risiko_id") message = "Harap memilih profil risiko"
+        if (t == "keputusan") message = "Harap memilih Keputusan"
+        if (t == "ro") message = "Harap mengisi Keterangan Perlakuan Risiko"
+        if (t == "start_date" || t == "end_date") message = "Harap mengisi waktu rencana"
+        if (t == "src_stakeholder_id") message = "Harap memilih penganggungjawab"
+        if (t == "src_matriks_risiko_id") message = "Harap memilih Risiko Residual Harapan"
+
       }
     }
 
     if (!valid){
-      errorModalContext.showModal(MODAL_TYPES.ERROR_MODAL, {code:400, message:"Harap mengisi seluruh form yang tersedia!"})
+      errorModalContext.showModal(MODAL_TYPES.ERROR_MODAL, {code:400, message:message})
       return
     }
 
