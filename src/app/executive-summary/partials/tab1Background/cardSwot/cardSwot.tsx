@@ -380,7 +380,10 @@ const GetGrid = ({
                         placeholder={`Tambah Kata Kunci ${title}`}
                         value={row.value}
                         onChange={(e) => {
-                          handleChangeKeyword(e.target.value, index);
+                          const newVal = e.target.value
+                          const x = newVal.split(" ");
+                          const finalNewVal = x.length > 4 ? x[0]+" "+x[1]+" "+x[2]+" "+x[3] : newVal
+                          handleChangeKeyword(finalNewVal, index);
                         }}
                       />
                     </Grid>
