@@ -17,6 +17,7 @@ import {
 import {doGetMasterListStakeholder} from "@/app/misc/master/masterService";
 import {MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel";
 import {RiskOverviewData} from "@/app/profil-risiko/overview/pageModel";
+import {MODAL_TYPES} from "@/lib/core/provider/globalmodalProvider";
 
 const useTreatmentRiskVM = () => {
 
@@ -152,6 +153,19 @@ const useTreatmentRiskVM = () => {
       src_stakeholder_id: state.src_stakeholder?.id ?? 0,
       src_matriks_risiko_id: state.src_matriks_risiko?.id ?? 0,
       triwulan: quarter
+    }
+
+    let valid = true;
+    let t: keyof RiskTreatmentReqDto;
+    for (t in req){
+      if (t != "id" && (req[t] == undefined || req[t] == 0)){
+        valid = false;
+      }
+    }
+
+    if (!valid){
+      errorModalContext.showModal(MODAL_TYPES.ERROR_MODAL, {code:400, message:"Harap mengisi seluruh form yang tersedia!"})
+      return
     }
 
     let response

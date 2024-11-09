@@ -190,31 +190,6 @@ export default function PageIdentifikasiView({}) {
     data,
     ...advancedTable,
     enableRowActions: false,
-    // displayColumnDefOptions: {
-    //   "mrt-row-actions": {
-    //     header: "",
-    //     size: 150,
-    //     Cell: (item: any) => (
-    //       <ActionColumn
-    //         viewClick={
-    //           hasPrivilege(permission, pathname, "list")
-    //             ? () => actionModal(true, "read", item.cell.row.original.id)
-    //             : undefined
-    //         }
-    //         editClick={
-    //           hasPrivilege(permission, pathname, "update")
-    //             ? () => actionModal(true, "update", item.cell.row.original.id)
-    //             : undefined
-    //         }
-    //         deleteClick={
-    //           hasPrivilege(permission, pathname, "delete")
-    //             ? () => actionModal(true, "delete", item.cell.row.original.id)
-    //             : undefined
-    //         }
-    //       />
-    //     ),
-    //   },
-    // },
     initialState: {
       showGlobalFilter: true,
     },
@@ -288,11 +263,6 @@ export default function PageIdentifikasiView({}) {
           <Stack gap={2}>
             <Paper elevation={2} sx={{ borderRadius: "1.25rem", p: 0, m: 1 }}>
               <HeaderTable asTable viewOnly data={dataIdentificationRisk} />
-              {/* <HeaderIdentifikasi
-                asTable
-                viewOnly
-                data={dataIdentificationRisk}
-              /> */}
             </Paper>
 
             <Box
