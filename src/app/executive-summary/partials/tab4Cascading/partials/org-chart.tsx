@@ -224,7 +224,7 @@ export default function CascadingOrgChart({
                 {prop.ro.map((ros) => (
                   <ItemProP
                     isKey={ros.intervention}
-                    description={`${ros.value} (${ros.kementerian})`}
+                    description={`${ros.value} (${ros.kementerian}) (${ros.type_stakeholder})`}
                   />
                 ))}
               </List>

@@ -47,6 +47,7 @@ export interface RoDto {
     code:string
     value:string
     kementerian:string
+    type_stakeholder:string
     kementrian_id:string
     kementrian:MiscMasterListStakeholderRes
     pkkr:string
