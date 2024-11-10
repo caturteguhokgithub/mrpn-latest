@@ -21,7 +21,6 @@ import { IconFA } from "@/components/icons/icon-fa";
 import { CustomTab, styleDownload } from "./style";
 import { useExsumContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import PageExecutiveSummaryContent from "@/app/executive-summary/pageViewContent";
-import FormCritical from "@/app/executive-summary/partials/tab6Critical/form";
 import DialogComponent from "@/components/dialog";
 import useApprovalVM from "@/app/executive-summary/approvalVM";
 import { grey } from "@mui/material/colors";

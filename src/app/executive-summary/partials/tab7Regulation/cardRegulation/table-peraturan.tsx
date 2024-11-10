@@ -30,10 +30,10 @@ import {
   ExsumRegulationResDto,
 } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
 import DialogDelete from "@/app/components/dialogDelete";
-import {useAuthContext} from "@/lib/core/hooks/useHooks";
-import {usePathname} from "next/navigation";
-import {hasPrivilege} from "@/lib/core/helpers/authHelpers";
-import {bgColorTh} from "@/utils/color";
+import { useAuthContext } from "@/lib/core/hooks/useHooks";
+import { usePathname } from "next/navigation";
+import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
+import { bgColorTh } from "@/utils/color";
 
 export default function TablePeraturan({
   data,
@@ -42,7 +42,6 @@ export default function TablePeraturan({
   data: ExsumRegulationResDto[];
   deleteData: any;
 }) {
-
   const { permission } = useAuthContext((state) => state);
   const pathname = usePathname();
 
@@ -76,26 +75,30 @@ export default function TablePeraturan({
                   key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  {(hasPrivilege(permission, pathname, "update") ||
-                    hasPrivilege(permission, pathname, "delete")) && (
-                    <TableCell sx={{ textAlign: "center", verticalAlign: "top" }}>
-                      <Tooltip title="Delete" placement="top">
-                        <IconButton
-                          aria-label="delete"
-                          color="error"
-                          onClick={() => deleteData(row.id)}
-                        >
-                          <Icon
-                            baseClassName="fas"
-                            className={`fa-trash-alt`}
-                            sx={{
-                              fontSize: "14px",
-                            }}
-                          />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
-                  )}
+                  {/* {(hasPrivilege(permission, pathname, "update") ||
+                    hasPrivilege(permission, pathname, "delete")) && ( */}
+                  <TableCell sx={{ textAlign: "center", verticalAlign: "top" }}>
+                    <Tooltip title="Delete" placement="top">
+                      <IconButton
+                        aria-label="delete"
+                        color="error"
+                        onClick={() => deleteData(row.id)}
+                        disabled={
+                          hasPrivilege(permission, pathname, "update") ||
+                          hasPrivilege(permission, pathname, "delete")
+                        }
+                      >
+                        <Icon
+                          baseClassName="fas"
+                          className={`fa-trash-alt`}
+                          sx={{
+                            fontSize: "14px",
+                          }}
+                        />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                  {/* )} */}
                   <TableCell sx={{ verticalAlign: "top" }}>
                     <Stack
                       display="inline-flex"
@@ -104,7 +107,7 @@ export default function TablePeraturan({
                       gap={0.5}
                       flexWrap="wrap"
                     >
-                      {row.entitas.map(e =>
+                      {row.entitas.map((e) => (
                         <Box component="span">
                           <Chip
                             key={e.id}
@@ -120,7 +123,7 @@ export default function TablePeraturan({
                             }}
                           />
                         </Box>
-                      )}
+                      ))}
                     </Stack>
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>

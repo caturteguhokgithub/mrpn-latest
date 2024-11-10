@@ -47,7 +47,7 @@ export default function PageIdentifikasiView({}) {
     usePenetapanGlobalVM();
 
   useEffect(() => {
-      getMasterListObject();
+    getMasterListObject();
   }, [year]);
 
   const {
@@ -250,7 +250,11 @@ export default function PageIdentifikasiView({}) {
   return (
     <>
       <ContentPage
-        title={`Identifikasi Risiko ${year == 0 ? 'RPJMN '+rpjmn?.start+"-"+rpjmn?.end : 'Tahun '+year}`}
+        title={`Identifikasi Risiko ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip="Proses menemukenali dan mendeskripsikan risiko"
         withCard={objectState === undefined}
         chooseObject={
@@ -287,7 +291,7 @@ export default function PageIdentifikasiView({}) {
         ) : (
           <Stack gap={2}>
             <Paper elevation={2} sx={{ borderRadius: "1.25rem", p: 0, m: 1 }}>
-              <HeaderTable asTable viewOnly data={dataIdentificationRisk} />
+              <HeaderTable viewOnly data={dataIdentificationRisk} />
               {/* <HeaderIdentifikasi
                 asTable
                 viewOnly
@@ -313,7 +317,7 @@ export default function PageIdentifikasiView({}) {
       </ContentPage>
 
       <DialogComponent
-        width={"70%"}
+        width={"50%"}
         dialogOpen={modal.isOpen && modal.action != "delete"}
         dialogClose={() => actionModal(true, "create")}
         title={`${
