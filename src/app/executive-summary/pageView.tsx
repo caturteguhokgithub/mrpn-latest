@@ -125,9 +125,9 @@ export default function PageExecutiveSummary({}) {
     );
   };
 
-  const approvalStatus = (approval: ApprovalDto | undefined) => {
-    if (approval == undefined) {
-      return undefined;
+  const approvalStatus = (approval:ApprovalDto|undefined) => {
+    if (exsum.id == 0){
+      return undefined
     }
 
     let label: string = "Draft";
@@ -145,20 +145,22 @@ export default function PageExecutiveSummary({}) {
       | undefined = "default";
     let sx: any = { bgcolor: grey[600], color: "white", px: 1 };
 
-    if (approval.status == "rejected") {
-      label = "Rejected";
-      color = "error";
-      sx = { px: 1 };
-    }
-    if (approval.status == "review") {
-      label = "Review";
-      color = "warning";
-      sx = { px: 1 };
-    }
-    if (approval.status == "approved") {
-      label = "Approved";
-      color = "success";
-      sx = { px: 1 };
+    if (approval != undefined){
+      if (approval.status == "rejected"){
+        label = "Rejected"
+        color = "error"
+        sx = {px: 1}
+      }
+      if (approval.status == "review"){
+        label = "Review"
+        color = "warning"
+        sx = {px: 1}
+      }
+      if (approval.status == "approved"){
+        label = "Approved"
+        color = "success"
+        sx = {px: 1}
+      }
     }
 
     return <Chip size="small" color={color} label={label} sx={sx} />;

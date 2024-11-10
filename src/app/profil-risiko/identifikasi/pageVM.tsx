@@ -80,8 +80,6 @@ const useIdentificationRiskVM = () => {
       }
     }
 
-    console.log(initReq)
-
     setRequest(initReq)
 
     setModal({

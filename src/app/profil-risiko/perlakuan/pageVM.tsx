@@ -17,6 +17,7 @@ import {
 import {doGetMasterListStakeholder} from "@/app/misc/master/masterService";
 import {MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel";
 import {RiskOverviewData} from "@/app/profil-risiko/overview/pageModel";
+import {MODAL_TYPES} from "@/lib/core/provider/globalmodalProvider";
 
 const useTreatmentRiskVM = () => {
 
@@ -152,6 +153,28 @@ const useTreatmentRiskVM = () => {
       src_stakeholder_id: state.src_stakeholder?.id ?? 0,
       src_matriks_risiko_id: state.src_matriks_risiko?.id ?? 0,
       triwulan: quarter
+    }
+
+    let valid = true;
+    let message = "";
+    let t: keyof RiskTreatmentReqDto;
+    for (t in req){
+      if (t != "id" && (req[t] == undefined || req[t] == 0)){
+        valid = false;
+
+        if (t == "profil_risiko_id") message = "Harap memilih profil risiko"
+        if (t == "keputusan") message = "Harap memilih Keputusan"
+        if (t == "ro") message = "Harap mengisi Keterangan Perlakuan Risiko"
+        if (t == "start_date" || t == "end_date") message = "Harap mengisi waktu rencana"
+        if (t == "src_stakeholder_id") message = "Harap memilih penganggungjawab"
+        if (t == "src_matriks_risiko_id") message = "Harap memilih Risiko Residual Harapan"
+
+      }
+    }
+
+    if (!valid){
+      errorModalContext.showModal(MODAL_TYPES.ERROR_MODAL, {code:400, message:message})
+      return
     }
 
     let response
