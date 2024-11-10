@@ -18,7 +18,6 @@ import { grey } from "@mui/material/colors";
 import { listSelectKp } from "@/app/executive-summary/data";
 import { listTriwulan } from "@/app/utils/data";
 import DateRangePicker from "@/components/dateRange";
-import { IconFA } from "../icons/icon-fa";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import { InfoTooltip } from "../InfoTooltip";
 

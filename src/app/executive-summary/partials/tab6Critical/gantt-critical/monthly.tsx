@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   Gantt,
   Task,
@@ -247,25 +247,22 @@ const CustomTaskListTable = ({
   );
 };
 
-export default function GanttChartMonthly(
-  {
-    tasks,
-    setTasks
-  }: {
-    tasks: Task[]
-    setTasks:any
-  }
-) {
-
+export default function GanttChartMonthly({
+  tasks,
+  setTasks,
+}: {
+  tasks: Task[];
+  setTasks: any;
+}) {
   const [tasksState, setTasksState] = React.useState<Task[]>(tasks);
 
   useEffect(() => {
-    setTasksState(tasks)
+    setTasksState(tasks);
   }, [tasks]);
 
   const handleExpanderClick = (task: any) => {
     setTasksState(tasks.map((t) => (t.id === task.id ? task : t)));
-  }
+  };
 
   return (
     <Box
@@ -306,6 +303,9 @@ export default function GanttChartMonthly(
             height: "6px",
             cursor: "pointer",
           },
+        },
+        "._1eT-t, ._2B2zv": {
+          height: "calc(100vh - 620px) !important",
         },
       }}
     >

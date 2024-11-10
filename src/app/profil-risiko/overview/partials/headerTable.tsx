@@ -15,26 +15,27 @@ import theme from "@/theme";
 import { IdentificationRiskResDto } from "@/app/profil-risiko/identifikasi/pageModel";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import { grey } from "@mui/material/colors";
-import {IndikatorDto} from "@/app/misc/rkp/rkpServiceModel";
-import {useRKPContext} from "@/lib/core/hooks/useHooks";
-import {GetTarget} from "@/lib/utils/common";
+import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import { GetTarget } from "@/lib/utils/common";
 
 export default function HeaderTable({
   noPadding,
   asTable,
   viewOnly,
   data,
+  noPaddingChip,
 }: {
   noPadding?: boolean;
+  noPaddingChip?: boolean;
   asTable?: boolean;
   viewOnly?: boolean;
   data?: IdentificationRiskResDto;
 }) {
-
   const { rpjmn, year } = useRKPContext((store) => store);
 
   const getTarget = (indikator: IndikatorDto) => {
-    return GetTarget(rpjmn, year, indikator)
+    return GetTarget(rpjmn, year, indikator);
   };
 
   return (
@@ -43,8 +44,8 @@ export default function HeaderTable({
         direction="row"
         justifyContent="space-between"
         alignItems="center"
-        px={2}
-        py={1.5}
+        px={noPaddingChip ? 0 : 2}
+        py={noPaddingChip ? 0 : 1.5}
       >
         <Stack
           direction="row"
@@ -83,6 +84,11 @@ export default function HeaderTable({
       <Table
         size="small"
         sx={{
+          ...(asTable && {
+            border: "1px solid #e0e0e0",
+            borderRadius: 5,
+            borderCollapse: "unset",
+          }),
           tr: {
             td: {
               py: noPadding ? 0.5 : 1.5,
@@ -114,29 +120,27 @@ export default function HeaderTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data && data.sasaran && data.sasaran.map((ssr,index) => (
-            <React.Fragment key={index}>
-              <TableRow>
-                <TableCell rowSpan={data.indikator.length}>
-                  {ssr}
-                </TableCell>
-                <TableCell>{data.indikator[0].value}</TableCell>
-                <TableCell align="center">{getTarget(data.indikator[0])}</TableCell>
-                <TableCell align="center">
-                  {data.periode}
-                </TableCell>
-              </TableRow>
-              {data.indikator.slice(1).map((child, childIndex) => (
-                <TableRow key={childIndex}>
-                  <TableCell>{child.value}</TableCell>
-                  <TableCell align="center">{getTarget(child)}</TableCell>
+          {data &&
+            data.sasaran &&
+            data.sasaran.map((ssr, index) => (
+              <React.Fragment key={index}>
+                <TableRow>
+                  <TableCell rowSpan={data.indikator.length}>{ssr}</TableCell>
+                  <TableCell>{data.indikator[0].value}</TableCell>
                   <TableCell align="center">
-                    {data.periode}
+                    {getTarget(data.indikator[0])}
                   </TableCell>
+                  <TableCell align="center">{data.periode}</TableCell>
                 </TableRow>
-              ))}
-            </React.Fragment>
-          ))}
+                {data.indikator.slice(1).map((child, childIndex) => (
+                  <TableRow key={childIndex}>
+                    <TableCell>{child.value}</TableCell>
+                    <TableCell align="center">{getTarget(child)}</TableCell>
+                    <TableCell align="center">{data.periode}</TableCell>
+                  </TableRow>
+                ))}
+              </React.Fragment>
+            ))}
         </TableBody>
       </Table>
     </React.Fragment>
