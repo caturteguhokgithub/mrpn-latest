@@ -28,7 +28,7 @@ import { ApprovalDto } from "@/lib/core/context/exsumContext";
 import { OverridableStringUnion } from "@mui/types";
 
 export default function PageExecutiveSummary({}) {
-  const { rkpState, rpjmn, setYear, year } = useRKPContext((state) => state);
+  const { rkpState, rpjmn, setYear, year, setRkpState } = useRKPContext((state) => state);
 
   const {
     exsum,
@@ -59,6 +59,7 @@ export default function PageExecutiveSummary({}) {
   }, [year]);
 
   const handleChangeTab = (event: any, newValue: any) => {
+    setRkpState(undefined)
     setYear(newValue);
   };
 

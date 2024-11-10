@@ -43,7 +43,7 @@ const textStyles = ["abbreviation", "full-form"];
 
 export default function Header({}) {
   const { user } = useAuthContext((state) => state);
-  const { rpjmn, setYear, year } = useRKPContext((state) => state);
+  const { rpjmn, setYear, year, setRkpState } = useRKPContext((state) => state);
   const { doLogout } = useAuthorizationVM();
 
   const optionsYear = () => {
@@ -58,6 +58,7 @@ export default function Header({}) {
   };
 
   const setProviderYear = (year: number) => {
+    setRkpState(undefined)
     setYear(year);
   };
 

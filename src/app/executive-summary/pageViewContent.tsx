@@ -129,7 +129,7 @@ export default function PageExecutiveSummaryContent({
       {rkpState === undefined ? (
         <EmptyState
           icon={<IconEmptyPage />}
-          title="Halaman Executive Summary (RPJMN) Kosong"
+          title="Halaman Executive Summary Kosong"
           description="Silahkan pilih kegiatan pembangunan di bawah ini"
           button={
             <DropdownRkp

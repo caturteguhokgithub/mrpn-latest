@@ -1,4 +1,4 @@
-import React, {SetStateAction} from "react";
+import React, {SetStateAction, useEffect, useState} from "react";
 import {Grid, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography,} from "@mui/material";
 import theme from "@/theme";
 import {MiscMasterRPJMNRes} from "@/app/misc/master/masterServiceModel";
@@ -15,7 +15,7 @@ function GetTableRow(
     state,
     setState
   } : {
-    tahun: number
+    tahun: number|string
     state:ExsumInterventionState,
     setState: (value: SetStateAction<ExsumInterventionState>) => void
   }
@@ -171,8 +171,8 @@ export default function TableAnggaran(
         </TableRow>
       </TableHead>
       <TableBody>
-        {rows().map((row, index) =>
-          <GetTableRow key={index} tahun={row} state={state} setState={setState}/>
+        {state.list.map((row, index) =>
+          <GetTableRow key={index} tahun={row.tahun} state={state} setState={setState}/>
         )}
       </TableBody>
     </Table>

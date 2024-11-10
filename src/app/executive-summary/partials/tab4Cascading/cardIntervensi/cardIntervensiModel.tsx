@@ -3,7 +3,7 @@ import {MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel
 import {BaseAPIServiceParam} from "@/lib/core/api/apiModel";
 
 export interface ProjectTargetAnggaranDto {
-  tahun: number
+  tahun: number|string
   target: string
   satuan: string
   anggaran: number

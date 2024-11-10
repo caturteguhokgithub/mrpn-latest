@@ -21,6 +21,7 @@ import {
  MiscMasterListStakeholderRes,
  MiscMasterRPJMNRes,
 } from "@/app/misc/master/masterServiceModel";
+import {useRKPContext} from "@/lib/core/hooks/useHooks";
 
 export default function FormProfilRoProject({
  selectProP,
@@ -37,6 +38,9 @@ export default function FormProfilRoProject({
  rpjmn: MiscMasterRPJMNRes | undefined;
  type:string
 }) {
+
+  const {year} = useRKPContext(store => store)
+
  return (
   <Grid container spacing={2}>
    <Grid item xs={12} md={5}>
@@ -80,7 +84,9 @@ export default function FormProfilRoProject({
      <FormControlLabel
       control={
        <Checkbox
-        checked={state.intervensi}
+         key={year}
+         disabled={year == 0}
+        checked={year == 0 ? true : state.intervensi}
         onChange={(checked) =>
          setState((prevState) => {
           return {

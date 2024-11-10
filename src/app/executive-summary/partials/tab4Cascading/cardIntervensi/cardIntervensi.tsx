@@ -39,6 +39,7 @@ export default function CardIntervensi({
   toggleShowTab?: boolean;
 }) {
   const {
+    year,
     rpjmn,
     state,
     setState,
@@ -63,33 +64,47 @@ export default function CardIntervensi({
 
   useEffect(() => {
     if (rpjmn == undefined) getRpjmn();
-    if (listProP.length == 0) getListProP();
     if (listSof.length == 0) getListSumberPendanaan();
     if (listStakeholder.length == 0) getListStakeholder();
-    if (exsum.id != 0) getData();
+
+    if (exsum.id != 0) {
+      getData()
+      getListProP()
+    }
+
   }, [exsum]);
 
-  useEffect(() => {
-    if (rpjmn && state.list.length == 0) {
-      const thisState = { ...state };
-      for (let i = rpjmn.start; i <= rpjmn.end; i++) {
-        const dataAnggaran: ProjectTargetAnggaranDto = {
-          tahun: i,
-          target: "",
-          satuan: "",
-          anggaranString: "",
-          anggaran: 0,
-          sumber_anggaran: "",
-        };
-        thisState.list.push(dataAnggaran);
-      }
+  const handleProjectOpenModal = (action:boolean,type:string) => {
+
+    let tahun:number|string = rpjmn?.start+"-"+rpjmn?.end
+
+    if (year > 0){
+      tahun = year
     }
-  }, [rpjmn]);
+
+    setState(prevState => {
+      const thisState = { ...prevState };
+      const dataAnggaran: ProjectTargetAnggaranDto = {
+        tahun: tahun,
+        target: "",
+        satuan: "",
+        anggaranString: "",
+        anggaran: 0,
+        sumber_anggaran: "",
+      }
+      thisState.list = [dataAnggaran]
+      return {
+        ...thisState
+      }
+    })
+
+    setModal({ action: action, type: type })
+  }
 
   const selectProP: AutoCompleteSingleProp<ProPDto> = {
     value: state.prop,
     options: listProP,
-    getOptionLabel: (opt) => opt.value,
+    getOptionLabel: (opt) => opt.code+" - "+opt.value,
     handleChange: (value: ProPDto) => handleChangeState<ProPDto>(value),
     placeHolder: "Pilih tagging ProP",
   };
@@ -119,7 +134,7 @@ export default function CardIntervensi({
             filled
             small
             title="Tambah Project"
-            onclick={() => setModal({ action: true, type: "NON_RO" })}
+            onclick={() => handleProjectOpenModal(true,"NON_RO")}
           />
           <AddButton
             filled

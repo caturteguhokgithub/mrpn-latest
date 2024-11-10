@@ -174,7 +174,7 @@ const useRkpVM = () => {
   }
 
   useEffect(() => {
-    if (rkpState) triggerChange(rkpState);
+    if (rkpState != undefined) triggerChange(rkpState);
   }, [rkpState]);
 
   useEffect(() => {

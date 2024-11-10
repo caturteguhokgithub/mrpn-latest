@@ -21,14 +21,13 @@ import {
   doCreateIntervention, doDeleteInterventionOnlyRO,
   doGetIntervention, doUpdateInterventionOnlyRO
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiService";
-import {MRT_RowSelectionState} from "material-react-table";
 
 const useCardIntervensiVM = () => {
 
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
   const {exsum} = useExsumContext()
-  const {rpjmn, setRpjmn} = useRKPContext(state => state)
+  const {year,rpjmn, setRpjmn} = useRKPContext(state => state)
 
   const [listProP, setListProP] = useState<ProPDto[]>([])
   const [listSof, setListSof] = useState<MiscMasterListSumberPendanaanRes[]>([])
@@ -52,6 +51,10 @@ const useCardIntervensiVM = () => {
   }
 
   async function getListProP() {
+    if (exsum.id == 0){
+      setListProP([])
+      return
+    }
     const response = await doGetPROP({
       body: {
         by: exsum.level,
@@ -157,7 +160,7 @@ const useCardIntervensiVM = () => {
          anggaran: state.list[0].anggaran,
          sumber_anggaran: state.list[0].sumber_anggaran,
          type: modal.type,
-         intervention: state.intervensi
+         intervention: year == 0 ? true : state.intervensi
        },
        loadingContext: loadingContext,
        errorModalContext: errorModalContext,
@@ -181,7 +184,7 @@ const useCardIntervensiVM = () => {
       indikator: state.indikator,
       list: state.list,
       list_ro: state.ro,
-      intervention: state.intervensi
+      intervention: year == 0 ? true : state.intervensi
     }
     const response = await doCreateIntervention({
       body: request,
@@ -207,6 +210,7 @@ const useCardIntervensiVM = () => {
   };
 
   return {
+    year,
     exsum,
     rpjmn,
     state,
