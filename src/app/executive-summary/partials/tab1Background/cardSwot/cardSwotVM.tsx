@@ -100,6 +100,7 @@ const useCardSWOTVM = () => {
     };
     await doDelete(params);
     getData();
+    setModalDelete(false)
   }
 
   async function deleteDataRow(id:number){
