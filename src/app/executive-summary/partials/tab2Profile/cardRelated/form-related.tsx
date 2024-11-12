@@ -108,19 +108,6 @@ export default function FormRelated({
  state: ExsumRelatedInitState;
  setState: (params: any) => void;
 }) {
- // const ReactQuill = dynamic(async () => {
- //     const { default: RQ } = await import('react-quill')
- //
- //     function QuillJS({ forwardedRef, ...props }: IWrappedComponent) {
- //       return <RQ ref={forwardedRef} {...props} />
- //     }
- //
- //     return QuillJS
- //   },
- //   {
- //     ssr: false,
- //   },);
- // const quillRef = React.useRef<ReactQuill>(null)
 
  return (
   <>
@@ -136,6 +123,7 @@ MRPN"
       />
       {mode === "add" || mode === "edit" ? (
        <Autocomplete
+         key={state.options.length}
         size="small"
         multiple
         disableCloseOnSelect
@@ -199,12 +187,6 @@ MRPN"
          },
         }}
        >
-        {/*<ReactQuill*/}
-        {/*  key={state.value}*/}
-        {/*  theme="snow"*/}
-        {/*  defaultValue={state.value}*/}
-        {/*  forwardedRef={quillRef}*/}
-        {/*/>*/}
 
         <TextareaStyled
          value={state.value}

@@ -1,5 +1,5 @@
 import {useExsumContext, useGlobalModalContext, useLoading} from "@/lib/core/hooks/useHooks";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
   ExsumRelatedInitState, exsumRelatedInitStateData, ExsumRelatedReqCh1Dto, ExsumRelatedReqCh2Dto,
   ExsumRelatedDto,
@@ -8,7 +8,12 @@ import {
 import {API_CODE} from "@/lib/core/api/apiModel";
 import {doGetMasterListKebijakan} from "@/app/misc/master/masterService";
 import {MiscMasterListKebijakanRes} from "@/app/misc/master/masterServiceModel";
-import {doCreate, doDelete, doGet} from "@/app/executive-summary/partials/tab2Profile/cardRelated/cardRelatedService";
+import {
+  doCreate,
+  doDelete,
+  doGet,
+  doUpdate
+} from "@/app/executive-summary/partials/tab2Profile/cardRelated/cardRelatedService";
 
 const useCardRelatedVM = () => {
 
@@ -19,8 +24,11 @@ const useCardRelatedVM = () => {
   const [options, setOptions] = useState<MiscMasterListKebijakanRes[]>([])
   const [data, setData] = useState<ExsumRelatedDto[]>([])
   const [request, setRequest] = useState<ExsumRelatedDto>({ ...initExsumRelatedDto })
-  const [state, setState] = useState<ExsumRelatedInitState>(exsumRelatedInitStateData)
+
+  const iReq = JSON.parse(JSON.stringify(exsumRelatedInitStateData));
+  const [state, setState] = useState<ExsumRelatedInitState>(iReq)
   const [modal, setModal] = useState(false);
+  const [modalDelete, setModalDelete] = React.useState(false);
 
   async function getMiscMasterListKebijakan(){
     const response = await doGetMasterListKebijakan({
@@ -64,7 +72,7 @@ const useCardRelatedVM = () => {
 
   const updateData = async () => {
     let req:ExsumRelatedDto = {
-      id: 0,
+      id: state.id,
       exsum_id: exsum.id,
       value: state.value,
       kebijakan: []
@@ -89,7 +97,12 @@ const useCardRelatedVM = () => {
       errorModalContext:errorModalContext
     }
 
-    const response = await doCreate(params)
+    let response;
+    if (req.id == 0){
+      response = await doCreate(params)
+    }else{
+      response = await doUpdate(params)
+    }
     if (response?.code == API_CODE.success) {
       getData()
       setModal(false)
@@ -97,15 +110,16 @@ const useCardRelatedVM = () => {
 
   }
 
-  const deleteData = async (id:number) => {
+  const deleteData = async () => {
     const params:DeleteRelatedByExsumIdServiceModel = {
-      body: {id:id},
+      body: {id:state.id},
       loadingContext:loadingContext,
       errorModalContext:errorModalContext
     }
     const response = await doDelete(params)
     if (response?.code == API_CODE.success) {
       getData()
+      setModalDelete(false)
     }
   }
 
@@ -119,7 +133,9 @@ const useCardRelatedVM = () => {
     modal,
     setModal,
     updateData,
-    deleteData
+    deleteData,
+    modalDelete,
+    setModalDelete
   }
 
 }

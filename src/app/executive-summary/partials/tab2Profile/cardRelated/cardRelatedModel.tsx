@@ -47,11 +47,13 @@ export type DeleteRelatedByExsumIdServiceModel = BaseAPIServiceParam & {
 };
 
 export interface ExsumRelatedInitState {
+  id:number
   value: string
   options: MiscMasterListKebijakanRes[]
 }
 
 export const exsumRelatedInitStateData:ExsumRelatedInitState = {
+  id:0,
   value:"",
   options:[]
 }

@@ -26,21 +26,15 @@ import { bgColorTh } from "@/app/utils/color";
 
 export default function TableTagging({
   project,
+  handleUpdateOrDelete,
   data,
-  handleDelete,
 }: {
   project: string;
+  handleUpdateOrDelete:any;
   data: ExsumRelatedDto[];
-  handleDelete: any;
 }) {
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
-
-  const [modalDelete, setModalDelete] = React.useState(false);
-
-  const handleModalDelete = () => {
-    setModalDelete(true);
-  };
 
   return (
     <TableContainer
@@ -58,7 +52,7 @@ export default function TableTagging({
       <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
         <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
           <TableRow>
-            {hasPrivilege(permission, pathname, "delete") && (
+            {(hasPrivilege(permission, pathname, "add") || hasPrivilege(permission, pathname, "delete") || hasPrivilege(permission, pathname, "update")) && (
               <TableCell sx={{ width: 80, bgcolor: bgColorTh }}>Aksi</TableCell>
             )}
             <TableCell sx={{ bgcolor: bgColorTh }}>Kebijakan</TableCell>
@@ -74,80 +68,56 @@ export default function TableTagging({
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                {hasPrivilege(permission, pathname, "delete") && (
+                {(hasPrivilege(permission, pathname, "add") || hasPrivilege(permission, pathname, "delete") || hasPrivilege(permission, pathname, "update")) && (
                   <TableCell sx={{ textAlign: "center", verticalAlign: "top" }}>
-                    <ActionColumn center deleteClick={handleModalDelete} />
-                  </TableCell>
-                )}
-                <TableCell>
-                  {/* {x.kebijakan.map((y, index2) => (
-                    <Chip
-                      key={index2}
-                      size="small"
-                      label={y.src_kebijakan?.name}
-                    />
-                  ))} */}
-                  <Paper variant="outlined" sx={{ p: 1 }}>
-                    <Typography fontSize={14} fontWeight={500}>
-                      17 Program Prioritas
-                    </Typography>
                     <Stack
                       marginTop={1}
-                      display="inline-flex"
+                      display="flex"
                       alignItems="center"
                       direction="row"
                       gap={0.5}
-                      flexWrap="wrap"
                     >
-                      <Chip
-                        size="small"
-                        label={
-                          "Melanjutkan pemerataan ekonomi dan penguatan UMKM melalui program kredit usaha dan pembangunan Ibu Kota Nusantara (IKN) serta kota-kota inovatif-karakteristik-mandiri lainnya"
-                        }
-                        sx={{
-                          height: "auto",
-                          ".MuiChip-label": {
-                            whiteSpace: "wrap",
-                            lineHeight: 1.2,
-                            py: 0.6,
-                          },
-                        }}
-                      />
-                      <Chip
-                        size="small"
-                        label={"Pemberantasan kemiskinan"}
-                        sx={{
-                          height: "auto",
-                          ".MuiChip-label": {
-                            whiteSpace: "wrap",
-                            lineHeight: 1.2,
-                            py: 0.6,
-                          },
-                        }}
-                      />
-                      <Chip
-                        size="small"
-                        label={"Mencapai swasembada pangan, energi dan air"}
-                        sx={{
-                          height: "auto",
-                          ".MuiChip-label": {
-                            whiteSpace: "wrap",
-                            lineHeight: 1.2,
-                            py: 0.6,
-                          },
-                        }}
-                      />
+                    {hasPrivilege(permission, pathname, "update") && <ActionColumn center editClick={() => handleUpdateOrDelete(index, "update")} />}
+                    {hasPrivilege(permission, pathname, "delete") && <ActionColumn center deleteClick={() => handleUpdateOrDelete(index, "delete")} />}
                     </Stack>
-                  </Paper>
+                  </TableCell>
+                )}
+                <TableCell>
+                  {x.kebijakan.map((y, index2) => (
+                    <Paper variant="outlined" sx={{ p: 1 }} key={`${index2}`}>
+                      <Typography fontSize={14} fontWeight={500}>
+                        {y.src_kebijakan?.name ?? ""}
+                      </Typography>
+                      <Stack
+                        marginTop={1}
+                        display="inline-flex"
+                        alignItems="center"
+                        direction="row"
+                        gap={0.5}
+                        flexWrap="wrap"
+                      >
+                        {y.list.map((z,iz) =>
+                          <Chip
+                            key={`${index2}-${iz}`}
+                            size="small"
+                            label={z.src_kebijakan_list?.value ?? ""}
+                            sx={{
+                              height: "auto",
+                              ".MuiChip-label": {
+                                whiteSpace: "wrap",
+                                lineHeight: 1.2,
+                                py: 0.6,
+                              },
+                            }}
+                          />
+                        )}
+                      </Stack>
+                    </Paper>
+                  ))}
                 </TableCell>
                 <TableCell>{x.value}</TableCell>
               </TableRow>
-              <DialogDelete
-                title="Hapus Data"
-                handleOpenModal={modalDelete}
-                handleDelete={() => handleDelete(x.id)}
-                handleCloseModal={() => setModalDelete(false)}
-              />
+
             </>
           ))}
         </TableBody>

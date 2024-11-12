@@ -8,6 +8,12 @@ import DialogComponent from "@/components/dialog";
 import TableTagging from "./table-tagging";
 import FormRelated from "./form-related";
 import useCardRelatedVM from "@/app/executive-summary/partials/tab2Profile/cardRelated/cardRelatedVM";
+import {
+  ExsumRelatedInitState,
+  exsumRelatedInitStateData
+} from "@/app/executive-summary/partials/tab2Profile/cardRelated/cardRelatedModel";
+import {MiscMasterListKebijakanRes} from "@/app/misc/master/masterServiceModel";
+import DialogDelete from "@/components/dialogDelete";
 
 export default function CardRelated({ project }: { project: string }) {
   const {
@@ -15,13 +21,54 @@ export default function CardRelated({ project }: { project: string }) {
     modal,
     setModal,
     options,
-    request,
-    setRequest,
     state,
     setState,
     updateData,
     deleteData,
+    modalDelete,
+    setModalDelete
   } = useCardRelatedVM();
+
+  const handleUpdateOrDelete = (index:number, action:string) => {
+    if (index == -1){
+      const initState = JSON.parse(JSON.stringify(exsumRelatedInitStateData));
+      setState(initState)
+    }else{
+      const selectedData = data[index]
+      let opt:MiscMasterListKebijakanRes[] = []
+
+      selectedData.kebijakan.map(k => {
+        options.map(o => {
+          if (o.id == k.src_kebijakan_id){
+            const newListKebijakan:MiscMasterListKebijakanRes = JSON.parse(JSON.stringify(o))
+            k.list.map(l => {
+              newListKebijakan.list.map((n, i) => {
+                if (l.src_kebijakan_list_id == n.id){
+                  newListKebijakan.list[i].isCheck = true
+                }
+              })
+            })
+
+            opt.push(newListKebijakan)
+          }
+        })
+      })
+
+      const curState:ExsumRelatedInitState = {
+        id:selectedData.id,
+        value: selectedData.value,
+        options: opt
+      }
+      setState(curState)
+    }
+
+    if (action == "update"){
+      setModal(true)
+    }else{
+      setModalDelete(true)
+    }
+
+  }
 
   return (
     <CardItem
@@ -31,7 +78,7 @@ export default function CardRelated({ project }: { project: string }) {
           filled
           small
           title="Tambah Kebijakan"
-          onclick={() => setModal(true)}
+          onclick={() => handleUpdateOrDelete(-1, "update")}
         />
       }
     >
@@ -43,7 +90,7 @@ export default function CardRelated({ project }: { project: string }) {
           description="Silahkan isi konten halaman ini"
         />
       ) : (
-        <TableTagging project={project} data={data} handleDelete={deleteData} />
+        <TableTagging project={project} data={data} handleUpdateOrDelete={handleUpdateOrDelete}/>
       )}
       <DialogComponent
         dialogOpen={modal}
@@ -71,6 +118,14 @@ export default function CardRelated({ project }: { project: string }) {
           setState={setState}
         />
       </DialogComponent>
+
+      <DialogDelete
+        title="Hapus Data"
+        handleOpenModal={modalDelete}
+        handleDelete={deleteData}
+        handleCloseModal={() => setModalDelete(false)}
+      />
+
     </CardItem>
   );
 }
