@@ -62,7 +62,10 @@ export default function TablePeraturan({
         <Table size="small">
           <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
             <TableRow>
-              <TableCell width="70px"></TableCell>
+              {(hasPrivilege(permission, pathname, "update") ||
+                hasPrivilege(permission, pathname, "delete")) && (
+                  <TableCell width="70px"></TableCell>
+              )}
               <TableCell>Entitas</TableCell>
               <TableCell width={240}>Peraturan Terkait</TableCell>
               <TableCell>Amanat Peraturan yang Terkait</TableCell>
@@ -75,18 +78,18 @@ export default function TablePeraturan({
                   key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  {/* {(hasPrivilege(permission, pathname, "update") ||
-                    hasPrivilege(permission, pathname, "delete")) && ( */}
+                  {(hasPrivilege(permission, pathname, "update") ||
+                    hasPrivilege(permission, pathname, "delete")) && (
                   <TableCell sx={{ textAlign: "center", verticalAlign: "top" }}>
                     <Tooltip title="Delete" placement="top">
                       <IconButton
                         aria-label="delete"
                         color="error"
                         onClick={() => deleteData(row.id)}
-                        disabled={
-                          hasPrivilege(permission, pathname, "update") ||
-                          hasPrivilege(permission, pathname, "delete")
-                        }
+                        // disabled={
+                        //   hasPrivilege(permission, pathname, "update") ||
+                        //   hasPrivilege(permission, pathname, "delete")
+                        // }
                       >
                         <Icon
                           baseClassName="fas"
@@ -98,7 +101,7 @@ export default function TablePeraturan({
                       </IconButton>
                     </Tooltip>
                   </TableCell>
-                  {/* )} */}
+                  )}
                   <TableCell sx={{ verticalAlign: "top" }}>
                     <Stack
                       display="inline-flex"

@@ -92,6 +92,7 @@ const useCardUrgentVM = () => {
     };
     await doDeleteUrgent(params);
     getData();
+    setModalDelete(false)
   }
 
   return {

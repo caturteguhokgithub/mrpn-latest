@@ -86,6 +86,7 @@ const useCardGoalsVM = () => {
     };
     await doDelete(params);
     getData();
+    setModalDelete(false)
   }
 
   return {

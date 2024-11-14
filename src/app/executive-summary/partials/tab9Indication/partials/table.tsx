@@ -258,9 +258,16 @@ export default function TableIndication({
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography variant="body1">
-                        {perlakuan.ro?.value ?? perlakuan.nonro?.value}
+                      <Typography
+                        variant="body1"
+                        color={perlakuan.ro?.value ? "" : "#f97316"}
+                      >
+                        {perlakuan.ro?.value ??
+                          perlakuan.nonro?.value + " (NON RO)"}
                       </Typography>
+                      {/*<Typography variant="body1">*/}
+                      {/*  {perlakuan.ro?.value ?? perlakuan.nonro?.value}*/}
+                      {/*</Typography>*/}
                     </TableCell>
                     <TableCell sx={{ verticalAlign: "top" }}>
                       <Stack

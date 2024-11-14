@@ -88,6 +88,7 @@ const useCardSegmentVM = () => {
     };
     await doDelete(params);
     getData();
+    setModalDelete(false)
   }
 
   return {
