@@ -217,12 +217,37 @@ export default function TableIndication({
                       </Box>
                     )}
                   </TableCell>
-                  {year == 0 && (
-                    <TableCell sx={{ verticalAlign: "top" }}>
-                      <Typography variant="body1">
-                        {row.perlakuan.length > 0 && row.perlakuan[0].tahun}
-                      </Typography>
-                    </TableCell>
+                  {year == 0 && row.perlakuan.length > 0 && (
+                    // <TableCell sx={{ verticalAlign: "top" }}>
+                    //   <Typography variant="body1">
+                    //     {row.perlakuan.length > 0 && row.perlakuan[0].tahun}
+                    //   </Typography>
+                    // </TableCell>
+                    <Stack
+                      marginTop={"10px"}
+                      display="inline-flex"
+                      alignItems="center"
+                      direction="row"
+                      gap={0.5}
+                      flexWrap="wrap"
+                    >
+                      {row.perlakuan[0].tahun.map((st, stIndex) => (
+                        <Box key={stIndex} component="span">
+                          <Chip
+                            label={st}
+                            size="small"
+                            sx={{
+                              height: "auto",
+                              ".MuiChip-label": {
+                                whiteSpace: "wrap",
+                                lineHeight: 1.2,
+                                py: 0.6,
+                              },
+                            }}
+                          />
+                        </Box>
+                      ))}
+                    </Stack>
                   )}
                 </TableRow>
                 {row.perlakuan.slice(1).map((perlakuan, i) => (
@@ -265,11 +290,36 @@ export default function TableIndication({
                       </Stack>
                     </TableCell>
                     {year == 0 && (
-                      <TableCell sx={{ verticalAlign: "top" }}>
-                        <Typography variant="body1">
-                          {perlakuan.tahun}
-                        </Typography>
-                      </TableCell>
+                      // <TableCell sx={{ verticalAlign: "top" }}>
+                      //   <Typography variant="body1">
+                      //     {perlakuan.tahun.join(",")}
+                      //   </Typography>
+                      // </TableCell>
+                      <Stack
+                        marginTop={"10px"}
+                        display="inline-flex"
+                        alignItems="center"
+                        direction="row"
+                        gap={0.5}
+                        flexWrap="wrap"
+                      >
+                        {perlakuan.tahun.map((st, stIndex) => (
+                          <Box key={stIndex} component="span">
+                            <Chip
+                              label={st}
+                              size="small"
+                              sx={{
+                                height: "auto",
+                                ".MuiChip-label": {
+                                  whiteSpace: "wrap",
+                                  lineHeight: 1.2,
+                                  py: 0.6,
+                                },
+                              }}
+                            />
+                          </Box>
+                        ))}
+                      </Stack>
                     )}
                   </TableRow>
                 ))}

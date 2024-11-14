@@ -16,7 +16,7 @@ export interface StakeholderReqDto {
   id:number
 }
 export interface ExsumIndicationValueReqDto {
-  tahun:number
+  tahun:number[]
   perlakuan_risiko:string
   rincian_output_id:number
   value:string
@@ -46,7 +46,7 @@ export interface NonRoDto {
 }
 export interface ExsumIndicationValueRes {
   id:number
-  tahun:number
+  tahun:number[]
   perlakuan_risiko:string
   ro:RoDto|undefined
   nonro:NonRoDto|undefined
@@ -73,7 +73,7 @@ export interface OthersEntityState {
 }
 export interface ExsumIndicationStateValue {
   id:number
-  tahun:number
+  tahun:number[]
   perlakuan_risiko:string
   rincian_output:RoDto|undefined
   non_rincian_output:string

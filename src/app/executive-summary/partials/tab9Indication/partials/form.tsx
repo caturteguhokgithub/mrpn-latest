@@ -66,7 +66,7 @@ export default function FormIndication({
       const prevValues = prevState.values
       prevValues.push({
         id:prevValues.length,
-        tahun:year == 0 ? (rpjmn?.start ?? 0) : year,
+        tahun:year == 0 ? [(rpjmn?.start ?? 0)] : [year],
         perlakuan_risiko: "",
         rincian_output: undefined,
         non_rincian_output: "",
@@ -228,25 +228,42 @@ export default function FormIndication({
                             information="Tahun"
                           />
                           {year == 0 ?
-                            <AutocompleteSelectSingle
-                              key={tags.tahun}
+                            // <AutocompleteSelectSingle
+                            //   key={tags.tahun}
+                            //   value={tags.tahun}
+                            //   options={optionsYear()}
+                            //   getOptionLabel={opt => opt.toString()}
+                            //   handleChange={(e:number) => setState(prevState => {
+                            //     const prevData = {...prevState}
+                            //     const getIndex = prevData.values.findIndex(x => x.id === tags.id)
+                            //     if (getIndex > -1){
+                            //       prevData.values[getIndex].tahun = e
+                            //       return prevData
+                            //     }
+                            //     return prevState
+                            //   })}
+                            //   placeHolder={"Pilih Tahun"}
+                            // />
+                            <AutocompleteSelectMultiple
+                              key={tags.tahun.length}
                               value={tags.tahun}
                               options={optionsYear()}
                               getOptionLabel={opt => opt.toString()}
-                              handleChange={(e:number) => setState(prevState => {
-                                const prevData = {...prevState}
-                                const getIndex = prevData.values.findIndex(x => x.id === tags.id)
-                                if (getIndex > -1){
-                                  prevData.values[getIndex].tahun = e
-                                  return prevData
-                                }
-                                return prevState
-                              })}
-                              placeHolder={"Pilih Tahun"}
+                                handleChange={(e:number[]) => setState(prevState => {
+                                  const prevData = {...prevState}
+                                  const getIndex = prevData.values.findIndex(x => x.id === tags.id)
+                                  if (getIndex > -1){
+                                    prevData.values[getIndex].tahun = e
+                                    return prevData
+                                  }
+                                  return prevState
+                                })}
+                              placeHolder={"Pilih tahun"}
+                              labelSelectAll={"Pilih semua tahun"}
                             />
                           :
                             <TextareaStyled
-                              value={tags.tahun}
+                              value={tags.tahun.join(",")}
                               disabled
                             />
                           }

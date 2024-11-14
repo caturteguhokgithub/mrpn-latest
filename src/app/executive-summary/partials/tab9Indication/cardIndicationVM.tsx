@@ -203,7 +203,7 @@ const useCardIndicationVM = () => {
         stakeholder: stakeholders
       }
 
-      if (val.tahun > 0 ){
+      if (val.tahun.length > 0 ){
         values.push(val)
       }
 
