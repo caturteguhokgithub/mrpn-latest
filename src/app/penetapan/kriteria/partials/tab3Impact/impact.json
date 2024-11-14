@@ -1,0 +1,112 @@
+[
+  {
+    "area": "Keuangan Negara",
+    "levels": [
+      {
+        "name": "Fraud",
+        "details": [
+          "x ≤ 10 juta",
+          "Rp.10 juta < x < Rp.100 juta",
+          "Rp.100 juta < x ≤ Rp.1 M",
+          "Rp.1 M < x ≤ Rp.10 M",
+          "x > Rp.10 M"
+        ]
+      },
+      {
+        "name": "Penerimaan atau pembiayaan",
+        "details": [
+          "x ≤ 0,1% dari penerimaan atau pembiayaan yang dikelola UPR",
+          "0,1% < x ≤ 0,5% dari penerimaan atau pembiayaan yang dikelola UPR",
+          "0,5% < x ≤ 1% dari penerimaan atau pembiayaan yang dikelola UPR",
+          "1% < x ≤ 2% dari penerimaan atau pembiayaan yang dikelola UPR",
+          "> 2% dari penerimaan atau pembiayaan yang dikelola UPR"
+        ]
+      }
+    ]
+  },
+  {
+    "area": "Reputasi",
+    "levels": [
+      {
+        "name": "Tingkat kepercayaan stakeholder",
+        "details": [
+          "Sangat baik atau x > 8 dari skala 10",
+          "Baik atau 7 < x ≤ 8 dari skala 10",
+          "Sedang atau 6 < x ≤ 7 dari skala 10",
+          "Rendah atau 4 < x ≤ 6 dari skala 10",
+          "Sangat rendah atau x < 4 dari skala 10"
+        ]
+      },
+      {
+        "name": "Jumlah keluhan atau prosentase berita negatif dari total berita tentang Obyek MRPN LS",
+        "details": [
+          "Jumlah Keluhan x ≤ 10",
+          "Prosentase pemberitaan negatif 10% < x ≤ 20%",
+          "Prosentase pemberitaan negatif 20% < x ≤ 30%",
+          "Prosentase pemberitaan negatif 30% < x ≤ 40%",
+          "Prosentase pemberitaan negatif > 40%"
+        ]
+      },
+      {
+        "name": "Tingkat kepuasan pengguna layanan/wisatawan/investor",
+        "details": [
+          "nilai kepuasan 4,5 < x ≤ 5, skala 5",
+          "nilai kepuasan 4 < x ≤ 4,5, skala 5",
+          "nilai kepuasan 3,5 < x ≤ 4, skala 5",
+          "nilai kepuasan 3 < x ≤ 3,5, skala 5",
+          "nilai kepuasan x < 3, skala 5"
+        ]
+      }
+    ]
+  },
+  {
+    "area": "Layanan Publik",
+    "levels": [
+      {
+        "name": "Prosentase gangguan",
+        "details": [
+          "5% dari standar operasional layanan",
+          "5% < x ≤ 15% dari standar operasional layanan",
+          "15% < x ≤ 35% dari standar operasional layanan",
+          "35% < x ≤ 50% dari standar operasional layanan",
+          "x > 50% dari standar operasional layanan"
+        ]
+      }
+    ]
+  },
+  {
+    "area": "Capaian Kinerja",
+    "levels": [
+      {
+        "name": "Deviasi keluaran atau output",
+        "details": [
+          "x < 1%",
+          "1% < x ≤ 5%",
+          "5% < x ≤ 10%",
+          "10% < x ≤ 20%",
+          "x > 20%"
+        ]
+      },
+      {
+        "name": "Over budget",
+        "details": [
+          "x < 1%",
+          "1% < x ≤ 5%",
+          "5% < x ≤ 10%",
+          "10% < x ≤ 20%",
+          "x > 20%"
+        ]
+      },
+      {
+        "name": "Keterlambatan penyelesaian",
+        "details": [
+          "x < 5%",
+          "5% < x ≤ 10%",
+          "10% < x ≤ 15%",
+          "15% < x ≤ 25%",
+          "x > 25%"
+        ]
+      }
+    ]
+  }
+]

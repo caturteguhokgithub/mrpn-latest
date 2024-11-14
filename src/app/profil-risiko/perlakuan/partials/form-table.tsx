@@ -52,6 +52,7 @@ import {
 import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
 import dayjs from "dayjs";
 import DialogComponent from "@/components/dialog";
+import TextareaComponent from "@/app/components/textarea";
 
 const highlightText = (text: any, highlight: any) => {
   if (!highlight.trim() || text == "" || text == undefined) {
@@ -127,20 +128,22 @@ const TablePerlakuanMultiCheck = ({
     <Paper
       elevation={0}
       variant="outlined"
-      sx={{ minWidth: "100% !important" }}
+      sx={{ minWidth: "100% !important", mt: 1 }}
     >
-      <TextField
-        InputLabelProps={{
-          shrink: true,
-        }}
-        variant="outlined"
-        fullWidth
-        placeholder="Cari nomenklatur RO"
-        value={search}
-        onChange={handleSearchChange}
-        sx={SxAutocompleteTextField(paramVariantDefault)}
-        size="small"
-      />
+      <Box p={1}>
+        <TextField
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          fullWidth
+          placeholder="Cari nomenklatur RO"
+          value={search}
+          onChange={handleSearchChange}
+          sx={SxAutocompleteTextField(paramVariantDefault)}
+          size="small"
+        />
+      </Box>
       <TableContainer sx={{ maxHeight: 200 }}>
         <Table stickyHeader size="small">
           <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
@@ -415,6 +418,11 @@ export default function FormTable({
                 </>
               }
             />
+            {/* <TextareaComponent
+              label=""
+              placeholder="Keterangan Perlakuan Risiko"
+              row={2}
+            /> */}
             <TablePerlakuanMultiCheck
               data={data?.optionRo ?? []}
               state={state}
@@ -531,6 +539,7 @@ export default function FormTable({
             levelId={5}
             handleClick={handleClick}
             clickedCell={clickedCell}
+            noClick={mode === "read" ? true : false}
           />
         </Grid>
 
