@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useRef, useState} from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import {
   Stack,
   Table,
@@ -7,21 +7,22 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import {blue, green, grey, orange, red, yellow} from "@mui/material/colors";
-import {dataMatriks} from "@/app/penetapan/kriteria/dataMatriks";
+import { blue, green, grey, orange, red, yellow } from "@mui/material/colors";
+import { dataMatriks } from "@/app/penetapan/kriteria/dataMatriks";
 
-export default function Matriks(
-  {
-    levelId,
-    handleClick,
-    clickedCell,
-    fontSize = [],
-  }: {
-    levelId?: number;
-    handleClick?: any;
-    fontSize?: any;
-    clickedCell?: any;
-  }) {
+export default function Matriks({
+  levelId,
+  handleClick,
+  clickedCell,
+  fontSize = [],
+  noClick,
+}: {
+  levelId?: number;
+  handleClick?: any;
+  fontSize?: any;
+  clickedCell?: any;
+  noClick?: boolean;
+}) {
   const [isActive, setIsActive] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -54,6 +55,8 @@ export default function Matriks(
             <>
               <Table
                 sx={{
+                  pointerEvents: noClick ? "none" : "unset",
+
                   "td, th": {
                     fontSize: 12,
                     p: 0.5,
@@ -68,7 +71,7 @@ export default function Matriks(
                 }}
               >
                 <TableHead>
-                  <TableRow sx={{bgcolor: grey[200]}}>
+                  <TableRow sx={{ bgcolor: grey[200] }}>
                     <TableCell colSpan={3} rowSpan={3} align="center">
                       {itemMatriks.header.title}
                     </TableCell>
@@ -76,14 +79,14 @@ export default function Matriks(
                       Level Dampak
                     </TableCell>
                   </TableRow>
-                  <TableRow sx={{bgcolor: grey[200]}}>
+                  <TableRow sx={{ bgcolor: grey[200] }}>
                     {itemMatriks.header.levels.map((level, index) => (
                       <TableCell key={index} align="center">
                         {level}
                       </TableCell>
                     ))}
                   </TableRow>
-                  <TableRow sx={{bgcolor: grey[200]}}>
+                  <TableRow sx={{ bgcolor: grey[200] }}>
                     {itemMatriks.header.descriptions.map((desc, index) => (
                       <TableCell key={index} align="center">
                         {desc}
@@ -118,14 +121,15 @@ export default function Matriks(
                           clickedCell.colIndex === colIndex
                             ? "active-cell"
                             : isActive
-                              ? "deactive-cell"
-                              : "active-cell"
+                            ? "deactive-cell"
+                            : "active-cell"
                         }
                         align="center"
                         width={150}
                         sx={{
                           fontWeight: 700,
-                          bgcolor: colorMap[itemMatriks.rows[0].colors[colIndex]],
+                          bgcolor:
+                            colorMap[itemMatriks.rows[0].colors[colIndex]],
                           userSelect: "none",
                           cursor: "pointer",
                           overflow: "hidden",
@@ -137,7 +141,7 @@ export default function Matriks(
                               : fontSize[colIndex] || "12px",
                         }}
                         onClick={() => {
-                          handleClick(0, colIndex, value)
+                          handleClick(0, colIndex, value);
                           setIsActive(true);
                         }}
                       >
@@ -159,8 +163,8 @@ export default function Matriks(
                             clickedCell.colIndex === colIndex
                               ? "active-cell"
                               : isActive
-                                ? "deactive-cell"
-                                : "active-cell"
+                              ? "deactive-cell"
+                              : "active-cell"
                           }
                           align="center"
                           sx={{
@@ -183,7 +187,7 @@ export default function Matriks(
                             //     : "none",
                           }}
                           onClick={() => {
-                            handleClick(rowIndex + 1, colIndex, value)
+                            handleClick(rowIndex + 1, colIndex, value);
                             setIsActive(true);
                           }}
                         >

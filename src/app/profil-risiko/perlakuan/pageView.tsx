@@ -89,14 +89,18 @@ export default function PagePerlakuanView({}) {
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
-      <Button onClick={() => actionModal(false, "create")}>Batal</Button>
-      <Button
-        variant="contained"
-        type="submit"
-        onClick={() => updateOrCreateOrDelete()}
-      >
-        Simpan
+      <Button onClick={() => actionModal(false, "create")}>
+        {modal.action == "read" ? "Keluar" : "Batal"}
       </Button>
+      {modal.action !== "read" && (
+        <Button
+          variant="contained"
+          type="submit"
+          onClick={() => updateOrCreateOrDelete()}
+        >
+          Simpan
+        </Button>
+      )}
     </DialogActions>
   );
 
@@ -423,7 +427,11 @@ export default function PagePerlakuanView({}) {
   return (
     <>
       <ContentPage
-        title={`Perlakuan Risiko ${year == 0 ? 'RPJMN '+rpjmn?.start+"-"+rpjmn?.end : 'Tahun '+year}`}
+        title={`Perlakuan Risiko ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip="Proses untuk menurunkan keterpaparan risiko yang dikaitkan dengan toleransi dan selera risiko
 yang telah ditetapkan"
         withCard={objectState === undefined}
@@ -466,7 +474,7 @@ yang telah ditetapkan"
       </ContentPage>
 
       <DialogComponent
-        width={"80%"}
+        width={"60%"}
         dialogOpen={modal.isOpen && modal.action != "delete"}
         dialogClose={() => actionModal(false, "create")}
         title={`${

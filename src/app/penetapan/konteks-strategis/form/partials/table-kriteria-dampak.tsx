@@ -2,28 +2,19 @@ import React from "react";
 import {
   Button,
   DialogActions,
-  Icon,
-  IconButton,
   Paper,
-  Stack,
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
-  Typography,
 } from "@mui/material";
 import theme from "@/theme";
 import { AddCircle } from "@mui/icons-material";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import DialogComponent from "@/app/components/dialog";
-import FormPeraturan from "./form-peraturan";
-import FormKemungkinan from "./form-kemungkinan";
 import FormDampak from "./form-dampak";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 import CardItem from "@/app/components/cardTabItem";
 
 export default function TableDampak({ mode }: { mode?: string }) {
@@ -84,7 +75,20 @@ export default function TableDampak({ mode }: { mode?: string }) {
 
   return (
     <>
-      <CardItem title="Kriteria Dampak">
+      <CardItem
+        title="Kriteria Dampak"
+        addButton={
+          <Button
+            variant="contained"
+            size="small"
+            startIcon={<AddCircle />}
+            sx={{ lineHeight: 1, py: 1, borderRadius: 24 }}
+            onClick={handleModalOpenAdd}
+          >
+            Tambah Kriteria Dampak
+          </Button>
+        }
+      >
         {/* <Stack
      mb={2}
      direction="row"
@@ -119,11 +123,11 @@ export default function TableDampak({ mode }: { mode?: string }) {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Sangat Rendah (1)</TableCell>
-                <TableCell>Rendah (2)</TableCell>
-                <TableCell>Sedang (3)</TableCell>
-                <TableCell>Tinggi (4)</TableCell>
-                <TableCell>Sangat Tinggi (5)</TableCell>
+                <TableCell>Tidak Signifikan (1)</TableCell>
+                <TableCell>Minor (2)</TableCell>
+                <TableCell>Moderat (3)</TableCell>
+                <TableCell>Signifikan (4)</TableCell>
+                <TableCell>Sangat Signifikan (5)</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

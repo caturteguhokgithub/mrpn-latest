@@ -1,0 +1,249 @@
+.wrap-input-8 .input:focus {
+  outline: none;
+}
+
+.wrap-input-8 .input ~ .focus-border:before,
+.wrap-input-8 .input ~ .focus-border:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #1880c9;
+  border-radius: 16px;
+  transition: 0.3s;
+}
+
+.wrap-input-8 .input ~ .focus-border:after {
+  top: auto;
+  bottom: 0;
+  left: auto;
+  right: 0;
+}
+
+.wrap-input-8 .input ~ .focus-border i:before,
+.wrap-input-8 .input ~ .focus-border i:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 0;
+  background-color: #1880c9;
+  transition: 0.4s;
+  border-radius: 16px;
+}
+
+.wrap-input-8 .input ~ .focus-border i:after {
+  left: auto;
+  right: 0;
+  top: auto;
+  bottom: 0;
+}
+
+.wrap-input-8 .input:focus ~ .focus-border:before,
+.wrap-input-8 .input:focus ~ .focus-border:after {
+  width: 100%;
+  transition: 0.3s;
+}
+
+.wrap-input-8 .input:focus ~ .focus-border i:before,
+.wrap-input-8 .input:focus ~ .focus-border i:after {
+  height: 100%;
+  transition: 0.4s;
+}
+
+.login-page {
+  background: linear-gradient(270deg, #001220, #0d344d);
+  background-size: 400% 400%;
+  animation: AnimationName 27s ease infinite;
+}
+
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+#slider {
+  display: flex;
+  gap: 15px;
+  font-size: 20px;
+}
+
+#sliderValue {
+  overflow: hidden; /* Hide overflowing content */
+  position: relative; /* Required for absolute positioning of letters */
+}
+
+#sliderValue span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fade 0.3s forwards;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.blobs {
+  width: 50vh;
+  height: 50vh;
+  display: block;
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.blobs .blob {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  position: absolute;
+  background-color: #ff4d00;
+  mix-blend-mode: multiply;
+  filter: blur(120px);
+  opacity: 0.2;
+}
+
+.blobs .blob.a {
+  background-color: #1880c9;
+  animation: circular2 40s linear infinite;
+}
+
+.blobs .blob.b {
+  background-color: #33cc33;
+  animation: circular 20s linear infinite;
+}
+
+.blobs .blob.c {
+  background-color: #33cc33;
+  animation: circular3 60s linear infinite;
+}
+
+.blobs .blob.d {
+  background-color: #1880c9;
+  animation: circular 10s linear infinite;
+}
+
+.blobs .blob.e {
+  background-color: #ff4d00;
+  animation: circular2 30s linear infinite;
+}
+
+@keyframes circular {
+  0% {
+    transform: translate(0, -600px);
+  }
+  25% {
+    transform: translate(600px, 0);
+  }
+  50% {
+    transform: translate(0, 600px);
+  }
+  75% {
+    transform: translate(-600px, 0);
+  }
+  100% {
+    transform: translate(0, -600px);
+  }
+}
+@keyframes circular2 {
+  0% {
+    transform: translate(0, 150px);
+  }
+  25% {
+    transform: translate(-150px, 0);
+  }
+  50% {
+    transform: translate(0, -150px);
+  }
+  75% {
+    transform: translate(150px, 0);
+  }
+  100% {
+    transform: translate(0, 150px);
+  }
+}
+@keyframes circular3 {
+  0% {
+    transform: translate(0, 150px);
+  }
+  25% {
+    transform: translate(-150px, 0);
+  }
+  50% {
+    transform: translate(0, -150px);
+  }
+  75% {
+    transform: translate(150px, 0);
+  }
+  100% {
+    transform: translate(0, 150px);
+  }
+}
+/**
+  * Gyro
+  *
+  * @author jh3y - https://github.com/jh3y
+*/
+@keyframes gyro {
+  0% {
+    transform: scale(1) rotate(0deg) translateY(calc(var(--radius) * 1%));
+  }
+  50% {
+    transform: scale(0.5) rotate(1440deg) translateY(0);
+  }
+  100% {
+    transform: scale(1) rotate(2920deg) translateY(calc(var(--radius) * 1%));
+  }
+}
+.gyro:after,
+.gyro:before {
+  --radius: 250;
+  animation: gyro 2s infinite linear;
+  background: lightcoral;
+  border-radius: 100%;
+  content: "";
+  height: 20px;
+  width: 20px;
+  position: absolute;
+}
+
+.gyro:before {
+  --radius: -250;
+  background: lightgreen;
+}
+
+.gantt-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-task-list {
+  position: absolute;
+  top: 100px; /* Adjust based on where you want it */
+  left: 10px; /* Adjust based on where you want it */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.custom-task {
+  margin-bottom: 5px;
+}/*# sourceMappingURL=styles.css.map */

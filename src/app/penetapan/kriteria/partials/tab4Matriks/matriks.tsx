@@ -1,14 +1,18 @@
 import React, { Fragment } from "react";
 import {
+  alpha,
+  Paper,
   Stack,
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
 } from "@mui/material";
 import { blue, green, grey, orange, red, yellow } from "@mui/material/colors";
 import { dataMatriks } from "../../dataMatriks";
+import theme from "@/theme";
 
 export default function Matriks({ levelId }: { levelId?: number }) {
   const colorMap: { [key: string]: string } = {
@@ -24,10 +28,12 @@ export default function Matriks({ levelId }: { levelId?: number }) {
       {dataMatriks.map((itemMatriks, index) => (
         <Fragment key={index}>
           {levelId === itemMatriks.id && (
-            <>
+            <TableContainer component={Paper} elevation={0} variant="outlined">
               <Table>
                 <TableHead>
-                  <TableRow sx={{ bgcolor: grey[200] }}>
+                  <TableRow
+                    sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}
+                  >
                     <TableCell
                       colSpan={3}
                       rowSpan={3}
@@ -40,14 +46,18 @@ export default function Matriks({ levelId }: { levelId?: number }) {
                       Level Dampak
                     </TableCell>
                   </TableRow>
-                  <TableRow sx={{ bgcolor: grey[200] }}>
+                  <TableRow
+                    sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}
+                  >
                     {itemMatriks.header.levels.map((level, index) => (
                       <TableCell key={index} align="center" sx={{ p: 1 }}>
                         {level}
                       </TableCell>
                     ))}
                   </TableRow>
-                  <TableRow sx={{ bgcolor: grey[200] }}>
+                  <TableRow
+                    sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}
+                  >
                     {itemMatriks.header.descriptions.map((desc, index) => (
                       <TableCell key={index} align="center" sx={{ p: 1 }}>
                         {desc}
@@ -105,7 +115,7 @@ export default function Matriks({ levelId }: { levelId?: number }) {
                   ))}
                 </TableBody>
               </Table>
-            </>
+            </TableContainer>
           )}
         </Fragment>
       ))}
@@ -113,9 +123,15 @@ export default function Matriks({ levelId }: { levelId?: number }) {
   );
 
   const levelMatriks = (
-    <Table>
+    <Table
+      sx={{
+        border: `1px solid ${grey[300]}`,
+        borderRadius: 1,
+        borderCollapse: "unset",
+      }}
+    >
       <TableHead>
-        <TableRow sx={{ bgcolor: grey[200] }}>
+        <TableRow sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
           <TableCell>Level Risiko</TableCell>
           <TableCell align="center">Besaran Risiko </TableCell>
           <TableCell align="center">Warna</TableCell>
