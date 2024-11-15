@@ -114,33 +114,41 @@ export default function FormTable({
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Insidentil" />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  disabled={mode === "read"}
-                  checked={request.insidentil}
-                  value={request.insidentil}
-                  onChange={(e) =>
-                    setRequest((prevState) => {
-                      return {
-                        ...prevState,
-                        insidentil: e.target.checked,
-                      };
-                    })
-                  }
-                  sx={{
-                    ...(mode === "read" && {
-                      py: 0,
-                    }),
-                  }}
-                />
-              }
-              label={
-                <Typography fontWeight={500} color={red[600]}>
-                  Insidentil
-                </Typography>
-              }
-            />
+            {mode === "read" && !request.insidentil ? (
+              "-"
+            ) : (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    disabled={mode === "read"}
+                    checked={request.insidentil}
+                    value={request.insidentil}
+                    onChange={(e) =>
+                      setRequest((prevState) => {
+                        return {
+                          ...prevState,
+                          insidentil: e.target.checked,
+                        };
+                      })
+                    }
+                    sx={{
+                      color: red[600],
+                      "&.Mui-checked": {
+                        color: red[600],
+                      },
+                      ...(mode === "read" && {
+                        py: 0,
+                      }),
+                    }}
+                  />
+                }
+                label={
+                  <Typography fontWeight={500} color={red[600]}>
+                    Insidentil
+                  </Typography>
+                }
+              />
+            )}
           </FormControl>
         </Grid>
         <Grid item xs={12}>

@@ -16,9 +16,15 @@ import { dataMatriks } from "../../kriteria/dataMatriks";
 export default function FormatBP({
   form,
   levelId,
+  target,
+  kapasitas,
+  inherent,
   note,
 }: {
   form: React.ReactNode;
+  target: React.ReactNode;
+  kapasitas: React.ReactNode;
+  inherent: React.ReactNode;
   note: React.ReactNode;
   levelId: number;
 }) {
@@ -174,6 +180,30 @@ export default function FormatBP({
 
   return (
     <Stack gap={2}>
+      <Stack gap={1}>
+        <Typography fontStyle="italic" fontSize={14}>
+          Target
+        </Typography>
+        <Typography sx={{ width: "50%" }} color={grey[900]}>
+          {target}
+        </Typography>
+      </Stack>
+      <Stack gap={1}>
+        <Typography fontStyle="italic" fontSize={14}>
+          Kapasitas
+        </Typography>
+        <Typography sx={{ width: "50%" }} color={grey[900]}>
+          {kapasitas}
+        </Typography>
+      </Stack>
+      <Stack gap={1}>
+        <Typography fontStyle="italic" fontSize={14}>
+          Inherent Risk
+        </Typography>
+        <Typography sx={{ width: "50%" }} color={grey[900]}>
+          {inherent}
+        </Typography>
+      </Stack>
       <Stack gap={1}>
         <Typography fontStyle="italic" fontSize={14}>
           Keterangan

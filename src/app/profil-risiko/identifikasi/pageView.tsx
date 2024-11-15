@@ -10,6 +10,7 @@ import {
   FormControl,
   Paper,
   Stack,
+  Typography,
 } from "@mui/material";
 import DialogComponent from "@/app/components/dialog";
 import FormTable from "./partials/form-table";
@@ -31,6 +32,8 @@ import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import HeaderTable from "../overview/partials/headerTable";
 import useRiskOverviewVM from "../overview/pageVM";
 import { advancedTable } from "@/app/components/table";
+import { red } from "@mui/material/colors";
+import { InfoTooltip } from "@/app/components/InfoTooltip";
 
 export default function PageIdentifikasiView({}) {
   const { permission } = useAuthContext((state) => state);
@@ -74,6 +77,18 @@ export default function PageIdentifikasiView({}) {
       header: "Peristiwa Risiko Strategis MRPN Linsek",
       size: 250,
       enableColumnActions: false,
+      Cell: (item: any) => (
+        <Stack flexDirection="row" alignItems="center" gap={1}>
+          <Typography
+            color={item.row.original.insidentil ? red[600] : "inherit"}
+          >
+            {item.row.original.peristiwa_risiko}
+          </Typography>
+          {item.row.original.insidentil && (
+            <InfoTooltip title="Insidentil" color={red[600]} />
+          )}
+        </Stack>
+      ),
     },
     {
       accessorKey: "kategori_risiko",
@@ -222,14 +237,18 @@ export default function PageIdentifikasiView({}) {
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
-      <Button onClick={() => actionModal(false, "create")}>Batal</Button>
-      <Button
-        variant="contained"
-        type="submit"
-        onClick={() => updateOrCreateOrDelete()}
-      >
-        Simpan
+      <Button onClick={() => actionModal(false, "create")}>
+        {modal.action == "read" ? "Keluar" : "Batal"}
       </Button>
+      {modal.action !== "read" && (
+        <Button
+          variant="contained"
+          type="submit"
+          onClick={() => updateOrCreateOrDelete()}
+        >
+          Simpan
+        </Button>
+      )}
     </DialogActions>
   );
 
@@ -249,6 +268,7 @@ export default function PageIdentifikasiView({}) {
 
   return (
     <>
+      {console.log("request.insidentil", request.insidentil)}
       <ContentPage
         title={`Identifikasi Risiko ${
           year == 0

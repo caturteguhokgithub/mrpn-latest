@@ -23,12 +23,12 @@ import { ExsumIndicationState } from "@/app/executive-summary/partials/tab9Indic
 import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
 import { ExsumSWOTValuesDto } from "@/app/executive-summary/partials/tab1Background/cardSwot/cardSwotModel";
 import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
-import TextareaComponent, {TextareaStyled} from "@/app/components/textarea";
+import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
 import AddButton from "@/app/components/buttonAdd";
 import { grey } from "@mui/material/colors";
-import {ExsumTWOSDto} from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
-import {Text} from "recharts";
-import {useRKPContext} from "@/lib/core/hooks/useHooks";
+import { ExsumTWOSDto } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
+import { Text } from "recharts";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
 
 export default function FormIndication({
   state,
@@ -37,7 +37,7 @@ export default function FormIndication({
   optionStrategy,
   optionStakeholder,
   optionRO,
-  optionTOWS
+  optionTOWS,
 }: {
   state: ExsumIndicationState;
   setState: (value: SetStateAction<ExsumIndicationState>) => void;
@@ -45,10 +45,9 @@ export default function FormIndication({
   optionStrategy: ExsumSWOTValuesDto[];
   optionStakeholder: MiscMasterListStakeholderRes[];
   optionRO: RoDto[];
-  optionTOWS: ExsumTWOSDto[]
+  optionTOWS: ExsumTWOSDto[];
 }) {
-
-  const {year,rpjmn} = useRKPContext(store => store)
+  const { year, rpjmn } = useRKPContext((store) => store);
 
   const optionsYear = () => {
     if (rpjmn !== undefined) {
@@ -63,44 +62,44 @@ export default function FormIndication({
 
   const addMenu = () => {
     setState((prevState) => {
-      const prevValues = prevState.values
+      const prevValues = prevState.values;
       prevValues.push({
-        id:prevValues.length,
-        tahun:year == 0 ? [(rpjmn?.start ?? 0)] : [year],
+        id: prevValues.length,
+        tahun: year == 0 ? [rpjmn?.start ?? 0] : [year],
         perlakuan_risiko: "",
         rincian_output: undefined,
         non_rincian_output: "",
-        stakeholderMultiple:[],
+        stakeholderMultiple: [],
         stakeholder: {
           coordinator: undefined,
           main: [],
           others: [
             {
               type: "",
-              entity: []
-            }
-          ]
-        }
-      })
+              entity: [],
+            },
+          ],
+        },
+      });
       return {
         ...prevState,
         values: prevValues,
       };
-    })
+    });
   };
 
   const minusMenu = (nowId: number) => {
     setState((prevState) => {
-      const prevValues = prevState.values
-      const getIndex = prevValues.findIndex(x => x.id == nowId)
-      if (getIndex > -1){
-        prevValues.splice(getIndex, 1)
+      const prevValues = prevState.values;
+      const getIndex = prevValues.findIndex((x) => x.id == nowId);
+      if (getIndex > -1) {
+        prevValues.splice(getIndex, 1);
       }
       return {
         ...prevState,
         values: prevValues,
       };
-    })
+    });
   };
 
   return (
@@ -112,7 +111,7 @@ export default function FormIndication({
             key={state.tows?.id ?? 0}
             value={state.tows}
             options={optionTOWS}
-            getOptionLabel={(option) => option.type +" - "+ option.value}
+            getOptionLabel={(option) => option.type + " - " + option.value}
             handleChange={(val: ExsumTWOSDto) =>
               setState((prevState) => {
                 return {
@@ -133,12 +132,14 @@ export default function FormIndication({
             minRows={2}
             aria-label="Tuliskan indikasi risiko"
             placeholder="Tuliskan indikasi risiko"
-            onChange={(e) => setState(prevState => {
-              return {
-                ...prevState,
-                indikasi_risiko:e.target.value
-              }
-            })}
+            onChange={(e) =>
+              setState((prevState) => {
+                return {
+                  ...prevState,
+                  indikasi_risiko: e.target.value,
+                };
+              })
+            }
           />
         </FormControl>
       </Grid>
@@ -222,12 +223,8 @@ export default function FormIndication({
                       </Grid>
                       <Grid item xs={12}>
                         <FormControl fullWidth>
-                          <FieldLabelInfo
-                            title="Tahun"
-                            titleField
-                            information="Tahun"
-                          />
-                          {year == 0 ?
+                          <FieldLabelInfo title="Tahun" titleField />
+                          {year == 0 ? (
                             // <AutocompleteSelectSingle
                             //   key={tags.tahun}
                             //   value={tags.tahun}
@@ -248,54 +245,71 @@ export default function FormIndication({
                               key={tags.tahun.length}
                               value={tags.tahun}
                               options={optionsYear()}
-                              getOptionLabel={opt => opt.toString()}
-                                handleChange={(e:number[]) => setState(prevState => {
-                                  const prevData = {...prevState}
-                                  const getIndex = prevData.values.findIndex(x => x.id === tags.id)
-                                  if (getIndex > -1){
-                                    prevData.values[getIndex].tahun = e
-                                    return prevData
+                              getOptionLabel={(opt) => opt.toString()}
+                              handleChange={(e: number[]) =>
+                                setState((prevState) => {
+                                  const prevData = { ...prevState };
+                                  const getIndex = prevData.values.findIndex(
+                                    (x) => x.id === tags.id
+                                  );
+                                  if (getIndex > -1) {
+                                    prevData.values[getIndex].tahun = e;
+                                    return prevData;
                                   }
-                                  return prevState
-                                })}
+                                  return prevState;
+                                })
+                              }
                               placeHolder={"Pilih tahun"}
                               labelSelectAll={"Pilih semua tahun"}
                             />
-                          :
+                          ) : (
                             <TextareaStyled
                               value={tags.tahun.join(",")}
                               disabled
                             />
-                          }
+                          )}
                         </FormControl>
                       </Grid>
                       <Grid item xs={12}>
                         <FormControl fullWidth>
                           <FieldLabelInfo
-                            title="Perlakuan Risiko"
+                            title="Indikasi Perlakuan Risiko"
                             titleField
-                            information="Proses untuk menurunkan keterpaparan risiko yang dikaitkan dengan toleransi dan selera risiko
-yang telah ditetapkan"
+                            information={
+                              <>
+                                <strong>Perlakuan Risiko</strong>
+                                <p>
+                                  Proses untuk menurunkan keterpaparan risiko
+                                  yang dikaitkan dengan toleransi dan selera
+                                  risiko yang telah ditetapkan
+                                </p>
+                              </>
+                            }
                           />
                           <TextareaStyled
-                            aria-label={"Perlakuan Risiko"}
-                            placeholder={"Perlakuan Risiko"}
+                            aria-label={"Indikasi Perlakuan Risiko"}
+                            placeholder={"Indikasi Perlakuan Risiko"}
                             value={tags.perlakuan_risiko}
-                            onChange={(e) => setState(prevState => {
-                              const prevData = {...prevState}
-                              const getIndex = prevData.values.findIndex(x => x.id === tags.id)
-                              if (getIndex > -1){
-                                prevData.values[getIndex].perlakuan_risiko = e.target.value
-                                return prevData
-                              }
-                              return prevState
-                            })}
+                            onChange={(e) =>
+                              setState((prevState) => {
+                                const prevData = { ...prevState };
+                                const getIndex = prevData.values.findIndex(
+                                  (x) => x.id === tags.id
+                                );
+                                if (getIndex > -1) {
+                                  prevData.values[getIndex].perlakuan_risiko =
+                                    e.target.value;
+                                  return prevData;
+                                }
+                                return prevState;
+                              })
+                            }
                           />
                         </FormControl>
                       </Grid>
                       <Grid item xs={12}>
                         <FormControl fullWidth>
-                          <FieldLabelInfo title="Rincian Output" titleField />
+                          <FieldLabelInfo title="Output" titleField />
                           <AutocompleteSelectSingle
                             bgWhite
                             key={tags.rincian_output?.id ?? 0}
@@ -304,58 +318,82 @@ yang telah ditetapkan"
                             getOptionLabel={(opt) => opt.value}
                             handleChange={(newVal: RoDto) =>
                               setState((prevState) => {
-                                const prevData = {...prevState}
-                                const getIndex = prevData.values.findIndex(x => x.id === tags.id)
-                                if (getIndex > -1){
-                                  prevData.values[getIndex].rincian_output = newVal
-                                  return prevData
+                                const prevData = { ...prevState };
+                                const getIndex = prevData.values.findIndex(
+                                  (x) => x.id === tags.id
+                                );
+                                if (getIndex > -1) {
+                                  prevData.values[getIndex].rincian_output =
+                                    newVal;
+                                  return prevData;
                                 }
-                                return prevState
+                                return prevState;
                               })
                             }
-                            placeHolder={"Pilih rincian output"}
+                            placeHolder={"Pilih output"}
                           />
                         </FormControl>
                       </Grid>
-                      {tags.rincian_output !== undefined && tags.rincian_output?.id === 0 &&
+                      {tags.rincian_output !== undefined &&
+                        tags.rincian_output?.id === 0 && (
                           <Grid item xs={12}>
-                              <FormControl fullWidth>
-                                  <FieldLabelInfo title="Non Rincian Output" titleField />
-                                  <TextareaStyled
-                                      value={tags.non_rincian_output}
-                                      onChange={(newVal) =>
-                                        setState((prevState) => {
-                                          const prevData = {...prevState}
-                                          const getIndex = prevData.values.findIndex(x => x.id === tags.id)
-                                          if (getIndex > -1){
-                                            prevData.values[getIndex].non_rincian_output = newVal.target.value
-                                            return prevData
-                                          }
-                                          return prevState
-                                        })}
-                                  />
-                              </FormControl>
+                            <FormControl fullWidth>
+                              <FieldLabelInfo
+                                title="Non Rincian Output"
+                                titleField
+                              />
+                              <TextareaStyled
+                                value={tags.non_rincian_output}
+                                onChange={(newVal) =>
+                                  setState((prevState) => {
+                                    const prevData = { ...prevState };
+                                    const getIndex = prevData.values.findIndex(
+                                      (x) => x.id === tags.id
+                                    );
+                                    if (getIndex > -1) {
+                                      prevData.values[
+                                        getIndex
+                                      ].non_rincian_output =
+                                        newVal.target.value;
+                                      return prevData;
+                                    }
+                                    return prevState;
+                                  })
+                                }
+                              />
+                            </FormControl>
                           </Grid>
-                      }
+                        )}
                       <Grid item xs={12}>
                         <FormControl fullWidth>
-                          <FieldLabelInfo title="K/L PenanggungJawab" titleField />
+                          <FieldLabelInfo
+                            title="PJ Perlakuan"
+                            titleField
+                          />
                           <AutocompleteSelectMultiple
                             bgWhite
                             key={tags.stakeholderMultiple.length}
                             value={tags.stakeholderMultiple}
                             options={optionStakeholder}
                             getOptionLabel={(opt) => opt.value}
-                            handleChange={(newVal: MiscMasterListStakeholderRes[]) => setState((prevState) => {
-                              const prevData = {...prevState};
-                              const getIndex = prevData.values.findIndex(x => x.id === tags.id);
-                              if (getIndex > -1) {
-                                prevData.values[getIndex].stakeholderMultiple = newVal;
-                                return prevData;
-                              }
-                              return prevState;
-                            })}
-                            placeHolder={"Pilih K/L penanggungjawab"}
+                            handleChange={(
+                              newVal: MiscMasterListStakeholderRes[]
+                            ) =>
+                              setState((prevState) => {
+                                const prevData = { ...prevState };
+                                const getIndex = prevData.values.findIndex(
+                                  (x) => x.id === tags.id
+                                );
+                                if (getIndex > -1) {
+                                  prevData.values[
+                                    getIndex
+                                  ].stakeholderMultiple = newVal;
+                                  return prevData;
+                                }
+                                return prevState;
+                              })
+                            }
+                            placeHolder={"Pilih PJ Perlakuan"}
                             labelSelectAll={"Pilih semua K/L"}
                           />
                         </FormControl>

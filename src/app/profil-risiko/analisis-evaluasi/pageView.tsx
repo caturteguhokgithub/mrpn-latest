@@ -48,7 +48,7 @@ export default function PageAnalisisEvaluasiView({}) {
     usePenetapanGlobalVM();
 
   useEffect(() => {
-      getMasterListObject();
+    getMasterListObject();
   }, [year]);
 
   const {
@@ -74,14 +74,18 @@ export default function PageAnalisisEvaluasiView({}) {
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
-      <Button onClick={() => actionModal(false, "create")}>Batal</Button>
-      <Button
-        variant="contained"
-        type="submit"
-        onClick={() => updateOrCreateOrDelete()}
-      >
-        Simpan
+      <Button onClick={() => actionModal(false, "create")}>
+        {modal.action == "read" ? "Keluar" : "Batal"}
       </Button>
+      {modal.action !== "read" && (
+        <Button
+          variant="contained"
+          type="submit"
+          onClick={() => updateOrCreateOrDelete()}
+        >
+          Simpan
+        </Button>
+      )}
     </DialogActions>
   );
 
@@ -99,7 +103,7 @@ export default function PageAnalisisEvaluasiView({}) {
     </DialogActions>
   );
 
-  const columns:MRT_ColumnDef<RiskOverviewData>[] = [
+  const columns: MRT_ColumnDef<RiskOverviewData>[] = [
     {
       id: "penilaian_risiko",
       header: "Penilaian Risiko",
@@ -172,8 +176,8 @@ export default function PageAnalisisEvaluasiView({}) {
                     renderedCellValue === "Sangat Tinggi (5)"
                       ? "error"
                       : renderedCellValue === "Tinggi (4)"
-                        ? "warning"
-                        : "success"
+                      ? "warning"
+                      : "success"
                   }
                   sx={{
                     minWidth: 80,
@@ -277,7 +281,11 @@ export default function PageAnalisisEvaluasiView({}) {
   return (
     <>
       <ContentPage
-        title={`Analisis & Evaluasi Risiko ${year == 0 ? 'RPJMN '+rpjmn?.start+"-"+rpjmn?.end : 'Tahun '+year}`}
+        title={`Analisis & Evaluasi Risiko ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip={
           <Stack spacing={2}>
             <div>

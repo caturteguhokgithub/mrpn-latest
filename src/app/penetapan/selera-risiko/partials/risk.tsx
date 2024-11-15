@@ -100,7 +100,7 @@ perencanaan pembangunan nasional"
         <Box mb={2}>
           <LabelRadio
             heading="RENDAH"
-            rangeValue={userLevel === "bappenas" ? null : "1-6"}
+            rangeValue={userLevel === "bappenas" ? "1-5" : "1-6"}
             description={
               <Stack gap={1}>
                 {userLevel === "bappenas" ? (
@@ -113,6 +113,9 @@ perencanaan pembangunan nasional"
                         width="100%"
                       />
                     }
+                    target="Sama atau meningkat ≤ 5%"
+                    kapasitas="Rendah/tetap/sebanding dengan peningkatan target"
+                    inherent="Sangat Rendah"
                     note="Sering tidak ingin risiko terjadi"
                   />
                 ) : (
@@ -156,7 +159,7 @@ perencanaan pembangunan nasional"
         <Box mb={2}>
           <LabelRadio
             heading="KONSERVATIF"
-            rangeValue={userLevel === "bappenas" ? null : "7-12"}
+            rangeValue={userLevel === "bappenas" ? "1-10" : "7-12"}
             // value={userLevel === "bappenas" ? 8 : null}
             description={
               <Stack gap={1}>
@@ -170,6 +173,9 @@ perencanaan pembangunan nasional"
                         width="100%"
                       />
                     }
+                    target="Meningkat 5% < x ≤ 10%"
+                    kapasitas="Rendah/tetap/sebanding dengan peningkatan target"
+                    inherent="Rendah"
                     note="Terdapat gap ketercapaian target yang dapat diterima"
                   />
                 ) : (
@@ -212,7 +218,7 @@ perencanaan pembangunan nasional"
         <Box mb={2}>
           <LabelRadio
             heading="MODERAT"
-            rangeValue={userLevel === "bappenas" ? null : "13-18"}
+            rangeValue={userLevel === "bappenas" ? "1-15" : "13-18"}
             // value={userLevel === "bappenas" ? 15 : null}
             description={
               <Stack gap={1}>
@@ -226,6 +232,9 @@ perencanaan pembangunan nasional"
                         width="100%"
                       />
                     }
+                    target="Meningkat 10% < x < 50%"
+                    kapasitas="Rendah/tetap/meningkat tetapi tidak sebanding dengan peningkatan target"
+                    inherent="Sedang"
                     note="Mempertimbangkan Cost & Benefit"
                   />
                 ) : (
@@ -272,7 +281,7 @@ perencanaan pembangunan nasional"
         <Box mb={2}>
           <LabelRadio
             heading="TINGGI"
-            rangeValue={userLevel === "bappenas" ? null : "19-25"}
+            rangeValue={userLevel === "bappenas" ? "1-20" : "19-25"}
             // value={userLevel === "bappenas" ? 25 : null}
             description={
               <Stack gap={1}>
@@ -286,6 +295,9 @@ perencanaan pembangunan nasional"
                         width="100%"
                       />
                     }
+                    target="Meningkat sangat signifikan > 50%"
+                    kapasitas="Rendah/tetap/meningkat tetapi tidak sebanding dengan peningkatan target"
+                    inherent="Tinggi"
                     note="Diperlukan banyak program inovasi untuk mengambil peluang & mencapai target kinerja dengan difasilitasi RO/Komponen (agar tersedia anggaran)"
                   />
                 ) : (

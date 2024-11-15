@@ -190,7 +190,7 @@ export default function TableIndication({
                     {row.perlakuan.length > 0 && (
                       <Box>
                         <Stack
-                          marginTop={"10px"}
+                          // marginTop={"10px"}
                           display="inline-flex"
                           alignItems="center"
                           direction="row"
@@ -198,7 +198,7 @@ export default function TableIndication({
                           flexWrap="wrap"
                         >
                           {row.perlakuan[0].stakeholder.map((st, stIndex) => (
-                            <Box key={stIndex} component="span">
+                            <Box key={stIndex} component="div">
                               <Chip
                                 label={st.value}
                                 size="small"
