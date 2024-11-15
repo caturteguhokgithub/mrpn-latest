@@ -17,7 +17,40 @@ import {
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import { API_CONSTANT } from "@/lib/core/api/apiModel";
-import { IconTimeout } from "../icons";
+import { IconErrorBadRequest, IconTimeout } from "../icons";
+
+const ErrorModal = ({
+  icon,
+  title,
+  message,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  message: string;
+}) => {
+  return (
+    <>
+      <Stack
+        alignItems="center"
+        mb={3}
+        sx={{
+          svg: {
+            width: 200,
+            height: "auto",
+          },
+        }}
+      >
+        {icon}
+      </Stack>
+      <DialogContentText sx={{ textAlign: "center" }}>
+        <Typography component="h3" fontWeight={600} fontSize={"1.3em"} mb={1}>
+          {title}
+        </Typography>
+        <Typography>{message}</Typography>
+      </DialogContentText>
+    </>
+  );
+};
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -58,39 +91,26 @@ export const IErrorModal = () => {
       sx={{
         ".MuiPaper-root": {
           borderRadius: 4,
-          p: 4,
+          p: 3,
         },
       }}
     >
       <DialogContent>
         {code == 400 ? (
-          <DialogContentText>{`${message} (${code})`}</DialogContentText>
+          <ErrorModal
+            icon={<IconErrorBadRequest />}
+            title="Error 400 Bad Request"
+            message={message}
+          />
         ) : (
-          <>
-            <Stack
-              alignItems="center"
-              mb={3}
-              sx={{
-                svg: {
-                  width: 200,
-                  height: "auto",
-                },
-              }}
-            >
-              <IconTimeout />
-            </Stack>
-            <DialogContentText sx={{ textAlign: "center" }}>
-              <Typography component="h3" fontWeight={600} fontSize={"1.3em"}>
-                Session Timeout
-              </Typography>
-              <Typography>
-                Sesi Anda telah berakhir, silahkan login kembali.
-              </Typography>
-            </DialogContentText>
-          </>
+          <ErrorModal
+            icon={<IconTimeout />}
+            title="Session Timeout"
+            message="Sesi Anda telah berakhir, silahkan login kembali."
+          />
         )}
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ p: 0 }}>
         <Button
           onClick={handleModalToggle}
           variant="contained"

@@ -13,3 +13,4 @@ export { IconEmptyImage } from "./empty-image";
 export { IconEmptyData } from "./empty-data";
 export { IndonesianSvgMap } from "./indonesia-map";
 export { IconTimeout } from "./timeout";
+export { IconErrorBadRequest } from "./error-400";
