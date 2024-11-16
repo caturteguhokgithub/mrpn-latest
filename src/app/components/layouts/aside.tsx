@@ -185,7 +185,7 @@ export default function Aside({
     reflect
     label="keluar sistem"
     icon={<IconKeluar />}
-    url={"javascript:void(0)"}
+    url={"/"}
     onclick={() => doLogout()}
    />
   </Stack>
