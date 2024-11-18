@@ -113,7 +113,23 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Insidentil" />
+            <FieldLabelInfo
+              title="Insidentil"
+              titleField
+              information={
+                <Stack spacing={2}>
+                  <div>
+                    <strong>Risiko Insidentil</strong>
+                    <p>
+                      Risiko yang sudah ditetapkan oleh UPR Lintas Sektor (LS)
+                      tetapi setelah perlakuan risiko masih berada dalam level
+                      tingkat tinggi sehingga tidak dapat ditangani lagi oleh
+                      UPR LS.
+                    </p>
+                  </div>
+                </Stack>
+              }
+            />
             {mode === "read" && !request.insidentil ? (
               "-"
             ) : (

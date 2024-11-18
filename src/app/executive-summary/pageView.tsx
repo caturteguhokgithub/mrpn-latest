@@ -13,6 +13,7 @@ import {
   Stack,
   Tabs,
   Tooltip,
+  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -26,9 +27,12 @@ import useApprovalVM from "@/app/executive-summary/approvalVM";
 import { grey } from "@mui/material/colors";
 import { ApprovalDto } from "@/lib/core/context/exsumContext";
 import { OverridableStringUnion } from "@mui/types";
+import { InfoTooltip } from "../components/InfoTooltip";
 
 export default function PageExecutiveSummary({}) {
-  const { rkpState, rpjmn, setYear, year, setRkpState } = useRKPContext((state) => state);
+  const { rkpState, rpjmn, setYear, year, setRkpState } = useRKPContext(
+    (state) => state
+  );
 
   const {
     exsum,
@@ -59,7 +63,7 @@ export default function PageExecutiveSummary({}) {
   }, [year]);
 
   const handleChangeTab = (event: any, newValue: any) => {
-    setRkpState(undefined)
+    setRkpState(undefined);
     setYear(newValue);
   };
 
@@ -126,9 +130,9 @@ export default function PageExecutiveSummary({}) {
     );
   };
 
-  const approvalStatus = (approval:ApprovalDto|undefined) => {
-    if (exsum.id == 0){
-      return undefined
+  const approvalStatus = (approval: ApprovalDto | undefined) => {
+    if (exsum.id == 0) {
+      return undefined;
     }
 
     let label: string = "Draft";
@@ -146,21 +150,21 @@ export default function PageExecutiveSummary({}) {
       | undefined = "default";
     let sx: any = { bgcolor: grey[600], color: "white", px: 1 };
 
-    if (approval != undefined){
-      if (approval.status == "rejected"){
-        label = "Rejected"
-        color = "error"
-        sx = {px: 1}
+    if (approval != undefined) {
+      if (approval.status == "rejected") {
+        label = "Rejected";
+        color = "error";
+        sx = { px: 1 };
       }
-      if (approval.status == "review"){
-        label = "Review"
-        color = "warning"
-        sx = {px: 1}
+      if (approval.status == "review") {
+        label = "Review";
+        color = "warning";
+        sx = { px: 1 };
       }
-      if (approval.status == "approved"){
-        label = "Approved"
-        color = "success"
-        sx = {px: 1}
+      if (approval.status == "approved") {
+        label = "Approved";
+        color = "success";
+        sx = { px: 1 };
       }
     }
 
@@ -207,10 +211,62 @@ export default function PageExecutiveSummary({}) {
                 onChange={handleChangeTab}
                 sx={{ borderRadius: 2.5 }}
               >
-                <CustomTab label="RPJMN" value={0} />
+                <CustomTab
+                  label={
+                    <Stack direction="row" alignItems="center" gap={0.5}>
+                      <Typography>RPJMN</Typography>
+                      <InfoTooltip
+                        title={
+                          <Stack spacing={2}>
+                            <div>
+                              <strong>
+                                Rencana Pembangunan Jangka Menengah (RPJMN)
+                              </strong>
+                              <p>
+                                Dokumen perencanaan Pembangunan Nasional untuk
+                                periode 5 (lima) tahun.
+                              </p>
+                            </div>
+                          </Stack>
+                        }
+                      />
+                    </Stack>
+                  }
+                  value={0}
+                />
                 {rpjmnState.map(
                   (r, i) =>
-                    i > 0 && <CustomTab label={`RKP ${r}`} value={r} key={i} />
+                    i > 0 && (
+                      <CustomTab
+                        label={
+                          <Stack direction="row" alignItems="center" gap={0.5}>
+                            <Typography>RKP {r}</Typography>
+                            {i == 1 && (
+                              <InfoTooltip
+                                title={
+                                  <Stack spacing={2}>
+                                    <div>
+                                      <strong>
+                                        Rencana Kerja Pemerintah (RKP)
+                                      </strong>
+                                      <p>
+                                        Dokumen perencanaan yang memuat
+                                        pokok-pokok kebijakan pembangunan
+                                        pemerintah dan menuntun ke arah tujuan
+                                        pencapaian visi dan misi pemerintah
+                                        untuk periode tahunan.
+                                      </p>
+                                    </div>
+                                  </Stack>
+                                }
+                              />
+                            )}
+                          </Stack>
+                        }
+                        value={r}
+                        key={i}
+                      />
+                    )
                 )}
               </Tabs>
             </Box>

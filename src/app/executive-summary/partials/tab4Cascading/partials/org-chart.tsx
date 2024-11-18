@@ -301,6 +301,15 @@ export default function CascadingOrgChart({
         maxHeight="100vh"
         dialogOpen={modalOpenImg}
         dialogClose={handleModalClose}
+        sx={{
+          ".transform-component-module_wrapper__SPB86": {
+            width: "100%",
+            height: "100vh",
+          },
+          ".MuiDialogContent-root": {
+            p: 0,
+          },
+        }}
       >
         <IconButton
           sx={{ position: "absolute", top: 10, right: 10, zIndex: 9999 }}

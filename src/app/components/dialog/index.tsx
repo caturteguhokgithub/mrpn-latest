@@ -1,5 +1,11 @@
 import React from "react";
-import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  SxProps,
+} from "@mui/material";
 import theme from "@/theme";
 import { IconFA } from "../icons/icon-fa";
 
@@ -18,6 +24,7 @@ export default function DialogComponent({
   zIndex,
   maxwidth,
   maxHeight,
+  sx,
 }: {
   title?: React.ReactNode;
   dialogOpen: boolean;
@@ -33,6 +40,7 @@ export default function DialogComponent({
   zIndex?: number;
   maxwidth?: number | string;
   maxHeight?: number | string;
+  sx?: SxProps;
 }) {
   return (
     <Dialog
@@ -41,6 +49,7 @@ export default function DialogComponent({
       onClose={dialogClose}
       onFocus={onFocus}
       sx={{
+        ...sx,
         zIndex: zIndex,
         ".MuiPaper-root": {
           minWidth: width ? width : 800,

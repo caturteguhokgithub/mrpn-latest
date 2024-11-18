@@ -1,4 +1,4 @@
-import React, {Fragment, SetStateAction} from "react";
+import React, { Fragment, SetStateAction } from "react";
 import {
   Box,
   Button,
@@ -6,58 +6,64 @@ import {
   FormControl,
   Grid,
   TextField,
+  Typography,
 } from "@mui/material";
-import {TextareaStyled} from "@/components/textarea";
+import { TextareaStyled } from "@/components/textarea";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
-import {MiscMasterListPerpresRes, MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel";
-import {ExsumRegulationDto} from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
-import {listPeraturan} from "@/app/utils/data";
-import {AutocompleteSelectMultiple, AutocompleteSelectSingle} from "@/components/autocomplete";
-import {IconFA} from "@/app/components/icons/icon-fa";
+import {
+  MiscMasterListPerpresRes,
+  MiscMasterListStakeholderRes,
+} from "@/app/misc/master/masterServiceModel";
+import { ExsumRegulationDto } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
+import { listPeraturan } from "@/app/utils/data";
+import {
+  AutocompleteSelectMultiple,
+  AutocompleteSelectSingle,
+} from "@/components/autocomplete";
+import { IconFA } from "@/app/components/icons/icon-fa";
 import DialogComponent from "@/app/components/dialog";
 
 type Option = (typeof listPeraturan)[number];
 
-export default function FormPeraturan(
-  {
-    options,
-    optionStakeholder,
-    request,
-    setRequest,
-    setModalPeraturan
-  }: {
-    options: MiscMasterListPerpresRes[];
-    optionStakeholder: MiscMasterListStakeholderRes[]
-    request: ExsumRegulationDto;
-    setRequest: (value: SetStateAction<ExsumRegulationDto>) => void;
-    setModalPeraturan:any
-  }
-) {
-
+export default function FormPeraturan({
+  options,
+  optionStakeholder,
+  request,
+  setRequest,
+  setModalPeraturan,
+}: {
+  options: MiscMasterListPerpresRes[];
+  optionStakeholder: MiscMasterListStakeholderRes[];
+  request: ExsumRegulationDto;
+  setRequest: (value: SetStateAction<ExsumRegulationDto>) => void;
+  setModalPeraturan: any;
+}) {
   return (
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Entitas"/>
+            <FieldLabelInfo title="Entitas" />
             <AutocompleteSelectMultiple
               key={request.stakeholder_id.length}
               value={request.stakeholder}
               options={optionStakeholder}
               getOptionLabel={(opt) => opt.value}
-              handleChange={(e: MiscMasterListStakeholderRes[]) => setRequest((prevState) => {
-                let stID:number[] = []
-                if (e.length > 0){
-                  e.map(s => {
-                    stID.push(s.id)
-                  })
-                }
-                return {
-                  ...prevState,
-                  stakeholder: e,
-                  stakeholder_id: stID
-                };
-              })}
+              handleChange={(e: MiscMasterListStakeholderRes[]) =>
+                setRequest((prevState) => {
+                  let stID: number[] = [];
+                  if (e.length > 0) {
+                    e.map((s) => {
+                      stID.push(s.id);
+                    });
+                  }
+                  return {
+                    ...prevState,
+                    stakeholder: e,
+                    stakeholder_id: stID,
+                  };
+                })
+              }
               placeHolder={"Pilih entitas"}
               labelSelectAll={"Pilih semua entitas"}
             />
@@ -65,7 +71,7 @@ export default function FormPeraturan(
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Peraturan Terkait"/>
+            <FieldLabelInfo title="Peraturan Terkait" />
             <AutocompleteSelectSingle
               key={request.perpres_state?.id ?? 0}
               value={request.perpres_state}
@@ -77,7 +83,7 @@ export default function FormPeraturan(
                     ...prevState,
                     perpres_state: e,
                     amanat: e?.value ?? "",
-                    perpres: [{id:e?.id ?? 0}]
+                    perpres: [{ id: e?.id ?? 0 }],
                   };
                 })
               }
@@ -85,7 +91,7 @@ export default function FormPeraturan(
               actionButton={
                 <Box onMouseDown={(e) => e.preventDefault()}>
                   <Button
-                    startIcon={<IconFA name="circle-plus" size={14}/>}
+                    startIcon={<IconFA name="circle-plus" size={14} />}
                     fullWidth
                     onClick={(e) => {
                       e.preventDefault();
@@ -101,8 +107,9 @@ export default function FormPeraturan(
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Amanat Peraturan yang Terkait"/>
-            <TextareaStyled
+            <FieldLabelInfo title="Amanat Peraturan yang Terkait" />
+            <Typography fontWeight={500}>{request.amanat || "-"}</Typography>
+            {/* <TextareaStyled
               aria-label="Amanat Peraturan yang Terkait"
               placeholder="Amanat Peraturan yang Terkait"
               minRows={3}
@@ -116,11 +123,10 @@ export default function FormPeraturan(
               //     };
               //   })
               // }
-            />
+            /> */}
           </FormControl>
         </Grid>
       </Grid>
-
     </>
   );
 }
