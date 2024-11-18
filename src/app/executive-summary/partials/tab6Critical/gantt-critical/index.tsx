@@ -97,7 +97,7 @@ export default function GanttChart({ tasks }: { tasks: Task[] }) {
         tasks={tasks}
         viewMode={ViewMode.Year}
         TooltipContent={CustomTooltip}
-        preStepsCount={1}
+        preStepsCount={0}
         // customHeader={customHeader}
         listCellWidth={"400px"}
         // ganttHeight={420}

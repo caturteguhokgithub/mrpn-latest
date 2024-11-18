@@ -22,16 +22,24 @@ import { IconEmptyData } from "@/app/components/icons";
 import DialogComponent from "@/app/components/dialog";
 import FormDampak from "./form-dampak";
 import dataImpact from "./impact.json";
+import ActionColumn from "@/app/components/actions/action";
+import DialogDelete from "@/app/components/dialogDelete";
 
 export default function TableDampak({ mode }: { mode?: string }) {
-  const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
+  const [modalAdd, setModalAdd] = React.useState(false);
+  const [modalEdit, setModalEdit] = React.useState(false);
+  const [modalDelete, setModalDelete] = React.useState(false);
 
-  const handleModalOpenAdd = () => {
-    setModalOpenAdd(true);
+  const handleModalAdd = () => {
+    setModalAdd(true);
   };
 
   const handleModalClose = () => {
-    setModalOpenAdd(false);
+    setModalAdd(false);
+  };
+
+  const handleModalDelete = () => {
+    setModalDelete(true);
   };
 
   const dialogActionFooter = (
@@ -55,6 +63,7 @@ export default function TableDampak({ mode }: { mode?: string }) {
               <TableCell colSpan={5} align="center">
                 Level Dampak
               </TableCell>
+              {/* <TableCell rowSpan={3}>Action</TableCell> */}
             </TableRow>
             <TableRow>
               <TableCell>1</TableCell>
@@ -85,6 +94,12 @@ export default function TableDampak({ mode }: { mode?: string }) {
                   {row.levels[0].details.map((detail, idx) => (
                     <TableCell key={idx}>{detail}</TableCell>
                   ))}
+                  {/* <TableCell rowSpan={row.levels.length}>
+                    <ActionColumn
+                      editClick={handleModalAdd}
+                      deleteClick={handleModalDelete}
+                    />
+                  </TableCell> */}
                 </TableRow>
                 {row.levels.slice(1).map((level, idx) => (
                   <TableRow key={idx}>
@@ -101,14 +116,29 @@ export default function TableDampak({ mode }: { mode?: string }) {
       </Paper>
 
       <DialogComponent
-        width={1200}
-        dialogOpen={modalOpenAdd}
+        width={1000}
+        dialogOpen={modalAdd}
         dialogClose={handleModalClose}
         title="Tambah Kriteria Dampak"
         dialogFooter={dialogActionFooter}
       >
         <FormDampak mode="add" />
       </DialogComponent>
+      <DialogComponent
+        width={1000}
+        dialogOpen={modalEdit}
+        dialogClose={handleModalClose}
+        title="Ubah Kriteria Dampak"
+        dialogFooter={dialogActionFooter}
+      >
+        <FormDampak mode="edit" />
+      </DialogComponent>
+      <DialogDelete
+        title="Hapus Data"
+        handleOpenModal={modalDelete}
+        handleCloseModal={() => setModalDelete(false)}
+        handleDelete={() => {}}
+      />
     </>
   );
 }

@@ -26,13 +26,13 @@ import FormRoadmap from "./form-roadmap";
 import useCardRoadmapVM from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapVM";
 import {
   ExsumRoadmapDto,
-  ExsumRoadmapResDto
+  ExsumRoadmapResDto,
 } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
 import { IconFA } from "@/app/components/icons/icon-fa";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
-import {useAuthContext} from "@/lib/core/hooks/useHooks";
-import {usePathname} from "next/navigation";
-import {hasPrivilege} from "@/lib/core/helpers/authHelpers";
+import { useAuthContext } from "@/lib/core/hooks/useHooks";
+import { usePathname } from "next/navigation";
+import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 
 const dataBisnis = {
   header: ["2025", "2026", "2027", "2028", "2029"],
@@ -64,7 +64,7 @@ const dataBisnis = {
 };
 
 interface RowData {
-  ids:number[]
+  ids: number[];
   year: number;
   value: string;
   colspan?: number;
@@ -126,6 +126,7 @@ export default function CardRoadmap() {
             rpjmn={rpjmn}
             request={request}
             setRequest={setRequest}
+            fieldTitle={modal.field}
           />
         )}
       </DialogComponent>
@@ -167,24 +168,23 @@ const BusinessTable = ({
   data: ExsumRoadmapResDto[];
   setModalDelete: any;
 }) => {
-
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
-  const canDelete = hasPrivilege(permission, pathname, "delete")
+  const canDelete = hasPrivilege(permission, pathname, "delete");
 
   const mergeRows = () => {
     const mergedData: RowData[] = [];
     const seen: { [key: string]: boolean } = {};
     data.forEach((d) => {
-      const row:RowData = {
-        ids:[d.id],
+      const row: RowData = {
+        ids: [d.id],
         year: d.year,
-        value: d.output
-      }
+        value: d.output,
+      };
       if (seen[row.value]) {
         const existingRow = mergedData.find((item) => item.value === row.value);
         if (existingRow) {
-          existingRow.ids.push(d.id)
+          existingRow.ids.push(d.id);
           existingRow.colspan = (existingRow.colspan || 1) + 1;
         }
       } else {
@@ -338,34 +338,36 @@ perencanaan, pengoperasian, pengelolaan, dan evaluasi kebijakan"
                               },
                             }}
                           >
-                            {row.year === parseInt(year) ?
+                            {row.year === parseInt(year) ? (
                               <>
-                              {canDelete &&
-                                <IconButton
-                                  onClick={() =>
-                                    setModalDelete({ isOpen: true, id: row.ids })
-                                  }
-                                  sx={{
-                                    color: "white",
-                                    bgcolor: red[600],
-                                    width: 20,
-                                    height: 20,
-                                    transition: "all 500ms",
-                                    "&:hover": {
-                                      bgcolor: red[900],
-                                    },
-                                    marginRight:"15px"
-                                  }}
-                                >
-                                  <IconFA name="trash-alt" size={10} />
-                                </IconButton>
-                              }
-                                <Typography>
-                                  {row.value}
-                                </Typography>
+                                {canDelete && (
+                                  <IconButton
+                                    onClick={() =>
+                                      setModalDelete({
+                                        isOpen: true,
+                                        id: row.ids,
+                                      })
+                                    }
+                                    sx={{
+                                      color: "white",
+                                      bgcolor: red[600],
+                                      width: 20,
+                                      height: 20,
+                                      transition: "all 500ms",
+                                      "&:hover": {
+                                        bgcolor: red[900],
+                                      },
+                                      marginRight: "15px",
+                                    }}
+                                  >
+                                    <IconFA name="trash-alt" size={10} />
+                                  </IconButton>
+                                )}
+                                <Typography>{row.value}</Typography>
                               </>
-                              : ""
-                            }
+                            ) : (
+                              ""
+                            )}
                           </Box>
                         </TableCell>
                       ))}
@@ -388,10 +390,9 @@ const OutputTable = ({
   data: ExsumRoadmapResDto[];
   setModalDelete: any;
 }) => {
-
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
-  const canDelete = hasPrivilege(permission, pathname, "delete")
+  const canDelete = hasPrivilege(permission, pathname, "delete");
 
   return (
     <>
@@ -472,7 +473,7 @@ const OutputTable = ({
                   >
                     {itemOutput.year}
                   </Typography>
-                  {canDelete &&
+                  {canDelete && (
                     <IconButton
                       onClick={() =>
                         setModalDelete({ isOpen: true, id: [itemOutput.id] })
@@ -494,8 +495,7 @@ const OutputTable = ({
                     >
                       <IconFA name="trash-alt" size={10} />
                     </IconButton>
-                  }
-
+                  )}
                 </CardContent>
                 <CardContent>
                   <>

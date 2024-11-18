@@ -19,16 +19,18 @@ import FieldLabelInfo from "@/components/fieldLabelInfo";
 import { MiscMasterRPJMNRes } from "@/app/misc/master/masterServiceModel";
 import { ExsumRoadmapDto } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
 import { grey } from "@mui/material/colors";
-import {AutocompleteSelectMultiple} from "@/components/autocomplete";
+import { AutocompleteSelectMultiple } from "@/components/autocomplete";
 
 export default function FormRoadmap({
   rpjmn,
   request,
   setRequest,
+  fieldTitle,
 }: {
   rpjmn: MiscMasterRPJMNRes;
   request: ExsumRoadmapDto;
   setRequest: any;
+  fieldTitle: string;
 }) {
   const listYearRPjmn = () => {
     let listYear = [];
@@ -49,6 +51,8 @@ export default function FormRoadmap({
 
   const [value, setValue] = React.useState("");
   const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+  console.log(request.output, "Request output");
 
   return (
     <>
@@ -78,13 +82,15 @@ export default function FormRoadmap({
             <AutocompleteSelectMultiple
               value={request.year}
               options={listYearRPjmn()}
-              getOptionLabel={option => option.toString()}
-              handleChange={(newVal:number[]) => setRequest((prev: ExsumRoadmapDto) => {
-                return {
-                  ...prev,
-                  year: newVal
-                };
-              })}
+              getOptionLabel={(option) => option.toString()}
+              handleChange={(newVal: number[]) =>
+                setRequest((prev: ExsumRoadmapDto) => {
+                  return {
+                    ...prev,
+                    year: newVal,
+                  };
+                })
+              }
               placeHolder={"Pilih tahun"}
               labelSelectAll={"Pilih semua tahun"}
             />
@@ -93,11 +99,12 @@ export default function FormRoadmap({
 
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Output" />
+            <FieldLabelInfo title={fieldTitle} />
+
             {/*<ReactQuill theme="snow" value={value} onChange={setValue} />*/}
             <TextareaStyled
-              aria-label={"Output"}
-              placeholder={"Output"}
+              aria-label={fieldTitle}
+              placeholder={fieldTitle}
               minRows={3}
               value={request.output}
               onChange={(e) =>
