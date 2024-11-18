@@ -63,7 +63,7 @@ export default function TableDampak({ mode }: { mode?: string }) {
               <TableCell colSpan={5} align="center">
                 Level Dampak
               </TableCell>
-              <TableCell rowSpan={3}>Action</TableCell>
+              {/* <TableCell rowSpan={3}>Action</TableCell> */}
             </TableRow>
             <TableRow>
               <TableCell>1</TableCell>
@@ -94,12 +94,12 @@ export default function TableDampak({ mode }: { mode?: string }) {
                   {row.levels[0].details.map((detail, idx) => (
                     <TableCell key={idx}>{detail}</TableCell>
                   ))}
-                  <TableCell rowSpan={row.levels.length}>
+                  {/* <TableCell rowSpan={row.levels.length}>
                     <ActionColumn
                       editClick={handleModalAdd}
                       deleteClick={handleModalDelete}
                     />
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
                 {row.levels.slice(1).map((level, idx) => (
                   <TableRow key={idx}>
