@@ -63,6 +63,9 @@ export default function DialogComponent({
             ".ql-container": {
               //    height: "calc(100% - 44px)",
               minHeight: 320,
+              ".ql-editor": {
+                minHeight: 320,
+              },
             },
           },
         },

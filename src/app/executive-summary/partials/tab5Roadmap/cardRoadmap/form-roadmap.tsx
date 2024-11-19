@@ -20,6 +20,11 @@ import { MiscMasterRPJMNRes } from "@/app/misc/master/masterServiceModel";
 import { ExsumRoadmapDto } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
 import { grey } from "@mui/material/colors";
 import { AutocompleteSelectMultiple } from "@/components/autocomplete";
+import type ReactQuill from "react-quill";
+
+interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
+  forwardedRef: React.LegacyRef<ReactQuill>;
+}
 
 export default function FormRoadmap({
   rpjmn,
@@ -50,7 +55,22 @@ export default function FormRoadmap({
   };
 
   const [value, setValue] = React.useState("");
-  const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+  const ReactQuill = dynamic(
+    async () => {
+      const { default: RQ } = await import("react-quill");
+
+      function QuillJS({ forwardedRef, ...props }: IWrappedComponent) {
+        return <RQ ref={forwardedRef} {...props} />;
+      }
+
+      return QuillJS;
+    },
+    {
+      ssr: false,
+    }
+  );
+  const quillRef = React.useRef<ReactQuill>(null);
 
   console.log(request.output, "Request output");
 
@@ -101,8 +121,16 @@ export default function FormRoadmap({
           <FormControl fullWidth>
             <FieldLabelInfo title={fieldTitle} />
 
-            {/*<ReactQuill theme="snow" value={value} onChange={setValue} />*/}
-            <TextareaStyled
+            <ReactQuill
+              key={value}
+              theme="snow"
+              defaultValue={value}
+              forwardedRef={quillRef}
+              // theme="snow"
+              // value={request.output}
+              // onChange={setValue}
+            />
+            {/* <TextareaStyled
               aria-label={fieldTitle}
               placeholder={fieldTitle}
               minRows={3}
@@ -115,7 +143,7 @@ export default function FormRoadmap({
                   };
                 })
               }
-            />
+            /> */}
           </FormControl>
         </Grid>
 

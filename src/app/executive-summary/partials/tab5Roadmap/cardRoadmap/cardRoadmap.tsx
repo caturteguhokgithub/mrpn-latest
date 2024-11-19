@@ -498,11 +498,15 @@ const OutputTable = ({
                   )}
                 </CardContent>
                 <CardContent>
-                  <>
+                  <Box
+                    textAlign="left"
+                    dangerouslySetInnerHTML={{ __html: itemOutput.output }}
+                  ></Box>
+                  {/* <>
                     <Typography component="p" textAlign="left">
                       {itemOutput.output}
                     </Typography>
-                  </>
+                  </> */}
                 </CardContent>
               </Card>
             ))

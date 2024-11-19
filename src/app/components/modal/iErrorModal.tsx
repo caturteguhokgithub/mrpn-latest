@@ -18,15 +18,18 @@ import {
 import { TransitionProps } from "@mui/material/transitions";
 import { API_CONSTANT } from "@/lib/core/api/apiModel";
 import { IconErrorBadRequest, IconTimeout } from "../icons";
+import { red } from "@mui/material/colors";
 
 const ErrorModal = ({
   icon,
   title,
   message,
+  errorTitle,
 }: {
   icon: React.ReactNode;
   title: string;
   message: string;
+  errorTitle?: boolean;
 }) => {
   return (
     <>
@@ -43,7 +46,13 @@ const ErrorModal = ({
         {icon}
       </Stack>
       <DialogContentText sx={{ textAlign: "center" }}>
-        <Typography component="h3" fontWeight={600} fontSize={"1.3em"} mb={1}>
+        <Typography
+          component="h3"
+          fontWeight={600}
+          fontSize={"1.3em"}
+          mb={1}
+          color={errorTitle ? red[600] : "inherit"}
+        >
           {title}
         </Typography>
         <Typography>{message}</Typography>
@@ -98,8 +107,9 @@ export const IErrorModal = () => {
       <DialogContent>
         {code == 400 ? (
           <ErrorModal
+            errorTitle
             icon={<IconErrorBadRequest />}
-            title="Error 400 Bad Request"
+            title={`Error ${code}`}
             message={message}
           />
         ) : (
