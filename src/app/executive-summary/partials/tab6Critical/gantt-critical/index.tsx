@@ -8,8 +8,9 @@ import {
 } from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
 import CustomTooltip from "./tooltip";
-import { Box } from "@mui/material";
+import { alpha, Box, Chip, Stack } from "@mui/material";
 import theme from "@/theme";
+import { blue, green, orange, red } from "@mui/material/colors";
 
 const CustomTaskListHeader = ({
   headerHeight,
@@ -23,7 +24,7 @@ const CustomTaskListHeader = ({
   fontSize: any;
 }) => {
   return (
-    <div
+    <Box
       style={{
         height: headerHeight,
         width: rowWidth,
@@ -37,10 +38,137 @@ const CustomTaskListHeader = ({
         fontWeight: 600,
       }}
     >
-      <div style={{ display: "flex" }}>
-        <div style={{ flex: 1 }}>Kegiatan</div>
-      </div>
-    </div>
+      <Stack>
+        <Stack flex={1}>RO/Project Kunci</Stack>
+      </Stack>
+    </Box>
+  );
+};
+
+type TaskListTableProps = {
+  rowHeight: number;
+  rowWidth: string;
+  fontFamily: string;
+  fontSize: string;
+  locale: string;
+  tasks: Task[];
+  selectedTaskId: string;
+  setSelectedTask: (taskId: string) => void;
+};
+
+const CustomTaskListTable = ({
+  fontFamily,
+  fontSize,
+  tasks,
+  rowWidth,
+  rowHeight,
+}: TaskListTableProps) => {
+  return (
+    <Box style={{ border: "1px solid #dfe1e5" }}>
+      {tasks.map((item, i) => {
+        const isProject = item.type === "project";
+        const isExpanded = !item.hideChildren;
+        const projectCategory = "BUMN";
+
+        return (
+          <Box
+            key={item.id}
+            style={{
+              height: rowHeight,
+              width: rowWidth,
+              display: "flex",
+              alignItems: "center",
+              fontFamily: fontFamily,
+              fontSize: fontSize,
+              // background: isExpanded
+              //   ? alpha(theme.palette.primary.main, 0.1)
+              //   : i % 2 === 0
+              //   ? "#ffffff"
+              //   : "#f4f5f7",
+              padding: 10,
+              paddingLeft: isProject ? 10 : 40,
+            }}
+          >
+            <Stack
+              m={0}
+              width="100%"
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <p>{item.name}</p>
+              <Chip
+                label={
+                  projectCategory === "BUMN"
+                    ? "BUMN"
+                    : projectCategory === "DAK"
+                    ? "DAK"
+                    : projectCategory === "KL"
+                    ? "Belanja K/L"
+                    : "Swasta"
+                }
+                size="small"
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  bgcolor:
+                    projectCategory === "BUMN"
+                      ? red[700]
+                      : projectCategory === "DAK"
+                      ? green[700]
+                      : projectCategory === "KL"
+                      ? blue[700]
+                      : orange[700],
+                  color: "white",
+                  fontWeight: 500,
+                  fontSize: 11,
+                  height: "auto",
+                  cursor: "default",
+                  span: {
+                    my: 0,
+                    py: 0.8,
+                    lineHeight: 1,
+                  },
+                }}
+              />
+              {/*{isProject && (*/}
+              {/*  <Stack*/}
+              {/*    justifyContent="center"*/}
+              {/*    alignItems="center"*/}
+              {/*    bgcolor={red[600]}*/}
+              {/*    borderRadius="50%"*/}
+              {/*    width={20}*/}
+              {/*    height={20}*/}
+              {/*  >*/}
+              {/*    <IconFA name="arrow-down" size={12} color="white" />*/}
+              {/*  </Stack>*/}
+              {/*)}*/}
+              {/* {!isProject && (
+                <Chip
+                  label="Finish to Start"
+                  size="small"
+                  sx={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    bgcolor: red[700],
+                    color: "white",
+                    fontWeight: 500,
+                    fontSize: 11,
+                    height: "auto",
+                    cursor: "default",
+                    span: {
+                      my: 0,
+                      py: 0.8,
+                      lineHeight: 1,
+                    },
+                  }}
+                />
+              )} */}
+            </Stack>
+          </Box>
+        );
+      })}
+    </Box>
   );
 };
 
@@ -112,7 +240,7 @@ export default function GanttChart({ tasks }: { tasks: Task[] }) {
         fontSize="14px"
         // headerHeight={200}
         TaskListHeader={CustomTaskListHeader}
-        // TaskListTable={CustomTaskListTable}
+        TaskListTable={CustomTaskListTable}
 
         // renderTaskList={(tasks: any) =>
         //   tasks.map((task: any) => <CustomTask key={task.id} task={task} />)

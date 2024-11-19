@@ -30,6 +30,10 @@ const useCardLocationVM = () => {
 
   const [columns, setColumns] = useState<MiscMasterListProvinsiRes[]>([]);
 
+  const [listProvinsi, setListProvinsi] = useState<MiscMasterListProvinsiRes[]>(
+    []
+  );
+
   const [locationExsum, setLocationExsum] = useState<
     MiscMasterListProvinsiRes[]
   >([]);
@@ -68,7 +72,7 @@ const useCardLocationVM = () => {
       let result: ExsumLocationDto[] = response.result;
       if (result.length > 0) {
         setData(result);
-        setRequest(result[0]);
+        // setRequest(result[0]);
       } else {
         setData([]);
         setRequest({ ...initExsumLocationUpdateDto });
@@ -106,6 +110,29 @@ const useCardLocationVM = () => {
     }
   }
 
+  async function getListProvinsi() {
+    const response = await doGetMasterListProvinsi({
+      body: {},
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+    if (response?.code == API_CODE.success) {
+      let result: MiscMasterListProvinsiRes[] = response.result;
+      if (result) {
+        setListProvinsi(result);
+      }
+    }
+  }
+
+  const handleChangeLocation = (value: MiscMasterListProvinsiRes[]) => {
+    setRequest((prev) => {
+      return {
+        ...prev,
+        lokasi: value,
+      };
+    });
+  };
+
   return {
     data,
     request,
@@ -116,6 +143,8 @@ const useCardLocationVM = () => {
     updateData,
     columns,
     setColumns,
+    listProvinsi,
+    handleChangeLocation,
   };
 };
 

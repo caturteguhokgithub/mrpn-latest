@@ -41,7 +41,7 @@ const CustomTaskListHeader = ({
       }}
     >
       <div style={{ display: "flex" }}>
-        <div style={{ flex: 1 }}>Kegiatan</div>
+        <div style={{ flex: 1 }}>RO/Project Kunci</div>
       </div>
     </div>
   );
@@ -49,85 +49,85 @@ const CustomTaskListHeader = ({
 
 const currentDate = new Date();
 
-const tasksTest: Task[] = [
-  {
-    start: new Date(2024, currentDate.getMonth(), 1),
-    end: new Date(2024, 10, 11),
-    name: "Project Detail 1",
-    id: "projectID",
-    progress: 25,
-    type: "project",
-    hideChildren: false,
-  },
-  {
-    start: new Date(2024, currentDate.getMonth(), 1),
-    end: new Date(2024, 11, 2),
-    name: "Idea",
-    id: "Task 0",
-    progress: 45,
-    type: "task",
-    project: "",
-  },
-  {
-    start: new Date(2024, currentDate.getMonth(), 2),
-    end: new Date(2024, 12, 10),
-    name: "Research",
-    id: "Task 1",
-    progress: 25,
-    dependencies: ["Task 0"],
-    type: "task",
-    project: "",
-  },
-  {
-    start: new Date(2024, currentDate.getMonth(), 4),
-    end: new Date(2024, currentDate.getMonth(), 8, 0, 0),
-    name: "Discussion with team",
-    id: "Task 2",
-    progress: 10,
-    // dependencies: ["projectID"],
-    type: "task",
-    project: "",
-  },
-  //   Parent 2
-  {
-    start: new Date(2025, currentDate.getMonth(), 1),
-    end: new Date(2025, currentDate.getMonth(), 15),
-    name: "Project Detail 2",
-    id: "projectID2",
-    progress: 25,
-    type: "project",
-    hideChildren: false,
-  },
-  {
-    start: new Date(2025, currentDate.getMonth(), 1),
-    end: new Date(2025, currentDate.getMonth(), 2, 12, 28),
-    name: "Idea",
-    id: "Task 0-2",
-    progress: 45,
-    type: "task",
-    project: "projectID2",
-  },
-  {
-    start: new Date(2025, currentDate.getMonth(), 2),
-    end: new Date(2025, currentDate.getMonth(), 4, 0, 0),
-    name: "Research",
-    id: "Task 1-2",
-    progress: 25,
-    // dependencies: ["Task 0"],
-    type: "task",
-    project: "projectID2",
-  },
-  {
-    start: new Date(2025, currentDate.getMonth(), 4),
-    end: new Date(2025, currentDate.getMonth(), 8, 0, 0),
-    name: "Discussion with team",
-    id: "Task 2-2",
-    progress: 10,
-    // dependencies: ["projectID2"],
-    type: "task",
-    project: "projectID2",
-  },
-];
+// const tasksTest: Task[] = [
+//   {
+//     start: new Date(2024, currentDate.getMonth(), 1),
+//     end: new Date(2024, 10, 11),
+//     name: "Project Detail 1",
+//     id: "projectID",
+//     progress: 25,
+//     type: "project",
+//     hideChildren: false,
+//   },
+//   {
+//     start: new Date(2024, currentDate.getMonth(), 1),
+//     end: new Date(2024, 11, 2),
+//     name: "Idea",
+//     id: "Task 0",
+//     progress: 45,
+//     type: "task",
+//     project: "",
+//   },
+//   {
+//     start: new Date(2024, currentDate.getMonth(), 2),
+//     end: new Date(2024, 12, 10),
+//     name: "Research",
+//     id: "Task 1",
+//     progress: 25,
+//     dependencies: ["Task 0"],
+//     type: "task",
+//     project: "",
+//   },
+//   {
+//     start: new Date(2024, currentDate.getMonth(), 4),
+//     end: new Date(2024, currentDate.getMonth(), 8, 0, 0),
+//     name: "Discussion with team",
+//     id: "Task 2",
+//     progress: 10,
+//     // dependencies: ["projectID"],
+//     type: "task",
+//     project: "",
+//   },
+//   //   Parent 2
+//   {
+//     start: new Date(2025, currentDate.getMonth(), 1),
+//     end: new Date(2025, currentDate.getMonth(), 15),
+//     name: "Project Detail 2",
+//     id: "projectID2",
+//     progress: 25,
+//     type: "project",
+//     hideChildren: false,
+//   },
+//   {
+//     start: new Date(2025, currentDate.getMonth(), 1),
+//     end: new Date(2025, currentDate.getMonth(), 2, 12, 28),
+//     name: "Idea",
+//     id: "Task 0-2",
+//     progress: 45,
+//     type: "task",
+//     project: "projectID2",
+//   },
+//   {
+//     start: new Date(2025, currentDate.getMonth(), 2),
+//     end: new Date(2025, currentDate.getMonth(), 4, 0, 0),
+//     name: "Research",
+//     id: "Task 1-2",
+//     progress: 25,
+//     // dependencies: ["Task 0"],
+//     type: "task",
+//     project: "projectID2",
+//   },
+//   {
+//     start: new Date(2025, currentDate.getMonth(), 4),
+//     end: new Date(2025, currentDate.getMonth(), 8, 0, 0),
+//     name: "Discussion with team",
+//     id: "Task 2-2",
+//     progress: 10,
+//     // dependencies: ["projectID2"],
+//     type: "task",
+//     project: "projectID2",
+//   },
+// ];
 
 type TaskListTableProps = {
   rowHeight: number;
@@ -142,7 +142,7 @@ type TaskListTableProps = {
 };
 
 const CustomTaskListTable = ({
-  fontFamily,
+  fontFamily, 
   fontSize,
   tasks,
   rowWidth,
@@ -150,12 +150,12 @@ const CustomTaskListTable = ({
   onExpanderClick,
 }: TaskListTableProps) => {
   return (
-    <div style={{ border: "1px solid #dfe1e5" }}>
+    <Box style={{ border: "1px solid #dfe1e5" }}>
       {tasks.map((item, i) => {
         const isProject = item.type === "project";
         const isExpanded = !item.hideChildren;
         return (
-          <div
+          <Box
             key={item.id}
             style={{
               height: rowHeight,
@@ -175,15 +175,13 @@ const CustomTaskListTable = ({
               paddingLeft: isProject ? 10 : 40,
             }}
           >
-            <div
+            <Stack
+              m={0}
+              width="100%"
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
               onClick={() => onExpanderClick(item)}
-              style={{
-                margin: 0,
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
             >
               <p>
                 {isProject ? (
@@ -239,11 +237,11 @@ const CustomTaskListTable = ({
                   }}
                 />
               )} */}
-            </div>
-          </div>
+            </Stack>
+          </Box>
         );
       })}
-    </div>
+    </Box>
   );
 };
 

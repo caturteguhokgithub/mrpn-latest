@@ -236,7 +236,10 @@ export default function PageExecutiveSummaryContent({
             <Tab1Background project={project} />
           </CustomTabPanel>
           {/* Tab 3 */}
-          <CustomTabPanel value={value} index={2} tabLevel="1">
+          <CustomTabPanel value={value} index={2} tabLevel={condTabHeightLv1}>
+            <Tab3Fot project={project} />
+          </CustomTabPanel>
+          {/* <CustomTabPanel value={value} index={2} tabLevel="1">
             <Tabs
               value={valueTabChild}
               onChange={handleChangeTabChild}
@@ -260,7 +263,7 @@ export default function PageExecutiveSummaryContent({
             >
               <Tab3Diagram project={project} />
             </CustomTabPanel>
-          </CustomTabPanel>
+          </CustomTabPanel> */}
           {/* Tab 4 */}
           <CustomTabPanel value={value} index={3} tabLevel={condTabHeightLv1}>
             <Tab9Indication project={project} />

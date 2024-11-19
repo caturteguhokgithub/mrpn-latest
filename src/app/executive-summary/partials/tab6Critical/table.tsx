@@ -18,20 +18,19 @@ import { ExsumIndicationResDto } from "@/app/executive-summary/partials/tab9Indi
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import ActionColumn from "@/app/components/actions/action";
-import {Task} from "gantt-task-react";
-import {ExsumCriticalData} from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
+import { Task } from "gantt-task-react";
+import { ExsumCriticalData } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
 import dayjs from "dayjs";
 
 export default function TableCritical({
   handleEdit,
   handleDelete,
-  data
+  data,
 }: {
   handleEdit?: any;
   handleDelete?: any;
-  data:ExsumCriticalData[]
+  data: ExsumCriticalData[];
 }) {
-
   return (
     <>
       <Table
@@ -49,7 +48,7 @@ export default function TableCritical({
           <TableRow>
             <TableCell>
               <Typography variant="body2" fontWeight={600}>
-                Kegiatan
+                RO/Project Kunci
               </Typography>
             </TableCell>
             <TableCell>
@@ -88,9 +87,7 @@ export default function TableCritical({
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
                 <Chip
-                  label={
-                    item.keterangan_kegiatan
-                  }
+                  label={item.keterangan_kegiatan}
                   size="small"
                   sx={{
                     bgcolor:
@@ -102,16 +99,24 @@ export default function TableCritical({
                 />
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
-                <Typography variant="body2">{item.ro?.kementrian.value}</Typography>
+                <Typography variant="body2">
+                  {item.ro?.kementrian.value}
+                </Typography>
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
-                <Typography variant="body2">{item.ro?.sumber_anggaran}</Typography>
+                <Typography variant="body2">
+                  {item.ro?.sumber_anggaran}
+                </Typography>
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
-                <Typography variant="body2">{dayjs(item.start_date).format("DD MMM YYYY")}</Typography>
+                <Typography variant="body2">
+                  {dayjs(item.start_date).format("DD MMM YYYY")}
+                </Typography>
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
-                <Typography variant="body2">{dayjs(item.end_date).format("DD MMM YYYY")}</Typography>
+                <Typography variant="body2">
+                  {dayjs(item.end_date).format("DD MMM YYYY")}
+                </Typography>
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
                 <ActionColumn

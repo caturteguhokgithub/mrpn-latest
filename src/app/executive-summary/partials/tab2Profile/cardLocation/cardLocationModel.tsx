@@ -6,6 +6,7 @@ export interface ExsumLocationDto {
   exsum_id: number
   keterangan:string
   provinsi: MiscMasterListProvinsiRes[]
+  lokasi:number[]
 }
 
 interface ExsumLocationValue {
@@ -15,6 +16,7 @@ interface ExsumLocationValue {
 export interface ExsumLocationUpdateDto {
   id:number
   exsum_id: number
+  lokasi: MiscMasterListProvinsiRes[]
   keterangan:string
 }
 
@@ -22,6 +24,7 @@ export interface ExsumLocationUpdateDto {
 export const initExsumLocationUpdateDto:ExsumLocationUpdateDto = {
   id:0,
   exsum_id: 0,
+  lokasi: [],
   keterangan: ""
 }
 
