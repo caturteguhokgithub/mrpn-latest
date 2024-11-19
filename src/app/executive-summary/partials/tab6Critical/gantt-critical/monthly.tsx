@@ -11,7 +11,7 @@ import CustomTooltip from "./tooltip";
 import { alpha, Box, Chip, Stack } from "@mui/material";
 import theme from "@/theme";
 import { IconFA } from "@/app/components/icons/icon-fa";
-import { red } from "@mui/material/colors";
+import { blue, green, orange, red } from "@mui/material/colors";
 import dayjs from "dayjs";
 
 const CustomTaskListHeader = ({
@@ -142,7 +142,7 @@ type TaskListTableProps = {
 };
 
 const CustomTaskListTable = ({
-  fontFamily, 
+  fontFamily,
   fontSize,
   tasks,
   rowWidth,
@@ -154,6 +154,8 @@ const CustomTaskListTable = ({
       {tasks.map((item, i) => {
         const isProject = item.type === "project";
         const isExpanded = !item.hideChildren;
+        const projectCategory = "BUMN";
+
         return (
           <Box
             key={item.id}
@@ -204,6 +206,42 @@ const CustomTaskListTable = ({
                 )}
                 {item.name}
               </p>
+              {isProject && (
+                <Chip
+                  label={
+                    projectCategory === "BUMN"
+                      ? "BUMN"
+                      : projectCategory === "DAK"
+                      ? "DAK"
+                      : projectCategory === "KL"
+                      ? "Belanja K/L"
+                      : "Swasta"
+                  }
+                  size="small"
+                  sx={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    bgcolor:
+                      projectCategory === "BUMN"
+                        ? red[700]
+                        : projectCategory === "DAK"
+                        ? green[700]
+                        : projectCategory === "KL"
+                        ? blue[700]
+                        : orange[700],
+                    color: "white",
+                    fontWeight: 500,
+                    fontSize: 11,
+                    height: "auto",
+                    cursor: "default",
+                    span: {
+                      my: 0,
+                      py: 0.8,
+                      lineHeight: 1,
+                    },
+                  }}
+                />
+              )}
               {/*{isProject && (*/}
               {/*  <Stack*/}
               {/*    justifyContent="center"*/}

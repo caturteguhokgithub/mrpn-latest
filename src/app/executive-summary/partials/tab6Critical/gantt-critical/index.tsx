@@ -80,11 +80,6 @@ const CustomTaskListTable = ({
               alignItems: "center",
               fontFamily: fontFamily,
               fontSize: fontSize,
-              // background: isExpanded
-              //   ? alpha(theme.palette.primary.main, 0.1)
-              //   : i % 2 === 0
-              //   ? "#ffffff"
-              //   : "#f4f5f7",
               padding: 10,
               paddingLeft: isProject ? 10 : 40,
             }}

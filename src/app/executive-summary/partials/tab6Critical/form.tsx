@@ -69,47 +69,6 @@ const groupColor = [
   "#CAF0F8", // Pastel Light Blue
 ];
 
-// [
-//   "#FFB3BA", // Pastel Red
-//   "#FFDFBA", // Pastel Orange
-//   "#FFFFBA", // Pastel Yellow
-//   "#98FB98", // Pale Green
-//   "#BAE1FF", // Pastel Blue
-//   "#C9BAFF", // Pastel Purple
-//   "#FFCCCB", // Light Coral
-//   "#F0E68C", // Pastel Khaki
-//   "#FFDAB9", // Peach Puff
-//   "#FFB6C1", // Light Pink
-// ];
-
-// [
-//   "#A3C1AD", // Pastel Mint
-//   "#FFD1DC", // Pastel Pink
-//   "#C3B1E1", // Lavender (Pastel)
-//   "#FFB347", // Pastel Orange
-//   "#FFDFD3", // Light Peach
-//   "#77DD77", // Pastel Green
-//   "#AEC6CF", // Pastel Blue
-//   "#FFB3BA", // Baby Pink
-//   "#FFFFB3", // Light Yellow
-//   "#B39EB5", // Pastel Purple
-// ];
-
-// [
-//   "#007BA7", // Cerulean Blue
-//   "#EF3038", // Deep Carmine Pink
-//   "#8F00FF", // Electric Violet
-//   "#32CD32", // Lime Green
-//   "#FD5E53", // Sunset Orange
-//   "#40E0D0", // Turquoise
-//   "#9F1D35", // Vivid Burgundy
-//   "#F8DE7E", // Mellow Yellow
-//   "#8E4585", // Plum
-//   "#7FFFD4", // Aquamarine
-// ];
-
-// [
-
 //   "#795548",
 //   "#ff9800",
 //   "#ffeb3b",
@@ -420,7 +379,7 @@ export default function FormCritical({
           </Typography>
         </FormControl>
       </Grid>
-      {year == 0 ? (
+      {/* {year == 0 ? (
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Waktu Pengerjaan" />
@@ -510,8 +469,120 @@ export default function FormCritical({
             </FormControl>
           </Grid>
         </>
-      )}
+      )} */}
 
+      <Grid item xs={12} md={6}>
+        <FormControl fullWidth>
+          <FieldLabelInfo title="Waktu Mulai Pengerjaan" />
+          {year == 0 ? (
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                sx={{
+                  ".MuiInputBase-root": {
+                    height: 40,
+                  },
+                }}
+                format="YYYY"
+                minDate={
+                  year > 0
+                    ? dayjs(`${year}-01-01`)
+                    : state.dependency
+                    ? dayjs(state.dependency.end_date)
+                    : undefined
+                }
+                maxDate={year > 0 ? dayjs(`${year}-12-31`) : undefined}
+                value={dayjs(state.start_date)}
+                onChange={(e: any) =>
+                  setState((prev) => {
+                    return {
+                      ...prev,
+                      start_date: dayjs(e).format("YYYY-MM-DD"),
+                    };
+                  })
+                }
+              />
+            </LocalizationProvider>
+          ) : (
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                sx={{
+                  ".MuiInputBase-root": {
+                    height: 40,
+                  },
+                }}
+                format="D MMM YYYY"
+                minDate={
+                  year > 0
+                    ? dayjs(`${year}-01-01`)
+                    : state.dependency
+                    ? dayjs(state.dependency.end_date)
+                    : undefined
+                }
+                maxDate={year > 0 ? dayjs(`${year}-12-31`) : undefined}
+                value={dayjs(state.start_date)}
+                onChange={(e: any) =>
+                  setState((prev) => {
+                    return {
+                      ...prev,
+                      start_date: dayjs(e).format("YYYY-MM-DD"),
+                    };
+                  })
+                }
+              />
+            </LocalizationProvider>
+          )}
+        </FormControl>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <FormControl fullWidth>
+          <FieldLabelInfo title="Waktu Selesai Pengerjaan" />{" "}
+          {year == 0 ? (
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                sx={{
+                  ".MuiInputBase-root": {
+                    height: 40,
+                  },
+                }}
+                format="YYYY"
+                minDate={dayjs(state.start_date)}
+                maxDate={year > 0 ? dayjs(`${year}-12-31`) : undefined}
+                value={dayjs(state.end_date)}
+                onChange={(e: any) =>
+                  setState((prev) => {
+                    return {
+                      ...prev,
+                      end_date: dayjs(e).format("YYYY-MM-DD"),
+                    };
+                  })
+                }
+              />
+            </LocalizationProvider>
+          ) : (
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                sx={{
+                  ".MuiInputBase-root": {
+                    height: 40,
+                  },
+                }}
+                format="D MMM YYYY"
+                minDate={dayjs(state.start_date)}
+                maxDate={year > 0 ? dayjs(`${year}-12-31`) : undefined}
+                value={dayjs(state.end_date)}
+                onChange={(e: any) =>
+                  setState((prev) => {
+                    return {
+                      ...prev,
+                      end_date: dayjs(e).format("YYYY-MM-DD"),
+                    };
+                  })
+                }
+              />
+            </LocalizationProvider>
+          )}
+        </FormControl>
+      </Grid>
       <Grid item xs={12}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Kategori Proyek" />
