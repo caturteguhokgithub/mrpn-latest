@@ -82,12 +82,14 @@ const useCardLocationVM = () => {
 
   useEffect(() => {
     if (exsum.id !== 0) {
+      getListProvinsi();
       getData();
       getLocationByExsumTOWSDiagram();
     }
   }, [exsum]);
 
-  async function updateData(req: ExsumLocationUpdateDto) {
+  async function updateData() {
+    const req = {...request}
     req.exsum_id = exsum.id;
     const params = {
       body: req,
@@ -144,6 +146,7 @@ const useCardLocationVM = () => {
     columns,
     setColumns,
     listProvinsi,
+    getListProvinsi,
     handleChangeLocation,
   };
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   Box,
   Button,
@@ -15,24 +15,31 @@ import CardItem from "@/components/cardTabItem";
 import DialogComponent from "@/components/dialog";
 import { grey } from "@mui/material/colors";
 import useCardLocationVM from "@/app/executive-summary/partials/tab2Profile/cardLocation/cardLocationVM";
-import { margin } from "@mui/system";
-
-import type ReactQuill from "react-quill";
+import {ExsumLocationUpdateDto} from "@/app/executive-summary/partials/tab2Profile/cardLocation/cardLocationModel";
 import dynamic from "next/dynamic";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
-import { ExsumLocationUpdateDto } from "@/app/executive-summary/partials/tab2Profile/cardLocation/cardLocationModel";
-
-import {
-  MiscMasterListProvinsiRes,
-  MiscMasterListStakeholderRes,
-  MiscMasterListSumberPendanaanRes,
-} from "@/app/misc/master/masterServiceModel";
-import { ExsumDiagramState } from "@/app/executive-summary/partials/tab3Fot/cardDiagram/cardDiagramModel";
 import { AutocompleteSelectMultiple } from "@/components/autocomplete";
+import ReactQuill from "react-quill";
+import {MiscMasterListProvinsiRes} from "@/app/misc/master/masterServiceModel";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
 }
+
+const ReactQuillX = dynamic(
+  async () => {
+    const { default: RQ } = await import("react-quill");
+
+    function QuillJS({ forwardedRef, ...props }: IWrappedComponent) {
+      return <RQ ref={forwardedRef} {...props} />;
+    }
+
+    return QuillJS;
+  },
+  {
+    ssr: false,
+  }
+);
 
 export default function CardLocation({ project }: { project: string }) {
   const {
@@ -49,30 +56,18 @@ export default function CardLocation({ project }: { project: string }) {
     handleChangeLocation,
   } = useCardLocationVM();
 
-  const ReactQuill = dynamic(
-    async () => {
-      const { default: RQ } = await import("react-quill");
-
-      function QuillJS({ forwardedRef, ...props }: IWrappedComponent) {
-        return <RQ ref={forwardedRef} {...props} />;
-      }
-
-      return QuillJS;
-    },
-    {
-      ssr: false,
-    }
-  );
   const quillRef = React.useRef<ReactQuill>(null);
 
-  const handleCreateOrUpdateData = async () => {
+  const handleChangeQuill = async () => {
+    console.log("trigger")
     const text = quillRef.current?.value;
     if (text) {
-      const req = {
-        ...request,
-        keterangan: text.toString(),
-      };
-      updateData(req);
+      setRequest(prevState => {
+        return {
+          ...prevState,
+          keterangan: text.toString()
+        }
+      })
     }
   };
 
@@ -80,7 +75,18 @@ export default function CardLocation({ project }: { project: string }) {
     <CardItem
       title="Lokasi Proyek"
       setting
-      settingEditOnclick={() => setModal(true)}
+      settingEditOnclick={() => {
+        if (data.length > 0){
+          const req:ExsumLocationUpdateDto = {
+            id: data[0].id,
+            exsum_id: data[0].exsum_id,
+            lokasi: data[0].provinsi ? data[0].provinsi : [],
+            keterangan: data[0].keterangan
+          }
+          setRequest(req)
+        }
+        setModal(true)
+      }}
     >
       {data.length == 0 ? (
         <EmptyState
@@ -133,7 +139,7 @@ export default function CardLocation({ project }: { project: string }) {
             <Button
               variant="contained"
               type="submit"
-              onClick={() => handleCreateOrUpdateData()}
+              onClick={() => updateData()}
             >
               Simpan
             </Button>
@@ -147,7 +153,11 @@ export default function CardLocation({ project }: { project: string }) {
               value={request.lokasi}
               options={listProvinsi}
               getOptionLabel={(option) => option.name}
-              handleChange={handleChangeLocation}
+              handleChange={(e:MiscMasterListProvinsiRes[]) => {
+                handleChangeQuill().then(r =>
+                  handleChangeLocation(e)
+                )
+              }}
               placeHolder={"Pilih Provinsi"}
               labelSelectAll={"Pilih semua Provinsi"}
             />
@@ -155,11 +165,13 @@ export default function CardLocation({ project }: { project: string }) {
           <Grid item xs={12}>
             <FormControl fullWidth>
               <FieldLabelInfo title="Keterangan" />
-              <ReactQuill
-                key={request.keterangan}
+              <ReactQuillX
+                key={request.keterangan.length}
                 theme="snow"
                 defaultValue={request.keterangan}
+                value={request.keterangan}
                 forwardedRef={quillRef}
+                onBlur={() => handleChangeQuill()}
               />
             </FormControl>
           </Grid>
