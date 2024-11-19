@@ -11,6 +11,7 @@ import CustomTooltip from "./tooltip";
 import { alpha, Box, Chip, Stack } from "@mui/material";
 import theme from "@/theme";
 import { blue, green, orange, red } from "@mui/material/colors";
+import {TaskAdditionalData} from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
 
 const CustomTaskListHeader = ({
   headerHeight,
@@ -63,12 +64,29 @@ const CustomTaskListTable = ({
   rowWidth,
   rowHeight,
 }: TaskListTableProps) => {
+
+  const getAdditionalData = (item:Task) => {
+    let taskProjectTask: TaskAdditionalData = {
+      type: "",
+      tooltip_type: "parent",
+      penanggungjawab: "",
+      sumber_anggaran: "",
+      keterangan_kegiatan: "",
+      category: "",
+      target: []
+    };
+
+    if (item.type == "task" && item.project){
+      taskProjectTask = JSON.parse(item.project)
+    }
+    return taskProjectTask
+  }
+
   return (
     <Box style={{ border: "1px solid #dfe1e5" }}>
       {tasks.map((item, i) => {
         const isProject = item.type === "project";
-        const isExpanded = !item.hideChildren;
-        const projectCategory = "BUMN";
+        const projectCategory = getAdditionalData(item).category;
 
         return (
           <Box
@@ -83,6 +101,7 @@ const CustomTaskListTable = ({
               padding: 10,
               paddingLeft: isProject ? 10 : 40,
             }}
+            // onClick={() => console.log(item)}
           >
             <Stack
               m={0}
@@ -93,30 +112,23 @@ const CustomTaskListTable = ({
             >
               <p>{item.name}</p>
               <Chip
-                label={
-                  projectCategory === "BUMN"
-                    ? "BUMN"
-                    : projectCategory === "DAK"
-                    ? "DAK"
-                    : projectCategory === "KL"
-                    ? "Belanja K/L"
-                    : "Swasta"
-                }
+                label={projectCategory}
                 size="small"
                 sx={{
                   display: "inline-flex",
                   alignItems: "center",
-                  bgcolor:
-                    projectCategory === "BUMN"
-                      ? red[700]
-                      : projectCategory === "DAK"
-                      ? green[700]
-                      : projectCategory === "KL"
-                      ? blue[700]
-                      : orange[700],
-                  color: "white",
+                  // bgcolor:
+                  //   projectCategory === "BUMN"
+                  //     ? red[700]
+                  //     : projectCategory === "DAK"
+                  //     ? green[700]
+                  //     : projectCategory === "KL"
+                  //     ? blue[700]
+                  //     : orange[700],
+                  // color: "white",
                   fontWeight: 500,
                   fontSize: 11,
+                  textTransform:"uppercase",
                   height: "auto",
                   cursor: "default",
                   span: {
@@ -126,39 +138,6 @@ const CustomTaskListTable = ({
                   },
                 }}
               />
-              {/*{isProject && (*/}
-              {/*  <Stack*/}
-              {/*    justifyContent="center"*/}
-              {/*    alignItems="center"*/}
-              {/*    bgcolor={red[600]}*/}
-              {/*    borderRadius="50%"*/}
-              {/*    width={20}*/}
-              {/*    height={20}*/}
-              {/*  >*/}
-              {/*    <IconFA name="arrow-down" size={12} color="white" />*/}
-              {/*  </Stack>*/}
-              {/*)}*/}
-              {/* {!isProject && (
-                <Chip
-                  label="Finish to Start"
-                  size="small"
-                  sx={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    bgcolor: red[700],
-                    color: "white",
-                    fontWeight: 500,
-                    fontSize: 11,
-                    height: "auto",
-                    cursor: "default",
-                    span: {
-                      my: 0,
-                      py: 0.8,
-                      lineHeight: 1,
-                    },
-                  }}
-                />
-              )} */}
             </Stack>
           </Box>
         );

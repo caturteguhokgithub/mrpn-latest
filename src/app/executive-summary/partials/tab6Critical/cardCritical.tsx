@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import CardItem from "@/app/components/cardTabItem";
@@ -94,6 +94,10 @@ export default function CardCritical({ project }: { project: string }) {
     return dt;
   };
 
+  useEffect(() => {
+    console.log(state)
+  }, [state]);
+
   return (
     <>
       <CardItem
@@ -113,13 +117,13 @@ export default function CardCritical({ project }: { project: string }) {
           <>
             <Stack gap={3} maxWidth="calc(100vw - 200px)">
               <Stack direction="row" gap={1}>
-                {groupProjectCategory().map((d, index) => (
-                  <ProjectType
-                    key={index}
-                    color={GetColor(d.id)}
-                    label={d.name}
-                  />
-                ))}
+                {/*{groupProjectCategory().map((d, index) => (*/}
+                {/*  <ProjectType*/}
+                {/*    key={index}*/}
+                {/*    color={GetColor(d.id)}*/}
+                {/*    label={d.name}*/}
+                {/*  />*/}
+                {/*))}*/}
               </Stack>
               {year == 0 && <GanttChart key={ganChart.length} tasks={ganChart} />}
               {year > 0 && <GanttChartMonthly key={ganChart.length} tasks={tasksRKP} setTasks={setTaskRKP} />}

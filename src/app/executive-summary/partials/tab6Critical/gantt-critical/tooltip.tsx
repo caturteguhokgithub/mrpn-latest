@@ -1,4 +1,3 @@
-// components/CustomTooltip.js
 import React from "react";
 import dayjs from "dayjs";
 import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
@@ -12,18 +11,24 @@ import theme from "@/theme";
 import { GenerateMonthFromInteger } from "@/lib/utils/common";
 
 const CustomTooltip = ({ task }: { task: Task }) => {
-  if (task.type == "task") {
-    let taskProject: TargetDto[] = [];
 
-    let taskProjectTask: TaskAdditionalData = {
-      penanggungjawab: "",
-      sumber_anggaran: "",
-      keterangan_kegiatan: "",
-    };
+  let taskProject: TaskAdditionalData = {
+    type:"",
+    tooltip_type:"parent",
+    penanggungjawab: "",
+    sumber_anggaran: "",
+    keterangan_kegiatan: "",
+    category:"",
+    target:[]
+  };
 
-    if (task.project) {
-      taskProject = JSON.parse(task.project);
-    }
+  if (task.project) {
+    taskProject = JSON.parse(task.project);
+  }
+
+  const dayjsFormat = taskProject.type == "rpjmn" ? "YYYY" : "DD MMM YYYY"
+
+  if (taskProject.tooltip_type == "parent") {
 
     return (
       <Box
@@ -61,40 +66,40 @@ const CustomTooltip = ({ task }: { task: Task }) => {
             Penanggungjawab:{" "}
           </Typography>
           <Typography component="strong" fontWeight={600}>
-            {taskProjectTask.penanggungjawab}
+            {taskProject.penanggungjawab}
           </Typography>
           <Typography variant="body2" component="span">
             Sumber Anggaran:{" "}
             <Typography component="strong" fontWeight={600}>
-              {taskProjectTask.sumber_anggaran == ""
+              {taskProject.sumber_anggaran == ""
                 ? "-"
-                : taskProjectTask.sumber_anggaran}
+                : taskProject.sumber_anggaran}
             </Typography>
           </Typography>
           <Typography variant="body2" component="span">
             Waktu Mulai:{" "}
             <Typography component="strong" fontWeight={600}>
-              {dayjs(task.start).format("DD MMM YYYY")}
+              {dayjs(task.start).format(dayjsFormat)}
             </Typography>
           </Typography>
           <Typography variant="body2" component="span">
             Waktu Selesai:{" "}
             <Typography component="strong" fontWeight={600}>
-              {dayjs(task.end).format("DD MMM YYYY")}
+              {dayjs(task.end).format(dayjsFormat)}
             </Typography>
           </Typography>
-          {taskProjectTask.keterangan_kegiatan && (
+          {taskProject.keterangan_kegiatan && (
             <Typography variant="body2" component="div">
               Status:{" "}
               <Box component="span">
                 <Chip
-                  label={taskProjectTask.keterangan_kegiatan}
+                  label={taskProject.keterangan_kegiatan}
                   size="small"
                   sx={{
                     display: "inline-flex",
                     alignItems: "center",
                     bgcolor:
-                      taskProjectTask.keterangan_kegiatan === "Finish to Start"
+                      taskProject.keterangan_kegiatan === "Finish to Start"
                         ? red[700]
                         : theme.palette.primary.main,
                     color: "white",
@@ -108,34 +113,9 @@ const CustomTooltip = ({ task }: { task: Task }) => {
               </Box>
             </Typography>
           )}
-          {taskProject.length > 0 && (
-            <>
-              <Divider sx={{ my: 1 }} />
-              <Typography component="span" variant="body2">
-                Target:
-              </Typography>
-              {taskProject.map((tgt, iTgt) => (
-                <Typography variant="body2" component="span">
-                  {GenerateMonthFromInteger(tgt.bulan)}{" "}
-                  <Typography component="strong" fontWeight={600}>
-                    {`${tgt.target}%`}
-                  </Typography>
-                </Typography>
-              ))}
-            </>
-          )}
         </Stack>
       </Box>
     );
-  }
-
-  let taskProject: TaskAdditionalData = {
-    penanggungjawab: "",
-    sumber_anggaran: "",
-    keterangan_kegiatan: "",
-  };
-  if (task.project) {
-    taskProject = JSON.parse(task.project);
   }
 
   return (
@@ -153,73 +133,37 @@ const CustomTooltip = ({ task }: { task: Task }) => {
         },
       }}
     >
-      <Box
-        className="kegiatan"
-        sx={{
-          "strong, span": {
-            display: "block",
-          },
-        }}
-      >
-        <Typography component="span" variant="body2">
-          RO/Project Kunci:
-        </Typography>
-        <Typography component="strong" fontWeight={600}>
-          {task.name}
-        </Typography>
-      </Box>
-      <Divider sx={{ my: 1 }} />
       <Stack direction="column" gap={0.5}>
-        <Typography variant="body2" component="span">
-          Penanggungjawab:{" "}
-        </Typography>
-        <Typography component="strong" fontWeight={600}>
-          {taskProject.penanggungjawab}
-        </Typography>
-        <Typography variant="body2" component="span">
-          Sumber Anggaran:{" "}
+        <Box
+          className="kegiatan"
+          sx={{
+            "strong, span": {
+              display: "block",
+            },
+          }}
+        >
+          <Typography component="span" variant="body2">
+            RO/Project Kunci:
+          </Typography>
           <Typography component="strong" fontWeight={600}>
-            {taskProject.sumber_anggaran == ""
-              ? "-"
-              : taskProject.sumber_anggaran}
+            {task.name}
           </Typography>
-        </Typography>
-        <Typography variant="body2" component="span">
-          Waktu Mulai:{" "}
-          <Typography component="strong" fontWeight={600}>
-            {dayjs(task.start).format("DD MMM YYYY")}
-          </Typography>
-        </Typography>
-        <Typography variant="body2" component="span">
-          Waktu Selesai:{" "}
-          <Typography component="strong" fontWeight={600}>
-            {dayjs(task.end).format("DD MMM YYYY")}
-          </Typography>
-        </Typography>
-        {taskProject.keterangan_kegiatan && (
-          <Typography variant="body2" component="div">
-            Status:{" "}
-            <Box component="span">
-              <Chip
-                label={taskProject.keterangan_kegiatan}
-                size="small"
-                sx={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  bgcolor:
-                    taskProject.keterangan_kegiatan === "Finish to Start"
-                      ? red[700]
-                      : theme.palette.primary.main,
-                  color: "white",
-                  span: {
-                    my: 0,
-                    py: 0,
-                    lineHeight: 1,
-                  },
-                }}
-              />
-            </Box>
-          </Typography>
+        </Box>
+        <Divider sx={{ my: 1 }} />
+        {taskProject.target.length > 0 && (
+          <>
+            <Typography component="span" variant="body2">
+              Target:
+            </Typography>
+            {taskProject.target.map((tgt, iTgt) => (
+              <Typography variant="body2" component="span">
+                {GenerateMonthFromInteger(tgt.bulan)}{" "}
+                <Typography component="strong" fontWeight={600}>
+                  {`${tgt.target}%`}
+                </Typography>
+              </Typography>
+            ))}
+          </>
         )}
       </Stack>
     </Box>

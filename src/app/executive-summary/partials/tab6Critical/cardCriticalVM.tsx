@@ -29,7 +29,8 @@ import {
 } from "@/app/executive-summary/partials/tab6Critical/cardCriticalService";
 import { Task } from "gantt-task-react";
 import dayjs from "dayjs";
-import { GetColor } from "@/utils/color";
+import {GetColor, GetColorCriticalPathIndex} from "@/utils/color";
+import useCardRoadmapVM from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapVM";
 
 const useCardCriticalVM = () => {
   const loadingContext = useLoading();
@@ -38,6 +39,7 @@ const useCardCriticalVM = () => {
   const { year, rpjmn } = useRKPContext((store) => store);
 
   const useCardTows = useCardTOWSVM();
+  const useCardRoadmap = useCardRoadmapVM();
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalAdd, setModalAdd] = useState<boolean>(false);
@@ -107,9 +109,13 @@ const useCardCriticalVM = () => {
         }
 
         const taskAdditionalData: TaskAdditionalData = {
+          type: year == 0 ? "rpjmn" : "rkp",
+          tooltip_type: "parent",
           penanggungjawab: res.ro?.kementrian.value ?? "",
           sumber_anggaran: res.ro?.sumber_anggaran ?? "",
           keterangan_kegiatan: res.keterangan_kegiatan,
+          category: res.kategori_proyek.name,
+          target:[]
         };
 
         const t: Task = {
@@ -120,7 +126,7 @@ const useCardCriticalVM = () => {
           end: endDay.toDate(),
           progress: 0,
           styles: {
-            backgroundColor: GetColor(res.kategori_proyek.id),
+            backgroundColor: res.color,
           },
           dependencies: [(res.dependency?.id ?? 0).toString()],
           hideChildren: false,
@@ -140,6 +146,9 @@ const useCardCriticalVM = () => {
               endDay = startDay.add(1, "hour");
             }
 
+            taskAdditionalData.target = kgt.target
+            taskAdditionalData.tooltip_type = "child"
+
             const t: Task = {
               id: kgt.id.toString(),
               type: "task",
@@ -148,10 +157,10 @@ const useCardCriticalVM = () => {
               end: endDay.toDate(),
               progress: 0,
               styles: {
-                backgroundColor: GetColor(res.kategori_proyek.id),
+                backgroundColor: res.color,
               },
               dependencies: [],
-              project: JSON.stringify(kgt.target),
+              project: JSON.stringify(taskAdditionalData),
             };
 
             tasks.push(t);
@@ -202,7 +211,8 @@ const useCardCriticalVM = () => {
       keterangan_kegiatan: state.keterangan_kegiatan,
       values: value,
       depedencies:state.dependency?.id ?? 0,
-      kegiatan:state.kegiatan
+      kegiatan:state.kegiatan,
+      color:state.color ?? ""
     };
 
     let response;
@@ -259,7 +269,8 @@ const useCardCriticalVM = () => {
       keterangan_kegiatan: "",
       values: [],
       depedencies:0,
-      kegiatan:[]
+      kegiatan:[],
+      color:state.color ?? ""
     };
 
     const response = await doDeleteCriticalPath({
@@ -316,7 +327,8 @@ const useCardCriticalVM = () => {
       strategy: selectedStrategy,
       keterangan_kegiatan: curData.keterangan_kegiatan,
       dependency:dep,
-      kegiatan:curData.kegiatan
+      kegiatan:curData.kegiatan,
+      color:curData.color
     };
 
     setState(state);
@@ -324,15 +336,17 @@ const useCardCriticalVM = () => {
   };
 
   useEffect(() => {
-    const data = useCardTows.data;
-    if (data != undefined && data.tows != undefined) {
+    const data = useCardRoadmap.dataBusiness;
+    if (data != undefined) {
       let options: string[] = [];
-      data.tows.map((t) => {
-        options.push(t.value);
+      data.map((t) => {
+        if (options.findIndex(x => x == t.output) == -1){
+          options.push(t.output);
+        }
       });
       setOptionStrategy(options);
     }
-  }, [useCardTows.data]);
+  }, [useCardRoadmap.dataBusiness]);
 
   useEffect(() => {
     if (exsum.id > 0) {

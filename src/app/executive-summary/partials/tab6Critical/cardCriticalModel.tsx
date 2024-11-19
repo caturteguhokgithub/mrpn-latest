@@ -1,11 +1,3 @@
-// 'exsum_id'              => "required",
-//   'ro_id'                 => "required",
-//   'start_date'            => "required",
-//   'end_date'              => "required",
-//   'kategori_proyek_id'    => "required",
-//   'values'                => 'required|array|min:1',
-//   'values.*.tagging'      => 'required',
-
 import {RoDto} from "@/app/misc/rkp/rkpServiceModel";
 import {BaseAPIServiceParam} from "@/lib/core/api/apiModel";
 import {MiscMasterListKategoriProyekRes} from "@/app/misc/master/masterServiceModel";
@@ -21,6 +13,7 @@ export interface ExsumCriticalState {
   keterangan_kegiatan:string
   dependency:ExsumCriticalData|undefined
   kegiatan:KegiatanDto[]
+  color?:string
 }
 
 export const initExsumCriticalReqDto:ExsumCriticalState = {
@@ -49,6 +42,7 @@ export interface ExsumCriticalReqDto {
   }[]
   depedencies:number
   kegiatan:KegiatanDto[]
+  color:string
 }
 
 export interface TargetDto {
@@ -64,9 +58,13 @@ export interface KegiatanDto {
 }
 
 export interface TaskAdditionalData {
+  type:string
+  tooltip_type:string
   penanggungjawab:string
   sumber_anggaran:string
   keterangan_kegiatan:string
+  category:string
+  target:TargetDto[]
 }
 
 export interface ExsumCriticalData {
@@ -83,6 +81,7 @@ export interface ExsumCriticalData {
   }[]
   dependency:ExsumCriticalData|undefined
   kegiatan:KegiatanDto[]
+  color:string
 }
 
 export interface GetByExsumId {

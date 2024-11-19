@@ -13,6 +13,7 @@ import theme from "@/theme";
 import { IconFA } from "@/app/components/icons/icon-fa";
 import { blue, green, orange, red } from "@mui/material/colors";
 import dayjs from "dayjs";
+import {TaskAdditionalData} from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
 
 const CustomTaskListHeader = ({
   headerHeight,
@@ -149,12 +150,31 @@ const CustomTaskListTable = ({
   rowHeight,
   onExpanderClick,
 }: TaskListTableProps) => {
+
+  const getAdditionalData = (item:Task) => {
+    let taskProjectTask: TaskAdditionalData = {
+      type: "",
+      tooltip_type: "parent",
+      penanggungjawab: "",
+      sumber_anggaran: "",
+      keterangan_kegiatan: "",
+      category: "",
+      target: []
+    };
+
+    if (item.project){
+      taskProjectTask = JSON.parse(item.project)
+    }
+
+    return taskProjectTask
+  }
+
   return (
     <Box style={{ border: "1px solid #dfe1e5" }}>
       {tasks.map((item, i) => {
         const isProject = item.type === "project";
         const isExpanded = !item.hideChildren;
-        const projectCategory = "BUMN";
+        const projectCategory = getAdditionalData(item).category;
 
         return (
           <Box
@@ -208,28 +228,21 @@ const CustomTaskListTable = ({
               </p>
               {isProject && (
                 <Chip
-                  label={
-                    projectCategory === "BUMN"
-                      ? "BUMN"
-                      : projectCategory === "DAK"
-                      ? "DAK"
-                      : projectCategory === "KL"
-                      ? "Belanja K/L"
-                      : "Swasta"
-                  }
+                  label={projectCategory}
                   size="small"
                   sx={{
                     display: "inline-flex",
                     alignItems: "center",
-                    bgcolor:
-                      projectCategory === "BUMN"
-                        ? red[700]
-                        : projectCategory === "DAK"
-                        ? green[700]
-                        : projectCategory === "KL"
-                        ? blue[700]
-                        : orange[700],
-                    color: "white",
+                    // bgcolor:
+                    //   projectCategory === "BUMN"
+                    //     ? red[700]
+                    //     : projectCategory === "DAK"
+                    //     ? green[700]
+                    //     : projectCategory === "KL"
+                    //     ? blue[700]
+                    //     : orange[700],
+                    // color: "white",
+                    textTransform:"uppercase",
                     fontWeight: 500,
                     fontSize: 11,
                     height: "auto",
