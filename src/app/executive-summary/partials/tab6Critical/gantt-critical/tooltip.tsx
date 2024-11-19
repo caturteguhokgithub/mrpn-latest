@@ -4,15 +4,23 @@ import dayjs from "dayjs";
 import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { grey, red } from "@mui/material/colors";
 import { Task } from "gantt-task-react";
-import {TargetDto, TaskAdditionalData} from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
+import {
+  TargetDto,
+  TaskAdditionalData,
+} from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
 import theme from "@/theme";
-import {GenerateMonthFromInteger} from "@/lib/utils/common";
+import { GenerateMonthFromInteger } from "@/lib/utils/common";
 
 const CustomTooltip = ({ task }: { task: Task }) => {
-
-  if (task.type == "task"){
-
+  if (task.type == "task") {
     let taskProject: TargetDto[] = [];
+
+    let taskProjectTask: TaskAdditionalData = {
+      penanggungjawab: "",
+      sumber_anggaran: "",
+      keterangan_kegiatan: "",
+    };
+
     if (task.project) {
       taskProject = JSON.parse(task.project);
     }
@@ -41,7 +49,7 @@ const CustomTooltip = ({ task }: { task: Task }) => {
           }}
         >
           <Typography component="span" variant="body2">
-            Kegiatan:
+            RO/Project Kunci:
           </Typography>
           <Typography component="strong" fontWeight={600}>
             {task.name}
@@ -49,6 +57,20 @@ const CustomTooltip = ({ task }: { task: Task }) => {
         </Box>
         <Divider sx={{ my: 1 }} />
         <Stack direction="column" gap={0.5}>
+          <Typography variant="body2" component="span">
+            Penanggungjawab:{" "}
+          </Typography>
+          <Typography component="strong" fontWeight={600}>
+            {taskProjectTask.penanggungjawab}
+          </Typography>
+          <Typography variant="body2" component="span">
+            Sumber Anggaran:{" "}
+            <Typography component="strong" fontWeight={600}>
+              {taskProjectTask.sumber_anggaran == ""
+                ? "-"
+                : taskProjectTask.sumber_anggaran}
+            </Typography>
+          </Typography>
           <Typography variant="body2" component="span">
             Waktu Mulai:{" "}
             <Typography component="strong" fontWeight={600}>
@@ -61,28 +83,51 @@ const CustomTooltip = ({ task }: { task: Task }) => {
               {dayjs(task.end).format("DD MMM YYYY")}
             </Typography>
           </Typography>
-
+          {taskProjectTask.keterangan_kegiatan && (
+            <Typography variant="body2" component="div">
+              Status:{" "}
+              <Box component="span">
+                <Chip
+                  label={taskProjectTask.keterangan_kegiatan}
+                  size="small"
+                  sx={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    bgcolor:
+                      taskProjectTask.keterangan_kegiatan === "Finish to Start"
+                        ? red[700]
+                        : theme.palette.primary.main,
+                    color: "white",
+                    span: {
+                      my: 0,
+                      py: 0,
+                      lineHeight: 1,
+                    },
+                  }}
+                />
+              </Box>
+            </Typography>
+          )}
           {taskProject.length > 0 && (
             <>
               <Divider sx={{ my: 1 }} />
               <Typography component="span" variant="body2">
                 Target:
               </Typography>
-              {taskProject.map((tgt, iTgt) =>
+              {taskProject.map((tgt, iTgt) => (
                 <Typography variant="body2" component="span">
-                  {GenerateMonthFromInteger(tgt.bulan)} {" "}
+                  {GenerateMonthFromInteger(tgt.bulan)}{" "}
                   <Typography component="strong" fontWeight={600}>
                     {`${tgt.target}%`}
                   </Typography>
                 </Typography>
-              )}
+              ))}
             </>
           )}
         </Stack>
       </Box>
     );
   }
-
 
   let taskProject: TaskAdditionalData = {
     penanggungjawab: "",
@@ -117,7 +162,7 @@ const CustomTooltip = ({ task }: { task: Task }) => {
         }}
       >
         <Typography component="span" variant="body2">
-          Kegiatan:
+          RO/Project Kunci:
         </Typography>
         <Typography component="strong" fontWeight={600}>
           {task.name}

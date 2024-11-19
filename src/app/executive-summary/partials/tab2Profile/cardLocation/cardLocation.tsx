@@ -22,6 +22,14 @@ import dynamic from "next/dynamic";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
 import { ExsumLocationUpdateDto } from "@/app/executive-summary/partials/tab2Profile/cardLocation/cardLocationModel";
 
+import {
+  MiscMasterListProvinsiRes,
+  MiscMasterListStakeholderRes,
+  MiscMasterListSumberPendanaanRes,
+} from "@/app/misc/master/masterServiceModel";
+import { ExsumDiagramState } from "@/app/executive-summary/partials/tab3Fot/cardDiagram/cardDiagramModel";
+import { AutocompleteSelectMultiple } from "@/components/autocomplete";
+
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
 }
@@ -37,6 +45,8 @@ export default function CardLocation({ project }: { project: string }) {
     updateData,
     columns,
     setColumns,
+    listProvinsi,
+    handleChangeLocation,
   } = useCardLocationVM();
 
   const ReactQuill = dynamic(
@@ -132,8 +142,19 @@ export default function CardLocation({ project }: { project: string }) {
       >
         <Grid container spacing={2}>
           <Grid item xs={12}>
+            <FieldLabelInfo title="Lokasi" />
+            <AutocompleteSelectMultiple
+              value={request.lokasi}
+              options={listProvinsi}
+              getOptionLabel={(option) => option.name}
+              handleChange={handleChangeLocation}
+              placeHolder={"Pilih Provinsi"}
+              labelSelectAll={"Pilih semua Provinsi"}
+            />
+          </Grid>
+          <Grid item xs={12}>
             <FormControl fullWidth>
-              <FieldLabelInfo title="Keterangan" information="Keterangan" />
+              <FieldLabelInfo title="Keterangan" />
               <ReactQuill
                 key={request.keterangan}
                 theme="snow"

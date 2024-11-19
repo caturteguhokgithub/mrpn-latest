@@ -30,7 +30,7 @@ export default function TableTagging({
   data,
 }: {
   project: string;
-  handleUpdateOrDelete:any;
+  handleUpdateOrDelete: any;
   data: ExsumRelatedDto[];
 }) {
   const { permission } = useAuthContext((state) => state);
@@ -52,13 +52,15 @@ export default function TableTagging({
       <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
         <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
           <TableRow>
-            {(hasPrivilege(permission, pathname, "add") || hasPrivilege(permission, pathname, "delete") || hasPrivilege(permission, pathname, "update")) && (
+            {(hasPrivilege(permission, pathname, "add") ||
+              hasPrivilege(permission, pathname, "delete") ||
+              hasPrivilege(permission, pathname, "update")) && (
               <TableCell sx={{ width: 80, bgcolor: bgColorTh }}>Aksi</TableCell>
             )}
             <TableCell sx={{ bgcolor: bgColorTh }}>Kebijakan</TableCell>
-            <TableCell sx={{ width: "50%", bgcolor: bgColorTh }}>
+            {/* <TableCell sx={{ width: "50%", bgcolor: bgColorTh }}>
               Keterangan
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -68,7 +70,9 @@ export default function TableTagging({
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                {(hasPrivilege(permission, pathname, "add") || hasPrivilege(permission, pathname, "delete") || hasPrivilege(permission, pathname, "update")) && (
+                {(hasPrivilege(permission, pathname, "add") ||
+                  hasPrivilege(permission, pathname, "delete") ||
+                  hasPrivilege(permission, pathname, "update")) && (
                   <TableCell sx={{ textAlign: "center", verticalAlign: "top" }}>
                     <Stack
                       marginTop={1}
@@ -77,8 +81,22 @@ export default function TableTagging({
                       direction="row"
                       gap={0.5}
                     >
-                    {hasPrivilege(permission, pathname, "update") && <ActionColumn center editClick={() => handleUpdateOrDelete(index, "update")} />}
-                    {hasPrivilege(permission, pathname, "delete") && <ActionColumn center deleteClick={() => handleUpdateOrDelete(index, "delete")} />}
+                      {hasPrivilege(permission, pathname, "update") && (
+                        <ActionColumn
+                          center
+                          editClick={() =>
+                            handleUpdateOrDelete(index, "update")
+                          }
+                        />
+                      )}
+                      {hasPrivilege(permission, pathname, "delete") && (
+                        <ActionColumn
+                          center
+                          deleteClick={() =>
+                            handleUpdateOrDelete(index, "delete")
+                          }
+                        />
+                      )}
                     </Stack>
                   </TableCell>
                 )}
@@ -96,7 +114,7 @@ export default function TableTagging({
                         gap={0.5}
                         flexWrap="wrap"
                       >
-                        {y.list.map((z,iz) =>
+                        {y.list.map((z, iz) => (
                           <Chip
                             key={`${index2}-${iz}`}
                             size="small"
@@ -110,14 +128,13 @@ export default function TableTagging({
                               },
                             }}
                           />
-                        )}
+                        ))}
                       </Stack>
                     </Paper>
                   ))}
                 </TableCell>
-                <TableCell>{x.value}</TableCell>
+                {/* <TableCell>{x.value}</TableCell> */}
               </TableRow>
-
             </>
           ))}
         </TableBody>
