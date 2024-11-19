@@ -25,7 +25,6 @@ import theme from "@/theme";
 import FormRoadmap from "./form-roadmap";
 import useCardRoadmapVM from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapVM";
 import {
-  ExsumRoadmapDto,
   ExsumRoadmapResDto,
 } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
 import { IconFA } from "@/app/components/icons/icon-fa";
@@ -98,38 +97,17 @@ export default function CardRoadmap() {
         <OutputTable data={dataOutput} setModalDelete={setModalDelete} />
       </Box>
 
-      <DialogComponent
-        width={600}
-        dialogOpen={modal.open}
-        dialogClose={() => handleOpenModal(false, "")}
-        title={modal.title}
-        dialogFooter={
-          <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button
-              variant="outlined"
-              onClick={() => handleOpenModal(false, "")}
-            >
-              Batal
-            </Button>
-            <Button
-              variant="contained"
-              type="submit"
-              onClick={() => updateData()}
-            >
-              Simpan
-            </Button>
-          </DialogActions>
-        }
-      >
-        {rpjmn && (
-          <FormRoadmap
-            rpjmn={rpjmn}
-            request={request}
-            setRequest={setRequest}
-            fieldTitle={modal.field}
-          />
-        )}
-      </DialogComponent>
+      {rpjmn && (
+        <FormRoadmap
+          rpjmn={rpjmn}
+          request={request}
+          setRequest={setRequest}
+          fieldTitle={modal.field}
+          modal={modal}
+          handleOpenModal={handleOpenModal}
+          updateData={updateData}
+        />
+      )}
 
       <DialogComponent
         width={400}
@@ -498,11 +476,12 @@ const OutputTable = ({
                   )}
                 </CardContent>
                 <CardContent>
-                  <>
-                    <Typography component="p" textAlign="left">
-                      {itemOutput.output}
-                    </Typography>
-                  </>
+                  <Box textAlign={"left"} dangerouslySetInnerHTML={{__html: itemOutput.output}} />
+                  {/*<>*/}
+                  {/*  <Typography component="p" textAlign="left">*/}
+                  {/*    {itemOutput.output}*/}
+                  {/*  </Typography>*/}
+                  {/*</>*/}
                 </CardContent>
               </Card>
             ))

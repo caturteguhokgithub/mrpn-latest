@@ -59,17 +59,29 @@ export default function CardLocation({ project }: { project: string }) {
   const quillRef = React.useRef<ReactQuill>(null);
 
   const handleChangeQuill = async () => {
-    console.log("trigger")
+    const text = quillRef.current?.value;
+    let finalText = ""
+    if (text) {
+      finalText = text.toString()
+    }
+    setRequest(prevState => {
+      return {
+        ...prevState,
+        keterangan: finalText
+      }
+    })
+  };
+
+  const handleUpdateData = async () => {
     const text = quillRef.current?.value;
     if (text) {
-      setRequest(prevState => {
-        return {
-          ...prevState,
-          keterangan: text.toString()
-        }
-      })
+      const req = {
+        ...request,
+        keterangan: text.toString(),
+      };
+      updateData(req);
     }
-  };
+  }
 
   return (
     <CardItem
@@ -139,7 +151,7 @@ export default function CardLocation({ project }: { project: string }) {
             <Button
               variant="contained"
               type="submit"
-              onClick={() => updateData()}
+              onClick={() => handleUpdateData()}
             >
               Simpan
             </Button>

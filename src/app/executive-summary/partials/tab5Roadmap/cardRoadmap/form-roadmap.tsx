@@ -1,5 +1,7 @@
 import React from "react";
 import {
+  Button,
+  DialogActions,
   Divider,
   FormControl,
   Grid,
@@ -20,18 +22,47 @@ import { MiscMasterRPJMNRes } from "@/app/misc/master/masterServiceModel";
 import { ExsumRoadmapDto } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
 import { grey } from "@mui/material/colors";
 import { AutocompleteSelectMultiple } from "@/components/autocomplete";
+import ReactQuill from "react-quill";
+import DialogComponent from "@/components/dialog";
+
+
+interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
+  forwardedRef: React.LegacyRef<ReactQuill>;
+}
+
+const ReactQuillX = dynamic(
+  async () => {
+    const { default: RQ } = await import("react-quill");
+
+    function QuillJS({ forwardedRef, ...props }: IWrappedComponent) {
+      return <RQ ref={forwardedRef} {...props} />;
+    }
+
+    return QuillJS;
+  },
+  {
+    ssr: false,
+  }
+);
 
 export default function FormRoadmap({
   rpjmn,
   request,
   setRequest,
   fieldTitle,
+  modal,
+  handleOpenModal,
+  updateData
 }: {
   rpjmn: MiscMasterRPJMNRes;
   request: ExsumRoadmapDto;
   setRequest: any;
   fieldTitle: string;
+  modal:any;
+  handleOpenModal:any;
+  updateData:any;
 }) {
+
   const listYearRPjmn = () => {
     let listYear = [];
     for (let i = rpjmn.start; i <= rpjmn.end; i++) {
@@ -40,55 +71,73 @@ export default function FormRoadmap({
     return listYear;
   };
 
-  const handleChange = (e: any) => {
-    setRequest((prev: ExsumRoadmapDto) => {
-      return {
-        ...prev,
-        year: e.target.value,
-      };
-    });
+  const quillRef = React.useRef<ReactQuill>(null);
+
+  const handleChangeQuill = async () => {
+    const text = quillRef.current?.value;
+    if (text) {
+      setRequest((prevState:ExsumRoadmapDto) => {
+        return {
+          ...prevState,
+          output: text.toString()
+        }
+      })
+    }
   };
 
-  const [value, setValue] = React.useState("");
-  const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-
-  console.log(request.output, "Request output");
+  const handleUpdateData = async () => {
+    const finalReq = {...request}
+    if (fieldTitle == "Output"){
+      const text = quillRef.current?.value;
+      if (text) {
+        finalReq.output = text.toString()
+      }else{
+        finalReq.output = ""
+      }
+    }
+    updateData(finalReq);
+  }
 
   return (
-    <>
+    <DialogComponent
+      width={600}
+      dialogOpen={modal.open}
+      dialogClose={() => handleOpenModal(false, "")}
+      title={modal.title}
+      dialogFooter={
+        <DialogActions sx={{ p: 2, px: 3 }}>
+          <Button
+            variant="outlined"
+            onClick={() => handleOpenModal(false, "")}
+          >
+            Batal
+          </Button>
+          <Button
+            variant="contained"
+            type="submit"
+            onClick={() => handleUpdateData()}
+          >
+            Simpan
+          </Button>
+        </DialogActions>
+      }
+    >
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Tahun" />
-            {/*<SelectCustomTheme*/}
-            {/*  defaultStyle*/}
-            {/*  small*/}
-            {/*  value={request.year}*/}
-            {/*  onChange={handleChange}*/}
-            {/*>*/}
-            {/*  <MenuItem value="none" disabled>*/}
-            {/*    <Typography fontSize={14} fontStyle="italic" color={grey[700]}>*/}
-            {/*      Pilih tahun*/}
-            {/*    </Typography>*/}
-            {/*  </MenuItem>*/}
-            {/*  {listYearRPjmn().map((tahunLabel, index) => (*/}
-            {/*    <MenuItem key={index} value={tahunLabel}>*/}
-            {/*      <Typography aria-haspopup="true" sx={{ fontSize: 14 }}>*/}
-            {/*        {tahunLabel}*/}
-            {/*      </Typography>*/}
-            {/*    </MenuItem>*/}
-            {/*  ))}*/}
-            {/*</SelectCustomTheme>*/}
             <AutocompleteSelectMultiple
               value={request.year}
               options={listYearRPjmn()}
               getOptionLabel={(option) => option.toString()}
               handleChange={(newVal: number[]) =>
-                setRequest((prev: ExsumRoadmapDto) => {
-                  return {
-                    ...prev,
-                    year: newVal,
-                  };
+                handleChangeQuill().then(r => {
+                  setRequest((prev: ExsumRoadmapDto) => {
+                    return {
+                      ...prev,
+                      year: newVal,
+                    };
+                  })
                 })
               }
               placeHolder={"Pilih tahun"}
@@ -101,67 +150,36 @@ export default function FormRoadmap({
           <FormControl fullWidth>
             <FieldLabelInfo title={fieldTitle} />
 
-            {/*<ReactQuill theme="snow" value={value} onChange={setValue} />*/}
-            <TextareaStyled
-              aria-label={fieldTitle}
-              placeholder={fieldTitle}
-              minRows={3}
-              value={request.output}
-              onChange={(e) =>
-                setRequest((prev: ExsumRoadmapDto) => {
-                  return {
-                    ...prev,
-                    output: e.target.value,
-                  };
-                })
-              }
-            />
+            {
+              fieldTitle == "Output" ?
+                <ReactQuillX
+                  key={request.output.length}
+                  theme="snow"
+                  defaultValue={request.output}
+                  value={request.output}
+                  forwardedRef={quillRef}
+                  onBlur={() => handleChangeQuill()}
+              />
+                :
+              <TextareaStyled
+                aria-label={fieldTitle}
+                placeholder={fieldTitle}
+                minRows={3}
+                value={request.output}
+                onChange={(e) =>
+                  setRequest((prev: ExsumRoadmapDto) => {
+                    return {
+                      ...prev,
+                      output: e.target.value,
+                    };
+                  })
+                }
+              />
+            }
+
           </FormControl>
         </Grid>
-
-        {/*<Grid item lg={6}>*/}
-        {/* <FormControl fullWidth sx={{ mb: 3 }}>*/}
-        {/*  <FieldLabelInfo title="RO Pendukung" information="RO Pendukung" />*/}
-        {/*  {mode === "add" ? (*/}
-        {/*   <ReactQuill*/}
-        {/*    theme="snow"*/}
-        {/*    value={value}*/}
-        {/*    onChange={setValue}*/}
-        {/*    style={{ maxHeight: "300px" }}*/}
-        {/*   />*/}
-        {/*  ) : mode === "edit" ? (*/}
-        {/*   <TextareaComponent*/}
-        {/*    label="Keterangan"*/}
-        {/*    placeholder="Keterangan"*/}
-        {/*    value="-"*/}
-        {/*   />*/}
-        {/*  ) : (*/}
-        {/*   <Typography fontWeight={600}>-</Typography>*/}
-        {/*  )}*/}
-        {/* </FormControl>*/}
-        {/*</Grid>*/}
-        {/*<Grid item lg={6}>*/}
-        {/* <FormControl fullWidth>*/}
-        {/*  <FieldLabelInfo title="Catatan Lain" information="Catatan Lain" />*/}
-        {/*  {mode === "add" ? (*/}
-        {/*   <ReactQuill*/}
-        {/*    theme="snow"*/}
-        {/*    value={value}*/}
-        {/*    onChange={setValue}*/}
-        {/*    style={{ maxHeight: "300px" }}*/}
-        {/*   />*/}
-        {/*  ) : mode === "edit" ? (*/}
-        {/*   <TextareaComponent*/}
-        {/*    label="Keterangan"*/}
-        {/*    placeholder="Keterangan"*/}
-        {/*    value="-"*/}
-        {/*   />*/}
-        {/*  ) : (*/}
-        {/*   <Typography fontWeight={600}>-</Typography>*/}
-        {/*  )}*/}
-        {/* </FormControl>*/}
-        {/*</Grid>*/}
       </Grid>
-    </>
+    </DialogComponent>
   );
 }

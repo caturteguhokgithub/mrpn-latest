@@ -268,7 +268,6 @@ export default function PageIdentifikasiView({}) {
 
   return (
     <>
-      {console.log("request.insidentil", request.insidentil)}
       <ContentPage
         title={`Identifikasi Risiko ${
           year == 0

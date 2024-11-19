@@ -110,13 +110,12 @@ const useCardRoadmapVM = () => {
 
       const businessData = result.filter((x) => x.type == "BISNIS");
       setDataBusiness(businessData);
-      console.log(businessData);
     }
   }
 
-  async function updateData() {
+  async function updateData(param:ExsumRoadmapDto) {
     const req: ExsumRoadmapDto = {
-      ...request,
+      ...param,
       exsum_id: exsum.id,
     };
     const params = {

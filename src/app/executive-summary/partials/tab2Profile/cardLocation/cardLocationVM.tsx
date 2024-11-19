@@ -88,8 +88,7 @@ const useCardLocationVM = () => {
     }
   }, [exsum]);
 
-  async function updateData() {
-    const req = {...request}
+  async function updateData(req: ExsumLocationUpdateDto) {
     req.exsum_id = exsum.id;
     const params = {
       body: req,
