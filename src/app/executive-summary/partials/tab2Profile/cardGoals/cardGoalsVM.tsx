@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import { ExsumGoalsDto, initExsumGoalsDto } from "./cardGoalsModel";
 import { doCreate, doDelete, doGet, doUpdate } from "./cardGoalsService";
+import useCardSupportVM from "@/app/executive-summary/partials/tab2Profile/cardSupport/cardSupportVM";
 
 const useCardGoalsVM = () => {
   const loadingContext = useLoading();
@@ -19,6 +20,8 @@ const useCardGoalsVM = () => {
   });
   const [modal, setModal] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
+
+  const useCardSupport = useCardSupportVM()
 
   const handleModalDelete = () => {
     setModalDelete(true);
@@ -102,6 +105,7 @@ const useCardGoalsVM = () => {
     modalDelete,
     setModalDelete,
     handleModalDelete,
+    sasaran:useCardSupport.data
   };
 };
 

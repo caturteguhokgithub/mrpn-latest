@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Button, DialogActions, Typography } from "@mui/material";
+import {Button, DialogActions, List, ListItem, Typography} from "@mui/material";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import CardItem from "@/app/components/cardTabItem";
@@ -25,6 +25,7 @@ export default function CardGoals({ project }: { project: string }) {
     modalDelete,
     setModalDelete,
     handleModalDelete,
+    sasaran
   } = useCardGoalsVM();
 
   const ReactQuill = dynamic(
@@ -58,10 +59,10 @@ export default function CardGoals({ project }: { project: string }) {
     <CardItem
       title="Tujuan Utama/Goals Proyek"
       setting
-      settingDeleteOnclick={handleModalDelete}
-      settingEditOnclick={() => setModal(true)}
+      // settingDeleteOnclick={handleModalDelete}
+      // settingEditOnclick={() => setModal(true)}
     >
-      {data.value === "" ? (
+      {sasaran == undefined ? (
         <EmptyState
           dense
           icon={<IconEmptyData width={100} />}
@@ -69,7 +70,10 @@ export default function CardGoals({ project }: { project: string }) {
           description="Silahkan isi konten halaman ini"
         />
       ) : (
-        <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
+        // <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
+        sasaran?.sasaran_kp.map((ssr,iSsr) =>
+            <Typography key={`ssr-${iSsr}`}>{`${ssr.value}`}</Typography>
+        )
       )}
       <DialogComponent
         dialogOpen={modal}

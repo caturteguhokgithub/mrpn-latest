@@ -1,8 +1,11 @@
 import {BaseAPIServiceParam} from "@/lib/core/api/apiModel";
 import {ProjectDefaultDto} from "@/lib/core/context/rkpContext";
-import {RKPSasaranDto} from "@/app/misc/rkp/rkpServiceModel";
+import {SasaranDto} from "@/app/misc/rkp/rkpServiceModel";
 
-export type ExsumSupportProjectRes = RKPSasaranDto
+export type ExsumSupportProjectRes = ProjectDefaultDto & {
+  sasaran: SasaranDto[]
+  sasaran_kp: SasaranDto[]
+}
 
 export type ExsumSupportProjectReq = {
   level: string
