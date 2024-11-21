@@ -296,7 +296,7 @@ export default function FormCritical({
       </Grid>
       <Grid item xs={12}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Tagging Strategi" />
+          <FieldLabelInfo title="Tagging Roadmap" />
           <AutocompleteSelectMultiple
             value={state.strategy}
             options={optionsStrategy}
@@ -308,7 +308,7 @@ export default function FormCritical({
                 };
               })
             }
-            placeHolder={"Pilih tagging strategi"}
+            placeHolder={"Pilih tagging roadmap proses bisnis"}
             getOptionLabel={(option: string) => option}
             labelSelectAll={"Pilih semua tagging"}
           />

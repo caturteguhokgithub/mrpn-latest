@@ -1,6 +1,16 @@
 import {IndikatorDto} from "@/app/misc/rkp/rkpServiceModel";
 import {MiscMasterRPJMNRes} from "@/app/misc/master/masterServiceModel";
 
+export const generateRpjmnYear = (rpjmn: MiscMasterRPJMNRes|undefined) => {
+  let result:number[] = []
+  if (rpjmn){
+    for (let i = rpjmn.start; i <= rpjmn.end; i++) {
+        result.push(i)
+    }
+  }
+  return result
+}
+
 export const GetTarget = (rpjmn: MiscMasterRPJMNRes|undefined, year: number, indikator: IndikatorDto) => {
   let index = 0;
 

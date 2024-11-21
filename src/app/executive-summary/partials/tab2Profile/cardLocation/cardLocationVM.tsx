@@ -78,6 +78,7 @@ const useCardLocationVM = () => {
         setRequest({ ...initExsumLocationUpdateDto });
       }
     }
+    getLocationByExsumTOWSDiagram();
   }
 
   useEffect(() => {
