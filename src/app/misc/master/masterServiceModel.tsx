@@ -57,10 +57,12 @@ export interface MiscMasterListPerpresRes {
  id: number;
  title: string;
  value: string;
+ flag: string;
 }
 export interface MiscMasterListPerpresCreateReq {
  title: string;
  value: string;
+ flag: string;
 }
 
 export type MiscMasterListPerpresCreateReqService = BaseAPIServiceParam & {

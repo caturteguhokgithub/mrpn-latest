@@ -133,7 +133,10 @@ export default function TablePeraturan({
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>
                     {row.perpres.map((y, index2) => (
-                      <Chip key={index2} size="small" label={y.title} />
+                      <Chip key={index2} size="small" label={y.title} sx={y.flag != null ? {
+                        background:"#EA6228",
+                        color:"white"
+                      } : undefined} />
                     ))}
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>

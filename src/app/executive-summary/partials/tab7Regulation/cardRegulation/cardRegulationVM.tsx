@@ -21,6 +21,12 @@ import {
   doGet
 } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationService";
 
+const initCreatePerpres = {
+  title:"",
+  value:"",
+  flag:"new"
+}
+
 const useCardRegulationVM = () => {
 
   const loadingContext = useLoading();
@@ -28,10 +34,10 @@ const useCardRegulationVM = () => {
   const { exsum } = useExsumContext()
 
   const [optionStakeholder, setOptionStakeholder] = useState<MiscMasterListStakeholderRes[]>([])
-  const [perpresState, setPerpresState] = useState<MiscMasterListPerpresCreateReq>({
-    title:"",
-    value:""
-  })
+
+  const initStatePerpres = JSON.parse(JSON.stringify(initCreatePerpres))
+  const [perpresState, setPerpresState] = useState<MiscMasterListPerpresCreateReq>(initStatePerpres)
+
   const [modalPeraturan, setModalPeraturan] = React.useState(false);
   const [perpres, setPerpres] = useState<MiscMasterListPerpresRes[]>([])
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -61,6 +67,8 @@ const useCardRegulationVM = () => {
     })
     if (response?.code == API_CODE.success){
       getListPerpres()
+      const initStatePerpres = JSON.parse(JSON.stringify(initCreatePerpres))
+      setPerpresState(initStatePerpres)
       setModalPeraturan(false)
     }
   }
