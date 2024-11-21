@@ -58,7 +58,7 @@ export default function CardGoals({ project }: { project: string }) {
   return (
     <CardItem
       title="Tujuan Utama/Goals Proyek"
-      setting
+      // setting
       // settingDeleteOnclick={handleModalDelete}
       // settingEditOnclick={() => setModal(true)}
     >
@@ -72,7 +72,7 @@ export default function CardGoals({ project }: { project: string }) {
       ) : (
         // <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
         sasaran?.sasaran_kp.map((ssr,iSsr) =>
-            <Typography key={`ssr-${iSsr}`}>{`${ssr.value}`}</Typography>
+            <Typography key={`ssr-${iSsr}`}>{`${ssr.code} - ${ssr.value}`}</Typography>
         )
       )}
       <DialogComponent
