@@ -69,7 +69,9 @@ const useCardIndicationVM = () => {
     sumber_anggaran: "",
     type: "RO",
     intervention: false,
-    type_stakeholder: ""
+    type_stakeholder: "",
+    detail: [],
+    lokasi: []
   }
 
   async function getOptionRiskType(){
