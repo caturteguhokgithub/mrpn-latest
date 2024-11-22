@@ -159,21 +159,21 @@ export default function CardLocation({ project }: { project: string }) {
         }
       >
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <FieldLabelInfo title="Lokasi" />
-            <AutocompleteSelectMultiple
-              value={request.lokasi}
-              options={listProvinsi}
-              getOptionLabel={(option) => option.name}
-              handleChange={(e:MiscMasterListProvinsiRes[]) => {
-                handleChangeQuill().then(r =>
-                  handleChangeLocation(e)
-                )
-              }}
-              placeHolder={"Pilih Provinsi"}
-              labelSelectAll={"Pilih semua Provinsi"}
-            />
-          </Grid>
+          {/*<Grid item xs={12}>*/}
+          {/*  <FieldLabelInfo title="Lokasi" />*/}
+          {/*  <AutocompleteSelectMultiple*/}
+          {/*    value={request.lokasi}*/}
+          {/*    options={listProvinsi}*/}
+          {/*    getOptionLabel={(option) => option.name}*/}
+          {/*    handleChange={(e:MiscMasterListProvinsiRes[]) => {*/}
+          {/*      handleChangeQuill().then(r =>*/}
+          {/*        handleChangeLocation(e)*/}
+          {/*      )*/}
+          {/*    }}*/}
+          {/*    placeHolder={"Pilih Provinsi"}*/}
+          {/*    labelSelectAll={"Pilih semua Provinsi"}*/}
+          {/*  />*/}
+          {/*</Grid>*/}
           <Grid item xs={12}>
             <FormControl fullWidth>
               <FieldLabelInfo title="Keterangan" />

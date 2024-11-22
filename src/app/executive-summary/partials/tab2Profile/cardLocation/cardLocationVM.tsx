@@ -46,7 +46,7 @@ const useCardLocationVM = () => {
   async function getLocationByExsumTOWSDiagram() {
     const params: RkpLocationReqDto = {
       action: "exsum_only",
-      exsum_id: [exsum.id],
+      exsum_id: exsum.id,
     };
     const response = await doGetRkpLocation({
       body: params,

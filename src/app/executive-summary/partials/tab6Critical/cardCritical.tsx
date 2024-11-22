@@ -94,10 +94,6 @@ export default function CardCritical({ project }: { project: string }) {
     return dt;
   };
 
-  useEffect(() => {
-    console.log(state)
-  }, [state]);
-
   return (
     <>
       <CardItem

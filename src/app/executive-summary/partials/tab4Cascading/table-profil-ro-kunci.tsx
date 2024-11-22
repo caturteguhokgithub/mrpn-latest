@@ -1,20 +1,10 @@
 import React, { SetStateAction, useEffect, useMemo } from "react";
 import {
-  alpha,
   Box,
-  Checkbox,
   Chip,
-  Paper,
   Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
 } from "@mui/material";
-import theme from "@/theme";
-import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
+import {RODataTable} from "@/app/misc/rkp/rkpServiceModel";
 import { FormatIDR } from "@/lib/utils/currency";
 import {
   MaterialReactTable,
@@ -22,125 +12,138 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { ExsumInterventionState } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
-import { RowSelectionState } from "@tanstack/table-core";
 import { advancedTable } from "@/app/components/table";
+import {useRKPContext} from "@/lib/core/hooks/useHooks";
+import {GenerateRpjmnYear} from "@/lib/utils/common";
 
 export default function TableProfilRoKunci({
   data,
   setState,
 }: {
-  data: RoDto[];
+  data: RODataTable[];
   setState: (value: SetStateAction<ExsumInterventionState>) => void;
 }) {
-  const columns = useMemo(
-    () => [
-      {
-        accessorKey: "intervention",
-        header: "Intervensi Kunci",
-        size: 150,
-        Cell: (item: any) => {
-          const value =
-            item.row.original.intervention == true
-              ? "Intervensi Kunci"
-              : "Reguler";
-          const color =
-            item.row.original.intervention == true ? "primary" : "default";
-          return (
-            <Stack height="100%" alignItems="flex-start">
-              <Chip size="small" color={color} label={value} />
-            </Stack>
-          );
-        },
-      },
-      {
-        accessorKey: "tahun",
-        header: "Tahun",
-        size: 120,
-        enableColumnFilterModes: true,
-        filterFns: "contains",
-        Cell: (item: any) => {
-          return (
-            <Stack height="100%" alignItems="flex-start">
-              {item.row.original.tahun}
-            </Stack>
-          );
-        },
-      },
-      {
-        accessorKey: "code",
-        header: "Format Kode",
-        enableColumnFilterModes: true,
-        filterFns: "contains",
-        Cell: (item: any) => {
-          return (
-            <Stack height="100%" alignItems="flex-start">
-              {item.row.original.code}
-            </Stack>
-          );
-        },
-      },
-      {
-        accessorKey: "kementrian_id",
-        header: "Penanggungjawab",
-        enableColumnFilterModes: false,
-        Cell: (item: any) => {
-          return item.row.original.kementrian.value;
-        },
-      },
-      {
-        accessorKey: "value",
-        header: "Nomenklatur RO/Project",
-        Cell: (item: any) => {
-          return (
-            <Stack height="100%" alignItems="flex-start">
-              {item.row.original.value}
-            </Stack>
-          );
-        },
-      },
-      {
-        accessorKey: "target",
-        header: "Target",
-        Cell: (item: any) => {
-          return (
-            <Stack height="100%" alignItems="flex-start">
-              {item.row.original.target}
-            </Stack>
-          );
-        },
-      },
-      {
-        accessorKey: "anggaran",
-        header: "Anggaran",
 
-        Cell: (item: any) => {
-          const value = FormatIDR(item.row.original.alokasi);
-          return (
-            <Stack
-              width="100%"
-              height="100%"
-              alignItems="flex-end"
-              justifyContent="flex-start"
-            >
-              {value}
-            </Stack>
-          );
-        },
+  const {year, rpjmn} = useRKPContext(store => store)
+
+  const columns = [
+    {
+      accessorKey: "intervention",
+      header: "Intervensi Kunci",
+      size: 150,
+      Cell: (item: any) => {
+        const value =
+          item.row.original.intervention == true
+            ? "Intervensi Kunci"
+            : "Reguler";
+        const color =
+          item.row.original.intervention == true ? "primary" : "default";
+        return (
+          <Stack height="100%" alignItems="flex-start">
+            <Chip size="small" color={color} label={value} />
+          </Stack>
+        );
       },
-      {
-        accessorKey: "sumber_anggaran",
-        header: "Sumber Anggaran",
-        Cell: (item: any) => {
-          return (
-            <Stack height="100%" alignItems="flex-start">
-              {item.row.original.sumber_anggaran}
-            </Stack>
-          );
-        },
+    },
+    {
+      accessorKey: "tahun",
+      header: "Tahun",
+      size: 120,
+      enableColumnFilterModes: true,
+      filterFns: "contains",
+      Cell: (item: any) => {
+        return (
+          <Stack height="100%" alignItems="flex-start">
+            {item.row.original.tahun}
+          </Stack>
+        );
       },
-    ],
-    []
-  );
+    },
+    {
+      accessorKey: "code",
+      header: "Format Kode",
+      enableColumnFilterModes: true,
+      filterFns: "contains",
+      Cell: (item: any) => {
+        return (
+          <Stack height="100%" alignItems="flex-start">
+            {item.row.original.code}
+          </Stack>
+        );
+      },
+    },
+    {
+      accessorKey: "kementrian_id",
+      header: "Penanggungjawab",
+      enableColumnFilterModes: false,
+      Cell: (item: any) => {
+        return item.row.original.kementrian.value;
+      },
+    },
+    {
+      accessorKey: "value",
+      header: "Nomenklatur RO/Project",
+      Cell: (item: any) => {
+        return (
+          <Stack height="100%" alignItems="flex-start">
+            {item.row.original.value}
+          </Stack>
+        );
+      },
+    },
+  ];
+
+  let detailRpjmn: any[] = []
+
+  let multiyear:number[] = [year]
+  if (year == 0){
+    multiyear = GenerateRpjmnYear(rpjmn)
+  }
+  multiyear.map((y, i) => {
+    let tahunDetail: any = {
+      id: "annual" + i,
+      header: y,
+      columns: [
+        {
+          accessorKey: "target_" + i,
+          header: "Target",
+          enableColumnActions: false,
+          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
+            renderedCellValue == "" ? "-" : renderedCellValue
+          ),
+        },
+        {
+          accessorKey: "satuan_" + i,
+          header: "Satuan",
+          enableColumnActions: false,
+          textAlign: 'center',
+          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
+            renderedCellValue == "" ? "-" : renderedCellValue
+          ),
+        },
+        {
+          accessorKey: "anggaran_" + i,
+          header: "Pembiayaan",
+          enableColumnActions: false,
+          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
+            <Stack alignItems={"flex-end"} width={"100%"}>
+              {FormatIDR(renderedCellValue)}
+            </Stack>
+          ),
+        },
+        {
+          accessorKey: "sumber_anggaran_" + i,
+          header: "Sumber Pembiayaan",
+          enableColumnActions: false,
+          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
+            renderedCellValue == "" ? "-" : renderedCellValue
+          ),
+        }
+      ]
+    }
+    detailRpjmn.push(tahunDetail)
+  })
+  columns.push(...detailRpjmn)
 
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     {}
@@ -191,7 +194,6 @@ export default function TableProfilRoKunci({
     paginationDisplayMode: "pages",
     initialState: {
       showGlobalFilter: true,
-      showColumnFilters: true,
     },
   });
 

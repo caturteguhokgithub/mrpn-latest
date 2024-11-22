@@ -1,29 +1,35 @@
-import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
-import { Box, Chip, Stack } from "@mui/material";
+import {RODataTable, RoDto} from "@/app/misc/rkp/rkpServiceModel";
+import {Box, Chip, Stack} from "@mui/material";
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
-import React from "react";
-import { FormatIDR } from "@/lib/utils/currency";
-import { advancedTable } from "@/app/components/table";
+import React, {useEffect, useState} from "react";
+import {FormatIDR} from "@/lib/utils/currency";
+import {advancedTable} from "@/app/components/table";
 import ActionColumn from "@/components/actions/action";
+import {GenerateRpjmnYear} from "@/lib/utils/common";
+import {useRKPContext} from "@/lib/core/hooks/useHooks";
 
-export default function TableProfilIntervensi({
-  data,
-  deleteData,
-  updateData,
-  toggleShowTab,
-  noActionColumn,
-  page,
-}: {
-  data: RoDto[];
-  deleteData?: any;
-  updateData?: any;
-  toggleShowTab?: boolean;
-  noActionColumn?: boolean;
-  page?: string;
-}) {
+export default function TableProfilIntervensi(
+  {
+    data,
+    deleteData,
+    updateData,
+    toggleShowTab,
+    noActionColumn,
+    page,
+  }: {
+    data: RODataTable[];
+    deleteData?: any;
+    updateData?: any;
+    toggleShowTab?: boolean;
+    noActionColumn?: boolean;
+    page?: string;
+  }) {
+
+  const {year, rpjmn} = useRKPContext(store => store)
+
   const columnTabelIntervensi = [
     {
       accessorKey: "tahun",
@@ -31,13 +37,9 @@ export default function TableProfilIntervensi({
       size: 130,
       enableColumnFilterModes: true,
       filterFns: "contains",
-      Cell: (item: any) => {
-        return (
-          <Stack height="100%" alignItems="flex-start">
-            {item.row.original.tahun}
-          </Stack>
-        );
-      },
+      Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
+        renderedCellValue == null ? "-" : renderedCellValue
+      ),
     },
     {
       accessorKey: "code",
@@ -45,13 +47,9 @@ export default function TableProfilIntervensi({
       size: 180,
       enableColumnFilterModes: true,
       filterFns: "contains",
-      Cell: (item: any) => {
-        return (
-          <Stack height="100%" alignItems="flex-start">
-            {item.row.original.code}
-          </Stack>
-        );
-      },
+      Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
+        renderedCellValue == null ? "-" : renderedCellValue
+      ),
     },
     {
       accessorKey: "intervention",
@@ -66,8 +64,8 @@ export default function TableProfilIntervensi({
         const color =
           item.row.original.intervention == true ? "primary" : "default";
         return (
-          <Stack height="100%" alignItems="flex-start">
-            <Chip size="small" color={color} label={value} />
+          <Stack height={"inherit"} width={"100%"} alignItems="center" flexDirection={"column"}>
+            <Chip size="small" color={color} label={value}/>
           </Stack>
         );
       },
@@ -79,7 +77,7 @@ export default function TableProfilIntervensi({
       enableColumnFilterModes: true,
       Cell: (item: any) => {
         return (
-          <Stack height="100%" alignItems="flex-start">
+          <Stack height="inherit" alignItems="center" justifyContent={"start"}>
             {item.row.original.kementrian.value}
           </Stack>
         );
@@ -91,58 +89,67 @@ export default function TableProfilIntervensi({
       size: 350,
       Cell: (item: any) => {
         return (
-          <Stack height="100%" alignItems="flex-start">
+          <Stack height="inherit" alignItems="center" justifyContent={"start"}>
             {item.row.original.value}
-          </Stack>
-        );
-      },
-    },
-    {
-      accessorKey: "target",
-      header: "Target",
-      size: 150,
-      Cell: (item: any) => {
-        return (
-          <Stack height="100%" alignItems="flex-start">
-            {item.row.original.target}
-          </Stack>
-        );
-      },
-    },
-    {
-      accessorKey: "anggaran",
-      header: "Anggaran",
-      size: 150,
-      Cell: (item: any) => {
-        const value = FormatIDR(item.row.original.anggaran);
-        return (
-          <Stack
-            width="100%"
-            height="100%"
-            alignItems="flex-end"
-            justifyContent="flex-start"
-          >
-            {value}
-          </Stack>
-        );
-      },
-    },
-    {
-      accessorKey: "sumber_anggaran",
-      header: "Sumber Anggaran",
-      size: 200,
-      Cell: (item: any) => {
-        return (
-          <Stack height="100%" alignItems="flex-start">
-            {item.row.original.sumber_anggaran}
           </Stack>
         );
       },
     },
   ];
 
+  let detailRpjmn: any[] = []
+
+  let multiyear:number[] = [year]
+  if (year == 0){
+    multiyear = GenerateRpjmnYear(rpjmn)
+  }
+  multiyear.map((y, i) => {
+    let tahunDetail: any = {
+      id: "annual" + i,
+      header: y,
+      columns: [
+        {
+          accessorKey: "target_" + i,
+          header: "Target",
+          enableColumnActions: false,
+          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
+            renderedCellValue == "" ? "-" : renderedCellValue
+          ),
+        },
+        {
+          accessorKey: "satuan_" + i,
+          header: "Satuan",
+          enableColumnActions: false,
+          textAlign: 'center',
+          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
+            renderedCellValue == "" ? "-" : renderedCellValue
+          ),
+        },
+        {
+          accessorKey: "anggaran_" + i,
+          header: "Pembiayaan",
+          enableColumnActions: false,
+          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
+            <Stack alignItems={"flex-end"} width={"100%"}>
+              {FormatIDR(renderedCellValue)}
+            </Stack>
+          ),
+        },
+        {
+          accessorKey: "sumber_anggaran_" + i,
+          header: "Sumber Pembiayaan",
+          enableColumnActions: false,
+          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
+            renderedCellValue == "" ? "-" : renderedCellValue
+          ),
+        }
+      ]
+    }
+    detailRpjmn.push(tahunDetail)
+  })
+  columnTabelIntervensi.push(...detailRpjmn)
+
   const columns = [
-    ...columnTabelIntervensi,
     {
       accessorKey: "action",
       header: "Aksi",
@@ -157,6 +164,7 @@ export default function TableProfilIntervensi({
         ) : null;
       },
     },
+    ...columnTabelIntervensi
   ];
 
   const table = useMaterialReactTable({
@@ -189,10 +197,10 @@ export default function TableProfilIntervensi({
           maxHeight: toggleShowTab
             ? // ? "calc(100vh - 690px)"
               // "calc(100vh - 390px)"
-              "80vh"
+            "80vh"
             : // : "calc(100vh - 625px)",
               // "calc(100vh - 325px)",
-              "80vh",
+            "80vh",
           "&::-webkit-scrollbar": {
             height: "6px",
             width: "6px",
@@ -201,7 +209,7 @@ export default function TableProfilIntervensi({
         },
       }}
     >
-      <MaterialReactTable key={data.length} table={table} />
+      <MaterialReactTable key={data.length} table={table}/>
     </Box>
   );
 }

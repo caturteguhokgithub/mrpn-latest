@@ -124,26 +124,6 @@ export default function TableAnggaran(
   }
 ) {
 
-  const {year} = useRKPContext(store => store)
-
-  const rows = () => {
-
-    let res: number[] = []
-
-    if (type == "NON_RO_UPDATE"){
-      res.push(year)
-      return res
-    }
-
-
-    if (rpjmn) {
-      for (let i = rpjmn.start; i <= rpjmn.end; i++) {
-        res.push(i)
-      }
-    }
-    return res
-  };
-
   return (
     <Table sx={{minWidth: 650}} size="small">
       <TableHead sx={{bgcolor: theme.palette.primary.light}}>
@@ -160,12 +140,12 @@ export default function TableAnggaran(
           </TableCell>
           <TableCell>
             <Typography variant="body1" fontWeight={600}>
-              Anggaran
+              Pembiayaan
             </Typography>
           </TableCell>
           <TableCell>
             <Typography variant="body1" fontWeight={600}>
-              Sumber Anggaran
+              Sumber Pembiayaan
             </Typography>
           </TableCell>
         </TableRow>

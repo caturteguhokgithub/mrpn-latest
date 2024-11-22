@@ -12,18 +12,20 @@ import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 import TableAnggaran from "./table-anggaran";
 import { red } from "@mui/material/colors";
 import {
- AutoCompleteSingleProp,
- AutocompleteSelectSingle,
+  AutoCompleteSingleProp,
+  AutocompleteSelectSingle, AutoCompleteMultipleProp, AutocompleteSelectMultiple,
 } from "@/components/autocomplete";
 import { ProPDto } from "@/app/misc/rkp/rkpServiceModel";
 import { ExsumInterventionState } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
 import {
- MiscMasterListStakeholderRes,
- MiscMasterRPJMNRes,
+  MiscMasterListProvinsiRes,
+  MiscMasterListStakeholderRes,
+  MiscMasterRPJMNRes,
 } from "@/app/misc/master/masterServiceModel";
 import {useRKPContext} from "@/lib/core/hooks/useHooks";
 
 export default function FormProfilRoProject({
+ selectLocation,
  selectProP,
  selectStakeholder,
  state,
@@ -31,6 +33,7 @@ export default function FormProfilRoProject({
  rpjmn,
   type
 }: {
+  selectLocation: AutoCompleteMultipleProp<MiscMasterListProvinsiRes>;
  selectProP: AutoCompleteSingleProp<ProPDto>;
  selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes>;
  state: ExsumInterventionState;
@@ -140,6 +143,19 @@ export default function FormProfilRoProject({
      />
     </FormControl>
    </Grid>
+  <Grid item xs={12} md={12}>
+    <FormControl fullWidth>
+      <FieldLabelInfo title="Lokasi" />
+      <AutocompleteSelectMultiple
+        value={selectLocation.value}
+        options={selectLocation.options}
+        getOptionLabel={selectLocation.getOptionLabel}
+        handleChange={selectLocation.handleChange}
+        placeHolder={selectLocation.placeHolder}
+        labelSelectAll={selectLocation.labelSelectAll}
+      />
+    </FormControl>
+  </Grid>
    <Grid item xs={12}>
     <FormControl fullWidth>
      <FieldLabelInfo title="Indikator Project" />

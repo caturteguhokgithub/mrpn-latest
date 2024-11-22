@@ -1,5 +1,5 @@
-import {ProPDto, RoDto} from "@/app/misc/rkp/rkpServiceModel";
-import {MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel";
+import {ProPDto, RODataTable, RoDto} from "@/app/misc/rkp/rkpServiceModel";
+import {MiscMasterListProvinsiRes, MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel";
 import {BaseAPIServiceParam} from "@/lib/core/api/apiModel";
 
 export interface ProjectTargetAnggaranDto {
@@ -23,6 +23,8 @@ export interface ExsumInterventionProjectReqDto {
   intervention: boolean
   list: ProjectTargetAnggaranDto[]
   list_ro:RoDto[]
+  tahun:number|string
+  lokasi:any[]
 }
 
 export interface ExsumInterventionState {
@@ -36,7 +38,9 @@ export interface ExsumInterventionState {
   list: ProjectTargetAnggaranDto[]
   intervensi: boolean,
   prop: ProPDto|undefined
-  ro: RoDto[]
+  ro: RODataTable[]
+  tahun:number|string
+  location:MiscMasterListProvinsiRes[]
 }
 
 export const initExsumInterventionState: ExsumInterventionState = {
@@ -50,7 +54,9 @@ export const initExsumInterventionState: ExsumInterventionState = {
   list: [],
   intervensi: false,
   prop: undefined,
-  ro: []
+  ro: [],
+  location: [],
+  tahun: ""
 }
 
 export interface GetByExsumId {
@@ -83,5 +89,8 @@ export type UpdateV2ExsumIntervention = BaseAPIServiceParam & {
     sumber_anggaran: string;
     type: string;
     intervention: boolean;
+    lokasi:any[]
+    tahun:number|string
+    list: ProjectTargetAnggaranDto[]
   }
 }

@@ -23,13 +23,13 @@ import {
   AutoCompleteMultipleProp,
   AutoCompleteSingleProp,
 } from "@/components/autocomplete";
-import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
+import {MiscMasterListProvinsiRes, MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel";
 import {
   ExsumInterventionState,
   ProjectTargetAnggaranDto,
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
-import { grey } from "@mui/material/colors";
 import DialogDelete from "@/components/dialogDelete";
+import {GenerateRpjmnYear} from "@/lib/utils/common";
 
 export default function CardIntervensi({
   project,
@@ -45,6 +45,7 @@ export default function CardIntervensi({
     setState,
     handleChangeState,
     data,
+    dataTable,
     listProP,
     listStakeholder,
     modal,
@@ -60,10 +61,13 @@ export default function CardIntervensi({
     modalDelete,
     setModalDelete,
     handleModalDelete,
+    listLocation,
+    getListLocation
   } = useCardIntervensiVM();
 
   useEffect(() => {
     if (rpjmn == undefined) getRpjmn();
+    if (listLocation.length == 0) getListLocation();
     if (listSof.length == 0) getListSumberPendanaan();
     if (listStakeholder.length == 0) getListStakeholder();
 
@@ -76,23 +80,35 @@ export default function CardIntervensi({
 
   const handleProjectOpenModal = (action:boolean,type:string) => {
 
-    let tahun:number|string = rpjmn?.start+"-"+rpjmn?.end
-
-    if (year > 0){
-      tahun = year
-    }
-
     setState(prevState => {
       const thisState = { ...prevState };
-      const dataAnggaran: ProjectTargetAnggaranDto = {
-        tahun: tahun,
-        target: "",
-        satuan: "",
-        anggaranString: "",
-        anggaran: 0,
-        sumber_anggaran: "",
+
+      let list:ProjectTargetAnggaranDto[] = []
+      if (year == 0){
+        GenerateRpjmnYear(rpjmn).map(t => {
+          const dataAnggaran: ProjectTargetAnggaranDto = {
+            tahun: t,
+            target: "",
+            satuan: "",
+            anggaranString: "",
+            anggaran: 0,
+            sumber_anggaran: "",
+          }
+          list.push(dataAnggaran)
+        })
+      }else{
+        const dataAnggaran: ProjectTargetAnggaranDto = {
+          tahun: year,
+          target: "",
+          satuan: "",
+          anggaranString: "",
+          anggaran: 0,
+          sumber_anggaran: "",
+        }
+        list.push(dataAnggaran)
       }
-      thisState.list = [dataAnggaran]
+
+      thisState.list = list
       return {
         ...thisState
       }
@@ -100,6 +116,20 @@ export default function CardIntervensi({
 
     setModal({ action: action, type: type })
   }
+
+  const selectLocation: AutoCompleteMultipleProp<MiscMasterListProvinsiRes> = {
+    value: state.location,
+    options: listLocation,
+    getOptionLabel: (opt) => opt.name,
+    handleChange: (value: MiscMasterListProvinsiRes[]) => setState((prev) => {
+      return {
+        ...prev,
+        location: value,
+      };
+    }),
+    placeHolder: "Pilih Lokasi",
+    labelSelectAll: "Pilih semua lokasi"
+  };
 
   const selectProP: AutoCompleteSingleProp<ProPDto> = {
     value: state.prop,
@@ -109,8 +139,7 @@ export default function CardIntervensi({
     placeHolder: "Pilih tagging ProP",
   };
 
-  const selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes> =
-    {
+  const selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes> = {
       value: state.kementrian,
       options: listStakeholder,
       getOptionLabel: (opt) => opt.value,
@@ -155,7 +184,7 @@ export default function CardIntervensi({
       ) : (
         <TableProfilIntervensi
           toggleShowTab={toggleShowTab}
-          data={data}
+          data={dataTable}
           deleteData={(id: number) => {
             setState((prevState) => {
               return {
@@ -177,6 +206,7 @@ export default function CardIntervensi({
               if (getPropIndex > -1) {
                 propData = listProP[getPropIndex];
               }
+
               const st: ExsumInterventionState = {
                 id: thisData.id,
                 exsum_id: 0,
@@ -185,20 +215,26 @@ export default function CardIntervensi({
                 kementrian: thisData.kementrian,
                 nomenklatur: thisData.value,
                 indikator: thisData.pkkr,
-                list: [
-                  {
-                    tahun: thisData.tahun,
-                    target: thisData.target,
-                    satuan: thisData.satuan,
-                    anggaran: thisData.anggaran,
-                    anggaranString: thisData.anggaran.toString(),
-                    sumber_anggaran: thisData.sumber_anggaran,
-                  },
-                ],
+                list: [],
                 intervensi: thisData.intervention,
                 prop: propData,
                 ro: [],
+                location:thisData.lokasi,
+                tahun:year
               };
+
+              thisData.detail.map((d,i) => {
+                const listItem = {
+                    tahun: d.tahun,
+                    target: d.target,
+                    satuan: d.satuan,
+                    anggaran: d.anggaran,
+                    anggaranString: d.anggaran.toString(),
+                    sumber_anggaran: d.sumber_anggaran,
+                  }
+                  st.list.push(listItem)
+              })
+
               setState(st);
               setModal({ action: true, type: "NON_RO_UPDATE" });
             }
@@ -260,6 +296,7 @@ export default function CardIntervensi({
         }
       >
         <FormProfilRoProject
+          selectLocation={selectLocation}
           selectProP={selectProP}
           selectStakeholder={selectStakeholder}
           state={state}

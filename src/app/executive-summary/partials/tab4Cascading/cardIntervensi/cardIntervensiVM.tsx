@@ -1,6 +1,6 @@
 import {useExsumContext, useGlobalModalContext, useLoading, useRKPContext} from "@/lib/core/hooks/useHooks";
 import {useEffect, useState} from "react";
-import {ProPDto, RoDto} from "@/app/misc/rkp/rkpServiceModel";
+import {ProPDto, RODataTable, RoDto} from "@/app/misc/rkp/rkpServiceModel";
 import {doGetPROP, doGetRO} from "@/app/misc/rkp/rkpService";
 import {API_CODE} from "@/lib/core/api/apiModel";
 import {
@@ -8,11 +8,13 @@ import {
   ExsumInterventionState, initExsumInterventionState, ProjectTargetAnggaranDto, UpdateById, UpdateV2ExsumIntervention
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
 import {
+  MiscMasterListProvinsiRes,
   MiscMasterListStakeholderRes,
   MiscMasterListSumberPendanaanRes,
   MiscMasterRPJMNRes
 } from "@/app/misc/master/masterServiceModel";
 import {
+  doGetMasterListProvinsi,
   doGetMasterListRpjmn,
   doGetMasterListStakeholder,
   doGetMasterListSumberPendanaan
@@ -21,6 +23,7 @@ import {
   doCreateIntervention, doDeleteInterventionOnlyRO,
   doGetIntervention, doUpdateInterventionOnlyRO
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiService";
+import {GenerateProjectData} from "@/lib/utils/common";
 
 const useCardIntervensiVM = () => {
 
@@ -29,6 +32,7 @@ const useCardIntervensiVM = () => {
   const {exsum} = useExsumContext()
   const {year,rpjmn, setRpjmn} = useRKPContext(state => state)
 
+  const [listLocation, setListLocation] = useState<MiscMasterListProvinsiRes[]>([]);
   const [listProP, setListProP] = useState<ProPDto[]>([])
   const [listSof, setListSof] = useState<MiscMasterListSumberPendanaanRes[]>([])
   const [listStakeholder, setListStakeholder] = useState<MiscMasterListStakeholderRes[]>([])
@@ -37,6 +41,7 @@ const useCardIntervensiVM = () => {
 
   const [state, setState] = useState<ExsumInterventionState>({...initExsumInterventionState})
   const [data, setData] = useState<RoDto[]>([])
+  const [dataTable, setDataTable] = useState<RODataTable[]>([])
 
   async function getRpjmn() {
     const response = await doGetMasterListRpjmn({
@@ -47,6 +52,20 @@ const useCardIntervensiVM = () => {
     if (response?.code == API_CODE.success) {
       const result: MiscMasterRPJMNRes = response.result
       setRpjmn(result)
+    }
+  }
+
+  async function getListLocation() {
+    const response = await doGetMasterListProvinsi({
+      body: {},
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+    if (response?.code == API_CODE.success) {
+      let result: MiscMasterListProvinsiRes[] = response.result;
+      if (result) {
+        setListLocation(result);
+      }
     }
   }
 
@@ -103,7 +122,7 @@ const useCardIntervensiVM = () => {
         return {
           ...prev,
           prop: undefined,
-          ro: (data as RoDto[])
+          ro: (data as RODataTable[])
         }
       })
     }
@@ -127,10 +146,12 @@ const useCardIntervensiVM = () => {
     })
     if (response?.code == API_CODE.success) {
       const result: RoDto[] = response.result
-
       setData(result)
 
-      const roOnly = result.filter(x => x.type == "RO")
+      const dataTable = GenerateProjectData(result, year, rpjmn)
+      setDataTable(dataTable)
+
+      const roOnly = dataTable.filter(x => x.type == "RO")
       setState(prev => {
         return {
           ...prev,
@@ -142,9 +163,16 @@ const useCardIntervensiVM = () => {
 
   const handleSubmit = async () => {
 
-    if ((modal.type == "NON_RO" || modal.type == "NON_RO_UPDATE") && (state.prop == undefined || state.kementrian == undefined)) {
+    if ((modal.type == "NON_RO" || modal.type == "NON_RO_UPDATE") && (state.prop == undefined || state.kementrian == undefined || state.location.length == 0)) {
       return
     }
+
+    let lokasi:any[] = []
+    state.location.map(x => {
+      lokasi.push({
+        src_provinsi_id:x.id
+      })
+    })
 
     if (modal.type == "NON_RO_UPDATE"){
      const req:UpdateV2ExsumIntervention = {
@@ -160,7 +188,10 @@ const useCardIntervensiVM = () => {
          anggaran: state.list[0].anggaran,
          sumber_anggaran: state.list[0].sumber_anggaran,
          type: modal.type,
-         intervention: year == 0 ? true : state.intervensi
+         intervention: year == 0 ? true : state.intervensi,
+         lokasi: lokasi,
+         list: state.list,
+         tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year
        },
        loadingContext: loadingContext,
        errorModalContext: errorModalContext,
@@ -184,7 +215,9 @@ const useCardIntervensiVM = () => {
       indikator: state.indikator,
       list: state.list,
       list_ro: state.ro,
-      intervention: year == 0 ? true : state.intervensi
+      intervention: year == 0 ? true : state.intervensi,
+      lokasi:lokasi,
+      tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year
     }
     const response = await doCreateIntervention({
       body: request,
@@ -217,12 +250,15 @@ const useCardIntervensiVM = () => {
     setState,
     handleChangeState,
     data,
+    dataTable,
     listProP,
     listStakeholder,
     modal,
     setModal,
     handleSubmit,
     getRpjmn,
+    listLocation,
+    getListLocation,
     getListProP,
     getListSumberPendanaan,
     getListStakeholder,

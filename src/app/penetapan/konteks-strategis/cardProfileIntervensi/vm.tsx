@@ -1,7 +1,7 @@
 import {useGlobalModalContext, useLoading} from "@/lib/core/hooks/useHooks";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import {useState} from "react";
-import {RoDto} from "@/app/misc/rkp/rkpServiceModel";
+import {RODataTable, RoDto} from "@/app/misc/rkp/rkpServiceModel";
 import {doGetDataProfileKunci} from "@/app/penetapan/konteks-strategis/cardProfileIntervensi/service";
 import {API_CODE} from "@/lib/core/api/apiModel";
 
@@ -12,6 +12,7 @@ const useProfileKunciVM = () => {
   const { objectState } = usePenetapanGlobalVM()
 
   const [data, setData] = useState<RoDto[]>([])
+  const [dataTable, setDataTable] = useState<RODataTable[]>([])
 
   async function getDataProfileKunci(){
     const response = await doGetDataProfileKunci({
@@ -28,6 +29,7 @@ const useProfileKunciVM = () => {
   return {
     objectState,
     data,
+    dataTable,
     getDataProfileKunci
   }
 }

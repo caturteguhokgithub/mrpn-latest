@@ -20,7 +20,7 @@ import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
 import useCardIndikatorVM from "@/app/executive-summary/partials/tab2Profile/cardIndicator/cardIndikatorVM";
 import theme from "@/theme";
 import { DasarPemilihan } from "@/app/penetapan/objek/pageModel";
-import {generateRpjmnYear, GetTarget} from "@/lib/utils/common";
+import {GenerateRpjmnYear, GetTarget} from "@/lib/utils/common";
 
 export const getLevel = (level: string) => {
   switch (level) {
@@ -71,7 +71,7 @@ export default function CardIndicator({ project }: { project: string }) {
                 <TableCell width={150}>Kode</TableCell>
                 <TableCell>Indikator</TableCell>
                 {year > 0 && <TableCell>Target</TableCell> }
-                {year == 0 && generateRpjmnYear(rpjmn).map((y,i) =>
+                {year == 0 && GenerateRpjmnYear(rpjmn).map((y, i) =>
                   <TableCell>Target {y}</TableCell>)
                 }
               </TableRow>
@@ -87,7 +87,7 @@ export default function CardIndicator({ project }: { project: string }) {
                   <TableCell>{row.code}</TableCell>
                   <TableCell>{row.value}</TableCell>
                   {year > 0 && <TableCell>{getTarget(row, year)}</TableCell> }
-                  {year == 0 && generateRpjmnYear(rpjmn).map((y,i) =>
+                  {year == 0 && GenerateRpjmnYear(rpjmn).map((y, i) =>
                     <TableCell>{getTarget(row, y)}</TableCell>
                   )}
                 </TableRow>

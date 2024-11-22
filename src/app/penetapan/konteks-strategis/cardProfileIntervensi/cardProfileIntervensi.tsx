@@ -6,7 +6,7 @@ import TableProfilIntervensi from "@/app/executive-summary/partials/tab4Cascadin
 import useProfileKunciVM from "@/app/penetapan/konteks-strategis/cardProfileIntervensi/vm";
 
 export default function CardProfileIntervensi() {
-  const { objectState, data, getDataProfileKunci } = useProfileKunciVM();
+  const { objectState, data, dataTable, getDataProfileKunci } = useProfileKunciVM();
 
   useEffect(() => {
     if (objectState != undefined) getDataProfileKunci();
@@ -23,7 +23,7 @@ export default function CardProfileIntervensi() {
         />
       ) : (
         <TableProfilIntervensi
-          data={data}
+          data={dataTable}
           noActionColumn
           page="konteks-strategis"
         />

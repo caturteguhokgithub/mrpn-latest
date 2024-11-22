@@ -170,6 +170,8 @@ const useCardCriticalVM = () => {
 
       });
 
+      console.log(tasks)
+
       setGanChart(tasks);
       setTaskRKP(tasks)
     }
@@ -177,12 +179,12 @@ const useCardCriticalVM = () => {
 
   const handleSubmit = async () => {
     if (
-      state.ro == undefined ||
-      state.start_date == "" ||
-      state.end_date == "" ||
-      state.kategori_proyek_id == 0 ||
-      state.strategy.length == 0 ||
-      state.keterangan_kegiatan == ""
+      state.ro == undefined
+      || state.start_date == ""
+      || state.end_date == ""
+      || state.kategori_proyek_id == 0
+      || state.strategy.length == 0
+      || (state.keterangan_kegiatan == "" && year > 0)
     ) {
       return;
     }
@@ -295,7 +297,7 @@ const useCardCriticalVM = () => {
     const initState: ExsumCriticalState = JSON.parse(
       JSON.stringify(initExsumCriticalReqDto)
     );
-    if (data.length == 0 ){
+    if (data.length == 0 && year > 0){
       initState.keterangan_kegiatan = "Finish to Start"
     }
     setState(initState)

@@ -166,11 +166,9 @@ export default function FormCritical({
     return existBulan;
   };
 
-  const multiYears = ["2025", "2026", "2027", "2028", "2029"];
-
   return (
     <Grid container spacing={2}>
-      {dataExisting.length > 0 && (
+      {year > 0 && dataExisting.length > 0 && (
         <>
           <Grid item xs={12}>
             <FormControl fullWidth>
@@ -219,7 +217,8 @@ export default function FormCritical({
         </>
       )}
 
-      <Grid item xs={12}>
+      {year > 0 &&
+        <Grid item xs={12}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Status" />
           <ToggleButtonGroup
@@ -273,6 +272,7 @@ export default function FormCritical({
           </ToggleButtonGroup>
         </FormControl>
       </Grid>
+      }
 
       <Grid item xs={12}>
         <FormControl fullWidth>
