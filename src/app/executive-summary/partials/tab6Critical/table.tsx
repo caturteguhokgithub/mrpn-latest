@@ -15,7 +15,7 @@ import {
 import theme from "@/theme";
 import { grey, red } from "@mui/material/colors";
 import { ExsumIndicationResDto } from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
-import { useAuthContext } from "@/lib/core/hooks/useHooks";
+import {useAuthContext, useRKPContext} from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import ActionColumn from "@/app/components/actions/action";
 import { Task } from "gantt-task-react";
@@ -31,6 +31,9 @@ export default function TableCritical({
   handleDelete?: any;
   data: ExsumCriticalData[];
 }) {
+
+  const {year} = useRKPContext(store => store)
+
   return (
     <>
       <Table
@@ -51,11 +54,13 @@ export default function TableCritical({
                 RO/Project Kunci
               </Typography>
             </TableCell>
-            <TableCell>
-              <Typography variant="body2" fontWeight={600}>
-                Status
-              </Typography>
-            </TableCell>
+            {year > 0 && (
+              <TableCell>
+                <Typography variant="body2" fontWeight={600}>
+                  Status
+                </Typography>
+              </TableCell>
+            )}
             <TableCell>
               <Typography variant="body2" fontWeight={600}>
                 Penanggungjawab
@@ -85,19 +90,21 @@ export default function TableCritical({
               <TableCell sx={{ verticalAlign: "top" }}>
                 <Typography variant="body2">{item.ro?.value}</Typography>
               </TableCell>
-              <TableCell sx={{ verticalAlign: "top" }}>
-                <Chip
-                  label={item.keterangan_kegiatan}
-                  size="small"
-                  sx={{
-                    bgcolor:
-                      item.keterangan_kegiatan === "Finish to Start"
-                        ? red[700]
-                        : theme.palette.primary.main,
-                    color: "white",
-                  }}
-                />
-              </TableCell>
+              {year > 0 && (
+                <TableCell sx={{ verticalAlign: "top" }}>
+                  <Chip
+                    label={item.keterangan_kegiatan}
+                    size="small"
+                    sx={{
+                      bgcolor:
+                        item.keterangan_kegiatan === "Finish to Start"
+                          ? red[700]
+                          : theme.palette.primary.main,
+                      color: "white",
+                    }}
+                  />
+                </TableCell>
+              )}
               <TableCell sx={{ verticalAlign: "top" }}>
                 <Typography variant="body2">
                   {item.ro?.kementrian.value}
@@ -110,12 +117,12 @@ export default function TableCritical({
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
                 <Typography variant="body2">
-                  {dayjs(item.start_date).format("DD MMM YYYY")}
+                  {year == 0 ? dayjs(item.start_date).format("YYYY") : dayjs(item.start_date).format("DD MMM YYYY")}
                 </Typography>
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
                 <Typography variant="body2">
-                  {dayjs(item.end_date).format("DD MMM YYYY")}
+                  {year == 0 ? dayjs(item.end_date).format("YYYY") : dayjs(item.end_date).format("DD MMM YYYY")}
                 </Typography>
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
