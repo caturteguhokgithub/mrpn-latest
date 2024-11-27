@@ -29,26 +29,26 @@ export const GetColor = (i: number) => {
   return colorArray[i];
 };
 export const ColorCriticalPath: string[] = [
-  "#FFD1DC", // Pastel Pink
-  "#B39EB5", // Pastel Purple
-  "#FFFFBA", // Pastel Yellow
-  "#98FB98", // Pale Green
-  "#BAE1FF", // Pastel Blue
-  "#C9BAFF", // Pastel Purple
-  "#F0E68C", // Pastel Khaki
-  "#FFDAB9", // Peach Puff
-  "#A3C1AD", // Pastel Mint
-  "#CAF0F8",
-  "#795548",
-  "#ff9800",
-  "#ffeb3b",
-  "#8bc34a",
-  "#009688",
-  "#03a9f4",
-  "#673ab7",
-  "#e91e63",
-  "#f44336",
-  "#cddc39",
+  "#e80037",
+  "#886a8a",
+  "#ffff20",
+  "#10f610",
+  "#209eff",
+  "#5020ff",
+  "#dac71d",
+  "#ff891f",
+  "#5d8a6c",
+  "#3fc9e6",
+  "#FFD1DC",
+  "#B39EB5",
+  "#FFFFBA",
+  "#98FB98",
+  "#BAE1FF",
+  "#C9BAFF",
+  "#F0E68C",
+  "#FFDAB9",
+  "#A3C1AD",
+  "#CAF0F8"
 ];
 
 export const GetColorCriticalPath = (i: number) => {

@@ -477,7 +477,7 @@ export default function FormCritical({
             }}
             aria-label="Grup Color"
           >
-            {ColorCriticalPath.map((color, i) => i < 10 && (
+            {ColorCriticalPath.map((color, i) => i < 5 && (
               <ToggleButton
                 key={i}
                 value={i}
