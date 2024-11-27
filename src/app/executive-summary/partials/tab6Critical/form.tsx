@@ -69,7 +69,7 @@ export default function FormCritical({
   setState: (value: SetStateAction<ExsumCriticalState>) => void;
 }) {
 
-  const { year } = useRKPContext((store) => store);
+  const { year, rpjmn } = useRKPContext((store) => store);
 
   const addMenu = () => {
     setState((prevState) => {
@@ -351,11 +351,17 @@ export default function FormCritical({
               minDate={
                 year > 0
                   ? dayjs(`${year}-01-01`)
-                  : state.dependency
-                    ? dayjs(state.dependency.end_date)
+                  : rpjmn
+                    ? dayjs(`${rpjmn.start}-01-01`)
                     : undefined
               }
-              maxDate={year > 0 ? dayjs(`${year}-12-31`) : undefined}
+              maxDate={
+                year > 0
+                  ? dayjs(`${year}-12-31`)
+                  : rpjmn
+                    ? dayjs(`${rpjmn.end}-12-31`)
+                    : undefined
+              }
               value={dayjs(state.start_date)}
               onChange={(e: any) =>
                 setState((prev) => {
@@ -384,10 +390,17 @@ export default function FormCritical({
                   height: 40,
                 },
               }}
+              disabled={state.start_date == ""}
               views={year == 0 ? ["year"] : undefined}
               format={year == 0 ? "YYYY" : "D MMM YYYY"}
               minDate={dayjs(state.start_date)}
-              maxDate={year > 0 ? dayjs(`${year}-12-31`) : undefined}
+              maxDate={
+                year > 0
+                  ? dayjs(`${year}-12-31`)
+                  : rpjmn
+                    ? dayjs(`${rpjmn.end}-12-31`)
+                    : undefined
+              }
               value={dayjs(state.end_date)}
               onChange={(e: any) =>
                 setState((prev) => {
