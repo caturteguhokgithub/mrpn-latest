@@ -62,10 +62,10 @@ export default function TablePeraturan({
         <Table size="small">
           <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
             <TableRow>
-              {(hasPrivilege(permission, pathname, "update") ||
-                hasPrivilege(permission, pathname, "delete")) && (
-                <TableCell width="70px"></TableCell>
-              )}
+              {/*{(hasPrivilege(permission, pathname, "update") ||*/}
+              {/*  hasPrivilege(permission, pathname, "delete")) && (*/}
+              {/*  <TableCell width="70px"></TableCell>*/}
+              {/*)}*/}
               <TableCell width={500}>Entitas</TableCell>
               <TableCell width={240}>Peraturan Terkait</TableCell>
               <TableCell>Amanat Peraturan yang Terkait</TableCell>
@@ -78,32 +78,32 @@ export default function TablePeraturan({
                   key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  {(hasPrivilege(permission, pathname, "update") ||
-                    hasPrivilege(permission, pathname, "delete")) && (
-                    <TableCell
-                      sx={{ textAlign: "center", verticalAlign: "top" }}
-                    >
-                      <Tooltip title="Delete" placement="top">
-                        <IconButton
-                          aria-label="delete"
-                          color="error"
-                          onClick={() => deleteData(row.id)}
-                          // disabled={
-                          //   hasPrivilege(permission, pathname, "update") ||
-                          //   hasPrivilege(permission, pathname, "delete")
-                          // }
-                        >
-                          <Icon
-                            baseClassName="fas"
-                            className={`fa-trash-alt`}
-                            sx={{
-                              fontSize: "14px",
-                            }}
-                          />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
-                  )}
+                  {/*{(hasPrivilege(permission, pathname, "update") ||*/}
+                  {/*  hasPrivilege(permission, pathname, "delete")) && (*/}
+                  {/*  <TableCell*/}
+                  {/*    sx={{ textAlign: "center", verticalAlign: "top" }}*/}
+                  {/*  >*/}
+                  {/*    <Tooltip title="Delete" placement="top">*/}
+                  {/*      <IconButton*/}
+                  {/*        aria-label="delete"*/}
+                  {/*        color="error"*/}
+                  {/*        onClick={() => deleteData(row.id)}*/}
+                  {/*        // disabled={*/}
+                  {/*        //   hasPrivilege(permission, pathname, "update") ||*/}
+                  {/*        //   hasPrivilege(permission, pathname, "delete")*/}
+                  {/*        // }*/}
+                  {/*      >*/}
+                  {/*        <Icon*/}
+                  {/*          baseClassName="fas"*/}
+                  {/*          className={`fa-trash-alt`}*/}
+                  {/*          sx={{*/}
+                  {/*            fontSize: "14px",*/}
+                  {/*          }}*/}
+                  {/*        />*/}
+                  {/*      </IconButton>*/}
+                  {/*    </Tooltip>*/}
+                  {/*  </TableCell>*/}
+                  {/*)}*/}
                   <TableCell sx={{ verticalAlign: "top" }}>
                     <Stack
                       display="inline-flex"
