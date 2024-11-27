@@ -69,6 +69,7 @@ const CustomTaskListTable = ({
     let taskProjectTask: TaskAdditionalData = {
       type: "",
       tooltip_type: "parent",
+      strategy:[],
       penanggungjawab: "",
       sumber_anggaran: "",
       keterangan_kegiatan: "",

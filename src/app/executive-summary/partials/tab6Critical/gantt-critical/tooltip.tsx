@@ -13,13 +13,14 @@ import { GenerateMonthFromInteger } from "@/lib/utils/common";
 const CustomTooltip = ({ task }: { task: Task }) => {
 
   let taskProject: TaskAdditionalData = {
-    type:"",
-    tooltip_type:"parent",
+    type: "",
+    tooltip_type: "parent",
     penanggungjawab: "",
     sumber_anggaran: "",
     keterangan_kegiatan: "",
-    category:"",
-    target:[]
+    category: "",
+    target: [],
+    strategy: []
   };
 
   if (task.project) {
@@ -88,6 +89,16 @@ const CustomTooltip = ({ task }: { task: Task }) => {
               {dayjs(task.end).format(dayjsFormat)}
             </Typography>
           </Typography>
+          {taskProject.strategy.length > 0 && (
+            <Typography variant="body2" component="div">
+              Tagging Roadmap:{" "}
+              <Box component="span" display={"flex"} flexDirection={"column"}>
+                {taskProject.strategy.map((st, iSt) =>
+                  <Typography component="strong" fontWeight={600}>{`- ${st.value}`}</Typography>
+                )}
+              </Box>
+            </Typography>
+          )}
           {taskProject.keterangan_kegiatan && (
             <Typography variant="body2" component="div">
               Status:{" "}

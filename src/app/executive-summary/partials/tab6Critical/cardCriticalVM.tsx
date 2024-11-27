@@ -111,6 +111,7 @@ const useCardCriticalVM = () => {
         const taskAdditionalData: TaskAdditionalData = {
           type: year == 0 ? "rpjmn" : "rkp",
           tooltip_type: "parent",
+          strategy: res.tagging_list,
           penanggungjawab: res.ro?.kementrian.value ?? "",
           sumber_anggaran: res.ro?.sumber_anggaran ?? "",
           keterangan_kegiatan: res.keterangan_kegiatan,

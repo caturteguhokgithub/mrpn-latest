@@ -159,7 +159,8 @@ const CustomTaskListTable = ({
       sumber_anggaran: "",
       keterangan_kegiatan: "",
       category: "",
-      target: []
+      target: [],
+      strategy: []
     };
 
     if (item.project){

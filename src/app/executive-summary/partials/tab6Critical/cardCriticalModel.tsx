@@ -65,6 +65,10 @@ export interface TaskAdditionalData {
   keterangan_kegiatan:string
   category:string
   target:TargetDto[]
+  strategy:{
+    id:number
+    value:string
+  }[]
 }
 
 export interface ExsumCriticalData {
