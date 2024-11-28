@@ -15,17 +15,9 @@ import {
  Tooltip,
  Typography,
 } from "@mui/material";
-import SelectCustomTheme from "@/app/components/select";
-import { listRiskCategory } from "@/app/utils/data";
 import dynamic from "next/dynamic";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import {
- SxAutocompleteTextField,
- SxAutocomplete,
-} from "@/components/dropdown/dropdownRkp";
 import { listTagProP } from "@/app/executive-summary/data";
-import { paramVariantDefault } from "@/app/utils/constant";
-import AddEntity from "./add";
 import TextareaComponent from "@/app/components/textarea";
 
 type OptionProP = (typeof listTagProP)[number];

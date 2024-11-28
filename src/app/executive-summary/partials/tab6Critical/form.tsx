@@ -319,7 +319,7 @@ export default function FormCritical({
         <FormControl fullWidth>
           <FieldLabelInfo title="Penanggungjawab" />
           <Typography fontWeight={600}>
-            {state.ro ? state.ro.kementrian.value : "-"}
+            {state.ro ? state.ro.kementrian?.value : "-"}
           </Typography>
         </FormControl>
       </Grid>
