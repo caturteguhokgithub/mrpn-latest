@@ -269,31 +269,39 @@ export default function PageExecutiveSummaryContent({
             <Tab9Indication project={project} />
           </CustomTabPanel>
           {/* Tab 5 */}
-          <CustomTabPanel value={value} index={4} tabLevel={"1"}>
-            <Tabs
-              value={valueTabChild}
-              onChange={handleChangeTabChild}
-              sx={styleTab(sxParamsOutlined)}
-              variant="fullWidth"
-            >
-              <Tab label="Profil RO/Project" {...a11yProps(0)} />
-              <Tab label="Diagram" {...a11yProps(1)} />
-            </Tabs>
-            <CustomTabPanel
-              value={valueTabChild}
-              index={0}
-              tabLevel={condTabCascading}
-            >
-              <Tab4Profile project={project} toggleShowTab={toggleShowTab} />
-            </CustomTabPanel>
-            <CustomTabPanel
-              value={valueTabChild}
-              index={1}
-              tabLevel={condTabCascading}
-            >
-              <Tab4Diagram project={project} />
-            </CustomTabPanel>
+          <CustomTabPanel
+            value={value}
+            index={4}
+            project={project}
+            tabLevel={condTabHeightLv1}
+          >
+            <Tab4Diagram project={project} />
           </CustomTabPanel>
+          {/*<CustomTabPanel value={value} index={4} tabLevel={"1"}>*/}
+          {/*  <Tabs*/}
+          {/*    value={valueTabChild}*/}
+          {/*    onChange={handleChangeTabChild}*/}
+          {/*    sx={styleTab(sxParamsOutlined)}*/}
+          {/*    variant="fullWidth"*/}
+          {/*  >*/}
+          {/*    <Tab label="Profil RO/Project" {...a11yProps(0)} />*/}
+          {/*    <Tab label="Diagram" {...a11yProps(1)} />*/}
+          {/*  </Tabs>*/}
+          {/*  <CustomTabPanel*/}
+          {/*    value={valueTabChild}*/}
+          {/*    index={0}*/}
+          {/*    tabLevel={condTabCascading}*/}
+          {/*  >*/}
+          {/*    <Tab4Profile project={project} toggleShowTab={toggleShowTab} />*/}
+          {/*  </CustomTabPanel>*/}
+          {/*  <CustomTabPanel*/}
+          {/*    value={valueTabChild}*/}
+          {/*    index={1}*/}
+          {/*    tabLevel={condTabCascading}*/}
+          {/*  >*/}
+          {/*    <Tab4Diagram project={project} />*/}
+          {/*  </CustomTabPanel>*/}
+          {/*</CustomTabPanel>*/}
           {/* Tab 6 */}
           <CustomTabPanel
             value={value}
