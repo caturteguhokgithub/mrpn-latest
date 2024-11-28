@@ -11,6 +11,7 @@ export default function CardFund({project}: { project: string }) {
   const {
     exsum,
     dataFund,
+    dataTableFund,
     getDataFund
   } = useCardFundVM()
 
@@ -31,7 +32,7 @@ export default function CardFund({project}: { project: string }) {
           description="Silahkan isi konten halaman ini"
         />
       ) : (
-        <TableFund project={project} data={dataFund}/>
+        <TableFund project={project} data={dataTableFund}/>
       )}
     </CardItem>
   );

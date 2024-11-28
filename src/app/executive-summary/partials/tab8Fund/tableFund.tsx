@@ -25,8 +25,11 @@ import { blue, green, grey, red } from "@mui/material/colors";
 import { dataTema } from "../../dataTema";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
-import { ExsumFundRes } from "@/app/executive-summary/partials/tab8Fund/cardFundModel";
-import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
+import {ExsumFundDataTableRes, ExsumFundRes} from "@/app/executive-summary/partials/tab8Fund/cardFundModel";
+import {RODataTable, RoDto} from "@/app/misc/rkp/rkpServiceModel";
+import {useRKPContext} from "@/lib/core/hooks/useHooks";
+import {GenerateRpjmnYear} from "@/lib/utils/common";
+import {FormatIDR} from "@/lib/utils/currency";
 
 function createData(aspectRo: string) {
   return {
@@ -125,24 +128,50 @@ const FundSource = ({ value, isYear }: { value: string; isYear?: boolean }) => {
   );
 };
 
-const TableFundPPKP = (props: { row?: RoDto[]; project: string }) => {
+const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
   const { row, project } = props;
+
+  const {year, rpjmn} = useRKPContext(store => store)
+
+  let multiyear:number[] = [year]
+  if (year == 0){
+    multiyear = GenerateRpjmnYear(rpjmn)
+  }
+
+  const getRowData = (key:string,data:RODataTable|undefined) => {
+    if (data == undefined) return ""
+    const obj:any = JSON.parse(JSON.stringify(data))
+    return obj[key]
+  }
 
   return (
     <Table size="small">
       <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
         <TableRow>
-          <TableCell>Intervensi Kunci</TableCell>
-          <TableCell>Indikator</TableCell>
-          <TableCell align="center">Target</TableCell>
-          <TableCell>Indikasi Alokasi Tahun Rencana (Rp Miliar)</TableCell>
-          <TableCell>Sumber Pendanaan (Belanja KL/ DAK/BUMN/Swasta)</TableCell>
-          <TableCell>Instansi Pelaksana RO</TableCell>
-          <TableCell>
+          <TableCell rowSpan={2}>Intervensi Kunci</TableCell>
+          <TableCell rowSpan={2}>Indikator</TableCell>
+          <TableCell rowSpan={2} align="center">Target</TableCell>
+          <TableCell rowSpan={2}>Indikasi Alokasi Tahun Rencana (Rp Miliar)</TableCell>
+          <TableCell rowSpan={2}>Sumber Pendanaan (Belanja KL/ DAK/BUMN/Swasta)</TableCell>
+          <TableCell rowSpan={2}>Instansi Pelaksana RO</TableCell>
+          <TableCell rowSpan={2}>
             Lokasi RO
             <br />
             (Prov./Kab./Kota)
           </TableCell>
+          {multiyear.map((y,iY) =>
+            <TableCell colSpan={4} align={"center"}>{y}</TableCell>
+          )}
+        </TableRow>
+        <TableRow>
+          {multiyear.map((y,iY) =>
+            <>
+              <TableCell>Target</TableCell>
+              <TableCell>Satuan</TableCell>
+              <TableCell>Pembiayaan</TableCell>
+              <TableCell>Sumber Pembiayaan</TableCell>
+            </>
+          )}
         </TableRow>
       </TableHead>
       <TableBody>
@@ -162,11 +191,21 @@ const TableFundPPKP = (props: { row?: RoDto[]; project: string }) => {
               {fundRow.sumber_anggaran ? fundRow.sumber_anggaran : "-"}
             </TableCell>
             <TableCell sx={{ verticalAlign: "top" }}>
-              {fundRow.kementrian.value ? fundRow.kementrian.value : "-"}
+              {fundRow?.kementrian?.value ?? "-"}
             </TableCell>
             <TableCell sx={{ verticalAlign: "top" }}>
               {fundRow.lokasi_ro ? fundRow.lokasi_ro : "-"}
             </TableCell>
+            {multiyear.map((y, iY) =>
+              <>
+                <TableCell>{getRowData(`target_${iY}`, fundRow)}</TableCell>
+                <TableCell>{getRowData(`satuan_${iY}`, fundRow)}</TableCell>
+                <TableCell
+                  align={"right"}>{FormatIDR(getRowData(`anggaran_${iY}`, fundRow))}</TableCell>
+                <TableCell>{getRowData(`sumber_anggaran_${iY}`, fundRow)}</TableCell>
+              </>
+            )}
+
           </TableRow>
         ))}
       </TableBody>
@@ -174,7 +213,7 @@ const TableFundPPKP = (props: { row?: RoDto[]; project: string }) => {
   );
 };
 
-function Row(props: { row: ExsumFundRes; project: string }) {
+function Row(props: { row: ExsumFundDataTableRes; project: string }) {
   const { row, project } = props;
   const [open, setOpen] = React.useState(false);
 
@@ -213,7 +252,7 @@ export default function TableFund({
   data,
 }: {
   project: string;
-  data: ExsumFundRes[];
+  data: ExsumFundDataTableRes[];
 }) {
   return (
     <TableContainer component={Paper} elevation={0}>

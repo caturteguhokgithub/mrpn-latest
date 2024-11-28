@@ -1,10 +1,15 @@
 import {BaseAPIServiceParam} from "@/lib/core/api/apiModel";
 import {RODto} from "@/lib/core/context/rkpContext";
-import {RoDto} from "@/app/misc/rkp/rkpServiceModel";
+import {RODataTable, RoDto} from "@/app/misc/rkp/rkpServiceModel";
 
 export interface ExsumFundRes {
   prop:string
   intervensi:RoDto[]
+}
+
+export interface ExsumFundDataTableRes {
+  prop:string
+  intervensi:RODataTable[]
 }
 
 export interface GetByExsumId {
