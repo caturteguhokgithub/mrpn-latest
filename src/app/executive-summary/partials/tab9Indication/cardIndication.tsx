@@ -1,7 +1,7 @@
-import React from "react";
-import { Button, DialogActions, Stack } from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {Button, DialogActions, FormControl, Grid, Stack} from "@mui/material";
 import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
+import {IconEmptyData} from "@/app/components/icons";
 import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
 import AddButton from "@/app/components/buttonAdd";
@@ -9,41 +9,60 @@ import TableIndication from "./partials/table";
 import FormIndication from "./partials/form";
 import useCardIndicationVM from "@/app/executive-summary/partials/tab9Indication/cardIndicationVM";
 import {useAuthContext, useRKPContext} from "@/lib/core/hooks/useHooks";
-import { usePathname } from "next/navigation";
-import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
+import {usePathname} from "next/navigation";
+import {hasPrivilege} from "@/lib/core/helpers/authHelpers";
 import DialogDelete from "@/app/components/dialogDelete";
+import FormPerlakuanRisiko from "@/app/executive-summary/partials/tab9Indication/partials/formPerlakuanRisiko";
+import FormRegulation from "@/app/executive-summary/partials/tab9Indication/partials/formRegulation";
+import { ExsumIndicationStateValue } from "./cardIndicationModel";
+import {TextareaStyled} from "@/components/textarea";
 
-export default function CardIndication({ project }: { project: string }) {
+export default function CardIndication({project}: { project: string }) {
 
   const {year, rpjmn} = useRKPContext(store => store)
 
   const {
     data,
-    optionRiskType,
-    optionStakeholder,
-    optionStrategy,
-    optionRO,
     state,
     setState,
+    optionRO,
+    dataTable,
+    optionRiskType,
+    optionStakeholder,
     modalOpen,
-    updateData,
     handleModalOpen,
-    handleModalClose,
-    modalOpenDelete,
-    setModalOpenDelete,
-    handleModalOpenDelete,
+    handleModalOpenSubmit,
+    modalOutput,
+    handleModalOutputOpen,
+    handleModalOutputSubmit,
+    modalRegulation,
+    handleModalRegulationOpen,
+    handleModalRegulationSubmit,
+    modalNewRegulation,
+    handleModalNewRegulationOpen,
+    handleModalNewRegulationSubmit,
     deleteData,
     dataTOWS,
+    stateValue,
+    setStateValue,
+    stateNewRegulation,
+    setStateNewRegulation,
+    listLocation,
+    listSof,
+    listProP,
+    stateRegulation,
+    setStateRegulation,
+    listPerpres,
   } = useCardIndicationVM();
 
-  const { permission } = useAuthContext((state) => state);
+  const {permission} = useAuthContext((state) => state);
   const pathname = usePathname();
 
   return (
     <>
       <Stack gap={1}>
         <CardItem
-          title={`Indikasi Risiko Objek MRPN ${year == 0 ? "5 Tahunan" : "Tahun "+year}`}
+          title={`Indikasi Risiko Objek MRPN ${year == 0 ? "5 Tahunan" : "Tahun " + year}`}
           infoTooltip={
             <Stack spacing={2}>
               <div>
@@ -75,7 +94,7 @@ export default function CardIndication({ project }: { project: string }) {
                 filled
                 small
                 title="Tambah Indikasi"
-                onclick={() => handleModalOpen(0)}
+                onclick={() => handleModalOpen(0, true, "update")}
               />
             )
           }
@@ -83,7 +102,7 @@ export default function CardIndication({ project }: { project: string }) {
           {data.length == 0 ? (
             <EmptyState
               dense
-              icon={<IconEmptyData width={100} />}
+              icon={<IconEmptyData width={100}/>}
               title="Data Kosong"
               description="Silahkan isi konten halaman ini"
             />
@@ -91,25 +110,25 @@ export default function CardIndication({ project }: { project: string }) {
             <TableIndication
               data={data}
               handleModalOpen={handleModalOpen}
-              handleModalOpenDelete={handleModalOpenDelete}
             />
           )}
         </CardItem>
       </Stack>
+
       <DialogComponent
-        width={"50%"}
-        dialogOpen={modalOpen}
-        dialogClose={handleModalClose}
+        width={"80%"}
+        dialogOpen={modalOpen.action && modalOpen.type == "update"}
+        // dialogClose={() => handleModalOpen(0, false, "")}
         title="Form Indikasi Risiko Objek MRPN 5 Tahunan"
         dialogFooter={
-          <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button variant="outlined" onClick={handleModalClose}>
+          <DialogActions sx={{p: 2, px: 3}}>
+            <Button variant="outlined" onClick={() => handleModalOpen(0, false, "")}>
               Batal
             </Button>
             <Button
               variant="contained"
               type="submit"
-              onClick={() => updateData()}
+              onClick={() => handleModalOpenSubmit()}
             >
               Simpan
             </Button>
@@ -119,19 +138,138 @@ export default function CardIndication({ project }: { project: string }) {
         <FormIndication
           state={state}
           setState={setState}
+          handleModalOutputOpen={handleModalOutputOpen}
+          handleModalRegulationOpen={handleModalRegulationOpen}
           optionRiskType={optionRiskType}
-          optionStrategy={optionStrategy}
-          optionStakeholder={optionStakeholder}
-          optionRO={optionRO}
           optionTOWS={dataTOWS}
         />
       </DialogComponent>
+
+      <DialogComponent
+        tableMode
+        width={"80%"}
+        dialogOpen={modalOutput.type != "delete" && modalOutput.action}
+        dialogClose={() => handleModalOutputOpen(-1, false, "")}
+        title="Tambah Perlakuan Risiko"
+        dialogFooter={
+          <DialogActions sx={{p: 2, px: 3}}>
+            <Button
+              variant="outlined"
+              onClick={() => handleModalOutputOpen(-1, false, "")}
+            >
+              Batal
+            </Button>
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => handleModalOutputSubmit()}
+            >
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <FormPerlakuanRisiko
+          optionRO={dataTable}
+          state={stateValue}
+          setState={setStateValue}
+          listLocation={listLocation}
+          listProP={listProP}
+          listStakeholder={optionStakeholder}
+        />
+      </DialogComponent>
+
+      <DialogComponent
+        width={520}
+        dialogOpen={modalRegulation.type == "update" && modalRegulation.action}
+        dialogClose={() => handleModalRegulationOpen(-1,false,"")}
+        title="Tambah Peraturan"
+        dialogFooter={
+          <DialogActions sx={{p: 2, px: 3}}>
+            <Button onClick={() => handleModalRegulationOpen(-1,false,"")}>Batal</Button>
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => handleModalRegulationSubmit()}
+            >
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <FormRegulation
+          state={stateRegulation}
+          setState={setStateRegulation}
+          options={listPerpres}
+          optionStakeholder={optionStakeholder}
+          setModalPeraturan={handleModalNewRegulationOpen}
+        />
+      </DialogComponent>
+
+      <DialogComponent
+        width={480}
+        dialogOpen={modalNewRegulation.action && modalNewRegulation.type == "update"}
+        dialogClose={() => handleModalNewRegulationOpen(-1, false, "")}
+        title="Tambah Peraturan"
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button onClick={() => handleModalNewRegulationOpen(-1, false, "")}>Batal</Button>
+            <Button
+              variant="contained"
+              type="submit"
+              color="primary"
+              onClick={() => handleModalNewRegulationSubmit()}
+            >
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <TextareaStyled
+                placeholder="Peraturan"
+                minRows={2}
+                value={stateNewRegulation.title}
+                onChange={(e: any) => {
+                  setStateNewRegulation((prevState) => {
+                    return {
+                      ...prevState,
+                      title: e.target.value,
+                    };
+                  });
+                }}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <TextareaStyled
+                placeholder="Keterangan Peraturan"
+                minRows={3}
+                value={stateNewRegulation.value}
+                onChange={(e: any) => {
+                  setStateNewRegulation((prevState) => {
+                    return {
+                      ...prevState,
+                      value: e.target.value,
+                    };
+                  });
+                }}
+              />
+            </FormControl>
+          </Grid>
+        </Grid>
+      </DialogComponent>
+
       <DialogDelete
         title="Hapus Data"
-        handleOpenModal={modalOpenDelete}
-        handleCloseModal={() => setModalOpenDelete(false)}
+        handleOpenModal={modalOpen.action && modalOpen.type == "delete"}
+        handleCloseModal={() => handleModalOpen(-1,false,"")}
         handleDelete={() => deleteData()}
       />
+
     </>
   );
 }

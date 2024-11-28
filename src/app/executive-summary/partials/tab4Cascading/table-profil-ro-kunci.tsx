@@ -39,7 +39,7 @@ export default function TableProfilRoKunci({
         const color =
           item.row.original.intervention == true ? "primary" : "default";
         return (
-          <Stack height="100%" alignItems="flex-start">
+          <Stack height="inherit" alignItems="center">
             <Chip size="small" color={color} label={value} />
           </Stack>
         );
@@ -53,7 +53,7 @@ export default function TableProfilRoKunci({
       filterFns: "contains",
       Cell: (item: any) => {
         return (
-          <Stack height="100%" alignItems="flex-start">
+          <Stack height="inherit" alignItems="center">
             {item.row.original.tahun}
           </Stack>
         );
@@ -66,7 +66,7 @@ export default function TableProfilRoKunci({
       filterFns: "contains",
       Cell: (item: any) => {
         return (
-          <Stack height="100%" alignItems="flex-start">
+          <Stack height="inherit" alignItems="center">
             {item.row.original.code}
           </Stack>
         );
@@ -77,7 +77,7 @@ export default function TableProfilRoKunci({
       header: "Penanggungjawab",
       enableColumnFilterModes: false,
       Cell: (item: any) => {
-        return item.row.original.kementrian.value;
+        return item.row.original?.kementrian?.value ?? "-";
       },
     },
     {

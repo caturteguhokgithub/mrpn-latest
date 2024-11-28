@@ -107,7 +107,7 @@ export default function TableCritical({
               )}
               <TableCell sx={{ verticalAlign: "top" }}>
                 <Typography variant="body2">
-                  {item.ro?.kementrian.value}
+                  {item.ro?.kementrian?.value ?? "-"}
                 </Typography>
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>

@@ -26,11 +26,9 @@ import { bgColorTh } from "@/app/utils/color";
 export default function TableIndication({
   data,
   handleModalOpen,
-  handleModalOpenDelete,
 }: {
   data?: ExsumIndicationResDto[];
   handleModalOpen?: any;
-  handleModalOpenDelete?: any;
 }) {
   const { permission } = useAuthContext((state) => state);
   const pathname = usePathname();
@@ -39,13 +37,13 @@ export default function TableIndication({
 
   const handleEditData = (id: number) => {
     if (data) {
-      handleModalOpen(id);
+      handleModalOpen(id, true, "update");
     }
   };
 
   const handleDeleteData = (id: number) => {
     if (data) {
-      handleModalOpenDelete(id);
+      handleModalOpen(id, true, "delete");
     }
   };
 
@@ -169,20 +167,31 @@ export default function TableIndication({
                       {row.kategori_risiko}
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{ verticalAlign: "top" }}>
+                  <TableCell
+                    rowSpan={
+                      row.perlakuan.length == 0 ? 1 : row.perlakuan.length
+                    }
+                    sx={{ verticalAlign: "top" }}
+                  >
                     <Typography variant="body1">
-                      {row.perlakuan.length > 0 &&
-                        row.perlakuan[0].perlakuan_risiko}
+                      {row.indikasi_perlakuan_risiko}
                     </Typography>
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>
                     {row.perlakuan.length > 0 && (
                       <Typography
                         variant="body1"
-                        color={row.perlakuan[0].ro?.value ? "" : "#f97316"}
+                        color={
+                          row.perlakuan[0].ro?.type == "RO"
+                            ? ""
+                            : "#f97316"
+                        }
                       >
-                        {row.perlakuan[0].ro?.value ??
-                          row.perlakuan[0].nonro?.value + " (NON RO)"}
+                        {
+                          row.perlakuan[0].ro?.type == "RO"
+                            ? row.perlakuan[0].ro?.value
+                            : row.perlakuan[0].ro?.value + " (NON RO)"
+                        }
                       </Typography>
                     )}
                   </TableCell>
@@ -197,120 +206,36 @@ export default function TableIndication({
                           gap={0.5}
                           flexWrap="wrap"
                         >
-                          {row.perlakuan[0].stakeholder.map((st, stIndex) => (
-                            <Box key={stIndex} component="div">
-                              <Chip
-                                label={st.value}
-                                size="small"
-                                sx={{
-                                  height: "auto",
-                                  ".MuiChip-label": {
-                                    whiteSpace: "wrap",
-                                    lineHeight: 1.2,
-                                    py: 0.6,
-                                  },
-                                }}
-                              />
-                            </Box>
-                          ))}
+                          {row.perlakuan.length > 0 &&
+                              <Box component="div">
+                                  <Chip
+                                      label={row.perlakuan[0].ro?.kementrian?.value ?? "-"}
+                                      size="small"
+                                      sx={{
+                                        height: "auto",
+                                        ".MuiChip-label": {
+                                          whiteSpace: "wrap",
+                                          lineHeight: 1.2,
+                                          py: 0.6,
+                                        },
+                                      }}
+                                  />
+                              </Box>
+                          }
                         </Stack>
                       </Box>
                     )}
                   </TableCell>
                   {year == 0 && row.perlakuan.length > 0 && (
-                    // <TableCell sx={{ verticalAlign: "top" }}>
-                    //   <Typography variant="body1">
-                    //     {row.perlakuan.length > 0 && row.perlakuan[0].tahun}
-                    //   </Typography>
-                    // </TableCell>
-                    <Stack
-                      marginTop={"10px"}
-                      display="inline-flex"
-                      alignItems="center"
-                      direction="row"
-                      gap={0.5}
-                      flexWrap="wrap"
-                    >
-                      {row.perlakuan[0].tahun.map((st, stIndex) => (
-                        <Box key={stIndex} component="span">
-                          <Chip
-                            label={st}
-                            size="small"
-                            sx={{
-                              height: "auto",
-                              ".MuiChip-label": {
-                                whiteSpace: "wrap",
-                                lineHeight: 1.2,
-                                py: 0.6,
-                              },
-                            }}
-                          />
-                        </Box>
-                      ))}
-                    </Stack>
-                  )}
-                </TableRow>
-                {row.perlakuan.slice(1).map((perlakuan, i) => (
-                  <TableRow key={perlakuan + "-" + index + "-" + i}>
                     <TableCell>
-                      <Typography variant="body1">
-                        {perlakuan.perlakuan_risiko}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography
-                        variant="body1"
-                        color={perlakuan.ro?.value ? "" : "#f97316"}
-                      >
-                        {perlakuan.ro?.value ??
-                          perlakuan.nonro?.value + " (NON RO)"}
-                      </Typography>
-                      {/*<Typography variant="body1">*/}
-                      {/*  {perlakuan.ro?.value ?? perlakuan.nonro?.value}*/}
-                      {/*</Typography>*/}
-                    </TableCell>
-                    <TableCell sx={{ verticalAlign: "top" }}>
                       <Stack
-                        marginTop={"10px"}
                         display="inline-flex"
                         alignItems="center"
                         direction="row"
                         gap={0.5}
                         flexWrap="wrap"
                       >
-                        {perlakuan.stakeholder.map((st, stIndex) => (
-                          <Box key={stIndex} component="span">
-                            <Chip
-                              label={st.value}
-                              size="small"
-                              sx={{
-                                height: "auto",
-                                ".MuiChip-label": {
-                                  whiteSpace: "wrap",
-                                  lineHeight: 1.2,
-                                  py: 0.6,
-                                },
-                              }}
-                            />
-                          </Box>
-                        ))}
-                      </Stack>
-                    </TableCell>
-                    {year == 0 && (
-                      // <TableCell sx={{ verticalAlign: "top" }}>
-                      //   <Typography variant="body1">
-                      //     {perlakuan.tahun.join(",")}
-                      //   </Typography>
-                      // </TableCell>
-                      <Stack
-                        marginTop={"10px"}
-                        display="inline-flex"
-                        alignItems="center"
-                        direction="row"
-                        gap={0.5}
-                        flexWrap="wrap"
-                      >
-                        {perlakuan.tahun.map((st, stIndex) => (
+                        {row.perlakuan[0].tahun.map((st, stIndex) => (
                           <Box key={stIndex} component="span">
                             <Chip
                               label={st}
@@ -327,6 +252,79 @@ export default function TableIndication({
                           </Box>
                         ))}
                       </Stack>
+                    </TableCell>
+                  )}
+                </TableRow>
+
+                {row.perlakuan.slice(1).map((perlakuan, i) => (
+                  <TableRow key={perlakuan + "-" + index + "-" + i}>
+                    <TableCell sx={{ verticalAlign: "top" }}>
+                      <Typography
+                        variant="body1"
+                        color={
+                          perlakuan.ro?.type == "RO"
+                            ? ""
+                            : "#f97316"
+                        }
+                      >
+                        {
+                          perlakuan.ro?.type == "RO"
+                            ? perlakuan.ro?.value
+                            : perlakuan.ro?.value + " (NON RO)"
+                        }
+                      </Typography>
+                    </TableCell>
+                    <TableCell sx={{ verticalAlign: "top" }}>
+                      <Stack
+                        display="inline-flex"
+                        alignItems="center"
+                        direction="row"
+                        gap={0.5}
+                        flexWrap="wrap"
+                      >
+                        <Box component="span">
+                          <Chip
+                            label={perlakuan.ro?.kementrian?.value ?? "-"}
+                            size="small"
+                            sx={{
+                              height: "auto",
+                              ".MuiChip-label": {
+                                whiteSpace: "wrap",
+                                lineHeight: 1.2,
+                                py: 0.6,
+                              },
+                            }}
+                          />
+                        </Box>
+                      </Stack>
+                    </TableCell>
+                    {year == 0 && (
+                      <TableCell sx={{verticalAlign:"top"}}>
+                        <Stack
+                          display="inline-flex"
+                          alignItems="center"
+                          direction="row"
+                          gap={0.5}
+                          flexWrap="wrap"
+                        >
+                          {perlakuan.tahun.map((st, stIndex) => (
+                            <Box key={stIndex} component="span">
+                              <Chip
+                                label={st}
+                                size="small"
+                                sx={{
+                                  height: "auto",
+                                  ".MuiChip-label": {
+                                    whiteSpace: "wrap",
+                                    lineHeight: 1.2,
+                                    py: 0.6,
+                                  },
+                                }}
+                              />
+                            </Box>
+                          ))}
+                        </Stack>
+                      </TableCell>
                     )}
                   </TableRow>
                 ))}

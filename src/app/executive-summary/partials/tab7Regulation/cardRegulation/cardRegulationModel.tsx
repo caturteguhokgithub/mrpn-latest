@@ -3,6 +3,7 @@ import {BaseAPIServiceParam} from "@/lib/core/api/apiModel";
 
 export interface ExsumRegulationResDto {
   id:number
+  tahun:number[]
   exsum_id:number
   amanat:string
   perpres:MiscMasterListPerpresRes[]
@@ -11,6 +12,7 @@ export interface ExsumRegulationResDto {
 
 export interface ExsumRegulationDto {
   id:number
+  tahun:number[]
   exsum_id:number
   amanat:string
   perpres_state:MiscMasterListPerpresRes|undefined
@@ -20,12 +22,13 @@ export interface ExsumRegulationDto {
 }
 export const initExsumRegulationDto:ExsumRegulationDto = {
   id: 0,
+  tahun:[],
   exsum_id: 0,
   amanat: "",
   stakeholder: [],
   stakeholder_id: [],
   perpres_state: undefined,
-  perpres: []
+  perpres: [],
 }
 
 export interface GetByExsumId {

@@ -64,6 +64,11 @@ export interface MiscMasterListPerpresCreateReq {
  value: string;
  flag: string;
 }
+export const initMiscMasterListPerpres:MiscMasterListPerpresCreateReq = {
+ title:"",
+ value:"",
+ flag:"new"
+}
 
 export type MiscMasterListPerpresCreateReqService = BaseAPIServiceParam & {
  body: MiscMasterListPerpresCreateReq

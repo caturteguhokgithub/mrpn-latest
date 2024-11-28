@@ -112,15 +112,11 @@ function GetTableRow(
 
 export default function TableAnggaran(
   {
-    rpjmn,
     state,
     setState,
-    type
   }: {
-    rpjmn: MiscMasterRPJMNRes | undefined
     state:ExsumInterventionState,
     setState: (value: SetStateAction<ExsumInterventionState>) => void
-    type:string
   }
 ) {
 

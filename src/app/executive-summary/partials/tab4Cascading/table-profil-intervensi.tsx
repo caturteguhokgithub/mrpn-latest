@@ -78,7 +78,7 @@ export default function TableProfilIntervensi(
       Cell: (item: any) => {
         return (
           <Stack height="inherit" alignItems="center" justifyContent={"start"}>
-            {item.row.original.kementrian.value}
+            {item.row.original?.kementrian?.value ?? "-"}
           </Stack>
         );
       },
