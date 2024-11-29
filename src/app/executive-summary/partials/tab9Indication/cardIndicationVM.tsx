@@ -50,7 +50,7 @@ import {
   ExsumInterventionProjectReqDto, ExsumInterventionState, UpdateV2ExsumIntervention
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
 import {
-  doCreateIntervention, doUpdateInterventionOnlyRO
+  doCreateIntervention, doDeleteInterventionOnlyRO, doUpdateInterventionOnlyRO
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiService";
 
 const useCardIndicationVM = () => {
@@ -420,14 +420,58 @@ const useCardIndicationVM = () => {
 
     if (response?.code == API_CODE.success){
       await getData()
-      // handleModalOpen(-1,false,"")
+      handleModalOpen(-1,false,"")
     }
 
   }
 
-  const handleModalOutputOpen = (index:number,action:boolean,type:string) => {
+  const handleModalOutputOpen = async (index:number,action:boolean,type:string) => {
 
     if(type == "delete"){
+
+      const value = state.values[index]
+
+      if (value.type == "NON_RO" && value.non_rincian_output.id != 0){
+        const response = await doDeleteInterventionOnlyRO({
+          body: {id : value.non_rincian_output.id},
+          loadingContext: loadingContext,
+          errorModalContext: errorModalContext,
+        })
+        if (response?.code != API_CODE.success) {
+          return;
+        }
+      }
+
+      if (value.type == "RO" && value.rincian_output != undefined){
+        let ro = value.rincian_output
+        ro.intervention = false
+
+        const request: ExsumInterventionProjectReqDto = {
+          id: 0,
+          intervention: false,
+          exsum_id: exsum.id,
+          type: "RO",
+          code: "",
+          prop: 0,
+          kementrian_id: 0,
+          nomenklatur: "",
+          indikator: "",
+          list: [],
+          list_ro: [ro],
+          tahun: "",
+          lokasi: []
+        }
+        const response = await doCreateIntervention({
+          body: request,
+          loadingContext: loadingContext,
+          errorModalContext: errorModalContext,
+        })
+        if (response?.code !== API_CODE.success) {
+          return
+        }
+      }
+
+
       setState(prevState => {
         let values = prevState.values
         values.splice(modalOutput.index, 1)
