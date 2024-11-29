@@ -24,9 +24,7 @@ import { grey, orange, red } from "@mui/material/colors";
 import theme from "@/theme";
 import FormRoadmap from "./form-roadmap";
 import useCardRoadmapVM from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapVM";
-import {
-  ExsumRoadmapResDto,
-} from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
+import { ExsumRoadmapResDto } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
 import { IconFA } from "@/app/components/icons/icon-fa";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
@@ -187,10 +185,13 @@ const BusinessTable = ({
             Proses Bisnis
           </Typography>
           <InfoTooltip
-            title="Rangkaian aktivitas atau tugas yang terstruktur dan saling terkait, yang dilakukan oleh organisasi
-atau Entitas MRPN untuk menyelesaikan pekerjaan, menghasilkan produk atau layanan tersebut,
-dan mencapai sasaran dan tujuan pembangunan nasional, mencakup, tetapi tidak terbatas pada,
-perencanaan, pengoperasian, pengelolaan, dan evaluasi kebijakan"
+            title={
+              <>
+                Menggambarkan <em>milestone general</em>/tahapan umum kegiatan
+                yang ingin dicapai untuk menggambarkan pelaksanaan kegiatan
+                secara keseluruhan dari tahun 2025 hingga tahun 2029
+              </>
+            }
           />
         </Stack>
         <Stack
@@ -375,14 +376,24 @@ const OutputTable = ({
   return (
     <>
       <Box marginBottom={"20px"}>
-        <Typography
-          component="h2"
-          fontSize="1em"
-          fontWeight={600}
-          textAlign="left"
-        >
-          Expected Output
-        </Typography>
+        <Stack direction="row" alignItems="center" gap={0.5}>
+          <Typography
+            component="h2"
+            fontSize="1em"
+            fontWeight={600}
+            textAlign="left"
+          >
+            Expected Output
+          </Typography>
+          <InfoTooltip
+            title={
+              <>
+                Merumuskan <em>output</em> utama bersifat kuantitatif yang akan
+                dilakukan setiap tahun.
+              </>
+            }
+          />
+        </Stack>
         <Stack
           direction="row"
           gap={2}
@@ -476,7 +487,10 @@ const OutputTable = ({
                   )}
                 </CardContent>
                 <CardContent>
-                  <Box textAlign={"left"} dangerouslySetInnerHTML={{__html: itemOutput.output}} />
+                  <Box
+                    textAlign={"left"}
+                    dangerouslySetInnerHTML={{ __html: itemOutput.output }}
+                  />
                   {/*<>*/}
                   {/*  <Typography component="p" textAlign="left">*/}
                   {/*    {itemOutput.output}*/}

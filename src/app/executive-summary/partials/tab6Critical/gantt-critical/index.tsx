@@ -11,7 +11,7 @@ import CustomTooltip from "./tooltip";
 import { alpha, Box, Chip, Stack } from "@mui/material";
 import theme from "@/theme";
 import { blue, green, orange, red } from "@mui/material/colors";
-import {TaskAdditionalData} from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
+import { TaskAdditionalData } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
 
 const CustomTaskListHeader = ({
   headerHeight,
@@ -64,8 +64,7 @@ const CustomTaskListTable = ({
   rowWidth,
   rowHeight,
 }: TaskListTableProps) => {
-
-  const getAdditionalData = (item:Task) => {
+  const getAdditionalData = (item: Task) => {
     let taskProjectTask: TaskAdditionalData = {
       type: "",
       tooltip_type: "parent",
@@ -74,14 +73,14 @@ const CustomTaskListTable = ({
       sumber_anggaran: "",
       keterangan_kegiatan: "",
       category: "",
-      target: []
+      target: [],
     };
 
-    if (item.type == "task" && item.project){
-      taskProjectTask = JSON.parse(item.project)
+    if (item.type == "task" && item.project) {
+      taskProjectTask = JSON.parse(item.project);
     }
-    return taskProjectTask
-  }
+    return taskProjectTask;
+  };
 
   return (
     <Box style={{ border: "1px solid #dfe1e5" }}>
@@ -129,7 +128,7 @@ const CustomTaskListTable = ({
                   // color: "white",
                   fontWeight: 500,
                   fontSize: 11,
-                  textTransform:"uppercase",
+                  textTransform: "uppercase",
                   height: "auto",
                   cursor: "default",
                   span: {
@@ -200,7 +199,7 @@ export default function GanttChart({ tasks }: { tasks: Task[] }) {
         tasks={tasks}
         viewMode={ViewMode.Year}
         TooltipContent={CustomTooltip}
-        preStepsCount={1}
+        preStepsCount={0}
         // customHeader={customHeader}
         listCellWidth={"400px"}
         // ganttHeight={420}

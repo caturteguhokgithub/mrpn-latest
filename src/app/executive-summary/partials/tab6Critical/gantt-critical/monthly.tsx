@@ -13,7 +13,7 @@ import theme from "@/theme";
 import { IconFA } from "@/app/components/icons/icon-fa";
 import { blue, green, orange, red } from "@mui/material/colors";
 import dayjs from "dayjs";
-import {TaskAdditionalData} from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
+import { TaskAdditionalData } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
 
 const CustomTaskListHeader = ({
   headerHeight,
@@ -150,8 +150,7 @@ const CustomTaskListTable = ({
   rowHeight,
   onExpanderClick,
 }: TaskListTableProps) => {
-
-  const getAdditionalData = (item:Task) => {
+  const getAdditionalData = (item: Task) => {
     let taskProjectTask: TaskAdditionalData = {
       type: "",
       tooltip_type: "parent",
@@ -160,15 +159,15 @@ const CustomTaskListTable = ({
       keterangan_kegiatan: "",
       category: "",
       target: [],
-      strategy: []
+      strategy: [],
     };
 
-    if (item.project){
-      taskProjectTask = JSON.parse(item.project)
+    if (item.project) {
+      taskProjectTask = JSON.parse(item.project);
     }
 
-    return taskProjectTask
-  }
+    return taskProjectTask;
+  };
 
   return (
     <Box style={{ border: "1px solid #dfe1e5" }}>
@@ -243,7 +242,7 @@ const CustomTaskListTable = ({
                     //     ? blue[700]
                     //     : orange[700],
                     // color: "white",
-                    textTransform:"uppercase",
+                    textTransform: "uppercase",
                     fontWeight: 500,
                     fontSize: 11,
                     height: "auto",
@@ -363,7 +362,7 @@ export default function GanttChartMonthly({
         tasks={tasks}
         viewMode={ViewMode.Month}
         TooltipContent={CustomTooltip}
-        preStepsCount={1}
+        preStepsCount={2}
         listCellWidth={"400px"}
         columnWidth={90}
         rowHeight={50}

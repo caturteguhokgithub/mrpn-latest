@@ -51,10 +51,23 @@ export const ColorCriticalPath: string[] = [
   "#CAF0F8"
 ];
 
+export const ColorCriticalPathDarken: string[] = [
+  "#e80037",
+  "#886a8a",
+  "#ffff20",
+  "#10f610",
+  "#209eff",
+  "#5020ff",
+  "#dac71d",
+  "#ff891f",
+  "#5d8a6c",
+  "#3fc9e6",
+];
+
 export const GetColorCriticalPath = (i: number) => {
   return ColorCriticalPath[i];
 };
 export const GetColorCriticalPathIndex = (i: string) => {
-  const index = ColorCriticalPath.findIndex(x => x == i)
-  return index > -1 ? index : 0
+  const index = ColorCriticalPath.findIndex((x) => x == i);
+  return index > -1 ? index : 0;
 };

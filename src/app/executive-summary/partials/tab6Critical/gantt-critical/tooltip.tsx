@@ -11,7 +11,6 @@ import theme from "@/theme";
 import { GenerateMonthFromInteger } from "@/lib/utils/common";
 
 const CustomTooltip = ({ task }: { task: Task }) => {
-
   let taskProject: TaskAdditionalData = {
     type: "",
     tooltip_type: "parent",
@@ -20,17 +19,16 @@ const CustomTooltip = ({ task }: { task: Task }) => {
     keterangan_kegiatan: "",
     category: "",
     target: [],
-    strategy: []
+    strategy: [],
   };
 
   if (task.project) {
     taskProject = JSON.parse(task.project);
   }
 
-  const dayjsFormat = taskProject.type == "rpjmn" ? "YYYY" : "DD MMM YYYY"
+  const dayjsFormat = taskProject.type == "rpjmn" ? "YYYY" : "DD MMM YYYY";
 
   if (taskProject.tooltip_type == "parent") {
-
     return (
       <Box
         bgcolor="white"
@@ -64,9 +62,12 @@ const CustomTooltip = ({ task }: { task: Task }) => {
             <Typography variant="body2" component="div">
               Tagging Roadmap:{" "}
               <Box component="span" display={"flex"} flexDirection={"column"}>
-                {taskProject.strategy.map((st, iSt) =>
-                  <Typography component="strong" fontWeight={600}>{`- ${st.value}`}</Typography>
-                )}
+                {taskProject.strategy.map((st, iSt) => (
+                  <Typography
+                    component="strong"
+                    fontWeight={600}
+                  >{`- ${st.value}`}</Typography>
+                ))}
               </Box>
             </Typography>
           )}
@@ -99,8 +100,21 @@ const CustomTooltip = ({ task }: { task: Task }) => {
               {dayjs(task.end).format(dayjsFormat)}
             </Typography>
           </Typography>
+          {taskProject.strategy.length > 0 && (
+            <Typography variant="body2" component="span">
+              Tagging Roadmap:{" "}
+              <Box component="span" display={"flex"} flexDirection={"column"}>
+                {taskProject.strategy.map((st, iSt) => (
+                  <Typography
+                    component="strong"
+                    fontWeight={600}
+                  >{`- ${st.value}`}</Typography>
+                ))}
+              </Box>
+            </Typography>
+          )}
           {taskProject.keterangan_kegiatan && (
-            <Typography variant="body2" component="div">
+            <Typography variant="body2" component="span">
               Status:{" "}
               <Box component="span">
                 <Chip
