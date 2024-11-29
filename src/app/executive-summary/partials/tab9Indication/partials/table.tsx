@@ -234,11 +234,6 @@ export default function TableIndication({
                     )}
                   </TableCell>
                   {year == 0 && row.perlakuan.length > 0 && (
-                    // <TableCell sx={{ verticalAlign: "top" }}>
-                    //   <Typography variant="body1">
-                    //     {row.perlakuan.length > 0 && row.perlakuan[0].tahun}
-                    //   </Typography>
-                    // </TableCell>
                     <TableCell sx={{ verticalAlign: "top" }}>
                       <Stack
                         display="inline-flex"
@@ -296,20 +291,38 @@ export default function TableIndication({
                     </TableCell>
                   )}
                 </TableRow>
+
+
                 {row.perlakuan.slice(1).map((perlakuan, i) => (
                   <TableRow key={perlakuan + "-" + index + "-" + i}>
-                    <TableCell>
-                      <Stack
-                        display="inline-flex"
-                        alignItems="center"
-                        direction="row"
-                        gap={0.5}
-                        flexWrap="wrap"
+                    <TableCell sx={{ verticalAlign: "top" }}>
+                      <Typography
+                        variant="body1"
+                        color={
+                          perlakuan.ro?.type == "RO" ? "" : "#f97316"
+                        }
                       >
-                        {perlakuan.stakeholder.map((st, stIndex) => (
-                          <Box key={stIndex} component="span">
+                        {perlakuan.ro?.type == "RO"
+                          ? perlakuan.ro?.value
+                          : perlakuan.ro?.value + " (NON RO)"}
+                      </Typography>
+                    </TableCell>
+
+                    <TableCell sx={{ verticalAlign: "top" }}>
+                      <Box>
+                        <Stack
+                          // marginTop={"10px"}
+                          display="inline-flex"
+                          alignItems="center"
+                          direction="row"
+                          gap={0.5}
+                          flexWrap="wrap"
+                        >
+                          <Box component="div">
                             <Chip
-                              label={st.value}
+                              label={
+                                perlakuan.ro?.kementrian?.value ?? "-"
+                              }
                               size="small"
                               sx={{
                                 height: "auto",
@@ -321,15 +334,11 @@ export default function TableIndication({
                               }}
                             />
                           </Box>
-                        ))}
-                      </Stack>
+                        </Stack>
+                      </Box>
                     </TableCell>
+
                     {year == 0 && (
-                      // <TableCell sx={{ verticalAlign: "top" }}>
-                      //   <Typography variant="body1">
-                      //     {perlakuan.tahun.join(",")}
-                      //   </Typography>
-                      // </TableCell>
                       <TableCell sx={{ verticalAlign: "top" }}>
                         <Stack
                           display="inline-flex"

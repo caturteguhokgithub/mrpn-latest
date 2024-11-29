@@ -373,6 +373,15 @@ const useCardIndicationVM = () => {
 
   const handleModalOpenSubmit = async () => {
 
+    if (state.tows == undefined
+      || state.indikasi_risiko == ""
+      || state.kategori_risiko == ""
+      || state.perlakuan_risiko == ""
+      || state.regulation.length == 0
+    ){
+      return
+    }
+
     let values:ExsumIndicationValueReqDto[] = []
     state.values.map(value => {
 
@@ -420,7 +429,7 @@ const useCardIndicationVM = () => {
 
     if (response?.code == API_CODE.success){
       await getData()
-      handleModalOpen(-1,false,"")
+      handleModalOpen(0,false,"")
     }
 
   }
