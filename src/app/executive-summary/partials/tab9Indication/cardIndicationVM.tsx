@@ -624,11 +624,15 @@ const useCardIndicationVM = () => {
     }
 
     setState(prevState => {
+      let thisState = {...stateValue}
+      if (thisState.type == "NON_RO"){
+        thisState.intervention = true
+      }
       let values = prevState.values
       if (modalOutput.index > -1){
-        values[modalOutput.index] = stateValue
+        values[modalOutput.index] = thisState
       }else{
-        values.push(stateValue)
+        values.push(thisState)
       }
 
       return {
