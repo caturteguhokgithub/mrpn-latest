@@ -220,6 +220,9 @@ export default function DashboardLayout(props: {
       // maxWidth: "calc(100vw - 444px)",
       maxWidth: "calc(100vw - 404px)",
     },
+    ".table-fund, .table-overflow-x-indication": {
+      maxWidth: "calc(100vw - 374px)",
+    },
     ".collapse-active": {
       ".table-sticky-actions-column": {
         maxWidth: "calc(100vw - 132px)",
@@ -232,6 +235,9 @@ export default function DashboardLayout(props: {
       ".orgchart-container": {
         // maxWidth: "calc(100vw - 228px)",
         maxWidth: "calc(100vw - 188px)",
+      },
+      ".table-fund, .table-overflow-x-indication": {
+        maxWidth: "calc(100vw - 158px)",
       },
     },
     [theme.breakpoints.down("md")]: {

@@ -27,16 +27,26 @@ import {
   ExsumTWOSDto,
   ExsumTWOSResDto,
 } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
+import { InfoTooltip } from "@/app/components/InfoTooltip";
 
-const TitleTableContent = ({ title }: { title: string }) => {
+const TitleTableContent = ({
+  title,
+  infoTooltip,
+}: {
+  title: string;
+  infoTooltip: React.ReactNode;
+}) => {
   return (
-    <Typography
-      variant="body1"
-      fontWeight={600}
-      sx={{ textDecoration: "underline" }}
-    >
-      {title}
-    </Typography>
+    <Stack direction="row" alignItems="center" gap={0.5}>
+      <Typography
+        variant="body1"
+        fontWeight={600}
+        sx={{ textDecoration: "underline" }}
+      >
+        {title}
+      </Typography>
+      <InfoTooltip title={infoTooltip} />
+    </Stack>
   );
 };
 
@@ -85,7 +95,11 @@ export default function TableTows({ data }: { data: ExsumTWOSResDto }) {
               </Typography>
             </TableCell>
             <TableCell sx={{ verticalAlign: "top" }}>
-              <TitleTableContent title="Strategi SO" />
+              <TitleTableContent
+                title="Strategi SO"
+                infoTooltip="Ciptakan strategi yang menggunakan kekuatan untuk memanfaatkan peluang
+"
+              />
               <Typography variant="body1">
                 <ul>
                   {data.tows.map((x) => x.type == "SO" && <li>{x.value}</li>)}
@@ -93,7 +107,11 @@ export default function TableTows({ data }: { data: ExsumTWOSResDto }) {
               </Typography>
             </TableCell>
             <TableCell sx={{ verticalAlign: "top" }}>
-              <TitleTableContent title="Strategi WO" />
+              <TitleTableContent
+                title="Strategi WO"
+                infoTooltip="Ciptakan strategi yang meminimalkan kelemahan untuk memanfaatkan peluang
+"
+              />
               <Typography variant="body1">
                 <ul>
                   {data.tows.map((x) => x.type == "WO" && <li>{x.value}</li>)}
@@ -116,7 +134,11 @@ export default function TableTows({ data }: { data: ExsumTWOSResDto }) {
               </Typography>
             </TableCell>
             <TableCell sx={{ verticalAlign: "top" }}>
-              <TitleTableContent title="Strategi ST" />
+              <TitleTableContent
+                title="Strategi ST"
+                infoTooltip="Ciptakan strategi yang menggunakan kekuatan untuk mengatasi ancaman
+"
+              />
               <Typography variant="body1">
                 <ul>
                   {data.tows.map((x) => x.type == "ST" && <li>{x.value}</li>)}
@@ -124,7 +146,11 @@ export default function TableTows({ data }: { data: ExsumTWOSResDto }) {
               </Typography>
             </TableCell>
             <TableCell sx={{ verticalAlign: "top" }}>
-              <TitleTableContent title="Strategi WT" />
+              <TitleTableContent
+                title="Strategi WT"
+                infoTooltip="Ciptakan strategi yang meminimalkan kelemahan dan menghindari ancaman
+"
+              />
               <Typography variant="body1">
                 <ul>
                   {data.tows.map((x) => x.type == "WT" && <li>{x.value}</li>)}

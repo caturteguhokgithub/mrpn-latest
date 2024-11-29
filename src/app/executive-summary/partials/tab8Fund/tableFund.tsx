@@ -25,11 +25,15 @@ import { blue, green, grey, red } from "@mui/material/colors";
 import { dataTema } from "../../dataTema";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
-import {ExsumFundDataTableRes, ExsumFundRes} from "@/app/executive-summary/partials/tab8Fund/cardFundModel";
-import {RODataTable, RoDto} from "@/app/misc/rkp/rkpServiceModel";
-import {useRKPContext} from "@/lib/core/hooks/useHooks";
-import {GenerateRpjmnYear} from "@/lib/utils/common";
-import {FormatIDR} from "@/lib/utils/currency";
+import {
+  ExsumFundDataTableRes,
+  ExsumFundRes,
+} from "@/app/executive-summary/partials/tab8Fund/cardFundModel";
+import { RODataTable, RoDto } from "@/app/misc/rkp/rkpServiceModel";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import { GenerateRpjmnYear } from "@/lib/utils/common";
+import { FormatIDR } from "@/lib/utils/currency";
+import { bgColorTh } from "@/app/utils/color";
 
 function createData(aspectRo: string) {
   return {
@@ -131,85 +135,134 @@ const FundSource = ({ value, isYear }: { value: string; isYear?: boolean }) => {
 const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
   const { row, project } = props;
 
-  const {year, rpjmn} = useRKPContext(store => store)
+  const { year, rpjmn } = useRKPContext((store) => store);
 
-  let multiyear:number[] = [year]
-  if (year == 0){
-    multiyear = GenerateRpjmnYear(rpjmn)
+  let multiyear: number[] = [year];
+  if (year == 0) {
+    multiyear = GenerateRpjmnYear(rpjmn);
   }
 
-  const getRowData = (key:string,data:RODataTable|undefined) => {
-    if (data == undefined) return ""
-    const obj:any = JSON.parse(JSON.stringify(data))
-    return obj[key]
-  }
+  const getRowData = (key: string, data: RODataTable | undefined) => {
+    if (data == undefined) return "";
+    const obj: any = JSON.parse(JSON.stringify(data));
+    return obj[key];
+  };
 
   return (
-    <Table size="small">
-      <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
-        <TableRow>
-          <TableCell rowSpan={2}>Intervensi Kunci</TableCell>
-          <TableCell rowSpan={2}>Indikator</TableCell>
-          <TableCell rowSpan={2} align="center">Target</TableCell>
-          <TableCell rowSpan={2}>Indikasi Alokasi Tahun Rencana (Rp Miliar)</TableCell>
-          <TableCell rowSpan={2}>Sumber Pendanaan (Belanja KL/ DAK/BUMN/Swasta)</TableCell>
-          <TableCell rowSpan={2}>Instansi Pelaksana RO</TableCell>
-          <TableCell rowSpan={2}>
-            Lokasi RO
-            <br />
-            (Prov./Kab./Kota)
-          </TableCell>
-          {multiyear.map((y,iY) =>
-            <TableCell colSpan={4} align={"center"}>{y}</TableCell>
-          )}
-        </TableRow>
-        <TableRow>
-          {multiyear.map((y,iY) =>
-            <>
-              <TableCell>Target</TableCell>
-              <TableCell>Satuan</TableCell>
-              <TableCell>Pembiayaan</TableCell>
-              <TableCell>Sumber Pembiayaan</TableCell>
-            </>
-          )}
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {row?.map((fundRow, index) => (
-          <TableRow key={index}>
-            <TableCell sx={{ verticalAlign: "top" }}>{fundRow.value}</TableCell>
-            <TableCell sx={{ verticalAlign: "top" }}>
-              {fundRow.pkkr ? fundRow.pkkr : "-"}
+    <TableContainer
+      className="table-fund"
+      component={Paper}
+      elevation={0}
+      variant="outlined"
+      sx={{
+        overflowX: "auto",
+        "&::-webkit-scrollbar": {
+          height: "6px",
+          cursor: "pointer",
+        },
+      }}
+    >
+      <Table size="small" style={{ tableLayout: "fixed", width: 4000 }}>
+        <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
+          <TableRow>
+            <TableCell
+              rowSpan={2}
+              sx={{
+                position: "sticky",
+                left: 0,
+                boxShadow: "2px -6px 10px grey",
+                borderRight: "1px solid #e0e0e0",
+                bgcolor: bgColorTh,
+                width: 250,
+              }}
+            >
+              Intervensi Kunci
             </TableCell>
-            <TableCell align="right" sx={{ verticalAlign: "top" }}>
-              {fundRow.target ? fundRow.target : "-"}
+            <TableCell rowSpan={2}>Indikator</TableCell>
+            <TableCell rowSpan={2} align="center">
+              Target
             </TableCell>
-            <TableCell align="right" sx={{ verticalAlign: "top" }}>
-              {fundRow.anggaran}
+            <TableCell rowSpan={2} sx={{ width: 200 }}>
+              Indikasi Alokasi Tahun Rencana (Rp Miliar)
             </TableCell>
-            <TableCell sx={{ verticalAlign: "top" }}>
-              {fundRow.sumber_anggaran ? fundRow.sumber_anggaran : "-"}
+            <TableCell rowSpan={2} sx={{ width: 200 }}>
+              Sumber Pendanaan (Belanja KL/ DAK/BUMN/Swasta)
             </TableCell>
-            <TableCell sx={{ verticalAlign: "top" }}>
-              {fundRow?.kementrian?.value ?? "-"}
+            <TableCell rowSpan={2} sx={{ width: 250 }}>
+              Instansi Pelaksana RO
             </TableCell>
-            <TableCell sx={{ verticalAlign: "top" }}>
-              {fundRow.lokasi_ro ? fundRow.lokasi_ro : "-"}
+            <TableCell rowSpan={2}>
+              Lokasi RO
+              <br />
+              (Prov./Kab./Kota)
             </TableCell>
-            {multiyear.map((y, iY) =>
-              <>
-                <TableCell>{getRowData(`target_${iY}`, fundRow)}</TableCell>
-                <TableCell>{getRowData(`satuan_${iY}`, fundRow)}</TableCell>
-                <TableCell
-                  align={"right"}>{FormatIDR(getRowData(`anggaran_${iY}`, fundRow))}</TableCell>
-                <TableCell>{getRowData(`sumber_anggaran_${iY}`, fundRow)}</TableCell>
-              </>
-            )}
-
+            {multiyear.map((y, iY) => (
+              <TableCell colSpan={4} align={"center"}>
+                {y}
+              </TableCell>
+            ))}
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+          <TableRow>
+            {multiyear.map((y, iY) => (
+              <>
+                <TableCell>Target</TableCell>
+                <TableCell>Satuan</TableCell>
+                <TableCell>Pembiayaan</TableCell>
+                <TableCell>Sumber Pembiayaan</TableCell>
+              </>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {row?.map((fundRow, index) => (
+            <TableRow key={index}>
+              <TableCell
+                sx={{
+                  verticalAlign: "top",
+                  position: "sticky",
+                  left: 0,
+                  background: "white",
+                  boxShadow: "5px 2px 5px grey",
+                  borderRight: "2px solid #e0e0e0",
+                }}
+              >
+                {fundRow.value}
+              </TableCell>
+              <TableCell sx={{ verticalAlign: "top" }}>
+                {fundRow.pkkr ? fundRow.pkkr : "-"}
+              </TableCell>
+              <TableCell align="right" sx={{ verticalAlign: "top" }}>
+                {fundRow.target ? fundRow.target : "-"}
+              </TableCell>
+              <TableCell align="right" sx={{ verticalAlign: "top" }}>
+                {fundRow.anggaran}
+              </TableCell>
+              <TableCell sx={{ verticalAlign: "top" }}>
+                {fundRow.sumber_anggaran ? fundRow.sumber_anggaran : "-"}
+              </TableCell>
+              <TableCell sx={{ verticalAlign: "top" }}>
+                {fundRow?.kementrian?.value ?? "-"}
+              </TableCell>
+              <TableCell sx={{ verticalAlign: "top" }}>
+                {fundRow.lokasi_ro ? fundRow.lokasi_ro : "-"}
+              </TableCell>
+              {multiyear.map((y, iY) => (
+                <>
+                  <TableCell>{getRowData(`target_${iY}`, fundRow)}</TableCell>
+                  <TableCell>{getRowData(`satuan_${iY}`, fundRow)}</TableCell>
+                  <TableCell align={"right"}>
+                    {FormatIDR(getRowData(`anggaran_${iY}`, fundRow))}
+                  </TableCell>
+                  <TableCell>
+                    {getRowData(`sumber_anggaran_${iY}`, fundRow)}
+                  </TableCell>
+                </>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

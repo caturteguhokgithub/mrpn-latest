@@ -23,13 +23,16 @@ import {
   AutoCompleteMultipleProp,
   AutoCompleteSingleProp,
 } from "@/components/autocomplete";
-import {MiscMasterListProvinsiRes, MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel";
+import {
+  MiscMasterListProvinsiRes,
+  MiscMasterListStakeholderRes,
+} from "@/app/misc/master/masterServiceModel";
 import {
   ExsumInterventionState,
   ProjectTargetAnggaranDto,
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
 import DialogDelete from "@/components/dialogDelete";
-import {GenerateRpjmnYear} from "@/lib/utils/common";
+import { GenerateRpjmnYear } from "@/lib/utils/common";
 
 export default function CardIntervensi({
   project,
@@ -62,7 +65,7 @@ export default function CardIntervensi({
     setModalDelete,
     handleModalDelete,
     listLocation,
-    getListLocation
+    getListLocation,
   } = useCardIntervensiVM();
 
   useEffect(() => {
@@ -72,20 +75,18 @@ export default function CardIntervensi({
     if (listStakeholder.length == 0) getListStakeholder();
 
     if (exsum.id != 0) {
-      getData()
-      getListProP()
+      getData();
+      getListProP();
     }
-
   }, [exsum]);
 
-  const handleProjectOpenModal = (action:boolean,type:string) => {
-
-    setState(prevState => {
+  const handleProjectOpenModal = (action: boolean, type: string) => {
+    setState((prevState) => {
       const thisState = { ...prevState };
 
-      let list:ProjectTargetAnggaranDto[] = []
-      if (year == 0){
-        GenerateRpjmnYear(rpjmn).map(t => {
+      let list: ProjectTargetAnggaranDto[] = [];
+      if (year == 0) {
+        GenerateRpjmnYear(rpjmn).map((t) => {
           const dataAnggaran: ProjectTargetAnggaranDto = {
             tahun: t,
             target: "",
@@ -93,10 +94,10 @@ export default function CardIntervensi({
             anggaranString: "",
             anggaran: 0,
             sumber_anggaran: "",
-          }
-          list.push(dataAnggaran)
-        })
-      }else{
+          };
+          list.push(dataAnggaran);
+        });
+      } else {
         const dataAnggaran: ProjectTargetAnggaranDto = {
           tahun: year,
           target: "",
@@ -104,42 +105,44 @@ export default function CardIntervensi({
           anggaranString: "",
           anggaran: 0,
           sumber_anggaran: "",
-        }
-        list.push(dataAnggaran)
+        };
+        list.push(dataAnggaran);
       }
 
-      thisState.list = list
+      thisState.list = list;
       return {
-        ...thisState
-      }
-    })
+        ...thisState,
+      };
+    });
 
-    setModal({ action: action, type: type })
-  }
+    setModal({ action: action, type: type });
+  };
 
   const selectLocation: AutoCompleteMultipleProp<MiscMasterListProvinsiRes> = {
     value: state.location,
     options: listLocation,
     getOptionLabel: (opt) => opt.name,
-    handleChange: (value: MiscMasterListProvinsiRes[]) => setState((prev) => {
-      return {
-        ...prev,
-        location: value,
-      };
-    }),
+    handleChange: (value: MiscMasterListProvinsiRes[]) =>
+      setState((prev) => {
+        return {
+          ...prev,
+          location: value,
+        };
+      }),
     placeHolder: "Pilih Lokasi",
-    labelSelectAll: "Pilih semua lokasi"
+    labelSelectAll: "Pilih semua lokasi",
   };
 
   const selectProP: AutoCompleteSingleProp<ProPDto> = {
     value: state.prop,
     options: listProP,
-    getOptionLabel: (opt) => opt.code+" - "+opt.value,
+    getOptionLabel: (opt) => opt.code + " - " + opt.value,
     handleChange: (value: ProPDto) => handleChangeState<ProPDto>(value),
     placeHolder: "Pilih tagging ProP",
   };
 
-  const selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes> = {
+  const selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes> =
+    {
       value: state.kementrian,
       options: listStakeholder,
       getOptionLabel: (opt) => opt.value,
@@ -157,13 +160,33 @@ export default function CardIntervensi({
     <CardItem
       //  contentNoPadding
       title="Profil Intervensi Kunci"
+      infoTooltip={
+        <div>
+          <p>
+            Proyek/RO yang disusun harus merujuk pada strategi hasil matriks
+            TOWS. Dalam penentuan proyek/RO kunci perlu memerhatikan:
+          </p>
+          <ol type="1" style={{ paddingLeft: "2em" }}>
+            <li>Merupakan proyek/RO penentu ketercapaian KP.</li>
+            <li>Memiliki keterkaitan indikator dengan IKU KP.</li>
+            <li>
+              Memiliki pengaruh/keterkaitan terhadap pelaksanaan proyek/RO
+              lainnya.
+            </li>
+            <li>Memiliki jumlah anggaran yang signifikan.</li>
+            <li>Merupakan proyek/RO yang dapat memitigasi risiko.</li>
+            <li>Memiliki angka target yang stabil.</li>
+            <li>Memperhatikan kesesuaian komponen RO dengan RO.</li>
+          </ol>
+        </div>
+      }
       addButton={
         <>
           <AddButton
             filled
             small
             title="Tambah Project"
-            onclick={() => handleProjectOpenModal(true,"NON_RO")}
+            onclick={() => handleProjectOpenModal(true, "NON_RO")}
           />
           <AddButton
             filled
@@ -219,21 +242,21 @@ export default function CardIntervensi({
                 intervensi: thisData.intervention,
                 prop: propData,
                 ro: [],
-                location:thisData.lokasi,
-                tahun:year
+                location: thisData.lokasi,
+                tahun: year,
               };
 
-              thisData.detail.map((d,i) => {
+              thisData.detail.map((d, i) => {
                 const listItem = {
-                    tahun: d.tahun,
-                    target: d.target,
-                    satuan: d.satuan,
-                    anggaran: d.anggaran,
-                    anggaranString: d.anggaran.toString(),
-                    sumber_anggaran: d.sumber_anggaran,
-                  }
-                  st.list.push(listItem)
-              })
+                  tahun: d.tahun,
+                  target: d.target,
+                  satuan: d.satuan,
+                  anggaran: d.anggaran,
+                  anggaranString: d.anggaran.toString(),
+                  sumber_anggaran: d.sumber_anggaran,
+                };
+                st.list.push(listItem);
+              });
 
               setState(st);
               setModal({ action: true, type: "NON_RO_UPDATE" });

@@ -23,6 +23,7 @@ import { IconEmptyData } from "@/app/components/icons";
 import DialogComponent from "@/app/components/dialog";
 import FormKemungkinan from "../tab2Possibility/form-kemungkinan";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import { bgColorTh } from "@/app/utils/color";
 
 export default function TableKategori({ mode }: { mode?: string }) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
@@ -111,23 +112,13 @@ export default function TableKategori({ mode }: { mode?: string }) {
         <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell
-                width={150}
-                sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}
-              >
+              <TableCell width={150} sx={{ bgcolor: bgColorTh }}>
                 Kategori Risiko
               </TableCell>
-              <TableCell
-                width={250}
-                sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}
-              >
+              <TableCell width={250} sx={{ bgcolor: bgColorTh }}>
                 Sub Kategori Risiko
               </TableCell>
-              <TableCell
-                sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}
-              >
-                Uraian
-              </TableCell>
+              <TableCell sx={{ bgcolor: bgColorTh }}>Uraian</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

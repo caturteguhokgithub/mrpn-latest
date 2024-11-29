@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import CardItem from "@/app/components/cardTabItem";
@@ -13,7 +13,7 @@ import { GetColor } from "@/utils/color";
 import TableCritical from "./table";
 import DialogDelete from "@/app/components/dialogDelete";
 import GanttChartMonthly from "./gantt-critical/monthly";
-import {useRKPContext} from "@/lib/core/hooks/useHooks";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
 
 const ProjectType = ({ label, color }: { label: string; color: string }) => {
   return (
@@ -53,7 +53,7 @@ export default function CardCritical({ project }: { project: string }) {
     setModalDelete,
   } = useCardCriticalVM();
 
-  const {year} = useRKPContext(store => store)
+  const { year } = useRKPContext((store) => store);
 
   const handleModalOpen = () => {
     setModalOpen(true);
@@ -98,6 +98,19 @@ export default function CardCritical({ project }: { project: string }) {
     <>
       <CardItem
         title="Critical Path"
+        infoTooltip={
+          <div>
+            <p>
+              <em>Critical Path</em> merupakan instrumen yang berisikan{" "}
+              <em>sequence of project</em> untuk melihat apakah kebijakan
+              menjadi/tidak menjadi prasyarat bagi kebijakan lain atau bersamaan
+              dengan proyek lain. Pada tahapan ini dilakukan pemetaan
+              proyek-proyek kunci guna menjamin urutan waktu serta mendapat
+              gambaran keterkaitan antar proyek agar berada pada koridor
+              pencapaian IKU
+            </p>
+          </div>
+        }
         setting
         settingAddOnclick={handleModalAdd}
         settingEditOnclick={handleModalOpen}
@@ -121,8 +134,16 @@ export default function CardCritical({ project }: { project: string }) {
                 {/*  />*/}
                 {/*))}*/}
               </Stack>
-              {year == 0 && <GanttChart key={ganChart.length} tasks={ganChart} />}
-              {year > 0 && <GanttChartMonthly key={ganChart.length} tasks={tasksRKP} setTasks={setTaskRKP} />}
+              {year == 0 && (
+                <GanttChart key={ganChart.length} tasks={ganChart} />
+              )}
+              {year > 0 && (
+                <GanttChartMonthly
+                  key={ganChart.length}
+                  tasks={tasksRKP}
+                  setTasks={setTaskRKP}
+                />
+              )}
             </Stack>
           </>
         )}

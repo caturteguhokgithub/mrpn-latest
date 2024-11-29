@@ -31,6 +31,7 @@ import { TextareaStyled } from "@/app/components/textarea";
 import AddButton from "@/components/buttonAdd";
 import { IconFA } from "@/components/icons/icon-fa";
 import DialogDelete from "@/app/components/dialogDelete";
+import { InfoTooltip } from "@/app/components/InfoTooltip";
 
 export default function CardSwot({ project }: { project: string }) {
   const {
@@ -44,13 +45,27 @@ export default function CardSwot({ project }: { project: string }) {
     modalDelete,
     setModalDelete,
     handleModalDelete,
-    deleteDataRow
+    deleteDataRow,
   } = useCardSWOTVM();
 
   return (
     <>
       <CardItem
         title="Kondisi Saat Ini/Latar Belakang Proyek (SWOT)"
+        infoTooltip={
+          <div>
+            <p>
+              <strong>SWOT</strong>: Analisis lingkungan eksternal dan internal
+              pada bagian ini menggunakan metode SWOT. Hal ini bertujuan untuk
+              menyajikan informasi yang akurat tentang potensi dari implementasi
+              KP melalui identifikasi lingkungan internal dan eksternal. Lingkup
+              analisis dipertajam pada sisi penilaian sumber daya (seperti SDM,
+              SDA, fiskal, dan teknologi) dengan mempertimbangkan evaluasi
+              terhadap ketercapaian periode sebelumnya. Analisis SWOT perlu
+              dilengkapi dengan data kuantitatif.
+            </p>
+          </div>
+        }
         setting
         // settingDeleteOnclick={() => deleteData()}
         settingDeleteOnclick={handleModalDelete}
@@ -267,7 +282,7 @@ const GetGrid = ({
   request: ExsumSWOTRequestDto;
   setRequest: any;
   title: string;
-  deleteDataRow:any
+  deleteDataRow: any;
 }) => {
   const addNewRow = (type: string) => {
     setRequest((prev: ExsumSWOTRequestDto) => {
@@ -312,7 +327,7 @@ const GetGrid = ({
     setRequest((prev: ExsumSWOTRequestDto) => {
       const values = [...prev.values];
 
-      deleteDataRow(values[index].id)
+      deleteDataRow(values[index].id);
 
       values.splice(index, 1);
       return {
@@ -354,9 +369,19 @@ const GetGrid = ({
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography fontSize={14} fontWeight={500} color={grey[500]}>
-                Kata Kunci
-              </Typography>
+              <Stack direction="row" alignItems="center" gap={0.5}>
+                <Typography fontSize={14} fontWeight={500} color={grey[500]}>
+                  Kata Kunci
+                </Typography>
+                <InfoTooltip
+                  title={
+                    <>
+                      <strong>Kata kunci SWOT</strong>: dilengkapi dengan kata
+                      kunci/keyword sebagai highlight utama dari SWOT
+                    </>
+                  }
+                />
+              </Stack>
             </Grid>
             {request.values.map(
               (row, index) =>
@@ -380,9 +405,12 @@ const GetGrid = ({
                         placeholder={`Tambah Kata Kunci ${title}`}
                         value={row.value}
                         onChange={(e) => {
-                          const newVal = e.target.value
+                          const newVal = e.target.value;
                           const x = newVal.split(" ");
-                          const finalNewVal = x.length > 4 ? x[0]+" "+x[1]+" "+x[2]+" "+x[3] : newVal
+                          const finalNewVal =
+                            x.length > 4
+                              ? x[0] + " " + x[1] + " " + x[2] + " " + x[3]
+                              : newVal;
                           handleChangeKeyword(finalNewVal, index);
                         }}
                       />
