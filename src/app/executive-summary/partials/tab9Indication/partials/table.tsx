@@ -105,11 +105,6 @@ export default function TableIndication({
                 Indikasi Perlakuan Risiko
               </Typography>
             </TableCell>
-            <TableCell sx={{bgcolor: bgColorTh, width: 200}}>
-              <Typography variant="body1" fontWeight={600}>
-                Regulasi
-              </Typography>
-            </TableCell>
             <TableCell sx={{bgcolor: bgColorTh, width: 360}}>
               <Typography variant="body1" fontWeight={600}>
                 Output
@@ -150,10 +145,11 @@ export default function TableIndication({
           {data &&
             data.map((row, index) => (
               <React.Fragment key={row + "-" + index}>
+
                 <TableRow>
                   <TableCell
                     rowSpan={
-                      row.perlakuan.length == 0 ? 1 : row.perlakuan.length
+                      (row.perlakuan.length == 0 ? 1 : row.perlakuan.length)+(row.regulasi.length)
                     }
                     sx={{verticalAlign: "top"}}
                   >
@@ -163,7 +159,7 @@ export default function TableIndication({
                   </TableCell>
                   <TableCell
                     rowSpan={
-                      row.perlakuan.length == 0 ? 1 : row.perlakuan.length
+                      (row.perlakuan.length == 0 ? 1 : row.perlakuan.length)+(row.regulasi.length)
                     }
                     sx={{verticalAlign: "top"}}
                   >
@@ -173,7 +169,7 @@ export default function TableIndication({
                   </TableCell>
                   <TableCell
                     rowSpan={
-                      row.perlakuan.length == 0 ? 1 : row.perlakuan.length
+                      (row.perlakuan.length == 0 ? 1 : row.perlakuan.length)+(row.regulasi.length)
                     }
                     sx={{verticalAlign: "top"}}
                   >
@@ -183,35 +179,13 @@ export default function TableIndication({
                   </TableCell>
                   <TableCell
                     rowSpan={
-                      row.perlakuan.length == 0 ? 1 : row.perlakuan.length
+                      (row.perlakuan.length == 0 ? 1 : row.perlakuan.length)+(row.regulasi.length)
                     }
                     sx={{verticalAlign: "top"}}
                   >
                     <Typography variant="body1">
                       {row.indikasi_perlakuan_risiko}
                     </Typography>
-                  </TableCell>
-                  <TableCell
-                    rowSpan={
-                      row.perlakuan.length == 0 ? 1 : row.perlakuan.length
-                    }
-                    sx={{verticalAlign: "top"}}
-                  >
-                    <ul>
-                      {row.regulasi.map(x => x.perpres.map((y, index2) => (
-
-                        // <Chip key={index2} size="small" label={y.title} sx={y.flag != null ? {
-                        //   background:"#EA6228",
-                        //   color:"white"
-                        // } : undefined} />
-
-                        <li>
-                          <Typography key={`perpres-${index2}`} color={y.flag != null ? "#EA6228" : undefined}>
-                            {`${y.title}`}
-                          </Typography>
-                        </li>
-                      )))}
-                    </ul>
                   </TableCell>
                   <TableCell sx={{verticalAlign: "top"}}>
                     {row.perlakuan.length > 0 && (
@@ -292,7 +266,7 @@ export default function TableIndication({
                     hasPrivilege(permission, pathname, "delete")) && (
                     <TableCell
                       rowSpan={
-                        row.perlakuan.length == 0 ? 1 : row.perlakuan.length
+                        (row.perlakuan.length == 0 ? 1 : row.perlakuan.length)+(row.regulasi.length)
                       }
                       sx={{
                         verticalAlign: "top",
@@ -395,6 +369,84 @@ export default function TableIndication({
                     )}
                   </TableRow>
                 ))}
+
+                {row.regulasi.map((regulation, iRegulation) =>
+                  <TableRow>
+                    <TableCell sx={{verticalAlign: "top"}}>
+                      <ul>
+                        {regulation.perpres.map((y, index2) => (
+
+                          <li>
+                            <Typography key={`perpres-${index2}`} color={y.flag != null ? "#EA6228" : undefined}>
+                              {`${y.title}`}
+                            </Typography>
+                          </li>
+                        ))}
+                      </ul>
+                    </TableCell>
+
+                    <TableCell sx={{verticalAlign: "top"}}>
+                      <Box>
+                        <Stack
+                          // marginTop={"10px"}
+                          display="inline-flex"
+                          alignItems="center"
+                          direction="row"
+                          gap={0.5}
+                          flexWrap="wrap"
+                        >
+                          <Box component="div">
+                            {regulation.entitas.map(regEnt =>
+                              <Chip
+                                label={regEnt.value}
+                                size="small"
+                                sx={{
+                                  height: "auto",
+                                  ".MuiChip-label": {
+                                    whiteSpace: "wrap",
+                                    lineHeight: 1.2,
+                                    py: 0.6,
+                                  },
+                                }}
+                              />
+                            )}
+                          </Box>
+                        </Stack>
+                      </Box>
+                    </TableCell>
+
+                    {year == 0 && (
+                      <TableCell sx={{verticalAlign: "top"}}>
+                        <Stack
+                          display="inline-flex"
+                          alignItems="center"
+                          direction="row"
+                          gap={0.5}
+                          flexWrap="wrap"
+                        >
+                          {regulation.tahun.map((st, stIndex) => (
+                            <Box key={stIndex} component="span">
+                              <Chip
+                                label={st}
+                                size="small"
+                                sx={{
+                                  height: "auto",
+                                  ".MuiChip-label": {
+                                    whiteSpace: "wrap",
+                                    lineHeight: 1.2,
+                                    py: 0.6,
+                                  },
+                                }}
+                              />
+                            </Box>
+                          ))}
+                        </Stack>
+                      </TableCell>
+                    )}
+
+                  </TableRow>
+                )}
+
               </React.Fragment>
             ))}
         </TableBody>
