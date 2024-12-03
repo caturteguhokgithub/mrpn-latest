@@ -145,7 +145,22 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
   const getRowData = (key: string, data: RODataTable | undefined) => {
     if (data == undefined) return "";
     const obj: any = JSON.parse(JSON.stringify(data));
-    return obj[key];
+    let val = obj[key]
+
+    // if (data.type == "NON_RO" && (
+    //   key == "anggaran_0"
+    //   || key == "anggaran_1"
+    //   || key == "anggaran_2"
+    //   || key == "anggaran_3"
+    //   || key == "anggaran_4"
+    // )){
+    //   const intVal:number = obj[key]
+    //   val = (intVal/1000000000).toFixed(2)
+    //   return val
+    // }
+
+    return val;
+
   };
 
   return (
@@ -179,15 +194,21 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
               RO/Project
             </TableCell>
             {/* <TableCell rowSpan={2}>Indikator</TableCell> */}
-            <TableCell rowSpan={2} align="center">
-              Target
-            </TableCell>
-            <TableCell rowSpan={2} sx={{ width: 200 }}>
-              Indikasi Alokasi Tahun Rencana (Rp Miliar)
-            </TableCell>
-            <TableCell rowSpan={2} sx={{ width: 200 }}>
-              Sumber Pendanaan (Belanja KL/ DAK/BUMN/Swasta)
-            </TableCell>
+            {/*<TableCell rowSpan={2} align="center">*/}
+            {/*  Target*/}
+            {/*</TableCell>*/}
+            {/*<TableCell rowSpan={2} sx={{ width: 200 }}>*/}
+            {/*  Indikasi Alokasi Tahun Rencana (Rp Miliar)*/}
+            {/*</TableCell>*/}
+            {/*<TableCell rowSpan={2} sx={{ width: 200 }}>*/}
+            {/*  Sumber Pendanaan (Belanja KL/ DAK/BUMN/Swasta)*/}
+            {/*</TableCell>*/}
+
+            {multiyear.map((y, iY) => (
+              <TableCell colSpan={4} align={"center"}>
+                {y}
+              </TableCell>
+            ))}
             <TableCell rowSpan={2} sx={{ width: 250 }}>
               Instansi Pelaksana RO
             </TableCell>
@@ -196,18 +217,14 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
               <br />
               (Prov./Kab./Kota)
             </TableCell>
-            {multiyear.map((y, iY) => (
-              <TableCell colSpan={4} align={"center"}>
-                {y}
-              </TableCell>
-            ))}
+
           </TableRow>
           <TableRow>
             {multiyear.map((y, iY) => (
               <>
                 <TableCell>Target</TableCell>
                 <TableCell>Satuan</TableCell>
-                <TableCell>Pembiayaan</TableCell>
+                <TableCell>Pembiayaan (Miliar)</TableCell>
                 <TableCell>Sumber Pembiayaan</TableCell>
               </>
             ))}
@@ -231,21 +248,16 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
               {/* <TableCell sx={{ verticalAlign: "top" }}>
                 {fundRow.pkkr ? fundRow.pkkr : "-"}
               </TableCell> */}
-              <TableCell align="right" sx={{ verticalAlign: "top" }}>
-                {fundRow.target ? fundRow.target : "-"}
-              </TableCell>
-              <TableCell align="right" sx={{ verticalAlign: "top" }}>
-                {fundRow.anggaran}
-              </TableCell>
-              <TableCell sx={{ verticalAlign: "top" }}>
-                {fundRow.sumber_anggaran ? fundRow.sumber_anggaran : "-"}
-              </TableCell>
-              <TableCell sx={{ verticalAlign: "top" }}>
-                {fundRow?.kementrian?.value ?? "-"}
-              </TableCell>
-              <TableCell sx={{ verticalAlign: "top" }}>
-                {fundRow.lokasi_ro ? fundRow.lokasi_ro : "-"}
-              </TableCell>
+              {/*<TableCell align="right" sx={{ verticalAlign: "top" }}>*/}
+              {/*  {fundRow.target ? fundRow.target : "-"}*/}
+              {/*</TableCell>*/}
+              {/*<TableCell align="right" sx={{ verticalAlign: "top" }}>*/}
+              {/*  {fundRow.anggaran}*/}
+              {/*</TableCell>*/}
+              {/*<TableCell sx={{ verticalAlign: "top" }}>*/}
+              {/*  {fundRow.sumber_anggaran ? fundRow.sumber_anggaran : "-"}*/}
+              {/*</TableCell>*/}
+
               {multiyear.map((y, iY) => (
                 <>
                   <TableCell>{getRowData(`target_${iY}`, fundRow)}</TableCell>
@@ -258,6 +270,14 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
                   </TableCell>
                 </>
               ))}
+
+              <TableCell sx={{ verticalAlign: "top" }}>
+                {fundRow?.kementrian?.value ?? "-"}
+              </TableCell>
+              <TableCell sx={{ verticalAlign: "top" }}>
+                {fundRow.lokasi_ro ? fundRow.lokasi_ro : "-"}
+              </TableCell>
+
             </TableRow>
           ))}
         </TableBody>
