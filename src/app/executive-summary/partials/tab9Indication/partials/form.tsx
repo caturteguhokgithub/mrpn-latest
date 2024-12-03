@@ -1,16 +1,25 @@
-import React, {Fragment, SetStateAction} from "react";
+import React, { Fragment, SetStateAction } from "react";
 import {
   alpha,
   Autocomplete,
   Box,
-  Checkbox, Chip,
+  Checkbox,
+  Chip,
   Divider,
   FormControl,
   FormControlLabel,
-  Grid, IconButton,
+  Grid,
+  IconButton,
   Paper,
-  Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  TextField, Tooltip,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
@@ -21,101 +30,119 @@ import {
 } from "@/components/autocomplete";
 import {
   ExsumIndicationState,
-  ExsumIndicationStateValue, ModalDto
+  ExsumIndicationStateValue,
+  ModalDto,
 } from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
-import {MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel";
-import {ExsumSWOTValuesDto} from "@/app/executive-summary/partials/tab1Background/cardSwot/cardSwotModel";
-import {RoDto} from "@/app/misc/rkp/rkpServiceModel";
-import TextareaComponent, {TextareaStyled} from "@/app/components/textarea";
+import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
+import { ExsumSWOTValuesDto } from "@/app/executive-summary/partials/tab1Background/cardSwot/cardSwotModel";
+import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
+import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
 import AddButton from "@/app/components/buttonAdd";
-import {green, grey, red} from "@mui/material/colors";
-import {ExsumTWOSDto} from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
-import {Text} from "recharts";
-import {useRKPContext} from "@/lib/core/hooks/useHooks";
+import { green, grey, red } from "@mui/material/colors";
+import { ExsumTWOSDto } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
+import { Text } from "recharts";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import theme from "@/theme";
 import EmptyState from "@/components/empty";
-import {IconEmptyData} from "@/components/icons";
-import {IconFA} from "@/components/icons/icon-fa";
+import { IconEmptyData } from "@/components/icons";
+import { IconFA } from "@/components/icons/icon-fa";
 import ActionColumn from "@/components/actions/action";
 
-function GenerateTableProject(state: ExsumIndicationState, handleModalOutputOpen:any, type:string) {
-  return <TableContainer component={Paper} elevation={0} variant="outlined">
-    <Table sx={{minWidth: 650}} size="small">
-      <TableHead sx={{bgcolor: theme.palette.primary.light}}>
-        <TableRow>
-          <TableCell width={"10%"}>Aksi</TableCell>
-          <TableCell width={"10%"}>Tahun</TableCell>
-          <TableCell width={"15%"}>Intervensi Kunci</TableCell>
-          <TableCell>Output</TableCell>
-          <TableCell width={"25%"}>PJ Perlakuan</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-
-        {state.values.length == 0 &&
+function GenerateTableProject(
+  state: ExsumIndicationState,
+  handleModalOutputOpen: any,
+  type: string
+) {
+  return (
+    <TableContainer component={Paper} elevation={0} variant="outlined">
+      <Table sx={{ minWidth: 650 }} size="small">
+        <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
+          <TableRow>
+            <TableCell width={"10%"}>Aksi</TableCell>
+            <TableCell width={"10%"}>Tahun</TableCell>
+            <TableCell width={"15%"}>Intervensi Kunci</TableCell>
+            <TableCell>Output</TableCell>
+            <TableCell width={"25%"}>PJ Perlakuan</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {state.values.length == 0 && (
             <TableRow>
-                <TableCell colSpan={5} align={"center"}>
-                    Data belum tersedia
-                </TableCell>
+              <TableCell colSpan={5} align={"center"}>
+                Data belum tersedia
+              </TableCell>
             </TableRow>
-        }
+          )}
 
-        {state.values.map((val, iVal) => val.type == type &&
-            <TableRow>
-                <TableCell
-                    sx={{verticalAlign: "top"}}
-                >
+          {state.values.map(
+            (val, iVal) =>
+              val.type == type && (
+                <TableRow>
+                  <TableCell sx={{ verticalAlign: "top" }}>
                     <ActionColumn
-                        editClick={() => handleModalOutputOpen(iVal, true, "RO")}
-                        deleteClick={() => handleModalOutputOpen(iVal, true, "delete")}
+                      editClick={() => handleModalOutputOpen(iVal, true, "RO")}
+                      deleteClick={() =>
+                        handleModalOutputOpen(iVal, true, "delete")
+                      }
                     />
-                </TableCell>
-                <TableCell align={"left"} sx={{verticalAlign: "top", paddingY:"13px"}}>
-                  {val.tahun.join(", ")}
-                </TableCell>
-                <TableCell align={"left"} sx={{verticalAlign: "top", paddingY:"13px"}}>
-                  {val.intervention
-                    ? <IconFA name="check" size={14} color={green[800]}/>
-                    : <IconFA name="times" size={14} color={red[800]}/>
-                  }
-                </TableCell>
-                <TableCell align={"left"} sx={{verticalAlign: "top", paddingY:"13px"}}>
-                  {type == "RO"
-                    ? val.rincian_output?.value ?? "-"
-                    : val.non_rincian_output.nomenklatur
-                  }
-                </TableCell>
-                <TableCell align={"left"} sx={{verticalAlign: "top", paddingY:"13px"}}>
-                  {type == "RO"
-                    ? val.rincian_output?.kementrian?.value ?? "-"
-                    : val.non_rincian_output.kementrian?.value ?? "-"
-                  }
-                </TableCell>
-            </TableRow>
-        )}
-
-      </TableBody>
-    </Table>
-  </TableContainer>;
+                  </TableCell>
+                  <TableCell
+                    align={"left"}
+                    sx={{ verticalAlign: "top", paddingY: "13px" }}
+                  >
+                    {val.tahun.join(", ")}
+                  </TableCell>
+                  <TableCell
+                    align={"left"}
+                    sx={{ verticalAlign: "top", paddingY: "13px" }}
+                  >
+                    {val.intervention ? (
+                      <IconFA name="check" size={14} color={green[800]} />
+                    ) : (
+                      <IconFA name="times" size={14} color={red[800]} />
+                    )}
+                  </TableCell>
+                  <TableCell
+                    align={"left"}
+                    sx={{ verticalAlign: "top", paddingY: "13px" }}
+                  >
+                    {type == "RO"
+                      ? val.rincian_output?.value ?? "-"
+                      : val.non_rincian_output.nomenklatur}
+                  </TableCell>
+                  <TableCell
+                    align={"left"}
+                    sx={{ verticalAlign: "top", paddingY: "13px" }}
+                  >
+                    {type == "RO"
+                      ? val.rincian_output?.kementrian?.value ?? "-"
+                      : val.non_rincian_output.kementrian?.value ?? "-"}
+                  </TableCell>
+                </TableRow>
+              )
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
 }
 
-export default function FormIndication(
-  {
-    state,
-    setState,
-    handleModalOutputOpen,
-    handleModalRegulationOpen,
-    optionRiskType,
-    optionTOWS,
-  }: {
-    state: ExsumIndicationState;
-    setState: (value: SetStateAction<ExsumIndicationState>) => void;
-    handleModalOutputOpen: any;
-    handleModalRegulationOpen: any;
-    optionRiskType: string[];
-    optionTOWS: ExsumTWOSDto[];
-  }) {
-  const {year, rpjmn} = useRKPContext((store) => store);
+export default function FormIndication({
+  state,
+  setState,
+  handleModalOutputOpen,
+  handleModalRegulationOpen,
+  optionRiskType,
+  optionTOWS,
+}: {
+  state: ExsumIndicationState;
+  setState: (value: SetStateAction<ExsumIndicationState>) => void;
+  handleModalOutputOpen: any;
+  handleModalRegulationOpen: any;
+  optionRiskType: string[];
+  optionTOWS: ExsumTWOSDto[];
+}) {
+  const { year, rpjmn } = useRKPContext((store) => store);
 
   const optionsYear = () => {
     if (rpjmn !== undefined) {
@@ -140,12 +167,10 @@ export default function FormIndication(
         },
       }}
     >
-
       <Grid container spacing={2}>
-
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Analisis TOWS"/>
+            <FieldLabelInfo title="Analisis TOWS" />
             <AutocompleteSelectSingle
               key={state.tows?.id ?? 0}
               value={state.tows}
@@ -166,7 +191,7 @@ export default function FormIndication(
 
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Indikasi Risiko"/>
+            <FieldLabelInfo title="Indikasi Risiko" />
             <TextareaStyled
               value={state.indikasi_risiko}
               minRows={2}
@@ -186,7 +211,7 @@ export default function FormIndication(
 
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Kategori Risiko"/>
+            <FieldLabelInfo title="Kategori Risiko" />
             <AutocompleteSelectSingle
               key={state.kategori_risiko}
               value={state.kategori_risiko}
@@ -214,9 +239,8 @@ export default function FormIndication(
                 <>
                   <strong>Perlakuan Risiko</strong>
                   <p>
-                    Proses untuk menurunkan keterpaparan risiko
-                    yang dikaitkan dengan toleransi dan selera
-                    risiko yang telah ditetapkan
+                    Proses untuk menurunkan keterpaparan risiko yang dikaitkan
+                    dengan toleransi dan selera risiko yang telah ditetapkan
                   </p>
                 </>
               }
@@ -229,7 +253,7 @@ export default function FormIndication(
                 setState((prevState) => {
                   return {
                     ...prevState,
-                    perlakuan_risiko: e.target.value
+                    perlakuan_risiko: e.target.value,
                   };
                 })
               }
@@ -244,7 +268,7 @@ export default function FormIndication(
             justifyContent="space-between"
             alignItems="center"
           >
-            <FieldLabelInfo titleSection title="PERLAKUAN RISIKO"/>
+            <FieldLabelInfo titleSection title="PERLAKUAN RISIKO" />
           </Stack>
         </Grid>
 
@@ -254,7 +278,7 @@ export default function FormIndication(
             justifyContent="space-between"
             alignItems="center"
           >
-            <FieldLabelInfo titleSection title="RO"/>
+            <FieldLabelInfo titleSection title="Rincian Output (RO)" />
             <Stack
               direction="column"
               justifyContent="right"
@@ -271,9 +295,7 @@ export default function FormIndication(
         </Grid>
 
         <Grid item xs={12}>
-
           {GenerateTableProject(state, handleModalOutputOpen, "RO")}
-
         </Grid>
 
         <Grid item xs={12}>
@@ -282,7 +304,7 @@ export default function FormIndication(
             justifyContent="space-between"
             alignItems="center"
           >
-            <FieldLabelInfo titleSection title="NON RO"/>
+            <FieldLabelInfo titleSection title="Non-RO" />
             <Stack
               direction="column"
               justifyContent="right"
@@ -299,11 +321,8 @@ export default function FormIndication(
         </Grid>
 
         <Grid item xs={12}>
-
           {GenerateTableProject(state, handleModalOutputOpen, "NON_RO")}
-
         </Grid>
-
 
         <Grid item xs={12}>
           <Divider sx={{ my: 2 }} />
@@ -312,7 +331,7 @@ export default function FormIndication(
             justifyContent="space-between"
             alignItems="center"
           >
-            <FieldLabelInfo titleSection title="REGULASI"/>
+            <FieldLabelInfo titleSection title="Regulasi/Kelembagaan" />
             <AddButton
               title="Tambah regulasi"
               noMargin
@@ -324,7 +343,7 @@ export default function FormIndication(
         <Grid item xs={12}>
           <TableContainer component={Paper} elevation={0} variant="outlined">
             <Table size="small">
-              <TableHead sx={{bgcolor: theme.palette.primary.light}}>
+              <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
                 <TableRow>
                   <TableCell width={"5%"}>Aksi</TableCell>
                   <TableCell width={"5%"}>Tahun</TableCell>
@@ -334,14 +353,13 @@ export default function FormIndication(
                 </TableRow>
               </TableHead>
               <TableBody>
-
-                {state.regulation.length == 0 &&
-                    <TableRow>
-                        <TableCell colSpan={5} align={"center"}>
-                            Data belum tersedia
-                        </TableCell>
-                    </TableRow>
-                }
+                {state.regulation.length == 0 && (
+                  <TableRow>
+                    <TableCell colSpan={5} align={"center"}>
+                      Data belum tersedia
+                    </TableCell>
+                  </TableRow>
+                )}
 
                 {state.regulation.map((row, iRow) => (
                   <>
@@ -349,19 +367,22 @@ export default function FormIndication(
                       key={row.id}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell
-                        align={"center"}
-                        sx={{verticalAlign: "top"}}
-                      >
+                      <TableCell align={"center"} sx={{ verticalAlign: "top" }}>
                         <ActionColumn
-                          deleteClick={() => handleModalRegulationOpen(iRow, true, "delete")}
+                          deleteClick={() =>
+                            handleModalRegulationOpen(iRow, true, "delete")
+                          }
                         />
                       </TableCell>
-                      <TableCell sx={{verticalAlign: "top"}}>
-                        <Stack display={"flex"} justifyContent={"left"} direction={"column"}>
-                          {row.tahun.map(t =>
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        <Stack
+                          display={"flex"}
+                          justifyContent={"left"}
+                          direction={"column"}
+                        >
+                          {row.tahun.map((t) => (
                             <Typography>{t}</Typography>
-                          )}
+                          ))}
                         </Stack>
                       </TableCell>
                       <TableCell sx={{ verticalAlign: "top" }}>
@@ -400,13 +421,10 @@ export default function FormIndication(
                     </TableRow>
                   </>
                 ))}
-
               </TableBody>
             </Table>
           </TableContainer>
         </Grid>
-
-
       </Grid>
     </Box>
   );

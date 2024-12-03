@@ -67,7 +67,7 @@ const useCardRoadmapVM = () => {
       case "OUTPUT": {
         setModal({
           open: action,
-          title: "Project Roadmap Berbasis Output",
+          title: "Tambah Expected Output",
           field: "Output",
         });
         break;
@@ -75,7 +75,7 @@ const useCardRoadmapVM = () => {
       case "BISNIS": {
         setModal({
           open: action,
-          title: "Project Roadmap Berbasis Bisnis",
+          title: "Tambah Proses Bisnis",
           field: "Proses Bisnis",
         });
         break;
@@ -83,7 +83,7 @@ const useCardRoadmapVM = () => {
       default: {
         setModal({
           open: action,
-          title: "Project Roadmap Berbasis Bisnis",
+          title: "Tambah Proses Bisnis",
           field: "Proses Bisnis",
         });
         break;
@@ -113,7 +113,7 @@ const useCardRoadmapVM = () => {
     }
   }
 
-  async function updateData(param:ExsumRoadmapDto) {
+  async function updateData(param: ExsumRoadmapDto) {
     const req: ExsumRoadmapDto = {
       ...param,
       exsum_id: exsum.id,

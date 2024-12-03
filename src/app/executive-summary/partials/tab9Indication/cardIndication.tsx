@@ -1,25 +1,24 @@
-import React, {useEffect, useState} from "react";
-import {Button, DialogActions, FormControl, Grid, Stack} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Button, DialogActions, FormControl, Grid, Stack } from "@mui/material";
 import EmptyState from "@/app/components/empty";
-import {IconEmptyData} from "@/app/components/icons";
+import { IconEmptyData } from "@/app/components/icons";
 import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
 import AddButton from "@/app/components/buttonAdd";
 import TableIndication from "./partials/table";
 import FormIndication from "./partials/form";
 import useCardIndicationVM from "@/app/executive-summary/partials/tab9Indication/cardIndicationVM";
-import {useAuthContext, useRKPContext} from "@/lib/core/hooks/useHooks";
-import {usePathname} from "next/navigation";
-import {hasPrivilege} from "@/lib/core/helpers/authHelpers";
+import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
+import { usePathname } from "next/navigation";
+import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import DialogDelete from "@/app/components/dialogDelete";
 import FormPerlakuanRisiko from "@/app/executive-summary/partials/tab9Indication/partials/formPerlakuanRisiko";
 import FormRegulation from "@/app/executive-summary/partials/tab9Indication/partials/formRegulation";
 import { ExsumIndicationStateValue } from "./cardIndicationModel";
-import {TextareaStyled} from "@/components/textarea";
+import { TextareaStyled } from "@/components/textarea";
 
-export default function CardIndication({project}: { project: string }) {
-
-  const {year, rpjmn} = useRKPContext(store => store)
+export default function CardIndication({ project }: { project: string }) {
+  const { year, rpjmn } = useRKPContext((store) => store);
 
   const {
     data,
@@ -55,14 +54,16 @@ export default function CardIndication({project}: { project: string }) {
     listPerpres,
   } = useCardIndicationVM();
 
-  const {permission} = useAuthContext((state) => state);
+  const { permission } = useAuthContext((state) => state);
   const pathname = usePathname();
 
   return (
     <>
       <Stack gap={1}>
         <CardItem
-          title={`Indikasi Risiko Objek MRPN ${year == 0 ? "5 Tahunan" : "Tahun " + year}`}
+          title={`Indikasi Risiko Objek MRPN ${
+            year == 0 ? "5 Tahunan" : "Tahun " + year
+          }`}
           infoTooltip={
             <Stack spacing={2}>
               <div>
@@ -102,15 +103,12 @@ export default function CardIndication({project}: { project: string }) {
           {data.length == 0 ? (
             <EmptyState
               dense
-              icon={<IconEmptyData width={100}/>}
+              icon={<IconEmptyData width={100} />}
               title="Data Kosong"
               description="Silahkan isi konten halaman ini"
             />
           ) : (
-            <TableIndication
-              data={data}
-              handleModalOpen={handleModalOpen}
-            />
+            <TableIndication data={data} handleModalOpen={handleModalOpen} />
           )}
         </CardItem>
       </Stack>
@@ -121,8 +119,11 @@ export default function CardIndication({project}: { project: string }) {
         // dialogClose={() => handleModalOpen(0, false, "")}
         title="Form Indikasi Risiko Objek MRPN 5 Tahunan"
         dialogFooter={
-          <DialogActions sx={{p: 2, px: 3}}>
-            <Button variant="outlined" onClick={() => handleModalOpen(0, false, "")}>
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button
+              variant="outlined"
+              onClick={() => handleModalOpen(0, false, "")}
+            >
               Batal
             </Button>
             <Button
@@ -150,9 +151,9 @@ export default function CardIndication({project}: { project: string }) {
         width={"80%"}
         dialogOpen={modalOutput.type != "delete" && modalOutput.action}
         dialogClose={() => handleModalOutputOpen(-1, false, "")}
-        title="Tambah Perlakuan Risiko"
+        title="Tambah Rincian Output"
         dialogFooter={
-          <DialogActions sx={{p: 2, px: 3}}>
+          <DialogActions sx={{ p: 2, px: 3 }}>
             <Button
               variant="outlined"
               onClick={() => handleModalOutputOpen(-1, false, "")}
@@ -182,11 +183,13 @@ export default function CardIndication({project}: { project: string }) {
       <DialogComponent
         width={520}
         dialogOpen={modalRegulation.type == "update" && modalRegulation.action}
-        dialogClose={() => handleModalRegulationOpen(-1,false,"")}
-        title="Tambah Peraturan"
+        dialogClose={() => handleModalRegulationOpen(-1, false, "")}
+        title="Tambah Regulasi/Kelembagaan"
         dialogFooter={
-          <DialogActions sx={{p: 2, px: 3}}>
-            <Button onClick={() => handleModalRegulationOpen(-1,false,"")}>Batal</Button>
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button onClick={() => handleModalRegulationOpen(-1, false, "")}>
+              Batal
+            </Button>
             <Button
               variant="contained"
               type="submit"
@@ -208,12 +211,16 @@ export default function CardIndication({project}: { project: string }) {
 
       <DialogComponent
         width={480}
-        dialogOpen={modalNewRegulation.action && modalNewRegulation.type == "update"}
+        dialogOpen={
+          modalNewRegulation.action && modalNewRegulation.type == "update"
+        }
         dialogClose={() => handleModalNewRegulationOpen(-1, false, "")}
         title="Tambah Peraturan"
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button onClick={() => handleModalNewRegulationOpen(-1, false, "")}>Batal</Button>
+            <Button onClick={() => handleModalNewRegulationOpen(-1, false, "")}>
+              Batal
+            </Button>
             <Button
               variant="contained"
               type="submit"
@@ -266,10 +273,9 @@ export default function CardIndication({project}: { project: string }) {
       <DialogDelete
         title="Hapus Data"
         handleOpenModal={modalOpen.action && modalOpen.type == "delete"}
-        handleCloseModal={() => handleModalOpen(-1,false,"")}
+        handleCloseModal={() => handleModalOpen(-1, false, "")}
         handleDelete={() => deleteData()}
       />
-
     </>
   );
 }

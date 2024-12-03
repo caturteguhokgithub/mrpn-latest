@@ -68,7 +68,7 @@ const CustomTaskListTable = ({
     let taskProjectTask: TaskAdditionalData = {
       type: "",
       tooltip_type: "parent",
-      strategy:[],
+      strategy: [],
       penanggungjawab: "",
       sumber_anggaran: "",
       keterangan_kegiatan: "",
@@ -162,6 +162,15 @@ export default function GanttChart({ tasks }: { tasks: Task[] }) {
   return (
     <Box
       sx={{
+        "._CZjuD": {
+          ".calendar": {
+            "& > ._9w8d5": {
+              "&:nth-of-type(1), &:last-of-type": {
+                display: "none",
+              },
+            },
+          },
+        },
         "._35nLX": {
           fill: "#f5f5f5",
         },
