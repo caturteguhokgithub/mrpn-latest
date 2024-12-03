@@ -176,9 +176,9 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
                 width: 250,
               }}
             >
-              Intervensi Kunci
+              RO/Project
             </TableCell>
-            <TableCell rowSpan={2}>Indikator</TableCell>
+            {/* <TableCell rowSpan={2}>Indikator</TableCell> */}
             <TableCell rowSpan={2} align="center">
               Target
             </TableCell>
@@ -228,9 +228,9 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
               >
                 {fundRow.value}
               </TableCell>
-              <TableCell sx={{ verticalAlign: "top" }}>
+              {/* <TableCell sx={{ verticalAlign: "top" }}>
                 {fundRow.pkkr ? fundRow.pkkr : "-"}
-              </TableCell>
+              </TableCell> */}
               <TableCell align="right" sx={{ verticalAlign: "top" }}>
                 {fundRow.target ? fundRow.target : "-"}
               </TableCell>
