@@ -155,8 +155,7 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
       key == "anggaran_4"
     ) {
       const intVal: number = obj[key];
-      // val = (intVal / 1000000000).toFixed(2);
-      val = (intVal / 1000000).toFixed(2);
+      val = (intVal / 1000).toFixed(2);
       return val;
     }
 
@@ -223,7 +222,7 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
               <>
                 <TableCell>Target</TableCell>
                 <TableCell>Satuan</TableCell>
-                <TableCell>Pembiayaan (Miliar)</TableCell>
+                <TableCell>Pembiayaan (Juta)</TableCell>
                 <TableCell>Sumber Pembiayaan</TableCell>
               </>
             ))}
