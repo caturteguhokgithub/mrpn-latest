@@ -157,8 +157,8 @@ export default function FormIndication({
 
   return (
     <Box
-      maxHeight="90vh"
-      overflow="auto"
+      // maxHeight="90vh"
+      // overflow="auto"
       pb={0.5}
       px={1.5}
       sx={{

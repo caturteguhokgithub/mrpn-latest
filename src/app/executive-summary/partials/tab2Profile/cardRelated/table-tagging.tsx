@@ -101,37 +101,39 @@ export default function TableTagging({
                   </TableCell>
                 )}
                 <TableCell>
-                  {x.kebijakan.map((y, index2) => (
-                    <Paper variant="outlined" sx={{ p: 1 }} key={`${index2}`}>
-                      <Typography fontSize={14} fontWeight={500}>
-                        {y.src_kebijakan?.name ?? ""}
-                      </Typography>
-                      <Stack
-                        marginTop={1}
-                        display="inline-flex"
-                        alignItems="center"
-                        direction="row"
-                        gap={0.5}
-                        flexWrap="wrap"
-                      >
-                        {y.list.map((z, iz) => (
-                          <Chip
-                            key={`${index2}-${iz}`}
-                            size="small"
-                            label={z.src_kebijakan_list?.value ?? ""}
-                            sx={{
-                              height: "auto",
-                              ".MuiChip-label": {
-                                whiteSpace: "wrap",
-                                lineHeight: 1.2,
-                                py: 0.6,
-                              },
-                            }}
-                          />
-                        ))}
-                      </Stack>
-                    </Paper>
-                  ))}
+                  <Stack flexDirection="column" gap={1}>
+                    {x.kebijakan.map((y, index2) => (
+                      <Paper variant="outlined" sx={{ p: 1 }} key={`${index2}`}>
+                        <Typography fontSize={14} fontWeight={500}>
+                          {y.src_kebijakan?.name ?? ""}
+                        </Typography>
+                        <Stack
+                          marginTop={1}
+                          display="inline-flex"
+                          alignItems="center"
+                          direction="row"
+                          gap={0.5}
+                          flexWrap="wrap"
+                        >
+                          {y.list.map((z, iz) => (
+                            <Chip
+                              key={`${index2}-${iz}`}
+                              size="small"
+                              label={z.src_kebijakan_list?.value ?? ""}
+                              sx={{
+                                height: "auto",
+                                ".MuiChip-label": {
+                                  whiteSpace: "wrap",
+                                  lineHeight: 1.2,
+                                  py: 0.6,
+                                },
+                              }}
+                            />
+                          ))}
+                        </Stack>
+                      </Paper>
+                    ))}
+                  </Stack>
                 </TableCell>
                 {/* <TableCell>{x.value}</TableCell> */}
               </TableRow>

@@ -67,7 +67,7 @@ export default function CardIndication({ project }: { project: string }) {
           infoTooltip={
             <Stack spacing={2}>
               <div>
-                <strong>Indikasi Profil Risiko Objek MRPN Lintas Sektor</strong>
+                {/* <strong>Indikasi Profil Risiko Objek MRPN Lintas Sektor</strong>
                 <p>
                   Kementerian PPN/Bappenas dalam melakukan proses Rancangan Awal
                   (Ranwal) RKP bersama dengan Kementerian Keuangan dan
@@ -85,7 +85,13 @@ export default function CardIndication({ project }: { project: string }) {
                   pembangunan nasional mencakup risiko global yang meliputi
                   risiko ekonomi, teknologi, geopolitik, sosial, lingkungan,
                   reputasi dan tata kelola.
-                </p>
+                </p> */}
+                Indikasi Risiko: Sumber-sumber risiko pada penyusunan kebijakan
+                perlakuan risiko dapat berasal dari strategi-strategi yang
+                dihasilkan dari matriks TOWS. Risiko tersebut melekat pada
+                kegiatan prioritas yang dipilih dan berpotensi menghambat atau
+                menyebabkan tidak optimalnya pencapaian sasaran kegiatan
+                prioritas.
               </div>
             </Stack>
           }
