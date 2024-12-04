@@ -93,6 +93,7 @@ export default function CardRelated({ project }: { project: string }) {
         <TableTagging project={project} data={data} handleUpdateOrDelete={handleUpdateOrDelete}/>
       )}
       <DialogComponent
+        width={"80%"}
         dialogOpen={modal}
         dialogClose={() => setModal(false)}
         title="Tambah Kebijakan"

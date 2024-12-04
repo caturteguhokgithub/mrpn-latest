@@ -31,6 +31,10 @@ export interface MiscMasterListKebijakanChildRes {
  src_kebijakan_id: number;
  value: string;
  isCheck?: boolean;
+ child:{
+  id:number;
+  value:string;
+ }[]
 }
 export interface MiscMasterListKebijakanRes {
  id: number;

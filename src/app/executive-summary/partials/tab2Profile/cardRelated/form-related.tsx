@@ -263,149 +263,170 @@ MRPN"
               },
             }}
           >
-            {/* {state.options.map(
+            {state.options.map(
               (option: MiscMasterListKebijakanRes, index: number) =>
                 option.list.length > 0 && (
                   <Box key={index} mt={2}>
                     <MultiCheckbox title={option.name} maxHeight={200}>
                       {option.list.map((item, index2) => (
-                        <Fragment key={index2}>
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                checked={item?.isCheck}
-                                onChange={(event) =>
-                                  setState((prev: ExsumRelatedInitState) => {
-                                    const newVal = { ...prev };
-                                    newVal.options[index].list[index2].isCheck =
-                                      event.target.checked;
-                                    return newVal;
-                                  })
-                                }
-                                name={item.value}
-                                sx={{ py: 0 }}
-                              />
-                            }
-                            label={
-                              <Stack
-                                direction="row"
-                                alignItems="flex-start"
-                                gap={1}
-                              >
-                                <Typography color={grey[600]}>
-                                  {index2 + 1}.
-                                </Typography>{" "}
-                                {item.value}
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={item?.isCheck}
+                              onChange={(event) =>
+                                setState((prev: ExsumRelatedInitState) => {
+                                  const newVal = { ...prev };
+                                  newVal.options[index].list[index2].isCheck =
+                                    event.target.checked;
+                                  return newVal;
+                                })
+                              }
+                              name={item.value}
+                              sx={{ py: 0 }}
+                            />
+                          }
+                          label={
+
+                            <Stack
+                              direction="row"
+                              alignItems="flex-start"
+                              gap={1}
+                            >
+                              <Typography color={grey[600]}>
+                                {index2 + 1}.
+                              </Typography>{" "}
+                              <Stack direction={"column"} gap={0}>
+                                <>
+                                  {item.value}
+                                </>
+                                <List
+                                  sx={{ ml: 2, listStyleType: "disc", py:0 }}
+                                >
+                                  {item.child.map((child) => (
+                                    <ListItem
+                                      sx={{
+                                        py:0,
+                                        display: "list-item",
+                                        px: 1,
+                                      }}
+                                    >
+                                      <Typography color={grey[700]}>
+                                        {child.value}
+                                      </Typography>{" "}
+                                    </ListItem>
+                                  ))}
+                                </List>
                               </Stack>
-                            }
-                            sx={{ alignItems: "flex-start" }}
-                          />
-                        </Fragment>
+                            </Stack>
+                          }
+                          sx={{ alignItems: "flex-start" }}
+                        />
                       ))}
                     </MultiCheckbox>
                   </Box>
                 )
-            )} */}
-            <Stack flexDirection="column" mt={2} gap={1}>
-              {state.options.map(
-                (option: MiscMasterListKebijakanRes, index: number) =>
-                  option.list.length > 0 && (
-                    <Box key={index}>
-                      <Box p={2} bgcolor={grey[200]} fontWeight={600}>
-                        {option.name}
-                      </Box>
-                      <TableContainer
-                        component={Paper}
-                        elevation={0}
-                        variant="outlined"
-                      >
-                        <Table size="small">
-                          <TableBody
-                            sx={{
-                              td: {
-                                px: 1,
-                              },
-                            }}
-                          >
-                            {data.map((item) => (
-                              <React.Fragment key={item.id}>
-                                <TableRow>
-                                  <TableCell sx={{ width: 10 }}>
-                                    <IconButton
-                                      aria-label="expand row"
-                                      size="small"
-                                      onClick={() => handleExpandClick(item.id)}
-                                    >
-                                      {item.open ? (
-                                        <KeyboardArrowUp />
-                                      ) : (
-                                        <KeyboardArrowDown />
-                                      )}
-                                    </IconButton>
-                                  </TableCell>
-                                  <TableCell>
-                                    <Checkbox
-                                      sx={{ p: 0 }}
-                                      checked={item.parent}
-                                      indeterminate={item.indeterminate}
-                                      onChange={() =>
-                                        handleParentCheckboxChange(item.id)
-                                      }
-                                    />
-                                  </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell
-                                    style={{ paddingBottom: 0, paddingTop: 0 }}
-                                    colSpan={6}
-                                  >
-                                    <Collapse
-                                      in={item.open}
-                                      timeout="auto"
-                                      unmountOnExit
-                                    >
-                                      <List
-                                        sx={{ ml: 4, listStyleType: "disc" }}
-                                      >
-                                        {item.children.map((child: any) => (
-                                          <ListItem
-                                            sx={{
-                                              display: "list-item",
-                                              px: 1,
-                                            }}
-                                          >
-                                            {/* <Checkbox
-                                        checked={child.checked}
-                                        onChange={() =>
-                                          handleChildCheckboxChange(
-                                            item.id,
-                                            child.id
-                                          )
-                                        }
-                                      /> */}
-                                            Lorem ipsum dolor sit amet
-                                            consectetur adipisicing elit.
-                                            Explicabo amet labore expedita odio
-                                            odit doloremque consectetur
-                                            exercitationem omnis quasi! Quasi
-                                            nam harum amet, doloremque assumenda
-                                            placeat obcaecati mollitia molestiae
-                                            porro. {child.id}
-                                          </ListItem>
-                                        ))}
-                                      </List>
-                                    </Collapse>
-                                  </TableCell>
-                                </TableRow>
-                              </React.Fragment>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
-                    </Box>
-                  )
-              )}
-            </Stack>
+            )}
+
+            {/*<Stack flexDirection="column" mt={2} gap={1}>*/}
+            {/*  {state.options.map(*/}
+            {/*    (option: MiscMasterListKebijakanRes, index: number) =>*/}
+            {/*      option.list.length > 0 && (*/}
+            {/*        <Box key={index}>*/}
+            {/*          <Box p={2} bgcolor={grey[200]} fontWeight={600}>*/}
+            {/*            {option.name}*/}
+            {/*          </Box>*/}
+            {/*          <TableContainer*/}
+            {/*            component={Paper}*/}
+            {/*            elevation={0}*/}
+            {/*            variant="outlined"*/}
+            {/*          >*/}
+            {/*            <Table size="small">*/}
+            {/*              <TableBody*/}
+            {/*                sx={{*/}
+            {/*                  td: {*/}
+            {/*                    px: 1,*/}
+            {/*                  },*/}
+            {/*                }}*/}
+            {/*              >*/}
+            {/*                {data.map((item) => (*/}
+            {/*                  <React.Fragment key={item.id}>*/}
+            {/*                    <TableRow>*/}
+            {/*                      <TableCell sx={{ width: 10 }}>*/}
+            {/*                        <IconButton*/}
+            {/*                          aria-label="expand row"*/}
+            {/*                          size="small"*/}
+            {/*                          onClick={() => handleExpandClick(item.id)}*/}
+            {/*                        >*/}
+            {/*                          {item.open ? (*/}
+            {/*                            <KeyboardArrowUp />*/}
+            {/*                          ) : (*/}
+            {/*                            <KeyboardArrowDown />*/}
+            {/*                          )}*/}
+            {/*                        </IconButton>*/}
+            {/*                      </TableCell>*/}
+            {/*                      <TableCell>*/}
+            {/*                        <Checkbox*/}
+            {/*                          sx={{ p: 0 }}*/}
+            {/*                          checked={item.parent}*/}
+            {/*                          indeterminate={item.indeterminate}*/}
+            {/*                          onChange={() =>*/}
+            {/*                            handleParentCheckboxChange(item.id)*/}
+            {/*                          }*/}
+            {/*                        />*/}
+            {/*                      </TableCell>*/}
+            {/*                    </TableRow>*/}
+            {/*                    <TableRow>*/}
+            {/*                      <TableCell*/}
+            {/*                        style={{ paddingBottom: 0, paddingTop: 0 }}*/}
+            {/*                        colSpan={6}*/}
+            {/*                      >*/}
+            {/*                        <Collapse*/}
+            {/*                          in={item.open}*/}
+            {/*                          timeout="auto"*/}
+            {/*                          unmountOnExit*/}
+            {/*                        >*/}
+            {/*                          <List*/}
+            {/*                            sx={{ ml: 4, listStyleType: "disc" }}*/}
+            {/*                          >*/}
+            {/*                            {item.children.map((child: any) => (*/}
+            {/*                              <ListItem*/}
+            {/*                                sx={{*/}
+            {/*                                  display: "list-item",*/}
+            {/*                                  px: 1,*/}
+            {/*                                }}*/}
+            {/*                              >*/}
+            {/*                                /!* <Checkbox*/}
+            {/*                            checked={child.checked}*/}
+            {/*                            onChange={() =>*/}
+            {/*                              handleChildCheckboxChange(*/}
+            {/*                                item.id,*/}
+            {/*                                child.id*/}
+            {/*                              )*/}
+            {/*                            }*/}
+            {/*                          /> *!/*/}
+            {/*                                Lorem ipsum dolor sit amet*/}
+            {/*                                consectetur adipisicing elit.*/}
+            {/*                                Explicabo amet labore expedita odio*/}
+            {/*                                odit doloremque consectetur*/}
+            {/*                                exercitationem omnis quasi! Quasi*/}
+            {/*                                nam harum amet, doloremque assumenda*/}
+            {/*                                placeat obcaecati mollitia molestiae*/}
+            {/*                                porro. {child.id}*/}
+            {/*                              </ListItem>*/}
+            {/*                            ))}*/}
+            {/*                          </List>*/}
+            {/*                        </Collapse>*/}
+            {/*                      </TableCell>*/}
+            {/*                    </TableRow>*/}
+            {/*                  </React.Fragment>*/}
+            {/*                ))}*/}
+            {/*              </TableBody>*/}
+            {/*            </Table>*/}
+            {/*          </TableContainer>*/}
+            {/*        </Box>*/}
+            {/*      )*/}
+            {/*  )}*/}
+            {/*</Stack>*/}
           </Stack>
         </Grid>
         {/* <Grid item xs={12}>
