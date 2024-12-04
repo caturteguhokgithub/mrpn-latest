@@ -145,22 +145,22 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
   const getRowData = (key: string, data: RODataTable | undefined) => {
     if (data == undefined) return "";
     const obj: any = JSON.parse(JSON.stringify(data));
-    let val = obj[key]
+    let val = obj[key];
 
-    // if (data.type == "NON_RO" && (
-    //   key == "anggaran_0"
-    //   || key == "anggaran_1"
-    //   || key == "anggaran_2"
-    //   || key == "anggaran_3"
-    //   || key == "anggaran_4"
-    // )){
-    //   const intVal:number = obj[key]
-    //   val = (intVal/1000000000).toFixed(2)
-    //   return val
-    // }
+    if (
+      key == "anggaran_0" ||
+      key == "anggaran_1" ||
+      key == "anggaran_2" ||
+      key == "anggaran_3" ||
+      key == "anggaran_4"
+    ) {
+      const intVal: number = obj[key];
+      // val = (intVal / 1000000000).toFixed(2);
+      val = (intVal / 1000000).toFixed(2);
+      return val;
+    }
 
     return val;
-
   };
 
   return (
@@ -217,7 +217,6 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
               <br />
               (Prov./Kab./Kota)
             </TableCell>
-
           </TableRow>
           <TableRow>
             {multiyear.map((y, iY) => (
@@ -277,7 +276,6 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
               <TableCell sx={{ verticalAlign: "top" }}>
                 {fundRow.lokasi_ro ? fundRow.lokasi_ro : "-"}
               </TableCell>
-
             </TableRow>
           ))}
         </TableBody>
