@@ -40,8 +40,8 @@ const useManagementUserVM = () => {
           id: x.id,
           name: x.name,
           email: x.email,
-          role: x.role.name,
-          role_id: x.role.id,
+          role: x.role?.name ?? "",
+          role_id: x.role?.id ?? 0,
           type: x.type
         }
         if(d.name !== "admin"){
@@ -54,6 +54,14 @@ const useManagementUserVM = () => {
   }
 
   async function createOrUpdateUser(){
+
+    if (request.role_id == undefined
+      || request.type == ""
+      || request.name == ""
+      || request.email == ""
+    ){
+      return
+    }
     const req:ManagementUserReqDto = {
       id:request.id,
       type: request.type,

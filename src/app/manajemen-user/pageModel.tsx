@@ -9,7 +9,7 @@ export interface ManagementUserResDto {
   role: {
     id: number
     name: string
-  }
+  }|undefined
 }
 
 export interface ManagementUserDataDto {
