@@ -85,14 +85,14 @@ export default function TableIndication({
                 <Typography variant="body1" fontWeight={600}>
                   Indikasi Risiko
                 </Typography>
-                <InfoTooltip
+                {/* <InfoTooltip
                   title="Sumber-sumber risiko pada penyusunan kebijakan dapat
                       berasal dari strategi-strategi yang dihasilkan dari
                       matriks TOWS terutama WT (weakness thread). Indikasi
                       peristiwa risiko yang terdapat pada indikasi risiko objek
                       RPJMN merupakan risiko yang mungkin terjadi pada tahap
                       perencanaan kebijakan pembangunan."
-                />
+                /> */}
               </Stack>
             </TableCell>
             <TableCell sx={{ bgcolor: bgColorTh, width: 200 }}>

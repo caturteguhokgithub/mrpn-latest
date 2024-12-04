@@ -1,28 +1,30 @@
-import React, { Fragment } from "react";
+import React, { useState } from "react";
 import {
   Autocomplete,
   Box,
-  Button,
   Card,
-  CardActions,
   CardContent,
   Checkbox,
   Chip,
-  Divider,
+  Collapse,
   FormControl,
   FormControlLabel,
   FormGroup,
-  FormHelperText,
   FormLabel,
   Grid,
+  IconButton,
   List,
   ListItem,
   Paper,
   Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
   TextField,
   Typography,
 } from "@mui/material";
-import { TextareaStyled } from "@/app/components/textarea";
 import {
   SxAutocompleteTextField,
   SxAutocomplete,
@@ -36,6 +38,7 @@ import {
 } from "@/app/executive-summary/partials/tab2Profile/cardRelated/cardRelatedModel";
 import type ReactQuill from "react-quill";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
 
 const FCLItem = ({ keyIndex, item }: { keyIndex: any; item: string }) => {
   return (
@@ -108,6 +111,80 @@ export default function FormRelated({
   state: ExsumRelatedInitState;
   setState: (params: any) => void;
 }) {
+  const [data, setData] = useState([
+    {
+      id: 1,
+      parent: false,
+      indeterminate: false,
+      open: false,
+      children: [
+        { id: 1.1, checked: false },
+        { id: 1.2, checked: false },
+      ],
+    },
+    {
+      id: 2,
+      parent: false,
+      indeterminate: false,
+      open: false,
+      children: [
+        { id: 2.1, checked: false },
+        { id: 2.2, checked: false },
+      ],
+    },
+  ]);
+  const handleParentCheckboxChange = (parentId: any) => {
+    const newData = data.map((item) => {
+      if (item.id === parentId) {
+        const newParentState = !item.parent;
+        return {
+          ...item,
+          parent: newParentState,
+          indeterminate: false,
+          children: item.children.map((child) => ({
+            ...child,
+            checked: newParentState,
+          })),
+        };
+      }
+      return item;
+    });
+    setData(newData);
+  };
+
+  const handleChildCheckboxChange = (parentId: any, childId: any) => {
+    const newData = data.map((item) => {
+      if (item.id === parentId) {
+        const newChildren = item.children.map((child) => {
+          if (child.id === childId) {
+            return { ...child, checked: !child.checked };
+          }
+          return child;
+        });
+        const allChecked = newChildren.every((child) => child.checked);
+        const noneChecked = newChildren.every((child) => !child.checked);
+        return {
+          ...item,
+          parent: allChecked,
+          indeterminate: !allChecked && !noneChecked,
+          children: newChildren,
+        };
+      }
+      return item;
+    });
+    setData(newData);
+  };
+
+  const handleExpandClick = (parentId: any) => {
+    const newData = data.map((item: any) => {
+      if (item.id === parentId) {
+        return { ...item, open: !item.open };
+      }
+      return item;
+    });
+    setData(newData);
+  };
+
   return (
     <>
       <Grid container spacing={2}>
@@ -186,7 +263,7 @@ MRPN"
               },
             }}
           >
-            {state.options.map(
+            {/* {state.options.map(
               (option: MiscMasterListKebijakanRes, index: number) =>
                 option.list.length > 0 && (
                   <Box key={index} mt={2}>
@@ -228,7 +305,107 @@ MRPN"
                     </MultiCheckbox>
                   </Box>
                 )
-            )}
+            )} */}
+            <Stack flexDirection="column" mt={2} gap={1}>
+              {state.options.map(
+                (option: MiscMasterListKebijakanRes, index: number) =>
+                  option.list.length > 0 && (
+                    <Box key={index}>
+                      <Box p={2} bgcolor={grey[200]} fontWeight={600}>
+                        {option.name}
+                      </Box>
+                      <TableContainer
+                        component={Paper}
+                        elevation={0}
+                        variant="outlined"
+                      >
+                        <Table size="small">
+                          <TableBody
+                            sx={{
+                              td: {
+                                px: 1,
+                              },
+                            }}
+                          >
+                            {data.map((item) => (
+                              <React.Fragment key={item.id}>
+                                <TableRow>
+                                  <TableCell sx={{ width: 10 }}>
+                                    <IconButton
+                                      aria-label="expand row"
+                                      size="small"
+                                      onClick={() => handleExpandClick(item.id)}
+                                    >
+                                      {item.open ? (
+                                        <KeyboardArrowUp />
+                                      ) : (
+                                        <KeyboardArrowDown />
+                                      )}
+                                    </IconButton>
+                                  </TableCell>
+                                  <TableCell>
+                                    <Checkbox
+                                      sx={{ p: 0 }}
+                                      checked={item.parent}
+                                      indeterminate={item.indeterminate}
+                                      onChange={() =>
+                                        handleParentCheckboxChange(item.id)
+                                      }
+                                    />
+                                  </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell
+                                    style={{ paddingBottom: 0, paddingTop: 0 }}
+                                    colSpan={6}
+                                  >
+                                    <Collapse
+                                      in={item.open}
+                                      timeout="auto"
+                                      unmountOnExit
+                                    >
+                                      <List
+                                        sx={{ ml: 4, listStyleType: "disc" }}
+                                      >
+                                        {item.children.map((child: any) => (
+                                          <ListItem
+                                            sx={{
+                                              display: "list-item",
+                                              px: 1,
+                                            }}
+                                          >
+                                            {/* <Checkbox
+                                        checked={child.checked}
+                                        onChange={() =>
+                                          handleChildCheckboxChange(
+                                            item.id,
+                                            child.id
+                                          )
+                                        }
+                                      /> */}
+                                            Lorem ipsum dolor sit amet
+                                            consectetur adipisicing elit.
+                                            Explicabo amet labore expedita odio
+                                            odit doloremque consectetur
+                                            exercitationem omnis quasi! Quasi
+                                            nam harum amet, doloremque assumenda
+                                            placeat obcaecati mollitia molestiae
+                                            porro. {child.id}
+                                          </ListItem>
+                                        ))}
+                                      </List>
+                                    </Collapse>
+                                  </TableCell>
+                                </TableRow>
+                              </React.Fragment>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    </Box>
+                  )
+              )}
+            </Stack>
           </Stack>
         </Grid>
         {/* <Grid item xs={12}>
