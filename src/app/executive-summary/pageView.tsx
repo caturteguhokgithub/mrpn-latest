@@ -20,7 +20,7 @@ import {
 import theme from "@/theme";
 import { IconFA } from "@/components/icons/icon-fa";
 import { CustomTab, styleDownload } from "./style";
-import { useExsumContext, useRKPContext } from "@/lib/core/hooks/useHooks";
+import {useAuthContext, useExsumContext, useRKPContext} from "@/lib/core/hooks/useHooks";
 import PageExecutiveSummaryContent from "@/app/executive-summary/pageViewContent";
 import DialogComponent from "@/components/dialog";
 import useApprovalVM from "@/app/executive-summary/approvalVM";
@@ -28,8 +28,14 @@ import { grey } from "@mui/material/colors";
 import { ApprovalDto } from "@/lib/core/context/exsumContext";
 import { OverridableStringUnion } from "@mui/types";
 import { InfoTooltip } from "../components/InfoTooltip";
+import {usePathname} from "next/navigation";
+import {hasPrivilege} from "@/lib/core/helpers/authHelpers";
 
 export default function PageExecutiveSummary({}) {
+
+  const { permission, user } = useAuthContext((state) => state);
+  const pathname = usePathname();
+
   const { rkpState, rpjmn, setYear, year, setRkpState } = useRKPContext(
     (state) => state
   );
@@ -102,7 +108,7 @@ export default function PageExecutiveSummary({}) {
 
 
 
-    if (approval != undefined && approval.status == "review") {
+    if (approval != undefined && hasPrivilege(permission, pathname, "approve") && approval.status == "review") {
       return (
         <Chip
           color="primary"
@@ -118,19 +124,21 @@ export default function PageExecutiveSummary({}) {
       );
     }
 
-    return (
-      <Chip
-        color="primary"
-        variant="outlined"
-        label={
-          <Stack direction="row" gap={1}>
-            Ajukan Approval
-          </Stack>
-        }
-        sx={styleDownload}
-        onClick={() => setModalApprove({ action: "review", isOpen: true })}
-      />
-    );
+    if (user && (user.role_id == 4 || user.role_id == 1)){
+      return (
+        <Chip
+          color="primary"
+          variant="outlined"
+          label={
+            <Stack direction="row" gap={1}>
+              Ajukan Approval
+            </Stack>
+          }
+          sx={styleDownload}
+          onClick={() => setModalApprove({ action: "review", isOpen: true })}
+        />
+      );
+    }
   };
 
   const approvalStatus = (approval: ApprovalDto | undefined) => {

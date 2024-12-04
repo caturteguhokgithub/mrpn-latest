@@ -9,6 +9,7 @@ export interface UserDto {
     name: string
     email: string
     type: string
+    role_id: number
 }
 export interface TokenPayload {
     token: string
