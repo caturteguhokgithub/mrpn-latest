@@ -285,13 +285,13 @@ function GetTableRow({
           onChange={(e) => handleStateChange(e.target.value, "anggaranString")}
           variant="outlined"
           size="small"
-          placeholder="Anggaran"
+          placeholder="0"
           InputLabelProps={{
             shrink: true,
           }}
-          sx={{ input: { textAlign: "right" } }}
+          sx={{ input: { textAlign: "right" }, px:0 }}
           InputProps={{
-            endAdornment: <InputAdornment position="end">ribu</InputAdornment>,
+            endAdornment: <InputAdornment position="end" sx={{px:0, marginLeft:0}}>.000,00</InputAdornment>,
           }}
         />
       </TableCell>
@@ -301,7 +301,7 @@ function GetTableRow({
           onChange={(e) => handleStateChange(e.target.value, "sumber_anggaran")}
           variant="outlined"
           size="small"
-          placeholder="Sumber Anggaran"
+          placeholder="Sumber Pembiayaan"
           InputLabelProps={{
             shrink: true,
           }}
