@@ -14,26 +14,26 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "@/theme";
-import {grey} from "@mui/material/colors";
-import {ExsumIndicationResDto} from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
-import {useAuthContext, useRKPContext} from "@/lib/core/hooks/useHooks";
-import {usePathname} from "next/navigation";
-import {hasPrivilege} from "@/lib/core/helpers/authHelpers";
-import {InfoTooltip} from "@/app/components/InfoTooltip";
+import { grey } from "@mui/material/colors";
+import { ExsumIndicationResDto } from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
+import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
+import { usePathname } from "next/navigation";
+import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
+import { InfoTooltip } from "@/app/components/InfoTooltip";
 import ActionColumn from "@/components/actions/action";
-import {bgColorTh} from "@/app/utils/color";
+import { bgColorTh } from "@/app/utils/color";
 
 export default function TableIndication({
-                                          data,
-                                          handleModalOpen,
-                                        }: {
+  data,
+  handleModalOpen,
+}: {
   data?: ExsumIndicationResDto[];
   handleModalOpen?: any;
 }) {
-  const {permission} = useAuthContext((state) => state);
+  const { permission } = useAuthContext((state) => state);
   const pathname = usePathname();
 
-  const {year} = useRKPContext((store) => store);
+  const { year } = useRKPContext((store) => store);
 
   const handleEditData = (id: number) => {
     if (data) {
@@ -69,18 +69,18 @@ export default function TableIndication({
       }}
     >
       <Table
-        style={{tableLayout: "fixed", width: 1600}}
+        // style={{ tableLayout: "fixed", width: 1600 }}
         size="small"
-        stickyHeader
+        // stickyHeader
       >
-        <TableHead sx={{bgcolor: alpha(theme.palette.primary.main, 0.1)}}>
+        <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
           <TableRow>
-            <TableCell sx={{bgcolor: bgColorTh, width: 200}}>
+            <TableCell sx={{ bgcolor: bgColorTh, width: 200 }}>
               <Typography variant="body1" fontWeight={600}>
                 Analisis TOWS
               </Typography>
             </TableCell>
-            <TableCell sx={{bgcolor: bgColorTh, width: 200}}>
+            <TableCell sx={{ bgcolor: bgColorTh, width: 200 }}>
               <Stack direction="row" alignItems="center" gap={0.5}>
                 <Typography variant="body1" fontWeight={600}>
                   Indikasi Risiko
@@ -95,28 +95,28 @@ export default function TableIndication({
                 />
               </Stack>
             </TableCell>
-            <TableCell sx={{bgcolor: bgColorTh, width: 200}}>
+            <TableCell sx={{ bgcolor: bgColorTh, width: 200 }}>
               <Typography variant="body1" fontWeight={600}>
                 Kategori Risiko
               </Typography>
             </TableCell>
-            <TableCell sx={{bgcolor: bgColorTh, width: 200}}>
+            <TableCell sx={{ bgcolor: bgColorTh, width: 200 }}>
               <Typography variant="body1" fontWeight={600}>
                 Indikasi Perlakuan Risiko
               </Typography>
             </TableCell>
-            <TableCell sx={{bgcolor: bgColorTh, width: 360}}>
+            <TableCell sx={{ bgcolor: bgColorTh, width: 360 }}>
               <Typography variant="body1" fontWeight={600}>
                 Output
               </Typography>
             </TableCell>
-            <TableCell sx={{bgcolor: bgColorTh, width: 300}}>
+            <TableCell sx={{ bgcolor: bgColorTh, width: 300 }}>
               <Typography variant="body1" fontWeight={600}>
                 PJ Perlakuan
               </Typography>
             </TableCell>
             {year == 0 && (
-              <TableCell width={100} sx={{bgcolor: bgColorTh}}>
+              <TableCell width={100} sx={{ bgcolor: bgColorTh }}>
                 <Typography variant="body1" fontWeight={600}>
                   Tahun
                 </Typography>
@@ -126,10 +126,10 @@ export default function TableIndication({
               hasPrivilege(permission, pathname, "delete")) && (
               <TableCell
                 sx={{
-                  position: "sticky",
-                  right: 0,
-                  boxShadow: "2px -6px 10px grey",
-                  borderLeft: "1px solid #e0e0e0",
+                  // position: "sticky",
+                  // right: 0,
+                  // boxShadow: "2px -6px 10px grey",
+                  // borderLeft: "1px solid #e0e0e0",
                   bgcolor: bgColorTh,
                   width: 100,
                 }}
@@ -145,13 +145,13 @@ export default function TableIndication({
           {data &&
             data.map((row, index) => (
               <React.Fragment key={row + "-" + index}>
-
                 <TableRow>
                   <TableCell
                     rowSpan={
-                      (row.perlakuan.length == 0 ? 1 : row.perlakuan.length)+(row.regulasi.length)
+                      (row.perlakuan.length == 0 ? 1 : row.perlakuan.length) +
+                      row.regulasi.length
                     }
-                    sx={{verticalAlign: "top"}}
+                    sx={{ verticalAlign: "top" }}
                   >
                     <Typography variant="body1">
                       {row.tows?.value ?? ""}
@@ -159,9 +159,10 @@ export default function TableIndication({
                   </TableCell>
                   <TableCell
                     rowSpan={
-                      (row.perlakuan.length == 0 ? 1 : row.perlakuan.length)+(row.regulasi.length)
+                      (row.perlakuan.length == 0 ? 1 : row.perlakuan.length) +
+                      row.regulasi.length
                     }
-                    sx={{verticalAlign: "top"}}
+                    sx={{ verticalAlign: "top" }}
                   >
                     <Typography variant="body1">
                       {row.indikasi_risiko}
@@ -169,9 +170,10 @@ export default function TableIndication({
                   </TableCell>
                   <TableCell
                     rowSpan={
-                      (row.perlakuan.length == 0 ? 1 : row.perlakuan.length)+(row.regulasi.length)
+                      (row.perlakuan.length == 0 ? 1 : row.perlakuan.length) +
+                      row.regulasi.length
                     }
-                    sx={{verticalAlign: "top"}}
+                    sx={{ verticalAlign: "top" }}
                   >
                     <Typography variant="body1">
                       {row.kategori_risiko}
@@ -179,15 +181,16 @@ export default function TableIndication({
                   </TableCell>
                   <TableCell
                     rowSpan={
-                      (row.perlakuan.length == 0 ? 1 : row.perlakuan.length)+(row.regulasi.length)
+                      (row.perlakuan.length == 0 ? 1 : row.perlakuan.length) +
+                      row.regulasi.length
                     }
-                    sx={{verticalAlign: "top"}}
+                    sx={{ verticalAlign: "top" }}
                   >
                     <Typography variant="body1">
                       {row.indikasi_perlakuan_risiko}
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{verticalAlign: "top"}}>
+                  <TableCell sx={{ verticalAlign: "top" }}>
                     {row.perlakuan.length > 0 && (
                       <Typography
                         variant="body1"
@@ -201,7 +204,7 @@ export default function TableIndication({
                       </Typography>
                     )}
                   </TableCell>
-                  <TableCell sx={{verticalAlign: "top"}}>
+                  <TableCell sx={{ verticalAlign: "top" }}>
                     {row.perlakuan.length > 0 && (
                       <Box>
                         <Stack
@@ -235,7 +238,7 @@ export default function TableIndication({
                     )}
                   </TableCell>
                   {year == 0 && row.perlakuan.length > 0 && (
-                    <TableCell sx={{verticalAlign: "top"}}>
+                    <TableCell sx={{ verticalAlign: "top" }}>
                       <Stack
                         display="inline-flex"
                         alignItems="center"
@@ -266,16 +269,17 @@ export default function TableIndication({
                     hasPrivilege(permission, pathname, "delete")) && (
                     <TableCell
                       rowSpan={
-                        (row.perlakuan.length == 0 ? 1 : row.perlakuan.length)+(row.regulasi.length)
+                        (row.perlakuan.length == 0 ? 1 : row.perlakuan.length) +
+                        row.regulasi.length
                       }
-                      sx={{
-                        verticalAlign: "top",
-                        position: "sticky",
-                        right: 0,
-                        boxShadow: "2px 6px 10px grey",
-                        borderLeft: "1px solid #e0e0e0",
-                        bgcolor: "white",
-                      }}
+                      // sx={{
+                      //   verticalAlign: "top",
+                      //   position: "sticky",
+                      //   right: 0,
+                      //   boxShadow: "2px 6px 10px grey",
+                      //   borderLeft: "1px solid #e0e0e0",
+                      //   bgcolor: "white",
+                      // }}
                     >
                       <ActionColumn
                         editClick={
@@ -293,15 +297,12 @@ export default function TableIndication({
                   )}
                 </TableRow>
 
-
                 {row.perlakuan.slice(1).map((perlakuan, i) => (
                   <TableRow key={perlakuan + "-" + index + "-" + i}>
-                    <TableCell sx={{verticalAlign: "top"}}>
+                    <TableCell sx={{ verticalAlign: "top" }}>
                       <Typography
                         variant="body1"
-                        color={
-                          perlakuan.ro?.type == "RO" ? "" : "#f97316"
-                        }
+                        color={perlakuan.ro?.type == "RO" ? "" : "#f97316"}
                       >
                         {perlakuan.ro?.type == "RO"
                           ? perlakuan.ro?.value
@@ -309,7 +310,7 @@ export default function TableIndication({
                       </Typography>
                     </TableCell>
 
-                    <TableCell sx={{verticalAlign: "top"}}>
+                    <TableCell sx={{ verticalAlign: "top" }}>
                       <Box>
                         <Stack
                           // marginTop={"10px"}
@@ -321,9 +322,7 @@ export default function TableIndication({
                         >
                           <Box component="div">
                             <Chip
-                              label={
-                                perlakuan.ro?.kementrian?.value ?? "-"
-                              }
+                              label={perlakuan.ro?.kementrian?.value ?? "-"}
                               size="small"
                               sx={{
                                 height: "auto",
@@ -340,7 +339,7 @@ export default function TableIndication({
                     </TableCell>
 
                     {year == 0 && (
-                      <TableCell sx={{verticalAlign: "top"}}>
+                      <TableCell sx={{ verticalAlign: "top" }}>
                         <Stack
                           display="inline-flex"
                           alignItems="center"
@@ -370,14 +369,16 @@ export default function TableIndication({
                   </TableRow>
                 ))}
 
-                {row.regulasi.map((regulation, iRegulation) =>
+                {row.regulasi.map((regulation, iRegulation) => (
                   <TableRow>
-                    <TableCell sx={{verticalAlign: "top"}}>
+                    <TableCell sx={{ verticalAlign: "top" }}>
                       <ul>
                         {regulation.perpres.map((y, index2) => (
-
                           <li>
-                            <Typography key={`perpres-${index2}`} color={y.flag != null ? "#EA6228" : undefined}>
+                            <Typography
+                              key={`perpres-${index2}`}
+                              color={y.flag != null ? "#EA6228" : undefined}
+                            >
                               {`${y.title}`}
                             </Typography>
                           </li>
@@ -385,7 +386,7 @@ export default function TableIndication({
                       </ul>
                     </TableCell>
 
-                    <TableCell sx={{verticalAlign: "top"}}>
+                    <TableCell sx={{ verticalAlign: "top" }}>
                       <Box>
                         <Stack
                           // marginTop={"10px"}
@@ -396,7 +397,7 @@ export default function TableIndication({
                           flexWrap="wrap"
                         >
                           <Box component="div">
-                            {regulation.entitas.map(regEnt =>
+                            {regulation.entitas.map((regEnt) => (
                               <Chip
                                 label={regEnt.value}
                                 size="small"
@@ -409,14 +410,14 @@ export default function TableIndication({
                                   },
                                 }}
                               />
-                            )}
+                            ))}
                           </Box>
                         </Stack>
                       </Box>
                     </TableCell>
 
                     {year == 0 && (
-                      <TableCell sx={{verticalAlign: "top"}}>
+                      <TableCell sx={{ verticalAlign: "top" }}>
                         <Stack
                           display="inline-flex"
                           alignItems="center"
@@ -443,10 +444,8 @@ export default function TableIndication({
                         </Stack>
                       </TableCell>
                     )}
-
                   </TableRow>
-                )}
-
+                ))}
               </React.Fragment>
             ))}
         </TableBody>
