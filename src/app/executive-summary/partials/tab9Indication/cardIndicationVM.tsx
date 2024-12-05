@@ -247,10 +247,58 @@ const useCardIndicationVM = () => {
     }
   }
 
+  async function deleteRONonROForm(value:ExsumIndicationStateValue){
+    if (value.type == "NON_RO" && value.non_rincian_output.id != 0){
+      const response = await doDeleteInterventionOnlyRO({
+        body: {id : value.non_rincian_output.id},
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      })
+      if (response?.code != API_CODE.success) {
+        return;
+      }
+    }
+
+    if (value.type == "RO" && value.rincian_output != undefined){
+      let ro = value.rincian_output
+      ro.intervention = false
+
+      const request: ExsumInterventionProjectReqDto = {
+        id: 0,
+        intervention: false,
+        exsum_id: exsum.id,
+        type: "RO",
+        code: "",
+        prop: 0,
+        kementrian_id: 0,
+        nomenklatur: "",
+        indikator: "",
+        list: [],
+        list_ro: [ro],
+        tahun: "",
+        lokasi: []
+      }
+      const response = await doCreateIntervention({
+        body: request,
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      })
+      if (response?.code !== API_CODE.success) {
+        return
+      }
+    }
+  }
+
   const handleModalOpen = (idData:number,action:boolean,type:string) => {
     if (idData == 0) {
+
+      state.values.map(value => {
+        deleteRONonROForm(value)
+      })
+
       const initState:ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication))
       setState(initState)
+
     } else {
 
       const getIndex = data.findIndex(x => x.id == idData)
@@ -441,46 +489,7 @@ const useCardIndicationVM = () => {
 
       const value = state.values[index]
 
-      if (value.type == "NON_RO" && value.non_rincian_output.id != 0){
-        const response = await doDeleteInterventionOnlyRO({
-          body: {id : value.non_rincian_output.id},
-          loadingContext: loadingContext,
-          errorModalContext: errorModalContext,
-        })
-        if (response?.code != API_CODE.success) {
-          return;
-        }
-      }
-
-      if (value.type == "RO" && value.rincian_output != undefined){
-        let ro = value.rincian_output
-        ro.intervention = false
-
-        const request: ExsumInterventionProjectReqDto = {
-          id: 0,
-          intervention: false,
-          exsum_id: exsum.id,
-          type: "RO",
-          code: "",
-          prop: 0,
-          kementrian_id: 0,
-          nomenklatur: "",
-          indikator: "",
-          list: [],
-          list_ro: [ro],
-          tahun: "",
-          lokasi: []
-        }
-        const response = await doCreateIntervention({
-          body: request,
-          loadingContext: loadingContext,
-          errorModalContext: errorModalContext,
-        })
-        if (response?.code !== API_CODE.success) {
-          return
-        }
-      }
-
+      await deleteRONonROForm(value)
 
       setState(prevState => {
         let values = prevState.values
@@ -566,7 +575,7 @@ const useCardIndicationVM = () => {
         })
       })
 
-      if (stateValue.id == 0){
+      if (nonRO.id == 0){
         const request: ExsumInterventionProjectReqDto = {
           id: nonRO.id,
           exsum_id: exsum.id,

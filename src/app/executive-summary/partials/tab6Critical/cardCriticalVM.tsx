@@ -71,7 +71,8 @@ const useCardCriticalVM = () => {
 
     if (response?.code == API_CODE.success) {
       let result: RoDto[] = response.result;
-      setOptionRO(result);
+      let finalResult:RoDto[] = result.filter(x => x.intervention)
+      setOptionRO(finalResult);
     }
   }
 
