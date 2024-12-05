@@ -170,6 +170,14 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
       variant="outlined"
       sx={{
         overflowX: "auto",
+        "td, th": {
+          "&.MuiTableCell-root": {
+            border: "1px solid rgb(224, 224, 224)",
+          },
+          "&:first-of-type": {
+            borderLeft: 0,
+          },
+        },
         "&::-webkit-scrollbar": {
           height: "6px",
           cursor: "pointer",
