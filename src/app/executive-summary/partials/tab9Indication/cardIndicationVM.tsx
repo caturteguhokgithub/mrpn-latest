@@ -480,7 +480,7 @@ const useCardIndicationVM = () => {
 
     if (response?.code == API_CODE.success){
       await getData()
-      handleModalOpen(0,false,"")
+      setModalOpen({index:-1, action:false, type:""});
     }
 
   }

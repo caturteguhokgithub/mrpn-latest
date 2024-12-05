@@ -8,7 +8,7 @@ import useCardFundVM from "@/app/executive-summary/partials/tab8Fund/cardFundVM"
 export default function CardFund({ project }: { project: string }) {
   const isEmpty = false;
 
-  const { exsum, dataFund, dataTableFund, getDataFund } = useCardFundVM();
+  const { exsum, dataFund, dataTableFund, getDataFund } = useCardFundVM(project);
 
   useEffect(() => {
     if (exsum != undefined) getDataFund();

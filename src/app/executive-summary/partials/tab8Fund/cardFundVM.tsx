@@ -6,7 +6,7 @@ import {doGetExsumFund} from "@/app/executive-summary/partials/tab8Fund/cardFund
 import {RODataTable, RoDto} from "@/app/misc/rkp/rkpServiceModel";
 import {GenerateProjectData} from "@/lib/utils/common";
 
-const useCardFundVM = () => {
+const useCardFundVM = (type:string) => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
   const {exsum} = useExsumContext()
@@ -31,10 +31,21 @@ const useCardFundVM = () => {
       let finalDataTable:ExsumFundDataTableRes[] = []
       result.map(x => {
         const dataTable = GenerateProjectData(x.intervensi, year, rpjmn)
-        finalDataTable.push({
+
+        let row = {
           prop: x.prop,
           intervensi: dataTable
-        })
+        }
+        if (type != "all"){
+          row.intervensi = dataTable.reduce<RODataTable[]>((a, b) => {
+            return b.intervention ? [...a, b] : [...a]
+          }, [])
+        }
+
+        if (row.intervensi.length > 0){
+          finalDataTable.push(row)
+        }
+
       })
 
 

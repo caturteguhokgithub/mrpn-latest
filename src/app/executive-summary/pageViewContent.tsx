@@ -347,9 +347,34 @@ export default function PageExecutiveSummaryContent({
             </CustomTabPanel>
           </CustomTabPanel>
           {/* Tab 9 */}
-          <CustomTabPanel value={value} index={8} tabLevel={condTabHeightLv1}>
-            <Tab8Fund project={project} />
+          <CustomTabPanel value={value} index={8} tabLevel="1">
+            <Tabs
+              value={valueTabChild}
+              onChange={handleChangeTabChild}
+              sx={styleTab(sxParamsOutlined)}
+              variant="fullWidth"
+            >
+              <Tab label="Intervensi Kunci" {...a11yProps(0)} />
+              <Tab label="Semua" {...a11yProps(1)} />
+            </Tabs>
+            <CustomTabPanel
+              value={valueTabChild}
+              index={0}
+              tabLevel={condTabHeightLv2}
+            >
+              <Tab8Fund project={"not_all"} />
+            </CustomTabPanel>
+            <CustomTabPanel
+              value={valueTabChild}
+              index={1}
+              tabLevel={condTabHeightLv2}
+            >
+              <Tab8Fund project={"all"} />
+            </CustomTabPanel>
           </CustomTabPanel>
+          {/*<CustomTabPanel value={value} index={8} tabLevel={condTabHeightLv1}>*/}
+          {/*  <Tab8Fund project={project} />*/}
+          {/*</CustomTabPanel>*/}
         </Box>
       </Collapse>
     </ContentPage>
