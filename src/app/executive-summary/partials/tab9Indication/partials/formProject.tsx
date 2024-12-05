@@ -142,27 +142,28 @@ export default function FromProject({
           />
         </FormControl>
       </Grid>
-      <Grid item xs={12}>
-        <FormControl fullWidth>
-          <FieldLabelInfo title="Indikator Project" />
-          <TextareaStyled
-            value={state.non_rincian_output.indikator}
-            onChange={(e) =>
-              setState((prev) => {
-                const nonR0 = prev.non_rincian_output;
-                nonR0.indikator = e.target.value;
-                return {
-                  ...prev,
-                  non_rincian_output: nonR0,
-                };
-              })
-            }
-            aria-label="Tuliskan Indikator Project"
-            placeholder="Tuliskan Indikator Project"
-            minRows={3}
-          />
-        </FormControl>
-      </Grid>
+
+      {/*<Grid item xs={12}>*/}
+      {/*  <FormControl fullWidth>*/}
+      {/*    <FieldLabelInfo title="Indikator Project" />*/}
+      {/*    <TextareaStyled*/}
+      {/*      value={state.non_rincian_output.indikator}*/}
+      {/*      onChange={(e) =>*/}
+      {/*        setState((prev) => {*/}
+      {/*          const nonR0 = prev.non_rincian_output;*/}
+      {/*          nonR0.indikator = e.target.value;*/}
+      {/*          return {*/}
+      {/*            ...prev,*/}
+      {/*            non_rincian_output: nonR0,*/}
+      {/*          };*/}
+      {/*        })*/}
+      {/*      }*/}
+      {/*      aria-label="Tuliskan Indikator Project"*/}
+      {/*      placeholder="Tuliskan Indikator Project"*/}
+      {/*      minRows={3}*/}
+      {/*    />*/}
+      {/*  </FormControl>*/}
+      {/*</Grid>*/}
 
       {state.non_rincian_output.list.length > 0 && (
         <Grid item xs={12}>
