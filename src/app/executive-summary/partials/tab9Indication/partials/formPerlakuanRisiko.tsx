@@ -331,7 +331,21 @@ export default function FormPerlakuanRisiko({
 
         {state.type == "RO" && state.rincian_output != undefined && (
           <Grid item xs={12}>
-            <TableContainer component={Paper} elevation={0} variant="outlined">
+            <TableContainer
+              component={Paper}
+              elevation={0}
+              variant="outlined"
+              sx={{
+                "td, th": {
+                  "&.MuiTableCell-root": {
+                    border: "1px solid rgb(224, 224, 224)",
+                  },
+                  "&:first-of-type": {
+                    borderLeft: 0,
+                  },
+                },
+              }}
+            >
               <Table sx={{ minWidth: 650 }} size="small">
                 <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
                   <TableRow>

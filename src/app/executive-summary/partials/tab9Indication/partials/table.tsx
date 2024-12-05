@@ -71,7 +71,7 @@ export default function TableIndication({
       <Table
         // style={{ tableLayout: "fixed", width: 1600 }}
         size="small"
-        // stickyHeader
+        stickyHeader
       >
         <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
           <TableRow>
@@ -116,7 +116,7 @@ export default function TableIndication({
               </Typography>
             </TableCell>
             {year == 0 && (
-              <TableCell width={100} sx={{ bgcolor: bgColorTh }}>
+              <TableCell width={160} sx={{ bgcolor: bgColorTh }}>
                 <Typography variant="body1" fontWeight={600}>
                   Tahun
                 </Typography>
@@ -192,80 +192,80 @@ export default function TableIndication({
                   </TableCell>
 
                   <TableCell sx={{ verticalAlign: "top" }}>
-                    {row.perlakuan.length > 0 &&
-                        <Typography
-                            variant="body1"
-                            color={
-                              row.perlakuan[0].ro?.type == "RO" ? "" : "#f97316"
-                            }
-                        >
-                          {row.perlakuan[0].ro?.type == "RO"
-                            ? row.perlakuan[0].ro?.value
-                            : row.perlakuan[0].ro?.value + " (NON RO)"}
-                        </Typography>
-                    }
+                    {row.perlakuan.length > 0 && (
+                      <Typography
+                        variant="body1"
+                        color={
+                          row.perlakuan[0].ro?.type == "RO" ? "" : "#f97316"
+                        }
+                      >
+                        {row.perlakuan[0].ro?.type == "RO"
+                          ? row.perlakuan[0].ro?.value
+                          : row.perlakuan[0].ro?.value + " (NON RO)"}
+                      </Typography>
+                    )}
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>
-                    {row.perlakuan.length > 0 &&
+                    {row.perlakuan.length > 0 && (
                       <Box>
-                          <Stack
-                            // marginTop={"10px"}
-                              display="inline-flex"
-                              alignItems="center"
-                              direction="row"
-                              gap={0.5}
-                              flexWrap="wrap"
-                          >
-                            {row.perlakuan.length > 0 && (
-                              <Box component="div">
-                                <Chip
-                                  label={
-                                    row.perlakuan[0].ro?.kementrian?.value ?? "-"
-                                  }
-                                  size="small"
-                                  sx={{
-                                    height: "auto",
-                                    ".MuiChip-label": {
-                                      whiteSpace: "wrap",
-                                      lineHeight: 1.2,
-                                      py: 0.6,
-                                    },
-                                  }}
-                                />
-                              </Box>
-                            )}
-                          </Stack>
+                        <Stack
+                          // marginTop={"10px"}
+                          display="inline-flex"
+                          alignItems="center"
+                          direction="row"
+                          gap={0.5}
+                          flexWrap="wrap"
+                        >
+                          {row.perlakuan.length > 0 && (
+                            <Box component="div">
+                              <Chip
+                                label={
+                                  row.perlakuan[0].ro?.kementrian?.value ?? "-"
+                                }
+                                size="small"
+                                sx={{
+                                  height: "auto",
+                                  ".MuiChip-label": {
+                                    whiteSpace: "wrap",
+                                    lineHeight: 1.2,
+                                    py: 0.6,
+                                  },
+                                }}
+                              />
+                            </Box>
+                          )}
+                        </Stack>
                       </Box>
-                    }
+                    )}
                   </TableCell>
                   {year == 0 && (
                     <TableCell sx={{ verticalAlign: "top" }}>
-                      {row.perlakuan.length > 0 &&
+                      {row.perlakuan.length > 0 && (
                         <Stack
-                        display="inline-flex"
-                        alignItems="center"
-                        direction="row"
-                        gap={0.5}
-                        flexWrap="wrap"
-                      >
-                        {row.perlakuan[0].tahun.map((st, stIndex) => (
-                          <Box key={stIndex} component="span">
-                            <Chip
-                              label={st}
-                              size="small"
-                              sx={{
-                                height: "auto",
-                                ".MuiChip-label": {
-                                  whiteSpace: "wrap",
-                                  lineHeight: 1.2,
-                                  py: 0.6,
-                                },
-                              }}
-                            />
-                          </Box>
-                        ))}
-                      </Stack>
-                      }
+                          display="inline-flex"
+                          alignItems="center"
+                          direction="row"
+                          gap={0.5}
+                          flexWrap="wrap"
+                        >
+                          {row.perlakuan[0].tahun.map((st, stIndex) => (
+                            <Box key={stIndex} component="span">
+                              <Chip
+                                label={st}
+                                size="small"
+                                sx={{
+                                  height: "auto",
+                                  ".MuiChip-label": {
+                                    whiteSpace: "wrap",
+                                    lineHeight: 1.2,
+                                    py: 0.6,
+                                  },
+                                }}
+                              />
+                            </Box>
+                          ))}
+                        </Stack>
+                      )}
                     </TableCell>
                   )}
 
