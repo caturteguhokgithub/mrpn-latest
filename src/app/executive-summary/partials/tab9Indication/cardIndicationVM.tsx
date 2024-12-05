@@ -561,7 +561,7 @@ const useCardIndicationVM = () => {
         || stateValue.non_rincian_output.prop == undefined
         || stateValue.non_rincian_output.kementrian == undefined
         || stateValue.non_rincian_output.location.length == 0
-        || stateValue.non_rincian_output.indikator == ""
+        // || stateValue.non_rincian_output.indikator == ""
       ) {
         return
       }

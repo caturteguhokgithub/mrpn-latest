@@ -157,7 +157,7 @@ export default function CardIndication({ project }: { project: string }) {
         width={"80%"}
         dialogOpen={modalOutput.type != "delete" && modalOutput.action}
         dialogClose={() => handleModalOutputOpen(-1, false, "")}
-        title="Tambah Rincian Output"
+        title={`Tambah ${modalOutput.type == "NON_RO" ? 'Project' : 'Rincian Output'}`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button
