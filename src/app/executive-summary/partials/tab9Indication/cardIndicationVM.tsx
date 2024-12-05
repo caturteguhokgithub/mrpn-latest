@@ -480,6 +480,8 @@ const useCardIndicationVM = () => {
 
     if (response?.code == API_CODE.success){
       await getData()
+      const initState:ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication))
+      setState(initState)
       setModalOpen({index:-1, action:false, type:""});
     }
 
