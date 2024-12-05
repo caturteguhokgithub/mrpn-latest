@@ -292,9 +292,11 @@ const useCardIndicationVM = () => {
   const handleModalOpen = (idData:number,action:boolean,type:string) => {
     if (idData == 0) {
 
-      state.values.map(value => {
-        deleteRONonROForm(value)
-      })
+      if(state.id == 0){
+        state.values.map(value => {
+          deleteRONonROForm(value)
+        })
+      }
 
       const initState:ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication))
       setState(initState)
