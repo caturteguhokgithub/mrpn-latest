@@ -30,6 +30,7 @@ import { SxParams } from "@/app/executive-summary/types";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
+import {FormatIDR} from "@/lib/utils/currency";
 
 const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
   const isAssistant = nodeData.isAssistant === true;
@@ -266,7 +267,7 @@ export default function CascadingOrgChart({
   return (
     <>
       <Stack gap={2} direction="row">
-        <FundSource value={`Rp. N/A`} />
+        <FundSource value={`${FormatIDR(data.total_anggaran/1000)} Juta`} />
         <Box>
           <Button
             variant="contained"

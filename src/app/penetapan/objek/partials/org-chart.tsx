@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useMemo } from "react";
+import React, {SetStateAction, useEffect, useMemo, useState} from "react";
 import OrgChart from "@dabeng/react-orgchart";
 import {
   Box,
@@ -25,6 +25,7 @@ import DraggableScroll from "@/app/executive-summary/partials/tab2Profile/partia
 import { SxParams } from "@/app/executive-summary/types";
 import { usePenetapanTopicContext } from "@/lib/core/hooks/useHooks";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
+import {FormatIDR} from "@/lib/utils/currency";
 
 const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
   const isAssistant = nodeData.isAssistant === true;
@@ -145,6 +146,7 @@ export default function CascadingPenetapanObjectOrgChart() {
     usePenetapanObjectVM();
 
   const { objectState } = usePenetapanTopicContext((state) => state);
+  const [total, setTotal] = useState(0)
 
   useEffect(() => {
     if (objectState !== undefined) {
@@ -176,7 +178,11 @@ export default function CascadingPenetapanObjectOrgChart() {
           children: [],
         };
       }
+      let total = 0
       stateCascading.map((pnData) => {
+
+        total = total + pnData.total_anggaran
+
         const pn = pnData.pn;
         let result: OrgDto = {
           name: `PN - ${pn.code}`,
@@ -252,6 +258,8 @@ export default function CascadingPenetapanObjectOrgChart() {
         // });
         object.children?.push(result);
       });
+
+      setTotal(total)
       return object;
     }, [stateCascading]);
 
@@ -279,7 +287,7 @@ export default function CascadingPenetapanObjectOrgChart() {
   return (
     <>
       <Stack gap={2} direction="row">
-        <FundSource value={`Rp. N/A`} />
+        <FundSource value={`${FormatIDR(total/1000)} Juta`} />
         <Box>
           <Button
             variant="contained"

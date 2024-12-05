@@ -47,7 +47,10 @@ export type PNDto = ProjectDefaultDto & {
   pp: PPDto
 }
 
-export type RKPCascadingDto = { pn : PNDto }
+export type RKPCascadingDto = {
+  pn : PNDto,
+  total_anggaran: number
+}
 
 export type PropCascadingDto = ProPDto & { isChecked: boolean }
 
