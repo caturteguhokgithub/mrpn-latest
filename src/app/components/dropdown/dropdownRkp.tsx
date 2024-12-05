@@ -66,7 +66,7 @@ export default function DropdownRkp({
   variant?: string;
 }) {
   const rkpContext = useRKPContext((state) => state);
-  const { rkp, setRkp, rkpState, setRkpState, year } = rkpContext;
+  const { rkp, setRkp, rkpState, setRkpState, year, rpjmn } = rkpContext;
 
   const {
     options,
@@ -85,16 +85,18 @@ export default function DropdownRkp({
   }, []);
 
   useEffect(() => {
-    if (allowedSelectRKP.length > 0) {
+    if (allowedSelectRKP.length > 0 && rpjmn != undefined) {
       getData().then(r => {
         if (r && rkpState) {
           triggerChange(rkpState)
         }
       })
     }
-  }, [allowedSelectRKP,year]);
+  }, [allowedSelectRKP,year, rpjmn]);
 
   const sxParams: SxParams = { variant: variant };
+
+  if (options.length == 0) return null
 
   return (
     <FormControl size="small">

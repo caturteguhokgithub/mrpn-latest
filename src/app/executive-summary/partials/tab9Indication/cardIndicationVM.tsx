@@ -427,7 +427,7 @@ const useCardIndicationVM = () => {
       || state.indikasi_risiko == ""
       || state.kategori_risiko == ""
       || state.perlakuan_risiko == ""
-      || state.values.length == 0
+      // || state.values.length == 0
       // || state.regulation.length == 0
     ){
       return
