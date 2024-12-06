@@ -8,9 +8,20 @@ import {
   initManagementUserReqDto,
   ManagementUserDataDto,
   ManagementUserStateDto,
-  ManagementUserResDto, ManagementUserReqDto
+  ManagementUserResDto, ManagementUserReqDto, OptionKP
 } from "@/app/manajemen-user/pageModel";
 import useManagementRoleVM from "@/app/manajemen-role/pageVM";
+import {doGetKP} from "@/app/misc/rkp/rkpService";
+
+interface ModalDto {
+  action: boolean
+  type: string
+}
+
+const initModalDto: ModalDto = {
+  action: false,
+  type: ""
+}
 
 const useManagementUserVM = () => {
 
@@ -18,13 +29,21 @@ const useManagementUserVM = () => {
   const errorModalContext = useGlobalModalContext();
 
   const [users, setUsers] = useState<ManagementUserDataDto[]>([])
-  const [modal, setModal] = useState<boolean>(false)
+  const [modal, setModal] = useState<ModalDto>(initModalDto)
   const [request, setRequest] = useState<ManagementUserStateDto>(Object.assign({}, initManagementUserReqDto))
-
+  const [optionKP, setOptionKP] = useState<OptionKP[]>([])
 
   const {
     managementRoleData,
   } = useManagementRoleVM()
+
+  const getOptionKP = async () => {
+    const response = await doGetKP()
+    if (response?.code === API_CODE.success) {
+      let result: OptionKP[] = response.result
+      setOptionKP(result)
+    }
+  }
 
   async function getUsers() {
     const response = await doGetUser({
@@ -42,43 +61,47 @@ const useManagementUserVM = () => {
           email: x.email,
           role: x.role?.name ?? "",
           role_id: x.role?.id ?? 0,
-          type: x.type
+          type: x.type,
+          list_kp_id: x.list_kp_id
         }
-        if(d.name !== "admin"){
+        // if (d.name !== "admin") {
           data.push(d)
-        }
+        // }
       })
 
       setUsers(data)
     }
   }
 
-  async function createOrUpdateUser(){
+  async function createOrUpdateUser() {
 
     if (request.role_id == undefined
       || request.type == ""
       || request.name == ""
       || request.email == ""
-    ){
+    ) {
       return
     }
-    const req:ManagementUserReqDto = {
-      id:request.id,
+    const req: ManagementUserReqDto = {
+      id: request.id,
       type: request.type,
       name: request.name,
       email: request.email,
       password: request.type == "BAPPENAS" ? request.password : "",
-      role_id: request.role_id?.id ?? 0
+      role_id: request.role_id?.id ?? 0,
+      list_kp_id: request.options.reduce<number[]>((a, b) => {
+        return [...a, b.id]
+      }, [])
     }
 
     let response
-    if(req.id == 0){
+    if (req.id == 0) {
       response = await doCreateUser({
         body: req,
         loadingContext: loadingContext,
         errorModalContext: errorModalContext
       })
-    }else{
+    } else {
       response = await doUpdateUser({
         body: req,
         loadingContext: loadingContext,
@@ -88,36 +111,39 @@ const useManagementUserVM = () => {
 
     if (response?.code === API_CODE.success) {
       getUsers()
-      setModal(false)
+      setModal({action: false, type: ""})
     }
   }
 
-  const handleOpenModal = (id:number) => {
-    if (id == 0){
+  const handleOpenModal = (id: number, type: string) => {
+    if (id == 0) {
       setRequest(Object.assign({}, initManagementUserReqDto))
-    }else{
+    } else {
       const index = users.findIndex(x => x.id == id)
       if (index > -1) {
         const findIndexRole = managementRoleData.findIndex(x => x.id == users[index].role_id)
-        const req:ManagementUserStateDto = {
+        const opt:OptionKP[] = optionKP.filter(x => users[index].list_kp_id.find(y => y == x.id))
+        const req: ManagementUserStateDto = {
           id: users[index].id,
           type: users[index].type,
           name: users[index].name,
           email: users[index].email,
           password: "",
-          role_id: managementRoleData[findIndexRole]
+          role_id: managementRoleData[findIndexRole],
+          options: opt
         }
         setRequest(req)
       }
     }
-    setModal(true)
+    setModal({action: true, type: type})
   }
   const createData = () => {
-      createOrUpdateUser()
+    createOrUpdateUser()
   }
 
   useEffect(() => {
-    if (users.length == 0) getUsers()
+    getUsers()
+    getOptionKP()
   }, []);
 
   return {
@@ -128,7 +154,8 @@ const useManagementUserVM = () => {
     createData,
     request,
     setRequest,
-    managementRoleData
+    managementRoleData,
+    optionKP
   }
 }
 

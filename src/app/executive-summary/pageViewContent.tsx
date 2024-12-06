@@ -74,7 +74,7 @@ export default function PageExecutiveSummaryContent({
 }: {
   toggleShowTab?: boolean;
 }) {
-  const { rkp, rkpState } = useRKPContext((state) => state);
+  const { rkp, rkpState, rkpOption } = useRKPContext((state) => state);
 
   const [value, setValue] = React.useState(0);
   const [project, setProject] = React.useState(""); // rkpState
@@ -130,7 +130,7 @@ export default function PageExecutiveSummaryContent({
         <EmptyState
           icon={<IconEmptyPage />}
           title="Halaman Executive Summary Kosong"
-          description="Silahkan pilih kegiatan pembangunan di bawah ini"
+          description={rkpOption.length > 0 ? `Silahkan pilih kegiatan pembangunan di bawah ini` : undefined}
           button={
             <DropdownRkp
               handleChangeProject={handleChangeProject}

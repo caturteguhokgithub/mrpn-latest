@@ -23,17 +23,21 @@ export default function Home() {
     processAuthUserFromSessionToken
   } = useAuthorizationVM()
 
-  useEffect(() => {
+  const authCheckProcess = async () => {
     const token = sessionStorage.getItem(API_CONSTANT.token);
     if (token) {
       setToken({ token: token });
-      const validAuth = processAuthUserFromSessionToken(token)
+      const validAuth = await processAuthUserFromSessionToken(token)
       if (!validAuth){
         router.replace("/login")
       }
     } else{
       doCheckSSO()
     }
+  }
+
+  useEffect(() => {
+    authCheckProcess()
   }, []);
 
   // useEffect(() => {

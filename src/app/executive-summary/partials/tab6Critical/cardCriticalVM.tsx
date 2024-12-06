@@ -172,7 +172,7 @@ const useCardCriticalVM = () => {
 
       });
 
-      console.log(tasks)
+      // console.log(tasks)
 
       setGanChart(tasks);
       setTaskRKP(tasks)

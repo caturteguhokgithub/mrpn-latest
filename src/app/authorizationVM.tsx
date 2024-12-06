@@ -160,6 +160,8 @@ const useAuthorizationVM = () => {
    url: "auth/me",
   });
 
+  if (response == null) return undefined
+
   if (response) {
    Object.assign(new ResponseBaseDto(), response);
    if (response.code == API_CODE.success) {
@@ -177,6 +179,8 @@ const useAuthorizationVM = () => {
    }
    return undefined
   }
+
+  return undefined
 
  }
 

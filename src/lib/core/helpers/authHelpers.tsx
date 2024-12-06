@@ -8,6 +8,8 @@ export function hasPrivilege(permission:string[], pathName:string, action:string
   let currentPath = explodePath.join(".")
 
   if (currentPath == "executive-summary") currentPath = "exsum"
+  if (currentPath == "manajemen-role") currentPath = "manajemenRole"
+  if (currentPath == "manajemen-user") currentPath = "manajemenUser"
 
   currentPath = endpoint != undefined ? endpoint : currentPath
 

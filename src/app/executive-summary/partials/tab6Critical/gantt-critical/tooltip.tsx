@@ -100,19 +100,19 @@ const CustomTooltip = ({ task }: { task: Task }) => {
               {dayjs(task.end).format(dayjsFormat)}
             </Typography>
           </Typography>
-          {taskProject.strategy.length > 0 && (
-            <Typography variant="body2" component="span">
-              Tagging Roadmap:{" "}
-              <Box component="span" display={"flex"} flexDirection={"column"}>
-                {taskProject.strategy.map((st, iSt) => (
-                  <Typography
-                    component="strong"
-                    fontWeight={600}
-                  >{`- ${st.value}`}</Typography>
-                ))}
-              </Box>
-            </Typography>
-          )}
+          {/*{taskProject.strategy.length > 0 && (*/}
+          {/*  <Typography variant="body2" component="span">*/}
+          {/*    Tagging Roadmap:{" "}*/}
+          {/*    <Box component="span" display={"flex"} flexDirection={"column"}>*/}
+          {/*      {taskProject.strategy.map((st, iSt) => (*/}
+          {/*        <Typography*/}
+          {/*          component="strong"*/}
+          {/*          fontWeight={600}*/}
+          {/*        >{`- ${st.value}`}</Typography>*/}
+          {/*      ))}*/}
+          {/*    </Box>*/}
+          {/*  </Typography>*/}
+          {/*)}*/}
           {taskProject.keterangan_kegiatan && (
             <Typography variant="body2" component="span">
               Status:{" "}

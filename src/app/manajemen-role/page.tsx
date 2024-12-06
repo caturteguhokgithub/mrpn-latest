@@ -14,8 +14,16 @@ import DialogComponent from "@/components/dialog";
 import {DialogActions, Button, Chip} from "@mui/material";
 import FormTable from "./partials/form-table";
 import useManagementRoleVM from "@/app/manajemen-role/pageVM";
+import {hasPrivilege, usePermissionChecker} from "@/lib/core/helpers/authHelpers";
+import {useAuthContext} from "@/lib/core/hooks/useHooks";
+import {usePathname} from "next/navigation";
 
 export default function PageRoleManagement() {
+
+  usePermissionChecker("manajemenRole")
+
+  const {permission} = useAuthContext(store => store)
+  const pathname = usePathname()
 
   const {
     managementRoleData,
@@ -48,7 +56,7 @@ export default function PageRoleManagement() {
     ...advancedTable,
     enableRowNumbers: true,
     renderTopToolbarCustomActions: () => (
-      <AddButton title="Tambah Role" onclick={() => handleOpenModal(0)}/>
+      hasPrivilege(permission, pathname, "add") ? <AddButton title="Tambah Role" onclick={() => handleOpenModal(0)}/> : undefined
     ),
     displayColumnDefOptions: {
       "mrt-row-actions": {
@@ -56,7 +64,7 @@ export default function PageRoleManagement() {
         size: 50,
         Cell: (row) => (
           <ActionColumn
-            editClick={() => handleOpenModal(row.cell.row.original.id)}
+            editClick={hasPrivilege(permission, pathname, "update") ? () => handleOpenModal(row.cell.row.original.id) : undefined}
             // deleteClick={() => handleOpenModal(row.cell.row.original.id)}
           />
         ),

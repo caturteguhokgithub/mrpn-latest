@@ -30,6 +30,13 @@ export async function doGetRkpLocation(params: GetRkpLocationServiceModel) {
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
 
+export async function doGetKP() {
+  const resp = await get({
+    url: "misc/rkp/getKP",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
 export async function doGetRO(params: GetRkpROServiceModel) {
   const resp = await post({
     ...params,
