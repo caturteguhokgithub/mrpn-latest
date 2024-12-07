@@ -11,7 +11,7 @@ import {
   MasterListObjectReq,
   MasterRiskMatrixReq,
   MiscMasterListPerpresCreateReq,
-  MiscMasterListPerpresCreateReqService
+  MiscMasterListPerpresCreateReqService, UpdateLogoStakeholderReq
 } from "@/app/misc/master/masterServiceModel";
 
 export async function doGetMasterListKebijakan(param: MiscMasterListKebijakanReq) {
@@ -90,6 +90,14 @@ export async function doCreateMasterPerpres(param: MiscMasterListPerpresCreateRe
   const resp = await post({
     ...param,
     url: "misc/master/addPerpres",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+export async function doUpdateLogoStakeholder(param: UpdateLogoStakeholderReq){
+  const resp = await post({
+    ...param,
+    url: "misc/master/uploadLogo",
   });
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }

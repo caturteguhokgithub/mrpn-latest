@@ -145,3 +145,15 @@ export interface MasterRiskMatrixRes {
  nilai: number;
  level: string;
 }
+
+// STAKEHOLDER
+export type UpdateLogoStakeholderReq = BaseAPIServiceParam & {
+ body: UpdateLogoStakeholderDto;
+};
+export interface UpdateLogoStakeholderDto {
+ id: number
+ value: string
+ iconPath: string
+ icon: string
+}
+export const initUpdateLogoStakeholderDto:UpdateLogoStakeholderDto = {icon: "", iconPath: "", id: 0, value: ""}

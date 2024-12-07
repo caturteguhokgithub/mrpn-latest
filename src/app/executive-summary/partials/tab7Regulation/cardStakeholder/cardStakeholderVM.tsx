@@ -1,7 +1,12 @@
 import {useExsumContext, useGlobalModalContext, useLoading} from "@/lib/core/hooks/useHooks";
 import React, {useEffect, useState} from "react";
-import {MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel";
-import {doGetMasterListStakeholder} from "@/app/misc/master/masterService";
+import {
+  initUpdateLogoStakeholderDto,
+  MiscMasterListStakeholderRes,
+  UpdateLogoStakeholderDto,
+  UpdateLogoStakeholderReq
+} from "@/app/misc/master/masterServiceModel";
+import {doGetMasterListStakeholder, doUpdateLogoStakeholder} from "@/app/misc/master/masterService";
 import {API_CODE, ResponseBaseDto} from "@/lib/core/api/apiModel";
 import {
   ExsumStakeholderReqDto, ExsumStakeholderResDto, ExsumStakeholderValueDto, initExsumStakeholderReqDto
@@ -22,6 +27,10 @@ const useCardStakeholderVM = () => {
   const [modalOpenStakeholder, setModalOpenStakeholder] = React.useState(false);
   const [data, setData] = useState<ExsumStakeholderResDto[]>([])
   const [request, setRequest] = useState<ExsumStakeholderReqDto>(initExsumStakeholderReqDto)
+  const [modalListLogo, setModalListLogo] = useState<boolean>(false)
+  const [modalLogo, setModalLogo] = useState<boolean>(false)
+  const initUploadLogo = JSON.parse(JSON.stringify(initUpdateLogoStakeholderDto))
+  const [logoState, setLogoState] = useState<UpdateLogoStakeholderDto>(initUploadLogo)
 
   async function getListStakeholder(){
     const response = await doGetMasterListStakeholder({
@@ -90,6 +99,21 @@ const useCardStakeholderVM = () => {
     }
   }
 
+  async function updateLogo(){
+    if (logoState == undefined) return;
+    const response = await doUpdateLogoStakeholder({
+      body:logoState,
+      loadingContext:loadingContext,
+      errorModalContext:errorModalContext
+    })
+    if (response?.code == API_CODE.success){
+      getData()
+      const initUploadLogo = JSON.parse(JSON.stringify(initUpdateLogoStakeholderDto))
+      setLogoState(initUploadLogo)
+      setModalLogo(false)
+    }
+  }
+
   const handleSelectStakeholder = (selectedItems:number[], type:string) => {
 
     const itemSelected:MiscMasterListStakeholderRes[] = []
@@ -136,7 +160,14 @@ const useCardStakeholderVM = () => {
     setRequest,
     updateData,
     handleSelectStakeholder,
-    handleChangeDescription
+    handleChangeDescription,
+    logoState,
+    setLogoState,
+    updateLogo,
+    modalListLogo,
+    setModalListLogo,
+    modalLogo,
+    setModalLogo
   }
 
 }
