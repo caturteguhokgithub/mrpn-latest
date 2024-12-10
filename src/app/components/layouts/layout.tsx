@@ -33,7 +33,7 @@ const Aside = dynamic(() => import("./aside"), { ssr: false });
 export default function DashboardLayout(props: {
   children: React.ReactNode;
   noOverflow?: boolean;
-  darkTheme?: boolean;
+  darkMode?: boolean;
 }) {
   const { rpjmn, setRpjmn, year, setYear } = useRKPContext((state) => state);
 
@@ -246,7 +246,7 @@ export default function DashboardLayout(props: {
     },
   };
 
-  const themeCondition = props.darkTheme
+  const themeCondition = props.darkMode
     ? "#151c26"
     : theme.palette.primary.light;
 
@@ -256,8 +256,8 @@ export default function DashboardLayout(props: {
       <Box
         component="aside"
         sx={sxAside}
-        position={props.darkTheme ? "inherit" : "unset"}
-        zIndex={props.darkTheme ? 1 : "unset"}
+        position={props.darkMode ? "inherit" : "unset"}
+        zIndex={props.darkMode ? 1 : "unset"}
       >
         <Collapse
           orientation="horizontal"
@@ -277,9 +277,9 @@ export default function DashboardLayout(props: {
       <Box
         component="header"
         sx={{ gridArea: "header", p: "20px 0" }}
-        bgcolor={props.darkTheme ? "#1f2937" : "transparent"}
-        position={props.darkTheme ? "inherit" : "unset"}
-        zIndex={props.darkTheme ? 1 : "unset"}
+        bgcolor={props.darkMode ? "#1f2937" : "transparent"}
+        position={props.darkMode ? "inherit" : "unset"}
+        zIndex={props.darkMode ? 1 : "unset"}
       >
         {flagPathnameTheme ? null : (
           <Zoom
