@@ -7,9 +7,11 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TableLonglistStepOne from "./table-long-step-1";
 import TableLonglistStepTwo from "./table-long-step-2";
-import {usePenetapanTopicContext} from "@/lib/core/hooks/useHooks";
+import {useAuthContext, usePenetapanTopicContext} from "@/lib/core/hooks/useHooks";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import {PenetapanObjectUraianDto} from "@/lib/core/context/penetapanTopicContext";
+import {usePathname} from "next/navigation";
+import {hasPrivilege} from "@/lib/core/helpers/authHelpers";
 
 const steps = [
  "Dasar Pemilihan Prioritas Objek MRPN Linsek",
@@ -21,6 +23,9 @@ export default function TableLonglistStepper({
 }: {
  handleOpenShortlist?: () => void;
 }) {
+
+ const { permission } = useAuthContext((state) => state);
+ let pathname = usePathname();
 
  const {
   uraianState,
@@ -145,15 +150,26 @@ export default function TableLonglistStepper({
         Lewati
        </Button>
       )} */}
-      <Button
-       onClick={
-        activeStep === steps.length - 1 ? handleOpenShortlist : handleNext
-       }
-       variant="contained"
-       sx={{ borderRadius: 24, px: 4 }}
-      >
-       {activeStep === steps.length - 1 ? "Selesai" : "Simpan"}
-      </Button>
+      {(hasPrivilege(permission, pathname, "add") || hasPrivilege(permission, pathname, "update") || hasPrivilege(permission, pathname, "delete"))
+        ? <Button
+          onClick={
+           activeStep === steps.length - 1 ? handleOpenShortlist : handleNext
+          }
+          variant="contained"
+          sx={{ borderRadius: 24, px: 4 }}
+        >
+         {activeStep === steps.length - 1 ? "Selesai" : "Simpan"}
+        </Button>
+        : activeStep < steps.length - 1 && <Button
+          onClick={handleNext}
+          variant="contained"
+          sx={{ borderRadius: 24, px: 4 }}
+        >
+         Selanjutnya
+        </Button>
+
+      }
+
       {/* {activeStep === steps.length - 1 && (
        <Button
         onClick={handleOpenShortlist}

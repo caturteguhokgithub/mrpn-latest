@@ -97,105 +97,107 @@ export default function TableNotaDinasViewOnly({
             </Table>
           </TableContainer>
         </Paper>
-        <Typography fontWeight={600} mt={1}>
-          Usulan UPR Lintas Sektor
-        </Typography>
-        <Paper elevation={0} variant="outlined">
-          <TableContainer sx={{ py: 1 }}>
-            <Table sx={{ minWidth: 650, td: { border: 0 } }} size="small">
-              <TableBody>
-                <TableRow>
-                  <TableCell width={300} sx={{ verticalAlign: "top" }}>
-                    <Typography color={grey[600]}>
-                      1. Kementerian Koordinasi
-                    </Typography>
-                  </TableCell>
-                  <TableCell width={2} sx={{ verticalAlign: "top", px: 0 }}>
-                    :
-                  </TableCell>
-                  <TableCell sx={{ verticalAlign: "top" }}>
-                    <Typography component="div">
-                      {notaDinas.kementerian_koordinasi.length > 1 ? (
-                        <List sx={{ p: 0, pl: "0 !important" }}>
-                          {notaDinas.kementerian_koordinasi.map((x, index) => (
-                            <ListItem sx={{ padding: 0, margin: 0 }}>{`${
-                              index + 1
-                            }. ${x}`}</ListItem>
-                          ))}
-                        </List>
-                      ) : (
-                        notaDinas.kementerian_koordinasi[0]
-                      )}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell sx={{ verticalAlign: "top" }}>
-                    <Typography color={grey[600]}>
-                      2. Entitas MRPN Sektor Utama
-                    </Typography>
-                  </TableCell>
-                  <TableCell width={2} sx={{ px: 0, verticalAlign: "top" }}>
-                    :
-                  </TableCell>
-                  <TableCell sx={{ verticalAlign: "top" }}>
-                    <Typography component="div">
-                      {notaDinas.entitas_sektor_utama.length > 1 ? (
-                        <List sx={{ p: 0, pl: "0 !important" }}>
-                          {notaDinas.entitas_sektor_utama.map((x, index) => (
-                            <ListItem sx={{ padding: 0, margin: 0 }}>{`${
-                              index + 1
-                            }. ${x}`}</ListItem>
-                          ))}
-                        </List>
-                      ) : (
-                        notaDinas.entitas_sektor_utama[0]
-                      )}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell sx={{ verticalAlign: "top" }}>
-                    <Typography color={grey[600]}>
-                      3. Entitas MRPN Pendukung
-                    </Typography>
-                  </TableCell>
-                  <TableCell width={2} sx={{ px: 0, verticalAlign: "top" }}>
-                    :
-                  </TableCell>
-                  <TableCell>
-                    <Typography component="div">
-                      {notaDinas.entitas_pendukung.length > 1 ? (
-                        <List sx={{ p: 0, pl: "0 !important" }}>
-                          {notaDinas.entitas_pendukung.map((x, index) => (
-                            <ListItem sx={{ padding: 0, margin: 0 }}>{`${
-                              index + 1
-                            }. ${x}`}</ListItem>
-                          ))}
-                        </List>
-                      ) : (
-                        notaDinas.entitas_pendukung[0]
-                      )}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell sx={{ verticalAlign: "top" }}>
-                    <Typography gutterBottom color={grey[600]}>
-                      Justifikasi & Penjelasan
-                    </Typography>
-                  </TableCell>
-                  <TableCell width={2} sx={{ px: 0, verticalAlign: "top" }}>
-                    :
-                  </TableCell>
-                  <TableCell sx={{ verticalAlign: "top" }}>
-                    <Typography>{notaDinas.penjelasan_usulan_upr}</Typography>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
+
+        {/*<Typography fontWeight={600} mt={1}>*/}
+        {/*  Usulan UPR Lintas Sektor*/}
+        {/*</Typography>*/}
+        {/*<Paper elevation={0} variant="outlined">*/}
+        {/*  <TableContainer sx={{ py: 1 }}>*/}
+        {/*    <Table sx={{ minWidth: 650, td: { border: 0 } }} size="small">*/}
+        {/*      <TableBody>*/}
+        {/*        <TableRow>*/}
+        {/*          <TableCell width={300} sx={{ verticalAlign: "top" }}>*/}
+        {/*            <Typography color={grey[600]}>*/}
+        {/*              1. Kementerian Koordinasi*/}
+        {/*            </Typography>*/}
+        {/*          </TableCell>*/}
+        {/*          <TableCell width={2} sx={{ verticalAlign: "top", px: 0 }}>*/}
+        {/*            :*/}
+        {/*          </TableCell>*/}
+        {/*          <TableCell sx={{ verticalAlign: "top" }}>*/}
+        {/*            <Typography component="div">*/}
+        {/*              {notaDinas.kementerian_koordinasi.length > 1 ? (*/}
+        {/*                <List sx={{ p: 0, pl: "0 !important" }}>*/}
+        {/*                  {notaDinas.kementerian_koordinasi.map((x, index) => (*/}
+        {/*                    <ListItem sx={{ padding: 0, margin: 0 }}>{`${*/}
+        {/*                      index + 1*/}
+        {/*                    }. ${x}`}</ListItem>*/}
+        {/*                  ))}*/}
+        {/*                </List>*/}
+        {/*              ) : (*/}
+        {/*                notaDinas.kementerian_koordinasi[0]*/}
+        {/*              )}*/}
+        {/*            </Typography>*/}
+        {/*          </TableCell>*/}
+        {/*        </TableRow>*/}
+        {/*        <TableRow>*/}
+        {/*          <TableCell sx={{ verticalAlign: "top" }}>*/}
+        {/*            <Typography color={grey[600]}>*/}
+        {/*              2. Entitas MRPN Sektor Utama*/}
+        {/*            </Typography>*/}
+        {/*          </TableCell>*/}
+        {/*          <TableCell width={2} sx={{ px: 0, verticalAlign: "top" }}>*/}
+        {/*            :*/}
+        {/*          </TableCell>*/}
+        {/*          <TableCell sx={{ verticalAlign: "top" }}>*/}
+        {/*            <Typography component="div">*/}
+        {/*              {notaDinas.entitas_sektor_utama.length > 1 ? (*/}
+        {/*                <List sx={{ p: 0, pl: "0 !important" }}>*/}
+        {/*                  {notaDinas.entitas_sektor_utama.map((x, index) => (*/}
+        {/*                    <ListItem sx={{ padding: 0, margin: 0 }}>{`${*/}
+        {/*                      index + 1*/}
+        {/*                    }. ${x}`}</ListItem>*/}
+        {/*                  ))}*/}
+        {/*                </List>*/}
+        {/*              ) : (*/}
+        {/*                notaDinas.entitas_sektor_utama[0]*/}
+        {/*              )}*/}
+        {/*            </Typography>*/}
+        {/*          </TableCell>*/}
+        {/*        </TableRow>*/}
+        {/*        <TableRow>*/}
+        {/*          <TableCell sx={{ verticalAlign: "top" }}>*/}
+        {/*            <Typography color={grey[600]}>*/}
+        {/*              3. Entitas MRPN Pendukung*/}
+        {/*            </Typography>*/}
+        {/*          </TableCell>*/}
+        {/*          <TableCell width={2} sx={{ px: 0, verticalAlign: "top" }}>*/}
+        {/*            :*/}
+        {/*          </TableCell>*/}
+        {/*          <TableCell>*/}
+        {/*            <Typography component="div">*/}
+        {/*              {notaDinas.entitas_pendukung.length > 1 ? (*/}
+        {/*                <List sx={{ p: 0, pl: "0 !important" }}>*/}
+        {/*                  {notaDinas.entitas_pendukung.map((x, index) => (*/}
+        {/*                    <ListItem sx={{ padding: 0, margin: 0 }}>{`${*/}
+        {/*                      index + 1*/}
+        {/*                    }. ${x}`}</ListItem>*/}
+        {/*                  ))}*/}
+        {/*                </List>*/}
+        {/*              ) : (*/}
+        {/*                notaDinas.entitas_pendukung[0]*/}
+        {/*              )}*/}
+        {/*            </Typography>*/}
+        {/*          </TableCell>*/}
+        {/*        </TableRow>*/}
+        {/*        <TableRow>*/}
+        {/*          <TableCell sx={{ verticalAlign: "top" }}>*/}
+        {/*            <Typography gutterBottom color={grey[600]}>*/}
+        {/*              Justifikasi & Penjelasan*/}
+        {/*            </Typography>*/}
+        {/*          </TableCell>*/}
+        {/*          <TableCell width={2} sx={{ px: 0, verticalAlign: "top" }}>*/}
+        {/*            :*/}
+        {/*          </TableCell>*/}
+        {/*          <TableCell sx={{ verticalAlign: "top" }}>*/}
+        {/*            <Typography>{notaDinas.penjelasan_usulan_upr}</Typography>*/}
+        {/*          </TableCell>*/}
+        {/*        </TableRow>*/}
+        {/*      </TableBody>*/}
+        {/*    </Table>*/}
+        {/*  </TableContainer>*/}
+        {/*</Paper>*/}
+
         <Paper elevation={0} variant="outlined">
           <TableContainer sx={{ py: 1 }}>
             <Table sx={{ minWidth: 650, td: { border: 0 } }} size="small">
@@ -332,14 +334,14 @@ export default function TableNotaDinasViewOnly({
                       <Typography textAlign="center" fontWeight={500}>
                         {notaDinas.dibuat}
                       </Typography>
-                      <Divider />
-                      <Typography
-                        textAlign="center"
-                        fontSize={14}
-                        color={grey[700]}
-                      >
-                        Kepala Biro Hukum
-                      </Typography>
+                      {/*<Divider />*/}
+                      {/*<Typography*/}
+                      {/*  textAlign="center"*/}
+                      {/*  fontSize={14}*/}
+                      {/*  color={grey[700]}*/}
+                      {/*>*/}
+                      {/*  Kepala Biro Hukum*/}
+                      {/*</Typography>*/}
                     </Stack>
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>
@@ -347,14 +349,14 @@ export default function TableNotaDinasViewOnly({
                       <Typography textAlign="center" fontWeight={500}>
                         {notaDinas.disetujui}
                       </Typography>
-                      <Divider />
-                      <Typography
-                        textAlign="center"
-                        fontSize={14}
-                        color={grey[700]}
-                      >
-                        Kepala Pusat Data dan Informasi Perencanaan Pembangunan
-                      </Typography>
+                      {/*<Divider />*/}
+                      {/*<Typography*/}
+                      {/*  textAlign="center"*/}
+                      {/*  fontSize={14}*/}
+                      {/*  color={grey[700]}*/}
+                      {/*>*/}
+                      {/*  Kepala Pusat Data dan Informasi Perencanaan Pembangunan*/}
+                      {/*</Typography>*/}
                     </Stack>
                   </TableCell>
                 </TableRow>

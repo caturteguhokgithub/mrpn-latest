@@ -368,9 +368,12 @@ const usePenetapanObjectVM = () => {
         })
         if (response?.code === API_CODE.success){
           getPenetapanObjectNotaDinas()
+          return true
         }
       }
     }
+
+    return false
   }
 
   const useEffectGenerateOption = () => {

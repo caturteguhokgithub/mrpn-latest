@@ -158,94 +158,96 @@ export default function TableNotaDinas({
             </TableBody>
           </Table>
         </TableContainer>
-        <Typography fontWeight={600}>Usulan UPR Lintas Sektor</Typography>
-        <TableContainer component={Paper} elevation={0} variant="outlined">
-          <Table sx={{ minWidth: 650 }} size="small">
-            <TableBody>
-              <TableRow>
-                <TableCell width={300} sx={{ verticalAlign: "top" }}>
-                  <Typography fontSize={14} color={grey[600]}>
-                    1. Kementerian Koordinasi
-                  </Typography>
-                </TableCell>
-                <TableCell width={2} sx={{ px: 0, verticalAlign: "top" }}>
-                  :
-                </TableCell>
-                <TableCell>
-                  <List sx={{ pl: "0 !important" }}>
-                    {nota?.kementerian_koordinasi.map((x) => (
-                      <ListItem>{x}</ListItem>
-                    ))}
-                  </List>
-                </TableCell>
-              </TableRow>
 
-              <TableRow>
-                <TableCell width={300} sx={{ verticalAlign: "top" }}>
-                  <Typography fontSize={14} color={grey[600]}>
-                    2. Entitas MRPN Sektor Utama
-                  </Typography>
-                </TableCell>
-                <TableCell width={2} sx={{ px: 0, verticalAlign: "top" }}>
-                  :
-                </TableCell>
-                <TableCell>
-                  <ul>
-                    {nota?.entitas_sektor_utama.map((x) => (
-                      <li>{x}</li>
-                    ))}
-                  </ul>
-                </TableCell>
-              </TableRow>
+        {/*<Typography fontWeight={600}>Usulan UPR Lintas Sektor</Typography>*/}
+        {/*<TableContainer component={Paper} elevation={0} variant="outlined">*/}
+        {/*  <Table sx={{ minWidth: 650 }} size="small">*/}
+        {/*    <TableBody>*/}
+        {/*      <TableRow>*/}
+        {/*        <TableCell width={300} sx={{ verticalAlign: "top" }}>*/}
+        {/*          <Typography fontSize={14} color={grey[600]}>*/}
+        {/*            1. Kementerian Koordinasi*/}
+        {/*          </Typography>*/}
+        {/*        </TableCell>*/}
+        {/*        <TableCell width={2} sx={{ px: 0, verticalAlign: "top" }}>*/}
+        {/*          :*/}
+        {/*        </TableCell>*/}
+        {/*        <TableCell>*/}
+        {/*          <List sx={{ pl: "0 !important" }}>*/}
+        {/*            {nota?.kementerian_koordinasi.map((x) => (*/}
+        {/*              <ListItem>{x}</ListItem>*/}
+        {/*            ))}*/}
+        {/*          </List>*/}
+        {/*        </TableCell>*/}
+        {/*      </TableRow>*/}
 
-              <TableRow>
-                <TableCell width={300} sx={{ verticalAlign: "top" }}>
-                  <Typography fontSize={14} color={grey[600]}>
-                    3. Entitas MRPN Pendukung
-                  </Typography>
-                </TableCell>
-                <TableCell width={2} sx={{ px: 0, verticalAlign: "top" }}>
-                  :
-                </TableCell>
-                <TableCell>
-                  <ul>
-                    {nota?.entitas_pendukung.map((x) => (
-                      <li>{x}</li>
-                    ))}
-                  </ul>
-                </TableCell>
-              </TableRow>
+        {/*      <TableRow>*/}
+        {/*        <TableCell width={300} sx={{ verticalAlign: "top" }}>*/}
+        {/*          <Typography fontSize={14} color={grey[600]}>*/}
+        {/*            2. Entitas MRPN Sektor Utama*/}
+        {/*          </Typography>*/}
+        {/*        </TableCell>*/}
+        {/*        <TableCell width={2} sx={{ px: 0, verticalAlign: "top" }}>*/}
+        {/*          :*/}
+        {/*        </TableCell>*/}
+        {/*        <TableCell>*/}
+        {/*          <ul>*/}
+        {/*            {nota?.entitas_sektor_utama.map((x) => (*/}
+        {/*              <li>{x}</li>*/}
+        {/*            ))}*/}
+        {/*          </ul>*/}
+        {/*        </TableCell>*/}
+        {/*      </TableRow>*/}
 
-              <TableRow>
-                <TableCell colSpan={3}>
-                  <Typography gutterBottom fontSize={14} color={grey[600]}>
-                    Justifikasi & Penjelasan
-                  </Typography>
-                  {edit ? (
-                    <TextareaStyled
-                      disabled={!edit}
-                      aria-label="Justifikasi & Penjelasan Usulan UPR Lintas Sektor"
-                      placeholder="Justifikasi & Penjelasan Usulan UPR Lintas Sektor"
-                      minRows={3}
-                      value={nota?.penjelasan_usulan_upr}
-                      onChange={(e) => {
-                        if (nota !== undefined) {
-                          const prev = { ...nota };
-                          prev.penjelasan_usulan_upr = e.target.value;
-                          setNota(prev);
-                        }
-                      }}
-                    />
-                  ) : (
-                    <Typography fontSize={14}>
-                      {nota?.penjelasan_usulan_upr}
-                    </Typography>
-                  )}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
+        {/*      <TableRow>*/}
+        {/*        <TableCell width={300} sx={{ verticalAlign: "top" }}>*/}
+        {/*          <Typography fontSize={14} color={grey[600]}>*/}
+        {/*            3. Entitas MRPN Pendukung*/}
+        {/*          </Typography>*/}
+        {/*        </TableCell>*/}
+        {/*        <TableCell width={2} sx={{ px: 0, verticalAlign: "top" }}>*/}
+        {/*          :*/}
+        {/*        </TableCell>*/}
+        {/*        <TableCell>*/}
+        {/*          <ul>*/}
+        {/*            {nota?.entitas_pendukung.map((x) => (*/}
+        {/*              <li>{x}</li>*/}
+        {/*            ))}*/}
+        {/*          </ul>*/}
+        {/*        </TableCell>*/}
+        {/*      </TableRow>*/}
+
+        {/*      <TableRow>*/}
+        {/*        <TableCell colSpan={3}>*/}
+        {/*          <Typography gutterBottom fontSize={14} color={grey[600]}>*/}
+        {/*            Justifikasi & Penjelasan*/}
+        {/*          </Typography>*/}
+        {/*          {edit ? (*/}
+        {/*            <TextareaStyled*/}
+        {/*              disabled={!edit}*/}
+        {/*              aria-label="Justifikasi & Penjelasan Usulan UPR Lintas Sektor"*/}
+        {/*              placeholder="Justifikasi & Penjelasan Usulan UPR Lintas Sektor"*/}
+        {/*              minRows={3}*/}
+        {/*              value={nota?.penjelasan_usulan_upr}*/}
+        {/*              onChange={(e) => {*/}
+        {/*                if (nota !== undefined) {*/}
+        {/*                  const prev = { ...nota };*/}
+        {/*                  prev.penjelasan_usulan_upr = e.target.value;*/}
+        {/*                  setNota(prev);*/}
+        {/*                }*/}
+        {/*              }}*/}
+        {/*            />*/}
+        {/*          ) : (*/}
+        {/*            <Typography fontSize={14}>*/}
+        {/*              {nota?.penjelasan_usulan_upr}*/}
+        {/*            </Typography>*/}
+        {/*          )}*/}
+        {/*        </TableCell>*/}
+        {/*      </TableRow>*/}
+        {/*    </TableBody>*/}
+        {/*  </Table>*/}
+        {/*</TableContainer>*/}
+
         <TableContainer component={Paper} elevation={0} variant="outlined">
           <Table sx={{ minWidth: 650 }} size="small">
             <TableBody>
@@ -497,7 +499,9 @@ export default function TableNotaDinas({
               <Button
                 variant="contained"
                 sx={{ borderRadius: 24, px: 4 }}
-                onClick={() => updateOrCreateNotaDinas()}
+                onClick={() => {
+                  updateOrCreateNotaDinas().then(r => r && setEdit(false))
+                }}
               >
                 Simpan
               </Button>
