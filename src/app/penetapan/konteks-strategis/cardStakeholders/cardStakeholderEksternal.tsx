@@ -42,7 +42,7 @@ export default function CardStakeholderEksternal() {
 
   return (
     <CardItem
-      title="Daftar Pemangku Kepentingan Internal (Stakeholder Eksternal)"
+      title="Daftar Pemangku Kepentingan Eksternal (Stakeholder Eksternal)"
       setting
       settingEditOnclick={handleModalOpenStakeholder}
     >
