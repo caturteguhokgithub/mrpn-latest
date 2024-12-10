@@ -65,12 +65,14 @@ export default function CardGroup({ darkMode }: { darkMode?: boolean }) {
             color={logoOrange}
             value="36,9%"
             title="Realisasi Perlakuan Risiko"
+            darkMode={darkMode}
           />
           <CardValue
             iconName="list-check"
             color={logoBlue}
             value="57,8%"
             title="Efektivitas Perlakuan Risiko"
+            darkMode={darkMode}
           />
           <CardValue
             titleSize={16}
@@ -79,6 +81,7 @@ export default function CardGroup({ darkMode }: { darkMode?: boolean }) {
             color={logoBrown}
             value="5"
             title="Jumlah Perlakuan Risiko"
+            darkMode={darkMode}
           />
           <CardValue
             titleSize={16}
@@ -87,6 +90,7 @@ export default function CardGroup({ darkMode }: { darkMode?: boolean }) {
             color={logoGreen}
             value="88%"
             title="Kepatuhan Pelaporan UPR LS"
+            darkMode={darkMode}
           />
           <CardValue
             titleSize={16}
@@ -95,6 +99,7 @@ export default function CardGroup({ darkMode }: { darkMode?: boolean }) {
             color={red}
             value="54"
             title="Jumlah UPR LS"
+            darkMode={darkMode}
             //   total="Kementerian PPN/Bappenas"
             //   onclick={handleModalOpen}
 

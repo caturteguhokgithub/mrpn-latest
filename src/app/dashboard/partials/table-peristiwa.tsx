@@ -227,5 +227,5 @@ export default function TablePeristiwa({ darkMode }: { darkMode?: boolean }) {
     </Table>
   );
 
-  return <BlockCard>{matriksFive}</BlockCard>;
+  return <BlockCard darkMode={darkMode}>{matriksFive}</BlockCard>;
 }

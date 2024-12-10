@@ -54,7 +54,7 @@ export default function ChartStatus({ darkMode }: { darkMode?: boolean }) {
   const breakpointDownXl = useMediaQuery(usetheme.breakpoints.down("xl"));
 
   return (
-    <BlockCard title="Perlakuan Risiko Berdasarkan Status">
+    <BlockCard title="Perlakuan Risiko Berdasarkan Status" darkMode={darkMode}>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie

@@ -11,6 +11,7 @@ export default function TableMatriks({ darkMode }: { darkMode?: boolean }) {
   };
   return (
     <BlockCard
+      darkMode={darkMode}
       title="Peta Risiko"
       cardAction={
         <DropdownDefault

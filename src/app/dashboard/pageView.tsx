@@ -125,7 +125,7 @@ export default function PageDashboardView({
                 <ChartEntitas darkMode={darkMode} />
               </Grid>
               <Grid item xs={12} md={4}>
-                <ChartTarget />
+                <ChartTarget darkMode={darkMode} />
               </Grid>
               <Grid item xs={12}>
                 <TableMatriks darkMode={darkMode} />
