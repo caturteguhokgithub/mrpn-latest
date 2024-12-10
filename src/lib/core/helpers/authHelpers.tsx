@@ -10,6 +10,7 @@ export function hasPrivilege(permission:string[], pathName:string, action:string
   if (currentPath == "executive-summary") currentPath = "exsum"
   if (currentPath == "manajemen-role") currentPath = "manajemenRole"
   if (currentPath == "manajemen-user") currentPath = "manajemenUser"
+  if (currentPath == "penetapan.objek") currentPath = "penetapan.objectUpr"
 
   currentPath = endpoint != undefined ? endpoint : currentPath
 
