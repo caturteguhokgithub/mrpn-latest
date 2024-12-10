@@ -24,7 +24,7 @@ export default function ChartEntitas({ darkMode }: { darkMode?: boolean }) {
   const COLORS = ["#00ccff", "#66d6ff", "#99ebff", "	#ccf5ff", "#f3fdff"];
 
   return (
-    <BlockCard title="5 Entitas Teratas">
+    <BlockCard title="5 Entitas Teratas" darkMode={darkMode}>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
           data={data}

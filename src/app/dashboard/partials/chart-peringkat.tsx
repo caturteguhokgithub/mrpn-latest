@@ -26,7 +26,7 @@ export default function ChartPeringkat({ darkMode }: { darkMode?: boolean }) {
   const breakpointDownXl = useMediaQuery(usetheme.breakpoints.down("xl"));
 
   return (
-    <BlockCard title="Peringkat Risiko">
+    <BlockCard title="Peringkat Risiko" darkMode={darkMode}>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie

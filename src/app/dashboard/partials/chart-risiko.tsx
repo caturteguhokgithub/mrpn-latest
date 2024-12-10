@@ -42,7 +42,7 @@ export default function ChartRisiko({ darkMode }: { darkMode?: boolean }) {
   const COLORS = ["#e25316", "#ea6228", "#ec733f", "#ef8456", "#f1956e"];
 
   return (
-    <BlockCard title="5 Risiko Teratas">
+    <BlockCard title="5 Risiko Teratas" darkMode={darkMode}>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
           data={data}
