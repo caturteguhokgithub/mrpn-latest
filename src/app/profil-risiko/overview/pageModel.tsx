@@ -17,6 +17,7 @@ export interface RiskOverviewData {
   perlakuan_br: number
   perlakuan_level: string
   keputusan: string
+  keterangan_risiko: string
   keterangan: string[]
   waktu: string
   penanggung_jawab: string

@@ -1,5 +1,5 @@
 import {BaseAPIServiceParam} from "@/lib/core/api/apiModel";
-import {RoDto} from "@/app/misc/rkp/rkpServiceModel";
+import {RODataTable, RoDto} from "@/app/misc/rkp/rkpServiceModel";
 import {MasterRiskMatrixRes, MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel";
 import {RiskAnalysisDto} from "@/app/profil-risiko/analisis-evaluasi/pageModel";
 import {RiskOverviewData} from "@/app/profil-risiko/overview/pageModel";
@@ -12,6 +12,7 @@ export interface RiskTreatmentValueDto {
   id: number
   profil_risiko_id: number
   keputusan: string
+  keterangan_risiko: string
   start_date: string
   end_date: string
   triwulan: number
@@ -39,6 +40,7 @@ export interface RiskTreatmentReqDto {
   profil_risiko_id: number
   keputusan: string
   ro: number[]
+  keterangan_risiko: string
   start_date: string
   end_date: string
   src_stakeholder_id: number
@@ -55,6 +57,7 @@ export interface RiskTreatmentState {
   profil_risiko: RiskAnalysisDto|undefined
   keputusan: string
   target: string
+  keterangan_risiko:string
   ro: RoDto[]
   start_date: string
   end_date: string
@@ -67,11 +70,12 @@ export const initRiskTreatmentState:RiskTreatmentState = {
   id: 0,
   profil_risiko: undefined,
   keputusan: "",
-  target:"",
+  target: "",
   ro: [],
   start_date: "2024-10-10",
   end_date: "2024-10-10",
   src_stakeholder: undefined,
   src_matriks_risiko: undefined,
-  triwulan: 0
+  triwulan: 0,
+  keterangan_risiko: ""
 }
