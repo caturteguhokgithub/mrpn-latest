@@ -188,22 +188,22 @@ const TablePerlakuanMultiCheck = ({
             <TableRow>
               <TableCell rowSpan={2} sx={{width: 30}}></TableCell>
               <TableCell rowSpan={2}>Nomenklatur RO</TableCell>
-              {multiyear.map((y, iY) => (
-                <TableCell colSpan={4} align={"center"}>
-                  {y}
-                </TableCell>
-              ))}
+              {/*{multiyear.map((y, iY) => (*/}
+              {/*  <TableCell colSpan={4} align={"center"}>*/}
+              {/*    {y}*/}
+              {/*  </TableCell>*/}
+              {/*))}*/}
             </TableRow>
-            <TableRow>
-              {multiyear.map((y, iY) => (
-                <>
-                  <TableCell>Target</TableCell>
-                  <TableCell>Satuan</TableCell>
-                  <TableCell>Pembiayaan (Juta)</TableCell>
-                  <TableCell>Sumber Pembiayaan</TableCell>
-                </>
-              ))}
-            </TableRow>
+            {/*<TableRow>*/}
+            {/*  {multiyear.map((y, iY) => (*/}
+            {/*    <>*/}
+            {/*      <TableCell>Target</TableCell>*/}
+            {/*      <TableCell>Satuan</TableCell>*/}
+            {/*      <TableCell>Pembiayaan (Juta)</TableCell>*/}
+            {/*      <TableCell>Sumber Pembiayaan</TableCell>*/}
+            {/*    </>*/}
+            {/*  ))}*/}
+            {/*</TableRow>*/}
           </TableHead>
           <TableBody>
             {rows.map((row) => (
@@ -217,22 +217,22 @@ const TablePerlakuanMultiCheck = ({
                   />
                 </TableCell>
                 <TableCell>{highlightText(row.value, search)}</TableCell>
-                {multiyear.map((y, iY) => (
-                  <>
-                    <TableCell>
-                      {getRowData('target', y, row.detail)}
-                    </TableCell>
-                    <TableCell>
-                      {getRowData('satuan',y, row.detail)}
-                    </TableCell>
-                    <TableCell align={"right"}>
-                      {getRowData('anggaran', y, row.detail)}
-                    </TableCell>
-                    <TableCell>
-                      {getRowData('sumber_anggaran', y, row.detail)}
-                    </TableCell>
-                  </>
-                ))}
+                {/*{multiyear.map((y, iY) => (*/}
+                {/*  <>*/}
+                {/*    <TableCell>*/}
+                {/*      {getRowData('target', y, row.detail)}*/}
+                {/*    </TableCell>*/}
+                {/*    <TableCell>*/}
+                {/*      {getRowData('satuan',y, row.detail)}*/}
+                {/*    </TableCell>*/}
+                {/*    <TableCell align={"right"}>*/}
+                {/*      {getRowData('anggaran', y, row.detail)}*/}
+                {/*    </TableCell>*/}
+                {/*    <TableCell>*/}
+                {/*      {getRowData('sumber_anggaran', y, row.detail)}*/}
+                {/*    </TableCell>*/}
+                {/*  </>*/}
+                {/*))}*/}
               </TableRow>
             ))}
           </TableBody>
