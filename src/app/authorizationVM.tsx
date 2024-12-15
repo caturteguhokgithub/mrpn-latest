@@ -90,7 +90,7 @@ const useAuthorizationVM = () => {
     let result: AuthResDto = response.result;
     sessionStorage.setItem(API_CONSTANT.token, result.access_token.token)
     setIsLoading(false);
-    return router.replace("/");
+    return router.replace((process.env.NEXT_PUBLIC_BASE_URL ?? "")+"/");
    }
   }
 
