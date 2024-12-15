@@ -4,6 +4,8 @@ const nextConfig = {
     output: "export",
     // basePath: "/fe",
     // assetPrefix: "https://mrpn.bappenas.go.id/fe",
+    // basePath: "/fe-staging",
+    // assetPrefix: "https://mrpn.bappenas.go.id/fe-staging",
     reactStrictMode: false,
     crossOrigin: 'anonymous',
     images: {
