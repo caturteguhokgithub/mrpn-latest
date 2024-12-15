@@ -482,6 +482,8 @@ const useCardIndicationVM = () => {
       await getData()
       const initState:ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication))
       setState(initState)
+
+      await getOptionRO()
       setModalOpen({index:-1, action:false, type:""});
     }
 
@@ -557,6 +559,25 @@ const useCardIndicationVM = () => {
         return
       }
 
+      setState(prevState => {
+        let thisState = {...stateValue}
+        if (thisState.type == "NON_RO"){
+          thisState.intervention = true
+        }
+        let values = prevState.values
+        if (modalOutput.index > -1){
+          values[modalOutput.index] = thisState
+        }else{
+          values.push(thisState)
+        }
+
+        return {
+          ...prevState,
+          values:values
+        }
+
+      })
+
     }
 
     if (stateValue.type == "NON_RO"){
@@ -570,7 +591,7 @@ const useCardIndicationVM = () => {
         return
       }
 
-      const nonRO = stateValue.non_rincian_output
+      const nonRO:ExsumInterventionState = JSON.parse(JSON.stringify(stateValue.non_rincian_output))
 
       let lokasi:any[] = []
       nonRO.location.map(x => {
@@ -605,7 +626,7 @@ const useCardIndicationVM = () => {
         }
 
         const res:RoDto = response?.result
-        stateValue.non_rincian_output.id = res.id
+        nonRO.id = res.id
 
       }else{
         const req:UpdateV2ExsumIntervention = {
@@ -635,26 +656,28 @@ const useCardIndicationVM = () => {
         }
       }
 
+      setState(prevState => {
+        let thisState = {...stateValue}
+        thisState.non_rincian_output = nonRO
+
+        if (thisState.type == "NON_RO"){
+          thisState.intervention = true
+        }
+        let values = prevState.values
+        if (modalOutput.index > -1){
+          values[modalOutput.index] = thisState
+        }else{
+          values.push(thisState)
+        }
+
+        return {
+          ...prevState,
+          values:values
+        }
+
+      })
+
     }
-
-    setState(prevState => {
-      let thisState = {...stateValue}
-      if (thisState.type == "NON_RO"){
-        thisState.intervention = true
-      }
-      let values = prevState.values
-      if (modalOutput.index > -1){
-        values[modalOutput.index] = thisState
-      }else{
-        values.push(thisState)
-      }
-
-      return {
-        ...prevState,
-        values:values
-      }
-
-    })
 
     handleModalOutputOpen(-1, false, "")
   }

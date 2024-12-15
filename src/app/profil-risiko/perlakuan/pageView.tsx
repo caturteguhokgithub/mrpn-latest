@@ -152,42 +152,12 @@ export default function PagePerlakuanView({}) {
             header: "Keputusan Perlakuan Risiko",
             enableColumnActions: false,
           },
-          // {
-          //   accessorKey: "keterangan",
-          //   header: "Keterangan Perlakuan Risiko",
-          //   enableColumnActions: false,
-          //   size: 300,
-          //   Cell: ({ cell }: { cell: any }) => (
-          //     <Paper
-          //       elevation={0}
-          //       sx={{
-          //         overflow: "auto",
-          //         maxHeight: 160,
-          //         backgroundColor: "transparent",
-          //         "&::-webkit-scrollbar": {
-          //           width: "3px",
-          //         },
-          //       }}
-          //     >
-          //       <Stack gap={1}>
-          //         {cell.getValue().map((itemDesc: any, index: any) => (
-          //           <Chip
-          //             // key={index}
-          //             sx={{
-          //               height: "auto",
-          //               py: 1,
-          //               "& .MuiChip-label": {
-          //                 overflow: "unset",
-          //                 whiteSpace: "wrap",
-          //               },
-          //             }}
-          //             label={"{no implement}"}
-          //           />
-          //         ))}
-          //       </Stack>
-          //     </Paper>
-          //   ),
-          // },
+          {
+            accessorKey: "keterangan_risiko",
+            header: "Keterangan Perlakuan Risiko",
+            enableColumnActions: false,
+            size: 300
+          },
           {
             accessorKey: "waktu",
             header: "Waktu Rencana Perlakuan Risiko",

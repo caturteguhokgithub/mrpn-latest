@@ -8,6 +8,7 @@ export interface ProfileRiskDto {
   kategori_risiko: string
   insidentil: boolean
   peristiwa_risiko: string
+  keterangan_risiko: string
   penyebab_dampak : {
     penyebab:string[]
     dampak:string[]

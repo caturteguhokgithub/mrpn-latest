@@ -12,10 +12,12 @@ import {
 import theme from "@/theme";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
-import {usePenetapanTopicContext} from "@/lib/core/hooks/useHooks";
+import {useAuthContext, usePenetapanTopicContext} from "@/lib/core/hooks/useHooks";
 import {PenetapanObjectPrioritas, PenetapanObjectUraianDto} from "@/lib/core/context/penetapanTopicContext";
 import {DasarPemilihan} from "@/app/penetapan/objek/pageModel";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
+import {usePathname} from "next/navigation";
+import {hasPrivilege} from "@/lib/core/helpers/authHelpers";
 
 export default function TableLonglistStepOne({ mode }: { mode?: string }) {
 
@@ -24,9 +26,8 @@ export default function TableLonglistStepOne({ mode }: { mode?: string }) {
    setUraianState,
  } = usePenetapanTopicContext(state => state)
 
- const {
-  manipulateStateUraianPriority
- } = usePenetapanObjectVM()
+ const { permission } = useAuthContext((state) => state);
+ let pathname = usePathname();
 
  const getIsChecked = (data:PenetapanObjectPrioritas[], id:number) => {
   const getIndex = data.findIndex(x => x.value == id.toString())
@@ -99,6 +100,7 @@ export default function TableLonglistStepOne({ mode }: { mode?: string }) {
            <TableCell align="center">
             <Checkbox
               value={x.id}
+              disabled={!(hasPrivilege(permission, pathname, "add") || hasPrivilege(permission, pathname, "update") || hasPrivilege(permission, pathname, "delete"))}
               checked={getIsChecked(row.prioritas, x.id)}
               onChange={(e) => handleChecked(e.target.checked, i, x.id)}
             />
