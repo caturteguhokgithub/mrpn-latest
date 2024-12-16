@@ -43,8 +43,11 @@ import { dataSub } from "@/app/profil-risiko/analisis-evaluasi/setting";
 import useRiskAnalysisVM from "@/app/profil-risiko/analisis-evaluasi/pageVM";
 import { RiskTreatmentDto } from "@/app/profil-risiko/perlakuan/pageModel";
 import dayjs from "dayjs";
-import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
+import {RoDetailDto, RoDto} from "@/app/misc/rkp/rkpServiceModel";
 import { RiskOverviewData } from "@/app/profil-risiko/overview/pageModel";
+import {GenerateRpjmnYear} from "@/lib/utils/common";
+import {FormatIDR} from "@/lib/utils/currency";
+import {getDetailRO} from "@/lib/utils/roDetail";
 
 export default function PagePerlakuanView({}) {
   const { permission } = useAuthContext((state) => state);
@@ -55,6 +58,11 @@ export default function PagePerlakuanView({}) {
       : pathname;
 
   const { year, rpjmn } = useRKPContext((state) => state);
+
+  let multiyear: number[] = [year];
+  if (year == 0) {
+    multiyear = GenerateRpjmnYear(rpjmn);
+  }
 
   const { objects, objectState, setObjectState, getMasterListObject } =
     usePenetapanGlobalVM();
@@ -338,7 +346,7 @@ export default function PagePerlakuanView({}) {
       <Box bgcolor={theme.palette.primary.light}>
         <TableContainer
           sx={{
-            maxHeight: 200,
+            maxHeight: 300,
             "&::-webkit-scrollbar": {
               width: "3px",
             },
@@ -347,16 +355,23 @@ export default function PagePerlakuanView({}) {
           <Table stickyHeader size="small">
             <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
               <TableRow>
-                <TableCell sx={{ width: 30 }}>No</TableCell>
-                <TableCell>Nomenklatur RO</TableCell>
-                <TableCell>Target</TableCell>
-                <TableCell>Satuan</TableCell>
-                <TableCell>Realisasi Fisik</TableCell>
-                <TableCell>Alokasi Anggaran</TableCell>
-                <TableCell>Realisasi Anggaran</TableCell>
-                <TableCell>Target Capaian</TableCell>
-                <TableCell>Realisasi Progress</TableCell>
-                <TableCell>Status</TableCell>
+                <TableCell rowSpan={2} sx={{ width: 30 }}>No</TableCell>
+                <TableCell rowSpan={2}>Nomenklatur RO</TableCell>
+                {multiyear.map((y, iY) => (
+                  <TableCell colSpan={4} align={"center"}>
+                    {y}
+                  </TableCell>
+                ))}
+              </TableRow>
+              <TableRow>
+                {multiyear.map((y, iY) => (
+                  <>
+                    <TableCell style={{ top: "37px" }}>Target</TableCell>
+                    <TableCell style={{ top: "37px" }}>Satuan</TableCell>
+                    <TableCell style={{ top: "37px" }}>Pembiayaan (Juta)</TableCell>
+                    <TableCell style={{ top: "37px" }}>Sumber Pembiayaan</TableCell>
+                  </>
+                ))}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -365,25 +380,22 @@ export default function PagePerlakuanView({}) {
                   <TableRow key={r.id}>
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{r.value}</TableCell>
-                    <TableCell>{r.target}</TableCell>
-                    <TableCell>{r.satuan}</TableCell>
-                    <TableCell>{r.fisik}</TableCell>
-                    <TableCell>{r.alokasi}</TableCell>
-                    <TableCell>{r.alokasi}</TableCell>
-                    <TableCell>{`{data not found}`}</TableCell>
-                    <TableCell>{`{data not found}`}</TableCell>
-                    <TableCell>
-                      {`{data not found}`}
-                      {/*<Chip*/}
-                      {/*  variant="outlined"*/}
-                      {/*  label={r.status === 1 ? "Tercapai" : "Tidak Tercapai"}*/}
-                      {/*  sx={{*/}
-                      {/*    fontWeight: 600,*/}
-                      {/*    color: r.status === 1 ? green[800] : red[800],*/}
-                      {/*    borderColor: r.status === 1 ? green[800] : red[800],*/}
-                      {/*  }}*/}
-                      {/*/>*/}
-                    </TableCell>
+                    {multiyear.map((y, iY) => (
+                      <>
+                        <TableCell>
+                          {getDetailRO('target', y, r.detail)}
+                        </TableCell>
+                        <TableCell>
+                          {getDetailRO('satuan',y, r.detail)}
+                        </TableCell>
+                        <TableCell align={"right"}>
+                          {getDetailRO('anggaran', y, r.detail)}
+                        </TableCell>
+                        <TableCell>
+                          {getDetailRO('sumber_anggaran', y, r.detail)}
+                        </TableCell>
+                      </>
+                    ))}
                   </TableRow>
                 )
               )}

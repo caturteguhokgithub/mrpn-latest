@@ -58,6 +58,7 @@ import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {useRKPContext} from "@/lib/core/hooks/useHooks";
 import {GenerateRpjmnYear} from "@/lib/utils/common";
 import {FormatIDR} from "@/lib/utils/currency";
+import {getDetailRO} from "@/lib/utils/roDetail";
 
 const highlightText = (text: any, highlight: any) => {
   if (!highlight.trim() || text == "" || text == undefined) {
@@ -138,28 +139,7 @@ const TablePerlakuanMultiCheck = ({
   }
 
   const getRowData = (key:string, year: number, data: RoDetailDto[]| undefined) => {
-    if (data == undefined) return "";
-
-    const d:RoDetailDto|undefined = data.find(x => x.tahun == year)
-    if (d == undefined){
-      return "";
-    }
-
-    if (key == "target"){
-      return d.target
-    }
-    if (key == "anggaran"){
-      const intVal: number = parseInt((d.anggaran / 1000).toFixed(2));
-      return FormatIDR(intVal)
-    }
-    if (key == "satuan"){
-      return d.satuan
-    }
-    if (key == "sumber_anggaran"){
-      return d.sumber_anggaran
-    }
-
-    return "";
+    return getDetailRO(key, year, data)
   };
 
   return (
