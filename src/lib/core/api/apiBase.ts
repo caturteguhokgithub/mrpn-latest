@@ -99,6 +99,18 @@ const fetchAPI = async (param: APIParam) => {
     param.usingBase ? API_BASE + param.url : param.url,
     fetchParam
   );
+
+  if (response.status == 503){
+    if (param.errorModalContext != undefined) {
+      param.errorModalContext.showModal(MODAL_TYPES.ERROR_MODAL, {
+        code: 503,
+        message: "",
+      });
+    }
+    if (param.loadingContext != undefined) param.loadingContext.setLoading(false);
+    return null;
+  }
+
   if (!response.ok && response.status != 400 && response.status != 401){
     if (param.loadingContext != undefined) param.loadingContext.setLoading(false);
     return null

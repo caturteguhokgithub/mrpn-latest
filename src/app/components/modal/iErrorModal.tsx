@@ -71,7 +71,7 @@ export const IErrorModal = () => {
   const { code, message } = modalProps || {};
 
   const handleModalToggle = () => {
-    if (code != 400) {
+    if (code == 401) {
       setUser(undefined);
       setToken(undefined);
       setMenu([]);
@@ -105,8 +105,8 @@ export const IErrorModal = () => {
         ) : (
           <ErrorModal
             icon={<IconTimeout />}
-            title="Session Timeout"
-            message="Sesi Anda telah berakhir, silahkan login kembali."
+            title={code == 503 ? "Service Offline" : "Session Timeout"}
+            message={code == 503 ? "Saat ini service sedang tidak tersedia. harap coba beberapa saat lagi." : "Sesi Anda telah berakhir, silahkan login kembali."}
           />
         )}
       </DialogContent>
