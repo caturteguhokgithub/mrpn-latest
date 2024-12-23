@@ -261,7 +261,7 @@ export default function GanttChart({ tasks }: { tasks: Task[] }) {
         TooltipContent={CustomTooltip}
         preStepsCount={0}
         // customHeader={customHeader}
-        listCellWidth={"400px"}
+        listCellWidth={"40vw"}
         // ganttHeight={420}
         columnWidth={120}
         rowHeight={60}
