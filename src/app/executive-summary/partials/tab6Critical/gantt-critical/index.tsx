@@ -8,7 +8,15 @@ import {
 } from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
 import CustomTooltip from "./tooltip";
-import { alpha, Box, Chip, Stack } from "@mui/material";
+import {
+  alpha,
+  Box,
+  Chip,
+  Grow,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import theme from "@/theme";
 import { blue, green, orange, red } from "@mui/material/colors";
 import { TaskAdditionalData } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
@@ -82,6 +90,18 @@ const CustomTaskListTable = ({
     return taskProjectTask;
   };
 
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+
   return (
     <Box style={{ border: "1px solid #dfe1e5" }}>
       {tasks.map((item, i) => {
@@ -110,7 +130,38 @@ const CustomTaskListTable = ({
               justifyContent="space-between"
               alignItems="center"
             >
-              <p>{item.name}</p>
+              <Box
+                component="p"
+                sx={{
+                  maxWidth: "70%",
+                  // display: "-webkit-box",
+                  // textOverflow: "ellipsis",
+                  // overflow: "hidden",
+                  // "-webkit-line-clamp": "2",
+                  // "-webkit-box-orient": " vertical",
+                }}
+              >
+                {item.name.length > 120 ? (
+                  <Tooltip
+                    title={item.name}
+                    followCursor
+                    TransitionComponent={Grow}
+                  >
+                    <Typography
+                      aria-owns={open ? "mouse-over-popover" : undefined}
+                      aria-haspopup="true"
+                      onMouseEnter={handlePopoverOpen}
+                      onMouseLeave={handlePopoverClose}
+                      fontSize={14}
+                      sx={{ cursor: "default" }}
+                    >
+                      {item.name.substring(0, 120) + "..."}
+                    </Typography>
+                  </Tooltip>
+                ) : (
+                  item.name
+                )}
+              </Box>
               <Chip
                 label={projectCategory}
                 size="small"
@@ -210,7 +261,7 @@ export default function GanttChart({ tasks }: { tasks: Task[] }) {
         TooltipContent={CustomTooltip}
         preStepsCount={0}
         // customHeader={customHeader}
-        listCellWidth={"400px"}
+        listCellWidth={"40vw"}
         // ganttHeight={420}
         columnWidth={120}
         rowHeight={60}

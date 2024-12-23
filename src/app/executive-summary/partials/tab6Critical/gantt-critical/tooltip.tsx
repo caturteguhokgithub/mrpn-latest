@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import dayjs from "dayjs";
 import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { grey, red } from "@mui/material/colors";
@@ -59,7 +59,7 @@ const CustomTooltip = ({ task }: { task: Task }) => {
             {task.name}
           </Typography>
           {taskProject.strategy.length > 0 && (
-            <Typography variant="body2" component="div">
+            <Typography variant="body2" component="span">
               Tagging Roadmap:{" "}
               <Box component="span" display={"flex"} flexDirection={"column"}>
                 {taskProject.strategy.map((st, iSt) => (
@@ -176,7 +176,7 @@ const CustomTooltip = ({ task }: { task: Task }) => {
         </Box>
         <Divider sx={{ my: 1 }} />
         {taskProject.target.length > 0 && (
-          <>
+          <Fragment>
             <Typography component="span" variant="body2">
               Target:
             </Typography>
@@ -188,7 +188,7 @@ const CustomTooltip = ({ task }: { task: Task }) => {
                 </Typography>
               </Typography>
             ))}
-          </>
+          </Fragment>
         )}
       </Stack>
     </Box>

@@ -20,7 +20,7 @@ import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
 import useCardIndikatorVM from "@/app/executive-summary/partials/tab2Profile/cardIndicator/cardIndikatorVM";
 import theme from "@/theme";
 import { DasarPemilihan } from "@/app/penetapan/objek/pageModel";
-import {GenerateRpjmnYear, GetTarget} from "@/lib/utils/common";
+import { GenerateRpjmnYear, GetTarget } from "@/lib/utils/common";
 
 export const getLevel = (level: string) => {
   switch (level) {
@@ -50,8 +50,8 @@ export default function CardIndicator({ project }: { project: string }) {
 
   const { rpjmn, year } = useRKPContext((store) => store);
 
-  const getTarget = (indikator: IndikatorDto, paramYear:number) => {
-    return GetTarget(rpjmn, paramYear, indikator)
+  const getTarget = (indikator: IndikatorDto, paramYear: number) => {
+    return GetTarget(rpjmn, paramYear, indikator);
   };
 
   return (
@@ -70,10 +70,11 @@ export default function CardIndicator({ project }: { project: string }) {
               <TableRow>
                 <TableCell width={150}>Kode</TableCell>
                 <TableCell>Indikator</TableCell>
-                {year > 0 && <TableCell>Target</TableCell> }
-                {year == 0 && GenerateRpjmnYear(rpjmn).map((y, i) =>
-                  <TableCell>Target {y}</TableCell>)
-                }
+                {year > 0 && <TableCell>Target</TableCell>}
+                {year == 0 &&
+                  GenerateRpjmnYear(rpjmn).map((y, i) => (
+                    <TableCell key={i}>Target {y}</TableCell>
+                  ))}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -86,10 +87,11 @@ export default function CardIndicator({ project }: { project: string }) {
                 >
                   <TableCell>{row.code}</TableCell>
                   <TableCell>{row.value}</TableCell>
-                  {year > 0 && <TableCell>{getTarget(row, year)}</TableCell> }
-                  {year == 0 && GenerateRpjmnYear(rpjmn).map((y, i) =>
-                    <TableCell>{getTarget(row, y)}</TableCell>
-                  )}
+                  {year > 0 && <TableCell>{getTarget(row, year)}</TableCell>}
+                  {year == 0 &&
+                    GenerateRpjmnYear(rpjmn).map((y, i) => (
+                      <TableCell key={i}>{getTarget(row, y)}</TableCell>
+                    ))}
                 </TableRow>
               ))}
             </TableBody>
