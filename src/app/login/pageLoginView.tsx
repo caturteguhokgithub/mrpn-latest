@@ -111,7 +111,7 @@ export default function PageLoginView() {
                 stroke="none"
                 strokeWidth="1"
                 fill="none"
-                fill-rule="evenodd"
+                fillRule="evenodd"
               >
                 <path
                   className="one"
