@@ -331,7 +331,7 @@ export default function GanttChartMonthly({
         viewMode={ViewMode.Month}
         TooltipContent={CustomTooltip}
         preStepsCount={2}
-        listCellWidth={"400px"}
+        listCellWidth={"40vw"}
         columnWidth={90}
         rowHeight={50}
         barCornerRadius={6}
