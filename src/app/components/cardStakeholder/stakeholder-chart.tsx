@@ -1,6 +1,6 @@
 import React from "react";
 import OrgChart from "@dabeng/react-orgchart";
-import { Box, Divider, Grow, Stack, Tooltip } from "@mui/material";
+import { Box, Divider, Grow, IconButton, Stack, Tooltip } from "@mui/material";
 import "@dabeng/react-orgchart/dist/ChartNode.css";
 import "@dabeng/react-orgchart/dist/ChartContainer.css";
 import theme from "@/theme";
@@ -67,23 +67,23 @@ const InstanceLogo = ({ data }: { data: MiscMasterListStakeholderRes[] }) => {
           TransitionComponent={Grow}
           key={index}
         >
-          {item.icon == null || item.icon == "" ? (
-            <IconEmptyImage width={60} />
-          ) : (
-            <Image
-              alt={item.value}
-              src={process.env.NEXT_PUBLIC_BASE_URL_FILES + item.icon}
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{
-                width: "auto",
-                height: "60px",
-                userSelect: "none",
-                touchAction: "none",
-              }}
-            />
-          )}
+          <Image
+            alt=""
+            src={
+              item.icon == null || item.icon == ""
+                ? "https://res.cloudinary.com/caturteguh/image/upload/v1735032555/mrpn/empty_ae8t7d.png"
+                : process.env.NEXT_PUBLIC_BASE_URL_FILES + item.icon
+            }
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{
+              width: "auto",
+              height: "60px",
+              userSelect: "none",
+              touchAction: "none",
+            }}
+          />
         </Tooltip>
       ))}
     </Stack>
