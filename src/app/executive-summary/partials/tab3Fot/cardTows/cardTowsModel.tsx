@@ -65,6 +65,15 @@ export const initExsumTWOSRequestDto:ExsumTWOSReqDto = {
   ]
 }
 
+export interface ExsumTWOSReqDtoV2 {
+  exsum_id:number
+  values:string
+}
+export const initExsumTWOSRequestDtoV2:ExsumTWOSReqDtoV2 = {
+  exsum_id: 0,
+  values: ""
+}
+
 export interface GetByExsumId {
   exsum_id: number
 }
@@ -75,4 +84,8 @@ export type GetTOWSByExsumIdServiceModel = BaseAPIServiceParam & {
 
 export type UpdateTOWSByExsumIdServiceModel = BaseAPIServiceParam & {
   body: ExsumTWOSReqDto;
+};
+
+export type UpdateTOWSByExsumIdServiceModelV2 = BaseAPIServiceParam & {
+  body: ExsumTWOSReqDtoV2;
 };

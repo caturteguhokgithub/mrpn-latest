@@ -1,11 +1,23 @@
 import {useExsumContext, useGlobalModalContext, useLoading} from "@/lib/core/hooks/useHooks";
 import React, {useEffect, useState} from "react";
 import {
-  ExsumTWOSResDto, ExsumTWOSOptions, ExsumTWOSReqDto,
-  initExsumTWOSRequestDto, UpdateTOWSByExsumIdServiceModel, initExsumTWOSResDto,
+  ExsumTWOSResDto,
+  ExsumTWOSOptions,
+  ExsumTWOSReqDto,
+  initExsumTWOSRequestDto,
+  UpdateTOWSByExsumIdServiceModel,
+  initExsumTWOSResDto,
+  ExsumTWOSReqDtoV2,
+  UpdateTOWSByExsumIdServiceModelV2,
 } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
 import {API_CODE} from "@/lib/core/api/apiModel";
-import {doCreate, doGet, doUpdate} from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsService";
+import {
+  doCreate,
+  doCreateV2,
+  doGet,
+  doUpdate,
+  doUpdateV2
+} from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsService";
 
 const useCardTOWSVM = () => {
   const loadingContext = useLoading();
@@ -68,6 +80,34 @@ const useCardTOWSVM = () => {
     }
   }
 
+  async function updateDataV2(){
+    const req:ExsumTWOSReqDto = {...request}
+    req.exsum_id = exsum.id
+
+    const reqV2:ExsumTWOSReqDtoV2 = {
+      exsum_id : exsum.id,
+      values: JSON.stringify(req.values)
+    }
+    const params:UpdateTOWSByExsumIdServiceModelV2 = {
+      body: reqV2,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    }
+
+    let response
+    if (data.tows.length == 0){
+      response = await doCreateV2(params)
+    }else{
+      response = await doUpdateV2(params)
+    }
+
+    if (response?.code == API_CODE.success) {
+      getData().then(r => {
+        setModalOpen(false)
+      })
+    }
+  }
+
   useEffect(() => {
     if (exsum.id !== 0) {
       getData();
@@ -82,7 +122,7 @@ const useCardTOWSVM = () => {
     setRequest,
     modalOpen,
     setModalOpen,
-    updateData
+    updateData:updateDataV2
   }
 
 }
