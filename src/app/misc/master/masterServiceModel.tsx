@@ -88,6 +88,7 @@ export interface MiscMasterListStakeholderRes {
  code: string;
  value: string;
  icon: string;
+ type: string;
 }
 
 // RPJMN

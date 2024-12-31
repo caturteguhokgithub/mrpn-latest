@@ -1,4 +1,4 @@
-import React, { SetStateAction, useMemo } from "react";
+import React, {SetStateAction, useMemo} from "react";
 import OrgChart from "@dabeng/react-orgchart";
 import {
   Box,
@@ -15,24 +15,24 @@ import {
 import "@dabeng/react-orgchart/dist/ChartNode.css";
 import "@dabeng/react-orgchart/dist/ChartContainer.css";
 import theme from "@/theme";
-import { IconFA } from "@/app/components/icons/icon-fa";
-import { styleList, styleOrgChart } from "@/app/executive-summary/style";
-import { grey, orange } from "@mui/material/colors";
+import {IconFA} from "@/app/components/icons/icon-fa";
+import {styleList, styleOrgChart} from "@/app/executive-summary/style";
+import {grey, orange} from "@mui/material/colors";
 import DialogComponent from "@/app/components/dialog";
 import {
   ExsumCascadingStateDto,
   RKPCascadingDto,
 } from "@/app/executive-summary/partials/tab4Cascading/cardDiagram/cardDiagramModel";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import {TransformWrapper, TransformComponent} from "react-zoom-pan-pinch";
 import DraggableScroll from "../../tab2Profile/partials/draggableScroll";
-import { SxParams } from "@/app/executive-summary/types";
+import {SxParams} from "@/app/executive-summary/types";
 
-import { useAuthContext } from "@/lib/core/hooks/useHooks";
-import { usePathname } from "next/navigation";
-import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
+import {useAuthContext} from "@/lib/core/hooks/useHooks";
+import {usePathname} from "next/navigation";
+import {hasPrivilege} from "@/lib/core/helpers/authHelpers";
 import {FormatIDR} from "@/lib/utils/currency";
 
-const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
+const NodeTemplate = ({nodeData}: { nodeData: any }) => {
   const isAssistant = nodeData.isAssistant === true;
   const nodeClass = isAssistant ? "has-assistant" : "";
 
@@ -49,10 +49,10 @@ const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
           position="absolute"
           top="50%"
           left={8}
-          sx={{ transform: "translateY(-50%)" }}
+          sx={{transform: "translateY(-50%)"}}
         >
           {nodeData.children && nodeData.children.length > 0 && (
-            <IconFA name="circle-plus" size={14} color="White" />
+            <IconFA name="circle-plus" size={14} color="White"/>
           )}
         </Box>
         <Box
@@ -60,13 +60,13 @@ const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
           py={0.5}
           bgcolor={theme.palette.primary.main}
           borderRadius={2}
-          sx={{ borderEndStartRadius: 0, borderEndEndRadius: 0 }}
+          sx={{borderEndStartRadius: 0, borderEndEndRadius: 0}}
           color="white"
         >
           {nodeData.name}
         </Box>
       </Box>
-      <Divider />
+      <Divider/>
       <Box px={2} py={1} fontWeight={500}>
         {nodeData.title}
       </Box>
@@ -74,7 +74,7 @@ const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
   );
 };
 
-const FundSource = ({ value, isYear }: { value: string; isYear?: boolean }) => {
+const FundSource = ({value, isYear}: { value: string; isYear?: boolean }) => {
   return (
     <Stack
       display="inline-flex"
@@ -110,21 +110,21 @@ const FundSource = ({ value, isYear }: { value: string; isYear?: boolean }) => {
 };
 
 const ItemProP = ({
-  isKey,
-  description,
-}: {
+                    isKey,
+                    description,
+                  }: {
   isKey?: boolean;
   description: string;
 }) => {
   return (
-    <ListItem sx={{ p: 0, alignItems: "flex-start" }}>
+    <ListItem sx={{p: 0, alignItems: "flex-start"}}>
       <ListItemIcon
-        sx={{ minWidth: 0, position: "relative", top: 5, width: 10 }}
+        sx={{minWidth: 0, position: "relative", top: 5, width: 10}}
       >
         {isKey ? (
-          <IconFA name="key" size={12} color={orange[800]} />
+          <IconFA name="key" size={12} color={orange[800]}/>
         ) : (
-          <IconFA name="circle" size={6} />
+          <IconFA name="circle" size={6}/>
         )}
       </ListItemIcon>
       <Tooltip title={isKey ? "Intervensi Kunci" : null} followCursor>
@@ -147,17 +147,17 @@ type OrgDto = {
 };
 
 export default function CascadingOrgChart({
-  setModal,
-  data,
-  setState,
-  deleteData,
-}: {
+                                            setModal,
+                                            data,
+                                            setState,
+                                            deleteData,
+                                          }: {
   setModal: any;
   data: RKPCascadingDto;
   setState: (value: SetStateAction<ExsumCascadingStateDto>) => void;
   deleteData: any;
 }) {
-  const { permission } = useAuthContext((state) => state);
+  const {permission} = useAuthContext((state) => state);
   const pathname = usePathname();
 
   const [modalOpenImg, setModalOpenImg] = React.useState(false);
@@ -178,78 +178,83 @@ export default function CascadingOrgChart({
         title: pn.value,
         children: [],
       };
-      // data.pp.map((pp) => {
-      const pp = pn.pp;
-      const ppData: OrgDto = {
-        name: `PP - ${pp.code}`,
-        title: pp.value,
-        children: [],
-      };
-      // pp.kp.map((kp) => {
-      const kp = pp.kp;
-      const kpData: OrgDto = {
-        name: `KP - ${kp.code}`,
-        title: kp.value,
-        children: [],
-      };
-      // kp.sasaran.map((ssrKP) => {
-      const ssrKP = kp.sasaran;
-      const ssrKPData: OrgDto = {
-        name: `SASARAN - ${ssrKP.code}`,
-        title: ssrKP.value,
-        children: [],
-      };
-      // ssrKP.indikator.map((ind) => {
-      const ind = ssrKP.indikator;
-      const indData: OrgDto = {
-        name: (
-          <Stack justifyContent="center" direction="row" alignItems="center">
-            {`INDIKATOR`}
-          </Stack>
-        ),
-        title: (
-          <List dense sx={styleList}>
-            {ind.value.map((ros) => (
-              <ItemProP description={ros} />
-            ))}
-          </List>
-        ),
-        children: [],
-      };
-      ind.prop.map((props) => {
-        props.map((prop) => {
-          const propData: OrgDto = {
-            name: prop.value,
+      pn.pp.map((pp) => {
+        const ppData: OrgDto = {
+          name: `PP - ${pp.code}`,
+          title: pp.value,
+          children: [],
+        };
+        pp.kp.map((kp) => {
+          const kpData: OrgDto = {
+            name: `KP - ${kp.code}`,
+            title: kp.value,
+            children: [],
+          };
+
+          const ssrKPData: OrgDto = {
+            name: (
+              <Stack justifyContent="center" direction="row" alignItems="center">
+                {`SASARAN`}
+              </Stack>
+            ),
             title: (
               <List dense sx={styleList}>
-                {prop.ro.map((ros) => (
-                  <ItemProP
-                    isKey={ros.intervention}
-                    description={`${ros.value} (${ros.kementerian}) (${ros.type_stakeholder})`}
-                  />
+                {kp.sasaran.map((ssrKP) => (
+                  <ItemProP description={`${ssrKP.code} - ${ssrKP.value}`}/>
                 ))}
               </List>
             ),
-            children: undefined,
+            children: [],
           };
-          indData.children?.push(propData);
+
+          const indData: OrgDto = {
+            name: (
+              <Stack justifyContent="center" direction="row" alignItems="center">
+                {`INDIKATOR`}
+              </Stack>
+            ),
+            title: (
+              <List dense sx={styleList}>
+                {kp.sasaran.map((ssrKP) =>
+                  ssrKP.indikator.map((ind) =>
+                  <ItemProP description={`${ind.code} - ${ind.value}`} />
+                ))}
+              </List>
+            ),
+            children: [],
+          };
+
+          kp.prop.map((prop) => {
+            const propData: OrgDto = {
+              name: prop.value,
+              title: (
+                <List dense sx={styleList}>
+                  {prop.ro.map((ros) => (
+                    <ItemProP
+                      isKey={ros.intervention}
+                      description={`${ros.value} (${ros.kementrian?.value}) (${ros.kementrian?.type})`}
+                    />
+                  ))}
+                </List>
+              ),
+              children: undefined,
+            };
+            indData.children?.push(propData);
+          });
+
+          ssrKPData.children?.push(indData);
+
+          kpData.children?.push(ssrKPData);
+
+          ppData.children?.push(kpData);
         });
+        result.children?.push(ppData);
       });
-      // indData.children?.push(klData);
-      // });
-      ssrKPData.children?.push(indData);
-      // });
-      kpData.children?.push(ssrKPData);
-      // });
-      ppData.children?.push(kpData);
-      // });
-      result.children?.push(ppData);
-      // });
       return result;
     }, [data]);
 
-  const sxParamsFull: SxParams = { variant: "full" };
-  const sxParamsZoom: SxParams = { variant: "zoom" };
+  const sxParamsFull: SxParams = {variant: "full"};
+  const sxParamsZoom: SxParams = {variant: "zoom"};
 
   // React.useEffect(() => {
   //   const element = document.querySelector(".orgchart > ul > li > .oc-node");
@@ -267,13 +272,13 @@ export default function CascadingOrgChart({
   return (
     <>
       <Stack gap={2} direction="row">
-        <FundSource value={`${FormatIDR(data.total_anggaran/1000)} Juta`} />
+        <FundSource value={`${FormatIDR(data.total_anggaran / 1000)} Juta`}/>
         <Box>
           <Button
             variant="contained"
             color="primary"
-            startIcon={<IconFA name="magnifying-glass-plus" size={14} />}
-            sx={{ height: 45, px: 3, borderRadius: 2 }}
+            startIcon={<IconFA name="magnifying-glass-plus" size={14}/>}
+            sx={{height: 45, px: 3, borderRadius: 2}}
             onClick={handleModalImg}
           >
             Perbesar Chart
@@ -313,10 +318,10 @@ export default function CascadingOrgChart({
         }}
       >
         <IconButton
-          sx={{ position: "absolute", top: 10, right: 10, zIndex: 9999 }}
+          sx={{position: "absolute", top: 10, right: 10, zIndex: 9999}}
           onClick={handleModalClose}
         >
-          <IconFA name="circle-xmark" color="red" size={32} />
+          <IconFA name="circle-xmark" color="red" size={32}/>
         </IconButton>
         <TransformWrapper
           //   centerOnInit
@@ -326,9 +331,9 @@ export default function CascadingOrgChart({
           minScale={0.1}
           maxScale={3}
           limitToBounds={true}
-          doubleClick={{ disabled: false }}
-          wheel={{ disabled: false }}
-          panning={{ disabled: false }}
+          doubleClick={{disabled: false}}
+          wheel={{disabled: false}}
+          panning={{disabled: false}}
         >
           <TransformComponent>
             <Box sx={styleOrgChart(sxParamsFull)} mt={4}>

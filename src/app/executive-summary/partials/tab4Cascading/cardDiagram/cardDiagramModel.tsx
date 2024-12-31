@@ -22,29 +22,26 @@ export interface IndikatorDto {
   id: number
   code: string
   value: string
-  kementerian: KLPengampu
 }
 
 export interface SasaranDto {
   id: number
   code: string
   value: string
-  indikator: {
-    value: string[]
-    prop:PropDto[][]
-  }
+  indikator: IndikatorDto[]
 }
 
 export type KPDto = ProjectDefaultDto & {
-  sasaran: SasaranDto
+  sasaran: SasaranDto[]
+  prop: PropDto[]
 }
 
 export type PPDto = ProjectDefaultDto & {
-  kp: KPDto
+  kp: KPDto[]
 }
 
 export type PNDto = ProjectDefaultDto & {
-  pp: PPDto
+  pp: PPDto[]
 }
 
 export type RKPCascadingDto = {
