@@ -515,6 +515,10 @@ const useCardIndicationVM = () => {
       initStateValue = state.values[index]
     }
 
+    if (year > 0){
+      initStateValue.tahun = [year]
+    }
+
     setStateValue(initStateValue)
     setModalOutput({index, action:action, type:type})
   }
