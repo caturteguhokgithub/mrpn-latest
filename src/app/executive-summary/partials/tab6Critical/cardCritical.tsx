@@ -112,7 +112,7 @@ export default function CardCritical({ project }: { project: string }) {
           </div>
         }
         setting
-        settingAddOnclick={handleModalAdd}
+        settingAddOnclickOnly={handleModalAdd}
         settingEditOnclick={handleModalOpen}
       >
         {data.length == 0 || ganChart.length == 0 ? (
@@ -123,29 +123,25 @@ export default function CardCritical({ project }: { project: string }) {
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <>
-            <Stack gap={3} maxWidth="calc(100vw - 200px)">
-              <Stack direction="row" gap={1}>
-                {/*{groupProjectCategory().map((d, index) => (*/}
-                {/*  <ProjectType*/}
-                {/*    key={index}*/}
-                {/*    color={GetColor(d.id)}*/}
-                {/*    label={d.name}*/}
-                {/*  />*/}
-                {/*))}*/}
-              </Stack>
-              {year == 0 && (
-                <GanttChart key={ganChart.length} tasks={ganChart} />
-              )}
-              {year > 0 && (
-                <GanttChartMonthly
-                  key={ganChart.length}
-                  tasks={tasksRKP}
-                  setTasks={setTaskRKP}
-                />
-              )}
+          <Stack gap={3} maxWidth="calc(100vw - 200px)">
+            <Stack direction="row" gap={1}>
+              {/*{groupProjectCategory().map((d, index) => (*/}
+              {/*  <ProjectType*/}
+              {/*    key={index}*/}
+              {/*    color={GetColor(d.id)}*/}
+              {/*    label={d.name}*/}
+              {/*  />*/}
+              {/*))}*/}
             </Stack>
-          </>
+            {year == 0 && <GanttChart key={ganChart.length} tasks={ganChart} />}
+            {year > 0 && (
+              <GanttChartMonthly
+                key={ganChart.length}
+                tasks={tasksRKP}
+                setTasks={setTaskRKP}
+              />
+            )}
+          </Stack>
         )}
       </CardItem>
       <DialogComponent
@@ -175,7 +171,7 @@ export default function CardCritical({ project }: { project: string }) {
         />
       </DialogComponent>
       <DialogComponent
-        width={320}
+        width={"50%"}
         dialogOpen={modalAdd}
         dialogClose={handleModalCloseAdd}
         title="Tambah Critical Path"

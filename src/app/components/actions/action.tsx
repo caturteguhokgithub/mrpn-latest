@@ -8,10 +8,12 @@ export const ActionIcon = ({
   icon,
   onclick,
   color,
+  size,
 }: {
   icon: string;
   onclick?: () => void;
   color: string;
+  size?: string;
 }) => {
   const iconStyle = {
     bgcolor:
@@ -41,11 +43,19 @@ export const ActionIcon = ({
           sx={iconStyle}
           onClick={onclick}
         >
-          <IconFA size={14} name={icon} />
+          <IconFA
+            size={size == "sm" ? 12 : 14}
+            name={icon}
+            sx={{ width: "auto" }}
+          />
         </IconButton>
       ) : (
         <IconButton aria-label="edit" color="primary" sx={iconStyle}>
-          <IconFA size={14} name={icon} />
+          <IconFA
+            size={size == "sm" ? 12 : 14}
+            name={icon}
+            sx={{ width: "auto" }}
+          />
         </IconButton>
       )}
     </>
@@ -60,6 +70,7 @@ export default function ActionColumn({
   viewClick,
   deleteClick,
   center,
+  size,
 }: {
   editUrl?: string;
   viewUrl?: string;
@@ -68,21 +79,27 @@ export default function ActionColumn({
   viewClick?: () => void;
   deleteClick?: () => void;
   center?: boolean;
+  size?: string;
 }) {
   return (
     <Stack
       direction="row"
       justifyContent={center ? "center" : "flex-end"}
       width="100%"
-      gap={1}
+      gap={size == "sm" ? 0.3 : 1}
     >
       {viewUrl && (
         <Link href={viewUrl}>
-          <ActionIcon icon="eye" color="approval" />
+          <ActionIcon icon="eye" color="approval" size={size} />
         </Link>
       )}
       {viewClick && (
-        <ActionIcon icon="eye" color="approval" onclick={viewClick} />
+        <ActionIcon
+          icon="eye"
+          color="approval"
+          onclick={viewClick}
+          size={size}
+        />
       )}
       {editUrl && (
         <Link href={editUrl}>
@@ -90,15 +107,25 @@ export default function ActionColumn({
         </Link>
       )}
       {editClick && (
-        <ActionIcon icon="pencil" color="primary" onclick={editClick} />
+        <ActionIcon
+          icon="pencil"
+          color="primary"
+          onclick={editClick}
+          size={size}
+        />
       )}
       {deleteUrl && (
         <Link href={deleteUrl}>
-          <ActionIcon icon="trash" color="danger" />
+          <ActionIcon icon="trash" color="danger" size={size} />
         </Link>
       )}
       {deleteClick && (
-        <ActionIcon icon="trash" color="danger" onclick={deleteClick} />
+        <ActionIcon
+          icon="trash"
+          color="danger"
+          onclick={deleteClick}
+          size={size}
+        />
       )}
     </Stack>
   );
