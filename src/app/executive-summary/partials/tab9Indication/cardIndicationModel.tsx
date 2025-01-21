@@ -1,101 +1,106 @@
-import {BaseAPIServiceParam} from "@/lib/core/api/apiModel";
-import {MiscMasterListPerpresRes, MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel";
-import {ExsumSWOTValuesDto} from "@/app/executive-summary/partials/tab1Background/cardSwot/cardSwotModel";
-import {RODataTable, RoDto} from "@/app/misc/rkp/rkpServiceModel";
-import {ExsumTWOSDto} from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
+import { BaseAPIServiceParam } from "@/lib/core/api/apiModel";
 import {
-  ExsumInterventionProjectReqDto, ExsumInterventionState
+  MiscMasterListPerpresRes,
+  MiscMasterListStakeholderRes,
+} from "@/app/misc/master/masterServiceModel";
+import { ExsumSWOTValuesDto } from "@/app/executive-summary/partials/tab1Background/cardSwot/cardSwotModel";
+import { RODataTable, RoDto } from "@/app/misc/rkp/rkpServiceModel";
+import { ExsumTWOSDto } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
+import {
+  ExsumInterventionProjectReqDto,
+  ExsumInterventionState,
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
 import {
-  ExsumRegulationDto, ExsumRegulationResDto,
-  initExsumRegulationDto
+  ExsumRegulationDto,
+  ExsumRegulationResDto,
+  initExsumRegulationDto,
 } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
 
-export const COORDINATOR = "Entitas Koordinator"
-export const MAIN = "Entitas Utama"
+export const COORDINATOR = "Entitas Koordinator";
+export const MAIN = "Entitas Utama";
 
 export interface ModalDto {
-  index: number
-  action: boolean
-  type: string
+  index: number;
+  action: boolean;
+  type: string;
 }
 
 export interface IndicationReqDto {
-  keterangan:string
-  swot:number[]
+  keterangan: string;
+  swot: number[];
 }
 export interface StakeholderReqDto {
-  type:string
-  id:number
+  type: string;
+  id: number;
 }
 export interface ExsumIndicationValueReqDto {
-  tahun:number[]
-  perlakuan_risiko:string
-  rincian_output_id:number
-  value:string
-  stakeholder:StakeholderReqDto[]
+  tahun: number[];
+  perlakuan_risiko: string;
+  rincian_output_id: number;
+  value: string;
+  stakeholder: StakeholderReqDto[];
 }
 export interface ExsumIndicationReqDto {
-  id:number,
-  exsum_id:number
-  swot_id:number
-  indikasi_risiko:string
-  kategori_risiko:string
-  indikasi_perlakuan_risiko:string
-  values:ExsumIndicationValueReqDto[]
-  regulasi:ExsumRegulationDto[]
+  id: number;
+  exsum_id: number;
+  swot_id: number;
+  indikasi_risiko: string;
+  kategori_risiko: string;
+  indikasi_perlakuan_risiko: string;
+  values: ExsumIndicationValueReqDto[];
+  regulasi: ExsumRegulationDto[];
 }
 
 export interface StakeholderResGroupDto {
-  [key: string]: StakeholderResDto[]
+  [key: string]: StakeholderResDto[];
 }
 export type StakeholderResDto = MiscMasterListStakeholderRes & {
-  group:{
-    "type" : string
-  }
-}
+  group: {
+    type: string;
+  };
+};
 export interface NonRoDto {
-  exsum_id:number
-  exsum_indikasi_risiko_perlakuan_id:number
-  value:string
+  exsum_id: number;
+  exsum_indikasi_risiko_perlakuan_id: number;
+  value: string;
 }
 export interface ExsumIndicationValueRes {
-  id:number
-  tahun:number[]
-  perlakuan_risiko:string
-  ro:RoDto|undefined
-  nonro:NonRoDto|undefined
-  stakeholder:StakeholderResDto[]
-  groupStakeholder:StakeholderResGroupDto
+  id: number;
+  tahun: number[];
+  perlakuan_risiko: string;
+  ro: RoDto | undefined;
+  nonro: NonRoDto | undefined;
+  stakeholder: StakeholderResDto[];
+  groupStakeholder: StakeholderResGroupDto;
 }
 export interface ExsumIndicationResDto {
-  id:number,
-  exsum_id:number
-  jenis:string
-  indikasi_risiko:string
-  kategori_risiko:string
-  indikasi_perlakuan_risiko:string
-  perlakuan:ExsumIndicationValueRes[]
-  tows?:ExsumTWOSDto
-  regulasi:ExsumRegulationResDto[]
+  id: number;
+  exsum_id: number;
+  jenis: string;
+  indikasi_risiko: string;
+  kategori_risiko: string;
+  indikasi_perlakuan_risiko: string;
+  perlakuan: ExsumIndicationValueRes[];
+  tows?: ExsumTWOSDto;
+  regulasi: ExsumRegulationResDto[];
 }
 
 export interface IndicationState {
-  keterangan:string
-  keyword_swot:ExsumSWOTValuesDto[]
+  keterangan: string;
+  keyword_swot: ExsumSWOTValuesDto[];
 }
 export interface OthersEntityState {
-  type:string
-  entity:MiscMasterListStakeholderRes[]
+  type: string;
+  entity: MiscMasterListStakeholderRes[];
 }
 export interface ExsumIndicationStateValue {
-  id:number
-  tahun:number[]
-  type:string,
+  id: number;
+  tahun: number[];
+  type: string;
   // perlakuan_risiko:string
-  rincian_output:RODataTable|undefined
-  non_rincian_output:ExsumInterventionState
-  intervention:boolean
+  rincian_output: RODataTable | undefined;
+  non_rincian_output: ExsumInterventionState;
+  intervention: boolean;
   // stakeholderMultiple:MiscMasterListStakeholderRes[]
   // stakeholder:{
   //   coordinator:MiscMasterListStakeholderRes|undefined
@@ -104,7 +109,7 @@ export interface ExsumIndicationStateValue {
   // }
 }
 
-export const initStateExsumIndicationValue:ExsumIndicationStateValue = {
+export const initStateExsumIndicationValue: ExsumIndicationStateValue = {
   id: 0,
   tahun: [],
   rincian_output: undefined,
@@ -121,34 +126,34 @@ export const initStateExsumIndicationValue:ExsumIndicationStateValue = {
     prop: undefined,
     ro: [],
     tahun: "",
-    location: []
+    location: [],
   },
   intervention: false,
-  type: ""
-}
+  type: "",
+};
 
 export interface ExsumIndicationState {
-  id:number
-  tows:ExsumTWOSDto|undefined
-  indikasi_risiko:string
-  kategori_risiko:string
-  perlakuan_risiko:string
-  values:ExsumIndicationStateValue[]
-  regulation:ExsumRegulationDto[]
+  id: number;
+  tows: ExsumTWOSDto | undefined;
+  indikasi_risiko: string;
+  kategori_risiko: string;
+  perlakuan_risiko: string;
+  values: ExsumIndicationStateValue[];
+  regulation: ExsumRegulationDto[];
 }
 
-export const initStateExsumIndication:ExsumIndicationState = {
+export const initStateExsumIndication: ExsumIndicationState = {
   id: 0,
   tows: undefined,
   indikasi_risiko: "",
   kategori_risiko: "",
   perlakuan_risiko: "",
   values: [],
-  regulation: []
-}
+  regulation: [],
+};
 
 export interface GetByExsumId {
-  exsum_id: number
+  exsum_id: number;
 }
 
 export type GetIndicationByExsumIdServiceModel = BaseAPIServiceParam & {
@@ -160,5 +165,5 @@ export type UpdateIndicationByIdServiceModel = BaseAPIServiceParam & {
 };
 
 export type DeleteIndicationByIdServiceModel = BaseAPIServiceParam & {
-  body: {id:number};
+  body: { id: number };
 };

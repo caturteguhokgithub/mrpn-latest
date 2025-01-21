@@ -11,8 +11,11 @@ import CustomTooltip from "./tooltip";
 import {
   alpha,
   Box,
+  Button,
   Chip,
+  DialogActions,
   Grow,
+  IconButton,
   Stack,
   Tooltip,
   Typography,
@@ -22,6 +25,9 @@ import { IconFA } from "@/app/components/icons/icon-fa";
 import { blue, green, orange, red } from "@mui/material/colors";
 import dayjs from "dayjs";
 import { TaskAdditionalData } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
+import ActionColumn from "@/app/components/actions/action";
+import DialogComponent from "@/app/components/dialog";
+import TableDetail from "./table";
 
 const CustomTaskListHeader = ({
   headerHeight,
@@ -96,6 +102,7 @@ const CustomTaskListTable = ({
   };
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  const [modalOpen, setModalOpen] = React.useState(false);
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -195,33 +202,61 @@ const CustomTaskListTable = ({
                 )}
               </Box>
               {isProject && (
-                <Chip
-                  label={projectCategory}
-                  size="small"
-                  sx={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    // bgcolor:
-                    //   projectCategory === "BUMN"
-                    //     ? red[700]
-                    //     : projectCategory === "DAK"
-                    //     ? green[700]
-                    //     : projectCategory === "KL"
-                    //     ? blue[700]
-                    //     : orange[700],
-                    // color: "white",
-                    textTransform: "uppercase",
-                    fontWeight: 500,
-                    fontSize: 11,
-                    height: "auto",
-                    cursor: "default",
-                    span: {
-                      my: 0,
-                      py: 0.8,
-                      lineHeight: 1,
-                    },
-                  }}
-                />
+                <Stack direction="row" gap={1} alignItems="center">
+                  <Box>
+                    <Chip
+                      label={projectCategory}
+                      size="small"
+                      sx={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        // bgcolor:
+                        //   projectCategory === "BUMN"
+                        //     ? red[700]
+                        //     : projectCategory === "DAK"
+                        //     ? green[700]
+                        //     : projectCategory === "KL"
+                        //     ? blue[700]
+                        //     : orange[700],
+                        // color: "white",
+                        textTransform: "uppercase",
+                        fontWeight: 500,
+                        fontSize: 11,
+                        height: "auto",
+                        cursor: "default",
+                        span: {
+                          my: 0,
+                          py: 0.8,
+                          lineHeight: 1,
+                        },
+                      }}
+                    />
+                  </Box>
+                  <ActionColumn
+                    size="sm"
+                    viewClick={() => setModalOpen(true)}
+                    editClick={() => {}}
+                    deleteClick={() => {}}
+                  />
+                  <DialogComponent
+                    width={"50%"}
+                    dialogOpen={modalOpen}
+                    dialogClose={() => setModalOpen(false)}
+                    title="Detail RO/Project Kunci Tahun 2025"
+                    dialogFooter={
+                      <DialogActions sx={{ p: 2, px: 3 }}>
+                        <Button
+                          variant="outlined"
+                          onClick={() => setModalOpen(false)}
+                        >
+                          Keluar
+                        </Button>
+                      </DialogActions>
+                    }
+                  >
+                    <TableDetail />
+                  </DialogComponent>
+                </Stack>
               )}
               {/*{isProject && (*/}
               {/*  <Stack*/}

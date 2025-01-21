@@ -51,6 +51,7 @@ export default function CardItem({
   settingEditOnclick,
   settingEditOutputClick,
   settingEditBisnisClick,
+  settingAddOnclickOnly,
   infoTooltip,
 }: {
   title?: React.ReactNode;
@@ -64,6 +65,7 @@ export default function CardItem({
   settingEditOnclick?: () => void;
   settingEditOutputClick?: () => void;
   settingEditBisnisClick?: () => void;
+  settingAddOnclickOnly?: () => void;
   infoTooltip?: React.ReactNode;
 }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -163,6 +165,10 @@ export default function CardItem({
         ) : settingEditOnclick ? (
           <MenuItem onClick={settingEditOnclick}>
             <ListItemDropdownMenu label="Ubah" />
+          </MenuItem>
+        ) : settingAddOnclickOnly ? (
+          <MenuItem onClick={settingAddOnclickOnly}>
+            <ListItemDropdownMenu mode="add" label="Tambah" />
           </MenuItem>
         ) : null}
 

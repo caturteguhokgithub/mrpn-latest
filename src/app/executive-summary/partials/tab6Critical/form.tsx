@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState } from "react";
+import React, { Fragment, SetStateAction, useState } from "react";
 import {
   alpha,
   Box,
@@ -36,7 +36,12 @@ import { MiscMasterListKategoriProyekRes } from "@/app/misc/master/masterService
 import AddButton from "@/app/components/buttonAdd";
 import SelectCustomTheme from "@/app/components/select";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
-import { GetColor, GetColorCriticalPath, GetColorCriticalPathIndex, ColorCriticalPath } from "@/utils/color";
+import {
+  GetColor,
+  GetColorCriticalPath,
+  GetColorCriticalPathIndex,
+  ColorCriticalPath,
+} from "@/utils/color";
 
 const monthList = [
   "Januari",
@@ -68,7 +73,6 @@ export default function FormCritical({
   state: ExsumCriticalState;
   setState: (value: SetStateAction<ExsumCriticalState>) => void;
 }) {
-
   const { year, rpjmn } = useRKPContext((store) => store);
 
   const addMenu = () => {
@@ -166,6 +170,21 @@ export default function FormCritical({
     return existBulan;
   };
 
+  const monthData = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+  ];
+
   return (
     <Grid container spacing={2}>
       {year > 0 && dataExisting.length > 0 && (
@@ -217,62 +236,62 @@ export default function FormCritical({
         </>
       )}
 
-      {year > 0 &&
+      {year > 0 && (
         <Grid item xs={12}>
-        <FormControl fullWidth>
-          <FieldLabelInfo title="Status" />
-          <ToggleButtonGroup
-            color="primary"
-            value={state.keterangan_kegiatan}
-            exclusive
-            onChange={(
-              event: React.MouseEvent<HTMLElement>,
-              newAlignment: string
-            ) => {
-              setState((prevState) => {
-                return {
-                  ...prevState,
-                  keterangan_kegiatan: newAlignment,
-                };
-              });
-            }}
-          >
-            <ToggleButton
-              value="Start to Start"
-              sx={{
-                width: "50%",
-                lineHeight: 1,
-                color: blue[600],
-                borderColor: blue[600],
-                "&.Mui-selected": {
-                  bgcolor: theme.palette.primary.main,
-                  color: "white",
-                },
+          <FormControl fullWidth>
+            <FieldLabelInfo title="Status" />
+            <ToggleButtonGroup
+              color="primary"
+              value={state.keterangan_kegiatan}
+              exclusive
+              onChange={(
+                event: React.MouseEvent<HTMLElement>,
+                newAlignment: string
+              ) => {
+                setState((prevState) => {
+                  return {
+                    ...prevState,
+                    keterangan_kegiatan: newAlignment,
+                  };
+                });
               }}
-              disabled={dataExisting.length == 0}
             >
-              Start to Start
-            </ToggleButton>
-            <ToggleButton
-              value="Finish to Start"
-              sx={{
-                width: "50%",
-                lineHeight: 1,
-                color: blue[600],
-                borderColor: blue[600],
-                "&.Mui-selected": {
-                  bgcolor: red[700],
-                  color: "white",
-                },
-              }}
-              disabled={dataExisting.length == 0}
-            >
-              Finish to Start
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </FormControl>
-      </Grid>
-      }
+              <ToggleButton
+                value="Start to Start"
+                sx={{
+                  width: "50%",
+                  lineHeight: 1,
+                  color: blue[600],
+                  borderColor: blue[600],
+                  "&.Mui-selected": {
+                    bgcolor: theme.palette.primary.main,
+                    color: "white",
+                  },
+                }}
+                disabled={dataExisting.length == 0}
+              >
+                Start to Start
+              </ToggleButton>
+              <ToggleButton
+                value="Finish to Start"
+                sx={{
+                  width: "50%",
+                  lineHeight: 1,
+                  color: blue[600],
+                  borderColor: blue[600],
+                  "&.Mui-selected": {
+                    bgcolor: red[700],
+                    color: "white",
+                  },
+                }}
+                disabled={dataExisting.length == 0}
+              >
+                Finish to Start
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </FormControl>
+        </Grid>
+      )}
 
       <Grid item xs={12}>
         <FormControl fullWidth>
@@ -352,23 +371,23 @@ export default function FormCritical({
                 year > 0
                   ? dayjs(`${year}-01-01`)
                   : rpjmn
-                    ? dayjs(`${rpjmn.start}-01-01`)
-                    : undefined
+                  ? dayjs(`${rpjmn.start}-01-01`)
+                  : undefined
               }
               maxDate={
                 year > 0
                   ? dayjs(`${year}-12-31`)
                   : rpjmn
-                    ? dayjs(`${rpjmn.end}-12-31`)
-                    : undefined
+                  ? dayjs(`${rpjmn.end}-12-31`)
+                  : undefined
               }
               value={dayjs(state.start_date)}
               onChange={(e: any) =>
                 setState((prev) => {
-                  const selectedYear = dayjs(e).year()
-                  let startDate = dayjs(e).format("YYYY-MM-DD")
-                  if (year == 0){
-                    startDate = `${selectedYear}-01-01`
+                  const selectedYear = dayjs(e).year();
+                  let startDate = dayjs(e).format("YYYY-MM-DD");
+                  if (year == 0) {
+                    startDate = `${selectedYear}-01-01`;
                   }
                   return {
                     ...prev,
@@ -398,16 +417,16 @@ export default function FormCritical({
                 year > 0
                   ? dayjs(`${year}-12-31`)
                   : rpjmn
-                    ? dayjs(`${rpjmn.end}-12-31`)
-                    : undefined
+                  ? dayjs(`${rpjmn.end}-12-31`)
+                  : undefined
               }
               value={dayjs(state.end_date)}
               onChange={(e: any) =>
                 setState((prev) => {
-                  const selectedYear = dayjs(e).year()
-                  let endDate = dayjs(e).format("YYYY-MM-DD")
-                  if (year == 0){
-                    endDate = `${selectedYear}-12-31`
+                  const selectedYear = dayjs(e).year();
+                  let endDate = dayjs(e).format("YYYY-MM-DD");
+                  if (year == 0) {
+                    endDate = `${selectedYear}-12-31`;
                   }
                   return {
                     ...prev,
@@ -463,69 +482,75 @@ export default function FormCritical({
           <FieldLabelInfo title="Kelompok Warna" />
           <ToggleButtonGroup
             exclusive
-            value={state?.color ? GetColorCriticalPathIndex((state?.color ?? "")) : null}
+            value={
+              state?.color
+                ? GetColorCriticalPathIndex(state?.color ?? "")
+                : null
+            }
             onChange={(e, value) => {
               if (value != null) {
-                setState(prevState => {
+                setState((prevState) => {
                   return {
                     ...prevState,
-                    color: GetColorCriticalPath(value)
-                  }
-                })
+                    color: GetColorCriticalPath(value),
+                  };
+                });
               }
-
             }}
             aria-label="Grup Color"
           >
-            {ColorCriticalPath.map((color, i) => i < 5 && (
-              <ToggleButton
-                key={i}
-                value={i}
-                aria-label="color"
-                sx={{
-                  bgcolor: alpha(color, 0.3),
-                  width: "20%",
-                  p: 0,
-                  minHeight: 50,
-                  "& > div": {
-                    "& > div": {
-                      opacity: 0.4,
-                    },
-                  },
-                  "&.Mui-selected": {
-                    bgcolor: color,
-                    "& > div": {
+            {ColorCriticalPath.map(
+              (color, i) =>
+                i < 5 && (
+                  <ToggleButton
+                    key={i}
+                    value={i}
+                    aria-label="color"
+                    sx={{
+                      bgcolor: alpha(color, 0.3),
+                      width: "20%",
+                      p: 0,
+                      minHeight: 50,
                       "& > div": {
-                        opacity: 1,
+                        "& > div": {
+                          opacity: 0.4,
+                        },
                       },
-                    },
-                  },
-                }}
-              >
-                <Box
-                  width="100%"
-                  height="100%"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Box
-                    bgcolor="black"
-                    color="white"
-                    borderRadius="50%"
-                    width={16}
-                    height={16}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    fontSize={10}
-                    lineHeight={1}
+                      "&.Mui-selected": {
+                        bgcolor: color,
+                        "& > div": {
+                          "& > div": {
+                            opacity: 1,
+                          },
+                        },
+                      },
+                    }}
                   >
-                    {i + 1}
-                  </Box>
-                </Box>
-              </ToggleButton>
-            ))}
+                    <Box
+                      width="100%"
+                      height="100%"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Box
+                        bgcolor="black"
+                        color="white"
+                        borderRadius="50%"
+                        width={16}
+                        height={16}
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        fontSize={10}
+                        lineHeight={1}
+                      >
+                        {i + 1}
+                      </Box>
+                    </Box>
+                  </ToggleButton>
+                )
+            )}
           </ToggleButtonGroup>
         </FormControl>
       </Grid>
@@ -599,6 +624,9 @@ export default function FormCritical({
                         />
                       </FormControl>
                     </Grid>
+                    <Grid marginTop={1} item xs={12}>
+                      <Typography>Aktivitas</Typography>
+                    </Grid>
                   </Grid>
 
                   <Stack>
@@ -607,27 +635,27 @@ export default function FormCritical({
                       variant="outlined"
                       sx={{ mt: 1, p: 2, minWidth: "0 !important" }}
                     >
-                      <Grid container spacing={3}>
+                      {/* <Grid marginBottom={1} container spacing={3}>
                         <Grid item xs={12}>
                           <Stack
                             direction="row"
                             alignItems="center"
                             justifyContent="space-between"
                           >
-                            <Typography fontWeight={500}>Target</Typography>
+                            <Typography fontWeight={500}>Aktivitas</Typography>
                             <AddButton
                               small
-                              title="Tambah Target"
+                              title="Tambah Aktivitas"
                               noMargin
                               onclick={() => addMenuTarget(index)}
                             />
                           </Stack>
                         </Grid>
-                      </Grid>
+                      </Grid> */}
 
-                      {tags.target.map((target: TargetDto, iTarget: number) => (
+                      {/* {tags.target.map((target: TargetDto, iTarget: number) => (
                         <Grid container spacing={1} key={`target-${iTarget}`}>
-                          <Grid marginY={1} item xs={12} md={6}>
+                          <Grid marginY={0.5} item xs={12} md={6}>
                             <FormControl fullWidth>
                               <SelectCustomTheme
                                 small
@@ -670,7 +698,7 @@ export default function FormCritical({
                           </Grid>
 
                           <Grid
-                            marginY={1}
+                            marginY={0.5}
                             item
                             xs={12}
                             md={iTarget > 0 ? 4 : 6}
@@ -724,16 +752,146 @@ export default function FormCritical({
                             </Grid>
                           )}
                         </Grid>
-                      ))}
+                      ))} */}
+                      <Stack gap={2}>
+                        {monthData.map((item, index) => (
+                          <Stack gap={1} key={index}>
+                            <Grid container spacing={3}>
+                              <Grid item xs={12}>
+                                <Stack
+                                  direction="row"
+                                  alignItems="center"
+                                  justifyContent="space-between"
+                                >
+                                  <Typography fontWeight={500}>
+                                    {item}
+                                  </Typography>
+                                  <AddButton
+                                    small
+                                    title={`Tambah Aktivitas ${item}`}
+                                    noMargin
+                                    onclick={() => addMenuTarget(index)}
+                                  />
+                                </Stack>
+                              </Grid>
+                            </Grid>
+                            {tags.target.map(
+                              (target: TargetDto, iTarget: number) => (
+                                <Grid
+                                  container
+                                  spacing={1}
+                                  key={`target-${iTarget}`}
+                                >
+                                  <Grid marginY={0.5} item xs={12} md={6}>
+                                    <FormControl fullWidth>
+                                      <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        placeholder={`Aktivitas ${item}`}
+                                        InputLabelProps={{
+                                          shrink: true,
+                                        }}
+                                      />
+                                    </FormControl>
+                                  </Grid>
+                                  <Grid
+                                    marginY={0.5}
+                                    item
+                                    xs={12}
+                                    md={iTarget > 0 ? 2 : 3}
+                                  >
+                                    <FormControl fullWidth>
+                                      <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        placeholder="Target"
+                                        InputLabelProps={{
+                                          shrink: true,
+                                        }}
+                                        value={target.target}
+                                        onChange={(e) =>
+                                          setState((prev) => {
+                                            const kegiatan = prev.kegiatan;
+                                            kegiatan[index].target[
+                                              iTarget
+                                            ].target = e.target.value;
+                                            return {
+                                              ...prev,
+                                              kegiatan: kegiatan,
+                                            };
+                                          })
+                                        }
+                                      />
+                                    </FormControl>
+                                  </Grid>
+                                  <Grid
+                                    marginY={0.5}
+                                    item
+                                    xs={12}
+                                    md={iTarget > 0 ? 2 : 3}
+                                  >
+                                    <FormControl fullWidth>
+                                      <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        placeholder="Satuan"
+                                        InputLabelProps={{
+                                          shrink: true,
+                                        }}
+                                        // InputProps={{
+                                        //   endAdornment: (
+                                        //     <InputAdornment position="end">
+                                        //       %
+                                        //     </InputAdornment>
+                                        //   ),
+                                        // }}
+                                        // value={target.target}
+                                        // onChange={(e) =>
+                                        //   setState((prev) => {
+                                        //     const kegiatan = prev.kegiatan;
+                                        //     kegiatan[index].target[iTarget].target =
+                                        //       e.target.value;
+                                        //     return { ...prev, kegiatan: kegiatan };
+                                        //   })
+                                        // }
+                                      />
+                                    </FormControl>
+                                  </Grid>
+                                  {iTarget > 0 && (
+                                    <Grid marginY={1} item xs={12} md="auto">
+                                      <Stack
+                                        direction="row"
+                                        alignItems="center"
+                                        justifyContent="space-between"
+                                        minHeight={"100%"}
+                                      >
+                                        <AddButton
+                                          small
+                                          errorColor
+                                          noMargin
+                                          onclick={() =>
+                                            minusMenuTarget(index, iTarget)
+                                          }
+                                          title={""}
+                                        />
+                                      </Stack>
+                                    </Grid>
+                                  )}
+                                </Grid>
+                              )
+                            )}
+                          </Stack>
+                        ))}
+                      </Stack>
                     </Paper>
                   </Stack>
                 </Paper>
               ))}
             </Stack>
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Divider />
-          </Grid>
+          </Grid> */}
         </>
       )}
     </Grid>
