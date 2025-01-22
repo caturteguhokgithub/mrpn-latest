@@ -1,6 +1,9 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   alpha,
+  FormControl,
+  Grid,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -11,6 +14,7 @@ import {
 import theme from "@/theme";
 import { grey } from "@mui/material/colors";
 import { bgColorTh } from "@/app/utils/color";
+import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 
 export default function TableDetail() {
   const data = {
@@ -41,7 +45,15 @@ export default function TableDetail() {
   };
 
   return (
-    <>
+    <Stack gap={2}>
+      <Grid container>
+        <Grid item xs={12}>
+          <FieldLabelInfo title="RO/Project Kunci" />
+          <Typography fontWeight={600}>
+            Perencanaan pengembangan KSPP Kalimantan Tengah
+          </Typography>
+        </Grid>
+      </Grid>
       <Table
         sx={{
           minWidth: 650,
@@ -63,7 +75,7 @@ export default function TableDetail() {
             </TableCell>
             <TableCell sx={{ bgcolor: bgColorTh }}>
               <Typography variant="body2" fontWeight={600}>
-                RO/Project Kunci
+                Narasi Aktivitas Kunci
               </Typography>
             </TableCell>
             <TableCell sx={{ bgcolor: bgColorTh, width: 150 }}>
@@ -100,6 +112,6 @@ export default function TableDetail() {
           ))}
         </TableBody>
       </Table>
-    </>
+    </Stack>
   );
 }

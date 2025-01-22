@@ -150,7 +150,6 @@ const CustomTaskListTable = ({
               alignItems="center"
               onClick={() => onExpanderClick(item)}
             >
-              {" "}
               <Box
                 component="p"
                 sx={{

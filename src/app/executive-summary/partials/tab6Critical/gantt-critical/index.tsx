@@ -253,6 +253,15 @@ export default function GanttChart({ tasks }: { tasks: Task[] }) {
             "-webkit-line-clamp": "1",
           },
         },
+        "._2k9Ys": {
+          "&::-webkit-scrollbar": {
+            height: "6px",
+            cursor: "pointer",
+          },
+        },
+        "._1eT-t, ._2B2zv": {
+          height: "calc(100vh - 620px) !important",
+        },
       }}
     >
       <Gantt

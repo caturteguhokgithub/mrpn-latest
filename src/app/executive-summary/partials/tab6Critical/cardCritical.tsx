@@ -14,6 +14,7 @@ import TableCritical from "./table";
 import DialogDelete from "@/app/components/dialogDelete";
 import GanttChartMonthly from "./gantt-critical/monthly";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import AddButton from "@/app/components/buttonAdd";
 
 const ProjectType = ({ label, color }: { label: string; color: string }) => {
   return (
@@ -111,9 +112,17 @@ export default function CardCritical({ project }: { project: string }) {
             </p>
           </div>
         }
-        setting
-        settingAddOnclickOnly={handleModalAdd}
-        settingEditOnclick={handleModalOpen}
+        // setting
+        // settingAddOnclickOnly={handleModalAdd}
+        // settingEditOnclick={handleModalOpen}
+        addButton={
+          <AddButton
+            filled
+            small
+            title="Tambah Critical Path"
+            onclick={handleModalAdd}
+          />
+        }
       >
         {data.length == 0 || ganChart.length == 0 ? (
           <EmptyState
