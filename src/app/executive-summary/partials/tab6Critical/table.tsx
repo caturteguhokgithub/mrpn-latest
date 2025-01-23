@@ -2,7 +2,9 @@ import React from "react";
 import {
   alpha,
   Box,
+  Button,
   Chip,
+  DialogActions,
   Paper,
   Stack,
   Table,
@@ -15,12 +17,14 @@ import {
 import theme from "@/theme";
 import { grey, red } from "@mui/material/colors";
 import { ExsumIndicationResDto } from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
-import {useAuthContext, useRKPContext} from "@/lib/core/hooks/useHooks";
+import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import ActionColumn from "@/app/components/actions/action";
 import { Task } from "gantt-task-react";
 import { ExsumCriticalData } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
 import dayjs from "dayjs";
+import DialogComponent from "@/app/components/dialog";
+import TableDetail from "./gantt-critical/table";
 
 export default function TableCritical({
   handleEdit,
@@ -31,8 +35,9 @@ export default function TableCritical({
   handleDelete?: any;
   data: ExsumCriticalData[];
 }) {
+  const [modalOpen, setModalOpen] = React.useState(false);
 
-  const {year} = useRKPContext(store => store)
+  const { year } = useRKPContext((store) => store);
 
   return (
     <>
@@ -117,16 +122,21 @@ export default function TableCritical({
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
                 <Typography variant="body2">
-                  {year == 0 ? dayjs(item.start_date).format("YYYY") : dayjs(item.start_date).format("DD MMM YYYY")}
+                  {year == 0
+                    ? dayjs(item.start_date).format("YYYY")
+                    : dayjs(item.start_date).format("DD MMM YYYY")}
                 </Typography>
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
                 <Typography variant="body2">
-                  {year == 0 ? dayjs(item.end_date).format("YYYY") : dayjs(item.end_date).format("DD MMM YYYY")}
+                  {year == 0
+                    ? dayjs(item.end_date).format("YYYY")
+                    : dayjs(item.end_date).format("DD MMM YYYY")}
                 </Typography>
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
                 <ActionColumn
+                  viewClick={year > 0 ? () => setModalOpen(true) : undefined}
                   editClick={() => handleEdit(index)}
                   deleteClick={() => handleDelete(index)}
                 />
@@ -135,6 +145,21 @@ export default function TableCritical({
           ))}
         </TableBody>
       </Table>
+      <DialogComponent
+        width={"50%"}
+        dialogOpen={modalOpen}
+        dialogClose={() => setModalOpen(false)}
+        title="Detail RO/Project Kunci Tahun 2025"
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button variant="outlined" onClick={() => setModalOpen(false)}>
+              Keluar
+            </Button>
+          </DialogActions>
+        }
+      >
+        <TableDetail />
+      </DialogComponent>
     </>
   );
 }
