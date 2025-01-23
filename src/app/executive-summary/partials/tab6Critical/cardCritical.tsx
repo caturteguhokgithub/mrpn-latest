@@ -113,17 +113,8 @@ export default function CardCritical({ project }: { project: string }) {
           </div>
         }
         setting
-        settingAddOnclickOnly={year > 0 ? handleModalAdd : undefined}
-        settingAddOnclick={year == 0 ? handleModalAdd : undefined}
-        settingEditOnclick={year == 0 ? handleModalOpen : undefined}
-        // addButton={
-        //   <AddButton
-        //     filled
-        //     small
-        //     title="Tambah Critical Path"
-        //     onclick={handleModalAdd}
-        //   />
-        // }
+        settingAddOnclick={handleModalAdd}
+        settingEditOnclick={handleModalOpen}
       >
         {data.length == 0 || ganChart.length == 0 ? (
           <EmptyState

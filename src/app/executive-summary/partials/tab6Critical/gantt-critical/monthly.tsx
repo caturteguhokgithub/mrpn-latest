@@ -11,23 +11,15 @@ import CustomTooltip from "./tooltip";
 import {
   alpha,
   Box,
-  Button,
   Chip,
-  DialogActions,
   Grow,
-  IconButton,
   Stack,
   Tooltip,
   Typography,
 } from "@mui/material";
 import theme from "@/theme";
 import { IconFA } from "@/app/components/icons/icon-fa";
-import { blue, green, orange, red } from "@mui/material/colors";
-import dayjs from "dayjs";
 import { TaskAdditionalData } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
-import ActionColumn from "@/app/components/actions/action";
-import DialogComponent from "@/app/components/dialog";
-import TableDetail from "./table";
 
 const CustomTaskListHeader = ({
   headerHeight,
@@ -102,7 +94,6 @@ const CustomTaskListTable = ({
   };
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-  const [modalOpen, setModalOpen] = React.useState(false);
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -231,30 +222,6 @@ const CustomTaskListTable = ({
                       }}
                     />
                   </Box>
-                  <ActionColumn
-                    size="sm"
-                    viewClick={() => setModalOpen(true)}
-                    editClick={() => {}}
-                    deleteClick={() => {}}
-                  />
-                  <DialogComponent
-                    width={"50%"}
-                    dialogOpen={modalOpen}
-                    dialogClose={() => setModalOpen(false)}
-                    title="Detail RO/Project Kunci Tahun 2025"
-                    dialogFooter={
-                      <DialogActions sx={{ p: 2, px: 3 }}>
-                        <Button
-                          variant="outlined"
-                          onClick={() => setModalOpen(false)}
-                        >
-                          Keluar
-                        </Button>
-                      </DialogActions>
-                    }
-                  >
-                    <TableDetail />
-                  </DialogComponent>
                 </Stack>
               )}
               {/*{isProject && (*/}
