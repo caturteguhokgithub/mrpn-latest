@@ -8,6 +8,7 @@ import useCardUrgentVM from "./cardUrgentVM";
 import dynamic from "next/dynamic";
 import type ReactQuill from "react-quill";
 import DialogDelete from "@/app/components/dialogDelete";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -26,6 +27,7 @@ export default function CardUrgent({ project }: { project: string }) {
     setModalDelete,
     handleModalDelete,
   } = useCardUrgentVM();
+  const { year } = useRKPContext((state) => state);
 
   const ReactQuill = dynamic(
     async () => {
@@ -57,7 +59,7 @@ export default function CardUrgent({ project }: { project: string }) {
   return (
     <CardItem
       title="Urgensi Proyek"
-      setting
+      setting={year <= 0}
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
     >

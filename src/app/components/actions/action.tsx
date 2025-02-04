@@ -9,11 +9,13 @@ export const ActionIcon = ({
   onclick,
   color,
   size,
+  disabled,
 }: {
   icon: string;
   onclick?: () => void;
   color: string;
   size?: string;
+  disabled?: boolean;
 }) => {
   const iconStyle = {
     bgcolor:
@@ -42,6 +44,7 @@ export const ActionIcon = ({
           color="primary"
           sx={iconStyle}
           onClick={onclick}
+          disabled={disabled}
         >
           <IconFA
             size={size == "sm" ? 12 : 14}
@@ -50,7 +53,12 @@ export const ActionIcon = ({
           />
         </IconButton>
       ) : (
-        <IconButton aria-label="edit" color="primary" sx={iconStyle}>
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          sx={iconStyle}
+          disabled={disabled}
+        >
           <IconFA
             size={size == "sm" ? 12 : 14}
             name={icon}
@@ -71,6 +79,7 @@ export default function ActionColumn({
   deleteClick,
   center,
   size,
+  disabled,
 }: {
   editUrl?: string;
   viewUrl?: string;
@@ -80,6 +89,7 @@ export default function ActionColumn({
   deleteClick?: () => void;
   center?: boolean;
   size?: string;
+  disabled?: boolean;
 }) {
   return (
     <Stack
@@ -90,7 +100,12 @@ export default function ActionColumn({
     >
       {viewUrl && (
         <Link href={viewUrl}>
-          <ActionIcon icon="eye" color="approval" size={size} />
+          <ActionIcon
+            icon="eye"
+            color="approval"
+            size={size}
+            disabled={disabled}
+          />
         </Link>
       )}
       {viewClick && (
@@ -99,11 +114,12 @@ export default function ActionColumn({
           color="approval"
           onclick={viewClick}
           size={size}
+          disabled={disabled}
         />
       )}
       {editUrl && (
         <Link href={editUrl}>
-          <ActionIcon icon="pencil" color="primary" />
+          <ActionIcon icon="pencil" color="primary" disabled={disabled} />
         </Link>
       )}
       {editClick && (
@@ -112,11 +128,17 @@ export default function ActionColumn({
           color="primary"
           onclick={editClick}
           size={size}
+          disabled={disabled}
         />
       )}
       {deleteUrl && (
         <Link href={deleteUrl}>
-          <ActionIcon icon="trash" color="danger" size={size} />
+          <ActionIcon
+            icon="trash"
+            color="danger"
+            size={size}
+            disabled={disabled}
+          />
         </Link>
       )}
       {deleteClick && (
@@ -125,6 +147,7 @@ export default function ActionColumn({
           color="danger"
           onclick={deleteClick}
           size={size}
+          disabled={disabled}
         />
       )}
     </Stack>

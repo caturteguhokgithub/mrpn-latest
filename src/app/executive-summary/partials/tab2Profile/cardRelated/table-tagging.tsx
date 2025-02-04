@@ -19,7 +19,7 @@ import theme from "@/theme";
 import { ExsumRelatedDto } from "@/app/executive-summary/partials/tab2Profile/cardRelated/cardRelatedModel";
 import DialogDelete from "@/app/components/dialogDelete";
 import ActionColumn from "@/app/components/actions/action";
-import { useAuthContext } from "@/lib/core/hooks/useHooks";
+import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import { bgColorTh } from "@/app/utils/color";
@@ -35,6 +35,8 @@ export default function TableTagging({
 }) {
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
+
+  const { year } = useRKPContext((state) => state);
 
   return (
     <TableContainer
@@ -84,6 +86,7 @@ export default function TableTagging({
                       {hasPrivilege(permission, pathname, "update") && (
                         <ActionColumn
                           center
+                          disabled={year > 0}
                           editClick={() =>
                             handleUpdateOrDelete(index, "update")
                           }
@@ -92,6 +95,7 @@ export default function TableTagging({
                       {hasPrivilege(permission, pathname, "delete") && (
                         <ActionColumn
                           center
+                          disabled={year > 0}
                           deleteClick={() =>
                             handleUpdateOrDelete(index, "delete")
                           }

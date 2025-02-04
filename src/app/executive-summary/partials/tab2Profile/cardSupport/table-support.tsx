@@ -18,7 +18,7 @@ import { ExsumDto } from "@/lib/core/context/exsumContext";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
 import { bgColorTh } from "@/app/utils/color";
-import {GetTarget} from "@/lib/utils/common";
+import { GetTarget } from "@/lib/utils/common";
 
 export const getLevel = (level: string) => {
   switch (level) {
@@ -47,7 +47,7 @@ export default function TableSupport({
   const { rpjmn, year } = useRKPContext((store) => store);
 
   const getTarget = (year: number, indikator: IndikatorDto) => {
-    return GetTarget(rpjmn, year, indikator)
+    return GetTarget(rpjmn, year, indikator);
   };
 
   return (
@@ -78,19 +78,21 @@ export default function TableSupport({
             <TableCell width="20%" sx={{ bgcolor: bgColorTh }}>
               Indikator
             </TableCell>
-            {year == 0 ? rpjmn &&
-              <>
-              {[0,1,2,3,4].map((r) =>
-                <TableCell width={200} sx={{ bgcolor: bgColorTh }}>
-                  Target {rpjmn.start+r}
-                </TableCell>
-              )}
-              </>
-              :
+            {year == 0 ? (
+              rpjmn && (
+                <>
+                  {[0, 1, 2, 3, 4].map((r) => (
+                    <TableCell width={200} sx={{ bgcolor: bgColorTh }}>
+                      Target {rpjmn.start + r}
+                    </TableCell>
+                  ))}
+                </>
+              )
+            ) : (
               <TableCell width={200} sx={{ bgcolor: bgColorTh }}>
                 Target
               </TableCell>
-            }
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -126,21 +128,21 @@ export default function TableSupport({
                     : ""}
                 </TableCell>
 
-                {sasaran.indikator.length > 0 && year == 0 ? rpjmn &&
+                {sasaran.indikator.length > 0 && year == 0 ? (
+                  rpjmn && (
                     <>
-                      {[0,1,2,3,4].map((r) =>
+                      {[0, 1, 2, 3, 4].map((r) => (
                         <TableCell sx={{ verticalAlign: "top" }}>
-                          {getTarget(rpjmn.start+r,sasaran.indikator[0])}
+                          {getTarget(rpjmn.start + r, sasaran.indikator[0])}
                         </TableCell>
-                      )}
+                      ))}
                     </>
-                  :
+                  )
+                ) : (
                   <TableCell sx={{ verticalAlign: "top" }}>
                     {getTarget(year, sasaran.indikator[0])}
                   </TableCell>
-                }
-
-
+                )}
               </TableRow>
               {sasaran.indikator.slice(1).map((indikator, i) => (
                 <TableRow key={`indikator-${index}-${i}`}>
@@ -148,18 +150,21 @@ export default function TableSupport({
                     {indikator.value}
                   </TableCell>
 
-                  {year == 0 ? rpjmn &&
+                  {year == 0 ? (
+                    rpjmn && (
                       <>
-                        {[0,1,2,3,4].map((r) =>
+                        {[0, 1, 2, 3, 4].map((r) => (
                           <TableCell sx={{ verticalAlign: "top" }}>
-                            {getTarget(rpjmn.start+r,indikator)}
+                            {getTarget(rpjmn.start + r, indikator)}
                           </TableCell>
-                        )}
+                        ))}
                       </>
-                    :
-                    <TableCell width={200}>{getTarget(year,indikator)}</TableCell>
-                  }
-
+                    )
+                  ) : (
+                    <TableCell width={200}>
+                      {getTarget(year, indikator)}
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </React.Fragment>

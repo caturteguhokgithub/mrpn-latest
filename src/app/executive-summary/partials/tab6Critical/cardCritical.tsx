@@ -125,15 +125,15 @@ export default function CardCritical({ project }: { project: string }) {
           />
         ) : (
           <Stack gap={3} maxWidth="calc(100vw - 200px)">
-            <Stack direction="row" gap={1}>
-              {/*{groupProjectCategory().map((d, index) => (*/}
-              {/*  <ProjectType*/}
-              {/*    key={index}*/}
-              {/*    color={GetColor(d.id)}*/}
-              {/*    label={d.name}*/}
-              {/*  />*/}
-              {/*))}*/}
-            </Stack>
+            {/* <Stack direction="row" gap={1}> */}
+            {/*{groupProjectCategory().map((d, index) => (*/}
+            {/*  <ProjectType*/}
+            {/*    key={index}*/}
+            {/*    color={GetColor(d.id)}*/}
+            {/*    label={d.name}*/}
+            {/*  />*/}
+            {/*))}*/}
+            {/* </Stack> */}
             {year == 0 && <GanttChart key={ganChart.length} tasks={ganChart} />}
             {year > 0 && (
               <GanttChartMonthly

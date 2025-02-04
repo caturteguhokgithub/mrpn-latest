@@ -1,42 +1,25 @@
 "use client";
 
 import ContentPage from "@/app/components/contents";
-import React, { useEffect } from "react";
+import React from "react";
 import EmptyState from "@/components/empty";
 import { IconEmptyPage } from "@/components/icons";
-import {
-  Box,
-  Button,
-  Chip,
-  Collapse,
-  Grow,
-  Stack,
-  Tab,
-  Tabs,
-  Tooltip,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import theme from "@/theme";
+import { Box, Collapse, Tab, Tabs } from "@mui/material";
 import { IconFA } from "@/components/icons/icon-fa";
 import Tab1Background from "./partials/tab1Background";
 import Tab2Profile from "./partials/tab2Profile";
 import Tab3Fot from "./partials/tab3Fot";
-import Tab3Diagram from "./partials/tab3Diagram";
-import Tab4Profile from "./partials/tab4Profile";
 import Tab4Diagram from "./partials/tab4Diagram";
 import Tab5Roadmap from "./partials/tab5Roadmap";
 import Tab6Critical from "./partials/tab6Critical";
 import Tab7Regulation from "./partials/tab7Regulation";
 import Tab8Fund from "./partials/tab8Fund";
 import Tab9Indication from "./partials/tab9Indication";
-import { CustomTab, styleDownload, styleTab, styleTabPanel } from "./style";
+import { styleTab, styleTabPanel } from "./style";
 import DropdownRkp from "@/components/dropdown/dropdownRkp";
 import { SxParams, TabPanelProps } from "./types";
 import Tab7Stakeholder from "./partials/tab7Stakeholder";
-import { useExsumContext, useRKPContext } from "@/lib/core/hooks/useHooks";
-import useRkpVM from "@/components/dropdown/rkpVM";
-import Tab9Risk from "@/app/executive-summary/partials/tab9Risk";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
 
 function a11yProps(index: number) {
   return {
@@ -130,7 +113,11 @@ export default function PageExecutiveSummaryContent({
         <EmptyState
           icon={<IconEmptyPage />}
           title="Halaman Executive Summary Kosong"
-          description={rkpOption.length > 0 ? `Silahkan pilih kegiatan pembangunan di bawah ini` : undefined}
+          description={
+            rkpOption.length > 0
+              ? `Silahkan pilih kegiatan pembangunan di bawah ini`
+              : undefined
+          }
           button={
             <DropdownRkp
               handleChangeProject={handleChangeProject}
