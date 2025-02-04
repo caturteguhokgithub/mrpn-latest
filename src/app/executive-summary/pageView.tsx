@@ -10,6 +10,7 @@ import {
   Collapse,
   DialogActions,
   Grow,
+  Icon,
   Stack,
   Tabs,
   Tooltip,
@@ -20,7 +21,11 @@ import {
 import theme from "@/theme";
 import { IconFA } from "@/components/icons/icon-fa";
 import { CustomTab, styleDownload } from "./style";
-import {useAuthContext, useExsumContext, useRKPContext} from "@/lib/core/hooks/useHooks";
+import {
+  useAuthContext,
+  useExsumContext,
+  useRKPContext,
+} from "@/lib/core/hooks/useHooks";
 import PageExecutiveSummaryContent from "@/app/executive-summary/pageViewContent";
 import DialogComponent from "@/components/dialog";
 import useApprovalVM from "@/app/executive-summary/approvalVM";
@@ -28,11 +33,11 @@ import { grey } from "@mui/material/colors";
 import { ApprovalDto } from "@/lib/core/context/exsumContext";
 import { OverridableStringUnion } from "@mui/types";
 import { InfoTooltip } from "../components/InfoTooltip";
-import {usePathname} from "next/navigation";
-import {hasPrivilege} from "@/lib/core/helpers/authHelpers";
+import { usePathname } from "next/navigation";
+import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
+import AddButton from "../components/buttonAdd";
 
 export default function PageExecutiveSummary({}) {
-
   const { permission, user } = useAuthContext((state) => state);
   const pathname = usePathname();
 
@@ -87,28 +92,31 @@ export default function PageExecutiveSummary({}) {
   const breakpointDownMd = useMediaQuery(usetheme.breakpoints.down("md"));
 
   const downloadAttachment = (
-    <Chip
-      color="primary"
-      variant="outlined"
-      label={
-        <Stack direction="row" gap={1}>
-          <IconFA
-            size={14}
-            name="download"
-            color={theme.palette.primary.main}
+    <AddButton
+      filled
+      errorColor
+      title="Download PDF"
+      startIcon={
+        breakpointDownMd ? null : (
+          <Icon
+            baseClassName="fas"
+            className={`fa-file-pdf`}
+            sx={{
+              fontSize: "16px !important",
+            }}
           />
-          {breakpointDownMd ? null : "Download Lampiran"}
-        </Stack>
+        )
       }
-      sx={styleDownload}
+      sx={{ height: 38 }}
     />
   );
 
   const approvalAction = (approval: ApprovalDto | undefined) => {
-
-
-
-    if (approval != undefined && hasPrivilege(permission, pathname, "approve") && approval.status == "review") {
+    if (
+      approval != undefined &&
+      hasPrivilege(permission, pathname, "approve") &&
+      approval.status == "review"
+    ) {
       return (
         <Chip
           color="primary"
@@ -124,7 +132,7 @@ export default function PageExecutiveSummary({}) {
       );
     }
 
-    if (user && (user.role_id == 4 || user.role_id == 1)){
+    if (user && (user.role_id == 4 || user.role_id == 1)) {
       return (
         <Chip
           color="primary"
@@ -188,7 +196,12 @@ export default function PageExecutiveSummary({}) {
       overflowHidden
       chooseProject={rkpState !== undefined}
       dowloadAttachmentFile={
-        rkpState !== undefined && approvalAction(exsum.approval)
+        rkpState !== undefined && (
+          <Stack direction="row" alignItems="center" gap={0.5}>
+            {downloadAttachment}
+            {approvalAction(exsum.approval)}
+          </Stack>
+        )
       }
       titleChild={approvalStatus(exsum.approval)}
       tabArrow={

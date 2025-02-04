@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Icon } from "@mui/material";
-import { blue, red } from "@mui/material/colors";
+import { blue, green, red } from "@mui/material/colors";
 import Link from "next/link";
 
 export default function AddButton({
@@ -14,8 +14,9 @@ export default function AddButton({
   startIcon,
   fullWidth,
   errorColor,
+  color,
 }: {
-  title?: string;
+  title?: React.ReactNode;
   url?: string;
   filled?: boolean;
   small?: boolean;
@@ -25,11 +26,12 @@ export default function AddButton({
   startIcon?: React.ReactNode;
   fullWidth?: boolean;
   errorColor?: boolean | any;
+  color?: string;
 }) {
   const buttonAdd = (
     <Button
       fullWidth={fullWidth}
-      color={errorColor && "error"}
+      color={errorColor ? "error" : color == "success" ? "success" : "primary"}
       variant={filled ? "contained" : "outlined"}
       size={small ? "small" : "medium"}
       startIcon={
@@ -53,8 +55,13 @@ export default function AddButton({
         lineHeight: 1,
         whiteSpace: "nowrap",
         textTransform: "capitalize",
+        transition: "all 300ms ease-in-out",
         "&:hover": {
-          bgcolor: errorColor ? red[800] : blue[800],
+          bgcolor: errorColor
+            ? red[800]
+            : color == "success"
+            ? green[700]
+            : blue[800],
           color: "white",
         },
         ".MuiButton-icon": {

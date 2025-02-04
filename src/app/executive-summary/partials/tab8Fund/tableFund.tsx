@@ -162,6 +162,14 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
     return val;
   };
 
+  const styleFixedColumn = {
+    position: "sticky",
+    left: 0,
+    boxShadow: "5px 2px 5px rgba(0,0,0,0.1)",
+    borderRight: "1px solid #e0e0e0",
+    width: 250,
+  };
+
   return (
     <TableContainer
       className="table-fund"
@@ -170,6 +178,7 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
       variant="outlined"
       sx={{
         overflowX: "auto",
+        maxHeight: "48vh",
         "td, th": {
           "&.MuiTableCell-root": {
             border: "1px solid rgb(224, 224, 224)",
@@ -184,18 +193,19 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
         },
       }}
     >
-      <Table size="small" style={{ tableLayout: "fixed", width: 4000 }}>
+      <Table
+        size="small"
+        style={{ tableLayout: "fixed", width: 4000 }}
+        stickyHeader
+      >
         <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
           <TableRow>
             <TableCell
               rowSpan={2}
               sx={{
-                position: "sticky",
-                left: 0,
-                boxShadow: "2px -6px 10px grey",
-                borderRight: "1px solid #e0e0e0",
+                ...styleFixedColumn,
                 bgcolor: bgColorTh,
-                width: 250,
+                zIndex: 3,
               }}
             >
               RO/Project
@@ -212,26 +222,40 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
             {/*</TableCell>*/}
 
             {multiyear.map((y, iY) => (
-              <TableCell colSpan={4} align={"center"}>
+              <TableCell
+                colSpan={4}
+                align={"center"}
+                sx={{ bgcolor: bgColorTh }}
+              >
                 {y}
               </TableCell>
             ))}
-            <TableCell rowSpan={2} sx={{ width: 250 }}>
+            <TableCell rowSpan={2} sx={{ width: 250, bgcolor: bgColorTh }}>
               Instansi Pelaksana RO
             </TableCell>
-            <TableCell rowSpan={2}>
+            <TableCell rowSpan={2} sx={{ bgcolor: bgColorTh }}>
               Lokasi RO
               <br />
               (Prov./Kab./Kota)
             </TableCell>
           </TableRow>
-          <TableRow>
+          <TableRow
+            sx={{
+              ".MuiTableCell-stickyHeader": {
+                top: 38,
+              },
+            }}
+          >
             {multiyear.map((y, iY) => (
               <>
-                <TableCell>Target</TableCell>
-                <TableCell>Satuan</TableCell>
-                <TableCell>Pembiayaan (Juta)</TableCell>
-                <TableCell>Sumber Pembiayaan</TableCell>
+                <TableCell sx={{ bgcolor: bgColorTh }}>Target</TableCell>
+                <TableCell sx={{ bgcolor: bgColorTh }}>Satuan</TableCell>
+                <TableCell sx={{ bgcolor: bgColorTh }}>
+                  Pembiayaan (Juta)
+                </TableCell>
+                <TableCell sx={{ bgcolor: bgColorTh }}>
+                  Sumber Pembiayaan
+                </TableCell>
               </>
             ))}
           </TableRow>
@@ -241,14 +265,19 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
             <TableRow key={index}>
               <TableCell
                 sx={{
+                  ...styleFixedColumn,
                   verticalAlign: "top",
-                  position: "sticky",
-                  left: 0,
                   background: "white",
-                  boxShadow: "5px 2px 5px grey",
-                  borderRight: "2px solid #e0e0e0",
                 }}
               >
+                <Typography
+                  component="span"
+                  color={grey[500]}
+                  fontSize="0.9rem"
+                >
+                  {fundRow.code}
+                </Typography>
+                <br />
                 {fundRow.value}
               </TableCell>
               {/* <TableCell sx={{ verticalAlign: "top" }}>

@@ -9,6 +9,7 @@ import { dataTema } from "../../../dataTema";
 import type ReactQuill from "react-quill";
 import useCardSegmentVM from "@/app/executive-summary/partials/tab1Background/cardSegment/cardSegmentVM";
 import DialogDelete from "@/app/components/dialogDelete";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -27,6 +28,8 @@ export default function CardSegment({ project }: { project: string }) {
     setModalDelete,
     handleModalDelete,
   } = useCardSegmentVM();
+
+    const { year } = useRKPContext((state) => state);
 
   const ReactQuill = dynamic(
     async () => {
@@ -58,7 +61,7 @@ export default function CardSegment({ project }: { project: string }) {
   return (
     <CardItem
       title="Segmen Penerima Manfaat"
-      setting
+      setting={year <= 0}
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
     >

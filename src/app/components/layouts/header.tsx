@@ -58,7 +58,7 @@ export default function Header({}) {
   };
 
   const setProviderYear = (year: number) => {
-    setRkpState(undefined)
+    setRkpState(undefined);
     setYear(year);
   };
 
@@ -110,29 +110,29 @@ export default function Header({}) {
 
   const currentStyle = textStyles[sliderCounter];
 
-  useGSAP(() => {
-    const tlIn = gsap.timeline({
-      repeat: -1,
-      repeatDelay: 6,
-      yoyo: true,
-      delay: 2,
-      defaults: {
-        ease: "expo.in",
-        stagger: { amount: 0.1 },
-        delay: 0.1,
-      },
-    });
+  // useGSAP(() => {
+  //   const tlIn = gsap.timeline({
+  //     repeat: -1,
+  //     repeatDelay: 6,
+  //     yoyo: true,
+  //     delay: 2,
+  //     defaults: {
+  //       ease: "expo.in",
+  //       stagger: { amount: 0.1 },
+  //       delay: 0.1,
+  //     },
+  //   });
 
-    tlIn
-      .from(".group-1 .ff", { xPercent: -10, width: 0 })
-      .to(".group-1 .ff", { xPercent: 0, delay: 0.1 })
-      .from(".group-2 .ff", { xPercent: -10, width: 0 })
-      .to(".group-2 .ff", { xPercent: 0, delay: 0.1 })
-      .from(".group-3 .ff", { xPercent: -10, width: 0 })
-      .to(".group-3 .ff", { xPercent: 0, delay: 0.1 })
-      .from(".group-4 .ff", { xPercent: -10, width: 0 })
-      .to(".group-4 .ff", { xPercent: 0, delay: 0.1 });
-  }, []);
+  //   tlIn
+  //     .from(".group-1 .ff", { xPercent: -10, width: 0 })
+  //     .to(".group-1 .ff", { xPercent: 0, delay: 0.1 })
+  //     .from(".group-2 .ff", { xPercent: -10, width: 0 })
+  //     .to(".group-2 .ff", { xPercent: 0, delay: 0.1 })
+  //     .from(".group-3 .ff", { xPercent: -10, width: 0 })
+  //     .to(".group-3 .ff", { xPercent: 0, delay: 0.1 })
+  //     .from(".group-4 .ff", { xPercent: -10, width: 0 })
+  //     .to(".group-4 .ff", { xPercent: 0, delay: 0.1 });
+  // }, []);
 
   return (
     <Box
@@ -379,11 +379,13 @@ export default function Header({}) {
                 bgcolor: year == y ? blue[100] : null,
               }}
             >
-              {y == 0 ?
-                <ListItemText>RPJMN {rpjmn?.start+"-"+rpjmn?.end}</ListItemText>
-                :
+              {y == 0 ? (
+                <ListItemText>
+                  RPJMN {rpjmn?.start + "-" + rpjmn?.end}
+                </ListItemText>
+              ) : (
                 <ListItemText>Tahun {y}</ListItemText>
-              }
+              )}
             </MenuItem>
           ))}
 

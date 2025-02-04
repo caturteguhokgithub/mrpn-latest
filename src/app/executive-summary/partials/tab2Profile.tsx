@@ -9,15 +9,15 @@ import CardLocation from "./tab2Profile/cardLocation/cardLocation";
 import CardGoals from "./tab2Profile/cardGoals/cardGoals";
 
 export default function Tab2Profile({ project }: { project: string }) {
- return (
-  <Stack gap={1}>
-   <CardNomenklatur project={project} />
-   <CardGoals project={project} />
-   <CardSupport project={project} />
-   <CardRelated project={project} />
-   <CardIndicator project={project} />
-   {/* <CardProfilRo project={project} /> */}
-   <CardLocation project={project} />
-  </Stack>
- );
+  return (
+    <Stack gap={1}>
+      <CardNomenklatur project={project} />
+      <CardGoals project={project} />
+      <CardSupport project={project} />
+      <CardRelated project={project} />
+      <CardIndicator project={project} />
+      {/* <CardProfilRo project={project} /> */}
+      <CardLocation project={project} />
+    </Stack>
+  );
 }

@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Button, DialogActions, FormControl, Grid, Stack } from "@mui/material";
+import {
+  Button,
+  DialogActions,
+  FormControl,
+  Grid,
+  Icon,
+  Stack,
+  useMediaQuery,
+} from "@mui/material";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import CardItem from "@/app/components/cardTabItem";
@@ -16,6 +24,7 @@ import FormPerlakuanRisiko from "@/app/executive-summary/partials/tab9Indication
 import FormRegulation from "@/app/executive-summary/partials/tab9Indication/partials/formRegulation";
 import { ExsumIndicationStateValue } from "./cardIndicationModel";
 import { TextareaStyled } from "@/components/textarea";
+import theme from "@/theme";
 
 export default function CardIndication({ project }: { project: string }) {
   const { year, rpjmn } = useRKPContext((store) => store);
@@ -56,13 +65,14 @@ export default function CardIndication({ project }: { project: string }) {
 
   const { permission } = useAuthContext((state) => state);
   const pathname = usePathname();
+  const onlySmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <>
       <Stack gap={1}>
         <CardItem
-          title={`Indikasi Risiko Objek MRPN ${
-            year == 0 ? "5 Tahunan" : "Tahun " + year
+          title={`Indikasi Risiko ${
+            year == 0 ? "RPJMN 5 Tahunan" : "RKP Tahun " + year
           }`}
           infoTooltip={
             <Stack spacing={2}>
@@ -96,14 +106,44 @@ export default function CardIndication({ project }: { project: string }) {
             </Stack>
           }
           addButton={
-            hasPrivilege(permission, pathname, "add") && (
+            <Stack direction="row" alignItems="center" gap={0.5}>
+              {/* {project == "all" && ( */}
               <AddButton
+                fullWidth={onlySmallScreen}
+                noMargin
                 filled
-                small
-                title="Tambah Indikasi"
-                onclick={() => handleModalOpen(0, true, "update")}
+                title="Download Excel"
+                color="success"
+                startIcon={
+                  <Icon
+                    baseClassName="fas"
+                    className={`fa-file-excel`}
+                    sx={{
+                      fontSize: "16px !important",
+                    }}
+                  />
+                }
+                onclick={() => {
+                  const uri =
+                    process.env.NEXT_PUBLIC_BASE_URL_API +
+                    "export/exsum/pendanaan";
+                  // const token = sessionStorage.getItem(API_CONSTANT.token);
+                  // const exsum_id = exsum.id;
+                  // const params = "token=" + token + "&exsum_id=" + exsum_id;
+
+                  // window.open(uri + "?" + params, "_blank")?.focus();
+                }}
               />
-            )
+              {/* )} */}
+              {hasPrivilege(permission, pathname, "add") && (
+                <AddButton
+                  filled
+                  small
+                  title="Tambah Indikasi"
+                  onclick={() => handleModalOpen(0, true, "update")}
+                />
+              )}
+            </Stack>
           }
         >
           {data.length == 0 ? (
@@ -157,7 +197,9 @@ export default function CardIndication({ project }: { project: string }) {
         width={"80%"}
         dialogOpen={modalOutput.type != "delete" && modalOutput.action}
         dialogClose={() => handleModalOutputOpen(-1, false, "")}
-        title={`Tambah ${modalOutput.type == "NON_RO" ? 'Project' : 'Rincian Output'}`}
+        title={`Tambah ${
+          modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
+        }`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button
@@ -275,7 +317,6 @@ export default function CardIndication({ project }: { project: string }) {
           </Grid>
         </Grid>
       </DialogComponent>
-
       <DialogDelete
         title="Hapus Data"
         handleOpenModal={modalOpen.action && modalOpen.type == "delete"}
