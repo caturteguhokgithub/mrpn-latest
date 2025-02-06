@@ -25,6 +25,7 @@ import {
 } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
 import AddButton from "@/components/buttonAdd";
 import { AutocompleteSelectMultiple } from "@/components/autocomplete";
+import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 
 export default function CardTows({ project }: { project: string }) {
   const useCardSWOT = useCardSWOTVM();
@@ -38,6 +39,8 @@ export default function CardTows({ project }: { project: string }) {
     setModalOpen,
     updateData,
   } = useCardTOWSVM();
+
+  const { handleEdited, conditionEditing } = useCardLocationVM();
 
   const handleModalOpen = () => {
     setModalOpen(true);
@@ -65,7 +68,7 @@ export default function CardTows({ project }: { project: string }) {
             }
           />
         ) : (
-          <TableTows data={data} />
+          <TableTows data={data} conditionEditing={conditionEditing} />
         )}
       </CardItem>
       <DialogComponent
@@ -81,7 +84,9 @@ export default function CardTows({ project }: { project: string }) {
             <Button
               variant="contained"
               type="submit"
-              onClick={() => updateData()}
+              onClick={() => {
+                updateData(), handleEdited();
+              }}
             >
               Simpan
             </Button>

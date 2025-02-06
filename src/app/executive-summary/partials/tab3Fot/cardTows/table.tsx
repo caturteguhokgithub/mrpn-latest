@@ -28,19 +28,24 @@ import {
   ExsumTWOSResDto,
 } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 
 const TitleTableContent = ({
   title,
   infoTooltip,
+  textColor,
 }: {
   title: string;
   infoTooltip: React.ReactNode;
+  textColor?: string;
 }) => {
   return (
     <Stack direction="row" alignItems="center" gap={0.5}>
       <Typography
         variant="body1"
         fontWeight={600}
+        color={textColor}
         sx={{ textDecoration: "underline" }}
       >
         {title}
@@ -50,7 +55,13 @@ const TitleTableContent = ({
   );
 };
 
-export default function TableTows({ data }: { data: ExsumTWOSResDto }) {
+export default function TableTows({
+  data,
+  conditionEditing,
+}: {
+  data: ExsumTWOSResDto;
+  conditionEditing?: string;
+}) {
   return (
     <TableContainer component={Paper} elevation={0} variant="outlined">
       <Table size="small">
@@ -99,8 +110,9 @@ export default function TableTows({ data }: { data: ExsumTWOSResDto }) {
                 title="Strategi SO"
                 infoTooltip="Ciptakan strategi yang menggunakan kekuatan untuk memanfaatkan peluang
 "
+                textColor={conditionEditing}
               />
-              <Typography variant="body1">
+              <Typography variant="body1" color={conditionEditing}>
                 <ul>
                   {data.tows.map((x) => x.type == "SO" && <li>{x.value}</li>)}
                 </ul>
@@ -111,8 +123,9 @@ export default function TableTows({ data }: { data: ExsumTWOSResDto }) {
                 title="Strategi WO"
                 infoTooltip="Ciptakan strategi yang meminimalkan kelemahan untuk memanfaatkan peluang
 "
+                textColor={conditionEditing}
               />
-              <Typography variant="body1">
+              <Typography variant="body1" color={conditionEditing}>
                 <ul>
                   {data.tows.map((x) => x.type == "WO" && <li>{x.value}</li>)}
                 </ul>
@@ -138,8 +151,9 @@ export default function TableTows({ data }: { data: ExsumTWOSResDto }) {
                 title="Strategi ST"
                 infoTooltip="Ciptakan strategi yang menggunakan kekuatan untuk mengatasi ancaman
 "
+                textColor={conditionEditing}
               />
-              <Typography variant="body1">
+              <Typography variant="body1" color={conditionEditing}>
                 <ul>
                   {data.tows.map((x) => x.type == "ST" && <li>{x.value}</li>)}
                 </ul>
@@ -150,8 +164,9 @@ export default function TableTows({ data }: { data: ExsumTWOSResDto }) {
                 title="Strategi WT"
                 infoTooltip="Ciptakan strategi yang meminimalkan kelemahan dan menghindari ancaman
 "
+                textColor={conditionEditing}
               />
-              <Typography variant="body1">
+              <Typography variant="body1" color={conditionEditing}>
                 <ul>
                   {data.tows.map((x) => x.type == "WT" && <li>{x.value}</li>)}
                 </ul>
