@@ -2,6 +2,7 @@ import {
   useExsumContext,
   useGlobalModalContext,
   useLoading,
+  useRKPContext,
 } from "@/lib/core/hooks/useHooks";
 import { useEffect, useState } from "react";
 import {
@@ -22,11 +23,13 @@ import {
   RkpDefaultReqV1Dto,
   RkpLocationReqDto,
 } from "@/app/misc/rkp/rkpServiceModel";
+import { grey } from "@mui/material/colors";
 
 const useCardLocationVM = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
   const { exsum } = useExsumContext();
+  const { year } = useRKPContext((state) => state);
 
   const [columns, setColumns] = useState<MiscMasterListProvinsiRes[]>([]);
 
@@ -42,6 +45,7 @@ const useCardLocationVM = () => {
     ...initExsumLocationUpdateDto,
   });
   const [modal, setModal] = useState(false);
+  const [edited, setEdited] = useState(false);
 
   async function getLocationByExsumTOWSDiagram() {
     const params: RkpLocationReqDto = {
@@ -135,6 +139,13 @@ const useCardLocationVM = () => {
     });
   };
 
+  const handleEdited = () => {
+    setEdited(true);
+  };
+
+  const conditionEditing =
+    year > 0 && !edited ? `${grey[600]} !important` : "inherit";
+
   return {
     data,
     request,
@@ -148,6 +159,9 @@ const useCardLocationVM = () => {
     listProvinsi,
     getListProvinsi,
     handleChangeLocation,
+    handleEdited,
+    edited,
+    conditionEditing,
   };
 };
 
