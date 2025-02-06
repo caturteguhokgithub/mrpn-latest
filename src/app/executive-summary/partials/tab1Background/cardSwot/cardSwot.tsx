@@ -32,6 +32,7 @@ import AddButton from "@/components/buttonAdd";
 import { IconFA } from "@/components/icons/icon-fa";
 import DialogDelete from "@/app/components/dialogDelete";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
+import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 
 export default function CardSwot({ project }: { project: string }) {
   const {
@@ -47,6 +48,8 @@ export default function CardSwot({ project }: { project: string }) {
     handleModalDelete,
     deleteDataRow,
   } = useCardSWOTVM();
+
+  const { handleEdited, conditionEditing } = useCardLocationVM();
 
   return (
     <>
@@ -85,12 +88,14 @@ export default function CardSwot({ project }: { project: string }) {
               sub1="strength"
               sub2="weakness"
               data={data.values}
+              conditionEditing={conditionEditing}
             />
             <GenerateCard
               title="Faktor Eksternal"
               sub1="opportunity"
               sub2="threat"
               data={data.values}
+              conditionEditing={conditionEditing}
             />
           </Stack>
         )}
@@ -108,7 +113,9 @@ export default function CardSwot({ project }: { project: string }) {
             <Button
               variant="contained"
               type="submit"
-              onClick={() => updateData()}
+              onClick={() => {
+                updateData(), handleEdited();
+              }}
             >
               Simpan
             </Button>
@@ -153,14 +160,18 @@ const GenerateCard = ({
   sub1,
   sub2,
   data,
+  conditionEditing,
 }: {
   title: string;
   sub1: string;
   sub2: string;
   data: ExsumSWOTValuesDto[];
+  conditionEditing: string;
 }) => {
   const filterSub1 = data.filter((x) => x.type == sub1.toUpperCase());
   const filterSub2 = data.filter((x) => x.type == sub2.toUpperCase());
+
+  // const { conditionEditing } = useCardLocationVM();
 
   return (
     <Stack
@@ -177,7 +188,7 @@ const GenerateCard = ({
         borderBottom={`1px solid ${grey[300]}`}
         sx={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
       >
-        <Typography fontSize={16} fontWeight={500}>
+        <Typography fontSize={16} fontWeight={500} color={conditionEditing}>
           {title}
         </Typography>
       </Box>
@@ -216,6 +227,7 @@ const GenerateCard = ({
               component="div"
               lineHeight={1.3}
               textTransform="capitalize"
+              color={conditionEditing}
             >
               {sub1}
             </Typography>
@@ -224,7 +236,9 @@ const GenerateCard = ({
             <ul>
               {filterSub1.map((x) => (
                 <li>
-                  <Typography variant="body1">{x.desc}</Typography>
+                  <Typography variant="body1" color={conditionEditing}>
+                    {x.desc}
+                  </Typography>
                 </li>
               ))}
             </ul>
@@ -254,6 +268,7 @@ const GenerateCard = ({
               component="div"
               lineHeight={1.3}
               textTransform="capitalize"
+              color={conditionEditing}
             >
               {sub2}
             </Typography>
@@ -262,7 +277,9 @@ const GenerateCard = ({
             <ul>
               {filterSub2.map((x) => (
                 <li>
-                  <Typography variant="body1">{x.desc}</Typography>
+                  <Typography variant="body1" color={conditionEditing}>
+                    {x.desc}
+                  </Typography>
                 </li>
               ))}
             </ul>

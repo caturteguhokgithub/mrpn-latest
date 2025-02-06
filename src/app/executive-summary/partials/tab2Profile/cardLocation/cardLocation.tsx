@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Button,
@@ -15,12 +15,13 @@ import CardItem from "@/components/cardTabItem";
 import DialogComponent from "@/components/dialog";
 import { grey } from "@mui/material/colors";
 import useCardLocationVM from "@/app/executive-summary/partials/tab2Profile/cardLocation/cardLocationVM";
-import {ExsumLocationUpdateDto} from "@/app/executive-summary/partials/tab2Profile/cardLocation/cardLocationModel";
+import { ExsumLocationUpdateDto } from "@/app/executive-summary/partials/tab2Profile/cardLocation/cardLocationModel";
 import dynamic from "next/dynamic";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
 import { AutocompleteSelectMultiple } from "@/components/autocomplete";
 import ReactQuill from "react-quill";
-import {MiscMasterListProvinsiRes} from "@/app/misc/master/masterServiceModel";
+import { MiscMasterListProvinsiRes } from "@/app/misc/master/masterServiceModel";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -54,22 +55,24 @@ export default function CardLocation({ project }: { project: string }) {
     setColumns,
     listProvinsi,
     handleChangeLocation,
+    handleEdited,
+    conditionEditing,
   } = useCardLocationVM();
 
   const quillRef = React.useRef<ReactQuill>(null);
 
   const handleChangeQuill = async () => {
     const text = quillRef.current?.value;
-    let finalText = ""
+    let finalText = "";
     if (text) {
-      finalText = text.toString()
+      finalText = text.toString();
     }
-    setRequest(prevState => {
+    setRequest((prevState) => {
       return {
         ...prevState,
-        keterangan: finalText
-      }
-    })
+        keterangan: finalText,
+      };
+    });
   };
 
   const handleUpdateData = async () => {
@@ -81,23 +84,23 @@ export default function CardLocation({ project }: { project: string }) {
       };
       updateData(req);
     }
-  }
+  };
 
   return (
     <CardItem
       title="Lokasi Proyek"
       setting
       settingEditOnclick={() => {
-        if (data.length > 0){
-          const req:ExsumLocationUpdateDto = {
+        if (data.length > 0) {
+          const req: ExsumLocationUpdateDto = {
             id: data[0].id,
             exsum_id: data[0].exsum_id,
             lokasi: data[0].provinsi ? data[0].provinsi : [],
-            keterangan: data[0].keterangan
-          }
-          setRequest(req)
+            keterangan: data[0].keterangan,
+          };
+          setRequest(req);
         }
-        setModal(true)
+        setModal(true);
       }}
     >
       {data.length == 0 ? (
@@ -108,7 +111,14 @@ export default function CardLocation({ project }: { project: string }) {
           description="Silahkan isi konten halaman ini"
         />
       ) : (
-        <Stack direction="row" flexWrap="wrap" gap={2}>
+        <Stack
+          direction="row"
+          flexWrap="wrap"
+          gap={2}
+          sx={{
+            color: conditionEditing,
+          }}
+        >
           <Stack gap={3} direction="column" height="100%">
             <Stack gap={1}>
               <Typography fontSize={16} fontWeight={500}>
@@ -119,7 +129,12 @@ export default function CardLocation({ project }: { project: string }) {
               </Typography>
               <Stack direction="row" flexWrap="wrap" gap={0.5}>
                 {locationExsum.map((x, index) => (
-                  <Chip size="small" label={x.name} key={index} />
+                  <Chip
+                    size="small"
+                    label={x.name}
+                    key={index}
+                    sx={{ color: conditionEditing }}
+                  />
                 ))}
               </Stack>
             </Stack>
@@ -151,7 +166,9 @@ export default function CardLocation({ project }: { project: string }) {
             <Button
               variant="contained"
               type="submit"
-              onClick={() => handleUpdateData()}
+              onClick={() => {
+                handleUpdateData(), handleEdited();
+              }}
             >
               Simpan
             </Button>
