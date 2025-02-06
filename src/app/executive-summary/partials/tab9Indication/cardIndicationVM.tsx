@@ -1,5 +1,5 @@
-import {useExsumContext, useGlobalModalContext, useLoading, useRKPContext} from "@/lib/core/hooks/useHooks";
-import React, {useEffect, useState} from "react";
+import { useExsumContext, useGlobalModalContext, useLoading, useRKPContext } from "@/lib/core/hooks/useHooks";
+import React, { useEffect, useState } from "react";
 import {
   COORDINATOR,
   ExsumIndicationReqDto,
@@ -20,10 +20,10 @@ import {
   doCreateIndication, doDeleteIndication,
   doGetIndication, doUpdateIndication
 } from "@/app/executive-summary/partials/tab9Indication/cardIndicationService";
-import {API_CODE} from "@/lib/core/api/apiModel";
-import {ProPDto, RODataTable, RoDto} from "@/app/misc/rkp/rkpServiceModel";
-import {doGetPROP, doGetRO} from "@/app/misc/rkp/rkpService";
-import {doGetSystemParamByModuleAndName} from "@/app/misc/sysparams/sysParamService";
+import { API_CODE } from "@/lib/core/api/apiModel";
+import { ProPDto, RODataTable, RoDto } from "@/app/misc/rkp/rkpServiceModel";
+import { doGetPROP, doGetRO } from "@/app/misc/rkp/rkpService";
+import { doGetSystemParamByModuleAndName } from "@/app/misc/sysparams/sysParamService";
 import useCardTOWSVM from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsVM";
 import {
   initMiscMasterListPerpres,
@@ -40,8 +40,8 @@ import {
   doGetMasterListStakeholder,
   doGetMasterListSumberPendanaan
 } from "@/app/misc/master/masterService";
-import {GetSysParamsServiceResModel} from "@/app/misc/sysparams/sysParamServiceModel";
-import {GenerateProjectData, GenerateRpjmnYear} from "@/lib/utils/common";
+import { GetSysParamsServiceResModel } from "@/app/misc/sysparams/sysParamServiceModel";
+import { GenerateProjectData, GenerateRpjmnYear } from "@/lib/utils/common";
 import {
   ExsumRegulationDto,
   initExsumRegulationDto
@@ -57,8 +57,8 @@ const useCardIndicationVM = () => {
 
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
-  const {exsum} = useExsumContext()
-  const {year,rpjmn} = useRKPContext(store => store)
+  const { exsum } = useExsumContext()
+  const { year, rpjmn } = useRKPContext(store => store)
 
   // DATA
   const [data, setData] = useState<ExsumIndicationResDto[]>([])
@@ -74,28 +74,28 @@ const useCardIndicationVM = () => {
   const [listPerpres, setListPerpres] = useState<MiscMasterListPerpresRes[]>([])
 
   // STATE
-  const initState:ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication))
+  const initState: ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication))
   const [state, setState] = useState<ExsumIndicationState>(initState)
-  const initStateValue:ExsumIndicationStateValue = JSON.parse(JSON.stringify(initStateExsumIndicationValue))
+  const initStateValue: ExsumIndicationStateValue = JSON.parse(JSON.stringify(initStateExsumIndicationValue))
   const [stateValue, setStateValue] = useState<ExsumIndicationStateValue>(initStateValue)
-  const initStateRegulation:ExsumRegulationDto = JSON.parse(JSON.stringify(initExsumRegulationDto))
+  const initStateRegulation: ExsumRegulationDto = JSON.parse(JSON.stringify(initExsumRegulationDto))
   const [stateRegulation, setStateRegulation] = useState<ExsumRegulationDto>(initStateRegulation)
   const initStatePerpres = JSON.parse(JSON.stringify(initMiscMasterListPerpres))
   const [stateNewRegulation, setStateNewRegulation] = useState<MiscMasterListPerpresCreateReq>(initStatePerpres)
 
   // MODAL
-  const [modalOpen, setModalOpen] = useState<ModalDto>({index:-1, action: false, type: ""});
-  const [modalOutput, setModalOutput] = useState<ModalDto>({index:-1, action: false, type: ""})
-  const [modalRegulation, setModalRegulation] = useState<ModalDto>({index:-1, action: false, type: ""})
-  const [modalNewRegulation, setModalNewRegulation] = useState<ModalDto>({index:-1, action: false, type: ""})
+  const [modalOpen, setModalOpen] = useState<ModalDto>({ index: -1, action: false, type: "" });
+  const [modalOutput, setModalOutput] = useState<ModalDto>({ index: -1, action: false, type: "" })
+  const [modalRegulation, setModalRegulation] = useState<ModalDto>({ index: -1, action: false, type: "" })
+  const [modalNewRegulation, setModalNewRegulation] = useState<ModalDto>({ index: -1, action: false, type: "" })
 
   const tows = useCardTOWSVM()
 
-  async function getOptionRiskType(){
+  async function getOptionRiskType() {
     const response = await doGetSystemParamByModuleAndName({
       body: {
-        module:"RISK",
-        name:"RISK_TYPE"
+        module: "RISK",
+        name: "RISK_TYPE"
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -103,7 +103,7 @@ const useCardIndicationVM = () => {
 
     if (response?.code == API_CODE.success) {
       let result: GetSysParamsServiceResModel = response.result
-      const paramValue:string[] = JSON.parse(result.value);
+      const paramValue: string[] = JSON.parse(result.value);
       setOptionRiskType(paramValue)
     }
   }
@@ -113,7 +113,7 @@ const useCardIndicationVM = () => {
       body: {
         by: exsum.level,
         id: [exsum.ref_id],
-        tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year
+        tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -159,7 +159,7 @@ const useCardIndicationVM = () => {
   }
 
   async function getListProP() {
-    if (exsum.id == 0){
+    if (exsum.id == 0) {
       setListProP([])
       return
     }
@@ -191,15 +191,15 @@ const useCardIndicationVM = () => {
     }
   }
 
-  async function getListPerpres(){
+  async function getListPerpres() {
     const response = await doGetMasterListPerpres({
-      body:{},
-      loadingContext:loadingContext,
-      errorModalContext:errorModalContext
+      body: {},
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext
     })
-    if (response?.code == API_CODE.success){
-      const result:MiscMasterListPerpresRes[] = response.result
-      if (result){
+    if (response?.code == API_CODE.success) {
+      const result: MiscMasterListPerpresRes[] = response.result
+      if (result) {
         setListPerpres(result)
       }
     }
@@ -217,11 +217,11 @@ const useCardIndicationVM = () => {
     if (response?.code == API_CODE.success) {
       let result: ExsumIndicationResDto[] = response.result == null ? [] : response.result
 
-      result.map((res,index) => {
+      result.map((res, index) => {
         res.perlakuan.map((prl, indexPrl) => {
-          let stData:StakeholderResGroupDto = {}
+          let stData: StakeholderResGroupDto = {}
           prl.stakeholder.map((st) => {
-            if (stData.hasOwnProperty(st.group.type)){
+            if (stData.hasOwnProperty(st.group.type)) {
               stData[st.group.type].push(st)
             } else {
               stData[st.group.type] = [st]
@@ -235,22 +235,22 @@ const useCardIndicationVM = () => {
     }
   }
 
-  async function deleteData(){
+  async function deleteData() {
     const response = await doDeleteIndication({
-      body: {id:state.id},
+      body: { id: state.id },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
     })
-    if (response?.code == API_CODE.success){
+    if (response?.code == API_CODE.success) {
       getData()
-      setModalOpen({index:-1, action:false,type:""})
+      setModalOpen({ index: -1, action: false, type: "" })
     }
   }
 
-  async function deleteRONonROForm(value:ExsumIndicationStateValue){
-    if (value.type == "NON_RO" && value.non_rincian_output.id != 0){
+  async function deleteRONonROForm(value: ExsumIndicationStateValue) {
+    if (value.type == "NON_RO" && value.non_rincian_output.id != 0) {
       const response = await doDeleteInterventionOnlyRO({
-        body: {id : value.non_rincian_output.id},
+        body: { id: value.non_rincian_output.id },
         loadingContext: loadingContext,
         errorModalContext: errorModalContext,
       })
@@ -259,7 +259,7 @@ const useCardIndicationVM = () => {
       }
     }
 
-    if (value.type == "RO" && value.rincian_output != undefined){
+    if (value.type == "RO" && value.rincian_output != undefined) {
       let ro = value.rincian_output
       ro.intervention = false
 
@@ -289,16 +289,16 @@ const useCardIndicationVM = () => {
     }
   }
 
-  const handleModalOpen = (idData:number,action:boolean,type:string) => {
+  const handleModalOpen = (idData: number, action: boolean, type: string) => {
     if (idData == 0) {
 
-      if(state.id == 0){
+      if (state.id == 0) {
         state.values.map(value => {
           deleteRONonROForm(value)
         })
       }
 
-      const initState:ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication))
+      const initState: ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication))
       setState(initState)
 
     } else {
@@ -306,17 +306,17 @@ const useCardIndicationVM = () => {
       const getIndex = data.findIndex(x => x.id == idData)
       const dataByIndex = data[getIndex]
 
-      let values:ExsumIndicationStateValue[] = []
+      let values: ExsumIndicationStateValue[] = []
       dataByIndex.perlakuan.map(prl => {
 
-        let rincian_output:RODataTable|undefined = undefined
-        const roID:number = prl.ro?.id ?? 0
-        if (roID > 0 && prl.ro?.type == "RO"){
+        let rincian_output: RODataTable | undefined = undefined
+        const roID: number = prl.ro?.id ?? 0
+        if (roID > 0 && prl.ro?.type == "RO") {
           const getIndexOptRO = dataTable.findIndex(x => x.id == roID)
           rincian_output = getIndexOptRO > -1 ? dataTable[getIndexOptRO] : undefined
         }
 
-        let non_rincian_output:ExsumInterventionState = {
+        let non_rincian_output: ExsumInterventionState = {
           id: 0,
           exsum_id: 0,
           type: "",
@@ -331,9 +331,9 @@ const useCardIndicationVM = () => {
           tahun: "",
           location: []
         }
-        if (roID > 0 && prl.ro?.type == "NON_RO"){
+        if (roID > 0 && prl.ro?.type == "NON_RO") {
           const getIndexOptRO = optionRO.findIndex(x => x.id == roID)
-          if (getIndexOptRO > -1){
+          if (getIndexOptRO > -1) {
 
             const thisData = optionRO[getIndexOptRO];
 
@@ -357,11 +357,11 @@ const useCardIndicationVM = () => {
               intervensi: thisData.intervention,
               prop: propData,
               ro: [],
-              location:thisData.lokasi,
-              tahun:year
+              location: thisData.lokasi,
+              tahun: year
             }
 
-            thisData.detail.map((d,i) => {
+            thisData.detail.map((d, i) => {
               const listItem = {
                 tahun: d.tahun,
                 target: d.target,
@@ -376,7 +376,7 @@ const useCardIndicationVM = () => {
           }
         }
 
-        const val:ExsumIndicationStateValue = {
+        const val: ExsumIndicationStateValue = {
           id: prl.id,
           tahun: prl.tahun,
           type: prl.ro?.type ?? "RO",
@@ -387,38 +387,38 @@ const useCardIndicationVM = () => {
         values.push(val)
       })
 
-      let regulationState:ExsumRegulationDto[] = []
+      let regulationState: ExsumRegulationDto[] = []
       dataByIndex.regulasi.map(rg => {
-        const row:ExsumRegulationDto = {
+        const row: ExsumRegulationDto = {
           id: rg.id,
           tahun: rg.tahun,
           exsum_id: rg.exsum_id,
           amanat: rg.amanat,
           perpres_state: rg.perpres.length > 0 ? rg.perpres[0] : undefined,
-          perpres: rg.perpres.reduce<{ id:number }[]>((a,b) => {
-            return [...a, {id:b.id}]
+          perpres: rg.perpres.reduce<{ id: number }[]>((a, b) => {
+            return [...a, { id: b.id }]
           }, []),
           stakeholder: rg.entitas,
-          stakeholder_id: rg.entitas.reduce<number[]>((a,b) => {
+          stakeholder_id: rg.entitas.reduce<number[]>((a, b) => {
             return [...a, b.id]
           }, [])
         }
         regulationState.push(row)
       })
 
-      const stateData:ExsumIndicationState = {
+      const stateData: ExsumIndicationState = {
         id: idData,
         tows: dataByIndex.tows,
         indikasi_risiko: dataByIndex.indikasi_risiko,
         kategori_risiko: dataByIndex.kategori_risiko,
         perlakuan_risiko: dataByIndex.indikasi_perlakuan_risiko,
         values: values,
-        regulation:regulationState
+        regulation: regulationState
       }
       setState(stateData)
 
     }
-    setModalOpen({index:-1,action:action, type:type});
+    setModalOpen({ index: -1, action: action, type: type });
   };
 
   const handleModalOpenSubmit = async () => {
@@ -429,30 +429,30 @@ const useCardIndicationVM = () => {
       || state.perlakuan_risiko == ""
       // || state.values.length == 0
       // || state.regulation.length == 0
-    ){
+    ) {
       return
     }
 
-    let values:ExsumIndicationValueReqDto[] = []
+    let values: ExsumIndicationValueReqDto[] = []
     state.values.map(value => {
 
-      let roID:number = value.type == "RO" ? value.rincian_output?.id ?? 0 : value.non_rincian_output.id
+      let roID: number = value.type == "RO" ? value.rincian_output?.id ?? 0 : value.non_rincian_output.id
 
-      const val:ExsumIndicationValueReqDto = {
-        tahun:value.tahun,
+      const val: ExsumIndicationValueReqDto = {
+        tahun: value.tahun,
         rincian_output_id: roID,
         perlakuan_risiko: "", // remove
-        value:"", // remove
+        value: "", // remove
         stakeholder: []
       }
 
-      if (val.tahun.length > 0 ){
+      if (val.tahun.length > 0) {
         values.push(val)
       }
 
     })
 
-    const requestDto:ExsumIndicationReqDto = {
+    const requestDto: ExsumIndicationReqDto = {
       id: state.id,
       exsum_id: exsum.id,
       swot_id: state.tows?.id ?? 0,
@@ -460,38 +460,38 @@ const useCardIndicationVM = () => {
       kategori_risiko: state.kategori_risiko,
       indikasi_perlakuan_risiko: state.perlakuan_risiko,
       values: values,
-      regulasi:state.regulation
+      regulasi: state.regulation
     }
 
     let response
-    if (requestDto.id == 0){
+    if (requestDto.id == 0) {
       response = await doCreateIndication({
-        body:requestDto,
+        body: requestDto,
         loadingContext: loadingContext,
         errorModalContext: errorModalContext,
       })
-    }else{
+    } else {
       response = await doUpdateIndication({
-        body:requestDto,
+        body: requestDto,
         loadingContext: loadingContext,
         errorModalContext: errorModalContext,
       })
     }
 
-    if (response?.code == API_CODE.success){
+    if (response?.code == API_CODE.success) {
       await getData()
-      const initState:ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication))
+      const initState: ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication))
       setState(initState)
 
       await getOptionRO()
-      setModalOpen({index:-1, action:false, type:""});
+      setModalOpen({ index: -1, action: false, type: "" });
     }
 
   }
 
-  const handleModalOutputOpen = async (index:number,action:boolean,type:string) => {
+  const handleModalOutputOpen = async (index: number, action: boolean, type: string) => {
 
-    if(type == "delete"){
+    if (type == "delete") {
 
       const value = state.values[index]
 
@@ -502,30 +502,30 @@ const useCardIndicationVM = () => {
         values.splice(modalOutput.index, 1)
         return {
           ...prevState,
-          values:values
+          values: values
         }
       })
       return
     }
 
-    let initStateValue:ExsumIndicationStateValue = JSON.parse(JSON.stringify(initStateExsumIndicationValue))
+    let initStateValue: ExsumIndicationStateValue = JSON.parse(JSON.stringify(initStateExsumIndicationValue))
     initStateValue.type = type
 
-    if (index > -1){
+    if (index > -1) {
       initStateValue = state.values[index]
     }
 
-    if (year > 0){
+    if (year > 0) {
       initStateValue.tahun = [year]
     }
 
     setStateValue(initStateValue)
-    setModalOutput({index, action:action, type:type})
+    setModalOutput({ index, action: action, type: type })
   }
 
   const handleModalOutputSubmit = async () => {
 
-    if(modalOutput.type == "delete"){
+    if (modalOutput.type == "delete") {
       return
     }
 
@@ -564,27 +564,27 @@ const useCardIndicationVM = () => {
       }
 
       setState(prevState => {
-        let thisState = {...stateValue}
-        if (thisState.type == "NON_RO"){
+        let thisState = { ...stateValue }
+        if (thisState.type == "NON_RO") {
           thisState.intervention = true
         }
         let values = prevState.values
-        if (modalOutput.index > -1){
+        if (modalOutput.index > -1) {
           values[modalOutput.index] = thisState
-        }else{
+        } else {
           values.push(thisState)
         }
 
         return {
           ...prevState,
-          values:values
+          values: values
         }
 
       })
 
     }
 
-    if (stateValue.type == "NON_RO"){
+    if (stateValue.type == "NON_RO") {
       if (stateValue.non_rincian_output.nomenklatur == ""
         || stateValue.non_rincian_output.code == ""
         || stateValue.non_rincian_output.prop == undefined
@@ -595,16 +595,16 @@ const useCardIndicationVM = () => {
         return
       }
 
-      const nonRO:ExsumInterventionState = JSON.parse(JSON.stringify(stateValue.non_rincian_output))
+      const nonRO: ExsumInterventionState = JSON.parse(JSON.stringify(stateValue.non_rincian_output))
 
-      let lokasi:any[] = []
+      let lokasi: any[] = []
       nonRO.location.map(x => {
         lokasi.push({
-          src_provinsi_id:x.id
+          src_provinsi_id: x.id
         })
       })
 
-      if (nonRO.id == 0){
+      if (nonRO.id == 0) {
         const request: ExsumInterventionProjectReqDto = {
           id: nonRO.id,
           exsum_id: exsum.id,
@@ -617,8 +617,8 @@ const useCardIndicationVM = () => {
           list: nonRO.list,
           list_ro: nonRO.ro,
           intervention: year == 0 ? true : nonRO.intervensi,
-          lokasi:lokasi,
-          tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year
+          lokasi: lokasi,
+          tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year
         }
         const response = await doCreateIntervention({
           body: request,
@@ -629,11 +629,11 @@ const useCardIndicationVM = () => {
           return
         }
 
-        const res:RoDto = response?.result
+        const res: RoDto = response?.result
         nonRO.id = res.id
 
-      }else{
-        const req:UpdateV2ExsumIntervention = {
+      } else {
+        const req: UpdateV2ExsumIntervention = {
           body: {
             id: nonRO.id,
             prop: nonRO.prop?.id ?? 0,
@@ -649,7 +649,7 @@ const useCardIndicationVM = () => {
             intervention: year == 0 ? true : nonRO.intervensi,
             lokasi: lokasi,
             list: nonRO.list,
-            tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year
+            tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year
           },
           loadingContext: loadingContext,
           errorModalContext: errorModalContext,
@@ -661,22 +661,22 @@ const useCardIndicationVM = () => {
       }
 
       setState(prevState => {
-        let thisState = {...stateValue}
+        let thisState = { ...stateValue }
         thisState.non_rincian_output = nonRO
 
-        if (thisState.type == "NON_RO"){
+        if (thisState.type == "NON_RO") {
           thisState.intervention = true
         }
         let values = prevState.values
-        if (modalOutput.index > -1){
+        if (modalOutput.index > -1) {
           values[modalOutput.index] = thisState
-        }else{
+        } else {
           values.push(thisState)
         }
 
         return {
           ...prevState,
-          values:values
+          values: values
         }
 
       })
@@ -686,7 +686,7 @@ const useCardIndicationVM = () => {
     handleModalOutputOpen(-1, false, "")
   }
 
-  const handleModalRegulationOpen = (index:number,action:boolean,type:string) => {
+  const handleModalRegulationOpen = (index: number, action: boolean, type: string) => {
 
     if (type == "delete") {
       setState(prevState => {
@@ -694,64 +694,64 @@ const useCardIndicationVM = () => {
         regulation.splice(index, 1)
         return {
           ...prevState,
-          regulation:regulation
+          regulation: regulation
         }
       })
       return
     }
 
-    let initStateValue:ExsumRegulationDto = JSON.parse(JSON.stringify(initExsumRegulationDto))
+    let initStateValue: ExsumRegulationDto = JSON.parse(JSON.stringify(initExsumRegulationDto))
 
-    if (index > -1){
+    if (index > -1) {
       initStateValue = state.regulation[index]
     }
 
     setStateRegulation(initStateValue)
 
-    setModalRegulation({index:index,action:action, type:type})
+    setModalRegulation({ index: index, action: action, type: type })
   }
 
   const handleModalRegulationSubmit = () => {
 
-    let req:ExsumRegulationDto = stateRegulation
+    let req: ExsumRegulationDto = stateRegulation
     req.exsum_id = exsum.id
     setState(prevState => {
       let regulation = prevState.regulation
-      if (modalOutput.index > -1){
+      if (modalOutput.index > -1) {
         regulation[modalRegulation.index] = req
-      }else{
+      } else {
         regulation.push(req)
       }
 
       return {
         ...prevState,
-        regulation:regulation
+        regulation: regulation
       }
     })
 
-    setModalRegulation({index:-1,action:false,type:""})
+    setModalRegulation({ index: -1, action: false, type: "" })
   }
 
-  const handleModalNewRegulationOpen = (index:number,action:boolean,type:string) => {
+  const handleModalNewRegulationOpen = (index: number, action: boolean, type: string) => {
     const initStatePerpres = JSON.parse(JSON.stringify(initMiscMasterListPerpres))
     setStateNewRegulation(initStatePerpres)
-    setModalNewRegulation({index:-1,action:action,type:type})
+    setModalNewRegulation({ index: -1, action: action, type: type })
   }
 
   const handleModalNewRegulationSubmit = async () => {
 
     if (stateNewRegulation.value == ""
       || stateNewRegulation.title == ""
-    ){
+    ) {
       return
     }
 
     const response = await doCreateMasterPerpres({
-      body:stateNewRegulation,
-      loadingContext:loadingContext,
-      errorModalContext:errorModalContext
+      body: stateNewRegulation,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext
     })
-    if (response?.code == API_CODE.success){
+    if (response?.code == API_CODE.success) {
       getListPerpres()
       handleModalNewRegulationOpen(-1, false, "")
     }
@@ -792,7 +792,7 @@ const useCardIndicationVM = () => {
     handleModalNewRegulationSubmit,
     handleModalOpenSubmit,
     deleteData,
-    dataTOWS:tows.data.tows,
+    dataTOWS: tows.data.tows,
     stateValue,
     setStateValue,
     listLocation,
@@ -803,6 +803,7 @@ const useCardIndicationVM = () => {
     stateNewRegulation,
     setStateNewRegulation,
     listPerpres,
+    exsum
   }
 
 }

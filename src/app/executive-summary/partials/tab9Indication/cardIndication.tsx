@@ -25,6 +25,7 @@ import FormRegulation from "@/app/executive-summary/partials/tab9Indication/part
 import { ExsumIndicationStateValue } from "./cardIndicationModel";
 import { TextareaStyled } from "@/components/textarea";
 import theme from "@/theme";
+import { API_CONSTANT } from "@/lib/core/api/apiModel";
 
 export default function CardIndication({ project }: { project: string }) {
   const { year, rpjmn } = useRKPContext((store) => store);
@@ -61,6 +62,7 @@ export default function CardIndication({ project }: { project: string }) {
     stateRegulation,
     setStateRegulation,
     listPerpres,
+    exsum
   } = useCardIndicationVM();
 
   const { permission } = useAuthContext((state) => state);
@@ -71,9 +73,8 @@ export default function CardIndication({ project }: { project: string }) {
     <>
       <Stack gap={1}>
         <CardItem
-          title={`Indikasi Risiko ${
-            year == 0 ? "RPJMN 5 Tahunan" : "RKP Tahun " + year
-          }`}
+          title={`Indikasi Risiko ${year == 0 ? "RPJMN 5 Tahunan" : "RKP Tahun " + year
+            }`}
           infoTooltip={
             <Stack spacing={2}>
               <div>
@@ -126,12 +127,12 @@ export default function CardIndication({ project }: { project: string }) {
                 onclick={() => {
                   const uri =
                     process.env.NEXT_PUBLIC_BASE_URL_API +
-                    "export/exsum/pendanaan";
-                  // const token = sessionStorage.getItem(API_CONSTANT.token);
-                  // const exsum_id = exsum.id;
-                  // const params = "token=" + token + "&exsum_id=" + exsum_id;
+                    "export/exsum/indikasi/excel";
+                  const token = sessionStorage.getItem(API_CONSTANT.token);
+                  const exsum_id = exsum.id;
+                  const params = "token=" + token + "&exsum_id=" + exsum_id;
 
-                  // window.open(uri + "?" + params, "_blank")?.focus();
+                  window.open(uri + "?" + params, "_blank")?.focus();
                 }}
               />
               {/* )} */}
@@ -197,9 +198,8 @@ export default function CardIndication({ project }: { project: string }) {
         width={"80%"}
         dialogOpen={modalOutput.type != "delete" && modalOutput.action}
         dialogClose={() => handleModalOutputOpen(-1, false, "")}
-        title={`Tambah ${
-          modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
-        }`}
+        title={`Tambah ${modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
+          }`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button
