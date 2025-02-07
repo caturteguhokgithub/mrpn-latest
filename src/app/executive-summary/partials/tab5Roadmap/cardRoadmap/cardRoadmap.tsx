@@ -30,6 +30,7 @@ import { InfoTooltip } from "@/app/components/InfoTooltip";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
+import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 
 const dataBisnis = {
   header: ["2025", "2026", "2027", "2028", "2029"],
@@ -81,6 +82,8 @@ export default function CardRoadmap() {
     setModalDelete,
     deleteData,
   } = useCardRoadmapVM();
+
+  const { handleEdited, conditionEditing } = useCardLocationVM();
 
   return (
     <CardItem

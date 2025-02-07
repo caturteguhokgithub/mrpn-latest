@@ -15,6 +15,7 @@ import {
 } from "@/app/executive-summary/partials/tab7Regulation/cardStakeholder/cardStakeholderModel";
 import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
 import { IconEmptyImage } from "@/components/icons";
+import useCardLocationVM from "@/app/executive-summary/partials/tab2Profile/cardLocation/cardLocationVM";
 
 const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
   const isAssistant = nodeData.isAssistant === true;
@@ -57,7 +58,13 @@ const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
   );
 };
 
-const InstanceLogo = ({ data }: { data: MiscMasterListStakeholderRes[] }) => {
+const InstanceLogo = ({
+  data,
+  conditionEditingImg,
+}: {
+  data: MiscMasterListStakeholderRes[];
+  conditionEditingImg?: string;
+}) => {
   return (
     <Stack gap={2} direction={"row"} justifyContent={"center"} flexWrap="wrap">
       {data.map((item, index) => (
@@ -68,6 +75,20 @@ const InstanceLogo = ({ data }: { data: MiscMasterListStakeholderRes[] }) => {
           key={index}
         >
           <Image
+            alt="Instansi Pelaksana"
+            src="/mrpn/logo-mrpn.png"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{
+              width: "auto",
+              height: "60px",
+              userSelect: "none",
+              touchAction: "none",
+              filter: conditionEditingImg,
+            }}
+          />
+          {/* <Image
             alt=""
             src={
               item.icon == null || item.icon == ""
@@ -82,8 +103,9 @@ const InstanceLogo = ({ data }: { data: MiscMasterListStakeholderRes[] }) => {
               height: "60px",
               userSelect: "none",
               touchAction: "none",
+              filter: conditionEditingImg,
             }}
-          />
+          /> */}
         </Tooltip>
       ))}
     </Stack>
@@ -92,8 +114,10 @@ const InstanceLogo = ({ data }: { data: MiscMasterListStakeholderRes[] }) => {
 
 export default function StakeholderChart({
   data,
+  conditionEditingImg,
 }: {
   data: ExsumStakeholderResDto[];
+  conditionEditingImg?: string;
 }) {
   const coordinator = data.find((x) => x.type == "COORDINATION");
   const mainEntity = data.find((x) => x.type == "MAIN_ENTITY");
@@ -101,15 +125,30 @@ export default function StakeholderChart({
 
   const ds = {
     name: `Kementerian Koordinator`,
-    title: <InstanceLogo data={coordinator?.stakeholder ?? []} />,
+    title: (
+      <InstanceLogo
+        data={coordinator?.stakeholder ?? []}
+        conditionEditingImg={conditionEditingImg}
+      />
+    ),
     children: [
       {
         name: "Entitas Sektor Utama",
-        title: <InstanceLogo data={mainEntity?.stakeholder ?? []} />,
+        title: (
+          <InstanceLogo
+            data={mainEntity?.stakeholder ?? []}
+            conditionEditingImg={conditionEditingImg}
+          />
+        ),
         children: [
           {
             name: "Entitas Pendukung",
-            title: <InstanceLogo data={support?.stakeholder ?? []} />,
+            title: (
+              <InstanceLogo
+                data={support?.stakeholder ?? []}
+                conditionEditingImg={conditionEditingImg}
+              />
+            ),
           },
         ],
       },
