@@ -74,7 +74,7 @@ const InstanceLogo = ({
           TransitionComponent={Grow}
           key={index}
         >
-          <Image
+          {/* <Image
             alt="Instansi Pelaksana"
             src="/mrpn/logo-mrpn.png"
             width={0}
@@ -87,8 +87,8 @@ const InstanceLogo = ({
               touchAction: "none",
               filter: conditionEditingImg,
             }}
-          />
-          {/* <Image
+          /> */}
+          <Image
             alt=""
             src={
               item.icon == null || item.icon == ""
@@ -105,7 +105,7 @@ const InstanceLogo = ({
               touchAction: "none",
               filter: conditionEditingImg,
             }}
-          /> */}
+          />
         </Tooltip>
       ))}
     </Stack>

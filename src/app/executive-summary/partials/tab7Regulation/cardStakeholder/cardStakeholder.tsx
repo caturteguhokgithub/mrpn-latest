@@ -135,10 +135,11 @@ export default function CardStakeholder({ project }: { project: string }) {
                 sx={{ paddingInline: 2 }}
                 onclick={() => setModalListLogo(true)}
               />
-              <AddButton
-                noMargin
-                small
-                title="Upload Gambar"
+              <Button
+                component="label"
+                size="small"
+                variant="outlined"
+                tabIndex={-1}
                 startIcon={
                   <Icon
                     baseClassName="fas"
@@ -148,9 +149,19 @@ export default function CardStakeholder({ project }: { project: string }) {
                     }}
                   />
                 }
-                sx={{ paddingInline: 2 }}
-                onclick={() => setModalListLogo(true)}
-              />
+                sx={{
+                  paddingInline: 2,
+                  borderRadius: "50px",
+                  textTransform: "capitalize",
+                }}
+              >
+                Unggah Gambar
+                <VisuallyHiddenInput
+                  type="file"
+                  onChange={(event) => console.log(event.target.files)}
+                  multiple
+                />
+              </Button>
               <AddButton
                 noMargin
                 filled
@@ -349,7 +360,7 @@ export default function CardStakeholder({ project }: { project: string }) {
               >
                 <Image
                   alt="Instansi Pelaksana"
-                  src="/mrpn/hierarchy.jpg"
+                  src="https://res.cloudinary.com/caturteguh/image/upload/v1738912448/mrpn/hierarchy_ic8yuc.jpg"
                   width={0}
                   height={0}
                   sizes="100vw"
