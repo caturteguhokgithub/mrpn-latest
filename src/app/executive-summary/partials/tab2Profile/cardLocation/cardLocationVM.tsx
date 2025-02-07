@@ -146,6 +146,9 @@ const useCardLocationVM = () => {
   const conditionEditing =
     year > 0 && !edited ? `${grey[600]} !important` : "inherit";
 
+  const conditionEditingImg =
+    year > 0 && !edited ? "grayscale(1)" : "grayscale(0)";
+
   return {
     data,
     request,
@@ -162,6 +165,7 @@ const useCardLocationVM = () => {
     handleEdited,
     edited,
     conditionEditing,
+    conditionEditingImg,
   };
 };
 
