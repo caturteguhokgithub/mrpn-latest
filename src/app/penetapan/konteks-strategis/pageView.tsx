@@ -28,13 +28,17 @@ export default function PageKonteksStrategisView({}) {
     usePenetapanGlobalVM();
 
   useEffect(() => {
-      getMasterListObject();
+    getMasterListObject();
   }, [year]);
 
   return (
     <>
       <ContentPage
-        title={`Eksplorasi Konteks Strategis ${year == 0 ? 'RPJMN '+rpjmn?.start+"-"+rpjmn?.end : 'Tahun '+year}`}
+        title={`Eksplorasi Konteks Strategis ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         chooseObject={
           <FormControl size="small" sx={{ width: "20vw" }}>
             <AutocompleteSelectSingle
@@ -44,7 +48,7 @@ export default function PageKonteksStrategisView({}) {
               options={objects}
               getOptionLabel={(opt) => `${opt.rkp.code} - ${opt.rkp.value}`}
               handleChange={(val: MasterListObjectRes) => setObjectState(val)}
-              placeHolder={"Pilih RKP"}
+              placeHolder={"Pilih KP"}
             />
           </FormControl>
         }
@@ -54,8 +58,8 @@ export default function PageKonteksStrategisView({}) {
           <EmptyState
             dense
             icon={<IconEmptyData width={100} />}
-            title="Pilih RKP"
-            description="Silahkan pilih rkp terlebih dulu"
+            title="Pilih KP"
+            description="Silahkan pilih KP terlebih dulu"
           />
         ) : (
           <Stack gap={1}>

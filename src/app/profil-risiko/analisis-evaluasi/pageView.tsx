@@ -319,7 +319,7 @@ export default function PageAnalisisEvaluasiView({}) {
               options={objects}
               getOptionLabel={(opt) => `${opt.rkp.code} - ${opt.rkp.value}`}
               handleChange={(val: MasterListObjectRes) => setObjectState(val)}
-              placeHolder={"Pilih RKP"}
+              placeHolder={"Pilih KP"}
             />
           </FormControl>
         }
@@ -328,8 +328,8 @@ export default function PageAnalisisEvaluasiView({}) {
           <EmptyState
             dense
             icon={<IconEmptyData width={100} />}
-            title="Pilih RKP"
-            description="Silahkan pilih rkp terlebih dulu"
+            title="Pilih KP"
+            description="Silahkan pilih KP terlebih dulu"
           />
         ) : (
           <MaterialReactTable table={table} />

@@ -18,7 +18,7 @@ export default function PageSeleraRisikoView({}) {
     usePenetapanGlobalVM();
 
   useEffect(() => {
-      getMasterListObject();
+    getMasterListObject();
   }, [year]);
 
   const handleModalOpenSave = () => {};
@@ -26,7 +26,11 @@ export default function PageSeleraRisikoView({}) {
   return (
     <>
       <ContentPage
-        title={`Selera Risiko ${year == 0 ? 'RPJMN '+rpjmn?.start+"-"+rpjmn?.end : 'Tahun '+year}`}
+        title={`Selera Risiko ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip="Jumlah dan jenis risiko yang bersedia diterima oleh suatu entitas atau organisasi pemerintahan
 dalam mengejar tujuannya"
         withCard
@@ -38,7 +42,7 @@ dalam mengejar tujuannya"
               options={objects}
               getOptionLabel={(opt) => `${opt.rkp.code} - ${opt.rkp.value}`}
               handleChange={(val: MasterListObjectRes) => setObjectState(val)}
-              placeHolder={"Pilih RKP"}
+              placeHolder={"Pilih KP"}
             />
           </FormControl>
         }
@@ -47,8 +51,8 @@ dalam mengejar tujuannya"
           <EmptyState
             dense
             icon={<IconEmptyData width={100} />}
-            title="Pilih RKP"
-            description="Silahkan pilih rkp terlebih dulu"
+            title="Pilih KP"
+            description="Silahkan pilih KP terlebih dulu"
           />
         ) : (
           <RiskContent handleSaveButton={handleModalOpenSave} />
