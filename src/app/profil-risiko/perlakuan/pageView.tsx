@@ -43,11 +43,11 @@ import { dataSub } from "@/app/profil-risiko/analisis-evaluasi/setting";
 import useRiskAnalysisVM from "@/app/profil-risiko/analisis-evaluasi/pageVM";
 import { RiskTreatmentDto } from "@/app/profil-risiko/perlakuan/pageModel";
 import dayjs from "dayjs";
-import {RoDetailDto, RoDto} from "@/app/misc/rkp/rkpServiceModel";
+import { RoDetailDto, RoDto } from "@/app/misc/rkp/rkpServiceModel";
 import { RiskOverviewData } from "@/app/profil-risiko/overview/pageModel";
-import {GenerateRpjmnYear} from "@/lib/utils/common";
-import {FormatIDR} from "@/lib/utils/currency";
-import {getDetailRO} from "@/lib/utils/roDetail";
+import { GenerateRpjmnYear } from "@/lib/utils/common";
+import { FormatIDR } from "@/lib/utils/currency";
+import { getDetailRO } from "@/lib/utils/roDetail";
 
 export default function PagePerlakuanView({}) {
   const { permission } = useAuthContext((state) => state);
@@ -164,7 +164,7 @@ export default function PagePerlakuanView({}) {
             accessorKey: "keterangan_risiko",
             header: "Keterangan Perlakuan Risiko",
             enableColumnActions: false,
-            size: 300
+            size: 300,
           },
           {
             accessorKey: "waktu",
@@ -355,7 +355,9 @@ export default function PagePerlakuanView({}) {
           <Table stickyHeader size="small">
             <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
               <TableRow>
-                <TableCell rowSpan={2} sx={{ width: 30 }}>No</TableCell>
+                <TableCell rowSpan={2} sx={{ width: 30 }}>
+                  No
+                </TableCell>
                 <TableCell rowSpan={2}>Nomenklatur RO</TableCell>
                 {multiyear.map((y, iY) => (
                   <TableCell colSpan={4} align={"center"}>
@@ -368,8 +370,12 @@ export default function PagePerlakuanView({}) {
                   <>
                     <TableCell style={{ top: "37px" }}>Target</TableCell>
                     <TableCell style={{ top: "37px" }}>Satuan</TableCell>
-                    <TableCell style={{ top: "37px" }}>Pembiayaan (Juta)</TableCell>
-                    <TableCell style={{ top: "37px" }}>Sumber Pembiayaan</TableCell>
+                    <TableCell style={{ top: "37px" }}>
+                      Pembiayaan (Juta)
+                    </TableCell>
+                    <TableCell style={{ top: "37px" }}>
+                      Sumber Pembiayaan
+                    </TableCell>
                   </>
                 ))}
               </TableRow>
@@ -383,16 +389,16 @@ export default function PagePerlakuanView({}) {
                     {multiyear.map((y, iY) => (
                       <>
                         <TableCell>
-                          {getDetailRO('target', y, r.detail)}
+                          {getDetailRO("target", y, r.detail)}
                         </TableCell>
                         <TableCell>
-                          {getDetailRO('satuan',y, r.detail)}
+                          {getDetailRO("satuan", y, r.detail)}
                         </TableCell>
                         <TableCell align={"right"}>
-                          {getDetailRO('anggaran', y, r.detail)}
+                          {getDetailRO("anggaran", y, r.detail)}
                         </TableCell>
                         <TableCell>
-                          {getDetailRO('sumber_anggaran', y, r.detail)}
+                          {getDetailRO("sumber_anggaran", y, r.detail)}
                         </TableCell>
                       </>
                     ))}
@@ -425,7 +431,7 @@ yang telah ditetapkan"
               options={objects}
               getOptionLabel={(opt) => `${opt.rkp.code} - ${opt.rkp.value}`}
               handleChange={(val: MasterListObjectRes) => setObjectState(val)}
-              placeHolder={"Pilih RKP"}
+              placeHolder={"Pilih KP"}
             />
           </FormControl>
         }
@@ -446,8 +452,8 @@ yang telah ditetapkan"
             <EmptyState
               dense
               icon={<IconEmptyData width={100} />}
-              title="Pilih RKP"
-              description="Silahkan pilih rkp terlebih dulu"
+              title="Pilih KP"
+              description="Silahkan pilih KP terlebih dulu"
             />
           ) : (
             <MaterialReactTable table={table} />
