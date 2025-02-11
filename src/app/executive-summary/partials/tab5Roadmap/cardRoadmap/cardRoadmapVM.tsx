@@ -18,11 +18,13 @@ import {
   doDelete,
   doGet,
 } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapService";
+import { grey } from "@mui/material/colors";
 
 const useCardRoadmapVM = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
   const { exsum } = useExsumContext();
+  const { year } = useRKPContext((state) => state);
   const { rpjmn, setRpjmn } = useRKPContext((state) => state);
 
   const [dataOutput, setDataOutput] = useState<ExsumRoadmapResDto[]>([]);
@@ -43,6 +45,8 @@ const useCardRoadmapVM = () => {
     isOpen: boolean;
     id: number[];
   }>({ isOpen: false, id: [] });
+
+  const [edited, setEdited] = useState(false);
 
   async function getRpjmn() {
     const response = await doGetMasterListRpjmn({
@@ -110,6 +114,8 @@ const useCardRoadmapVM = () => {
 
       const businessData = result.filter((x) => x.type == "BISNIS");
       setDataBusiness(businessData);
+
+      setEdited(result[0]?.isEdit ?? true);
     }
   }
 
@@ -156,6 +162,12 @@ const useCardRoadmapVM = () => {
     if (exsum.id != 0) getData();
   }, [exsum]);
 
+  const handleEdited = () => {
+    setEdited(true);
+  };
+
+  const conditionEditing = year > 0 && !edited ? `${grey[600]} !important` : "inherit";
+
   return {
     rpjmn,
     dataOutput,
@@ -168,6 +180,8 @@ const useCardRoadmapVM = () => {
     modalDelete,
     setModalDelete,
     deleteData,
+    handleEdited,
+    conditionEditing,
   };
 };
 

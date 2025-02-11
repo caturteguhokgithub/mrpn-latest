@@ -3,14 +3,14 @@ import {
   doGetMasterListPerpres,
   doGetMasterListStakeholder
 } from "@/app/misc/master/masterService";
-import {useExsumContext, useGlobalModalContext, useLoading} from "@/lib/core/hooks/useHooks";
-import React, {useEffect, useState} from "react";
+import { useExsumContext, useGlobalModalContext, useLoading, useRKPContext } from "@/lib/core/hooks/useHooks";
+import React, { useEffect, useState } from "react";
 import {
   MiscMasterListPerpresCreateReq,
   MiscMasterListPerpresRes,
   MiscMasterListStakeholderRes
 } from "@/app/misc/master/masterServiceModel";
-import {API_CODE} from "@/lib/core/api/apiModel";
+import { API_CODE } from "@/lib/core/api/apiModel";
 import {
   ExsumRegulationDto, ExsumRegulationResDto,
   initExsumRegulationDto
@@ -20,11 +20,12 @@ import {
   doDelete,
   doGet
 } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationService";
+import { grey } from "@mui/material/colors";
 
 const initCreatePerpres = {
-  title:"",
-  value:"",
-  flag:"new"
+  title: "",
+  value: "",
+  flag: "new"
 }
 
 const useCardRegulationVM = () => {
@@ -32,6 +33,7 @@ const useCardRegulationVM = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
   const { exsum } = useExsumContext()
+  const { year } = useRKPContext((state) => state);
 
   const [optionStakeholder, setOptionStakeholder] = useState<MiscMasterListStakeholderRes[]>([])
 
@@ -41,31 +43,32 @@ const useCardRegulationVM = () => {
   const [modalPeraturan, setModalPeraturan] = React.useState(false);
   const [perpres, setPerpres] = useState<MiscMasterListPerpresRes[]>([])
   const [modalOpen, setModalOpen] = React.useState(false);
-  const [data,setData] = useState<ExsumRegulationResDto[]>([])
-  const initReq:ExsumRegulationDto = JSON.parse(JSON.stringify(initExsumRegulationDto))
+  const [data, setData] = useState<ExsumRegulationResDto[]>([])
+  const initReq: ExsumRegulationDto = JSON.parse(JSON.stringify(initExsumRegulationDto))
   const [request, setRequest] = useState<ExsumRegulationDto>(initReq)
+  const [edited, setEdited] = useState(false);
 
-  async function getListPerpres(){
+  async function getListPerpres() {
     const response = await doGetMasterListPerpres({
-      body:{},
-      loadingContext:loadingContext,
-      errorModalContext:errorModalContext
+      body: {},
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext
     })
-    if (response?.code == API_CODE.success){
-      const result:MiscMasterListPerpresRes[] = response.result
-      if (result){
+    if (response?.code == API_CODE.success) {
+      const result: MiscMasterListPerpresRes[] = response.result
+      if (result) {
         setPerpres(result)
       }
     }
   }
 
-  async function createListPerpres(){
+  async function createListPerpres() {
     const response = await doCreateMasterPerpres({
-      body:perpresState,
-      loadingContext:loadingContext,
-      errorModalContext:errorModalContext
+      body: perpresState,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext
     })
-    if (response?.code == API_CODE.success){
+    if (response?.code == API_CODE.success) {
       getListPerpres()
       const initStatePerpres = JSON.parse(JSON.stringify(initCreatePerpres))
       setPerpresState(initStatePerpres)
@@ -87,43 +90,44 @@ const useCardRegulationVM = () => {
     }
   }
 
-  async function getData(){
+  async function getData() {
     const response = await doGet({
-      body:{exsum_id:exsum.id},
-      loadingContext:loadingContext,
-      errorModalContext:errorModalContext
+      body: { exsum_id: exsum.id },
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext
     })
-    if (response?.code == API_CODE.success){
-      const result:ExsumRegulationResDto[] = response.result
-      if (result){
+    if (response?.code == API_CODE.success) {
+      const result: ExsumRegulationResDto[] = response.result
+      if (result) {
         setData(result)
+        setEdited(result[0]?.isEdit ?? true);
       }
     }
   }
 
-  async function createData(){
-    let req:ExsumRegulationDto = request
+  async function createData() {
+    let req: ExsumRegulationDto = request
     req.exsum_id = exsum.id
     const response = await doCreate({
-      body:req,
-      loadingContext:loadingContext,
-      errorModalContext:errorModalContext
+      body: req,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext
     })
-    if (response?.code == API_CODE.success){
+    if (response?.code == API_CODE.success) {
       getData()
       setModalOpen(false)
-      const initReq:ExsumRegulationDto = JSON.parse(JSON.stringify(initExsumRegulationDto))
+      const initReq: ExsumRegulationDto = JSON.parse(JSON.stringify(initExsumRegulationDto))
       setRequest(initReq)
     }
   }
 
-  async function deleteData(id:number){
+  async function deleteData(id: number) {
     const response = await doDelete({
-      body:{id:id},
-      loadingContext:loadingContext,
-      errorModalContext:errorModalContext
+      body: { id: id },
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext
     })
-    if (response?.code == API_CODE.success){
+    if (response?.code == API_CODE.success) {
       getData()
       setModalOpen(false)
     }
@@ -134,6 +138,13 @@ const useCardRegulationVM = () => {
     if (perpres.length == 0) getListPerpres();
     if (exsum.id !== 0) getData();
   }, [exsum]);
+
+  const handleEdited = () => {
+    setEdited(true);
+  };
+
+  const conditionEditing =
+    year > 0 && !edited ? `${grey[600]} !important` : "inherit";
 
   return {
     data,
@@ -149,7 +160,9 @@ const useCardRegulationVM = () => {
     setPerpresState,
     createListPerpres,
     modalPeraturan,
-    setModalPeraturan
+    setModalPeraturan,
+    handleEdited,
+    conditionEditing,
   }
 
 }

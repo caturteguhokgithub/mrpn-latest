@@ -32,6 +32,8 @@ export default function CardRegulation({ project }: { project: string }) {
     setPerpresState,
     modalPeraturan,
     setModalPeraturan,
+    handleEdited,
+    conditionEditing,
   } = useCardRegulationVM();
 
   const handleModalOpen = () => {
@@ -44,21 +46,21 @@ export default function CardRegulation({ project }: { project: string }) {
   return (
     <CardItem
       title="Kebutuhan Regulasi"
-      // addButton={
-      //   <AddButton
-      //     filled
-      //     small
-      //     title="Tambah Peraturan"
-      //     onclick={() => handleModalOpen()}
-      //   />
-      // }
+    // addButton={
+    //   <AddButton
+    //     filled
+    //     small
+    //     title="Tambah Peraturan"
+    //     onclick={() => handleModalOpen()}
+    //   />
+    // }
     >
       {data.length == 0 ? (
         <EmptyState
           dense
           icon={<IconEmptyData width={100} />}
           title="Data Kosong"
-          // description="Silahkan isi konten halaman ini"
+        // description="Silahkan isi konten halaman ini"
         />
       ) : (
         <TablePeraturan data={data} deleteData={deleteData} />

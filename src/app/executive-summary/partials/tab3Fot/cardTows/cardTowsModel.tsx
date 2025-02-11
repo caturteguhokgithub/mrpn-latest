@@ -1,75 +1,77 @@
-import {BaseAPIServiceParam} from "@/lib/core/api/apiModel";
+import { BaseAPIServiceParam } from "@/lib/core/api/apiModel";
 
 export interface ExsumKeyword {
-  id:number
-  value:string
+  id: number
+  value: string
 }
 export interface ExsumTWOSOptions {
-  so:ExsumKeyword[],
-  wo:ExsumKeyword[],
-  st:ExsumKeyword[],
-  wt:ExsumKeyword[]
+  so: ExsumKeyword[],
+  wo: ExsumKeyword[],
+  st: ExsumKeyword[],
+  wt: ExsumKeyword[]
 }
 export interface ExsumTWOSDto {
-  id:number
-  type:string
-  value:string
-  keywords:ExsumKeyword[]
+  id: number
+  type: string
+  value: string
+  keywords: ExsumKeyword[]
 }
 
 export interface ExsumTWOSResDto {
-  tows:ExsumTWOSDto[],
-  options:ExsumTWOSOptions
+  tows: ExsumTWOSDto[],
+  options: ExsumTWOSOptions,
+  isEdit: boolean
 }
-export const initExsumTWOSResDto:ExsumTWOSResDto = {
+export const initExsumTWOSResDto: ExsumTWOSResDto = {
   tows: [],
   options: {
-    so:[],
-    wo:[],
-    st:[],
-    wt:[]
-  }
+    so: [],
+    wo: [],
+    st: [],
+    wt: []
+  },
+  isEdit: true
 }
 
 export interface ExsumTWOSReqDto {
-  exsum_id:number
-  values:ExsumTWOSDto[]
+  exsum_id: number
+  values: ExsumTWOSDto[]
 }
-export const initExsumTWOSRequestDto:ExsumTWOSReqDto = {
+export const initExsumTWOSRequestDto: ExsumTWOSReqDto = {
   exsum_id: 0,
-  values:[
+  values: [
     {
-      id:0,
-      type:"SO",
-      value:"",
-      keywords:[]
+      id: 0,
+      type: "SO",
+      value: "",
+      keywords: []
     },
     {
-      id:0,
-      type:"WO",
-      value:"",
-      keywords:[]
+      id: 0,
+      type: "WO",
+      value: "",
+      keywords: []
     },
     {
-      id:0,
-      type:"ST",
-      value:"",
-      keywords:[]
+      id: 0,
+      type: "ST",
+      value: "",
+      keywords: []
     },
     {
-      id:0,
-      type:"WT",
-      value:"",
-      keywords:[]
+      id: 0,
+      type: "WT",
+      value: "",
+      keywords: []
     }
   ]
 }
 
 export interface ExsumTWOSReqDtoV2 {
-  exsum_id:number
-  values:string
+  exsum_id: number
+  values: string
 }
-export const initExsumTWOSRequestDtoV2:ExsumTWOSReqDtoV2 = {
+export const initExsumTWOSRequestDtoV2: ExsumTWOSReqDtoV2 = {
   exsum_id: 0,
   values: ""
 }

@@ -90,6 +90,7 @@ const useCardLocationVM = () => {
       getListProvinsi();
       getData();
       getLocationByExsumTOWSDiagram();
+      setEdited(data[0]?.isEdit ?? true);
     }
   }, [exsum]);
 

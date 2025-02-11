@@ -31,7 +31,7 @@ export default function CardRelated({ project }: { project: string }) {
   } = useCardRelatedVM();
 
   const { year } = useRKPContext((state) => state);
-  console.log(year);
+  // console.log(year);
 
   const handleUpdateOrDelete = (index: number, action: string) => {
     if (index == -1) {

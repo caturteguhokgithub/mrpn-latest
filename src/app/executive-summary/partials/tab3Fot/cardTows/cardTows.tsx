@@ -38,9 +38,11 @@ export default function CardTows({ project }: { project: string }) {
     modalOpen,
     setModalOpen,
     updateData,
+    handleEdited,
+    conditionEditing,
   } = useCardTOWSVM();
 
-  const { handleEdited, conditionEditing } = useCardLocationVM();
+  // const { handleEdited, conditionEditing } = useCardLocationVM();
 
   const handleModalOpen = () => {
     setModalOpen(true);

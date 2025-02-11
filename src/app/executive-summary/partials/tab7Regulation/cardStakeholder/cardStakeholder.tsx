@@ -50,9 +50,12 @@ export default function CardStakeholder({ project }: { project: string }) {
     setModalLogo,
     modalViewImage,
     setModalViewImage,
+    handleEdited,
+    conditionEditing,
+    conditionEditingImg,
   } = useCardStakeholderVM();
 
-  const { handleEdited, conditionEditingImg } = useCardLocationVM();
+  // const { handleEdited, conditionEditingImg } = useCardLocationVM();
 
   const handleModalOpenStakeholder = () => {
     setModalOpenStakeholder(true);
@@ -118,69 +121,69 @@ export default function CardStakeholder({ project }: { project: string }) {
         <>
           {(hasPrivilege(permission, pathname, "add") ||
             hasPrivilege(permission, pathname, "update")) && (
-            <Stack direction="row" gap={1}>
-              <AddButton
-                noMargin
-                small
-                title="Ubah Logo"
-                startIcon={
-                  <Icon
-                    baseClassName="fas"
-                    className={"fa-pencil"}
-                    sx={{
-                      fontSize: "12px !important",
-                    }}
-                  />
-                }
-                sx={{ paddingInline: 2 }}
-                onclick={() => setModalListLogo(true)}
-              />
-              <Button
-                component="label"
-                size="small"
-                variant="outlined"
-                tabIndex={-1}
-                startIcon={
-                  <Icon
-                    baseClassName="fas"
-                    className={"fa-upload"}
-                    sx={{
-                      fontSize: "12px !important",
-                    }}
-                  />
-                }
-                sx={{
-                  paddingInline: 2,
-                  borderRadius: "50px",
-                  textTransform: "capitalize",
-                }}
-              >
-                Unggah Gambar
-                <VisuallyHiddenInput
-                  type="file"
-                  onChange={(event) => console.log(event.target.files)}
-                  multiple
+              <Stack direction="row" gap={1}>
+                <AddButton
+                  noMargin
+                  small
+                  title="Ubah Logo"
+                  startIcon={
+                    <Icon
+                      baseClassName="fas"
+                      className={"fa-pencil"}
+                      sx={{
+                        fontSize: "12px !important",
+                      }}
+                    />
+                  }
+                  sx={{ paddingInline: 2 }}
+                  onclick={() => setModalListLogo(true)}
                 />
-              </Button>
-              <AddButton
-                noMargin
-                filled
-                small
-                title="Lihat Gambar"
-                startIcon={
-                  <Icon
-                    baseClassName="fas"
-                    className={"fa-magnifying-glass-plus"}
-                    sx={{
-                      fontSize: "12px !important",
-                    }}
+                <Button
+                  component="label"
+                  size="small"
+                  variant="outlined"
+                  tabIndex={-1}
+                  startIcon={
+                    <Icon
+                      baseClassName="fas"
+                      className={"fa-upload"}
+                      sx={{
+                        fontSize: "12px !important",
+                      }}
+                    />
+                  }
+                  sx={{
+                    paddingInline: 2,
+                    borderRadius: "50px",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  Unggah Gambar
+                  <VisuallyHiddenInput
+                    type="file"
+                    onChange={(event) => console.log(event.target.files)}
+                    multiple
                   />
-                }
-                sx={{ paddingInline: 2 }}
-                onclick={() => setModalViewImage(true)}
-              />
-            </Stack>
-          )}
+                </Button>
+                <AddButton
+                  noMargin
+                  filled
+                  small
+                  title="Lihat Gambar"
+                  startIcon={
+                    <Icon
+                      baseClassName="fas"
+                      className={"fa-magnifying-glass-plus"}
+                      sx={{
+                        fontSize: "12px !important",
+                      }}
+                    />
+                  }
+                  sx={{ paddingInline: 2 }}
+                  onclick={() => setModalViewImage(true)}
+                />
+              </Stack>
+            )}
           <StakeholderChart
             data={data}
             conditionEditingImg={conditionEditingImg}
@@ -280,7 +283,7 @@ export default function CardStakeholder({ project }: { project: string }) {
                 src={
                   logoState.icon == ""
                     ? process.env.NEXT_PUBLIC_BASE_URL_FILES +
-                      logoState.iconPath
+                    logoState.iconPath
                     : ""
                 }
                 width={0}
