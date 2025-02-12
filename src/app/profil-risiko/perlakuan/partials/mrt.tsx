@@ -1,5 +1,5 @@
-import React, {useMemo} from "react";
-import {advancedTable} from "@/app/components/table";
+import React, { useMemo } from "react";
+import { advancedTable } from "@/app/components/table";
 import {
   Box,
   Checkbox,
@@ -20,27 +20,26 @@ import {
 } from "material-react-table";
 import ActionColumn from "@/app/components/actions/action";
 import AddButton from "@/app/components/buttonAdd";
-import {data, type PerlakuanType} from "../setting";
-import {green, grey, orange, red} from "@mui/material/colors";
+import { data, type PerlakuanType } from "../setting";
+import { green, grey, orange, red } from "@mui/material/colors";
 import theme from "@/theme";
-import {dataSub} from "../../analisis-evaluasi/setting";
+import { dataSub } from "../../analisis-evaluasi/setting";
 
-export default function MRTPerlakuan(
-  {
-    handleModalOpenView,
-    handleModalOpenDelete,
-    handleModalOpenAdd,
-    handleModalOpenEdit,
-    viewOnly,
-    renderCaption,
-  }: {
-    handleModalOpenView?: () => void;
-    handleModalOpenDelete?: () => void;
-    handleModalOpenAdd?: () => void;
-    handleModalOpenEdit?: () => void;
-    viewOnly?: boolean;
-    renderCaption?: React.ReactNode;
-  }) {
+export default function MRTPerlakuan({
+  handleModalOpenView,
+  handleModalOpenDelete,
+  handleModalOpenAdd,
+  handleModalOpenEdit,
+  viewOnly,
+  renderCaption,
+}: {
+  handleModalOpenView?: () => void;
+  handleModalOpenDelete?: () => void;
+  handleModalOpenAdd?: () => void;
+  handleModalOpenEdit?: () => void;
+  viewOnly?: boolean;
+  renderCaption?: React.ReactNode;
+}) {
   const columns = useMemo<MRT_ColumnDef<PerlakuanType>[]>(
     () => [
       {
@@ -80,7 +79,7 @@ export default function MRTPerlakuan(
             header: "Keterangan Perlakuan Risiko",
             enableColumnActions: false,
             size: 300,
-            Cell: ({cell}: { cell: any }) => (
+            Cell: ({ cell }: { cell: any }) => (
               <Paper
                 elevation={0}
                 sx={{
@@ -168,14 +167,14 @@ export default function MRTPerlakuan(
             accessorKey: "levelRRH",
             header: "Level Risiko",
             enableColumnActions: false,
-            Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
+            Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
               <Chip
                 color={
                   renderedCellValue === "Sangat Tinggi"
                     ? "error"
                     : renderedCellValue === "Tinggi"
-                      ? "warning"
-                      : "success"
+                    ? "warning"
+                    : "success"
                 }
                 sx={{
                   minWidth: 80,
@@ -214,13 +213,13 @@ export default function MRTPerlakuan(
 
   const renderTopToolbar: ColumnsType = {
     renderTopToolbarCustomActions: () => (
-      <AddButton onclick={handleModalOpenAdd} title="Tambah Perlakuan"/>
+      <AddButton onclick={handleModalOpenAdd} title="Tambah Perlakuan" />
     ),
   };
 
   const actionRight = {
     initialState: {
-      columnPinning: {right: ["mrt-row-actions"]},
+      columnPinning: { right: ["mrt-row-actions"] },
       showGlobalFilter: true,
     },
   };
@@ -277,9 +276,9 @@ export default function MRTPerlakuan(
           }}
         >
           <Table stickyHeader size="small">
-            <TableHead sx={{bgcolor: theme.palette.primary.light}}>
+            <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
               <TableRow>
-                <TableCell sx={{width: 30}}></TableCell>
+                <TableCell sx={{ width: 30 }}></TableCell>
                 <TableCell>Nomenklatur RO</TableCell>
                 <TableCell>Target</TableCell>
                 <TableCell>Satuan</TableCell>
@@ -295,7 +294,7 @@ export default function MRTPerlakuan(
               {dataSub.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell>
-                    <Checkbox size="small"/>
+                    <Checkbox size="small" />
                   </TableCell>
                   <TableCell>{row.ro}</TableCell>
                   <TableCell>{row.target}</TableCell>
@@ -337,7 +336,7 @@ export default function MRTPerlakuan(
         },
       }}
     >
-      <MaterialReactTable table={table}/>
+      <MaterialReactTable table={table} />
     </Box>
   );
 }

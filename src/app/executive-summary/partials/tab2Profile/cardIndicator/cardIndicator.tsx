@@ -21,6 +21,7 @@ import useCardIndikatorVM from "@/app/executive-summary/partials/tab2Profile/car
 import theme from "@/theme";
 import { DasarPemilihan } from "@/app/penetapan/objek/pageModel";
 import { GenerateRpjmnYear, GetTarget } from "@/lib/utils/common";
+import { grey } from "@mui/material/colors";
 
 export const getLevel = (level: string) => {
   switch (level) {
@@ -75,6 +76,19 @@ export default function CardIndicator({ project }: { project: string }) {
                   GenerateRpjmnYear(rpjmn).map((y, i) => (
                     <TableCell key={i}>Target {y}</TableCell>
                   ))}
+              </TableRow>
+              <TableRow>
+                {[...new Array(year > 0 ? 3 : 7)].map((_, i) => (
+                  <TableCell sx={{ bgcolor: grey[100] }}>
+                    <Typography
+                      color={grey[500]}
+                      fontSize={14}
+                      textAlign="left"
+                    >
+                      {i + 1}
+                    </Typography>
+                  </TableCell>
+                ))}
               </TableRow>
             </TableHead>
             <TableBody>

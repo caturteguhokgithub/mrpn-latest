@@ -1,34 +1,34 @@
-import {RODataTable, RoDto} from "@/app/misc/rkp/rkpServiceModel";
-import {Box, Chip, Stack} from "@mui/material";
+import { RODataTable, RoDto } from "@/app/misc/rkp/rkpServiceModel";
+import { Box, Chip, Stack } from "@mui/material";
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
-import React, {useEffect, useState} from "react";
-import {FormatIDR} from "@/lib/utils/currency";
-import {advancedTable} from "@/app/components/table";
+import React, { useEffect, useState } from "react";
+import { FormatIDR } from "@/lib/utils/currency";
+import { advancedTable } from "@/app/components/table";
 import ActionColumn from "@/components/actions/action";
-import {GenerateRpjmnYear} from "@/lib/utils/common";
-import {useRKPContext} from "@/lib/core/hooks/useHooks";
+import { GenerateRpjmnYear } from "@/lib/utils/common";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import { SortNumber } from "@/app/profil-risiko/perlakuan/partials/mrt-complete";
+import { blue, grey } from "@mui/material/colors";
 
-export default function TableProfilIntervensi(
-  {
-    data,
-    deleteData,
-    updateData,
-    toggleShowTab,
-    noActionColumn,
-    page,
-  }: {
-    data: RODataTable[];
-    deleteData?: any;
-    updateData?: any;
-    toggleShowTab?: boolean;
-    noActionColumn?: boolean;
-    page?: string;
-  }) {
-
-  const {year, rpjmn} = useRKPContext(store => store)
+export default function TableProfilIntervensi({
+  data,
+  deleteData,
+  updateData,
+  toggleShowTab,
+  noActionColumn,
+  page,
+}: {
+  data: RODataTable[];
+  deleteData?: any;
+  updateData?: any;
+  toggleShowTab?: boolean;
+  noActionColumn?: boolean;
+  page?: string;
+}) {
+  const { year, rpjmn } = useRKPContext((store) => store);
 
   const columnTabelIntervensi = [
     {
@@ -37,8 +37,10 @@ export default function TableProfilIntervensi(
       size: 130,
       enableColumnFilterModes: true,
       filterFns: "contains",
-      Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
-        renderedCellValue == null ? "-" : renderedCellValue
+      Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+        renderedCellValue == null ? "-" : renderedCellValue,
+      Header: ({ column }: any) => (
+        <SortNumber column={column} numberSort={column.getIndex() + 1} />
       ),
     },
     {
@@ -47,8 +49,10 @@ export default function TableProfilIntervensi(
       size: 180,
       enableColumnFilterModes: true,
       filterFns: "contains",
-      Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
-        renderedCellValue == null ? "-" : renderedCellValue
+      Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+        renderedCellValue == null ? "-" : renderedCellValue,
+      Header: ({ column }: any) => (
+        <SortNumber column={column} numberSort={column.getIndex() + 1} />
       ),
     },
     {
@@ -64,11 +68,19 @@ export default function TableProfilIntervensi(
         const color =
           item.row.original.intervention == true ? "primary" : "default";
         return (
-          <Stack height={"inherit"} width={"100%"} alignItems="center" flexDirection={"column"}>
-            <Chip size="small" color={color} label={value}/>
+          <Stack
+            height={"inherit"}
+            width={"100%"}
+            alignItems="center"
+            flexDirection={"column"}
+          >
+            <Chip size="small" color={color} label={value} />
           </Stack>
         );
       },
+      Header: ({ column }: any) => (
+        <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      ),
     },
     {
       accessorKey: "kementrian_id",
@@ -82,6 +94,9 @@ export default function TableProfilIntervensi(
           </Stack>
         );
       },
+      Header: ({ column }: any) => (
+        <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      ),
     },
     {
       accessorKey: "value",
@@ -94,14 +109,17 @@ export default function TableProfilIntervensi(
           </Stack>
         );
       },
+      Header: ({ column }: any) => (
+        <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      ),
     },
   ];
 
-  let detailRpjmn: any[] = []
+  let detailRpjmn: any[] = [];
 
-  let multiyear:number[] = [year]
-  if (year == 0){
-    multiyear = GenerateRpjmnYear(rpjmn)
+  let multiyear: number[] = [year];
+  if (year == 0) {
+    multiyear = GenerateRpjmnYear(rpjmn);
   }
   multiyear.map((y, i) => {
     let tahunDetail: any = {
@@ -112,42 +130,51 @@ export default function TableProfilIntervensi(
           accessorKey: "target_" + i,
           header: "Target",
           enableColumnActions: false,
-          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
-            renderedCellValue == "" ? "-" : renderedCellValue
+          Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+            renderedCellValue == "" ? "-" : renderedCellValue,
+          Header: ({ column }: any) => (
+            <SortNumber column={column} numberSort={column.getIndex() + 1} />
           ),
         },
         {
           accessorKey: "satuan_" + i,
           header: "Satuan",
           enableColumnActions: false,
-          textAlign: 'center',
-          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
-            renderedCellValue == "" ? "-" : renderedCellValue
+          textAlign: "center",
+          Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+            renderedCellValue == "" ? "-" : renderedCellValue,
+          Header: ({ column }: any) => (
+            <SortNumber column={column} numberSort={column.getIndex() + 1} />
           ),
         },
         {
           accessorKey: "anggaran_" + i,
           header: "Pembiayaan",
           enableColumnActions: false,
-          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
+          Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
             <Stack alignItems={"flex-end"} width={"100%"}>
               {FormatIDR(renderedCellValue)}
             </Stack>
+          ),
+          Header: ({ column }: any) => (
+            <SortNumber column={column} numberSort={column.getIndex() + 1} />
           ),
         },
         {
           accessorKey: "sumber_anggaran_" + i,
           header: "Sumber Pembiayaan",
           enableColumnActions: false,
-          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
-            renderedCellValue == "" ? "-" : renderedCellValue
+          Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+            renderedCellValue == "" ? "-" : renderedCellValue,
+          Header: ({ column }: any) => (
+            <SortNumber column={column} numberSort={column.getIndex() + 1} />
           ),
-        }
-      ]
-    }
-    detailRpjmn.push(tahunDetail)
-  })
-  columnTabelIntervensi.push(...detailRpjmn)
+        },
+      ],
+    };
+    detailRpjmn.push(tahunDetail);
+  });
+  columnTabelIntervensi.push(...detailRpjmn);
 
   const columns = [
     {
@@ -163,8 +190,11 @@ export default function TableProfilIntervensi(
           />
         ) : null;
       },
+      Header: ({ column }: any) => (
+        <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      ),
     },
-    ...columnTabelIntervensi
+    ...columnTabelIntervensi,
   ];
 
   const table = useMaterialReactTable({
@@ -178,6 +208,35 @@ export default function TableProfilIntervensi(
     getRowId: (row) => row.id.toString(),
     initialState: {
       showGlobalFilter: true,
+    },
+    muiTableHeadCellProps: {
+      sx: {
+        border: `1px solid ${grey[300]}`,
+        justifyContent: "center",
+      },
+    },
+    muiTableHeadRowProps: {
+      sx: {
+        ".MuiTableCell-head": {
+          bgcolor: `${blue[50]} !important`,
+        },
+        "&:nth-of-type(2)": {
+          ".Mui-TableHeadCell-Content": {
+            height: "100%",
+
+            ".Mui-TableHeadCell-Content-Labels": {
+              width: "100%",
+              alignItems: "flex-start",
+              height: "100%",
+
+              ".Mui-TableHeadCell-Content-Wrapper": {
+                flex: 1,
+                height: "100%",
+              },
+            },
+          },
+        },
+      },
     },
   });
 
@@ -197,10 +256,10 @@ export default function TableProfilIntervensi(
           maxHeight: toggleShowTab
             ? // ? "calc(100vh - 690px)"
               // "calc(100vh - 390px)"
-            "80vh"
+              "80vh"
             : // : "calc(100vh - 625px)",
               // "calc(100vh - 325px)",
-            "80vh",
+              "80vh",
           "&::-webkit-scrollbar": {
             height: "6px",
             width: "6px",
@@ -209,7 +268,7 @@ export default function TableProfilIntervensi(
         },
       }}
     >
-      <MaterialReactTable key={data.length} table={table}/>
+      <MaterialReactTable key={data.length} table={table} />
     </Box>
   );
 }

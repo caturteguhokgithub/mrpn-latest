@@ -14,7 +14,7 @@ import {
 import theme from "@/theme";
 import { IdentificationRiskResDto } from "@/app/profil-risiko/identifikasi/pageModel";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
-import { grey } from "@mui/material/colors";
+import { blue, grey } from "@mui/material/colors";
 import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { GetTarget } from "@/lib/utils/common";
@@ -104,16 +104,16 @@ export default function HeaderTable({
       >
         <TableHead>
           <TableRow>
-            <TableCell sx={{ bgcolor: grey[300], borderTopLeftRadius: 20 }}>
+            <TableCell sx={{ bgcolor: blue[50], borderTopLeftRadius: 20 }}>
               Sasaran
             </TableCell>
-            <TableCell sx={{ bgcolor: grey[300] }}>Indikator</TableCell>
-            <TableCell align="center" sx={{ bgcolor: grey[300] }}>
+            <TableCell sx={{ bgcolor: blue[50] }}>Indikator</TableCell>
+            <TableCell align="center" sx={{ bgcolor: blue[50] }}>
               Target
             </TableCell>
             <TableCell
               align="center"
-              sx={{ bgcolor: grey[300], borderTopRightRadius: 20 }}
+              sx={{ bgcolor: blue[50], borderTopRightRadius: 20 }}
             >
               Periode Pemantauan
             </TableCell>

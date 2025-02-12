@@ -19,7 +19,7 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import ActionColumn from "@/app/components/actions/action";
-import { orange, red, green } from "@mui/material/colors";
+import { orange, red, green, blue, grey } from "@mui/material/colors";
 import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { AutocompleteSelectSingle } from "@/components/autocomplete";
@@ -31,6 +31,7 @@ import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import { RiskOverviewData } from "@/app/profil-risiko/overview/pageModel";
 import { advancedTable } from "@/components/table";
+import { SortNumber } from "../perlakuan/partials/mrt-complete";
 
 type ColumnsType = {};
 
@@ -116,11 +117,23 @@ export default function PageAnalisisEvaluasiView({}) {
               accessorKey: "peristiwa",
               header: "Peristiwa Risiko",
               enableColumnActions: false,
+              Header: ({ column }) => (
+                <SortNumber
+                  column={column}
+                  numberSort={column.getIndex() + 1}
+                />
+              ),
             },
             {
               accessorKey: "kategori",
               header: "Kategori Risiko",
               enableColumnActions: false,
+              Header: ({ column }) => (
+                <SortNumber
+                  column={column}
+                  numberSort={column.getIndex() + 1}
+                />
+              ),
             },
           ],
         },
@@ -139,6 +152,12 @@ export default function PageAnalisisEvaluasiView({}) {
               muiTableBodyCellProps: {
                 align: "center",
               },
+              Header: ({ column }) => (
+                <SortNumber
+                  column={column}
+                  numberSort={column.getIndex() + 1}
+                />
+              ),
             },
             {
               accessorKey: "analisis_ld",
@@ -151,6 +170,12 @@ export default function PageAnalisisEvaluasiView({}) {
               muiTableBodyCellProps: {
                 align: "center",
               },
+              Header: ({ column }) => (
+                <SortNumber
+                  column={column}
+                  numberSort={column.getIndex() + 1}
+                />
+              ),
             },
             {
               id: "row-br",
@@ -164,6 +189,12 @@ export default function PageAnalisisEvaluasiView({}) {
               muiTableBodyCellProps: {
                 align: "center",
               },
+              Header: ({ column }) => (
+                <SortNumber
+                  column={column}
+                  numberSort={column.getIndex() + 1}
+                />
+              ),
             },
             {
               accessorKey: "analisis_level",
@@ -205,6 +236,12 @@ export default function PageAnalisisEvaluasiView({}) {
                   label={renderedCellValue}
                 />
               ),
+              Header: ({ column }) => (
+                <SortNumber
+                  column={column}
+                  numberSort={column.getIndex() + 1}
+                />
+              ),
             },
             {
               id: "row-prioritas",
@@ -218,6 +255,12 @@ export default function PageAnalisisEvaluasiView({}) {
               muiTableBodyCellProps: {
                 align: "center",
               },
+              Header: ({ column }) => (
+                <SortNumber
+                  column={column}
+                  numberSort={column.getIndex() + 1}
+                />
+              ),
             },
           ],
         },
@@ -250,6 +293,33 @@ export default function PageAnalisisEvaluasiView({}) {
           desc: true,
         },
       ],
+    },
+    muiTableHeadCellProps: {
+      sx: {
+        bgcolor: blue[50],
+        border: `1px solid ${grey[300]}`,
+        justifyContent: "center",
+      },
+    },
+    muiTableHeadRowProps: {
+      sx: {
+        "&:nth-of-type(3)": {
+          ".Mui-TableHeadCell-Content": {
+            height: "100%",
+
+            ".Mui-TableHeadCell-Content-Labels": {
+              width: "100%",
+              alignItems: "flex-start",
+              height: "100%",
+
+              ".Mui-TableHeadCell-Content-Wrapper": {
+                flex: 1,
+                height: "100%",
+              },
+            },
+          },
+        },
+      },
     },
     displayColumnDefOptions: {
       "mrt-row-actions": {
