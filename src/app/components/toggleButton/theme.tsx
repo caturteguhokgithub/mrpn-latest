@@ -96,7 +96,7 @@ export default function ThemeToggleButton({
           fontWeight={700}
           fontSize="2em"
           textTransform="capitalize"
-          maxWidth={260}
+          maxWidth={320}
           lineHeight={1.1}
           textAlign="left"
         >

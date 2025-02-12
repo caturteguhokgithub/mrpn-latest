@@ -75,12 +75,12 @@ export default function TableIndication({
       >
         <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
           <TableRow>
-            <TableCell sx={{ bgcolor: bgColorTh, width: 200 }}>
+            <TableCell sx={{ bgcolor: bgColorTh, width: 240 }}>
               <Typography variant="body1" fontWeight={600}>
                 Analisis TOWS
               </Typography>
             </TableCell>
-            <TableCell sx={{ bgcolor: bgColorTh, width: 200 }}>
+            <TableCell sx={{ bgcolor: bgColorTh, width: 240 }}>
               <Stack direction="row" alignItems="center" gap={0.5}>
                 <Typography variant="body1" fontWeight={600}>
                   Indikasi Risiko
@@ -100,7 +100,7 @@ export default function TableIndication({
                 Kategori Risiko
               </Typography>
             </TableCell>
-            <TableCell sx={{ bgcolor: bgColorTh, width: 200 }}>
+            <TableCell sx={{ bgcolor: bgColorTh, width: 240 }}>
               <Typography variant="body1" fontWeight={600}>
                 Indikasi Perlakuan Risiko
               </Typography>
@@ -139,6 +139,21 @@ export default function TableIndication({
                 </Typography>
               </TableCell>
             )}
+          </TableRow>
+          <TableRow
+            sx={{
+              ".MuiTableCell-stickyHeader": {
+                top: 37,
+              },
+            }}
+          >
+            {[...new Array(year == 0 ? 7 : 6)].map((_, i) => (
+              <TableCell sx={{ bgcolor: grey[100] }}>
+                <Typography color={grey[500]} fontSize={14} textAlign="left">
+                  {i + 1}
+                </Typography>
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>

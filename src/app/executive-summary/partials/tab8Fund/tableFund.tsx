@@ -259,6 +259,29 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
               </>
             ))}
           </TableRow>
+          <TableRow
+            sx={{
+              ".MuiTableCell-stickyHeader": {
+                top: "calc(38px + 62px)",
+              },
+              "th:nth-of-type(1)": {
+                ...styleFixedColumn,
+                zIndex: 3,
+              },
+            }}
+          >
+            {[...new Array(year > 0 ? 7 : 23)].map((_, i) => (
+              <TableCell
+                sx={{
+                  bgcolor: grey[100],
+                }}
+              >
+                <Typography color={grey[500]} fontSize={14} textAlign="center">
+                  {i + 1}
+                </Typography>
+              </TableCell>
+            ))}
+          </TableRow>
         </TableHead>
         <TableBody>
           {row?.map((fundRow, index) => (

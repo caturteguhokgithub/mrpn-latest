@@ -35,7 +35,7 @@ import {
   MRT_ColumnDef,
   useMaterialReactTable,
 } from "material-react-table";
-import { green, grey, orange, red } from "@mui/material/colors";
+import { blue, green, grey, orange, red } from "@mui/material/colors";
 import { advancedTable } from "@/components/table";
 import ActionColumn from "@/components/actions/action";
 import theme from "@/theme";
@@ -48,6 +48,7 @@ import { RiskOverviewData } from "@/app/profil-risiko/overview/pageModel";
 import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { FormatIDR } from "@/lib/utils/currency";
 import { getDetailRO } from "@/lib/utils/roDetail";
+import { SortNumber } from "./partials/mrt-complete";
 
 export default function PagePerlakuanView({}) {
   const { permission } = useAuthContext((state) => state);
@@ -141,11 +142,23 @@ export default function PagePerlakuanView({}) {
                 header: "Peristiwa Risiko",
                 size: 250,
                 enableColumnActions: false,
+                Header: ({ column }) => (
+                  <SortNumber
+                    column={column}
+                    numberSort={column.getIndex() + 1}
+                  />
+                ),
               },
               {
                 accessorKey: "kategori",
                 header: "Kategori Risiko",
                 enableColumnActions: false,
+                Header: ({ column }) => (
+                  <SortNumber
+                    column={column}
+                    numberSort={column.getIndex() + 1}
+                  />
+                ),
               },
             ],
           },
@@ -159,23 +172,35 @@ export default function PagePerlakuanView({}) {
             accessorKey: "keputusan",
             header: "Keputusan Perlakuan Risiko",
             enableColumnActions: false,
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
           },
           {
             accessorKey: "keterangan_risiko",
             header: "Keterangan Perlakuan Risiko",
             enableColumnActions: false,
             size: 300,
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
           },
           {
             accessorKey: "waktu",
             header: "Waktu Rencana Perlakuan Risiko",
             enableColumnActions: false,
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
           },
           {
             accessorKey: "penanggung_jawab",
             header: "Penanggung Jawab",
             enableColumnActions: false,
             size: 220,
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
           },
         ],
       },
@@ -194,6 +219,9 @@ export default function PagePerlakuanView({}) {
             muiTableBodyCellProps: {
               align: "center",
             },
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
           },
           {
             accessorKey: "perlakuan_ld",
@@ -206,6 +234,9 @@ export default function PagePerlakuanView({}) {
             muiTableBodyCellProps: {
               align: "center",
             },
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
           },
           {
             id: "row_perlakuan_br",
@@ -219,6 +250,9 @@ export default function PagePerlakuanView({}) {
             muiTableBodyCellProps: {
               align: "center",
             },
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
           },
           {
             accessorKey: "perlakuan_level",
@@ -258,6 +292,9 @@ export default function PagePerlakuanView({}) {
                 }}
                 label={renderedCellValue}
               />
+            ),
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
             ),
           },
         ],
@@ -307,9 +344,29 @@ export default function PagePerlakuanView({}) {
     },
     muiTableHeadCellProps: {
       sx: {
-        bgcolor: grey[100],
+        bgcolor: blue[50],
         border: `1px solid ${grey[300]}`,
         justifyContent: "center",
+      },
+    },
+    muiTableHeadRowProps: {
+      sx: {
+        "&:nth-of-type(3)": {
+          ".Mui-TableHeadCell-Content": {
+            height: "100%",
+
+            ".Mui-TableHeadCell-Content-Labels": {
+              width: "100%",
+              alignItems: "flex-start",
+              height: "100%",
+
+              ".Mui-TableHeadCell-Content-Wrapper": {
+                flex: 1,
+                height: "100%",
+              },
+            },
+          },
+        },
       },
     },
     displayColumnDefOptions: {

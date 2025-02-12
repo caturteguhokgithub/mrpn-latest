@@ -32,7 +32,7 @@ import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import HeaderTable from "../overview/partials/headerTable";
 import useRiskOverviewVM from "../overview/pageVM";
 import { advancedTable } from "@/app/components/table";
-import { red } from "@mui/material/colors";
+import { blue, grey, red } from "@mui/material/colors";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 
 export default function PageIdentifikasiView({}) {
@@ -230,6 +230,13 @@ export default function PageIdentifikasiView({}) {
     //     ),
     //   },
     // },
+    muiTableHeadCellProps: {
+      sx: {
+        bgcolor: blue[50],
+        // border: `1px solid ${grey[300]}`,
+        justifyContent: "center",
+      },
+    },
     initialState: {
       showGlobalFilter: true,
     },

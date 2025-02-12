@@ -19,6 +19,7 @@ import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
 import { bgColorTh } from "@/app/utils/color";
 import { GetTarget } from "@/lib/utils/common";
+import { grey } from "@mui/material/colors";
 
 export const getLevel = (level: string) => {
   switch (level) {
@@ -93,6 +94,15 @@ export default function TableSupport({
                 Target
               </TableCell>
             )}
+          </TableRow>
+          <TableRow>
+            {[...new Array(year == 0 ? 9 : 5)].map((_, i) => (
+              <TableCell sx={{ bgcolor: grey[100] }}>
+                <Typography color={grey[500]} fontSize={14} textAlign="left">
+                  {i + 1}
+                </Typography>
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>

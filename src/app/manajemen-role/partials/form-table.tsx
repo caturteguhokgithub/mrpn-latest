@@ -34,9 +34,11 @@ function GenerateCheckbox(props: {
   return (
     <FormControlLabel
       key={props.prm.id}
+      // key={`${props.label}-${props.prm.id}`}
       value="start"
       control={
         <Checkbox
+          color="success"
           checked={getIsChecked(props.stateRolePermission, props.prm.id)}
           onChange={() => {
             if (getIsChecked(props.stateRolePermission, props.prm.id)) {
@@ -54,22 +56,22 @@ function GenerateCheckbox(props: {
               });
             }
           }}
-          sx={{
-            "&.Mui-checked": {
-              svg: {
-                fill:
-                  props.prm.id == 1
-                    ? green[700]
-                    : props.prm.id == 2
-                    ? yellow[700]
-                    : props.prm.id == 3
-                    ? blue[700]
-                    : props.prm.id == 4
-                    ? orange[700]
-                    : red[700],
-              },
-            },
-          }}
+          // sx={{
+          //   "&.Mui-checked": {
+          //     svg: {
+          //       fill:
+          //         props.prm.id == 1
+          //           ? green[700]
+          //           : props.prm.id == 2
+          //           ? yellow[700]
+          //           : props.prm.id == 3
+          //           ? blue[700]
+          //           : props.prm.id == 4
+          //           ? orange[700]
+          //           : red[700],
+          //     },
+          //   },
+          // }}
         />
       }
       label={props.label}
