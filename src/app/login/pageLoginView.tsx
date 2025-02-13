@@ -337,7 +337,7 @@ export default function PageLoginView() {
                   display: showLogin ? "inline-block" : "none",
                   width: "auto",
                   height: "110px",
-                  filter: "drop-shadow(0px 12px 14px #000000)",
+                  // filter: "drop-shadow(0px 12px 14px #000000)",
                 }}
               />
             </Collapse>
