@@ -63,14 +63,22 @@ export default function Header({}) {
   };
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorYear, setAnchorYear] = React.useState<null | HTMLElement>(null);
   const [openDrawerMobile, setOpenDrawerMobile] = React.useState(false);
 
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const openYear = Boolean(anchorYear);
+  const handleClickYear = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorYear(event.currentTarget);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
+    setAnchorYear(null);
   };
 
   const toggleDrawerMobile = (newOpen: boolean) => () => {
@@ -133,6 +141,40 @@ export default function Header({}) {
   //     .from(".group-4 .ff", { xPercent: -10, width: 0 })
   //     .to(".group-4 .ff", { xPercent: 0, delay: 0.1 });
   // }, []);
+
+  const menuStyle = {
+    overflow: "visible",
+    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+    mt: 1.5,
+    "& .MuiAvatar-root": {
+      width: 32,
+      height: 32,
+      ml: -0.5,
+      mr: 1,
+    },
+    "&::before": {
+      content: '""',
+      display: "block",
+      position: "absolute",
+      top: 0,
+      right: 14,
+      width: 10,
+      height: 10,
+      bgcolor: "background.paper",
+      transform: "translateY(-50%) rotate(45deg)",
+      zIndex: 0,
+    },
+    ".MuiMenuItem-root": {
+      py: "10px",
+      "&:first-of-type, &:last-of-type": {
+        py: 2,
+      },
+      "&:last-of-type": {
+        borderBottomLeftRadius: 12,
+        borderBottomRightRadius: 12,
+      },
+    },
+  };
 
   return (
     <Box
@@ -276,6 +318,26 @@ export default function Header({}) {
           )}
         </Stack>
         <Stack alignItems="center" direction="row" gap={2}>
+          <Button
+            size="small"
+            variant="contained"
+            color="primary"
+            onClick={handleClickYear}
+            sx={{
+              px: 2,
+              borderRadius: 50,
+              "&:hover": {
+                bgcolor: blue[800],
+              },
+            }}
+            startIcon={<IconFA size={16} name="list-ol" />}
+          >
+            <Typography variant="body1" textTransform="capitalize">
+              {year == 0
+                ? `RPJMN ${rpjmn?.start + "-" + rpjmn?.end}`
+                : `RKP ${year}`}
+            </Typography>
+          </Button>
           <Button onClick={handleClick} sx={{ p: 0, m: 0, minWidth: 0 }}>
             <Avatar sx={{ bgcolor: "white", width: 36, height: 36 }}>
               <IconFA
@@ -304,6 +366,111 @@ export default function Header({}) {
           </Box>
         </Stack>
         <Menu
+          anchorEl={anchorYear}
+          id="year"
+          open={openYear}
+          onClose={handleClose}
+          onClick={handleClose}
+          slotProps={{
+            paper: {
+              elevation: 0,
+              sx: {
+                ...menuStyle,
+                "&.MuiPaper-root": {
+                  right: 94,
+                  width: 240,
+                  borderRadius: 3,
+                  ".MuiList-root": {
+                    py: 0,
+
+                    ".MuiButtonBase-root": {
+                      "&:first-of-type": {
+                        borderTopLeftRadius: 12,
+                        borderTopRightRadius: 12,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          }}
+          transformOrigin={{ horizontal: "right", vertical: "top" }}
+          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        >
+          {optionsYear().map((y, index) => (
+            <MenuItem
+              key={index}
+              onClick={() => setProviderYear(y)}
+              sx={{
+                bgcolor: year == y ? blue[50] : null,
+                color: year == y ? blue[700] : "inherit",
+              }}
+            >
+              {y == 0 ? (
+                <ListItemText>
+                  <Stack
+                    component="span"
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Typography
+                      component="span"
+                      fontWeight={year == y ? 700 : 400}
+                    >
+                      RPJMN {rpjmn?.start + "-" + rpjmn?.end}
+                    </Typography>
+                    {year == y && (
+                      <IconFA
+                        size={18}
+                        name="circle-check"
+                        color={theme.palette.primary.main}
+                        sx={{
+                          width: 20,
+                          height: 20,
+                          overflow: "visible",
+                          display: "inline-flex",
+                          alignItems: "center",
+                        }}
+                      />
+                    )}
+                  </Stack>
+                </ListItemText>
+              ) : (
+                <ListItemText>
+                  <Stack
+                    component="span"
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Typography
+                      component="span"
+                      fontWeight={year == y ? 700 : 400}
+                    >
+                      RKP {y}
+                    </Typography>
+                    {year == y && (
+                      <IconFA
+                        size={18}
+                        name="circle-check"
+                        color={theme.palette.primary.main}
+                        sx={{
+                          width: 20,
+                          height: 20,
+                          overflow: "visible",
+                          display: "inline-flex",
+                          alignItems: "center",
+                        }}
+                      />
+                    )}
+                  </Stack>
+                </ListItemText>
+              )}
+            </MenuItem>
+          ))}
+        </Menu>
+        <Menu
           anchorEl={anchorEl}
           id="account-menu"
           open={open}
@@ -313,45 +480,13 @@ export default function Header({}) {
             paper: {
               elevation: 0,
               sx: {
-                overflow: "visible",
-                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                mt: 1.5,
-                "& .MuiAvatar-root": {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
-                "&::before": {
-                  content: '""',
-                  display: "block",
-                  position: "absolute",
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: "background.paper",
-                  transform: "translateY(-50%) rotate(45deg)",
-                  zIndex: 0,
-                },
-                //
+                ...menuStyle,
                 "&.MuiPaper-root": {
-                  left: "auto !important",
                   right: 44,
-                  width: 300,
+                  width: 240,
                   borderRadius: 3,
                   ".MuiList-root": {
                     py: 0,
-                  },
-                },
-                ".MuiMenuItem-root": {
-                  py: "10px",
-                  "&:first-of-type, &:last-of-type": {
-                    py: 2,
-                  },
-                  "&:last-of-type": {
-                    borderBottomLeftRadius: 12,
-                    borderBottomRightRadius: 12,
                   },
                 },
               },
@@ -360,16 +495,26 @@ export default function Header({}) {
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
-          <MenuItem sx={{ py: 2, gap: 1 }}>
+          <MenuItem sx={{ py: "10px !important", gap: 1 }}>
             <Avatar
               alt={user?.name ?? ""}
               src="https://res.cloudinary.com/caturteguh/image/upload/v1708049745/mrpn/logo-2024_ne4yaj.png"
             />
-            <ListItemText sx={{ span: { fontWeight: 500 } }}>
+            <ListItemText
+              sx={{
+                span: {
+                  fontWeight: 500,
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                },
+              }}
+            >
               {user?.name ?? ""}
             </ListItemText>
           </MenuItem>
-          <Divider sx={{ m: "0 !important" }} />
+          {/* <Divider sx={{ m: "0 !important" }} />
 
           {optionsYear().map((y, index) => (
             <MenuItem
@@ -387,7 +532,7 @@ export default function Header({}) {
                 <ListItemText>Tahun {y}</ListItemText>
               )}
             </MenuItem>
-          ))}
+          ))} */}
 
           <Divider sx={{ m: "0 !important" }} />
           <MenuItem
