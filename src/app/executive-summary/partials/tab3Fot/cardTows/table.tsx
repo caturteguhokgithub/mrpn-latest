@@ -50,7 +50,7 @@ const TitleTableContent = ({
       >
         {title}
       </Typography>
-      <InfoTooltip title={infoTooltip} />
+      <InfoTooltip title={infoTooltip} color={textColor} />
     </Stack>
   );
 };
@@ -68,23 +68,43 @@ export default function TableTows({
         <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
           <TableRow>
             <TableCell>
-              <Typography variant="body1" fontWeight={600}>
+              <Typography
+                variant="body1"
+                fontWeight={600}
+                color={conditionEditing}
+              >
                 Faktor Eksternal/Internal
               </Typography>
             </TableCell>
             <TableCell width="40%">
-              <Typography variant="body1" fontWeight={600}>
+              <Typography
+                variant="body1"
+                fontWeight={600}
+                color={conditionEditing}
+              >
                 Strength (S)
               </Typography>
-              <Typography variant="caption" fontWeight={600}>
+              <Typography
+                variant="caption"
+                fontWeight={600}
+                color={conditionEditing}
+              >
                 Tentukan Faktor Kekuatan Internal
               </Typography>
             </TableCell>
             <TableCell width="40%">
-              <Typography variant="body1" fontWeight={600}>
+              <Typography
+                variant="body1"
+                fontWeight={600}
+                color={conditionEditing}
+              >
                 Weakness (W)
               </Typography>
-              <Typography variant="caption" fontWeight={600}>
+              <Typography
+                variant="caption"
+                fontWeight={600}
+                color={conditionEditing}
+              >
                 Tentukan Faktor Kelemahan Internal
               </Typography>
             </TableCell>
@@ -98,18 +118,25 @@ export default function TableTows({
                 bgcolor: alpha(theme.palette.primary.main, 0.1),
               }}
             >
-              <Typography variant="body1" fontWeight={600}>
+              <Typography
+                variant="body1"
+                fontWeight={600}
+                color={conditionEditing}
+              >
                 Opportunity (O)
               </Typography>
-              <Typography variant="caption" fontWeight={600}>
+              <Typography
+                variant="caption"
+                fontWeight={600}
+                color={conditionEditing}
+              >
                 Tentukan Faktor Peluang Eksternal
               </Typography>
             </TableCell>
             <TableCell sx={{ verticalAlign: "top" }}>
               <TitleTableContent
                 title="Strategi SO"
-                infoTooltip="Ciptakan strategi yang menggunakan kekuatan untuk memanfaatkan peluang
-"
+                infoTooltip="Ciptakan strategi yang menggunakan kekuatan untuk memanfaatkan peluang"
                 textColor={conditionEditing}
               />
               <Typography variant="body1" color={conditionEditing}>
@@ -121,8 +148,7 @@ export default function TableTows({
             <TableCell sx={{ verticalAlign: "top" }}>
               <TitleTableContent
                 title="Strategi WO"
-                infoTooltip="Ciptakan strategi yang meminimalkan kelemahan untuk memanfaatkan peluang
-"
+                infoTooltip="Ciptakan strategi yang meminimalkan kelemahan untuk memanfaatkan peluang"
                 textColor={conditionEditing}
               />
               <Typography variant="body1" color={conditionEditing}>
@@ -139,10 +165,18 @@ export default function TableTows({
                 bgcolor: alpha(theme.palette.primary.main, 0.1),
               }}
             >
-              <Typography variant="body1" fontWeight={600}>
+              <Typography
+                variant="body1"
+                fontWeight={600}
+                color={conditionEditing}
+              >
                 Threats (T)
               </Typography>
-              <Typography variant="caption" fontWeight={600}>
+              <Typography
+                variant="caption"
+                fontWeight={600}
+                color={conditionEditing}
+              >
                 Tentukan Faktor Ancaman Eksternal
               </Typography>
             </TableCell>

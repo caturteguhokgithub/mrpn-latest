@@ -35,57 +35,6 @@ import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { FormatIDR } from "@/lib/utils/currency";
 import { bgColorTh } from "@/app/utils/color";
 
-function createData(aspectRo: string) {
-  return {
-    aspectRo,
-    fund: [
-      {
-        keyRO: true,
-        ro: "Penyediaan PMT bagi balita bermasalah gizi (termasuk balita dengan BB tidak bertambah sesuai usia/ (weight faltering)",
-        indicator:
-          "Balita bermasalah gizi (termasuk balita dengan BB tidak bertambah sesuai usia/(weight faltering) mendapat PMT",
-        target1: 75,
-        target2: 80,
-        target3: 85,
-        target4: 87,
-        target5: 90,
-        alocation: 200,
-        fundSource: "-",
-        instance: "Kemkes",
-        location: "Seluruh provinsi",
-      },
-      {
-        keyRO: false,
-        ro: "Pendampingan balita dengan permasalahan gizi",
-        indicator: "Balita dengan permasalahan gizi mendapatkan pendampingan",
-        target1: 75,
-        target2: 80,
-        target3: 85,
-        target4: 87,
-        target5: 90,
-        alocation: 200,
-        fundSource: "-",
-        instance: "Kemkes",
-        location: "Seluruh provinsi",
-      },
-      {
-        keyRO: false,
-        ro: "Pelayanan gizi masyarakat di kab/kota",
-        indicator: "Kab/kota yg menyelenggarakan pelayanan gizi masyarakat",
-        target1: 75,
-        target2: 80,
-        target3: 85,
-        target4: 87,
-        target5: 90,
-        alocation: 200,
-        fundSource: "-",
-        instance: "Kemkes",
-        location: "Seluruh provinsi",
-      },
-    ],
-  };
-}
-
 const ChevronBtn = ({ name }: { name: string }) => {
   return (
     <Button
@@ -195,7 +144,38 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
     >
       <Table
         size="small"
-        style={{ tableLayout: "fixed", width: 4000 }}
+        style={
+          {
+            // tableLayout: "fixed",
+            // width: "100%",
+            // [theme.breakpoints.down("xl")]: {
+            //   width: 1500,
+            // },
+            // ...(year > 0
+            //   ? {
+            //       width: "100%",
+            //       [theme.breakpoints.down("xl")]: {
+            //         width: 1500,
+            //       },
+            //     }
+            //   : { width: 4000 }),
+            // width: year > 0 ? "100%" : 4000,
+            // [theme.breakpoints.down("xl")]: {
+            //   width: year > 0 ? 1500 : "100%",
+            // },
+          }
+        }
+        sx={{
+          tableLayout: "fixed",
+          ...(year > 0
+            ? {
+                width: "100%",
+                [theme.breakpoints.down("xl")]: {
+                  width: 1500,
+                },
+              }
+            : { width: 4000 }),
+        }}
         stickyHeader
       >
         <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
@@ -203,7 +183,7 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
             <TableCell
               rowSpan={2}
               sx={{
-                ...styleFixedColumn,
+                ...(year > 0 ? null : styleFixedColumn),
                 bgcolor: bgColorTh,
                 zIndex: 3,
               }}
@@ -262,10 +242,10 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
           <TableRow
             sx={{
               ".MuiTableCell-stickyHeader": {
-                top: "calc(38px + 62px)",
+                top: "calc(38px + 38px)",
               },
               "th:nth-of-type(1)": {
-                ...styleFixedColumn,
+                ...(year > 0 ? null : styleFixedColumn),
                 zIndex: 3,
               },
             }}
@@ -288,7 +268,7 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
             <TableRow key={index}>
               <TableCell
                 sx={{
-                  ...styleFixedColumn,
+                  ...(year > 0 ? null : styleFixedColumn),
                   verticalAlign: "top",
                   background: "white",
                 }}

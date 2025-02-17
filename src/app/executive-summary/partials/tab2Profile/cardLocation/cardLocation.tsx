@@ -145,7 +145,12 @@ export default function CardLocation({ project }: { project: string }) {
                   (Area of Interest)
                 </Typography>
               </Typography>
-              <Typography variant="body1" fontWeight={600}>
+              <Typography
+                variant="body1"
+                fontWeight={600}
+                color={conditionEditing}
+                component="div"
+              >
                 <div
                   dangerouslySetInnerHTML={{ __html: data[0].keterangan }}
                 ></div>

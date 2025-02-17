@@ -112,7 +112,7 @@ export default function CardCritical({ project }: { project: string }) {
             </p>
           </div>
         }
-        setting
+        setting={year > 0 ? false : true}
         settingAddOnclick={handleModalAdd}
         settingEditOnclick={handleModalOpen}
       >

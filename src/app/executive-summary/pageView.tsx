@@ -199,7 +199,7 @@ export default function PageExecutiveSummary({}) {
       dowloadAttachmentFile={
         rkpState !== undefined && (
           <Stack direction="row" alignItems="center" gap={0.5}>
-            {downloadAttachment}
+            {/* {downloadAttachment} */}
             {approvalAction(exsum.approval)}
           </Stack>
         )
