@@ -237,7 +237,7 @@ export default function DashboardLayout(props: {
         maxWidth: "calc(100vw - 188px)",
       },
       ".table-fund, .table-overflow-x-indication": {
-        maxWidth: "calc(100vw - 158px)",
+        maxWidth: "calc(100vw - 175px)",
       },
     },
     [theme.breakpoints.down("md")]: {

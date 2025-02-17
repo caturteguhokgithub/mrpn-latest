@@ -147,7 +147,7 @@ export default function TableIndication({
               },
             }}
           >
-            {[...new Array(year == 0 ? 7 : 6)].map((_, i) => (
+            {[...new Array(7)].map((_, i) => (
               <TableCell sx={{ bgcolor: grey[100] }}>
                 <Typography color={grey[500]} fontSize={14} textAlign="left">
                   {i + 1}
