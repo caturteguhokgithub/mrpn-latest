@@ -131,6 +131,7 @@ export default function CardStakeholder({ project }: { project: string }) {
                       fontSize: "12px !important",
                     }}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                   />
                 }
                 sx={{ paddingInline: 2 }}
@@ -181,6 +182,8 @@ export default function CardStakeholder({ project }: { project: string }) {
                 onclick={() => setModalViewImage(true)}
               />
 =======
+=======
+>>>>>>> Stashed changes
                   />
                 }
                 sx={{ paddingInline: 2 }}
@@ -230,6 +233,9 @@ export default function CardStakeholder({ project }: { project: string }) {
                   sx={{ paddingInline: 2 }}
                   onclick={() => setModalViewImage(true)}
                 /> */}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             </Stack>
           )}
