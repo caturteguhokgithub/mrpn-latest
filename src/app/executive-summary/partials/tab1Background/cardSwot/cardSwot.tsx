@@ -47,9 +47,9 @@ export default function CardSwot({ project }: { project: string }) {
     setModalDelete,
     handleModalDelete,
     deleteDataRow,
+    handleEdited,
+    conditionEditing,
   } = useCardSWOTVM();
-
-  const { handleEdited, conditionEditing } = useCardLocationVM();
 
   return (
     <>

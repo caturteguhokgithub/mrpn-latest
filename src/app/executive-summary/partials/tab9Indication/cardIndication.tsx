@@ -106,9 +106,8 @@ export default function CardIndication({ project }: { project: string }) {
               </div>
             </Stack>
           }
-          addButton={
-            <Stack direction="row" alignItems="center" gap={0.5}>
-              {/* {project == "all" && ( */}
+          downloadButton={
+            <Stack spacing={2}>
               <AddButton
                 fullWidth={onlySmallScreen}
                 noMargin
@@ -135,6 +134,37 @@ export default function CardIndication({ project }: { project: string }) {
                   window.open(uri + "?" + params, "_blank")?.focus();
                 }}
               />
+            </Stack>
+          }
+          addButton={
+            <Stack direction="row" alignItems="center" gap={0.5}>
+              {/* {project == "all" && ( */}
+              {/* <AddButton
+                fullWidth={onlySmallScreen}
+                noMargin
+                filled
+                title="Download Excel"
+                color="success"
+                startIcon={
+                  <Icon
+                    baseClassName="fas"
+                    className={`fa-file-excel`}
+                    sx={{
+                      fontSize: "16px !important",
+                    }}
+                  />
+                }
+                onclick={() => {
+                  const uri =
+                    process.env.NEXT_PUBLIC_BASE_URL_API +
+                    "export/exsum/indikasi/excel";
+                  const token = sessionStorage.getItem(API_CONSTANT.token);
+                  const exsum_id = exsum.id;
+                  const params = "token=" + token + "&exsum_id=" + exsum_id;
+
+                  window.open(uri + "?" + params, "_blank")?.focus();
+                }}
+              /> */}
               {/* )} */}
               {hasPrivilege(permission, pathname, "add") && (
                 <AddButton

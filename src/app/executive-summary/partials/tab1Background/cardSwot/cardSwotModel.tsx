@@ -1,6 +1,6 @@
 import { BaseAPIServiceParam } from "@/lib/core/api/apiModel";
 
-export const LISTSWOT = ["Strength","Weakness","Opportunity","Threat"];
+export const LISTSWOT = ["Strength", "Weakness", "Opportunity", "Threat"];
 
 export interface ExsumSWOTRequestDto {
     id: number
@@ -8,51 +8,53 @@ export interface ExsumSWOTRequestDto {
     values: ExsumSWOTValuesDto[]
 }
 export interface ExsumSWOTValuesDto {
-    id:number
-    type:string
-    value:string
-    desc:string
+    id: number
+    type: string
+    value: string
+    desc: string
 }
 export interface ExsumSWOTResponseDto {
     id: number
     exsum_id: number
-    values: ExsumSWOTValuesDto[]
+    values: ExsumSWOTValuesDto[],
+    isEdit: boolean
 }
 
-export const initExsumSWOTRequestDto:ExsumSWOTRequestDto = {
+export const initExsumSWOTRequestDto: ExsumSWOTRequestDto = {
     id: 0,
     exsum_id: 0,
-    values:[
+    values: [
         {
-            id:0,
-            type:"STRENGTH",
-            value:"",
-            desc:""
+            id: 0,
+            type: "STRENGTH",
+            value: "",
+            desc: ""
         },
         {
-            id:0,
-            type:"WEAKNESS",
-            value:"",
-            desc:""
+            id: 0,
+            type: "WEAKNESS",
+            value: "",
+            desc: ""
         },
         {
-            id:0,
-            type:"OPPORTUNITY",
-            value:"",
-            desc:""
+            id: 0,
+            type: "OPPORTUNITY",
+            value: "",
+            desc: ""
         },
         {
-            id:0,
-            type:"THREAT",
-            value:"",
-            desc:""
+            id: 0,
+            type: "THREAT",
+            value: "",
+            desc: ""
         }
     ]
 }
-export const initExsumSWOTResponseDto:ExsumSWOTResponseDto = {
+export const initExsumSWOTResponseDto: ExsumSWOTResponseDto = {
     id: 0,
     exsum_id: 0,
-    values:[]
+    values: [],
+    isEdit: true
 }
 
 export interface GetByExsumId {
@@ -68,5 +70,5 @@ export type UpdateSWOTByExsumIdServiceModel = BaseAPIServiceParam & {
 };
 
 export type DeleteRowSWOTServiceModel = BaseAPIServiceParam & {
-    body: { id:number };
+    body: { id: number };
 };

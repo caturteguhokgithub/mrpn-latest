@@ -2,6 +2,7 @@ import {
   useExsumContext,
   useGlobalModalContext,
   useLoading,
+  useRKPContext
 } from "@/lib/core/hooks/useHooks";
 import React, { useEffect, useState } from "react";
 import {
@@ -26,11 +27,13 @@ import {
   doGet,
   doUpdate,
 } from "@/app/executive-summary/partials/tab7Regulation/cardStakeholder/cardStakeholderService";
+import { grey } from "@mui/material/colors";
 
 const useCardStakeholderVM = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
   const { exsum } = useExsumContext();
+  const { year } = useRKPContext((state) => state);
 
   const [listStakeholder, setListStakeholder] = useState<
     MiscMasterListStakeholderRes[]
@@ -48,6 +51,8 @@ const useCardStakeholderVM = () => {
   const [logoState, setLogoState] =
     useState<UpdateLogoStakeholderDto>(initUploadLogo);
   const [modalViewImage, setModalViewImage] = useState<boolean>(false);
+
+  const [edited, setEdited] = useState(false);
 
   async function getListStakeholder() {
     const response = await doGetMasterListStakeholder({
@@ -87,6 +92,8 @@ const useCardStakeholderVM = () => {
       });
       genereteReq.id = 1;
       setRequest(genereteReq);
+
+      setEdited(result[0]?.isEdit ?? true);
     }
   }
 
@@ -174,6 +181,16 @@ const useCardStakeholderVM = () => {
     if (exsum.id != 0) getData();
   }, [exsum]);
 
+  const handleEdited = () => {
+    setEdited(true);
+  };
+
+  const conditionEditing =
+    year > 0 && !edited ? `${grey[600]} !important` : "inherit";
+
+  const conditionEditingImg =
+    year > 0 && !edited ? "grayscale(1)" : "grayscale(0)";
+
   return {
     data,
     listStakeholder,
@@ -193,6 +210,9 @@ const useCardStakeholderVM = () => {
     setModalLogo,
     modalViewImage,
     setModalViewImage,
+    handleEdited,
+    conditionEditing,
+    conditionEditingImg,
   };
 };
 export default useCardStakeholderVM;

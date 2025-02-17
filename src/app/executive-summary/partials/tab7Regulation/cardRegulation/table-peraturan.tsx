@@ -34,6 +34,7 @@ import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import { bgColorTh } from "@/utils/color";
+import useCardRegulationVM from "./cardRegulationVM";
 
 export default function TablePeraturan({
   data,
@@ -45,6 +46,8 @@ export default function TablePeraturan({
   const { permission } = useAuthContext((state) => state);
   const pathname = usePathname();
 
+  const { conditionEditing } = useCardRegulationVM();
+
   return (
     <>
       <Stack
@@ -52,6 +55,7 @@ export default function TablePeraturan({
         direction="row"
         justifyContent="space-between"
         alignItems="center"
+        color={conditionEditing}
       >
         <FieldLabelInfo
           titleSection
@@ -134,8 +138,8 @@ export default function TablePeraturan({
                   <TableCell sx={{ verticalAlign: "top" }}>
                     {row.perpres.map((y, index2) => (
                       <Chip key={index2} size="small" label={y.title} sx={y.flag != null ? {
-                        background:"#EA6228",
-                        color:"white"
+                        background: "#EA6228",
+                        color: "white"
                       } : undefined} />
                     ))}
                   </TableCell>

@@ -1,28 +1,29 @@
-import {MiscMasterListPerpresRes, MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel";
-import {BaseAPIServiceParam} from "@/lib/core/api/apiModel";
+import { MiscMasterListPerpresRes, MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
+import { BaseAPIServiceParam } from "@/lib/core/api/apiModel";
 
 export interface ExsumRegulationResDto {
-  id:number
-  tahun:number[]
-  exsum_id:number
-  amanat:string
-  perpres:MiscMasterListPerpresRes[]
-  entitas: MiscMasterListStakeholderRes[]
+  id: number
+  tahun: number[]
+  exsum_id: number
+  amanat: string
+  perpres: MiscMasterListPerpresRes[]
+  entitas: MiscMasterListStakeholderRes[],
+  isEdit: boolean
 }
 
 export interface ExsumRegulationDto {
-  id:number
-  tahun:number[]
-  exsum_id:number
-  amanat:string
-  perpres_state:MiscMasterListPerpresRes|undefined
-  perpres:{id:number}[]
+  id: number
+  tahun: number[]
+  exsum_id: number
+  amanat: string
+  perpres_state: MiscMasterListPerpresRes | undefined
+  perpres: { id: number }[]
   stakeholder: MiscMasterListStakeholderRes[]
-  stakeholder_id:number[]
+  stakeholder_id: number[]
 }
-export const initExsumRegulationDto:ExsumRegulationDto = {
+export const initExsumRegulationDto: ExsumRegulationDto = {
   id: 0,
-  tahun:[],
+  tahun: [],
   exsum_id: 0,
   amanat: "",
   stakeholder: [],
@@ -44,5 +45,5 @@ export type CreateRegulationByExsumIdServiceModel = BaseAPIServiceParam & {
 };
 
 export type DeleteRegulationByExsumIdServiceModel = BaseAPIServiceParam & {
-  body: { id:number };
+  body: { id: number };
 };

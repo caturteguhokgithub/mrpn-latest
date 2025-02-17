@@ -1,5 +1,5 @@
-import {useExsumContext, useGlobalModalContext, useLoading} from "@/lib/core/hooks/useHooks";
-import React, {useEffect, useState} from "react";
+import { useExsumContext, useGlobalModalContext, useLoading, useRKPContext } from "@/lib/core/hooks/useHooks";
+import React, { useEffect, useState } from "react";
 import {
   ExsumTWOSResDto,
   ExsumTWOSOptions,
@@ -10,7 +10,7 @@ import {
   ExsumTWOSReqDtoV2,
   UpdateTOWSByExsumIdServiceModelV2,
 } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
-import {API_CODE} from "@/lib/core/api/apiModel";
+import { API_CODE } from "@/lib/core/api/apiModel";
 import {
   doCreate,
   doCreateV2,
@@ -18,17 +18,20 @@ import {
   doUpdate,
   doUpdateV2
 } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsService";
+import { grey } from "@mui/material/colors";
 
 const useCardTOWSVM = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
   const { exsum } = useExsumContext()
+  const { year } = useRKPContext((state) => state);
 
   const initTows = JSON.parse(JSON.stringify(initExsumTWOSResDto))
-  const [ data, setData ] = useState<ExsumTWOSResDto>(initTows)
-  const [ request, setRequest ] = useState<ExsumTWOSReqDto>(initExsumTWOSRequestDto)
-  const [ options, setOptions ] = useState<ExsumTWOSOptions>()
-  const [ modalOpen, setModalOpen] = React.useState(false);
+  const [data, setData] = useState<ExsumTWOSResDto>(initTows)
+  const [request, setRequest] = useState<ExsumTWOSReqDto>(initExsumTWOSRequestDto)
+  const [options, setOptions] = useState<ExsumTWOSOptions>()
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [edited, setEdited] = useState(false);
 
   async function getData() {
     const response = await doGet({
@@ -40,36 +43,39 @@ const useCardTOWSVM = () => {
     });
     if (response?.code == API_CODE.success) {
       const initTows = JSON.parse(JSON.stringify(initExsumTWOSResDto))
-      const result:ExsumTWOSResDto = response.result == null ? initTows : response.result
+      const result: ExsumTWOSResDto = response.result == null ? initTows : response.result
       if (result) {
 
         setData(result)
         setOptions(result.options)
 
-        if (result.tows.length){
-          const req:ExsumTWOSReqDto = {
+        if (result.tows.length) {
+          const req: ExsumTWOSReqDto = {
             exsum_id: exsum.id,
             values: result.tows
           }
           setRequest(req)
         }
+
+        setEdited(result.isEdit ?? true);
+        // setEdited(result?.isEdit ?? true);
       }
     }
   }
 
-  async function updateData(){
-    const req:ExsumTWOSReqDto = {...request}
+  async function updateData() {
+    const req: ExsumTWOSReqDto = { ...request }
     req.exsum_id = exsum.id
-    const params:UpdateTOWSByExsumIdServiceModel = {
+    const params: UpdateTOWSByExsumIdServiceModel = {
       body: req,
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
     }
 
     let response
-    if (data.tows.length == 0){
+    if (data.tows.length == 0) {
       response = await doCreate(params)
-    }else{
+    } else {
       response = await doUpdate(params)
     }
 
@@ -80,24 +86,24 @@ const useCardTOWSVM = () => {
     }
   }
 
-  async function updateDataV2(){
-    const req:ExsumTWOSReqDto = {...request}
+  async function updateDataV2() {
+    const req: ExsumTWOSReqDto = { ...request }
     req.exsum_id = exsum.id
 
-    const reqV2:ExsumTWOSReqDtoV2 = {
-      exsum_id : exsum.id,
+    const reqV2: ExsumTWOSReqDtoV2 = {
+      exsum_id: exsum.id,
       values: JSON.stringify(req.values)
     }
-    const params:UpdateTOWSByExsumIdServiceModelV2 = {
+    const params: UpdateTOWSByExsumIdServiceModelV2 = {
       body: reqV2,
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
     }
 
     let response
-    if (data.tows.length == 0){
+    if (data.tows.length == 0) {
       response = await doCreateV2(params)
-    }else{
+    } else {
       response = await doUpdateV2(params)
     }
 
@@ -114,6 +120,13 @@ const useCardTOWSVM = () => {
     }
   }, [exsum]);
 
+  const handleEdited = () => {
+    setEdited(true);
+  };
+
+  const conditionEditing =
+    year > 0 && !edited ? `${grey[600]} !important` : "inherit";
+
   return {
     data,
     options,
@@ -122,7 +135,9 @@ const useCardTOWSVM = () => {
     setRequest,
     modalOpen,
     setModalOpen,
-    updateData:updateDataV2
+    updateData: updateDataV2,
+    handleEdited,
+    conditionEditing,
   }
 
 }

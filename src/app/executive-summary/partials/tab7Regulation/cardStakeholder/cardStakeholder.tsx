@@ -130,60 +130,6 @@ export default function CardStakeholder({ project }: { project: string }) {
                     sx={{
                       fontSize: "12px !important",
                     }}
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                  />
-                }
-                sx={{ paddingInline: 2 }}
-                onclick={() => setModalListLogo(true)}
-              />
-              <Button
-                component="label"
-                size="small"
-                variant="outlined"
-                tabIndex={-1}
-                startIcon={
-                  <Icon
-                    baseClassName="fas"
-                    className={"fa-upload"}
-                    sx={{
-                      fontSize: "12px !important",
-                    }}
-                  />
-                }
-                sx={{
-                  paddingInline: 2,
-                  borderRadius: "50px",
-                  textTransform: "capitalize",
-                }}
-              >
-                Unggah Gambar
-                <VisuallyHiddenInput
-                  type="file"
-                  onChange={(event) => console.log(event.target.files)}
-                  multiple
-                />
-              </Button>
-              <AddButton
-                noMargin
-                filled
-                small
-                title="Lihat Gambar"
-                startIcon={
-                  <Icon
-                    baseClassName="fas"
-                    className={"fa-magnifying-glass-plus"}
-                    sx={{
-                      fontSize: "12px !important",
-                    }}
-                  />
-                }
-                sx={{ paddingInline: 2 }}
-                onclick={() => setModalViewImage(true)}
-              />
-=======
-=======
->>>>>>> Stashed changes
                   />
                 }
                 sx={{ paddingInline: 2 }}
@@ -233,10 +179,6 @@ export default function CardStakeholder({ project }: { project: string }) {
                   sx={{ paddingInline: 2 }}
                   onclick={() => setModalViewImage(true)}
                 /> */}
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
             </Stack>
           )}
           <StakeholderChart

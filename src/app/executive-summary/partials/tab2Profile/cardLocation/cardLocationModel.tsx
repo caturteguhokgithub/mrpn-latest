@@ -1,28 +1,30 @@
 import { BaseAPIServiceParam } from "@/lib/core/api/apiModel";
-import {MiscMasterListProvinsiRes} from "@/app/misc/master/masterServiceModel";
+import { MiscMasterListProvinsiRes } from "@/app/misc/master/masterServiceModel";
+import { SetStateAction } from "react";
 
 export interface ExsumLocationDto {
   id: number
   exsum_id: number
-  keterangan:string
+  keterangan: string
   provinsi: MiscMasterListProvinsiRes[]
-  lokasi:number[]
+  lokasi: number[],
+  isEdit: boolean
 }
 
 interface ExsumLocationValue {
-  keterangan:string
-  provinsi:number[]
+  keterangan: string
+  provinsi: number[]
 }
 export interface ExsumLocationUpdateDto {
-  id:number
+  id: number
   exsum_id: number
   lokasi: MiscMasterListProvinsiRes[]
-  keterangan:string
+  keterangan: string
 }
 
 
-export const initExsumLocationUpdateDto:ExsumLocationUpdateDto = {
-  id:0,
+export const initExsumLocationUpdateDto: ExsumLocationUpdateDto = {
+  id: 0,
   exsum_id: 0,
   lokasi: [],
   keterangan: ""

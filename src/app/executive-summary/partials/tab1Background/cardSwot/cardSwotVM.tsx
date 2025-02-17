@@ -2,6 +2,7 @@ import {
   useExsumContext,
   useGlobalModalContext,
   useLoading,
+  useRKPContext
 } from "@/lib/core/hooks/useHooks";
 import { useEffect, useState } from "react";
 import { API_CODE } from "@/lib/core/api/apiModel";
@@ -12,12 +13,14 @@ import {
   initExsumSWOTResponseDto,
   LISTSWOT,
 } from "./cardSwotModel";
-import {doCreate, doDelete, doDeleteRow, doGet, doUpdate} from "./cardSwotService";
+import { doCreate, doDelete, doDeleteRow, doGet, doUpdate } from "./cardSwotService";
+import { grey } from "@mui/material/colors";
 
 const useCardSWOTVM = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
   const { exsum } = useExsumContext();
+  const { year } = useRKPContext((state) => state);
 
   const [data, setData] = useState<ExsumSWOTResponseDto>({
     ...initExsumSWOTResponseDto,
@@ -27,6 +30,7 @@ const useCardSWOTVM = () => {
   });
   const [modal, setModal] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
+  const [edited, setEdited] = useState(false);
 
   const handleModalDelete = () => {
     setModalDelete(true);
@@ -52,10 +56,13 @@ const useCardSWOTVM = () => {
           values: result.values,
         };
         setRequest(initReqState);
+
+        setEdited(result?.isEdit ?? true);
       } else {
         setData({ ...initExsumSWOTResponseDto });
         setRequest({ ...initExsumSWOTRequestDto });
       }
+
     }
   }
 
@@ -103,14 +110,21 @@ const useCardSWOTVM = () => {
     setModalDelete(false)
   }
 
-  async function deleteDataRow(id:number){
+  async function deleteDataRow(id: number) {
     const params = {
-      body: {id:id},
+      body: { id: id },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
     };
     await doDeleteRow(params);
   }
+
+  const handleEdited = () => {
+    setEdited(true);
+  };
+
+  const conditionEditing =
+    year > 0 && !edited ? `${grey[600]} !important` : "inherit";
 
   return {
     data,
@@ -125,7 +139,9 @@ const useCardSWOTVM = () => {
     modalDelete,
     setModalDelete,
     handleModalDelete,
-    deleteDataRow
+    deleteDataRow,
+    handleEdited,
+    conditionEditing,
   };
 };
 

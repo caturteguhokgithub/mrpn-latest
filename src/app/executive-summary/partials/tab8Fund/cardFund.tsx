@@ -24,7 +24,7 @@ export default function CardFund({ project }: { project: string }) {
       title={`Pendanaan & Investasi ${exsum.level}`}
       infoTooltip="Menampilkan informasi lengkap terkait dengan target dan alokasi tahunan, sumber pendanaan, instansi pelaksana, serta lokasi dari Proyek/RO kunci"
       contentNoPadding
-      addButton={
+      downloadButton={
         project == "all" && (
           <AddButton
             fullWidth={onlySmallScreen}
