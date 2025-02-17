@@ -76,6 +76,7 @@ const useCardLocationVM = () => {
       let result: ExsumLocationDto[] = response.result;
       if (result.length > 0) {
         setData(result);
+        setEdited(result[0].isEdit ?? true);
         // setRequest(result[0]);
       } else {
         setData([]);
@@ -90,7 +91,6 @@ const useCardLocationVM = () => {
       getListProvinsi();
       getData();
       getLocationByExsumTOWSDiagram();
-      setEdited(data[0]?.isEdit ?? true);
     }
   }, [exsum]);
 

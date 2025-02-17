@@ -57,7 +57,8 @@ const useCardTOWSVM = () => {
           setRequest(req)
         }
 
-        setEdited(result?.isEdit ?? true);
+        setEdited(result.isEdit ?? true);
+        // setEdited(result?.isEdit ?? true);
       }
     }
   }
