@@ -144,33 +144,13 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
     >
       <Table
         size="small"
-        style={
-          {
-            // tableLayout: "fixed",
-            // width: "100%",
-            // [theme.breakpoints.down("xl")]: {
-            //   width: 1500,
-            // },
-            // ...(year > 0
-            //   ? {
-            //       width: "100%",
-            //       [theme.breakpoints.down("xl")]: {
-            //         width: 1500,
-            //       },
-            //     }
-            //   : { width: 4000 }),
-            // width: year > 0 ? "100%" : 4000,
-            // [theme.breakpoints.down("xl")]: {
-            //   width: year > 0 ? 1500 : "100%",
-            // },
-          }
-        }
         sx={{
           tableLayout: "fixed",
           ...(year > 0
             ? {
                 width: "100%",
                 [theme.breakpoints.down("xl")]: {
+                  ...styleFixedColumn,
                   width: 1500,
                 },
               }
@@ -186,6 +166,9 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
                 ...(year > 0 ? null : styleFixedColumn),
                 bgcolor: bgColorTh,
                 zIndex: 3,
+                [theme.breakpoints.down("xl")]: {
+                  ...styleFixedColumn,
+                },
               }}
             >
               RO/Project
@@ -247,6 +230,9 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
               "th:nth-of-type(1)": {
                 ...(year > 0 ? null : styleFixedColumn),
                 zIndex: 3,
+                [theme.breakpoints.down("xl")]: {
+                  ...styleFixedColumn,
+                },
               },
             }}
           >
@@ -271,6 +257,9 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
                   ...(year > 0 ? null : styleFixedColumn),
                   verticalAlign: "top",
                   background: "white",
+                  [theme.breakpoints.down("xl")]: {
+                    ...styleFixedColumn,
+                  },
                 }}
               >
                 <Typography
