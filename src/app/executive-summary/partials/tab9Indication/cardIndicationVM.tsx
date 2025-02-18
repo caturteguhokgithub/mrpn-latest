@@ -1,4 +1,9 @@
-import { useExsumContext, useGlobalModalContext, useLoading, useRKPContext } from "@/lib/core/hooks/useHooks";
+import {
+  useExsumContext,
+  useGlobalModalContext,
+  useLoading,
+  useRKPContext,
+} from "@/lib/core/hooks/useHooks";
 import React, { useEffect, useState } from "react";
 import {
   COORDINATOR,
@@ -10,15 +15,18 @@ import {
   IndicationReqDto,
   initStateExsumIndication,
   initStateExsumIndicationValue,
-  MAIN, ModalDto,
+  MAIN,
+  ModalDto,
   OthersEntityState,
   StakeholderReqDto,
   StakeholderResDto,
-  StakeholderResGroupDto
+  StakeholderResGroupDto,
 } from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
 import {
-  doCreateIndication, doDeleteIndication,
-  doGetIndication, doUpdateIndication
+  doCreateIndication,
+  doDeleteIndication,
+  doGetIndication,
+  doUpdateIndication,
 } from "@/app/executive-summary/partials/tab9Indication/cardIndicationService";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import { ProPDto, RODataTable, RoDto } from "@/app/misc/rkp/rkpServiceModel";
@@ -31,80 +39,121 @@ import {
   MiscMasterListPerpresRes,
   MiscMasterListProvinsiRes,
   MiscMasterListStakeholderRes,
-  MiscMasterListSumberPendanaanRes
+  MiscMasterListSumberPendanaanRes,
 } from "@/app/misc/master/masterServiceModel";
 import {
   doCreateMasterPerpres,
   doGetMasterListPerpres,
   doGetMasterListProvinsi,
   doGetMasterListStakeholder,
-  doGetMasterListSumberPendanaan
+  doGetMasterListSumberPendanaan,
 } from "@/app/misc/master/masterService";
 import { GetSysParamsServiceResModel } from "@/app/misc/sysparams/sysParamServiceModel";
 import { GenerateProjectData, GenerateRpjmnYear } from "@/lib/utils/common";
 import {
   ExsumRegulationDto,
-  initExsumRegulationDto
+  initExsumRegulationDto,
 } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
 import {
-  ExsumInterventionProjectReqDto, ExsumInterventionState, UpdateV2ExsumIntervention
+  ExsumInterventionProjectReqDto,
+  ExsumInterventionState,
+  UpdateV2ExsumIntervention,
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
 import {
-  doCreateIntervention, doDeleteInterventionOnlyRO, doUpdateInterventionOnlyRO
+  doCreateIntervention,
+  doDeleteInterventionOnlyRO,
+  doUpdateInterventionOnlyRO,
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiService";
+import { grey } from "@mui/material/colors";
 
 const useCardIndicationVM = () => {
-
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
-  const { exsum } = useExsumContext()
-  const { year, rpjmn } = useRKPContext(store => store)
+  const { exsum } = useExsumContext();
+  const { year, rpjmn } = useRKPContext((store) => store);
 
   // DATA
-  const [data, setData] = useState<ExsumIndicationResDto[]>([])
+  const [data, setData] = useState<ExsumIndicationResDto[]>([]);
 
   // OPTION
-  const [optionRiskType, setOptionRiskType] = useState<string[]>([])
-  const [optionRO, setOptionRO] = useState<RoDto[]>([])
-  const [dataTable, setDataTable] = useState<RODataTable[]>([])
-  const [optionStakeholder, setOptionStakeholder] = useState<MiscMasterListStakeholderRes[]>([])
-  const [listLocation, setListLocation] = useState<MiscMasterListProvinsiRes[]>([]);
-  const [listProP, setListProP] = useState<ProPDto[]>([])
-  const [listSof, setListSof] = useState<MiscMasterListSumberPendanaanRes[]>([])
-  const [listPerpres, setListPerpres] = useState<MiscMasterListPerpresRes[]>([])
+  const [optionRiskType, setOptionRiskType] = useState<string[]>([]);
+  const [optionRO, setOptionRO] = useState<RoDto[]>([]);
+  const [dataTable, setDataTable] = useState<RODataTable[]>([]);
+  const [optionStakeholder, setOptionStakeholder] = useState<
+    MiscMasterListStakeholderRes[]
+  >([]);
+  const [listLocation, setListLocation] = useState<MiscMasterListProvinsiRes[]>(
+    []
+  );
+  const [listProP, setListProP] = useState<ProPDto[]>([]);
+  const [listSof, setListSof] = useState<MiscMasterListSumberPendanaanRes[]>(
+    []
+  );
+  const [listPerpres, setListPerpres] = useState<MiscMasterListPerpresRes[]>(
+    []
+  );
 
   // STATE
-  const initState: ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication))
-  const [state, setState] = useState<ExsumIndicationState>(initState)
-  const initStateValue: ExsumIndicationStateValue = JSON.parse(JSON.stringify(initStateExsumIndicationValue))
-  const [stateValue, setStateValue] = useState<ExsumIndicationStateValue>(initStateValue)
-  const initStateRegulation: ExsumRegulationDto = JSON.parse(JSON.stringify(initExsumRegulationDto))
-  const [stateRegulation, setStateRegulation] = useState<ExsumRegulationDto>(initStateRegulation)
-  const initStatePerpres = JSON.parse(JSON.stringify(initMiscMasterListPerpres))
-  const [stateNewRegulation, setStateNewRegulation] = useState<MiscMasterListPerpresCreateReq>(initStatePerpres)
+  const initState: ExsumIndicationState = JSON.parse(
+    JSON.stringify(initStateExsumIndication)
+  );
+  const [state, setState] = useState<ExsumIndicationState>(initState);
+  const initStateValue: ExsumIndicationStateValue = JSON.parse(
+    JSON.stringify(initStateExsumIndicationValue)
+  );
+  const [stateValue, setStateValue] =
+    useState<ExsumIndicationStateValue>(initStateValue);
+  const initStateRegulation: ExsumRegulationDto = JSON.parse(
+    JSON.stringify(initExsumRegulationDto)
+  );
+  const [stateRegulation, setStateRegulation] =
+    useState<ExsumRegulationDto>(initStateRegulation);
+  const initStatePerpres = JSON.parse(
+    JSON.stringify(initMiscMasterListPerpres)
+  );
+  const [stateNewRegulation, setStateNewRegulation] =
+    useState<MiscMasterListPerpresCreateReq>(initStatePerpres);
+
+  const [edited, setEdited] = useState(false);
 
   // MODAL
-  const [modalOpen, setModalOpen] = useState<ModalDto>({ index: -1, action: false, type: "" });
-  const [modalOutput, setModalOutput] = useState<ModalDto>({ index: -1, action: false, type: "" })
-  const [modalRegulation, setModalRegulation] = useState<ModalDto>({ index: -1, action: false, type: "" })
-  const [modalNewRegulation, setModalNewRegulation] = useState<ModalDto>({ index: -1, action: false, type: "" })
+  const [modalOpen, setModalOpen] = useState<ModalDto>({
+    index: -1,
+    action: false,
+    type: "",
+  });
+  const [modalOutput, setModalOutput] = useState<ModalDto>({
+    index: -1,
+    action: false,
+    type: "",
+  });
+  const [modalRegulation, setModalRegulation] = useState<ModalDto>({
+    index: -1,
+    action: false,
+    type: "",
+  });
+  const [modalNewRegulation, setModalNewRegulation] = useState<ModalDto>({
+    index: -1,
+    action: false,
+    type: "",
+  });
 
-  const tows = useCardTOWSVM()
+  const tows = useCardTOWSVM();
 
   async function getOptionRiskType() {
     const response = await doGetSystemParamByModuleAndName({
       body: {
         module: "RISK",
-        name: "RISK_TYPE"
+        name: "RISK_TYPE",
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
-    })
+    });
 
     if (response?.code == API_CODE.success) {
-      let result: GetSysParamsServiceResModel = response.result
+      let result: GetSysParamsServiceResModel = response.result;
       const paramValue: string[] = JSON.parse(result.value);
-      setOptionRiskType(paramValue)
+      setOptionRiskType(paramValue);
     }
   }
 
@@ -113,20 +162,20 @@ const useCardIndicationVM = () => {
       body: {
         by: exsum.level,
         id: [exsum.ref_id],
-        tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year
+        tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
-    })
+    });
 
     if (response?.code == API_CODE.success) {
-      let result: RoDto[] = response.result
+      let result: RoDto[] = response.result;
 
-      setOptionRO(result)
+      setOptionRO(result);
 
-      const dataTable = GenerateProjectData(result, year, rpjmn)
-      const roOnly = dataTable.filter(x => x.type == "RO")
-      setDataTable(roOnly)
+      const dataTable = GenerateProjectData(result, year, rpjmn);
+      const roOnly = dataTable.filter((x) => x.type == "RO");
+      setDataTable(roOnly);
     }
   }
 
@@ -134,12 +183,12 @@ const useCardIndicationVM = () => {
     const response = await doGetMasterListStakeholder({
       body: {},
       loadingContext: loadingContext,
-      errorModalContext: errorModalContext
-    })
+      errorModalContext: errorModalContext,
+    });
     if (response?.code == API_CODE.success) {
-      const result: MiscMasterListStakeholderRes[] = response.result
+      const result: MiscMasterListStakeholderRes[] = response.result;
       if (result) {
-        setOptionStakeholder(result)
+        setOptionStakeholder(result);
       }
     }
   }
@@ -160,20 +209,20 @@ const useCardIndicationVM = () => {
 
   async function getListProP() {
     if (exsum.id == 0) {
-      setListProP([])
-      return
+      setListProP([]);
+      return;
     }
     const response = await doGetPROP({
       body: {
         by: exsum.level,
-        id: [exsum.ref_id]
+        id: [exsum.ref_id],
       },
       errorModalContext: errorModalContext,
-      loadingContext: loadingContext
-    })
+      loadingContext: loadingContext,
+    });
     if (response?.code == API_CODE.success) {
-      const result: ProPDto[] = response.result
-      setListProP(result)
+      const result: ProPDto[] = response.result;
+      setListProP(result);
     }
   }
 
@@ -181,12 +230,12 @@ const useCardIndicationVM = () => {
     const response = await doGetMasterListSumberPendanaan({
       body: {},
       loadingContext: loadingContext,
-      errorModalContext: errorModalContext
-    })
+      errorModalContext: errorModalContext,
+    });
     if (response?.code == API_CODE.success) {
-      const result: MiscMasterListSumberPendanaanRes[] = response.result
+      const result: MiscMasterListSumberPendanaanRes[] = response.result;
       if (result) {
-        setListSof(result)
+        setListSof(result);
       }
     }
   }
@@ -195,12 +244,12 @@ const useCardIndicationVM = () => {
     const response = await doGetMasterListPerpres({
       body: {},
       loadingContext: loadingContext,
-      errorModalContext: errorModalContext
-    })
+      errorModalContext: errorModalContext,
+    });
     if (response?.code == API_CODE.success) {
-      const result: MiscMasterListPerpresRes[] = response.result
+      const result: MiscMasterListPerpresRes[] = response.result;
       if (result) {
-        setListPerpres(result)
+        setListPerpres(result);
       }
     }
   }
@@ -208,30 +257,31 @@ const useCardIndicationVM = () => {
   async function getData() {
     const response = await doGetIndication({
       body: {
-        exsum_id: exsum.id
+        exsum_id: exsum.id,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
-    })
+    });
 
     if (response?.code == API_CODE.success) {
-      let result: ExsumIndicationResDto[] = response.result == null ? [] : response.result
+      let result: ExsumIndicationResDto[] =
+        response.result == null ? [] : response.result;
 
       result.map((res, index) => {
         res.perlakuan.map((prl, indexPrl) => {
-          let stData: StakeholderResGroupDto = {}
+          let stData: StakeholderResGroupDto = {};
           prl.stakeholder.map((st) => {
             if (stData.hasOwnProperty(st.group.type)) {
-              stData[st.group.type].push(st)
+              stData[st.group.type].push(st);
             } else {
-              stData[st.group.type] = [st]
+              stData[st.group.type] = [st];
             }
-          })
-          result[index].perlakuan[indexPrl].groupStakeholder = stData
-        })
-      })
+          });
+          result[index].perlakuan[indexPrl].groupStakeholder = stData;
+        });
+      });
 
-      setData(result)
+      setData(result);
     }
   }
 
@@ -240,10 +290,10 @@ const useCardIndicationVM = () => {
       body: { id: state.id },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
-    })
+    });
     if (response?.code == API_CODE.success) {
-      getData()
-      setModalOpen({ index: -1, action: false, type: "" })
+      getData();
+      setModalOpen({ index: -1, action: false, type: "" });
     }
   }
 
@@ -253,15 +303,15 @@ const useCardIndicationVM = () => {
         body: { id: value.non_rincian_output.id },
         loadingContext: loadingContext,
         errorModalContext: errorModalContext,
-      })
+      });
       if (response?.code != API_CODE.success) {
         return;
       }
     }
 
     if (value.type == "RO" && value.rincian_output != undefined) {
-      let ro = value.rincian_output
-      ro.intervention = false
+      let ro = value.rincian_output;
+      ro.intervention = false;
 
       const request: ExsumInterventionProjectReqDto = {
         id: 0,
@@ -276,44 +326,43 @@ const useCardIndicationVM = () => {
         list: [],
         list_ro: [ro],
         tahun: "",
-        lokasi: []
-      }
+        lokasi: [],
+      };
       const response = await doCreateIntervention({
         body: request,
         loadingContext: loadingContext,
         errorModalContext: errorModalContext,
-      })
+      });
       if (response?.code !== API_CODE.success) {
-        return
+        return;
       }
     }
   }
 
   const handleModalOpen = (idData: number, action: boolean, type: string) => {
     if (idData == 0) {
-
       if (state.id == 0) {
-        state.values.map(value => {
-          deleteRONonROForm(value)
-        })
+        state.values.map((value) => {
+          deleteRONonROForm(value);
+        });
       }
 
-      const initState: ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication))
-      setState(initState)
-
+      const initState: ExsumIndicationState = JSON.parse(
+        JSON.stringify(initStateExsumIndication)
+      );
+      setState(initState);
     } else {
+      const getIndex = data.findIndex((x) => x.id == idData);
+      const dataByIndex = data[getIndex];
 
-      const getIndex = data.findIndex(x => x.id == idData)
-      const dataByIndex = data[getIndex]
-
-      let values: ExsumIndicationStateValue[] = []
-      dataByIndex.perlakuan.map(prl => {
-
-        let rincian_output: RODataTable | undefined = undefined
-        const roID: number = prl.ro?.id ?? 0
+      let values: ExsumIndicationStateValue[] = [];
+      dataByIndex.perlakuan.map((prl) => {
+        let rincian_output: RODataTable | undefined = undefined;
+        const roID: number = prl.ro?.id ?? 0;
         if (roID > 0 && prl.ro?.type == "RO") {
-          const getIndexOptRO = dataTable.findIndex(x => x.id == roID)
-          rincian_output = getIndexOptRO > -1 ? dataTable[getIndexOptRO] : undefined
+          const getIndexOptRO = dataTable.findIndex((x) => x.id == roID);
+          rincian_output =
+            getIndexOptRO > -1 ? dataTable[getIndexOptRO] : undefined;
         }
 
         let non_rincian_output: ExsumInterventionState = {
@@ -329,12 +378,11 @@ const useCardIndicationVM = () => {
           prop: undefined,
           ro: [],
           tahun: "",
-          location: []
-        }
+          location: [],
+        };
         if (roID > 0 && prl.ro?.type == "NON_RO") {
-          const getIndexOptRO = optionRO.findIndex(x => x.id == roID)
+          const getIndexOptRO = optionRO.findIndex((x) => x.id == roID);
           if (getIndexOptRO > -1) {
-
             const thisData = optionRO[getIndexOptRO];
 
             let propData = undefined;
@@ -358,8 +406,8 @@ const useCardIndicationVM = () => {
               prop: propData,
               ro: [],
               location: thisData.lokasi,
-              tahun: year
-            }
+              tahun: year,
+            };
 
             thisData.detail.map((d, i) => {
               const listItem = {
@@ -369,10 +417,9 @@ const useCardIndicationVM = () => {
                 anggaran: d.anggaran,
                 anggaranString: d.anggaran.toString(),
                 sumber_anggaran: d.sumber_anggaran,
-              }
-              non_rincian_output.list.push(listItem)
-            })
-
+              };
+              non_rincian_output.list.push(listItem);
+            });
           }
         }
 
@@ -382,13 +429,13 @@ const useCardIndicationVM = () => {
           type: prl.ro?.type ?? "RO",
           rincian_output: rincian_output,
           non_rincian_output: non_rincian_output,
-          intervention: prl.ro?.intervention ?? false
-        }
-        values.push(val)
-      })
+          intervention: prl.ro?.intervention ?? false,
+        };
+        values.push(val);
+      });
 
-      let regulationState: ExsumRegulationDto[] = []
-      dataByIndex.regulasi.map(rg => {
+      let regulationState: ExsumRegulationDto[] = [];
+      dataByIndex.regulasi.map((rg) => {
         const row: ExsumRegulationDto = {
           id: rg.id,
           tahun: rg.tahun,
@@ -396,15 +443,15 @@ const useCardIndicationVM = () => {
           amanat: rg.amanat,
           perpres_state: rg.perpres.length > 0 ? rg.perpres[0] : undefined,
           perpres: rg.perpres.reduce<{ id: number }[]>((a, b) => {
-            return [...a, { id: b.id }]
+            return [...a, { id: b.id }];
           }, []),
           stakeholder: rg.entitas,
           stakeholder_id: rg.entitas.reduce<number[]>((a, b) => {
-            return [...a, b.id]
-          }, [])
-        }
-        regulationState.push(row)
-      })
+            return [...a, b.id];
+          }, []),
+        };
+        regulationState.push(row);
+      });
 
       const stateData: ExsumIndicationState = {
         id: idData,
@@ -413,44 +460,44 @@ const useCardIndicationVM = () => {
         kategori_risiko: dataByIndex.kategori_risiko,
         perlakuan_risiko: dataByIndex.indikasi_perlakuan_risiko,
         values: values,
-        regulation: regulationState
-      }
-      setState(stateData)
-
+        regulation: regulationState,
+      };
+      setState(stateData);
     }
     setModalOpen({ index: -1, action: action, type: type });
   };
 
   const handleModalOpenSubmit = async () => {
-
-    if (state.tows == undefined
-      || state.indikasi_risiko == ""
-      || state.kategori_risiko == ""
-      || state.perlakuan_risiko == ""
+    if (
+      state.tows == undefined ||
+      state.indikasi_risiko == "" ||
+      state.kategori_risiko == "" ||
+      state.perlakuan_risiko == ""
       // || state.values.length == 0
       // || state.regulation.length == 0
     ) {
-      return
+      return;
     }
 
-    let values: ExsumIndicationValueReqDto[] = []
-    state.values.map(value => {
-
-      let roID: number = value.type == "RO" ? value.rincian_output?.id ?? 0 : value.non_rincian_output.id
+    let values: ExsumIndicationValueReqDto[] = [];
+    state.values.map((value) => {
+      let roID: number =
+        value.type == "RO"
+          ? value.rincian_output?.id ?? 0
+          : value.non_rincian_output.id;
 
       const val: ExsumIndicationValueReqDto = {
         tahun: value.tahun,
         rincian_output_id: roID,
         perlakuan_risiko: "", // remove
         value: "", // remove
-        stakeholder: []
-      }
+        stakeholder: [],
+      };
 
       if (val.tahun.length > 0) {
-        values.push(val)
+        values.push(val);
       }
-
-    })
+    });
 
     const requestDto: ExsumIndicationReqDto = {
       id: state.id,
@@ -460,84 +507,88 @@ const useCardIndicationVM = () => {
       kategori_risiko: state.kategori_risiko,
       indikasi_perlakuan_risiko: state.perlakuan_risiko,
       values: values,
-      regulasi: state.regulation
-    }
+      regulasi: state.regulation,
+    };
 
-    let response
+    let response;
     if (requestDto.id == 0) {
       response = await doCreateIndication({
         body: requestDto,
         loadingContext: loadingContext,
         errorModalContext: errorModalContext,
-      })
+      });
     } else {
       response = await doUpdateIndication({
         body: requestDto,
         loadingContext: loadingContext,
         errorModalContext: errorModalContext,
-      })
+      });
     }
 
     if (response?.code == API_CODE.success) {
-      await getData()
-      const initState: ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication))
-      setState(initState)
+      await getData();
+      const initState: ExsumIndicationState = JSON.parse(
+        JSON.stringify(initStateExsumIndication)
+      );
+      setState(initState);
 
-      await getOptionRO()
+      await getOptionRO();
       setModalOpen({ index: -1, action: false, type: "" });
     }
+  };
 
-  }
-
-  const handleModalOutputOpen = async (index: number, action: boolean, type: string) => {
-
+  const handleModalOutputOpen = async (
+    index: number,
+    action: boolean,
+    type: string
+  ) => {
     if (type == "delete") {
+      const value = state.values[index];
 
-      const value = state.values[index]
+      await deleteRONonROForm(value);
 
-      await deleteRONonROForm(value)
-
-      setState(prevState => {
-        let values = prevState.values
-        values.splice(modalOutput.index, 1)
+      setState((prevState) => {
+        let values = prevState.values;
+        values.splice(modalOutput.index, 1);
         return {
           ...prevState,
-          values: values
-        }
-      })
-      return
+          values: values,
+        };
+      });
+      return;
     }
 
-    let initStateValue: ExsumIndicationStateValue = JSON.parse(JSON.stringify(initStateExsumIndicationValue))
-    initStateValue.type = type
+    let initStateValue: ExsumIndicationStateValue = JSON.parse(
+      JSON.stringify(initStateExsumIndicationValue)
+    );
+    initStateValue.type = type;
 
     if (index > -1) {
-      initStateValue = state.values[index]
+      initStateValue = state.values[index];
     }
 
     if (year > 0) {
-      initStateValue.tahun = [year]
+      initStateValue.tahun = [year];
     }
 
-    setStateValue(initStateValue)
-    setModalOutput({ index, action: action, type: type })
-  }
+    setStateValue(initStateValue);
+    setModalOutput({ index, action: action, type: type });
+  };
 
   const handleModalOutputSubmit = async () => {
-
     if (modalOutput.type == "delete") {
-      return
+      return;
     }
 
     if (stateValue.tahun.length == 0) {
-      return
+      return;
     }
 
     if (stateValue.type == "RO") {
-      if (stateValue.rincian_output == undefined) return
+      if (stateValue.rincian_output == undefined) return;
 
-      let ro = stateValue.rincian_output
-      ro.intervention = stateValue.intervention
+      let ro = stateValue.rincian_output;
+      ro.intervention = stateValue.intervention;
 
       const request: ExsumInterventionProjectReqDto = {
         id: 0,
@@ -552,57 +603,58 @@ const useCardIndicationVM = () => {
         list: [],
         list_ro: [ro],
         tahun: "",
-        lokasi: []
-      }
+        lokasi: [],
+      };
       const response = await doCreateIntervention({
         body: request,
         loadingContext: loadingContext,
         errorModalContext: errorModalContext,
-      })
+      });
       if (response?.code !== API_CODE.success) {
-        return
+        return;
       }
 
-      setState(prevState => {
-        let thisState = { ...stateValue }
+      setState((prevState) => {
+        let thisState = { ...stateValue };
         if (thisState.type == "NON_RO") {
-          thisState.intervention = true
+          thisState.intervention = true;
         }
-        let values = prevState.values
+        let values = prevState.values;
         if (modalOutput.index > -1) {
-          values[modalOutput.index] = thisState
+          values[modalOutput.index] = thisState;
         } else {
-          values.push(thisState)
+          values.push(thisState);
         }
 
         return {
           ...prevState,
-          values: values
-        }
-
-      })
-
+          values: values,
+        };
+      });
     }
 
     if (stateValue.type == "NON_RO") {
-      if (stateValue.non_rincian_output.nomenklatur == ""
-        || stateValue.non_rincian_output.code == ""
-        || stateValue.non_rincian_output.prop == undefined
-        || stateValue.non_rincian_output.kementrian == undefined
-        || stateValue.non_rincian_output.location.length == 0
+      if (
+        stateValue.non_rincian_output.nomenklatur == "" ||
+        stateValue.non_rincian_output.code == "" ||
+        stateValue.non_rincian_output.prop == undefined ||
+        stateValue.non_rincian_output.kementrian == undefined ||
+        stateValue.non_rincian_output.location.length == 0
         // || stateValue.non_rincian_output.indikator == ""
       ) {
-        return
+        return;
       }
 
-      const nonRO: ExsumInterventionState = JSON.parse(JSON.stringify(stateValue.non_rincian_output))
+      const nonRO: ExsumInterventionState = JSON.parse(
+        JSON.stringify(stateValue.non_rincian_output)
+      );
 
-      let lokasi: any[] = []
-      nonRO.location.map(x => {
+      let lokasi: any[] = [];
+      nonRO.location.map((x) => {
         lokasi.push({
-          src_provinsi_id: x.id
-        })
-      })
+          src_provinsi_id: x.id,
+        });
+      });
 
       if (nonRO.id == 0) {
         const request: ExsumInterventionProjectReqDto = {
@@ -618,20 +670,19 @@ const useCardIndicationVM = () => {
           list_ro: nonRO.ro,
           intervention: year == 0 ? true : nonRO.intervensi,
           lokasi: lokasi,
-          tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year
-        }
+          tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
+        };
         const response = await doCreateIntervention({
           body: request,
           loadingContext: loadingContext,
           errorModalContext: errorModalContext,
-        })
+        });
         if (response?.code !== API_CODE.success) {
-          return
+          return;
         }
 
-        const res: RoDto = response?.result
-        nonRO.id = res.id
-
+        const res: RoDto = response?.result;
+        nonRO.id = res.id;
       } else {
         const req: UpdateV2ExsumIntervention = {
           body: {
@@ -649,127 +700,137 @@ const useCardIndicationVM = () => {
             intervention: year == 0 ? true : nonRO.intervensi,
             lokasi: lokasi,
             list: nonRO.list,
-            tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year
+            tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
           },
           loadingContext: loadingContext,
           errorModalContext: errorModalContext,
-        }
-        const response = await doUpdateInterventionOnlyRO(req)
+        };
+        const response = await doUpdateInterventionOnlyRO(req);
         if (response?.code !== API_CODE.success) {
-          return
+          return;
         }
       }
 
-      setState(prevState => {
-        let thisState = { ...stateValue }
-        thisState.non_rincian_output = nonRO
+      setState((prevState) => {
+        let thisState = { ...stateValue };
+        thisState.non_rincian_output = nonRO;
 
         if (thisState.type == "NON_RO") {
-          thisState.intervention = true
+          thisState.intervention = true;
         }
-        let values = prevState.values
+        let values = prevState.values;
         if (modalOutput.index > -1) {
-          values[modalOutput.index] = thisState
+          values[modalOutput.index] = thisState;
         } else {
-          values.push(thisState)
+          values.push(thisState);
         }
 
         return {
           ...prevState,
-          values: values
-        }
-
-      })
-
+          values: values,
+        };
+      });
     }
 
-    handleModalOutputOpen(-1, false, "")
-  }
+    handleModalOutputOpen(-1, false, "");
+  };
 
-  const handleModalRegulationOpen = (index: number, action: boolean, type: string) => {
-
+  const handleModalRegulationOpen = (
+    index: number,
+    action: boolean,
+    type: string
+  ) => {
     if (type == "delete") {
-      setState(prevState => {
-        let regulation = prevState.regulation
-        regulation.splice(index, 1)
+      setState((prevState) => {
+        let regulation = prevState.regulation;
+        regulation.splice(index, 1);
         return {
           ...prevState,
-          regulation: regulation
-        }
-      })
-      return
+          regulation: regulation,
+        };
+      });
+      return;
     }
 
-    let initStateValue: ExsumRegulationDto = JSON.parse(JSON.stringify(initExsumRegulationDto))
+    let initStateValue: ExsumRegulationDto = JSON.parse(
+      JSON.stringify(initExsumRegulationDto)
+    );
 
     if (index > -1) {
-      initStateValue = state.regulation[index]
+      initStateValue = state.regulation[index];
     }
 
-    setStateRegulation(initStateValue)
+    setStateRegulation(initStateValue);
 
-    setModalRegulation({ index: index, action: action, type: type })
-  }
+    setModalRegulation({ index: index, action: action, type: type });
+  };
 
   const handleModalRegulationSubmit = () => {
-
-    let req: ExsumRegulationDto = stateRegulation
-    req.exsum_id = exsum.id
-    setState(prevState => {
-      let regulation = prevState.regulation
+    let req: ExsumRegulationDto = stateRegulation;
+    req.exsum_id = exsum.id;
+    setState((prevState) => {
+      let regulation = prevState.regulation;
       if (modalOutput.index > -1) {
-        regulation[modalRegulation.index] = req
+        regulation[modalRegulation.index] = req;
       } else {
-        regulation.push(req)
+        regulation.push(req);
       }
 
       return {
         ...prevState,
-        regulation: regulation
-      }
-    })
+        regulation: regulation,
+      };
+    });
 
-    setModalRegulation({ index: -1, action: false, type: "" })
-  }
+    setModalRegulation({ index: -1, action: false, type: "" });
+  };
 
-  const handleModalNewRegulationOpen = (index: number, action: boolean, type: string) => {
-    const initStatePerpres = JSON.parse(JSON.stringify(initMiscMasterListPerpres))
-    setStateNewRegulation(initStatePerpres)
-    setModalNewRegulation({ index: -1, action: action, type: type })
-  }
+  const handleModalNewRegulationOpen = (
+    index: number,
+    action: boolean,
+    type: string
+  ) => {
+    const initStatePerpres = JSON.parse(
+      JSON.stringify(initMiscMasterListPerpres)
+    );
+    setStateNewRegulation(initStatePerpres);
+    setModalNewRegulation({ index: -1, action: action, type: type });
+  };
 
   const handleModalNewRegulationSubmit = async () => {
-
-    if (stateNewRegulation.value == ""
-      || stateNewRegulation.title == ""
-    ) {
-      return
+    if (stateNewRegulation.value == "" || stateNewRegulation.title == "") {
+      return;
     }
 
     const response = await doCreateMasterPerpres({
       body: stateNewRegulation,
       loadingContext: loadingContext,
-      errorModalContext: errorModalContext
-    })
+      errorModalContext: errorModalContext,
+    });
     if (response?.code == API_CODE.success) {
-      getListPerpres()
-      handleModalNewRegulationOpen(-1, false, "")
+      getListPerpres();
+      handleModalNewRegulationOpen(-1, false, "");
     }
-  }
+  };
 
   useEffect(() => {
-    if (optionRiskType.length == 0) getOptionRiskType()
-    if (optionStakeholder.length == 0) getOptionStakeholder()
+    if (optionRiskType.length == 0) getOptionRiskType();
+    if (optionStakeholder.length == 0) getOptionStakeholder();
     if (listLocation.length == 0) getListLocation();
     if (listSof.length == 0) getListSumberPendanaan();
     if (listPerpres.length == 0) getListPerpres();
 
     if (exsum.id > 0) {
-      getOptionRO()
-      getListProP()
-      getData()
-    };
+      getOptionRO();
+      getListProP();
+      getData();
+    }
   }, [exsum]);
+
+  const conditionEditing =
+    year > 0 && !edited ? `${grey[600]} !important` : "inherit";
+
+  const conditionEditingPointerEvent = year > 0 && !edited ? "none" : "auto";
 
   return {
     data,
@@ -803,9 +864,10 @@ const useCardIndicationVM = () => {
     stateNewRegulation,
     setStateNewRegulation,
     listPerpres,
-    exsum
-  }
-
-}
+    exsum,
+    conditionEditing,
+    conditionEditingPointerEvent,
+  };
+};
 
 export default useCardIndicationVM;

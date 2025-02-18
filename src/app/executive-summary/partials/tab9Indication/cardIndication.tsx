@@ -26,6 +26,7 @@ import { ExsumIndicationStateValue } from "./cardIndicationModel";
 import { TextareaStyled } from "@/components/textarea";
 import theme from "@/theme";
 import { API_CONSTANT } from "@/lib/core/api/apiModel";
+import useCardLocationVM from "../tab2Profile/cardLocation/cardLocationVM";
 
 export default function CardIndication({ project }: { project: string }) {
   const { year, rpjmn } = useRKPContext((store) => store);
@@ -62,7 +63,9 @@ export default function CardIndication({ project }: { project: string }) {
     stateRegulation,
     setStateRegulation,
     listPerpres,
-    exsum
+    exsum,
+    conditionEditing,
+    conditionEditingPointerEvent,
   } = useCardIndicationVM();
 
   const { permission } = useAuthContext((state) => state);
@@ -73,8 +76,9 @@ export default function CardIndication({ project }: { project: string }) {
     <>
       <Stack gap={1}>
         <CardItem
-          title={`Indikasi Risiko ${year == 0 ? "RPJMN 5 Tahunan" : "RKP Tahun " + year
-            }`}
+          title={`Indikasi Risiko ${
+            year == 0 ? "RPJMN 5 Tahunan" : "RKP Tahun " + year
+          }`}
           infoTooltip={
             <Stack spacing={2}>
               <div>
@@ -185,7 +189,12 @@ export default function CardIndication({ project }: { project: string }) {
               description="Silahkan isi konten halaman ini"
             />
           ) : (
-            <TableIndication data={data} handleModalOpen={handleModalOpen} />
+            <TableIndication
+              data={data}
+              handleModalOpen={handleModalOpen}
+              conditionEditing={conditionEditing}
+              conditionEditingPointerEvent={conditionEditingPointerEvent}
+            />
           )}
         </CardItem>
       </Stack>
@@ -228,8 +237,9 @@ export default function CardIndication({ project }: { project: string }) {
         width={"80%"}
         dialogOpen={modalOutput.type != "delete" && modalOutput.action}
         dialogClose={() => handleModalOutputOpen(-1, false, "")}
-        title={`Tambah ${modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
-          }`}
+        title={`Tambah ${
+          modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
+        }`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button

@@ -26,9 +26,13 @@ import { bgColorTh } from "@/app/utils/color";
 export default function TableIndication({
   data,
   handleModalOpen,
+  conditionEditing,
+  conditionEditingPointerEvent,
 }: {
   data?: ExsumIndicationResDto[];
   handleModalOpen?: any;
+  conditionEditing?: string;
+  conditionEditingPointerEvent?: any;
 }) {
   const { permission } = useAuthContext((state) => state);
   const pathname = usePathname();
@@ -72,6 +76,12 @@ export default function TableIndication({
         // style={{ tableLayout: "fixed", width: 1600 }}
         size="small"
         stickyHeader
+        sx={{
+          "*": {
+            color: conditionEditing,
+            pointerEvents: conditionEditingPointerEvent,
+          },
+        }}
       >
         <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
           <TableRow>
