@@ -187,7 +187,7 @@ export default function CardStakeholder({ project }: { project: string }) {
               />
             </Button>
             {
-              gambar?.value != "" ?
+              gambar != undefined ?
                 <AddButton
                   noMargin
                   filled
