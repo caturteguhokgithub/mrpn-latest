@@ -150,6 +150,11 @@ export default function CardLocation({ project }: { project: string }) {
                 fontWeight={600}
                 color={conditionEditing}
                 component="div"
+                sx={{
+                  "*": {
+                    color: conditionEditing,
+                  },
+                }}
               >
                 <div
                   dangerouslySetInnerHTML={{ __html: data[0].keterangan }}
