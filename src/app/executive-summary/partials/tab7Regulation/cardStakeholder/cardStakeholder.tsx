@@ -34,6 +34,7 @@ import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 export default function CardStakeholder({ project }: { project: string }) {
   const {
     data,
+    gambar,
     listStakeholder,
     modalOpenStakeholder,
     setModalOpenStakeholder,
@@ -43,7 +44,10 @@ export default function CardStakeholder({ project }: { project: string }) {
     handleChangeDescription,
     logoState,
     setLogoState,
+    gambarState,
+    setGambarState,
     updateLogo,
+    uploadImage,
     modalListLogo,
     setModalListLogo,
     modalLogo,
@@ -97,6 +101,24 @@ export default function CardStakeholder({ project }: { project: string }) {
     }
   };
 
+  const handleGambarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files?.[0];
+
+    if (files) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(files);
+      reader.onload = () => {
+        const res = reader.result as string;
+        uploadImage(res);
+      };
+
+      reader.onerror = (error) => {
+        console.error("Error: ", error);
+      };
+    }
+  };
+
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
   const sxParamsFull: SxParams = { variant: "full" };
@@ -116,52 +138,56 @@ export default function CardStakeholder({ project }: { project: string }) {
         />
       ) : (
         <>
-          {(hasPrivilege(permission, pathname, "add") ||
-            hasPrivilege(permission, pathname, "update")) && (
-            <Stack direction="row" gap={1}>
-              <AddButton
-                noMargin
-                small
-                title="Ubah Logo"
-                startIcon={
-                  <Icon
-                    baseClassName="fas"
-                    className={"fa-pencil"}
-                    sx={{
-                      fontSize: "12px !important",
-                    }}
-                  />
-                }
-                sx={{ paddingInline: 2 }}
-                onclick={() => setModalListLogo(true)}
-              />
-              {/* <Button
-                  component="label"
-                  size="small"
-                  variant="outlined"
-                  tabIndex={-1}
+          <Stack direction="row" gap={1}>
+            {(hasPrivilege(permission, pathname, "add") ||
+              hasPrivilege(permission, pathname, "update")) && (
+                <AddButton
+                  noMargin
+                  small
+                  title="Ubah Logo"
                   startIcon={
                     <Icon
                       baseClassName="fas"
-                      className={"fa-upload"}
+                      className={"fa-pencil"}
                       sx={{
                         fontSize: "12px !important",
                       }}
                     />
                   }
+                  sx={{ paddingInline: 2 }}
+                  onclick={() => setModalListLogo(true)}
+                />
+              )}
+
+            <Button
+              component="label"
+              size="small"
+              variant="outlined"
+              tabIndex={-1}
+              startIcon={
+                <Icon
+                  baseClassName="fas"
+                  className={"fa-upload"}
                   sx={{
-                    paddingInline: 2,
-                    borderRadius: "50px",
-                    textTransform: "capitalize",
+                    fontSize: "12px !important",
                   }}
-                >
-                  Unggah Gambar
-                  <VisuallyHiddenInput
-                    type="file"
-                    onChange={(event) => console.log(event.target.files)}
-                    multiple
-                  />
-                </Button>
+                />
+              }
+              sx={{
+                paddingInline: 2,
+                borderRadius: "50px",
+                textTransform: "capitalize",
+              }}
+            >
+              Unggah Gambar
+              <VisuallyHiddenInput
+                type="file"
+                onChange={(event) => handleGambarChange(event)}
+                multiple
+              />
+            </Button>
+            {
+              gambar?.value != "" ?
                 <AddButton
                   noMargin
                   filled
@@ -178,9 +204,11 @@ export default function CardStakeholder({ project }: { project: string }) {
                   }
                   sx={{ paddingInline: 2 }}
                   onclick={() => setModalViewImage(true)}
-                /> */}
-            </Stack>
-          )}
+                />
+                : ""
+            }
+
+          </Stack>
           <StakeholderChart
             data={data}
             conditionEditingImg={conditionEditingImg}
@@ -280,7 +308,7 @@ export default function CardStakeholder({ project }: { project: string }) {
                 src={
                   logoState.icon == ""
                     ? process.env.NEXT_PUBLIC_BASE_URL_FILES +
-                      logoState.iconPath
+                    logoState.iconPath
                     : ""
                 }
                 width={0}
@@ -360,7 +388,9 @@ export default function CardStakeholder({ project }: { project: string }) {
               >
                 <Image
                   alt="Instansi Pelaksana"
-                  src="https://res.cloudinary.com/caturteguh/image/upload/v1738912448/mrpn/hierarchy_ic8yuc.jpg"
+                  src={
+                    process.env.NEXT_PUBLIC_BASE_URL_FILES + (gambar?.value ?? "")
+                  }
                   width={0}
                   height={0}
                   sizes="100vw"
