@@ -282,6 +282,7 @@ const useCardIndicationVM = () => {
       });
 
       setData(result);
+      setEdited(result[0].isEdit ?? true);
     }
   }
 
@@ -841,6 +842,7 @@ const useCardIndicationVM = () => {
     optionRiskType,
     optionStakeholder,
     modalOpen,
+    setModalOpen,
     handleModalOpen,
     handleModalOutputSubmit,
     modalOutput,

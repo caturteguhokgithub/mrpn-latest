@@ -83,6 +83,7 @@ export interface ExsumIndicationResDto {
   perlakuan: ExsumIndicationValueRes[];
   tows?: ExsumTWOSDto;
   regulasi: ExsumRegulationResDto[];
+  isEdit: boolean
 }
 
 export interface IndicationState {
