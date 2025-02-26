@@ -9,6 +9,7 @@ import {
   IconExecutive,
   IconKeluar,
   IconManajemen,
+  IconObject,
   IconPemantauan,
   IconPenetapan,
   IconProfil,
@@ -29,7 +30,8 @@ const getIcon = (icon: string) => {
       return <IconExecutive />;
     }
     case "IconPenetapan": {
-      return <IconPenetapan />;
+      return <IconFA name="stamp" size={16} sx={{ width: 20 }} />;
+      // return <IconPenetapan />;
     }
     case "IconProfil": {
       return <IconProfil />;
@@ -44,10 +46,22 @@ const getIcon = (icon: string) => {
       return <IconFA name="seedling" size={18} />;
     }
     case "IconSupport": {
-      return <IconSupport />;
+      return <IconFA name="headset" size={16} sx={{ width: 20 }} />;
     }
     case "IconManajemen": {
       return <IconManajemen />;
+    }
+    case "IconObject": {
+      return <IconFA name="box" size={18} />;
+    }
+    case "IconLogActivity": {
+      return <IconFA name="user-clock" size={16} sx={{ width: 20 }} />;
+    }
+    case "IconUserMgmt": {
+      return <IconFA name="user-group" size={16} sx={{ width: 20 }} />;
+    }
+    case "IconUserRole": {
+      return <IconFA name="user-gear" size={16} sx={{ width: 20 }} />;
     }
     default: {
       return <IconDashboard />;
@@ -62,6 +76,19 @@ function getMenuItem(
   type: string
 ) {
   if (mn.type === type) {
+    const isParentActive =
+      typeof window !== "undefined"
+        ? window.location.pathname.includes(mn.route)
+        : false;
+
+    const isChildActive = mn.submenu.some((sm) =>
+      typeof window !== "undefined"
+        ? window.location.pathname.includes(sm.route)
+        : false
+    );
+
+    const isActive = isParentActive || isChildActive;
+
     return (
       <MenuItem
         hasChild={mn.submenu.length > 0}

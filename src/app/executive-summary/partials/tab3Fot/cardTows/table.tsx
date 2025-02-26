@@ -30,6 +30,7 @@ import {
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
+import { bgColorTh } from "@/app/utils/color";
 
 const TitleTableContent = ({
   title,
@@ -64,8 +65,20 @@ export default function TableTows({
 }) {
   return (
     <TableContainer component={Paper} elevation={0} variant="outlined">
-      <Table size="small">
-        <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
+      <Table
+        size="small"
+        sx={{
+          "tbody, thead": {
+            "td, th": {
+              borderRight: `1px solid ${grey[300]} !important`,
+              "&:last-of-type": {
+                borderRight: `0 !important`,
+              },
+            },
+          },
+        }}
+      >
+        <TableHead sx={{ bgcolor: bgColorTh }}>
           <TableRow>
             <TableCell>
               <Typography
@@ -76,7 +89,7 @@ export default function TableTows({
                 Faktor Eksternal/Internal
               </Typography>
             </TableCell>
-            <TableCell width="40%">
+            <TableCell width="40%" sx={{ textAlign: "center" }}>
               <Typography
                 variant="body1"
                 fontWeight={600}
@@ -92,7 +105,7 @@ export default function TableTows({
                 Tentukan Faktor Kekuatan Internal
               </Typography>
             </TableCell>
-            <TableCell width="40%">
+            <TableCell width="40%" sx={{ textAlign: "center" }}>
               <Typography
                 variant="body1"
                 fontWeight={600}
@@ -115,7 +128,7 @@ export default function TableTows({
             <TableCell
               sx={{
                 verticalAlign: "top",
-                bgcolor: alpha(theme.palette.primary.main, 0.1),
+                bgcolor: bgColorTh,
               }}
             >
               <Typography
@@ -162,7 +175,7 @@ export default function TableTows({
             <TableCell
               sx={{
                 verticalAlign: "top",
-                bgcolor: alpha(theme.palette.primary.main, 0.1),
+                bgcolor: bgColorTh,
               }}
             >
               <Typography

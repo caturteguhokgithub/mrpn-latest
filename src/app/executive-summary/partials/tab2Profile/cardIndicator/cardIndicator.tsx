@@ -22,6 +22,7 @@ import theme from "@/theme";
 import { DasarPemilihan } from "@/app/penetapan/objek/pageModel";
 import { GenerateRpjmnYear, GetTarget } from "@/lib/utils/common";
 import { grey } from "@mui/material/colors";
+import { bgColorTh } from "@/app/utils/color";
 
 export const getLevel = (level: string) => {
   switch (level) {
@@ -66,15 +67,34 @@ export default function CardIndicator({ project }: { project: string }) {
         />
       ) : (
         <TableContainer component={Paper} elevation={0} variant="outlined">
-          <Table sx={{ minWidth: 650 }} size="small">
-            <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
+          <Table
+            sx={{
+              minWidth: 650,
+              "tbody, thead": {
+                "td, th": {
+                  borderRight: `1px solid ${grey[300]} !important`,
+                  "&:last-of-type": {
+                    borderRight: `0 !important`,
+                  },
+                },
+              },
+            }}
+            size="small"
+          >
+            <TableHead sx={{ bgcolor: bgColorTh }}>
               <TableRow>
-                <TableCell width={150}>Kode</TableCell>
-                <TableCell>Indikator</TableCell>
-                {year > 0 && <TableCell>Target</TableCell>}
+                <TableCell width={150} sx={{ textAlign: "center" }}>
+                  Kode
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>Indikator</TableCell>
+                {year > 0 && (
+                  <TableCell sx={{ textAlign: "center" }}>Target</TableCell>
+                )}
                 {year == 0 &&
                   GenerateRpjmnYear(rpjmn).map((y, i) => (
-                    <TableCell key={i}>Target {y}</TableCell>
+                    <TableCell key={i} sx={{ textAlign: "center" }}>
+                      Target {y}
+                    </TableCell>
                   ))}
               </TableRow>
               <TableRow>
@@ -83,7 +103,7 @@ export default function CardIndicator({ project }: { project: string }) {
                     <Typography
                       color={grey[500]}
                       fontSize={14}
-                      textAlign="left"
+                      textAlign="center"
                     >
                       {i + 1}
                     </Typography>

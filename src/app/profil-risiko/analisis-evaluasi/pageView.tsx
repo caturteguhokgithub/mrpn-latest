@@ -117,6 +117,9 @@ export default function PageAnalisisEvaluasiView({}) {
               accessorKey: "peristiwa",
               header: "Peristiwa Risiko",
               enableColumnActions: false,
+              muiTableHeadCellProps: {
+                align: "center",
+              },
               Header: ({ column }) => (
                 <SortNumber
                   column={column}
@@ -128,6 +131,9 @@ export default function PageAnalisisEvaluasiView({}) {
               accessorKey: "kategori",
               header: "Kategori Risiko",
               enableColumnActions: false,
+              muiTableHeadCellProps: {
+                align: "center",
+              },
               Header: ({ column }) => (
                 <SortNumber
                   column={column}
@@ -200,6 +206,9 @@ export default function PageAnalisisEvaluasiView({}) {
               accessorKey: "analisis_level",
               header: "Level Risiko",
               enableColumnActions: false,
+              muiTableHeadCellProps: {
+                align: "center",
+              },
               size: 160,
               Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
                 <Chip
@@ -297,8 +306,13 @@ export default function PageAnalisisEvaluasiView({}) {
     muiTableHeadCellProps: {
       sx: {
         bgcolor: blue[50],
-        border: `1px solid ${grey[300]}`,
+        borderRight: `1px solid ${grey[300]}`,
         justifyContent: "center",
+      },
+    },
+    muiTableBodyCellProps: {
+      sx: {
+        borderRight: `1px solid ${grey[300]}`,
       },
     },
     muiTableHeadRowProps: {

@@ -91,26 +91,26 @@ export default function PageExecutiveSummary({}) {
   const usetheme = useTheme();
   const breakpointDownMd = useMediaQuery(usetheme.breakpoints.down("md"));
 
-  const downloadAttachment = (
-    <AddButton
-      url="#"
-      filled
-      errorColor
-      title="Download PDF"
-      startIcon={
-        breakpointDownMd ? null : (
-          <Icon
-            baseClassName="fas"
-            className={`fa-file-pdf`}
-            sx={{
-              fontSize: "16px !important",
-            }}
-          />
-        )
-      }
-      sx={{ height: 38 }}
-    />
-  );
+  // const downloadAttachment = (
+  //   <AddButton
+  //     url="#"
+  //     filled
+  //     errorColor
+  //     title="Download PDF"
+  //     startIcon={
+  //       breakpointDownMd ? null : (
+  //         <Icon
+  //           baseClassName="fas"
+  //           className={`fa-file-pdf`}
+  //           sx={{
+  //             fontSize: "16px !important",
+  //           }}
+  //         />
+  //       )
+  //     }
+  //     sx={{ height: 38 }}
+  //   />
+  // );
 
   const approvalAction = (approval: ApprovalDto | undefined) => {
     if (
@@ -217,7 +217,7 @@ export default function PageExecutiveSummary({}) {
                   name="chevron-down"
                   color={theme.palette.primary.main}
                 />
-                {breakpointDownMd ? null : "Tab History"}
+                {breakpointDownMd ? null : "Tab RPJMN RKP"}
               </Stack>
             }
             sx={styleDownload}

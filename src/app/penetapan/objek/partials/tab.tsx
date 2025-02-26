@@ -122,15 +122,15 @@ export default function TabObject({}) {
             iconPosition="start"
             icon={<IconFA size={16} name="list-check" />}
           />
-          {/*<Tab*/}
-          {/*  label="Usulan UPR Linsek"*/}
-          {/*  {...a11yProps(3)}*/}
-          {/*  iconPosition="start"*/}
-          {/*  icon={<IconFA size={16} name="scroll" />}*/}
-          {/*/>*/}
           <Tab
-            label="Nota Dinas Objek MRPN & UPR Linsek"
+            label="Usulan UPR Linsek"
             {...a11yProps(3)}
+            iconPosition="start"
+            icon={<IconFA size={16} name="scroll" />}
+          />
+          <Tab
+            label="Pengesahan"
+            {...a11yProps(4)}
             iconPosition="start"
             icon={<IconFA size={16} name="newspaper" sx={{ width: "auto" }} />}
           />
@@ -178,23 +178,24 @@ export default function TabObject({}) {
           )}
         </CardItem>
       </CustomTabPanel>
-      {/*<CustomTabPanel value={value} index={3}>*/}
-      {/*  <CardItem title="Usulan UPR Linsek">*/}
-      {/*    {isEmpty ? (*/}
-      {/*      <EmptyState*/}
-      {/*        dense*/}
-      {/*        icon={<IconEmptyData width={100} />}*/}
-      {/*        title="Data Kosong"*/}
-      {/*        description="Silahkan isi konten halaman ini"*/}
-      {/*      />*/}
-      {/*    ) : (*/}
-      {/*      <TableProposal />*/}
-      {/*    )}*/}
-      {/*  </CardItem>*/}
-      {/*</CustomTabPanel>*/}
       <CustomTabPanel value={value} index={3}>
+        <CardItem title="Usulan UPR Linsek">
+          {isEmpty ? (
+            <EmptyState
+              dense
+              icon={<IconEmptyData width={100} />}
+              title="Data Kosong"
+              description="Silahkan isi konten halaman ini"
+            />
+          ) : (
+            <TableProposal />
+          )}
+        </CardItem>
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={4}>
         <CardItem
-          title="Nota Dinas Objek MRPN & UPR Linsek"
+          // title="Nota Dinas Objek MRPN & UPR Linsek"
+          title="Pengesahan"
           addButton={
             !editNotaDinas && (
               <AddButton

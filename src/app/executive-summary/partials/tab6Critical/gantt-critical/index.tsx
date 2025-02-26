@@ -283,11 +283,14 @@ export default function GanttChart({ tasks }: { tasks: Task[] }) {
         fontSize="14px"
         // headerHeight={200}
         TaskListHeader={CustomTaskListHeader}
-        TaskListTable={CustomTaskListTable}
+        TaskListTable={(props) => <CustomTaskListTable {...props} />}
+        // TaskListTable={CustomTaskListTable}
 
         // renderTaskList={(tasks: any) =>
         //   tasks.map((task: any) => <CustomTask key={task.id} task={task} />)
         // }
+        ganttHeight={300}
+        locale="id"
       />
       {/* <CustomTaskList tasks={tasks} /> */}
     </Box>
