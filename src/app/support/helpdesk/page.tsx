@@ -20,7 +20,7 @@ export default function PageHelpdesk() {
     title="Helpdesk"
     withCard
     project={project}
-    handleChangeProject={handleChangeProject}
+    // handleChangeProject={handleChangeProject}
    >
     <EmptyState
      icon={<IconEmptyPage />}

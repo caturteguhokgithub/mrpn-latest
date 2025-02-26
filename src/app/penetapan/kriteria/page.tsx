@@ -23,7 +23,7 @@ risiko untuk mendukung pengambilan keputusan"
     withCard={false}
     chipKp
     project={project}
-    handleChangeProject={handleChangeProject}
+    // handleChangeProject={handleChangeProject}
    >
     <TabCriteria />
    </ContentPage>

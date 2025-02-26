@@ -59,7 +59,7 @@ export default function PageDashboardView({
         noMarginBotttom
         withCard={isEmpty ? true : false}
         project={project}
-        handleChangeProject={handleChangeProject}
+        // handleChangeProject={handleChangeProject}
         darkTheme={isEmpty ? false : true}
       >
         {isEmpty ? (
