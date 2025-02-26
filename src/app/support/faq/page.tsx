@@ -20,7 +20,7 @@ export default function PageFAQ() {
     title="FAQ (Frequently Ask Question)"
     withCard
     project={project}
-    handleChangeProject={handleChangeProject}
+    // handleChangeProject={handleChangeProject}
    >
     <EmptyState
      icon={<IconEmptyPage />}

@@ -15,3 +15,4 @@ export { IndonesianSvgMap } from "./indonesia-map";
 export { IconTimeout } from "./timeout";
 export { IconErrorBadRequest } from "./error-400";
 export { IconObject } from "./object";
+export { IconStamp } from "./stamp";

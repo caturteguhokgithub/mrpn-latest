@@ -13,6 +13,7 @@ import {
   IconPemantauan,
   IconPenetapan,
   IconProfil,
+  IconStamp,
 } from "../icons";
 import { IconFA } from "../icons/icon-fa";
 import { IconSupport } from "../icons/support";
@@ -20,48 +21,48 @@ import { IconApproval } from "../icons/approval";
 import useAuthorizationVM from "@/app/authorizationVM";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { Menu } from "@/lib/core/context/authContext";
+import Iconify from "../icons/iconify";
 
 const getIcon = (icon: string) => {
   switch (icon) {
     case "IconDashboard": {
-      return <IconDashboard />;
+      return <Iconify name="mdi:view-dashboard" size={20} />;
     }
     case "IconExecutive": {
-      return <IconExecutive />;
+      return <Iconify name="mdi:book-open-page-variant" size={20} />;
     }
     case "IconPenetapan": {
-      return <IconFA name="stamp" size={16} sx={{ width: 20 }} />;
-      // return <IconPenetapan />;
+      return <Iconify name="mdi:stamper" size={20} />;
     }
     case "IconProfil": {
-      return <IconProfil />;
+      return <Iconify name="mdi:account-file-text" size={20} />;
     }
     case "IconPemantauan": {
-      return <IconPemantauan />;
+      return <Iconify name="mdi:television-guide" size={20} />;
     }
     case "IconApproval": {
-      return <IconApproval />;
+      return <Iconify name="mdi:checkbox-multiple-marked-circle" size={20} />;
     }
     case "IconMaturitas": {
-      return <IconFA name="seedling" size={18} />;
+      return <Iconify name="mdi:leaf" size={20} />;
     }
     case "IconSupport": {
-      return <IconFA name="headset" size={16} sx={{ width: 20 }} />;
+      return <Iconify name="mdi:headset" size={20} />;
     }
     case "IconManajemen": {
       return <IconManajemen />;
     }
     case "IconObject": {
-      return <IconFA name="box" size={18} />;
+      return <Iconify name="mdi:cube" size={20} />;
     }
     case "IconLogActivity": {
-      return <IconFA name="user-clock" size={16} sx={{ width: 20 }} />;
+      return <Iconify name="mdi:account-clock" size={20} />;
     }
     case "IconUserMgmt": {
-      return <IconFA name="user-group" size={16} sx={{ width: 20 }} />;
+      return <Iconify name="mdi:account-group" size={20} />;
     }
     case "IconUserRole": {
-      return <IconFA name="user-gear" size={16} sx={{ width: 20 }} />;
+      return <Iconify name="mdi:account-cog" size={20} />;
     }
     default: {
       return <IconDashboard />;
