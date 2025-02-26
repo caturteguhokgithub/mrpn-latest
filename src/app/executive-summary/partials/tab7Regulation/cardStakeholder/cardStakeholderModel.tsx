@@ -19,6 +19,16 @@ export interface ExsumStakeholderReqDto {
     values: ExsumStakeholderValueDto[];
 }
 
+export interface ExsumStakeholderImageValueDto {
+    exsum_id: number;
+    value: string;
+}
+
+export interface ExsumStakeholderImageReqDto {
+    exsum_id: number;
+    file: string;
+}
+
 export const initExsumStakeholderReqDto: ExsumStakeholderReqDto = {
     id: 0,
     exsum_id: 0,
@@ -47,6 +57,11 @@ export const initExsumStakeholderReqDto: ExsumStakeholderReqDto = {
     ],
 };
 
+export const initUploadImageStakeholderDto: ExsumStakeholderImageReqDto = {
+    exsum_id: 0,
+    file: ""
+}
+
 export type ExsumStakeholderResDto = ExsumStakeholderValueDto;
 
 export type GetStakeholderByExsumIdServiceModel = BaseAPIServiceParam & {
@@ -60,3 +75,13 @@ export type UpdateStakeholderByExsumIdServiceModel = BaseAPIServiceParam & {
 export type DeleteStakeholderByExsumIdServiceModel = BaseAPIServiceParam & {
     body: { id: number };
 };
+
+export type GetStakeholderImageByExsumIdServiceModel = BaseAPIServiceParam & {
+    body: GetByExsumId;
+};
+
+export type UploadImageStakeholderByExsumIdServiceModel = BaseAPIServiceParam & {
+    body: ExsumStakeholderImageReqDto;
+};
+
+export type ExsumStakeholderImageResDto = ExsumStakeholderImageValueDto;

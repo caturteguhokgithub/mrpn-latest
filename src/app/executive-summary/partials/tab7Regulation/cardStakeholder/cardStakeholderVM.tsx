@@ -17,14 +17,19 @@ import {
 } from "@/app/misc/master/masterService";
 import { API_CODE, ResponseBaseDto } from "@/lib/core/api/apiModel";
 import {
+  ExsumStakeholderImageReqDto,
+  ExsumStakeholderImageResDto,
   ExsumStakeholderReqDto,
   ExsumStakeholderResDto,
   ExsumStakeholderValueDto,
   initExsumStakeholderReqDto,
+  initUploadImageStakeholderDto,
 } from "@/app/executive-summary/partials/tab7Regulation/cardStakeholder/cardStakeholderModel";
 import {
   doCreate,
   doGet,
+  doLihatGambar,
+  doUnggahGambar,
   doUpdate,
 } from "@/app/executive-summary/partials/tab7Regulation/cardStakeholder/cardStakeholderService";
 import { grey } from "@mui/material/colors";
@@ -40,6 +45,7 @@ const useCardStakeholderVM = () => {
   >([]);
   const [modalOpenStakeholder, setModalOpenStakeholder] = React.useState(false);
   const [data, setData] = useState<ExsumStakeholderResDto[]>([]);
+  const [gambar, setGambar] = useState<ExsumStakeholderImageResDto>();
   const [request, setRequest] = useState<ExsumStakeholderReqDto>(
     initExsumStakeholderReqDto
   );
@@ -51,6 +57,9 @@ const useCardStakeholderVM = () => {
   const [logoState, setLogoState] =
     useState<UpdateLogoStakeholderDto>(initUploadLogo);
   const [modalViewImage, setModalViewImage] = useState<boolean>(false);
+
+  const initUploadImage = JSON.parse(JSON.stringify(initUploadImageStakeholderDto));
+  const [gambarState, setGambarState] = useState<ExsumStakeholderImageReqDto>(initUploadImage);
 
   const [edited, setEdited] = useState(false);
 
@@ -142,6 +151,38 @@ const useCardStakeholderVM = () => {
     }
   }
 
+  async function getDataImage() {
+    const response = await doLihatGambar({
+      body: { exsum_id: exsum.id },
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+    if (response?.code == API_CODE.success) {
+      const result: ExsumStakeholderImageResDto = response.result;
+      if (result) {
+        setGambar(result);
+      }
+    }
+  }
+
+  async function uploadImage(gambar: string) {
+    if (gambarState == undefined) return;
+
+    const req: ExsumStakeholderImageReqDto = {
+      exsum_id: exsum.id ?? 0,
+      file: gambar ?? "",
+    };
+
+    const response = await doUnggahGambar({
+      body: req,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+    if (response?.code == API_CODE.success) {
+      getDataImage()
+    }
+  }
+
   const handleSelectStakeholder = (selectedItems: number[], type: string) => {
     const itemSelected: MiscMasterListStakeholderRes[] = [];
     selectedItems.map((x) => {
@@ -178,7 +219,10 @@ const useCardStakeholderVM = () => {
 
   useEffect(() => {
     if (listStakeholder.length == 0) getListStakeholder();
-    if (exsum.id != 0) getData();
+    if (exsum.id != 0) {
+      getData();
+      getDataImage();
+    }
   }, [exsum]);
 
   const handleEdited = () => {
@@ -193,6 +237,7 @@ const useCardStakeholderVM = () => {
 
   return {
     data,
+    gambar,
     listStakeholder,
     modalOpenStakeholder,
     setModalOpenStakeholder,
@@ -203,7 +248,10 @@ const useCardStakeholderVM = () => {
     handleChangeDescription,
     logoState,
     setLogoState,
+    gambarState,
+    setGambarState,
     updateLogo,
+    uploadImage,
     modalListLogo,
     setModalListLogo,
     modalLogo,

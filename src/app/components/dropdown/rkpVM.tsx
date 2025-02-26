@@ -14,6 +14,8 @@ import { doGetSystemParamByModuleAndName } from "@/app/misc/sysparams/sysParamSe
 import { GetSysParamsServiceResModel } from "@/app/misc/sysparams/sysParamServiceModel";
 import { ProjectDefaultDto, RKPDto } from "@/lib/core/context/rkpContext";
 
+const LOCAL_STORAGE_KEY = "selectedRKP";
+
 const useRkpVM = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
@@ -45,6 +47,7 @@ const useRkpVM = () => {
       setAllowedSelectRKP(allowSelect);
     }
   }
+
   async function getData() {
     const response = await doGetRKP({
       body: {
@@ -58,7 +61,7 @@ const useRkpVM = () => {
       let result: RKPDto = response.result;
       rkpContext.setRkp(result);
 
-      // generate Options
+      // Generate Options
       let opt: OptionsRKP[] = [];
       result.map((pn) => {
         if (allowedSelectRKP.includes("PN")) {
@@ -130,6 +133,7 @@ const useRkpVM = () => {
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
     });
+
     if (response?.code == API_CODE.success) {
       let result: ExsumDto = response.result;
       if (
@@ -177,10 +181,20 @@ const useRkpVM = () => {
   const handleChangeOptions = (params: OptionsRKP) => {
     if (params == null) {
       setRkpState(undefined);
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
     } else {
       setRkpState(params);
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(params));
     }
   };
+
+  useEffect(() => {
+    const savedRKP = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (savedRKP) {
+      const parsedRKP = JSON.parse(savedRKP);
+      setRkpState(parsedRKP);
+    }
+  }, []);
 
   useEffect(() => {
     if (rkpState != undefined) triggerChange(rkpState);
