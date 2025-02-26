@@ -24,6 +24,7 @@ import FormDampak from "./form-dampak";
 import dataImpact from "./impact.json";
 import ActionColumn from "@/app/components/actions/action";
 import DialogDelete from "@/app/components/dialogDelete";
+import { bgColorTh } from "@/app/utils/color";
 
 export default function TableDampak({ mode }: { mode?: string }) {
   const [modalAdd, setModalAdd] = React.useState(false);
@@ -55,7 +56,7 @@ export default function TableDampak({ mode }: { mode?: string }) {
     <>
       <Paper sx={{ overflowX: "auto" }} elevation={0} variant="outlined">
         <Table size="small">
-          <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
+          <TableHead sx={{ bgcolor: bgColorTh }}>
             <TableRow>
               <TableCell rowSpan={3} colSpan={2}>
                 Area Dampak
@@ -86,7 +87,7 @@ export default function TableDampak({ mode }: { mode?: string }) {
                 <TableRow>
                   <TableCell
                     rowSpan={row.levels.length}
-                    sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}
+                    sx={{ bgcolor: bgColorTh }}
                   >
                     {row.area}
                   </TableCell>

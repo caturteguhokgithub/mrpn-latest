@@ -52,7 +52,7 @@ export default function TableTagging({
       }}
     >
       <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
-        <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
+        <TableHead sx={{ bgcolor: bgColorTh }}>
           <TableRow>
             {(hasPrivilege(permission, pathname, "add") ||
               hasPrivilege(permission, pathname, "delete") ||

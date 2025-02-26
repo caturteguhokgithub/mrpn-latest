@@ -13,6 +13,7 @@ import {
 import { blue, green, grey, orange, red, yellow } from "@mui/material/colors";
 import { dataMatriks } from "../../dataMatriks";
 import theme from "@/theme";
+import { bgColorTh } from "@/app/utils/color";
 
 export default function Matriks({ levelId }: { levelId?: number }) {
   const colorMap: { [key: string]: string } = {
@@ -131,7 +132,7 @@ export default function Matriks({ levelId }: { levelId?: number }) {
       }}
     >
       <TableHead>
-        <TableRow sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
+        <TableRow sx={{ bgcolor: bgColorTh }}>
           <TableCell>Level Risiko</TableCell>
           <TableCell align="center">Besaran Risiko </TableCell>
           <TableCell align="center">Warna</TableCell>

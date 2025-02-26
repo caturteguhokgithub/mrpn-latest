@@ -158,7 +158,7 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
         }}
         stickyHeader
       >
-        <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
+        <TableHead sx={{ bgcolor: bgColorTh }}>
           <TableRow>
             <TableCell
               rowSpan={2}
@@ -166,6 +166,8 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
                 ...(year > 0 ? null : styleFixedColumn),
                 bgcolor: bgColorTh,
                 zIndex: 3,
+                textAlign: "center",
+                whiteSpace: "nowrap",
                 [theme.breakpoints.down("xl")]: {
                   ...styleFixedColumn,
                 },
@@ -193,10 +195,21 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
                 {y}
               </TableCell>
             ))}
-            <TableCell rowSpan={2} sx={{ width: 250, bgcolor: bgColorTh }}>
+            <TableCell
+              rowSpan={2}
+              sx={{
+                width: 250,
+                bgcolor: bgColorTh,
+                textAlign: "center",
+                whiteSpace: "nowrap",
+              }}
+            >
               Instansi Pelaksana RO
             </TableCell>
-            <TableCell rowSpan={2} sx={{ bgcolor: bgColorTh }}>
+            <TableCell
+              rowSpan={2}
+              sx={{ bgcolor: bgColorTh, textAlign: "center" }}
+            >
               Lokasi RO
               <br />
               (Prov./Kab./Kota)
@@ -211,12 +224,28 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
           >
             {multiyear.map((y, iY) => (
               <>
-                <TableCell sx={{ bgcolor: bgColorTh }}>Target</TableCell>
-                <TableCell sx={{ bgcolor: bgColorTh }}>Satuan</TableCell>
-                <TableCell sx={{ bgcolor: bgColorTh }}>
+                <TableCell sx={{ bgcolor: bgColorTh, textAlign: "center" }}>
+                  Target
+                </TableCell>
+                <TableCell sx={{ bgcolor: bgColorTh, textAlign: "center" }}>
+                  Satuan
+                </TableCell>
+                <TableCell
+                  sx={{
+                    bgcolor: bgColorTh,
+                    textAlign: "center",
+                    whiteSpace: "nowrap",
+                  }}
+                >
                   Pembiayaan (Juta)
                 </TableCell>
-                <TableCell sx={{ bgcolor: bgColorTh }}>
+                <TableCell
+                  sx={{
+                    bgcolor: bgColorTh,
+                    textAlign: "center",
+                    whiteSpace: "nowrap",
+                  }}
+                >
                   Sumber Pembiayaan
                 </TableCell>
               </>

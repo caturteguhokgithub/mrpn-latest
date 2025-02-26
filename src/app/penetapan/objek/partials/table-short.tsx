@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import {
+  alpha,
   Box,
   Chip,
   Paper,
@@ -10,6 +11,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import theme from "@/theme";
 import EmptyState from "@/app/components/empty";
@@ -18,6 +20,8 @@ import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import useRkpVM from "@/components/dropdown/rkpVM";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
+import { grey } from "@mui/material/colors";
+import { bgColorTh } from "@/app/utils/color";
 
 type Row = {
   object: string;
@@ -126,13 +130,26 @@ export default function TableShortlist({ mode }: { mode?: string }) {
   return (
     <>
       <TableContainer component={Paper} elevation={0} variant="outlined">
-        <Table sx={{ minWidth: 650 }} size="small">
-          <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
+        <Table
+          sx={{
+            minWidth: 650,
+            "tbody, thead": {
+              "td, th": {
+                borderRight: `1px solid ${grey[300]} !important`,
+                "&:last-of-type": {
+                  borderRight: `0 !important`,
+                },
+              },
+            },
+          }}
+          size="small"
+        >
+          <TableHead sx={{ bgcolor: bgColorTh }}>
             <TableRow>
-              <TableCell>Objek</TableCell>
-              <TableCell>Sasaran</TableCell>
-              <TableCell>Indikator</TableCell>
-              <TableCell>Target</TableCell>
+              <TableCell align="center">Objek</TableCell>
+              <TableCell align="center">Sasaran</TableCell>
+              <TableCell align="center">Indikator</TableCell>
+              <TableCell align="center">Target</TableCell>
               {/* <TableCell width={200}>Kementerian Koordinator</TableCell>
               <TableCell width={200}>
                 <Stack direction="row" alignItems="center" gap={0.5}>
@@ -153,6 +170,25 @@ Lintas Sektor termasuk yang menjadi penanggung jawab atas suatu perlakuan risiko
                   />
                 </Stack>
               </TableCell> */}
+            </TableRow>
+            <TableRow
+              sx={{
+                ".MuiTableCell-stickyHeader": {
+                  top: 37,
+                },
+              }}
+            >
+              {[...new Array(4)].map((_, i) => (
+                <TableCell sx={{ bgcolor: grey[100] }}>
+                  <Typography
+                    color={`${grey[500]} !important`}
+                    fontSize={14}
+                    textAlign="center"
+                  >
+                    {i + 1}
+                  </Typography>
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>

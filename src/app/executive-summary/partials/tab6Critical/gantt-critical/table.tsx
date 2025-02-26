@@ -66,7 +66,7 @@ export default function TableDetail() {
         size="small"
         stickyHeader
       >
-        <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
+        <TableHead sx={{ bgcolor: bgColorTh }}>
           <TableRow>
             <TableCell sx={{ bgcolor: bgColorTh }}>
               <Typography variant="body2" fontWeight={600}>

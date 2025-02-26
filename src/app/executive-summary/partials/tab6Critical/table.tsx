@@ -25,6 +25,7 @@ import { ExsumCriticalData } from "@/app/executive-summary/partials/tab6Critical
 import dayjs from "dayjs";
 import DialogComponent from "@/app/components/dialog";
 import TableDetail from "./gantt-critical/table";
+import { bgColorTh } from "@/app/utils/color";
 
 export default function TableCritical({
   handleEdit,
@@ -52,7 +53,7 @@ export default function TableCritical({
         }}
         size="small"
       >
-        <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
+        <TableHead sx={{ bgcolor: bgColorTh }}>
           <TableRow>
             <TableCell>
               <Typography variant="body2" fontWeight={600}>

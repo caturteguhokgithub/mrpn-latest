@@ -64,7 +64,7 @@ export default function TablePeraturan({
       </Stack>
       <TableContainer component={Paper} elevation={0} variant="outlined">
         <Table size="small">
-          <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
+          <TableHead sx={{ bgcolor: bgColorTh }}>
             <TableRow>
               {/*{(hasPrivilege(permission, pathname, "update") ||*/}
               {/*  hasPrivilege(permission, pathname, "delete")) && (*/}
@@ -137,10 +137,19 @@ export default function TablePeraturan({
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>
                     {row.perpres.map((y, index2) => (
-                      <Chip key={index2} size="small" label={y.title} sx={y.flag != null ? {
-                        background: "#EA6228",
-                        color: "white"
-                      } : undefined} />
+                      <Chip
+                        key={index2}
+                        size="small"
+                        label={y.title}
+                        sx={
+                          y.flag != null
+                            ? {
+                                background: "#EA6228",
+                                color: "white",
+                              }
+                            : undefined
+                        }
+                      />
                     ))}
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>

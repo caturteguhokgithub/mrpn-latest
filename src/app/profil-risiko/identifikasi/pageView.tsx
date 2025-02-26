@@ -34,6 +34,7 @@ import useRiskOverviewVM from "../overview/pageVM";
 import { advancedTable } from "@/app/components/table";
 import { blue, grey, red } from "@mui/material/colors";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
+import { SortNumber } from "../perlakuan/partials/mrt-complete";
 
 export default function PageIdentifikasiView({}) {
   const { permission } = useAuthContext((state) => state);
@@ -77,6 +78,9 @@ export default function PageIdentifikasiView({}) {
       header: "Peristiwa Risiko Strategis MRPN Linsek",
       size: 250,
       enableColumnActions: false,
+      Header: ({ column }: any) => (
+        <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      ),
       Cell: (item: any) => (
         <Stack flexDirection="row" alignItems="center" gap={1}>
           <Typography
@@ -93,13 +97,19 @@ export default function PageIdentifikasiView({}) {
     {
       accessorKey: "kategori_risiko",
       header: "Kategori Risiko",
-      size: 200,
+      size: 260,
       enableColumnActions: false,
+      Header: ({ column }: any) => (
+        <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      ),
     },
     {
       accessorKey: "penyebab_dampak",
       header: "Penyebab",
       enableColumnActions: false,
+      Header: ({ column }: any) => (
+        <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      ),
       Cell: ({ cell }: { cell: any }) => (
         <Paper
           elevation={0}
@@ -135,9 +145,20 @@ export default function PageIdentifikasiView({}) {
       ),
     },
     {
+      accessorKey: "area_dampak",
+      header: "Area Dampak",
+      enableColumnActions: false,
+      Header: ({ column }: any) => (
+        <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      ),
+    },
+    {
       accessorKey: "penyebab_dampak",
       header: "Dampak",
       enableColumnActions: false,
+      Header: ({ column }: any) => (
+        <SortNumber column={column} numberSort={column.getIndex() + 3} />
+      ),
       Cell: ({ cell }: { cell: any }) => (
         <Paper
           elevation={0}
@@ -177,6 +198,9 @@ export default function PageIdentifikasiView({}) {
       header: "Action",
       size: 100,
       enableColumnActions: false,
+      Header: ({ column }: any) => (
+        <SortNumber column={column} numberSort={column.getIndex() + 5} />
+      ),
       Cell: (item: any) => (
         <ActionColumn
           viewClick={
@@ -233,8 +257,17 @@ export default function PageIdentifikasiView({}) {
     muiTableHeadCellProps: {
       sx: {
         bgcolor: blue[50],
-        // border: `1px solid ${grey[300]}`,
+        borderRight: `1px solid ${grey[300]}`,
         justifyContent: "center",
+        textAlign: "center",
+        ".Mui-TableHeadCell-Content": {
+          justifyContent: "center",
+        },
+      },
+    },
+    muiTableBodyCellProps: {
+      sx: {
+        borderRight: `1px solid ${grey[300]}`,
       },
     },
     initialState: {

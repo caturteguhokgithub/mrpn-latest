@@ -110,21 +110,27 @@ export default function PageExecutiveSummaryContent({
       noMinusMargin
     >
       {rkpState === undefined ? (
-        <EmptyState
-          icon={<IconEmptyPage />}
-          title="Halaman Executive Summary Kosong"
-          description={
-            rkpOption.length > 0
-              ? `Silahkan pilih kegiatan pembangunan di bawah ini`
-              : undefined
-          }
-          button={
-            <DropdownRkp
-              handleChangeProject={handleChangeProject}
-              variant="primary"
-            />
-          }
-        />
+        <>
+          {/* <EmptyState
+            icon={<IconEmptyPage />}
+            title="Halaman Executive Summary Kosong"
+            description={
+              rkpOption.length > 0
+                ? `Silahkan pilih kegiatan pembangunan di bawah ini`
+                : undefined
+            }
+            button={
+              <DropdownRkp
+                handleChangeProject={handleChangeProject}
+                variant="primary"
+              />
+            }
+          /> */}
+          <DropdownRkp
+            // handleChangeProject={handleChangeProject}
+            variant="primary"
+          />
+        </>
       ) : null}
       <Collapse in={!(rkpState === undefined)}>
         <Box sx={{ width: "100%" }}>
