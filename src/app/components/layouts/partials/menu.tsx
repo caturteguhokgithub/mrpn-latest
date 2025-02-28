@@ -28,19 +28,17 @@ export const MenuItem = ({
   children,
   menuParentActive,
   onclick,
+  openSubmenu,
+  clickOpenCollapse,
+  clickOutsideCollapse,
 }: IMenu & ILayout) => {
   const pathname = usePathname();
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
-  const [openSubmenu, setOpenSubmenu] = React.useState(false);
   const [activeSubmenuCollapse, setactiveSubmenuCollapse] =
     React.useState(false);
-
-  const clickOpenCollapse = () => {
-    setOpenSubmenu(!openSubmenu);
-  };
 
   const clickPopoverCollapse = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -50,10 +48,6 @@ export const MenuItem = ({
   const handleClosePopoverCollapse = () => {
     setAnchorEl(null);
     setactiveSubmenuCollapse(false);
-  };
-
-  const clickOutsideCollapse = () => {
-    setOpenSubmenu(false);
   };
 
   const open = Boolean(anchorEl);
@@ -281,10 +275,10 @@ export const MenuItem = ({
 
           ...(openSubmenu || activeSubmenuCollapse
             ? {
-                transform: "rotate(-90deg)",
+                transform: "rotate(0deg)",
               }
             : {
-                transform: "rotate(0deg)",
+                transform: "rotate(-90deg)",
               }),
         }}
       />
