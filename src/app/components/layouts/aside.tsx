@@ -1,27 +1,15 @@
 import React from "react";
-import { Typography, Box, Stack, Collapse, Button } from "@mui/material";
+import { Typography, Box, Stack, Collapse } from "@mui/material";
 import Image from "next/image";
 import { MenuItem } from "./partials/menu";
 import { MenuGroup } from "./partials/menu-group";
 import { SubmenuItem } from "./partials/submenu";
-import {
-  IconDashboard,
-  IconExecutive,
-  IconKeluar,
-  IconManajemen,
-  IconObject,
-  IconPemantauan,
-  IconPenetapan,
-  IconProfil,
-  IconStamp,
-} from "../icons";
-import { IconFA } from "../icons/icon-fa";
-import { IconSupport } from "../icons/support";
-import { IconApproval } from "../icons/approval";
+import { IconDashboard, IconKeluar, IconManajemen } from "../icons";
 import useAuthorizationVM from "@/app/authorizationVM";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { Menu } from "@/lib/core/context/authContext";
 import Iconify from "../icons/iconify";
+import useLayoutVM from "./hooks";
 
 const getIcon = (icon: string) => {
   switch (icon) {
@@ -74,7 +62,10 @@ function getMenuItem(
   indexMn: number,
   isExpanded: boolean | undefined,
   mn: Menu,
-  type: string
+  type: string,
+  clickOpenCollapse: (index: number) => void,
+  clickOutsideCollapse: () => void,
+  activeMenuIndex: number | null
 ) {
   if (mn.type === type) {
     const isParentActive =
@@ -90,19 +81,20 @@ function getMenuItem(
 
     const isActive = isParentActive || isChildActive;
 
+    const isSubmenuOpen = activeMenuIndex === indexMn;
+
     return (
       <MenuItem
+        openSubmenu={isActive || isSubmenuOpen}
+        clickOpenCollapse={() => clickOpenCollapse(indexMn)}
+        clickOutsideCollapse={clickOutsideCollapse}
         hasChild={mn.submenu.length > 0}
         key={indexMn}
         isExpanded={isExpanded}
         label={mn.name}
         icon={getIcon(mn.icon)}
         url={mn.route}
-        menuParentActive={
-          typeof window !== "undefined"
-            ? window.location.pathname.includes(mn.route)
-            : false
-        }
+        menuParentActive={isParentActive}
       >
         {mn.submenu.map((sm, indexSm) => (
           <SubmenuItem
@@ -127,6 +119,16 @@ export default function Aside({
   const { menu } = useAuthContext((state) => state);
 
   const { doLogout } = useAuthorizationVM();
+
+  const { clickOutsideCollapse } = useLayoutVM();
+
+  const [activeMenuIndex, setActiveMenuIndex] = React.useState<number | null>(
+    null
+  );
+
+  const handleClickOpenCollapse = (index: number) => {
+    setActiveMenuIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
 
   const CompanyIcon = (
     <Stack
@@ -194,7 +196,15 @@ export default function Aside({
         <MenuGroup isExpanded={isExpanded} label="menu">
           <Stack direction="column" gap={1}>
             {menu.map((mn, indexMn) =>
-              getMenuItem(indexMn, isExpanded, mn, "GENERAL")
+              getMenuItem(
+                indexMn,
+                isExpanded,
+                mn,
+                "GENERAL",
+                handleClickOpenCollapse,
+                clickOutsideCollapse,
+                activeMenuIndex
+              )
             )}
           </Stack>
         </MenuGroup>
@@ -203,7 +213,15 @@ export default function Aside({
           <MenuGroup isExpanded={isExpanded} label="administrator">
             <Stack direction="column" gap={1}>
               {menu.map((mn, indexMn) =>
-                getMenuItem(indexMn, isExpanded, mn, "CONFIG")
+                getMenuItem(
+                  indexMn,
+                  isExpanded,
+                  mn,
+                  "CONFIG",
+                  handleClickOpenCollapse,
+                  clickOutsideCollapse,
+                  activeMenuIndex
+                )
               )}
             </Stack>
           </MenuGroup>
