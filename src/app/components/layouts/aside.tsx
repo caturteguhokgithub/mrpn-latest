@@ -62,6 +62,13 @@ function getMenuItem(
   type: string
 ) {
   if (mn.type === type) {
+    const currentPath =
+      typeof window !== "undefined" ? window.location.pathname : "";
+
+    const isActive =
+      currentPath.includes(mn.route) &&
+      currentPath !== "/penetapan/objek";
+
     return (
       <MenuItem
         hasChild={mn.submenu.length > 0}
@@ -70,11 +77,7 @@ function getMenuItem(
         label={mn.name}
         icon={getIcon(mn.icon)}
         url={mn.route}
-        menuParentActive={
-          typeof window !== "undefined"
-            ? window.location.pathname.includes(mn.route)
-            : false
-        }
+        menuParentActive={isActive}
       >
         {mn.submenu.map((sm, indexSm) => (
           <SubmenuItem
@@ -88,6 +91,7 @@ function getMenuItem(
     );
   }
 }
+
 
 export default function Aside({
   isExpanded,
