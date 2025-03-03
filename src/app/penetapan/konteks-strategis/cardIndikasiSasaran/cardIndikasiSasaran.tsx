@@ -22,6 +22,7 @@ import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
 import useIndikatorSasaranVM from "@/app/penetapan/konteks-strategis/cardIndikasiSasaran/vm";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import { bgColorTh } from "@/app/utils/color";
 
 type Row = {
   uraian: string;
@@ -131,9 +132,7 @@ export default function CardIndikasiSasaran() {
         ) : (
           <TableContainer component={Paper} elevation={0} variant="outlined">
             <Table size="small">
-              <TableHead
-                sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}
-              >
+              <TableHead sx={{ bgcolor: bgColorTh }}>
                 <TableRow>
                   <TableCell>Uraian</TableCell>
                   <TableCell>Sasaran</TableCell>

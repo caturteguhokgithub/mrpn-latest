@@ -1,53 +1,56 @@
 import React from "react";
-import { Typography, Box, Stack, Collapse, Button } from "@mui/material";
+import { Typography, Box, Stack, Collapse } from "@mui/material";
 import Image from "next/image";
 import { MenuItem } from "./partials/menu";
 import { MenuGroup } from "./partials/menu-group";
 import { SubmenuItem } from "./partials/submenu";
-import {
-  IconDashboard,
-  IconExecutive,
-  IconKeluar,
-  IconManajemen,
-  IconPemantauan,
-  IconPenetapan,
-  IconProfil,
-} from "../icons";
-import { IconFA } from "../icons/icon-fa";
-import { IconSupport } from "../icons/support";
-import { IconApproval } from "../icons/approval";
+import { IconDashboard, IconKeluar, IconManajemen } from "../icons";
 import useAuthorizationVM from "@/app/authorizationVM";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { Menu } from "@/lib/core/context/authContext";
+import Iconify from "../icons/iconify";
+import useLayoutVM from "./hooks";
 
 const getIcon = (icon: string) => {
   switch (icon) {
     case "IconDashboard": {
-      return <IconDashboard />;
+      return <Iconify name="mdi:view-dashboard" size={20} />;
     }
     case "IconExecutive": {
-      return <IconExecutive />;
+      return <Iconify name="mdi:book-open-page-variant" size={20} />;
     }
     case "IconPenetapan": {
-      return <IconPenetapan />;
+      return <Iconify name="mdi:stamper" size={20} />;
     }
     case "IconProfil": {
-      return <IconProfil />;
+      return <Iconify name="mdi:account-file-text" size={20} />;
     }
     case "IconPemantauan": {
-      return <IconPemantauan />;
+      return <Iconify name="mdi:television-guide" size={20} />;
     }
     case "IconApproval": {
-      return <IconApproval />;
+      return <Iconify name="mdi:checkbox-multiple-marked-circle" size={20} />;
     }
     case "IconMaturitas": {
-      return <IconFA name="seedling" size={18} />;
+      return <Iconify name="mdi:leaf" size={20} />;
     }
     case "IconSupport": {
-      return <IconSupport />;
+      return <Iconify name="mdi:headset" size={20} />;
     }
     case "IconManajemen": {
       return <IconManajemen />;
+    }
+    case "IconObject": {
+      return <Iconify name="mdi:cube" size={20} />;
+    }
+    case "IconLogActivity": {
+      return <Iconify name="mdi:account-clock" size={20} />;
+    }
+    case "IconUserMgmt": {
+      return <Iconify name="mdi:account-group" size={20} />;
+    }
+    case "IconUserRole": {
+      return <Iconify name="mdi:account-cog" size={20} />;
     }
     default: {
       return <IconDashboard />;
@@ -59,25 +62,41 @@ function getMenuItem(
   indexMn: number,
   isExpanded: boolean | undefined,
   mn: Menu,
-  type: string
+  type: string,
+  clickOpenCollapse: (index: number) => void,
+  clickOutsideCollapse: () => void,
+  activeMenuIndex: number | null
 ) {
   if (mn.type === type) {
     const currentPath =
       typeof window !== "undefined" ? window.location.pathname : "";
 
-    const isActive =
-      currentPath.includes(mn.route) &&
-      currentPath !== "/penetapan/objek";
+    const isParentActive =
+      typeof window !== "undefined"
+        ? currentPath.includes(mn.route) && currentPath !== "/penetapan/objek"
+        : false;
+
+    const isChildActive = mn.submenu.some((sm) =>
+      typeof window !== "undefined"
+        ? currentPath.includes(sm.route) && currentPath !== "/penetapan/objek"
+        : false
+    );
+
+    const isActive = isParentActive || isChildActive;
+    const isSubmenuOpen = activeMenuIndex === indexMn;
 
     return (
       <MenuItem
+        openSubmenu={isActive || isSubmenuOpen}
+        clickOpenCollapse={() => clickOpenCollapse(indexMn)}
+        clickOutsideCollapse={clickOutsideCollapse}
         hasChild={mn.submenu.length > 0}
         key={indexMn}
         isExpanded={isExpanded}
         label={mn.name}
         icon={getIcon(mn.icon)}
         url={mn.route}
-        menuParentActive={isActive}
+        menuParentActive={isParentActive}
       >
         {mn.submenu.map((sm, indexSm) => (
           <SubmenuItem
@@ -103,6 +122,16 @@ export default function Aside({
   const { menu } = useAuthContext((state) => state);
 
   const { doLogout } = useAuthorizationVM();
+
+  const { clickOutsideCollapse } = useLayoutVM();
+
+  const [activeMenuIndex, setActiveMenuIndex] = React.useState<number | null>(
+    null
+  );
+
+  const handleClickOpenCollapse = (index: number) => {
+    setActiveMenuIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
 
   const CompanyIcon = (
     <Stack
@@ -170,7 +199,15 @@ export default function Aside({
         <MenuGroup isExpanded={isExpanded} label="menu">
           <Stack direction="column" gap={1}>
             {menu.map((mn, indexMn) =>
-              getMenuItem(indexMn, isExpanded, mn, "GENERAL")
+              getMenuItem(
+                indexMn,
+                isExpanded,
+                mn,
+                "GENERAL",
+                handleClickOpenCollapse,
+                clickOutsideCollapse,
+                activeMenuIndex
+              )
             )}
           </Stack>
         </MenuGroup>
@@ -179,7 +216,15 @@ export default function Aside({
           <MenuGroup isExpanded={isExpanded} label="administrator">
             <Stack direction="column" gap={1}>
               {menu.map((mn, indexMn) =>
-                getMenuItem(indexMn, isExpanded, mn, "CONFIG")
+                getMenuItem(
+                  indexMn,
+                  isExpanded,
+                  mn,
+                  "CONFIG",
+                  handleClickOpenCollapse,
+                  clickOutsideCollapse,
+                  activeMenuIndex
+                )
               )}
             </Stack>
           </MenuGroup>

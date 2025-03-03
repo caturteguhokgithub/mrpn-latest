@@ -218,10 +218,17 @@ export default function DashboardLayout(props: {
     },
     ".orgchart-container": {
       // maxWidth: "calc(100vw - 444px)",
-      maxWidth: "calc(100vw - 404px)",
+      width: "calc(100vw - 404px)",
     },
     ".table-fund, .table-overflow-x-indication": {
       maxWidth: "calc(100vw - 374px)",
+    },
+    ".wording-kp-ellipsis": {
+      span: {
+        "&.MuiTypography-root": {
+          maxWidth: "60vw",
+        },
+      },
     },
     ".collapse-active": {
       ".table-sticky-actions-column": {
@@ -234,10 +241,17 @@ export default function DashboardLayout(props: {
       },
       ".orgchart-container": {
         // maxWidth: "calc(100vw - 228px)",
-        maxWidth: "calc(100vw - 188px)",
+        width: "calc(100vw - 188px)",
       },
       ".table-fund, .table-overflow-x-indication": {
         maxWidth: "calc(100vw - 175px)",
+      },
+      ".wording-kp-ellipsis": {
+        span: {
+          "&.MuiTypography-root": {
+            maxWidth: "70vw",
+          },
+        },
       },
     },
     [theme.breakpoints.down("md")]: {

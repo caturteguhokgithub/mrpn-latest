@@ -64,41 +64,84 @@ export default function TableSupport({
         },
       }}
     >
-      <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
+      <Table
+        sx={{
+          minWidth: 1200,
+          "tbody, thead": {
+            "td, th": {
+              borderRight: `1px solid ${grey[300]} !important`,
+              "&:last-of-type": {
+                borderRight: `0 !important`,
+              },
+            },
+          },
+        }}
+        size="small"
+        stickyHeader
+      >
         <TableHead sx={{ bgcolor: bgColorTh }}>
           <TableRow>
-            <TableCell sx={{ bgcolor: bgColorTh }}>
+            <TableCell sx={{ bgcolor: bgColorTh, textAlign: "center" }}>
               {getLevel(exsum.level)}
             </TableCell>
-            <TableCell width="10%" sx={{ bgcolor: bgColorTh }}>
+            <TableCell
+              width="10%"
+              sx={{
+                bgcolor: bgColorTh,
+                textAlign: "center",
+                whiteSpace: "nowrap",
+              }}
+            >
               Kode Sasaran {getLevel(exsum.level)}
             </TableCell>
-            <TableCell width="30%" sx={{ bgcolor: bgColorTh }}>
+            <TableCell
+              width="30%"
+              sx={{
+                bgcolor: bgColorTh,
+                textAlign: "center",
+                whiteSpace: "nowrap",
+              }}
+            >
               Sasaran {getLevel(exsum.level)}
             </TableCell>
-            <TableCell width="20%" sx={{ bgcolor: bgColorTh }}>
+            <TableCell
+              width="20%"
+              sx={{ bgcolor: bgColorTh, textAlign: "center" }}
+            >
               Indikator
             </TableCell>
             {year == 0 ? (
               rpjmn && (
                 <>
                   {[0, 1, 2, 3, 4].map((r) => (
-                    <TableCell width={200} sx={{ bgcolor: bgColorTh }}>
+                    <TableCell
+                      width={200}
+                      sx={{ bgcolor: bgColorTh, textAlign: "center" }}
+                    >
                       Target {rpjmn.start + r}
                     </TableCell>
                   ))}
                 </>
               )
             ) : (
-              <TableCell width={200} sx={{ bgcolor: bgColorTh }}>
+              <TableCell
+                width={200}
+                sx={{ bgcolor: bgColorTh, textAlign: "center" }}
+              >
                 Target
               </TableCell>
             )}
           </TableRow>
-          <TableRow>
+          <TableRow
+            sx={{
+              ".MuiTableCell-stickyHeader": {
+                top: 37,
+              },
+            }}
+          >
             {[...new Array(year == 0 ? 9 : 5)].map((_, i) => (
               <TableCell sx={{ bgcolor: grey[100] }}>
-                <Typography color={grey[500]} fontSize={14} textAlign="left">
+                <Typography color={grey[500]} fontSize={14} textAlign="center">
                   {i + 1}
                 </Typography>
               </TableCell>

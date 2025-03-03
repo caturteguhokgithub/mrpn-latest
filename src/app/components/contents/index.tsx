@@ -38,7 +38,7 @@ export default function ContentPage({
   overflowHidden,
   addButton,
   project,
-  handleChangeProject,
+  // handleChangeProject,
   dowloadAttachmentFile,
   triWulan,
   hasAlert,
@@ -73,7 +73,7 @@ export default function ContentPage({
   overflowHidden?: boolean;
   addButton?: React.ReactNode;
   project?: any;
-  handleChangeProject?: any;
+  // handleChangeProject?: any;
   dowloadAttachmentFile?: React.ReactNode;
   triWulan?: boolean;
   hasAlert?: React.ReactNode;
@@ -307,9 +307,7 @@ export default function ContentPage({
           {tabArrow}
           {chooseProjectPage}
           {dowloadAttachmentFile}
-          {chooseProject && (
-            <DropdownRkp handleChangeProject={handleChangeProject} />
-          )}
+          {chooseProject && <DropdownRkp />}
           {chooseObject && chooseObject}
           {chooseRo && (
             <FormControl size="small">

@@ -92,31 +92,61 @@ export default function HeaderTable({
           tr: {
             td: {
               py: noPadding ? 0.5 : 1.5,
-              "&:first-of-type": {
-                border: 0,
-              },
             },
-            "&:last-of-type": {
-              td: { border: 0 },
+          },
+          "tbody, thead": {
+            "td, th": {
+              borderRight: `1px solid ${grey[300]} !important`,
+              "&:last-of-type": {
+                borderRight: `0 !important`,
+              },
             },
           },
         }}
       >
         <TableHead>
           <TableRow>
-            <TableCell sx={{ bgcolor: blue[50], borderTopLeftRadius: 20 }}>
+            <TableCell
+              align="center"
+              sx={{ bgcolor: blue[50], borderTopLeftRadius: 20 }}
+            >
               Sasaran
             </TableCell>
-            <TableCell sx={{ bgcolor: blue[50] }}>Indikator</TableCell>
+            <TableCell align="center" sx={{ bgcolor: blue[50] }}>
+              Indikator
+            </TableCell>
             <TableCell align="center" sx={{ bgcolor: blue[50] }}>
               Target
             </TableCell>
             <TableCell
               align="center"
-              sx={{ bgcolor: blue[50], borderTopRightRadius: 20 }}
+              sx={{
+                bgcolor: blue[50],
+                borderTopRightRadius: 20,
+                whiteSpace: "nowrap",
+              }}
             >
               Periode Pemantauan
             </TableCell>
+          </TableRow>
+          <TableRow
+            sx={{
+              ".MuiTableCell-stickyHeader": {
+                top: 37,
+              },
+            }}
+          >
+            {[...new Array(4)].map((_, i) => (
+              <TableCell sx={{ bgcolor: grey[100] }}>
+                <Typography
+                  color={`${grey[500]} !important`}
+                  fontSize={14}
+                  textAlign="center"
+                >
+                  {i + 1}
+                </Typography>
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>

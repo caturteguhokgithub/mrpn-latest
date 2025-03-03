@@ -81,19 +81,29 @@ export default function TableIndication({
             color: conditionEditing,
             pointerEvents: conditionEditingPointerEvent,
           },
+          "tbody, thead": {
+            "td, th": {
+              borderRight: `1px solid ${grey[300]} !important`,
+              "&:last-of-type": {
+                borderRight: `0 !important`,
+              },
+            },
+          },
         }}
       >
-        <TableHead sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}>
+        <TableHead sx={{ bgcolor: bgColorTh }}>
           <TableRow>
             <TableCell sx={{ bgcolor: bgColorTh, width: 240 }}>
-              <Typography variant="body1" fontWeight={600}>
+              <Typography variant="body1" fontWeight={600} textAlign="center">
                 Analisis TOWS
               </Typography>
             </TableCell>
-            <TableCell sx={{ bgcolor: bgColorTh, width: 240 }}>
+            <TableCell
+              sx={{ bgcolor: bgColorTh, width: 240, whiteSpace: "nowrap" }}
+            >
               <Stack direction="row" alignItems="center" gap={0.5}>
-                <Typography variant="body1" fontWeight={600}>
-                  Indikasi Risiko
+                <Typography variant="body1" fontWeight={600} textAlign="center">
+                  Indikasi Peristiwa Risiko
                 </Typography>
                 {/* <InfoTooltip
                   title="Sumber-sumber risiko pada penyusunan kebijakan dapat
@@ -105,29 +115,35 @@ export default function TableIndication({
                 /> */}
               </Stack>
             </TableCell>
-            <TableCell sx={{ bgcolor: bgColorTh, width: 200 }}>
-              <Typography variant="body1" fontWeight={600}>
+            <TableCell
+              sx={{ bgcolor: bgColorTh, width: 200, whiteSpace: "nowrap" }}
+            >
+              <Typography variant="body1" fontWeight={600} textAlign="center">
                 Kategori Risiko
               </Typography>
             </TableCell>
-            <TableCell sx={{ bgcolor: bgColorTh, width: 240 }}>
-              <Typography variant="body1" fontWeight={600}>
+            <TableCell
+              sx={{ bgcolor: bgColorTh, width: 240, whiteSpace: "nowrap" }}
+            >
+              <Typography variant="body1" fontWeight={600} textAlign="center">
                 Indikasi Perlakuan Risiko
               </Typography>
             </TableCell>
             <TableCell sx={{ bgcolor: bgColorTh, width: 360 }}>
-              <Typography variant="body1" fontWeight={600}>
+              <Typography variant="body1" fontWeight={600} textAlign="center">
                 Output
               </Typography>
             </TableCell>
-            <TableCell sx={{ bgcolor: bgColorTh, width: 300 }}>
-              <Typography variant="body1" fontWeight={600}>
+            <TableCell
+              sx={{ bgcolor: bgColorTh, width: 300, whiteSpace: "nowrap" }}
+            >
+              <Typography variant="body1" fontWeight={600} textAlign="center">
                 PJ Perlakuan
               </Typography>
             </TableCell>
             {year == 0 && (
               <TableCell width={200} sx={{ bgcolor: bgColorTh }}>
-                <Typography variant="body1" fontWeight={600}>
+                <Typography variant="body1" fontWeight={600} textAlign="center">
                   Tahun
                 </Typography>
               </TableCell>
@@ -144,7 +160,7 @@ export default function TableIndication({
                   width: 100,
                 }}
               >
-                <Typography variant="body1" fontWeight={600}>
+                <Typography variant="body1" fontWeight={600} textAlign="center">
                   Aksi
                 </Typography>
               </TableCell>
@@ -157,9 +173,13 @@ export default function TableIndication({
               },
             }}
           >
-            {[...new Array(7)].map((_, i) => (
+            {[...new Array(year == 0 ? 8 : 7)].map((_, i) => (
               <TableCell sx={{ bgcolor: grey[100] }}>
-                <Typography color={grey[500]} fontSize={14} textAlign="left">
+                <Typography
+                  color={`${grey[500]} !important`}
+                  fontSize={14}
+                  textAlign="center"
+                >
                   {i + 1}
                 </Typography>
               </TableCell>

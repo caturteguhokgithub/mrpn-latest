@@ -33,7 +33,7 @@ const CustomTaskListHeader = ({
   fontSize: any;
 }) => {
   return (
-    <div
+    <Box
       style={{
         height: headerHeight,
         width: rowWidth,
@@ -47,10 +47,10 @@ const CustomTaskListHeader = ({
         fontWeight: 600,
       }}
     >
-      <div style={{ display: "flex" }}>
-        <div style={{ flex: 1 }}>RO/Project Kunci</div>
-      </div>
-    </div>
+      <Stack>
+        <Stack flex={1}>RO/Project Kunci</Stack>
+      </Stack>
+    </Box>
   );
 };
 
