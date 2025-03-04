@@ -7,9 +7,6 @@ import { FormControl, Stack } from "@mui/material";
 import CardIndikasiSasaran from "./cardIndikasiSasaran/cardIndikasiSasaran";
 import CardSasaranKinerjaUPR from "./cardSasaranKinerjaUPR/cardSasaranKinerjaUPR";
 import CardRegulation from "./cardRegulasi/cardRegulation";
-import TableStakeholderInternal from "./form/partials/table-stakeholder-internal";
-import TableStakeholderEksternal from "./form/partials/table-stakeholder-eksternal";
-import TableRincianOutput from "./form/partials/table-ro";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { IconEmptyData } from "@/components/icons";
 import EmptyState from "@/components/empty";
@@ -17,7 +14,6 @@ import CardProfileIntervensi from "@/app/penetapan/konteks-strategis/cardProfile
 import { AutocompleteSelectSingle } from "@/components/autocomplete";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { MasterListObjectRes } from "@/app/misc/master/masterServiceModel";
-import { width } from "@mui/system";
 import CardStakeholderInternal from "@/app/penetapan/konteks-strategis/cardStakeholders/cardStakeholderInternal";
 import CardStakeholderEksternal from "@/app/penetapan/konteks-strategis/cardStakeholders/cardStakeholderEksternal";
 
@@ -34,11 +30,12 @@ export default function PageKonteksStrategisView({}) {
   return (
     <>
       <ContentPage
-        title={`Eksplorasi Konteks Strategis ${
-          year == 0
-            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-            : "Tahun " + year
-        }`}
+        // title={`Eksplorasi Konteks Strategis ${
+        //   year == 0
+        //     ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+        //     : "Tahun " + year
+        // }`}
+        title="Lingkup Objek"
         chooseObject={
           <FormControl size="small" sx={{ width: "20vw" }}>
             <AutocompleteSelectSingle
@@ -65,9 +62,9 @@ export default function PageKonteksStrategisView({}) {
           <Stack gap={1}>
             <CardIndikasiSasaran />
             <CardSasaranKinerjaUPR />
-            <CardRegulation />
+            {/* <CardRegulation />
             <CardStakeholderInternal />
-            <CardStakeholderEksternal />
+            <CardStakeholderEksternal /> */}
             <CardProfileIntervensi />
           </Stack>
         )}

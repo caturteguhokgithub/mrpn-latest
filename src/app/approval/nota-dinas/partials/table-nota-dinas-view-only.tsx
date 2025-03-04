@@ -2,6 +2,7 @@ import React from "react";
 import {
   Box,
   Button,
+  Chip,
   DialogActions,
   Divider,
   List,
@@ -56,6 +57,36 @@ export default function TableNotaDinasViewOnly({
                   </TableCell>
                 </TableRow>
                 <TableRow>
+                  <TableCell>
+                    <Typography color={grey[600]}>Status Pengesahan</Typography>
+                  </TableCell>
+                  <TableCell width={2} sx={{ px: 0 }}>
+                    :
+                  </TableCell>
+                  <TableCell>
+                    <Typography>
+                      <Chip
+                        color="primary"
+                        label="Rancangan"
+                        variant="outlined"
+                        sx={{ fontWeight: 600 }}
+                      />
+                      <Chip
+                        color="error"
+                        label="Ditolak"
+                        variant="outlined"
+                        sx={{ fontWeight: 600 }}
+                      />
+                      <Chip
+                        color="success"
+                        label="Disetujui"
+                        variant="outlined"
+                        sx={{ fontWeight: 600 }}
+                      />
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+                {/* <TableRow>
                   <TableCell sx={{ verticalAlign: "top" }}>
                     <Typography color={grey[600]}>
                       Usulan Objek MRPN Lintas Sektor
@@ -92,7 +123,7 @@ export default function TableNotaDinasViewOnly({
                   <TableCell sx={{ verticalAlign: "top" }}>
                     <Typography>{notaDinas.penjelasan_objek_mrpn}</Typography>
                   </TableCell>
-                </TableRow>
+                </TableRow> */}
               </TableBody>
             </Table>
           </TableContainer>

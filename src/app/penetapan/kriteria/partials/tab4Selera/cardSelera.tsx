@@ -1,18 +1,12 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Button, DialogActions } from "@mui/material";
 import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
-import TableDampak from "./table-kriteria-dampak";
-import FormDampak from "./form-dampak";
-import { AddCircle } from "@mui/icons-material";
-// import TableDampak from "@/app/penetapan/konteks-strategis/form/partials/table-kriteria-dampak";
+import FormDampak from "../tab3Impact/form-dampak";
+import RiskContent from "@/app/penetapan/selera-risiko/partials/risk";
 
-export default function CardDampak() {
+export default function CardSelera() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
-
-  const handleModalOpenAdd = () => {
-    setModalOpenAdd(true);
-  };
 
   const handleModalClose = () => {
     setModalOpenAdd(false);
@@ -27,23 +21,12 @@ export default function CardDampak() {
     </DialogActions>
   );
 
+  const handleModalOpenSave = () => {};
+
   return (
-    <>
-      <CardItem
-        title="Kriteria Dampak"
-        // addButton={
-        //   <Button
-        //     variant="contained"
-        //     size="small"
-        //     startIcon={<AddCircle />}
-        //     sx={{ lineHeight: 1, py: 1, borderRadius: 24 }}
-        //     onClick={handleModalOpenAdd}
-        //   >
-        //     Tambah Kriteria Dampak
-        //   </Button>
-        // }
-      >
-        <TableDampak mode="view" />
+    <Fragment>
+      <CardItem title="Selera Risiko">
+        <RiskContent handleSaveButton={handleModalOpenSave} />
       </CardItem>
       <DialogComponent
         width={1200}
@@ -54,6 +37,6 @@ export default function CardDampak() {
       >
         <FormDampak mode="add" />
       </DialogComponent>
-    </>
+    </Fragment>
   );
 }

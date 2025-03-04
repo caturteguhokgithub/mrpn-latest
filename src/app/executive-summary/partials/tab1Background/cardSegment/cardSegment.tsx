@@ -15,7 +15,7 @@ interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
 }
 
-export default function CardSegment({ project }: { project: string }) {
+export default function CardSegment({ project }: { project?: string }) {
   const {
     data,
     modal,
@@ -29,7 +29,7 @@ export default function CardSegment({ project }: { project: string }) {
     handleModalDelete,
   } = useCardSegmentVM();
 
-    const { year } = useRKPContext((state) => state);
+  const { year } = useRKPContext((state) => state);
 
   const ReactQuill = dynamic(
     async () => {

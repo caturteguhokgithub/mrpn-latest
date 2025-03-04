@@ -1,7 +1,7 @@
 "use client";
 
 import ContentPage from "@/app/components/contents";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import DashboardLayout from "@/app/components/layouts/layout";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyPage } from "@/app/components/icons";
@@ -41,9 +41,11 @@ import {
 } from "@/lib/core/context/penetapanTopicContext";
 import useRkpVM from "@/components/dropdown/rkpVM";
 import DialogDelete from "@/app/components/dialogDelete";
-import {PenetapanObjectVMState} from "@/app/penetapan/objek/pageModel";
-import {ProjectDefaultDto} from "@/lib/core/context/rkpContext";
-import {forEach} from "lodash";
+import { PenetapanObjectVMState } from "@/app/penetapan/objek/pageModel";
+import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
+import { forEach } from "lodash";
+import Iconify from "@/app/components/icons/iconify";
+import TableLog from "./partials/table-log";
 
 const styleToggleButton = [
   {
@@ -53,6 +55,7 @@ const styleToggleButton = [
     mt: 2,
     mb: 2,
     p: "1px",
+    maxHeight: "calc(100vh - 302px)",
     button: {
       //  bgcolor: "white",
       transition: "all 500ms ease-in-out",
@@ -130,58 +133,60 @@ export default function PageTemaView({}) {
     setStateTopic,
     updateOrCreateTopic,
     deleteTopic,
-    generateOptionPN
+    generateOptionPN,
+    modalLog,
+    setModalLog,
   } = usePenetapanObjectVM();
 
   useEffect(useEffectGenerateOption, [year]);
 
   useEffect(useEffectObjectState, [year, objectState]);
 
-  useEffect(()=> {
-    generateOptionPN()
-  }, [rkp])
+  useEffect(() => {
+    generateOptionPN();
+  }, [rkp]);
 
-  const handleEditTopic = (x:PenetapanObjectDto) => {
-    let optState:ProjectDefaultDto[] = []
-    optionPN.map(f => {
-      x.penetapan_object_list.map(ty => {
-        if (f.id == ty.ref_id && f.level == ty.level){
-          optState.push(f)
+  const handleEditTopic = (x: PenetapanObjectDto) => {
+    let optState: ProjectDefaultDto[] = [];
+    optionPN.map((f) => {
+      x.penetapan_object_list.map((ty) => {
+        if (f.id == ty.ref_id && f.level == ty.level) {
+          optState.push(f);
         }
-      })
-    })
+      });
+    });
 
-    const state:PenetapanObjectVMState = {
+    const state: PenetapanObjectVMState = {
       id: x.id,
       code: x.code,
       topik: x.topik,
       tahun: x.tahun,
-      values: optState
-    }
-    setStateTopic(state)
-    setModalAdd(true)
-  }
+      values: optState,
+    };
+    setStateTopic(state);
+    setModalAdd(true);
+  };
 
-  const handleDeleteTopic = (x:PenetapanObjectDto) => {
-    let optState:ProjectDefaultDto[] = []
-    optionPN.map(f => {
-      x.penetapan_object_list.map(ty => {
-        if (f.id == ty.ref_id && f.level == ty.level){
-          optState.push(f)
+  const handleDeleteTopic = (x: PenetapanObjectDto) => {
+    let optState: ProjectDefaultDto[] = [];
+    optionPN.map((f) => {
+      x.penetapan_object_list.map((ty) => {
+        if (f.id == ty.ref_id && f.level == ty.level) {
+          optState.push(f);
         }
-      })
-    })
+      });
+    });
 
-    const state:PenetapanObjectVMState = {
+    const state: PenetapanObjectVMState = {
       id: x.id,
       code: x.code,
       topik: x.topik,
       tahun: x.tahun,
-      values: optState
-    }
-    setStateTopic(state)
-    setModalDeleteTopic(true)
-  }
+      values: optState,
+    };
+    setStateTopic(state);
+    setModalDeleteTopic(true);
+  };
 
   const dialogActionFooterAdd = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -201,7 +206,11 @@ export default function PageTemaView({}) {
   return (
     <>
       <ContentPage
-        title={`Objek MRPN & UPR Linsek ${year == 0 ? 'RPJMN '+rpjmn?.start+"-"+rpjmn?.end : 'Tahun '+year}`}
+        title={`Objek MRPN & UPR Linsek ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip={
           <Stack spacing={2}>
             <div>
@@ -224,7 +233,7 @@ export default function PageTemaView({}) {
         }
         noMinusMargin
         heightNoSet
-        withCard={objects.length == 0}
+        withCard={objects.length == 0 || year == 0}
         selectedTopic={
           <Collapse in={objectState !== undefined}>
             <Chip
@@ -273,38 +282,52 @@ export default function PageTemaView({}) {
           </Collapse>
         }
         addButton={
-          <>
+          <Stack direction="row" spacing={1}>
             <Collapse in={objectState !== undefined}>
               <AddButton
                 title="Ganti Topik"
                 filled
                 noMargin
-                startIcon={<IconFA name="refresh" size={14} />}
+                startIcon={<IconFA name="refresh" size={16} />}
                 onclick={() => setObjectState(undefined)}
               />
             </Collapse>
-            {objectState == undefined &&
-              hasPrivilege(
-                permission,
-                pathname,
-                "add",
-                "penetapan.objectUpr"
-              ) && (
+            {year > 0 && (
+              <Fragment>
                 <AddButton
-                  title="Tambah Topik"
-                  filled
+                  title="Log Activity"
                   noMargin
-                  onclick={() => setModalAdd(true)}
+                  startIcon={<Iconify name="mdi:update" size={18} />}
+                  onclick={() => setModalLog(true)}
                 />
-              )}
-          </>
+                {objectState == undefined &&
+                  hasPrivilege(
+                    permission,
+                    pathname,
+                    "add",
+                    "penetapan.objectUpr"
+                  ) && (
+                    <AddButton
+                      title="Tambah Topik"
+                      filled
+                      noMargin
+                      onclick={() => setModalAdd(true)}
+                    />
+                  )}
+              </Fragment>
+            )}
+          </Stack>
         }
       >
-        {objects.length == 0 ? (
+        {objects.length == 0 || year == 0 ? (
           <EmptyState
             icon={<IconEmptyPage />}
-            title="Halaman Topik Kosong"
-            description="Silahkan isi konten halaman ini"
+            title={
+              year == 0
+                ? "Tidak ada data yang ditampilkan"
+                : "Halaman Topik Kosong"
+            }
+            description={year == 0 ? null : "Silahkan isi konten halaman ini"}
           />
         ) : (
           <>
@@ -366,10 +389,21 @@ export default function PageTemaView({}) {
         handleOpenModal={modalDeleteTopic}
         handleCloseModal={() => setModalDeleteTopic(false)}
         handleDelete={() => {
-          deleteTopic()
-          setModalDeleteTopic(false)
+          deleteTopic();
+          setModalDeleteTopic(false);
         }}
       />
+
+      <DialogComponent
+        title="Log Activity"
+        tableMode
+        // width={800}
+        dialogOpen={modalLog}
+        dialogClose={() => setModalLog(false)}
+        dialogFooter={false}
+      >
+        <TableLog />
+      </DialogComponent>
 
       {/*<DialogComponent*/}
       {/* noDivider={true}*/}
