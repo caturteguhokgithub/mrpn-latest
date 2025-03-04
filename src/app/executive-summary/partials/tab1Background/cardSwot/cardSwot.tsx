@@ -34,7 +34,7 @@ import DialogDelete from "@/app/components/dialogDelete";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 
-export default function CardSwot({ project }: { project: string }) {
+export default function CardSwot({ project }: { project?: string }) {
   const {
     data,
     modal,

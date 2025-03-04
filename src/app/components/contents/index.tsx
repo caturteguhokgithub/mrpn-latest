@@ -581,6 +581,7 @@ export default function ContentPage({
       </Stack>
       {hasAlert && hasAlert}
       <Box
+        className="mrpn-card-content"
         ref={ref}
         height={
           heightTitleBreadcrumb

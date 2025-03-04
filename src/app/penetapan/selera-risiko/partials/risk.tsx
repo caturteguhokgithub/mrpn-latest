@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   Box,
   Button,
@@ -21,6 +21,10 @@ import FormatKL from "./formatKl";
 import { LabelRadio } from "@/app/components/labelRadio";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
+import SeleraMatriks from "../../kriteria/partials/tab4Selera/matriks";
+import DialogComponent from "@/app/components/dialog";
+import AddButton from "@/app/components/buttonAdd";
+import Iconify from "@/app/components/icons/iconify";
 
 export default function RiskContent({
   handleSaveButton,
@@ -32,6 +36,7 @@ export default function RiskContent({
   const userLv = user?.type === "BAPPENAS" ? "bappenas" : "kl";
   const [valueTheme, setValueTheme] = React.useState<string | null>("");
   const [userLevel, setUserLevel] = React.useState<string | null>(userLv);
+  const [modalOpenRef, setModalOpenRef] = React.useState(false);
 
   const handleUserLevel = (
     event: React.MouseEvent<HTMLElement>,
@@ -45,6 +50,14 @@ export default function RiskContent({
     newAlignment: string | null
   ) => {
     setValueTheme(newAlignment);
+  };
+
+  const handleModalOpenRef = () => {
+    setModalOpenRef(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpenRef(false);
   };
 
   const saveButton = (
@@ -63,7 +76,7 @@ export default function RiskContent({
   );
 
   return (
-    <>
+    <Fragment>
       <Box mb={2} p={2} bgcolor={theme.palette.primary.light} borderRadius={3}>
         <Typography component="p">
           Selera risiko adalah jenis/jumlah (nilai absolut) dari risiko yang
@@ -104,20 +117,31 @@ perencanaan pembangunan nasional"
             description={
               <Stack gap={1}>
                 {userLevel === "bappenas" ? (
-                  <FormatBP
-                    levelId={1}
-                    form={
-                      <TextareaComponent
-                        label="Deskripsi"
-                        placeholder="Deskripsi rendah"
-                        width="100%"
+                  <Stack gap={1}>
+                    <FormatBP
+                      levelId={1}
+                      form={
+                        <TextareaComponent
+                          label="Deskripsi"
+                          placeholder="Deskripsi rendah"
+                          width="100%"
+                        />
+                      }
+                      target="Sama atau meningkat ≤ 5%"
+                      kapasitas="Rendah/tetap/sebanding dengan peningkatan target"
+                      inherent="Sangat Rendah"
+                      note="Sering tidak ingin risiko terjadi"
+                    />
+                    <Box>
+                      <AddButton
+                        startIcon={<Iconify name="mdi:search" />}
+                        title="Lihat Referensi Matriks"
+                        onclick={handleModalOpenRef}
+                        filled
                       />
-                    }
-                    target="Sama atau meningkat ≤ 5%"
-                    kapasitas="Rendah/tetap/sebanding dengan peningkatan target"
-                    inherent="Sangat Rendah"
-                    note="Sering tidak ingin risiko terjadi"
-                  />
+                    </Box>
+                    <SeleraMatriks levelId={1} levelDampak="rendah" />
+                  </Stack>
                 ) : (
                   <FormatKL
                     listItem={
@@ -164,20 +188,31 @@ perencanaan pembangunan nasional"
             description={
               <Stack gap={1}>
                 {userLevel === "bappenas" ? (
-                  <FormatBP
-                    levelId={2}
-                    form={
-                      <TextareaComponent
-                        label="Deskripsi"
-                        placeholder="Deskripsi konservatif"
-                        width="100%"
+                  <Stack gap={1}>
+                    <FormatBP
+                      levelId={2}
+                      form={
+                        <TextareaComponent
+                          label="Deskripsi"
+                          placeholder="Deskripsi konservatif"
+                          width="100%"
+                        />
+                      }
+                      target="Meningkat 5% < x ≤ 10%"
+                      kapasitas="Rendah/tetap/sebanding dengan peningkatan target"
+                      inherent="Rendah"
+                      note="Terdapat gap ketercapaian target yang dapat diterima"
+                    />
+                    <Box>
+                      <AddButton
+                        startIcon={<Iconify name="mdi:search" />}
+                        title="Lihat Referensi Matriks"
+                        onclick={handleModalOpenRef}
+                        filled
                       />
-                    }
-                    target="Meningkat 5% < x ≤ 10%"
-                    kapasitas="Rendah/tetap/sebanding dengan peningkatan target"
-                    inherent="Rendah"
-                    note="Terdapat gap ketercapaian target yang dapat diterima"
-                  />
+                    </Box>
+                    <SeleraMatriks levelId={1} levelDampak="konservatif" />
+                  </Stack>
                 ) : (
                   <FormatKL
                     listItem={
@@ -223,20 +258,31 @@ perencanaan pembangunan nasional"
             description={
               <Stack gap={1}>
                 {userLevel === "bappenas" ? (
-                  <FormatBP
-                    levelId={3}
-                    form={
-                      <TextareaComponent
-                        label="Deskripsi"
-                        placeholder="Deskripsi moderat"
-                        width="100%"
+                  <Stack gap={1}>
+                    <FormatBP
+                      levelId={3}
+                      form={
+                        <TextareaComponent
+                          label="Deskripsi"
+                          placeholder="Deskripsi moderat"
+                          width="100%"
+                        />
+                      }
+                      target="Meningkat 10% < x < 50%"
+                      kapasitas="Rendah/tetap/meningkat tetapi tidak sebanding dengan peningkatan target"
+                      inherent="Sedang"
+                      note="Mempertimbangkan Cost & Benefit"
+                    />
+                    <Box>
+                      <AddButton
+                        startIcon={<Iconify name="mdi:search" />}
+                        title="Lihat Referensi Matriks"
+                        onclick={handleModalOpenRef}
+                        filled
                       />
-                    }
-                    target="Meningkat 10% < x < 50%"
-                    kapasitas="Rendah/tetap/meningkat tetapi tidak sebanding dengan peningkatan target"
-                    inherent="Sedang"
-                    note="Mempertimbangkan Cost & Benefit"
-                  />
+                    </Box>
+                    <SeleraMatriks levelId={1} levelDampak="moderat" />
+                  </Stack>
                 ) : (
                   <FormatKL
                     listItem={
@@ -286,20 +332,31 @@ perencanaan pembangunan nasional"
             description={
               <Stack gap={1}>
                 {userLevel === "bappenas" ? (
-                  <FormatBP
-                    levelId={4}
-                    form={
-                      <TextareaComponent
-                        label="Deskripsi"
-                        placeholder="Deskripsi tinggi"
-                        width="100%"
+                  <Stack gap={1}>
+                    <FormatBP
+                      levelId={4}
+                      form={
+                        <TextareaComponent
+                          label="Deskripsi"
+                          placeholder="Deskripsi tinggi"
+                          width="100%"
+                        />
+                      }
+                      target="Meningkat sangat signifikan > 50%"
+                      kapasitas="Rendah/tetap/meningkat tetapi tidak sebanding dengan peningkatan target"
+                      inherent="Tinggi"
+                      note="Diperlukan banyak program inovasi untuk mengambil peluang & mencapai target kinerja dengan difasilitasi RO/Komponen (agar tersedia anggaran)"
+                    />
+                    <Box>
+                      <AddButton
+                        startIcon={<Iconify name="mdi:search" />}
+                        title="Lihat Referensi Matriks"
+                        onclick={handleModalOpenRef}
+                        filled
                       />
-                    }
-                    target="Meningkat sangat signifikan > 50%"
-                    kapasitas="Rendah/tetap/meningkat tetapi tidak sebanding dengan peningkatan target"
-                    inherent="Tinggi"
-                    note="Diperlukan banyak program inovasi untuk mengambil peluang & mencapai target kinerja dengan difasilitasi RO/Komponen (agar tersedia anggaran)"
-                  />
+                    </Box>
+                    <SeleraMatriks levelId={1} levelDampak="tinggi" />
+                  </Stack>
                 ) : (
                   <FormatKL
                     listItem={
@@ -404,6 +461,14 @@ perencanaan pembangunan nasional"
         />
       </ToggleButtonGroup>
       {saveButton}
-    </>
+      <DialogComponent
+        width={1200}
+        dialogOpen={modalOpenRef}
+        dialogClose={handleModalClose}
+        title="Lihat Referensi"
+      >
+        <SeleraMatriks levelId={1} levelDampak="rendah" />
+      </DialogComponent>
+    </Fragment>
   );
 }
