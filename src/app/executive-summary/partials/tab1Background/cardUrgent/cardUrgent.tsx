@@ -14,7 +14,7 @@ interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
 }
 
-export default function CardUrgent({ project }: { project: string }) {
+export default function CardUrgent({ project }: { project?: string }) {
   const {
     data,
     modal,

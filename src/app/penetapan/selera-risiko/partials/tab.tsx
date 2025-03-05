@@ -1,15 +1,23 @@
 import React from "react";
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Stack, Tab, Tabs } from "@mui/material";
 import theme from "@/theme";
 import { IconFA } from "@/components/icons/icon-fa";
 import { styleTab } from "@/app/executive-summary/style";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
-import CardKategori from "./tab1Category/cardKategori";
-import CardKemungkinan from "./tab2Possibility/cardKemungkinan";
-import CardDampak from "./tab3Impact/cardDampak";
-import CardMatriks from "./tab4Matriks/cardMatriks";
-import CardSelera from "./tab4Selera/cardSelera";
+import CardRegulation from "../../konteks-strategis/cardRegulasi/cardRegulation";
+import CardStakeholderInternal from "../../konteks-strategis/cardStakeholders/cardStakeholderInternal";
+import CardStakeholderEksternal from "../../konteks-strategis/cardStakeholders/cardStakeholderEksternal";
+import CardCritical from "@/app/executive-summary/partials/tab6Critical/cardCritical";
+import CardStakeholder from "@/app/executive-summary/partials/tab7Regulation/cardStakeholder/cardStakeholder";
+import CardInformation from "./cardInformation";
+import CardUrgent from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgent";
+import CardSegment from "@/app/executive-summary/partials/tab1Background/cardSegment/cardSegment";
+import CardSwot from "@/app/executive-summary/partials/tab1Background/cardSwot/cardSwot";
+// import CardKategori from "./tab1Category/cardKategori";
+// import CardKemungkinan from "./tab2Possibility/cardKemungkinan";
+// import CardDampak from "./tab3Impact/cardDampak";
+// import CardMatriks from "./tab4Matriks/cardMatriks";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -64,7 +72,7 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-export default function TabCriteria({}) {
+export default function TabInternalEksternal({}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -79,35 +87,29 @@ export default function TabCriteria({}) {
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={value} onChange={handleChange} sx={styleTab(sxParams)}>
           <Tab
-            label="Kategori Risiko"
+            label="Latar Belakang"
             {...a11yProps(0)}
             iconPosition="start"
-            icon={<IconFA size={16} name="gauge-high" />}
+            icon={<IconFA size={16} name="pen-to-square" />}
           />
           <Tab
-            label="Kriteria Kemungkinan"
+            label="Regulasi & Stakeholder"
             {...a11yProps(1)}
             iconPosition="start"
-            icon={<IconFA size={16} name="maximize" />}
+            icon={<IconFA size={16} name="gavel" />}
           />
           <Tab
-            label="Kriteria Dampak"
+            label="Critical Path"
             {...a11yProps(2)}
             iconPosition="start"
-            icon={<IconFA size={16} name="minimize" />}
+            icon={<IconFA size={16} name="exclamation-triangle" />}
           />
           <Tab
-            label="Selera Risiko"
+            label="Informasi Lain"
             {...a11yProps(3)}
             iconPosition="start"
-            icon={<IconFA size={16} name="flask-vial" sx={{ width: 20 }} />}
+            icon={<IconFA size={16} name="ellipsis" />}
           />
-          {/* <Tab
-            label="Matriks Analisis Risiko"
-            {...a11yProps(4)}
-            iconPosition="start"
-            icon={<IconFA size={16} name="arrow-up-right-dots" />}
-          /> */}
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -119,7 +121,11 @@ export default function TabCriteria({}) {
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <CardKategori />
+          <Stack gap={1}>
+            <CardUrgent  />
+            <CardSegment  />
+            <CardSwot  />
+          </Stack>
         )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
@@ -131,7 +137,10 @@ export default function TabCriteria({}) {
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <CardKemungkinan />
+          <Stack gap={1}>
+            <CardRegulation />
+            <CardStakeholder />
+          </Stack>
         )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
@@ -143,7 +152,7 @@ export default function TabCriteria({}) {
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <CardDampak />
+          <CardCritical />
         )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
@@ -155,21 +164,9 @@ export default function TabCriteria({}) {
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <CardSelera />
+          <CardInformation />
         )}
       </CustomTabPanel>
-      {/* <CustomTabPanel value={value} index={4}>
-        {isEmpty ? (
-          <EmptyState
-            dense
-            icon={<IconEmptyData width={100} />}
-            title="Data Kosong"
-            description="Silahkan isi konten halaman ini"
-          />
-        ) : (
-          <CardMatriks />
-        )}
-      </CustomTabPanel> */}
     </Box>
   );
 }

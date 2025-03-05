@@ -180,7 +180,7 @@ export default function FormatBP({
 
   return (
     <Stack gap={2}>
-      <Stack gap={1}>
+      <Stack>
         <Typography fontStyle="italic" fontSize={14}>
           Target
         </Typography>
@@ -188,7 +188,7 @@ export default function FormatBP({
           {target}
         </Typography>
       </Stack>
-      <Stack gap={1}>
+      <Stack>
         <Typography fontStyle="italic" fontSize={14}>
           Kapasitas
         </Typography>
@@ -196,7 +196,7 @@ export default function FormatBP({
           {kapasitas}
         </Typography>
       </Stack>
-      <Stack gap={1}>
+      <Stack>
         <Typography fontStyle="italic" fontSize={14}>
           Inherent Risk
         </Typography>
@@ -204,7 +204,7 @@ export default function FormatBP({
           {inherent}
         </Typography>
       </Stack>
-      <Stack gap={1}>
+      <Stack>
         <Typography fontStyle="italic" fontSize={14}>
           Keterangan
         </Typography>
@@ -212,7 +212,7 @@ export default function FormatBP({
           {note}
         </Typography>
       </Stack>
-      <Stack gap={1}>
+      <Stack gap={0.5}>
         <Typography fontStyle="italic" fontSize={14}>
           Tuliskan pernyataan selera risiko
         </Typography>

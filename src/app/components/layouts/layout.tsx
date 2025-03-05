@@ -230,6 +230,9 @@ export default function DashboardLayout(props: {
         },
       },
     },
+    ".mrpn-card-content": {
+      maxWidth: "calc(100vw - 348px)",
+    },
     ".collapse-active": {
       ".table-sticky-actions-column": {
         maxWidth: "calc(100vw - 132px)",
@@ -252,6 +255,9 @@ export default function DashboardLayout(props: {
             maxWidth: "70vw",
           },
         },
+      },
+      ".mrpn-card-content": {
+        maxWidth: "100%",
       },
     },
     [theme.breakpoints.down("md")]: {

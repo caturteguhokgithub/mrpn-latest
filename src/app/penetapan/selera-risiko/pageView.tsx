@@ -1,8 +1,8 @@
 "use client";
 
 import ContentPage from "@/app/components/contents/index";
-import React, { useEffect } from "react";
-import { FormControl } from "@mui/material";
+import React, { Fragment, useEffect } from "react";
+import { FormControl, Stack } from "@mui/material";
 import RiskContent from "./partials/risk";
 import { AutocompleteSelectSingle } from "@/components/autocomplete";
 import { MasterListObjectRes } from "@/app/misc/master/masterServiceModel";
@@ -10,6 +10,10 @@ import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
+import CardRegulation from "../konteks-strategis/cardRegulasi/cardRegulation";
+import CardStakeholderInternal from "../konteks-strategis/cardStakeholders/cardStakeholderInternal";
+import CardStakeholderEksternal from "../konteks-strategis/cardStakeholders/cardStakeholderEksternal";
+import TabInternalEksternal from "./partials/tab";
 
 export default function PageSeleraRisikoView({}) {
   const { year, rpjmn } = useRKPContext((state) => state);
@@ -24,16 +28,17 @@ export default function PageSeleraRisikoView({}) {
   const handleModalOpenSave = () => {};
 
   return (
-    <>
+    <Fragment>
       <ContentPage
-        title={`Selera Risiko ${
-          year == 0
-            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-            : "Tahun " + year
-        }`}
-        infoToolTip="Jumlah dan jenis risiko yang bersedia diterima oleh suatu entitas atau organisasi pemerintahan
-dalam mengejar tujuannya"
-        withCard
+        // title={`Selera Risiko ${
+        //   year == 0
+        //     ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+        //     : "Tahun " + year
+        // }`}
+        title="Konteks Internal Eksternal"
+        //         infoToolTip="Jumlah dan jenis risiko yang bersedia diterima oleh suatu entitas atau organisasi pemerintahan
+        // dalam mengejar tujuannya"
+        withCard={objectState === undefined}
         chooseObject={
           <FormControl size="small" sx={{ width: "20vw" }}>
             <AutocompleteSelectSingle
@@ -55,9 +60,15 @@ dalam mengejar tujuannya"
             description="Silahkan pilih KP terlebih dulu"
           />
         ) : (
-          <RiskContent handleSaveButton={handleModalOpenSave} />
+          <Fragment>
+            <TabInternalEksternal />
+            {/* <CardRegulation />
+            <CardStakeholderInternal />
+            <CardStakeholderEksternal /> */}
+            {/* <RiskContent handleSaveButton={handleModalOpenSave} /> */}
+          </Fragment>
         )}
       </ContentPage>
-    </>
+    </Fragment>
   );
 }

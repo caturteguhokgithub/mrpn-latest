@@ -1,6 +1,11 @@
-import {useGlobalModalContext, useLoading, usePenetapanTopicContext, useRKPContext} from "@/lib/core/hooks/useHooks";
-import {useState} from "react";
-import {ProjectDefaultDto} from "@/lib/core/context/rkpContext";
+import {
+  useGlobalModalContext,
+  useLoading,
+  usePenetapanTopicContext,
+  useRKPContext,
+} from "@/lib/core/hooks/useHooks";
+import { useState } from "react";
+import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
 import {
   initPenetapanObjectState,
   NotaDinasReqDto,
@@ -15,7 +20,7 @@ import {
   PenetapanObjectShortListDto,
   PenetapanObjectStateEntityDto,
   PenetapanObjectVMState,
-  RKPCascadingDto
+  RKPCascadingDto,
 } from "@/app/penetapan/objek/pageModel";
 import {
   doCratePenetapanObjectLongList,
@@ -30,27 +35,21 @@ import {
   doGetPenetapanObjectShortList,
   doUpdateOrCreateGetPenetapanObjectNotaDinas,
   doUpdateOrCreatePenetapanObjectEntityUsulan,
-  doUpdatePenetapanObjectTopic
+  doUpdatePenetapanObjectTopic,
 } from "@/app/penetapan/objek/pageService";
-import {API_CODE} from "@/lib/core/api/apiModel";
+import { API_CODE } from "@/lib/core/api/apiModel";
 import useRkpVM from "@/components/dropdown/rkpVM";
 import {
   PenetapanObjectDto,
   PenetapanObjectNotaDto,
-  PenetapanObjectUraianDto
+  PenetapanObjectUraianDto,
 } from "@/lib/core/context/penetapanTopicContext";
 
 const usePenetapanObjectVM = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
-  const {
-    rkp,
-    year,
-    rpjmn
-  } = useRKPContext(state => state)
-  const {
-    getData
-  } = useRkpVM()
+  const { rkp, year, rpjmn } = useRKPContext((state) => state);
+  const { getData } = useRkpVM();
   const {
     objects,
     setObjects,
@@ -59,293 +58,296 @@ const usePenetapanObjectVM = () => {
     uraianState,
     setUraianState,
     nota,
-    setNota
-  } = usePenetapanTopicContext(state => state)
+    setNota,
+  } = usePenetapanTopicContext((state) => state);
 
-  const initState = JSON.parse(JSON.stringify(initPenetapanObjectState))
-  const [stateTopic, setStateTopic] = useState<PenetapanObjectVMState>(initState)
-  const [stateShorList, setStateShortList] = useState<PenetapanObjectShortListDto[]>([])
-  const [stateCascading, setStateCascading] = useState<RKPCascadingDto[]>([])
-  const [stateEntity, setStateEntity] = useState<PenetapanObjectStateEntityDto[]>([])
+  const initState = JSON.parse(JSON.stringify(initPenetapanObjectState));
+  const [stateTopic, setStateTopic] =
+    useState<PenetapanObjectVMState>(initState);
+  const [stateShorList, setStateShortList] = useState<
+    PenetapanObjectShortListDto[]
+  >([]);
+  const [stateCascading, setStateCascading] = useState<RKPCascadingDto[]>([]);
+  const [stateEntity, setStateEntity] = useState<
+    PenetapanObjectStateEntityDto[]
+  >([]);
 
-  const [optionPN, setOptionPN] = useState<ProjectDefaultDto[]>([])
-  const [modalAdd, setModalAdd] = useState<boolean>(false)
+  const [optionPN, setOptionPN] = useState<ProjectDefaultDto[]>([]);
+  const [modalAdd, setModalAdd] = useState<boolean>(false);
+  const [modalLog, setModalLog] = useState<boolean>(false);
 
   const generateOptionPN = () => {
-
-    let opt: ProjectDefaultDto[] = []
-    rkp.map(pn => {
+    let opt: ProjectDefaultDto[] = [];
+    rkp.map((pn) => {
       // opt.push({
       //   id: pn.id,
       //   level: "PN",
       //   code: pn.code,
       //   value: pn.value
       // })
-      pn.pp.map(pp => {
+      pn.pp.map((pp) => {
         opt.push({
           id: pp.id,
           level: "PP",
           code: pp.code,
-          value: pp.value
-        })
+          value: pp.value,
+        });
 
-        pp.kp.map(kp => {
+        pp.kp.map((kp) => {
           opt.push({
             id: kp.id,
             level: "KP",
             code: kp.code,
-            value: kp.value
-          })
-        })
+            value: kp.value,
+          });
+        });
+      });
+    });
 
-      })
-    })
+    setOptionPN(opt);
+  };
 
-    setOptionPN(opt)
-  }
-
-  async function getPenetapanObjectTopic(){
+  async function getPenetapanObjectTopic() {
     const response = await doGetPenetapanObject({
-      body:{
-        tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year
+      body: {
+        tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
       },
-      loadingContext:loadingContext,
-      errorModalContext:errorModalContext
-    })
-    if (response?.code == API_CODE.success){
-      let result:PenetapanObjectDto[] = response.result
-      setObjects(result)
-    }else{
-      setObjects([])
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+    if (response?.code == API_CODE.success) {
+      let result: PenetapanObjectDto[] = response.result;
+      setObjects(result);
+    } else {
+      setObjects([]);
     }
   }
 
-  async function updateOrCreateTopic(){
-    const req:PenetapanObjectReqDto = {
+  async function updateOrCreateTopic() {
+    const req: PenetapanObjectReqDto = {
       id: stateTopic.id,
       code: stateTopic.code,
       topik: stateTopic.topik,
-      tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year,
-      values: stateTopic.values
-    }
+      tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
+      values: stateTopic.values,
+    };
 
-    let response
-    if (stateTopic.id == 0){
+    let response;
+    if (stateTopic.id == 0) {
       response = await doCreatePenetapanObjectTopic({
-        body:req,
-        loadingContext:loadingContext,
-        errorModalContext:errorModalContext
-      })
+        body: req,
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      });
     } else {
       response = await doUpdatePenetapanObjectTopic({
-        body:req,
-        loadingContext:loadingContext,
-        errorModalContext:errorModalContext
-      })
+        body: req,
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      });
     }
-    if (response?.code == API_CODE.success){
-      getPenetapanObjectTopic()
-      const initState = JSON.parse(JSON.stringify(initPenetapanObjectState))
-      setModalAdd(false)
-      setStateTopic(initState)
+    if (response?.code == API_CODE.success) {
+      getPenetapanObjectTopic();
+      const initState = JSON.parse(JSON.stringify(initPenetapanObjectState));
+      setModalAdd(false);
+      setStateTopic(initState);
     }
   }
 
-  async function deleteTopic(){
-    const req:PenetapanObjectReqDto = {
+  async function deleteTopic() {
+    const req: PenetapanObjectReqDto = {
       id: stateTopic.id,
       code: stateTopic.code,
       topik: stateTopic.topik,
-      tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year,
-      values: stateTopic.values
-    }
+      tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
+      values: stateTopic.values,
+    };
 
     const response = await doDeletePenetapanObjectTopic({
-      body:req,
-      loadingContext:loadingContext,
-      errorModalContext:errorModalContext
-    })
-    if (response?.code == API_CODE.success){
-      getPenetapanObjectTopic()
-      const initState = JSON.parse(JSON.stringify(initPenetapanObjectState))
-      setModalAdd(false)
-      setStateTopic(initState)
+      body: req,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+    if (response?.code == API_CODE.success) {
+      getPenetapanObjectTopic();
+      const initState = JSON.parse(JSON.stringify(initPenetapanObjectState));
+      setModalAdd(false);
+      setStateTopic(initState);
     }
   }
 
-  async function updateOrCreateLongList(){
-    let reqLongList:PenetapanObjectLongListReqDto = {
-      values:[]
-    }
+  async function updateOrCreateLongList() {
+    let reqLongList: PenetapanObjectLongListReqDto = {
+      values: [],
+    };
 
-    let reqLongListAssignObject:PenetapanObjectLongListAssignObjectReqDto = {
-      values:[]
-    }
+    let reqLongListAssignObject: PenetapanObjectLongListAssignObjectReqDto = {
+      values: [],
+    };
 
-    uraianState.map(u => {
-      const values:PenetapanObjectLongListReqValueDto = {
-        uraian_id:u.id,
-        prioritas:[]
-      }
-      u.prioritas.map(p => {
-        if (p.value){
-          values.prioritas.push(p.value)
+    uraianState.map((u) => {
+      const values: PenetapanObjectLongListReqValueDto = {
+        uraian_id: u.id,
+        prioritas: [],
+      };
+      u.prioritas.map((p) => {
+        if (p.value) {
+          values.prioritas.push(p.value);
         }
-      })
-      reqLongList.values.push(values)
+      });
+      reqLongList.values.push(values);
 
       reqLongListAssignObject.values.push({
-        uraian_id:u.id,
-        assignObjek:u.objek == null ? false : u.objek
-      })
+        uraian_id: u.id,
+        assignObjek: u.objek == null ? false : u.objek,
+      });
     });
 
     const responseLongList = await doCratePenetapanObjectLongList({
-      body:reqLongList,
-      loadingContext:loadingContext,
-      errorModalContext:errorModalContext
-    })
-    if (responseLongList?.code != API_CODE.success){
-      return false
+      body: reqLongList,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+    if (responseLongList?.code != API_CODE.success) {
+      return false;
     }
 
-    const responseLongListAssignObject = await doCratePenetapanObjectLongListAssignObject({
-      body:reqLongListAssignObject,
-      loadingContext:loadingContext,
-      errorModalContext:errorModalContext
-    })
-    if (responseLongListAssignObject?.code != API_CODE.success){
-      return false
+    const responseLongListAssignObject =
+      await doCratePenetapanObjectLongListAssignObject({
+        body: reqLongListAssignObject,
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      });
+    if (responseLongListAssignObject?.code != API_CODE.success) {
+      return false;
     }
 
-    getPenetapanObjectTopic()
-    return true
-
+    getPenetapanObjectTopic();
+    return true;
   }
 
-  async function getPenetapanObjectShortList(){
-    if (objectState !== undefined){
+  async function getPenetapanObjectShortList() {
+    if (objectState !== undefined) {
       const response = await doGetPenetapanObjectShortList({
-        body:{id:objectState.id},
-        loadingContext:loadingContext,
-        errorModalContext:errorModalContext
-      })
-      if (response?.code == API_CODE.success){
-        let result:PenetapanObjectShortListDto[] = response.result
-        setStateShortList(result)
+        body: { id: objectState.id },
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      });
+      if (response?.code == API_CODE.success) {
+        let result: PenetapanObjectShortListDto[] = response.result;
+        setStateShortList(result);
       }
     }
   }
 
-  async function getPenetapanObjectCascading(){
-    if (objectState !== undefined){
+  async function getPenetapanObjectCascading() {
+    if (objectState !== undefined) {
       const response = await doGetPenetapanObjectCascading({
-        body:{id:objectState.id},
-        loadingContext:loadingContext,
-        errorModalContext:errorModalContext
-      })
-      if (response?.code == API_CODE.success){
-        let result:RKPCascadingDto[] = response.result
-        setStateCascading(result)
+        body: { id: objectState.id },
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      });
+      if (response?.code == API_CODE.success) {
+        let result: RKPCascadingDto[] = response.result;
+        setStateCascading(result);
       }
     }
   }
 
-  async function getPenetapanObjectEntity(){
-
-    if (objectState !== undefined){
+  async function getPenetapanObjectEntity() {
+    if (objectState !== undefined) {
       const response = await doGetPenetapanObjectEntity({
-        body:{id:objectState.id},
-        loadingContext:loadingContext,
-        errorModalContext:errorModalContext
-      })
-      if (response?.code != API_CODE.success){
-        return
+        body: { id: objectState.id },
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      });
+      if (response?.code != API_CODE.success) {
+        return;
       }
 
       const response2 = await doGetPenetapanObjectEntityUsulan({
-        body:{id:objectState.id},
-        loadingContext:loadingContext,
-        errorModalContext:errorModalContext
-      })
-      if (response2?.code != API_CODE.success){
-        return
+        body: { id: objectState.id },
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      });
+      if (response2?.code != API_CODE.success) {
+        return;
       }
 
-      let allEntity:PenetapanObjectEntityDto[] = response.result
-      let checkedEntity:PenetapanObjectEntityCheckedDto[] = response2.result
+      let allEntity: PenetapanObjectEntityDto[] = response.result;
+      let checkedEntity: PenetapanObjectEntityCheckedDto[] = response2.result;
 
-      let state:PenetapanObjectStateEntityDto[] = []
+      let state: PenetapanObjectStateEntityDto[] = [];
 
-      allEntity.map(x => {
-        if (x.type == "SUPPORT"){
-          x.stakeholder.map(y => {
+      allEntity.map((x) => {
+        if (x.type == "SUPPORT") {
+          x.stakeholder.map((y) => {
+            let row: PenetapanObjectStateEntityDto = Object.assign(
+              { items: [] },
+              y
+            );
 
-            let row:PenetapanObjectStateEntityDto = Object.assign({items:[]}, y)
-
-            const getIndex = checkedEntity.findIndex(checked => checked.entitas.id == y.id)
-            if (getIndex > -1){
-              row.items = [...row.items, ...checkedEntity[getIndex].items]
+            const getIndex = checkedEntity.findIndex(
+              (checked) => checked.entitas.id == y.id
+            );
+            if (getIndex > -1) {
+              row.items = [...row.items, ...checkedEntity[getIndex].items];
             }
 
-            state.push(row)
-
-          })
+            state.push(row);
+          });
         }
-      })
+      });
 
-      setStateEntity(state)
-
+      setStateEntity(state);
     }
   }
 
-  async function updateOrCreateEntity(){
-    if (objectState !== undefined){
+  async function updateOrCreateEntity() {
+    if (objectState !== undefined) {
       // console.log(stateEntity)
-      let req:PenetapanObjectEntityReqDto = {
+      let req: PenetapanObjectEntityReqDto = {
         id_objek: objectState.id,
-        values: []
-      }
-      stateEntity.map(st => {
-        const val:PenetapanObjectEntityValueReqDto = {
+        values: [],
+      };
+      stateEntity.map((st) => {
+        const val: PenetapanObjectEntityValueReqDto = {
           entitas: st.id,
-          kriteria: []
-        }
-        st.items.map(s => {
-          val.kriteria.push(s.value)
-        })
-        req.values.push(val)
-      })
+          kriteria: [],
+        };
+        st.items.map((s) => {
+          val.kriteria.push(s.value);
+        });
+        req.values.push(val);
+      });
       const response = await doUpdateOrCreatePenetapanObjectEntityUsulan({
-        body:req,
-        loadingContext:loadingContext,
-        errorModalContext:errorModalContext
-      })
-      if (response?.code == API_CODE.success){
-        getPenetapanObjectEntity()
+        body: req,
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      });
+      if (response?.code == API_CODE.success) {
+        getPenetapanObjectEntity();
       }
     }
   }
 
-  async function getPenetapanObjectNotaDinas(){
-    if (objectState !== undefined){
+  async function getPenetapanObjectNotaDinas() {
+    if (objectState !== undefined) {
       const response = await doGetPenetapanObjectNotaDinas({
-        body:{id_topik:objectState.id},
-        errorModalContext:errorModalContext,
-        loadingContext:loadingContext
-      })
-      if (response?.code === API_CODE.success){
-        let result:PenetapanObjectNotaDto = response.result
-        setNota(result)
+        body: { id_topik: objectState.id },
+        errorModalContext: errorModalContext,
+        loadingContext: loadingContext,
+      });
+      if (response?.code === API_CODE.success) {
+        let result: PenetapanObjectNotaDto = response.result;
+        setNota(result);
       }
     }
-
   }
 
-  async function updateOrCreateNotaDinas(){
-
-    if (nota != undefined){
-      const request:NotaDinasReqDto = {
+  async function updateOrCreateNotaDinas() {
+    if (nota != undefined) {
+      const request: NotaDinasReqDto = {
         penetapan_object_id: objectState?.id ?? 0,
         penjelasan_objek_mrpn: nota.penjelasan_objek_mrpn,
         penjelasan_usulan_upr: nota.penjelasan_usulan_upr,
@@ -357,43 +359,42 @@ const usePenetapanObjectVM = () => {
         ttd_pembuat: nota.ttd_pembuat_base64,
         ttd_pembuat_filename: nota.ttd_pembuat_filename,
         ttd_penyetuju: nota.ttd_penyetuju_base64,
-        ttd_penyetuju_filename: nota.ttd_penyetuju_filename
-      }
+        ttd_penyetuju_filename: nota.ttd_penyetuju_filename,
+      };
 
-      if (objectState !== undefined){
+      if (objectState !== undefined) {
         const response = await doUpdateOrCreateGetPenetapanObjectNotaDinas({
-          body:request,
-          errorModalContext:errorModalContext,
-          loadingContext:loadingContext
-        })
-        if (response?.code === API_CODE.success){
-          getPenetapanObjectNotaDinas()
-          return true
+          body: request,
+          errorModalContext: errorModalContext,
+          loadingContext: loadingContext,
+        });
+        if (response?.code === API_CODE.success) {
+          getPenetapanObjectNotaDinas();
+          return true;
         }
       }
     }
 
-    return false
+    return false;
   }
 
   const useEffectGenerateOption = () => {
-    setObjectState(undefined)
-    getData()
-    getPenetapanObjectTopic()
-  }
+    setObjectState(undefined);
+    getData();
+    getPenetapanObjectTopic();
+  };
 
-  const manipulateStateUraianPriority = (data:PenetapanObjectUraianDto[]) => {
+  const manipulateStateUraianPriority = (data: PenetapanObjectUraianDto[]) => {
+    const calculatePriorityCount: PenetapanObjectUraianDto[] = data.reduce<
+      PenetapanObjectUraianDto[]
+    >((a, b) => {
+      b.priotitas_count = b.prioritas.length;
+      return [...a, b];
+    }, []);
 
-    const calculatePriorityCount:PenetapanObjectUraianDto[] = data.reduce<PenetapanObjectUraianDto[]>(
-      (a,b) => {
-        b.priotitas_count = b.prioritas.length
-        return [...a, b]
-      }, []
-    )
-
-    const sortedData:PenetapanObjectUraianDto[] = data.sort((a,b) => {
-      const n1 = a.prioritas.length
-      const n2 = b.prioritas.length
+    const sortedData: PenetapanObjectUraianDto[] = data.sort((a, b) => {
+      const n1 = a.prioritas.length;
+      const n2 = b.prioritas.length;
       if (n1 > n2) {
         return -1;
       }
@@ -401,47 +402,52 @@ const usePenetapanObjectVM = () => {
         return 1;
       }
       return 0;
-    })
+    });
 
-    const objGroupBy = Object.groupBy(sortedData, ({priotitas_count}) => priotitas_count)
-
-    const sorted = Object.keys(objGroupBy).sort((a,b) => (parseInt(a) < parseInt(b)) ? 1 : -1)
-
-    return sortedData.reduce<PenetapanObjectUraianDto[]>(
-      (a, b) => {
-        let prior: number = 1
-        const getIndex = sorted.findIndex(x => parseInt(x) == b.priotitas_count)
-        if (getIndex > -1) {
-          prior = getIndex + 1
-        }
-        b.priotitas_order = prior
-        return [...a, b]
-      },
-      []
+    const objGroupBy = Object.groupBy(
+      sortedData,
+      ({ priotitas_count }) => priotitas_count
     );
-  }
+
+    const sorted = Object.keys(objGroupBy).sort((a, b) =>
+      parseInt(a) < parseInt(b) ? 1 : -1
+    );
+
+    return sortedData.reduce<PenetapanObjectUraianDto[]>((a, b) => {
+      let prior: number = 1;
+      const getIndex = sorted.findIndex(
+        (x) => parseInt(x) == b.priotitas_count
+      );
+      if (getIndex > -1) {
+        prior = getIndex + 1;
+      }
+      b.priotitas_order = prior;
+      return [...a, b];
+    }, []);
+  };
 
   const useEffectObjectState = () => {
-    if (objectState !== undefined){
+    if (objectState !== undefined) {
+      const uraianDt: PenetapanObjectUraianDto[] =
+        objectState.penetapan_object_list.reduce<PenetapanObjectUraianDto[]>(
+          (acc, b) => {
+            b.uraian.map((x, index) => {
+              b.uraian[index].priotitas_count = x.prioritas.length;
+            });
+            return [...acc, ...b.uraian];
+          },
+          []
+        );
 
-      const uraianDt:PenetapanObjectUraianDto[] = objectState.penetapan_object_list.reduce<PenetapanObjectUraianDto[]>(
-        (acc,b) => {
-          b.uraian.map((x,index) => {
-            b.uraian[index].priotitas_count = x.prioritas.length
-          })
-          return [...acc, ...b.uraian]
-        }, []
-      )
+      const finalData = manipulateStateUraianPriority(uraianDt);
 
-      const finalData = manipulateStateUraianPriority(uraianDt)
+      setUraianState(finalData);
 
-      setUraianState(finalData)
+      getPenetapanObjectEntity();
 
-      getPenetapanObjectEntity()
-
-      getPenetapanObjectNotaDinas()
+      getPenetapanObjectNotaDinas();
     }
-  }
+  };
 
   return {
     useEffectGenerateOption,
@@ -468,8 +474,10 @@ const usePenetapanObjectVM = () => {
     getPenetapanObjectEntity,
     getPenetapanObjectNotaDinas,
     updateOrCreateNotaDinas,
-    manipulateStateUraianPriority
-  }
-}
+    manipulateStateUraianPriority,
+    modalLog,
+    setModalLog,
+  };
+};
 
-export default usePenetapanObjectVM
+export default usePenetapanObjectVM;

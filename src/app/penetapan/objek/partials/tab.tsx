@@ -195,13 +195,13 @@ export default function TabObject({}) {
       <CustomTabPanel value={value} index={4}>
         <CardItem
           // title="Nota Dinas Objek MRPN & UPR Linsek"
-          title="Pengesahan"
+          title="Pengesahan Objek & UPR LS"
           addButton={
             !editNotaDinas && (
               <AddButton
                 title={`Ubah`}
                 filled
-                startIcon={<IconFA size={18} name="pencil" />}
+                startIcon={<IconFA size={14} name="pencil" />}
                 onclick={() => setEditNotaDinas(true)}
               />
             )

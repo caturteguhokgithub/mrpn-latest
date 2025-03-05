@@ -31,7 +31,7 @@ import { styleOrgChart } from "@/app/executive-summary/style";
 import { SxParams } from "@/app/executive-summary/types";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 
-export default function CardStakeholder({ project }: { project: string }) {
+export default function CardStakeholder({ project }: { project?: string }) {
   const {
     data,
     gambar,

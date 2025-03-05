@@ -31,7 +31,7 @@ const ProjectType = ({ label, color }: { label: string; color: string }) => {
   );
 };
 
-export default function CardCritical({ project }: { project: string }) {
+export default function CardCritical({ project }: { project?: string }) {
   const {
     optionRO,
     optionStrategy,
