@@ -14,7 +14,13 @@ interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
 }
 
-export default function CardUrgent({ project }: { project?: string }) {
+export default function CardUrgent({
+  project,
+  activeSetting,
+}: {
+  project?: string;
+  activeSetting?: boolean;
+}) {
   const {
     data,
     modal,
@@ -59,7 +65,7 @@ export default function CardUrgent({ project }: { project?: string }) {
   return (
     <CardItem
       title="Urgensi Proyek"
-      setting={year <= 0}
+      setting={year <= 0 || activeSetting}
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
     >

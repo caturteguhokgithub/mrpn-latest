@@ -15,7 +15,13 @@ interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
 }
 
-export default function CardSegment({ project }: { project?: string }) {
+export default function CardSegment({
+  project,
+  activeSetting,
+}: {
+  project?: string;
+  activeSetting?: boolean;
+}) {
   const {
     data,
     modal,
@@ -61,7 +67,7 @@ export default function CardSegment({ project }: { project?: string }) {
   return (
     <CardItem
       title="Segmen Penerima Manfaat"
-      setting={year <= 0}
+      setting={year <= 0 || activeSetting}
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
     >
@@ -78,7 +84,7 @@ export default function CardSegment({ project }: { project?: string }) {
       <DialogComponent
         dialogOpen={modal}
         dialogClose={() => setModal(false)}
-        title="Segment Penerima Manfaat"
+        title="Segmen Penerima Manfaat"
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button variant="outlined" onClick={() => setModal(false)}>

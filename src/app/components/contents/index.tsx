@@ -65,7 +65,7 @@ export default function ContentPage({
   chooseProjectPage?: React.ReactNode;
   chooseKonteks?: boolean;
   chooseRo?: boolean;
-  chooseObject?: React.JSX.Element;
+  chooseObject?: React.ReactNode;
   chipRo?: boolean;
   heightTitleBreadcrumb?: boolean;
   titleChild?: React.ReactNode;

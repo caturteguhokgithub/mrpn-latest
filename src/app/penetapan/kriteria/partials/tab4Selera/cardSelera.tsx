@@ -4,9 +4,13 @@ import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
 import FormDampak from "../tab3Impact/form-dampak";
 import RiskContent from "@/app/penetapan/selera-risiko/partials/risk";
+import AddButton from "@/app/components/buttonAdd";
+import Iconify from "@/app/components/icons/iconify";
+import SeleraMatriks from "./matriks";
 
 export default function CardSelera() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
+  const [modalOpenRef, setModalOpenRef] = React.useState(false);
 
   const handleModalClose = () => {
     setModalOpenAdd(false);
@@ -25,7 +29,16 @@ export default function CardSelera() {
 
   return (
     <Fragment>
-      <CardItem title="Selera Risiko">
+      <CardItem
+        title="Selera Risiko"
+        addButton={
+          <AddButton
+            startIcon={<Iconify name="mdi:search" />}
+            title="Referensi Matriks"
+            onclick={() => setModalOpenRef(true)}
+          />
+        }
+      >
         <RiskContent handleSaveButton={handleModalOpenSave} />
       </CardItem>
       <DialogComponent
@@ -36,6 +49,14 @@ export default function CardSelera() {
         dialogFooter={dialogActionFooter}
       >
         <FormDampak mode="add" />
+      </DialogComponent>
+      <DialogComponent
+        width={1200}
+        dialogOpen={modalOpenRef}
+        dialogClose={() => setModalOpenRef(false)}
+        title={`Referensi Matriks Moderat`}
+      >
+        <SeleraMatriks levelId={1} levelDampak="rendah" />
       </DialogComponent>
     </Fragment>
   );

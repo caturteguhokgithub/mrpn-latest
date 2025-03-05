@@ -26,8 +26,13 @@ import FormReject from "@/app/approval/nota-dinas/partials/form-reject";
 import { IconFA } from "@/components/icons/icon-fa";
 import EmptyState from "@/components/empty";
 import { IconEmptyPage } from "@/components/icons";
+import AddButton from "@/app/components/buttonAdd";
+import Iconify from "@/app/components/icons/iconify";
+import TableStatus from "./partials/table-status";
 
 export default function PageApprovalNotaDinasView({}) {
+  const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
+
   const { year } = useRKPContext((state) => state);
 
   const { objects, objectState, setObjectState, nota } =
@@ -42,7 +47,7 @@ export default function PageApprovalNotaDinasView({}) {
 
   return (
     <ContentPage
-      title="Nota Dinas Objek MRPN & UPR Lintas Sektor"
+      title="Pengesahan Objek MRPN & UPR Lintas Sektor"
       infoToolTip={
         <Stack spacing={2}>
           <div>
@@ -65,16 +70,33 @@ export default function PageApprovalNotaDinasView({}) {
       }
       withCard
       chooseObject={
-        <FormControl size="small" sx={{ width: "20vw" }}>
-          <AutocompleteSelectSingle
-            rounded
-            value={objectState}
-            options={objects}
-            getOptionLabel={(opt) => `${opt.code} - ${opt.topik}`}
-            handleChange={(val: PenetapanObjectDto) => setObjectState(val)}
-            placeHolder={"Pilih Topik"}
-          />
-        </FormControl>
+        year > 0 && (
+          <Stack gap={1} direction="row" alignItems="center">
+            <Button
+              onClick={() => setModalOpenAdd(true)}
+              variant="outlined"
+              color="primary"
+              startIcon={<Iconify name="mdi:list-status" />}
+              sx={{
+                borderRadius: 50,
+                whiteSpace: "nowrap",
+                textTransform: "capitalize",
+              }}
+            >
+              Status Topik
+            </Button>
+            <FormControl size="small" sx={{ width: "20vw" }}>
+              <AutocompleteSelectSingle
+                rounded
+                value={objectState}
+                options={objects}
+                getOptionLabel={(opt) => `${opt.code} - ${opt.topik}`}
+                handleChange={(val: PenetapanObjectDto) => setObjectState(val)}
+                placeHolder={"Pilih Topik"}
+              />
+            </FormControl>
+          </Stack>
+        )
       }
     >
       {nota !== undefined ? (
@@ -82,8 +104,12 @@ export default function PageApprovalNotaDinasView({}) {
       ) : (
         <EmptyState
           icon={<IconEmptyPage />}
-          title="Halaman Kosong"
-          description="Silahkan pilih topik yang tersedia"
+          title={
+            year == 0
+              ? "Tidak ada data yang ditampilkan"
+              : "Halaman Topik Kosong"
+          }
+          description={year == 0 ? null : "Silahkan pilih topik"}
         />
       )}
 
@@ -188,6 +214,14 @@ export default function PageApprovalNotaDinasView({}) {
       {/*    )}*/}
       {/*  </TableCell>*/}
       {/*</TableRow>*/}
+      <DialogComponent
+        tableMode
+        dialogOpen={modalOpenAdd}
+        dialogClose={() => setModalOpenAdd(false)}
+        title="Status Topik"
+      >
+        <TableStatus />
+      </DialogComponent>
     </ContentPage>
   );
 }
