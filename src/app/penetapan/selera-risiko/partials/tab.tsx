@@ -122,9 +122,9 @@ export default function TabInternalEksternal({}) {
           />
         ) : (
           <Stack gap={1}>
-            <CardUrgent  />
-            <CardSegment  />
-            <CardSwot  />
+            <CardUrgent activeSetting />
+            <CardSegment activeSetting />
+            <CardSwot activeSetting />
           </Stack>
         )}
       </CustomTabPanel>
@@ -164,7 +164,7 @@ export default function TabInternalEksternal({}) {
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <CardInformation />
+          <CardInformation activeSetting />
         )}
       </CustomTabPanel>
     </Box>

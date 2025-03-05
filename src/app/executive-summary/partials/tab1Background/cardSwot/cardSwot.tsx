@@ -34,7 +34,13 @@ import DialogDelete from "@/app/components/dialogDelete";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 
-export default function CardSwot({ project }: { project?: string }) {
+export default function CardSwot({
+  project,
+  activeSetting,
+}: {
+  project?: string;
+  activeSetting?: boolean;
+}) {
   const {
     data,
     modal,
@@ -69,7 +75,7 @@ export default function CardSwot({ project }: { project?: string }) {
             </p>
           </div>
         }
-        setting
+        setting={activeSetting}
         // settingDeleteOnclick={() => deleteData()}
         settingDeleteOnclick={handleModalDelete}
         settingEditOnclick={() => setModal(true)}

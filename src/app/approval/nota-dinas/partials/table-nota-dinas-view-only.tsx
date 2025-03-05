@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   Box,
   Button,
   Chip,
   DialogActions,
   Divider,
+  IconButton,
   List,
   ListItem,
   Paper,
@@ -13,12 +14,17 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableHead,
   TableRow,
   Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import Image from "next/image";
 import { PenetapanObjectNotaDto } from "@/lib/core/context/penetapanTopicContext";
+import { bgColorTh } from "@/app/utils/color";
+import Iconify from "@/app/components/icons/iconify";
+import DialogComponent from "@/app/components/dialog";
+import FormNote from "./form-note";
 
 export default function TableNotaDinasViewOnly({
   notaDinas,
@@ -27,8 +33,27 @@ export default function TableNotaDinasViewOnly({
   notaDinas: PenetapanObjectNotaDto;
   actionApprove?: React.ReactNode;
 }) {
+  const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
+
+  const dialogActionFooter = (
+    <DialogActions sx={{ p: 2, px: 3 }}>
+      <Button onClick={() => setModalOpenAdd(false)}>Batal</Button>
+      <Button variant="contained" type="submit">
+        Simpan
+      </Button>
+    </DialogActions>
+  );
+
+  const dataUPR = [
+    "Kementerian Koordinator Bidang Pangan",
+    "Pemerintah Provinsi Kalteng",
+    "Bappenas",
+    "Kementerian Transmigrasi",
+    "Kementerian PU",
+  ];
+
   return (
-    <>
+    <Fragment>
       <Stack gap={2}>
         <Paper elevation={0} variant="outlined">
           <TableContainer sx={{ py: 1 }}>
@@ -128,7 +153,230 @@ export default function TableNotaDinasViewOnly({
             </Table>
           </TableContainer>
         </Paper>
-
+        {/* OBJEK UPR */}
+        <Stack gap={1}>
+          <Typography fontWeight={600}>Objek & UPR LS</Typography>
+          <TableContainer component={Paper} elevation={0} variant="outlined">
+            <Table
+              sx={{
+                minWidth: 650,
+                "tbody, thead": {
+                  "td, th": {
+                    borderRight: `1px solid ${grey[300]} !important`,
+                    "&:last-of-type": {
+                      borderRight: `0 !important`,
+                    },
+                  },
+                },
+              }}
+              size="small"
+            >
+              <TableHead sx={{ bgcolor: bgColorTh }}>
+                <TableRow>
+                  <TableCell
+                    rowSpan={2}
+                    width={70}
+                    sx={{ textAlign: "center" }}
+                  >
+                    No.
+                  </TableCell>
+                  <TableCell rowSpan={2} sx={{ textAlign: "center" }}>
+                    Objek MRPN LS
+                  </TableCell>
+                  <TableCell colSpan={3} align="center">
+                    Unit Pengelola Risiko
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="center">Koordinator</TableCell>
+                  <TableCell align="center">Utama</TableCell>
+                  <TableCell align="center">Pendukung</TableCell>
+                </TableRow>
+                <TableRow
+                  sx={{
+                    ".MuiTableCell-stickyHeader": {
+                      top: 37,
+                    },
+                  }}
+                >
+                  {[...new Array(5)].map((_, i) => (
+                    <TableCell sx={{ bgcolor: grey[100] }}>
+                      <Typography
+                        color={`${grey[500]} !important`}
+                        fontSize={14}
+                        textAlign="center"
+                      >
+                        {i + 1}
+                      </Typography>
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell align="center">1</TableCell>
+                  <TableCell>
+                    Pengembangan Kawasan Sentra Produksi Pangan (KSPP)/Lumbung
+                    Pangan Kalimantan Tengah
+                  </TableCell>
+                  <TableCell width={300}>
+                    <Stack
+                      display="inline-flex"
+                      alignItems="center"
+                      direction="row"
+                      gap={0.5}
+                      flexWrap="wrap"
+                    >
+                      {dataUPR.map((item) => (
+                        <Box component="div">
+                          <Chip
+                            label={item}
+                            size="small"
+                            sx={{
+                              height: "auto",
+                              ".MuiChip-label": {
+                                whiteSpace: "wrap",
+                                lineHeight: 1.2,
+                                py: 0.6,
+                              },
+                            }}
+                          />
+                        </Box>
+                      ))}
+                    </Stack>
+                  </TableCell>
+                  <TableCell width={300}>
+                    <Stack
+                      display="inline-flex"
+                      alignItems="center"
+                      direction="row"
+                      gap={0.5}
+                      flexWrap="wrap"
+                    >
+                      {dataUPR.map((item) => (
+                        <Box component="div">
+                          <Chip
+                            label={item}
+                            size="small"
+                            sx={{
+                              height: "auto",
+                              ".MuiChip-label": {
+                                whiteSpace: "wrap",
+                                lineHeight: 1.2,
+                                py: 0.6,
+                              },
+                            }}
+                          />
+                        </Box>
+                      ))}
+                    </Stack>
+                  </TableCell>
+                  <TableCell width={300}>
+                    <Stack
+                      display="inline-flex"
+                      alignItems="center"
+                      direction="row"
+                      gap={0.5}
+                      flexWrap="wrap"
+                    >
+                      {dataUPR.map((item) => (
+                        <Box component="div">
+                          <Chip
+                            label={item}
+                            size="small"
+                            sx={{
+                              height: "auto",
+                              ".MuiChip-label": {
+                                whiteSpace: "wrap",
+                                lineHeight: 1.2,
+                                py: 0.6,
+                              },
+                            }}
+                          />
+                        </Box>
+                      ))}
+                    </Stack>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Stack>
+        {/* Bukti Dukung */}
+        <Stack gap={1}>
+          <Typography fontWeight={600}>Bukti Dukung</Typography>
+          <TableContainer component={Paper} elevation={0} variant="outlined">
+            <Table
+              sx={{
+                minWidth: 650,
+                "tbody, thead": {
+                  "td, th": {
+                    borderRight: `1px solid ${grey[300]} !important`,
+                    "&:last-of-type": {
+                      borderRight: `0 !important`,
+                    },
+                  },
+                },
+              }}
+              size="small"
+            >
+              <TableHead sx={{ bgcolor: bgColorTh }}>
+                <TableRow>
+                  <TableCell width={70} align="center">
+                    No.
+                  </TableCell>
+                  <TableCell align="center">File Bukti Dukung</TableCell>
+                  <TableCell align="center">Aksi</TableCell>
+                </TableRow>
+                <TableRow
+                  sx={{
+                    ".MuiTableCell-stickyHeader": {
+                      top: 37,
+                    },
+                  }}
+                >
+                  {[...new Array(3)].map((_, i) => (
+                    <TableCell sx={{ bgcolor: grey[100] }}>
+                      <Typography
+                        color={`${grey[500]} !important`}
+                        fontSize={14}
+                        textAlign="center"
+                      >
+                        {i + 1}
+                      </Typography>
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell align="center">1</TableCell>
+                  <TableCell>
+                    DokumenPendukungObjekMRPNdenganTopikSwasembadaPangan.pdf
+                  </TableCell>
+                  <TableCell align="center">
+                    <IconButton color="primary">
+                      <Iconify name="mdi:file-pdf" color="red" size={20} />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Stack>
+        {/* Pengajuan Pengesahan */}
+        <Stack gap={1}>
+          <Typography fontWeight={600}>Pengajuan Pengesahan</Typography>
+          <Box>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={() => setModalOpenAdd(true)}
+            >
+              Catatan
+            </Button>
+          </Box>
+        </Stack>
         {/*<Typography fontWeight={600} mt={1}>*/}
         {/*  Usulan UPR Lintas Sektor*/}
         {/*</Typography>*/}
@@ -228,7 +476,6 @@ export default function TableNotaDinasViewOnly({
         {/*    </Table>*/}
         {/*  </TableContainer>*/}
         {/*</Paper>*/}
-
         <Paper elevation={0} variant="outlined">
           <TableContainer sx={{ py: 1 }}>
             <Table sx={{ minWidth: 650, td: { border: 0 } }} size="small">
@@ -242,55 +489,37 @@ export default function TableNotaDinasViewOnly({
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>
-                    <Typography textAlign="center">Dibuat oleh,</Typography>
-                  </TableCell>
+                  {/* <TableCell>
+                  <Typography textAlign="center">Dibuat oleh,</Typography>
+                </TableCell> */}
                   <TableCell>
                     <Typography textAlign="center">Disetujui oleh,</Typography>
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center">
-                    <Box
-                      position="relative"
-                      width="auto"
-                      display="inline-block"
-                    >
-                      <Box position="relative" zIndex={1}>
-                        {notaDinas.ttd_pembuat && (
+                  {/* <TableCell align="center">
+                  <Box position="relative" width="auto" display="inline-block">
+                    <Box position="relative" zIndex={1}>
+                      {notaDinas.ttd_pembuat && (
+                        <Image
+                          alt="Dibuat oleh"
+                          src={
+                            process.env.NEXT_PUBLIC_BASE_URL_FILES +
+                            notaDinas.ttd_pembuat
+                          }
+                          width={0}
+                          height={0}
+                          sizes="100vw"
+                          style={{ width: "auto", height: "100px" }}
+                        />
+                      )}
+                    </Box>
+                    <Box position="absolute" top={-70} left={-70} zIndex={0}>
+                      {notaDinas.alasan_ttd_pembuat &&
+                        !notaDinas.approve_ttd_pembuat && (
                           <Image
                             alt="Dibuat oleh"
-                            src={
-                              process.env.NEXT_PUBLIC_BASE_URL_FILES +
-                              notaDinas.ttd_pembuat
-                            }
-                            width={0}
-                            height={0}
-                            sizes="100vw"
-                            style={{ width: "auto", height: "100px" }}
-                          />
-                        )}
-                      </Box>
-                      <Box position="absolute" top={-70} left={-70} zIndex={0}>
-                        {notaDinas.alasan_ttd_pembuat &&
-                          !notaDinas.approve_ttd_pembuat && (
-                            <Image
-                              alt="Dibuat oleh"
-                              src="https://res.cloudinary.com/caturteguh/image/upload/v1721703228/mrpn/ttd/stamp-rejected_gdzucv.png"
-                              width={0}
-                              height={0}
-                              sizes="100vw"
-                              style={{
-                                width: "auto",
-                                height: "200px",
-                                opacity: 0.3,
-                              }}
-                            />
-                          )}
-                        {notaDinas.approve_ttd_pembuat && (
-                          <Image
-                            alt="Dibuat oleh"
-                            src="https://res.cloudinary.com/caturteguh/image/upload/v1721703223/mrpn/ttd/stamp-approved_dduusw.png"
+                            src="https://res.cloudinary.com/caturteguh/image/upload/v1721703228/mrpn/ttd/stamp-rejected_gdzucv.png"
                             width={0}
                             height={0}
                             sizes="100vw"
@@ -301,9 +530,23 @@ export default function TableNotaDinasViewOnly({
                             }}
                           />
                         )}
-                      </Box>
+                      {notaDinas.approve_ttd_pembuat && (
+                        <Image
+                          alt="Dibuat oleh"
+                          src="https://res.cloudinary.com/caturteguh/image/upload/v1721703223/mrpn/ttd/stamp-approved_dduusw.png"
+                          width={0}
+                          height={0}
+                          sizes="100vw"
+                          style={{
+                            width: "auto",
+                            height: "200px",
+                            opacity: 0.3,
+                          }}
+                        />
+                      )}
                     </Box>
-                  </TableCell>
+                  </Box>
+                </TableCell> */}
                   <TableCell align="center">
                     <Box
                       position="relative"
@@ -360,21 +603,13 @@ export default function TableNotaDinasViewOnly({
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell sx={{ verticalAlign: "top" }}>
-                    <Stack gap="4px" maxWidth={300} m="0 auto">
-                      <Typography textAlign="center" fontWeight={500}>
-                        {notaDinas.dibuat}
-                      </Typography>
-                      {/*<Divider />*/}
-                      {/*<Typography*/}
-                      {/*  textAlign="center"*/}
-                      {/*  fontSize={14}*/}
-                      {/*  color={grey[700]}*/}
-                      {/*>*/}
-                      {/*  Kepala Biro Hukum*/}
-                      {/*</Typography>*/}
-                    </Stack>
-                  </TableCell>
+                  {/* <TableCell sx={{ verticalAlign: "top" }}>
+                  <Stack gap="4px" maxWidth={300} m="0 auto">
+                    <Typography textAlign="center" fontWeight={500}>
+                      {notaDinas.dibuat}
+                    </Typography>
+                  </Stack>
+                </TableCell> */}
                   <TableCell sx={{ verticalAlign: "top" }}>
                     <Stack gap="4px" maxWidth={300} m="0 auto">
                       <Typography textAlign="center" fontWeight={500}>
@@ -398,6 +633,14 @@ export default function TableNotaDinasViewOnly({
           </TableContainer>
         </Paper>
       </Stack>
-    </>
+      <DialogComponent
+        dialogOpen={modalOpenAdd}
+        dialogClose={() => setModalOpenAdd(false)}
+        title="Catatan Pengajuan Pengesahan"
+        dialogFooter={dialogActionFooter}
+      >
+        <FormNote mode="add" />
+      </DialogComponent>
+    </Fragment>
   );
 }

@@ -132,14 +132,6 @@ perencanaan pembangunan nasional"
                       inherent="Sangat Rendah"
                       note="Sering tidak ingin risiko terjadi"
                     />
-                    <Box>
-                      <AddButton
-                        startIcon={<Iconify name="mdi:search" />}
-                        title="Lihat Referensi Matriks"
-                        onclick={handleModalOpenRef}
-                        filled
-                      />
-                    </Box>
                     <SeleraMatriks levelId={1} levelDampak="rendah" />
                   </Stack>
                 ) : (
@@ -203,14 +195,14 @@ perencanaan pembangunan nasional"
                       inherent="Rendah"
                       note="Terdapat gap ketercapaian target yang dapat diterima"
                     />
-                    <Box>
+                    {/* <Box>
                       <AddButton
                         startIcon={<Iconify name="mdi:search" />}
                         title="Lihat Referensi Matriks"
                         onclick={handleModalOpenRef}
                         filled
                       />
-                    </Box>
+                    </Box> */}
                     <SeleraMatriks levelId={1} levelDampak="konservatif" />
                   </Stack>
                 ) : (
@@ -273,14 +265,14 @@ perencanaan pembangunan nasional"
                       inherent="Sedang"
                       note="Mempertimbangkan Cost & Benefit"
                     />
-                    <Box>
+                    {/* <Box>
                       <AddButton
                         startIcon={<Iconify name="mdi:search" />}
                         title="Lihat Referensi Matriks"
                         onclick={handleModalOpenRef}
                         filled
                       />
-                    </Box>
+                    </Box> */}
                     <SeleraMatriks levelId={1} levelDampak="moderat" />
                   </Stack>
                 ) : (
@@ -347,14 +339,14 @@ perencanaan pembangunan nasional"
                       inherent="Tinggi"
                       note="Diperlukan banyak program inovasi untuk mengambil peluang & mencapai target kinerja dengan difasilitasi RO/Komponen (agar tersedia anggaran)"
                     />
-                    <Box>
+                    {/* <Box>
                       <AddButton
                         startIcon={<Iconify name="mdi:search" />}
                         title="Lihat Referensi Matriks"
                         onclick={handleModalOpenRef}
                         filled
                       />
-                    </Box>
+                    </Box> */}
                     <SeleraMatriks levelId={1} levelDampak="tinggi" />
                   </Stack>
                 ) : (
@@ -461,14 +453,6 @@ perencanaan pembangunan nasional"
         />
       </ToggleButtonGroup>
       {saveButton}
-      <DialogComponent
-        width={1200}
-        dialogOpen={modalOpenRef}
-        dialogClose={handleModalClose}
-        title="Lihat Referensi"
-      >
-        <SeleraMatriks levelId={1} levelDampak="rendah" />
-      </DialogComponent>
     </Fragment>
   );
 }

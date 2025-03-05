@@ -248,10 +248,9 @@ export default function CardItem({
         <CardHeader
           action={
             <>
-              {addButton}
               <Stack direction="row" alignItems="center" gap={0.5}>
                 {downloadButton}
-                {addButton
+                {/* {addButton
                   ? hasPrivilege(permission, pathname, "add")
                     ? addButton
                     : null
@@ -261,20 +260,9 @@ export default function CardItem({
                     hasPrivilege(permission, pathname, "delete")
                     ? settingButton
                     : null
-                  : null}
-              </Stack>
-              {/* {downloadButton}
-              {addButton
-                ? hasPrivilege(permission, pathname, "add")
-                  ? addButton
-                  : null
-                : setting
-                  ? hasPrivilege(permission, pathname, "add") ||
-                    hasPrivilege(permission, pathname, "update") ||
-                    hasPrivilege(permission, pathname, "delete")
-                    ? settingButton
-                    : null
                   : null} */}
+                {addButton ? addButton : setting ? settingButton : null}
+              </Stack>
             </>
           }
           title={
