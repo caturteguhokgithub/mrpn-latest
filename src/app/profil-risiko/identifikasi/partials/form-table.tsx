@@ -191,7 +191,6 @@ export default function FormTable({
             )}
           </FormControl>
         </Grid>
-
         <Grid item xs={12}>
           <FormControl fullWidth>
             <Stack
@@ -291,7 +290,30 @@ export default function FormTable({
             </Stack>
           </FormControl>
         </Grid>
-
+        <Grid item xs={12}>
+          <FormControl fullWidth>
+            <FieldLabelInfo title="Area Dampak" />
+            {mode === "read" ? (
+              <Typography fontWeight={500}>
+                {"request.peristiwa_risiko"}
+              </Typography>
+            ) : (
+              <TextareaStyled
+                aria-label="Area Dampak"
+                placeholder="Area Dampak"
+                value={"request.peristiwa_risiko"}
+                onChange={(e) =>
+                  setRequest((prevState) => {
+                    return {
+                      ...prevState,
+                      peristiwa_risiko: e.target.value,
+                    };
+                  })
+                }
+              />
+            )}
+          </FormControl>
+        </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
             <Stack
