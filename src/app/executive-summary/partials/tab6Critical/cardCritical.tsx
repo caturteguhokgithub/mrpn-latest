@@ -31,7 +31,13 @@ const ProjectType = ({ label, color }: { label: string; color: string }) => {
   );
 };
 
-export default function CardCritical({ project }: { project?: string }) {
+export default function CardCritical({
+  project,
+  title,
+}: {
+  project?: string;
+  title?: string;
+}) {
   const {
     optionRO,
     optionStrategy,
@@ -98,7 +104,7 @@ export default function CardCritical({ project }: { project?: string }) {
   return (
     <>
       <CardItem
-        title="Critical Path"
+        title={title ? title : "Critical Path"}
         infoTooltip={
           <div>
             <p>

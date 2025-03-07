@@ -191,12 +191,12 @@ export default function FormIndication({
 
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Indikasi Risiko" />
+            <FieldLabelInfo title="Indikasi Peristiwa Risiko" />
             <TextareaStyled
               value={state.indikasi_risiko}
               minRows={2}
-              aria-label="Tuliskan indikasi risiko"
-              placeholder="Tuliskan indikasi risiko"
+              aria-label="Tuliskan indikasi peristiwa risiko"
+              placeholder="Tuliskan indikasi peristiwa risiko"
               onChange={(e) =>
                 setState((prevState) => {
                   return {

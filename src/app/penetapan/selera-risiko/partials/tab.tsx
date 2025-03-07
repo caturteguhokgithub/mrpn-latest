@@ -99,7 +99,7 @@ export default function TabInternalEksternal({}) {
             icon={<IconFA size={16} name="gavel" />}
           />
           <Tab
-            label="Critical Path"
+            label="Perencanaan Lintasan Kritis"
             {...a11yProps(2)}
             iconPosition="start"
             icon={<IconFA size={16} name="exclamation-triangle" />}
@@ -152,7 +152,7 @@ export default function TabInternalEksternal({}) {
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <CardCritical />
+          <CardCritical title="Perencanaan Lintasan Kritis" />
         )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
