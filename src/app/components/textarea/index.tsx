@@ -4,7 +4,7 @@ import { TextareaAutosize as BaseTextareaAutosize } from "@mui/base/TextareaAuto
 import { grey, blue } from "@mui/material/colors";
 
 export const TextareaStyled = styled(BaseTextareaAutosize)(
-    ({ theme }: any) => `
+  ({ theme }: any) => `
         width: 100%;
         box-sizing: border-box;
         font-family: 'Poppins', sans-serif;
@@ -16,11 +16,11 @@ export const TextareaStyled = styled(BaseTextareaAutosize)(
         color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
         background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
         border: 1px solid ${
-        theme.palette.mode === "dark" ? grey[700] : grey[400]
-    };
+          theme.palette.mode === "dark" ? grey[700] : grey[400]
+        };
         box-shadow: 0px 2px 2px ${
-        theme.palette.mode === "dark" ? grey[900] : grey[50]
-    };
+          theme.palette.mode === "dark" ? grey[900] : grey[50]
+        };
     
         &:hover {
           border-color: ${blue[400]};
@@ -29,8 +29,8 @@ export const TextareaStyled = styled(BaseTextareaAutosize)(
         &:focus {
           border-color: ${blue[400]};
           box-shadow: 0 0 0 3px ${
-        theme.palette.mode === "dark" ? blue[600] : blue[200]
-    };
+            theme.palette.mode === "dark" ? blue[600] : blue[200]
+          };
         }
     
         // firefox
@@ -40,22 +40,21 @@ export const TextareaStyled = styled(BaseTextareaAutosize)(
       `
 );
 
-export default function TextareaComponent(
-{
+export default function TextareaComponent({
   label,
   placeholder,
   row,
   value,
-  width
+  width,
 }: {
-    label: string;
-    placeholder: string;
-    row?: number;
-    value?: string;
-    width?: number | string;
+  label?: string;
+  placeholder: string;
+  row?: number;
+  value?: string;
+  width?: number | string;
 }) {
-    const Textarea = styled(BaseTextareaAutosize)(
-        ({ theme }: any) => `
+  const Textarea = styled(BaseTextareaAutosize)(
+    ({ theme }: any) => `
         width: ${width};
         box-sizing: border-box;
         font-family: 'Poppins', sans-serif;
@@ -67,10 +66,10 @@ export default function TextareaComponent(
         color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
         background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
         border: 1px solid ${
-            theme.palette.mode === "dark" ? grey[700] : grey[400]
+          theme.palette.mode === "dark" ? grey[700] : grey[400]
         };
         box-shadow: 0px 2px 2px ${
-            theme.palette.mode === "dark" ? grey[900] : grey[50]
+          theme.palette.mode === "dark" ? grey[900] : grey[50]
         };
     
         &:hover {
@@ -81,7 +80,7 @@ export default function TextareaComponent(
           border-color: ${blue[400]};
           box-shadow: 0 0 0 3px ${
             theme.palette.mode === "dark" ? blue[600] : blue[200]
-        };
+          };
         }
     
         // firefox
@@ -89,15 +88,15 @@ export default function TextareaComponent(
           outline: 0;
         }
       `
-    );
+  );
 
-    return (
-        <Textarea
-            aria-label={label}
-            minRows={row ? row : 3}
-            placeholder={placeholder}
-            value={value}
-            sx={{ width: width }}
-        />
-    );
+  return (
+    <Textarea
+      aria-label={label}
+      minRows={row ? row : 3}
+      placeholder={placeholder}
+      value={value}
+      sx={{ width: width }}
+    />
+  );
 }

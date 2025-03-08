@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  alpha,
   Paper,
   Table,
   TableBody,
@@ -13,6 +12,7 @@ import theme from "@/theme";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import { bgColorTh } from "@/app/utils/color";
+import { grey } from "@mui/material/colors";
 
 export default function TableKemungkinan({ mode }: { mode?: string }) {
   function createData(
@@ -65,11 +65,24 @@ export default function TableKemungkinan({ mode }: { mode?: string }) {
 
   return (
     <TableContainer component={Paper} elevation={0} variant="outlined">
-      <Table sx={{ minWidth: 650 }} size="small">
+      <Table
+        size="small"
+        sx={{
+          minWidth: 650,
+          "tbody, thead": {
+            "td, th": {
+              borderRight: `1px solid ${grey[300]} !important`,
+              "&:last-of-type": {
+                borderRight: `0 !important`,
+              },
+            },
+          },
+        }}
+      >
         <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
           <TableRow>
             {/* <TableCell width="70px"></TableCell> */}
-            <TableCell rowSpan={3} sx={{ bgcolor: bgColorTh }}>
+            <TableCell rowSpan={3} sx={{ bgcolor: bgColorTh }} align="center">
               Level Kemungkinan
             </TableCell>
             <TableCell colSpan={3} align="center" sx={{ bgcolor: bgColorTh }}>
@@ -80,13 +93,17 @@ export default function TableKemungkinan({ mode }: { mode?: string }) {
             <TableCell colSpan={2} align="center" sx={{ bgcolor: bgColorTh }}>
               Non low frequency event dalam 1 periode analisis
             </TableCell>
-            <TableCell rowSpan={2} sx={{ bgcolor: bgColorTh }}>
+            <TableCell rowSpan={2} sx={{ bgcolor: bgColorTh }} align="center">
               Low frequency event
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell sx={{ bgcolor: bgColorTh }}>Probabilitias</TableCell>
-            <TableCell sx={{ bgcolor: bgColorTh }}>Jumlah Frekuensi</TableCell>
+            <TableCell sx={{ bgcolor: bgColorTh }} align="center">
+              Probabilitias
+            </TableCell>
+            <TableCell sx={{ bgcolor: bgColorTh }} align="center">
+              Jumlah Frekuensi
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

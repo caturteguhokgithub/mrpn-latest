@@ -1,34 +1,16 @@
 import React, { SetStateAction } from "react";
 import {
-  Autocomplete,
-  Box,
-  Button,
   Checkbox,
-  Chip,
-  Divider,
   FormControl,
   FormControlLabel,
   Grid,
-  Icon,
   IconButton,
-  MenuItem,
-  Paper,
-  SelectChangeEvent,
   Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TextField,
   Typography,
 } from "@mui/material";
-import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
+import { TextareaStyled } from "@/app/components/textarea";
 import { red } from "@mui/material/colors";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import theme from "@/theme";
 import HeaderIdentifikasi from "./header";
 import {
   IdentificationRiskAddReqDto,
@@ -37,7 +19,6 @@ import {
 import { AutocompleteSelectSingle } from "@/components/autocomplete";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
-import { ActionIcon } from "@/components/actions/action";
 import AddButton from "@/components/buttonAdd";
 import { IconFA } from "@/components/icons/icon-fa";
 import { GetTarget } from "@/lib/utils/common";
