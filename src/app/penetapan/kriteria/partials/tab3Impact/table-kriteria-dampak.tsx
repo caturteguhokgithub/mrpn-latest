@@ -1,30 +1,20 @@
 import React from "react";
 import {
-  alpha,
   Button,
   DialogActions,
-  Icon,
-  IconButton,
   Paper,
-  Stack,
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
-  Typography,
 } from "@mui/material";
-import theme from "@/theme";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
 import DialogComponent from "@/app/components/dialog";
 import FormDampak from "./form-dampak";
 import dataImpact from "./impact.json";
-import ActionColumn from "@/app/components/actions/action";
 import DialogDelete from "@/app/components/dialogDelete";
 import { bgColorTh } from "@/app/utils/color";
+import { grey } from "@mui/material/colors";
 
 export default function TableDampak({ mode }: { mode?: string }) {
   const [modalAdd, setModalAdd] = React.useState(false);
@@ -55,10 +45,22 @@ export default function TableDampak({ mode }: { mode?: string }) {
   return (
     <>
       <Paper sx={{ overflowX: "auto" }} elevation={0} variant="outlined">
-        <Table size="small">
+        <Table
+          size="small"
+          sx={{
+            "tbody, thead": {
+              "td, th": {
+                borderRight: `1px solid ${grey[300]} !important`,
+                "&:last-of-type": {
+                  borderRight: `0 !important`,
+                },
+              },
+            },
+          }}
+        >
           <TableHead sx={{ bgcolor: bgColorTh }}>
             <TableRow>
-              <TableCell rowSpan={3} colSpan={2}>
+              <TableCell rowSpan={3} colSpan={2} align="center">
                 Area Dampak
               </TableCell>
               <TableCell colSpan={5} align="center">
@@ -67,18 +69,18 @@ export default function TableDampak({ mode }: { mode?: string }) {
               {/* <TableCell rowSpan={3}>Action</TableCell> */}
             </TableRow>
             <TableRow>
-              <TableCell>1</TableCell>
-              <TableCell>2</TableCell>
-              <TableCell>3</TableCell>
-              <TableCell>4</TableCell>
-              <TableCell>5</TableCell>
+              <TableCell align="center">1</TableCell>
+              <TableCell align="center">2</TableCell>
+              <TableCell align="center">3</TableCell>
+              <TableCell align="center">4</TableCell>
+              <TableCell align="center">5</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Tidak Signifikan</TableCell>
-              <TableCell>Minor</TableCell>
-              <TableCell>Moderat</TableCell>
-              <TableCell>Signifikan</TableCell>
-              <TableCell>Sangat Signifikan</TableCell>
+              <TableCell align="center">Tidak Signifikan</TableCell>
+              <TableCell align="center">Minor</TableCell>
+              <TableCell align="center">Moderat</TableCell>
+              <TableCell align="center">Signifikan</TableCell>
+              <TableCell align="center">Sangat Signifikan</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

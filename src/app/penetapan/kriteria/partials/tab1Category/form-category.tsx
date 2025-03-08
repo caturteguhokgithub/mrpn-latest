@@ -5,7 +5,6 @@ import {
   DialogActions,
   FormControl,
   Grid,
-  IconButton,
   Paper,
   Stack,
   TextField,
@@ -14,8 +13,6 @@ import {
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 import AddButton from "@/app/components/buttonAdd";
 import TextareaComponent from "@/app/components/textarea";
-import { IconFA } from "@/app/components/icons/icon-fa";
-import { red } from "@mui/material/colors";
 import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
 import Iconify from "@/app/components/icons/iconify";
 import DialogComponent from "@/app/components/dialog";
@@ -50,7 +47,7 @@ const ItemDampak = ({
   );
 };
 
-export default function FormDampak({ mode }: { mode?: string }) {
+export default function FormCategory({ mode }: { mode?: string }) {
   const [items, setItem] = React.useState([{ id: 1 }]);
 
   const add = () => {
@@ -76,12 +73,7 @@ export default function FormDampak({ mode }: { mode?: string }) {
     setItem(newArr);
   };
 
-  const listAreaDampak = [
-    "Keuangan Negara",
-    "Reputasi",
-    "Layanan Publik",
-    "Capaian Kinerja",
-  ];
+  const listCategory = ["Ekonomi", "Geopolitik", "Teknologi"];
 
   const [value, setValue] = React.useState(null);
 
@@ -105,13 +97,13 @@ export default function FormDampak({ mode }: { mode?: string }) {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Area Dampak" titleField />
+            <FieldLabelInfo title="Kategori" titleField />
             <AutocompleteSelectSingle
               value={value}
-              options={listAreaDampak.map((option) => option)}
+              options={listCategory.map((option) => option)}
               getOptionLabel={(option) => `${option}`}
               handleChange={(newValue: any) => handleChangeSelect(newValue)}
-              placeHolder={"Pilih area dampak"}
+              placeHolder={"Pilih kategori"}
               actionButton={
                 <Button
                   fullWidth
@@ -120,10 +112,16 @@ export default function FormDampak({ mode }: { mode?: string }) {
                   startIcon={<Iconify name="mdi:plus-circle" />}
                   onMouseDown={() => setModalOpenAdd(true)}
                 >
-                  Tambah Area Dampak
+                  Tambah Kategori
                 </Button>
               }
             />
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControl fullWidth>
+            <FieldLabelInfo title="Uraian" titleField />
+            <TextareaComponent row={2} label="" placeholder="Uraian" />
           </FormControl>
         </Grid>
         <Grid item xs={12}>
@@ -132,9 +130,14 @@ export default function FormDampak({ mode }: { mode?: string }) {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Typography fontWeight={600}>Dampak</Typography>
+            <Typography fontWeight={600}>Sub Kategori</Typography>
             <Box>
-              <AddButton title="Tambah Dampak" small noMargin onclick={add} />
+              <AddButton
+                title="Tambah Sub Kategori"
+                small
+                noMargin
+                onclick={add}
+              />
             </Box>
           </Stack>
         </Grid>
@@ -153,10 +156,11 @@ export default function FormDampak({ mode }: { mode?: string }) {
                     <FormControl fullWidth>
                       <Stack justifyContent="space-between" direction="row">
                         <Typography fontWeight={600}>
-                          Dampak #{key + 1}
+                          Sub Kategori #{key + 1}
                         </Typography>
                         {key > 0 && (
                           <AddButton
+                            small
                             errorColor
                             title="Hapus"
                             noMargin
@@ -169,54 +173,20 @@ export default function FormDampak({ mode }: { mode?: string }) {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth>
                       <TextareaComponent
+                        width="100%"
                         row={2}
                         label=""
-                        placeholder="Dampak"
+                        placeholder="Sub Kategori"
                       />
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} md={6}>
-                    <ItemDampak number={1}>
-                      <TextareaComponent
-                        row={2}
-                        label=""
-                        placeholder="Tidak Signifikan"
-                      />
-                    </ItemDampak>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <ItemDampak number={2}>
-                      <TextareaComponent row={2} label="" placeholder="Minor" />
-                    </ItemDampak>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <ItemDampak number={3}>
-                      <TextareaComponent
-                        row={2}
-                        label=""
-                        placeholder="Moderat"
-                      />
-                    </ItemDampak>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <ItemDampak number={4}>
-                      <TextareaComponent
-                        width="100%"
-                        row={2}
-                        label=""
-                        placeholder="Signifikan"
-                      />
-                    </ItemDampak>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <ItemDampak number={5}>
-                      <TextareaComponent
-                        width="100%"
-                        row={2}
-                        label=""
-                        placeholder="Sangat Signifikan"
-                      />
-                    </ItemDampak>
+                    <TextareaComponent
+                      width="100%"
+                      row={2}
+                      label=""
+                      placeholder="Uraian"
+                    />
                   </Grid>
                 </Grid>
               </Paper>
@@ -224,23 +194,6 @@ export default function FormDampak({ mode }: { mode?: string }) {
           </Stack>
         </Grid>
       </Grid>
-      <DialogComponent
-        width={500}
-        dialogOpen={modalOpenAdd}
-        dialogClose={() => setModalOpenAdd(false)}
-        title="Tambah Area Dampak"
-        dialogFooter={dialogActionFooter}
-      >
-        <TextField
-          fullWidth
-          variant="outlined"
-          size="small"
-          placeholder="Area Dampak"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-      </DialogComponent>
     </Fragment>
   );
 }

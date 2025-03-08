@@ -31,17 +31,17 @@ export default function CardDampak() {
     <>
       <CardItem
         title="Kriteria Dampak"
-        // addButton={
-        //   <Button
-        //     variant="contained"
-        //     size="small"
-        //     startIcon={<AddCircle />}
-        //     sx={{ lineHeight: 1, py: 1, borderRadius: 24 }}
-        //     onClick={handleModalOpenAdd}
-        //   >
-        //     Tambah Kriteria Dampak
-        //   </Button>
-        // }
+        addButton={
+          <Button
+            variant="contained"
+            size="small"
+            startIcon={<AddCircle />}
+            sx={{ lineHeight: 1, py: 1, borderRadius: 24 }}
+            onClick={handleModalOpenAdd}
+          >
+            Tambah Kriteria Dampak
+          </Button>
+        }
       >
         <TableDampak mode="view" />
       </CardItem>
