@@ -8,18 +8,17 @@ import { DialogActions, Button } from "@mui/material";
 
 export default function CardKemungkinan() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
-
-  const handleModalOpenAdd = () => {
-    setModalOpenAdd(true);
-  };
-
-  const handleModalClose = () => {
-    setModalOpenAdd(false);
-  };
+  const [modalOpenEdit, setModalOpenEdit] = React.useState(false);
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
-      <Button onClick={handleModalClose}>Batal</Button>
+      <Button
+        onClick={() => {
+          setModalOpenAdd(false), setModalOpenEdit(false);
+        }}
+      >
+        Batal
+      </Button>
       <Button variant="contained" type="submit">
         Simpan
       </Button>
@@ -30,28 +29,29 @@ export default function CardKemungkinan() {
     <>
       <CardItem
         title="Kriteria Kemungkinan"
-        // addButton={
-        //  <AddButton
-        //   filled
-        //   small
-        //   title="Tambah Kriteria Kemungkinan"
-        //   onclick={handleModalOpenAdd}
-        //  />
-        // }
         setting
-        // settingDeleteOnclick={() => deleteData()}
-        settingEditOnclick={handleModalOpenAdd}
+        settingEditOnclick={() => setModalOpenEdit(true)}
+        settingAddOnclick={() => setModalOpenAdd(true)}
       >
         <TableKemungkinan mode="view" />
       </CardItem>
       <DialogComponent
         width={1200}
         dialogOpen={modalOpenAdd}
-        dialogClose={handleModalClose}
+        dialogClose={() => setModalOpenAdd(false)}
         title="Tambah Kriteria Kemungkinan"
         dialogFooter={dialogActionFooter}
       >
         <FormKemungkinan mode="add" />
+      </DialogComponent>
+      <DialogComponent
+        width={1200}
+        dialogOpen={modalOpenEdit}
+        dialogClose={() => setModalOpenEdit(false)}
+        title="Ubah Kriteria Kemungkinan"
+        dialogFooter={dialogActionFooter}
+      >
+        <FormKemungkinan mode="edit" />
       </DialogComponent>
     </>
   );

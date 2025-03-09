@@ -98,101 +98,127 @@ export default function FormCategory({ mode }: { mode?: string }) {
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Kategori" titleField />
-            <AutocompleteSelectSingle
-              value={value}
-              options={listCategory.map((option) => option)}
-              getOptionLabel={(option) => `${option}`}
-              handleChange={(newValue: any) => handleChangeSelect(newValue)}
-              placeHolder={"Pilih kategori"}
-              actionButton={
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  color="primary"
-                  startIcon={<Iconify name="mdi:plus-circle" />}
-                  onMouseDown={() => setModalOpenAdd(true)}
-                >
-                  Tambah Kategori
-                </Button>
-              }
-            />
+            {mode == "edit" ? (
+              <TextField
+                fullWidth
+                value="Ekonomi"
+                variant="outlined"
+                size="small"
+                placeholder="Kategori"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            ) : (
+              <AutocompleteSelectSingle
+                value={value}
+                options={listCategory.map((option) => option)}
+                getOptionLabel={(option) => `${option}`}
+                handleChange={(newValue: any) => handleChangeSelect(newValue)}
+                placeHolder={"Pilih kategori"}
+                actionButton={
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<Iconify name="mdi:plus-circle" />}
+                    onMouseDown={() => setModalOpenAdd(true)}
+                  >
+                    Tambah Kategori
+                  </Button>
+                }
+              />
+            )}
           </FormControl>
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Uraian" titleField />
-            <TextareaComponent row={2} label="" placeholder="Uraian" />
+            <TextareaComponent
+              row={2}
+              label="Uraian"
+              placeholder="Uraian"
+              value={
+                mode == "edit"
+                  ? "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
+                  : ""
+              }
+            />
           </FormControl>
         </Grid>
-        <Grid item xs={12}>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Typography fontWeight={600}>Sub Kategori</Typography>
-            <Box>
-              <AddButton
-                title="Tambah Sub Kategori"
-                small
-                noMargin
-                onclick={add}
-              />
-            </Box>
-          </Stack>
-        </Grid>
-        <Grid item xs={12}>
-          <Stack gap={2}>
-            {/* ITEM DAMPAK */}
-            {items.map((tags: any, key: any) => (
-              <Paper
-                key={`${tags.id}`}
-                variant="outlined"
-                elevation={0}
-                sx={{ p: 2, minWidth: "0 !important" }}
+        {mode !== "edit" && (
+          <Fragment>
+            <Grid item xs={12}>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
               >
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <FormControl fullWidth>
-                      <Stack justifyContent="space-between" direction="row">
-                        <Typography fontWeight={600}>
-                          Sub Kategori #{key + 1}
-                        </Typography>
-                        {key > 0 && (
-                          <AddButton
-                            small
-                            errorColor
-                            title="Hapus"
-                            noMargin
-                            onclick={() => minus(tags.id)}
+                <Typography fontWeight={600}>Sub Kategori</Typography>
+                <Box>
+                  <AddButton
+                    title="Tambah Sub Kategori"
+                    small
+                    noMargin
+                    onclick={add}
+                  />
+                </Box>
+              </Stack>
+            </Grid>
+            <Grid item xs={12}>
+              <Stack gap={2}>
+                {/* ITEM DAMPAK */}
+                {items.map((tags: any, key: any) => (
+                  <Paper
+                    key={`${tags.id}`}
+                    variant="outlined"
+                    elevation={0}
+                    sx={{ p: 2, minWidth: "0 !important" }}
+                  >
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <FormControl fullWidth>
+                          <Stack justifyContent="space-between" direction="row">
+                            <Typography fontWeight={600}>
+                              Sub Kategori #{key + 1}
+                            </Typography>
+                            {key > 0 && (
+                              <AddButton
+                                small
+                                errorColor
+                                title="Hapus"
+                                noMargin
+                                onclick={() => minus(tags.id)}
+                              />
+                            )}
+                          </Stack>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <FormControl fullWidth>
+                          <TextareaComponent
+                            width="100%"
+                            row={2}
+                            label=""
+                            placeholder="Sub Kategori"
                           />
-                        )}
-                      </Stack>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <FormControl fullWidth>
-                      <TextareaComponent
-                        width="100%"
-                        row={2}
-                        label=""
-                        placeholder="Sub Kategori"
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <TextareaComponent
-                      width="100%"
-                      row={2}
-                      label=""
-                      placeholder="Uraian"
-                    />
-                  </Grid>
-                </Grid>
-              </Paper>
-            ))}
-          </Stack>
-        </Grid>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <TextareaComponent
+                          width="100%"
+                          row={2}
+                          label=""
+                          placeholder="Uraian"
+                        />
+                      </Grid>
+                    </Grid>
+                  </Paper>
+                ))}
+              </Stack>
+            </Grid>
+          </Fragment>
+        )}
       </Grid>
     </Fragment>
   );

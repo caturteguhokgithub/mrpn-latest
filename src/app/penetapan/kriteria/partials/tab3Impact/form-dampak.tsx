@@ -106,123 +106,187 @@ export default function FormDampak({ mode }: { mode?: string }) {
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Area Dampak" titleField />
-            <AutocompleteSelectSingle
-              value={value}
-              options={listAreaDampak.map((option) => option)}
-              getOptionLabel={(option) => `${option}`}
-              handleChange={(newValue: any) => handleChangeSelect(newValue)}
-              placeHolder={"Pilih area dampak"}
-              actionButton={
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  color="primary"
-                  startIcon={<Iconify name="mdi:plus-circle" />}
-                  onMouseDown={() => setModalOpenAdd(true)}
-                >
-                  Tambah Area Dampak
-                </Button>
-              }
-            />
+            {mode == "edit" ? (
+              <Typography>Keuangan Negara</Typography>
+            ) : (
+              <Fragment>
+                {mode == "edit-area" ? (
+                  <TextField
+                    fullWidth
+                    value="Keuangan Negara"
+                    variant="outlined"
+                    size="small"
+                    placeholder="Area Dampak"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                ) : (
+                  <AutocompleteSelectSingle
+                    value={value}
+                    options={listAreaDampak.map((option) => option)}
+                    getOptionLabel={(option) => `${option}`}
+                    handleChange={(newValue: any) =>
+                      handleChangeSelect(newValue)
+                    }
+                    placeHolder={"Pilih area dampak"}
+                    actionButton={
+                      <Button
+                        fullWidth
+                        variant="outlined"
+                        color="primary"
+                        startIcon={<Iconify name="mdi:plus-circle" />}
+                        onMouseDown={() => setModalOpenAdd(true)}
+                      >
+                        Tambah Area Dampak
+                      </Button>
+                    }
+                  />
+                )}
+              </Fragment>
+            )}
           </FormControl>
         </Grid>
-        <Grid item xs={12}>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Typography fontWeight={600}>Dampak</Typography>
-            <Box>
-              <AddButton title="Tambah Dampak" small noMargin onclick={add} />
-            </Box>
-          </Stack>
-        </Grid>
-        <Grid item xs={12}>
-          <Stack gap={2}>
-            {/* ITEM DAMPAK */}
-            {items.map((tags: any, key: any) => (
-              <Paper
-                key={`${tags.id}`}
-                variant="outlined"
-                elevation={0}
-                sx={{ p: 2, minWidth: "0 !important" }}
+        {mode !== "edit-area" && (
+          <Fragment>
+            <Grid item xs={12}>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
               >
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <FormControl fullWidth>
-                      <Stack justifyContent="space-between" direction="row">
-                        <Typography fontWeight={600}>
-                          Dampak #{key + 1}
-                        </Typography>
-                        {key > 0 && (
-                          <AddButton
-                            errorColor
-                            title="Hapus"
-                            noMargin
-                            onclick={() => minus(tags.id)}
+                <Typography fontWeight={600}>Dampak</Typography>
+                {mode !== "edit" && (
+                  <Box>
+                    <AddButton
+                      title="Tambah Dampak"
+                      small
+                      noMargin
+                      onclick={add}
+                    />
+                  </Box>
+                )}
+              </Stack>
+            </Grid>
+            <Grid item xs={12}>
+              <Stack gap={2}>
+                {/* ITEM DAMPAK */}
+                {items.map((tags: any, key: any) => (
+                  <Paper
+                    key={`${tags.id}`}
+                    variant="outlined"
+                    elevation={0}
+                    sx={{ p: 2, minWidth: "0 !important" }}
+                  >
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <FormControl fullWidth>
+                          <Stack justifyContent="space-between" direction="row">
+                            <Typography fontWeight={600}>
+                              Dampak #{key + 1}
+                            </Typography>
+                            {key > 0 && (
+                              <AddButton
+                                errorColor
+                                title="Hapus"
+                                noMargin
+                                onclick={() => minus(tags.id)}
+                              />
+                            )}
+                          </Stack>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <FormControl fullWidth>
+                          <TextareaComponent
+                            row={2}
+                            label="Dampak"
+                            placeholder="Dampak"
+                            value={
+                              mode == "edit"
+                                ? "Jumlah keluhan atau prosentase berita negatif dari total berita tentang Obyek MRPN LS"
+                                : ""
+                            }
                           />
-                        )}
-                      </Stack>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <FormControl fullWidth>
-                      <TextareaComponent
-                        row={2}
-                        label=""
-                        placeholder="Dampak"
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <ItemDampak number={1}>
-                      <TextareaComponent
-                        row={2}
-                        label=""
-                        placeholder="Tidak Signifikan"
-                      />
-                    </ItemDampak>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <ItemDampak number={2}>
-                      <TextareaComponent row={2} label="" placeholder="Minor" />
-                    </ItemDampak>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <ItemDampak number={3}>
-                      <TextareaComponent
-                        row={2}
-                        label=""
-                        placeholder="Moderat"
-                      />
-                    </ItemDampak>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <ItemDampak number={4}>
-                      <TextareaComponent
-                        width="100%"
-                        row={2}
-                        label=""
-                        placeholder="Signifikan"
-                      />
-                    </ItemDampak>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <ItemDampak number={5}>
-                      <TextareaComponent
-                        width="100%"
-                        row={2}
-                        label=""
-                        placeholder="Sangat Signifikan"
-                      />
-                    </ItemDampak>
-                  </Grid>
-                </Grid>
-              </Paper>
-            ))}
-          </Stack>
-        </Grid>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <ItemDampak number={1}>
+                          <TextareaComponent
+                            row={2}
+                            label="Tidak Signifikan"
+                            placeholder="Tidak Signifikan"
+                            value={
+                              mode == "edit" ? "Jumlah Keluhan x ≤ 10" : ""
+                            }
+                          />
+                        </ItemDampak>
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <ItemDampak number={2}>
+                          <TextareaComponent
+                            row={2}
+                            label="Minor"
+                            placeholder="Minor"
+                            value={
+                              mode == "edit"
+                                ? "Prosentase pemberitaan negatif 10% < x ≤ 20%"
+                                : ""
+                            }
+                          />
+                        </ItemDampak>
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <ItemDampak number={3}>
+                          <TextareaComponent
+                            row={2}
+                            label="Moderat"
+                            placeholder="Moderat"
+                            value={
+                              mode == "edit"
+                                ? "Prosentase pemberitaan negatif 20% < x ≤ 30%"
+                                : ""
+                            }
+                          />
+                        </ItemDampak>
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <ItemDampak number={4}>
+                          <TextareaComponent
+                            width="100%"
+                            row={2}
+                            label="Signifikan"
+                            placeholder="Signifikan"
+                            value={
+                              mode == "edit"
+                                ? "Prosentase pemberitaan negatif 30% < x ≤ 40%"
+                                : ""
+                            }
+                          />
+                        </ItemDampak>
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <ItemDampak number={5}>
+                          <TextareaComponent
+                            width="100%"
+                            row={2}
+                            label="Sangat Signifikan"
+                            placeholder="Sangat Signifikan"
+                            value={
+                              mode == "edit"
+                                ? "Prosentase pemberitaan negatif > 40%"
+                                : ""
+                            }
+                          />
+                        </ItemDampak>
+                      </Grid>
+                    </Grid>
+                  </Paper>
+                ))}
+              </Stack>
+            </Grid>
+          </Fragment>
+        )}
       </Grid>
       <DialogComponent
         width={500}

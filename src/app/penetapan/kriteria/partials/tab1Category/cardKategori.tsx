@@ -2,11 +2,8 @@ import React from "react";
 import { Button, DialogActions } from "@mui/material";
 import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
-import TableKategori from "./table-kategori";
-import FormKategoriField from "./form-kategori-field";
 import CollapsibleTable from "./table-kategori-collapsible";
 import FormCategory from "./form-category";
-import FormCategoryOnly from "./form-category-only";
 import DialogDelete from "@/app/components/dialogDelete";
 
 export default function CardKategori() {
@@ -44,7 +41,7 @@ export default function CardKategori() {
           </>
         }
         setting
-        settingEditOnclick={() => setModalOpenAdd(true)}
+        settingAddOnclickOnly={() => setModalOpenAdd(true)}
       >
         {/* <TableKategori mode="view" /> */}
         <CollapsibleTable
@@ -67,7 +64,7 @@ export default function CardKategori() {
         title="Ubah Kategori"
         dialogFooter={dialogActionFooter}
       >
-        <FormCategoryOnly />
+        <FormCategory mode="edit" />
       </DialogComponent>
       <DialogDelete
         title="Hapus Data"
