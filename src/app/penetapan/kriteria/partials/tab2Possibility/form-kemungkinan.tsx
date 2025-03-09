@@ -39,6 +39,7 @@ export default function FormKemungkinan({ mode }: { mode?: string }) {
                   placeholder="Probabilitias"
                   row={2}
                   width="100%"
+                  value={mode == "edit" ? "25% < p ≤ 50%" : ""}
                 />
               </TableCell>
               <TableCell>
@@ -46,6 +47,11 @@ export default function FormKemungkinan({ mode }: { mode?: string }) {
                   placeholder="Jumlah Frekuensi"
                   row={2}
                   width="100%"
+                  value={
+                    mode == "edit"
+                      ? "6 kali s.d 9 kali dalam 12 bulan terkahir"
+                      : ""
+                  }
                 />
               </TableCell>
               <TableCell>
@@ -53,6 +59,11 @@ export default function FormKemungkinan({ mode }: { mode?: string }) {
                   placeholder="Low Frequency Event"
                   row={2}
                   width="100%"
+                  value={
+                    mode == "edit"
+                      ? "Minimal 1 kejadian dalam 3 tahun terakhir"
+                      : ""
+                  }
                 />
               </TableCell>
             </TableRow>

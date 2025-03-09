@@ -94,7 +94,7 @@ export default function TableKemungkinan({ mode }: { mode?: string }) {
               Non low frequency event dalam 1 periode analisis
             </TableCell>
             <TableCell rowSpan={2} sx={{ bgcolor: bgColorTh }} align="center">
-              Low frequency event
+              Low Frequency Event
             </TableCell>
           </TableRow>
           <TableRow>
