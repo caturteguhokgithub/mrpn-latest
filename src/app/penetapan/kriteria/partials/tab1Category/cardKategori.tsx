@@ -8,6 +8,7 @@ import DialogDelete from "@/app/components/dialogDelete";
 
 export default function CardKategori() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
+  const [modalOpenAddCategory, setModalOpenAddCategory] = React.useState(false);
   const [modalOpenCategory, setModalOpenCategory] = React.useState(false);
   const [modalOpenDelete, setModalDelete] = React.useState(false);
 
