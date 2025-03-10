@@ -16,7 +16,7 @@ export const LabelRadio = ({
 }) => {
   return (
     <Stack direction="column" justifyContent="flex-start">
-      <Stack direction="row" alignItems="center" gap={1}>
+      {/* <Stack direction="row" alignItems="center" gap={1}>
         <Typography
           component="h2"
           fontSize="18px"
@@ -28,13 +28,7 @@ export const LabelRadio = ({
             {rangeValue && `(Range Matriks ${rangeValue})`}
           </Typography>
         </Typography>
-        {/* <FieldLabelInfo
-     iconOnly
-     titleSection
-     title={heading}
-     information={heading}
-    /> */}
-      </Stack>
+      </Stack> */}
       <Typography
         component="div"
         color={grey[700]}

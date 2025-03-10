@@ -25,6 +25,7 @@ import SeleraMatriks from "../../kriteria/partials/tab4Selera/matriks";
 import DialogComponent from "@/app/components/dialog";
 import AddButton from "@/app/components/buttonAdd";
 import Iconify from "@/app/components/icons/iconify";
+import TableRas from "./table-ras";
 
 export default function RiskContent({
   handleSaveButton,
@@ -96,18 +97,94 @@ export default function RiskContent({
       {/*  <ToggleButton value="bappenas">User Bappenas</ToggleButton>*/}
       {/*  <ToggleButton value="kl">User KL</ToggleButton>*/}
       {/*</ToggleButtonGroup>*/}
-
-      <Stack direction="row" alignItems="center" gap={0.5} mb={3}>
-        <Typography fontSize={18} fontWeight={600}>
-          Risk Appetite Statement (RAS)/Pernyataan Selera Risiko
-        </Typography>
-        <InfoTooltip
-          title="Pernyataan formal yang menentukan sejauh mana perusahaan bersedia mengambil risiko dalam
+      <Stack gap={2}>
+        <Stack direction="row" alignItems="center" gap={0.5}>
+          <Typography fontSize={18} fontWeight={600}>
+            Risk Appetite Statement (RAS)/Pernyataan Selera Risiko
+          </Typography>
+          <InfoTooltip
+            title="Pernyataan formal yang menentukan sejauh mana perusahaan bersedia mengambil risiko dalam
 mencapai tujuan bisnisnya. Hal ini penting dalam membimbing pengambilan keputusan dan
 menetapkan batasan yang diterima oleh perusahaan dalam menghadapi risiko. Selera risiko RPJMN
 dan RKP ditentukan oleh Kementerian yang menyelenggarakan urusan pemerintahan di bidang
 perencanaan pembangunan nasional"
-        />
+          />
+        </Stack>
+        <TableRas />
+      </Stack>
+      <Stack gap={2} mt={3}>
+        <Typography color={grey[600]} fontSize={14} fontStyle="italic">
+          Pilih salah satu untuk memberikan{" "}
+          {userLevel === "bappenas" ? "deskripsi" : "nilai"}
+        </Typography>
+        <ToggleButtonGroup
+          value={valueTheme}
+          exclusive
+          onChange={handleAlignment}
+          aria-label="text alignment"
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr 1fr 1fr",
+            [theme.breakpoints.down("md")]: {
+              gridTemplateColumns: "1fr 1fr",
+            },
+            [theme.breakpoints.down("sm")]: {
+              gridTemplateColumns: "1fr",
+            },
+            gap: 2,
+            button: {
+              "&:hover": {
+                bgcolor: alpha(theme.palette.primary.main, 0.1),
+              },
+              "&.Mui-selected": {
+                bgcolor: theme.palette.primary.main,
+                color: "white",
+                ".MuiBox-root": {
+                  bgcolor: theme.palette.primary.main,
+                  color: "white",
+                  borderRight: "1px solid white",
+                },
+                "&:hover": {
+                  bgcolor: theme.palette.primary.main,
+                  color: "white",
+                },
+              },
+            },
+          }}
+        >
+          <CustomToggleButton
+            //    variant="danger"
+            code={userLevel === "bappenas" ? "Nilai" : null}
+            value="1"
+            //    valueLabel="1-6"
+            label="Rendah"
+            minheight={60}
+          />
+          <CustomToggleButton
+            //    variant="warning"
+            code={userLevel === "bappenas" ? "Nilai" : null}
+            value="2"
+            //    valueLabel="7-12"
+            label="Konservatif"
+            minheight={60}
+          />
+          <CustomToggleButton
+            //    variant="success"
+            code={userLevel === "bappenas" ? "Nilai" : null}
+            value="3"
+            //    valueLabel="13-18"
+            label="Moderat"
+            minheight={60}
+          />
+          <CustomToggleButton
+            //    variant="primary"
+            code={userLevel === "bappenas" ? "Nilai" : null}
+            value="4"
+            //    valueLabel="19-25"
+            label="Tinggi"
+            minheight={60}
+          />
+        </ToggleButtonGroup>
       </Stack>
       <Collapse in={valueTheme === "1"}>
         <Box mb={2}>
@@ -379,79 +456,6 @@ perencanaan pembangunan nasional"
         </Box>
         {/* {saveButton} */}
       </Collapse>
-      <Typography color={grey[600]} fontSize={14} fontStyle="italic">
-        Pilih salah satu untuk memberikan{" "}
-        {userLevel === "bappenas" ? "deskripsi" : "nilai"}
-      </Typography>
-      <ToggleButtonGroup
-        value={valueTheme}
-        exclusive
-        onChange={handleAlignment}
-        aria-label="text alignment"
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr 1fr",
-          [theme.breakpoints.down("md")]: {
-            gridTemplateColumns: "1fr 1fr",
-          },
-          [theme.breakpoints.down("sm")]: {
-            gridTemplateColumns: "1fr",
-          },
-          gap: 2,
-          mt: 2,
-          button: {
-            "&:hover": {
-              bgcolor: alpha(theme.palette.primary.main, 0.1),
-            },
-            "&.Mui-selected": {
-              bgcolor: theme.palette.primary.main,
-              color: "white",
-              ".MuiBox-root": {
-                bgcolor: theme.palette.primary.main,
-                color: "white",
-                borderRight: "1px solid white",
-              },
-              "&:hover": {
-                bgcolor: theme.palette.primary.main,
-                color: "white",
-              },
-            },
-          },
-        }}
-      >
-        <CustomToggleButton
-          //    variant="danger"
-          code={userLevel === "bappenas" ? "Nilai" : null}
-          value="1"
-          //    valueLabel="1-6"
-          label="Rendah"
-          minheight={60}
-        />
-        <CustomToggleButton
-          //    variant="warning"
-          code={userLevel === "bappenas" ? "Nilai" : null}
-          value="2"
-          //    valueLabel="7-12"
-          label="Konservatif"
-          minheight={60}
-        />
-        <CustomToggleButton
-          //    variant="success"
-          code={userLevel === "bappenas" ? "Nilai" : null}
-          value="3"
-          //    valueLabel="13-18"
-          label="Moderat"
-          minheight={60}
-        />
-        <CustomToggleButton
-          //    variant="primary"
-          code={userLevel === "bappenas" ? "Nilai" : null}
-          value="4"
-          //    valueLabel="19-25"
-          label="Tinggi"
-          minheight={60}
-        />
-      </ToggleButtonGroup>
       {saveButton}
     </Fragment>
   );

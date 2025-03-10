@@ -33,7 +33,8 @@ export default function CardSelera() {
         title="Selera Risiko"
         addButton={
           <AddButton
-            startIcon={<Iconify name="mdi:search" />}
+            filled
+            startIcon={<Iconify name="mdi:chart-bar-stacked" />}
             title="Referensi Matriks"
             onclick={() => setModalOpenRef(true)}
           />
