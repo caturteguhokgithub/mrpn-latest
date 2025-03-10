@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   alpha,
   Button,
@@ -96,7 +96,7 @@ export default function TableKategori({ mode }: { mode?: string }) {
   );
 
   return (
-    <>
+    <Fragment>
       <TableContainer
         component={Paper}
         elevation={0}
@@ -165,6 +165,6 @@ export default function TableKategori({ mode }: { mode?: string }) {
       >
         <FormKemungkinan mode="add" />
       </DialogComponent>
-    </>
+    </Fragment>
   );
 }

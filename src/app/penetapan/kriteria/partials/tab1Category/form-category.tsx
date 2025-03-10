@@ -47,7 +47,13 @@ const ItemDampak = ({
   );
 };
 
-export default function FormCategory({ mode }: { mode?: string }) {
+export default function FormCategory({
+  mode,
+  handleOpenCategory,
+}: {
+  mode?: string;
+  handleOpenCategory?: any;
+}) {
   const [items, setItem] = React.useState([{ id: 1 }]);
 
   const add = () => {
@@ -98,7 +104,7 @@ export default function FormCategory({ mode }: { mode?: string }) {
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Kategori" titleField />
-            {mode == "edit" ? (
+            {mode == "edit" || mode == "add-category" ? (
               <TextField
                 fullWidth
                 value="Ekonomi"
@@ -220,6 +226,23 @@ export default function FormCategory({ mode }: { mode?: string }) {
           </Fragment>
         )}
       </Grid>
+      <DialogComponent
+        width={500}
+        dialogOpen={modalOpenAdd}
+        dialogClose={() => setModalOpenAdd(false)}
+        title="Tambah Kategori"
+        dialogFooter={dialogActionFooter}
+      >
+        <TextField
+          fullWidth
+          variant="outlined"
+          size="small"
+          placeholder="Kategori"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+      </DialogComponent>
     </Fragment>
   );
 }
