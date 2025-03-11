@@ -396,24 +396,32 @@ export default function PageAnalisisEvaluasiView({}) {
         }
         withCard={objectState === undefined}
         chooseObject={
-          <FormControl size="small" sx={{ width: "20vw" }}>
-            <AutocompleteSelectSingle
-              rounded
-              value={objectState}
-              options={objects}
-              getOptionLabel={(opt) => `${opt.rkp.code} - ${opt.rkp.value}`}
-              handleChange={(val: MasterListObjectRes) => setObjectState(val)}
-              placeHolder={"Pilih KP"}
-            />
-          </FormControl>
+          year == 0 ? (
+            ""
+          ) : (
+            <FormControl size="small" sx={{ width: "20vw" }}>
+              <AutocompleteSelectSingle
+                rounded
+                value={objectState}
+                options={objects}
+                getOptionLabel={(opt) => `${opt.rkp.code} - ${opt.rkp.value}`}
+                handleChange={(val: MasterListObjectRes) => setObjectState(val)}
+                placeHolder={"Pilih KP"}
+              />
+            </FormControl>
+          )
         }
       >
         {objectState === undefined ? (
           <EmptyState
             dense
             icon={<IconEmptyData width={100} />}
-            title="Pilih KP"
-            description="Silahkan pilih KP terlebih dulu"
+            title={year == 0 ? "Tidak ada data yang ditampilkan" : "Pilih KP"}
+            description={
+              year == 0
+                ? "Silahkan pilih RKP terlebih dulu"
+                : "Silahkan pilih KP terlebih dulu"
+            }
           />
         ) : (
           <MaterialReactTable table={table} />

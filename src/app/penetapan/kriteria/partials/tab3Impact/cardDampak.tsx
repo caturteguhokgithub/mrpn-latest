@@ -1,17 +1,21 @@
-import React from "react";
-import { Button, DialogActions, TextField } from "@mui/material";
+import React, { Fragment } from "react";
+import { Button, DialogActions, Stack, TextField } from "@mui/material";
 import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
 import FormDampak from "./form-dampak";
 import { AddCircle } from "@mui/icons-material";
 import CollapsibleImpactTable from "./table-impact-collapsible";
 import DialogDelete from "@/app/components/dialogDelete";
+import TableDampak from "./table-kriteria-dampak";
+import AddButton from "@/app/components/buttonAdd";
+import Iconify from "@/app/components/icons/iconify";
 
 export default function CardDampak() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalOpenEdit, setModalOpenEdit] = React.useState(false);
   const [modalOpenEditArea, setModalOpenEditArea] = React.useState(false);
   const [modalOpenDelete, setModalDelete] = React.useState(false);
+  const [modalOpenRef, setModalOpenRef] = React.useState(false);
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -31,22 +35,26 @@ export default function CardDampak() {
   );
 
   return (
-    <>
+    <Fragment>
       <CardItem
         title="Kriteria Dampak"
         addButton={
-          <Button
-            variant="contained"
-            size="small"
-            startIcon={<AddCircle />}
-            sx={{ lineHeight: 1, py: 1, borderRadius: 24 }}
-            onClick={() => setModalOpenAdd(true)}
-          >
-            Tambah Kriteria Dampak
-          </Button>
+          <Stack direction="row" alignItems="center">
+            <AddButton
+              filled
+              startIcon={<Iconify name="mdi:chart-bar-stacked" />}
+              title="Referensi Tabel"
+              onclick={() => setModalOpenRef(true)}
+            />
+            <AddButton
+              filled
+              startIcon={<Iconify name="mdi:plus-circle" />}
+              title="Tambah Kriteria Dampak"
+              onclick={() => setModalOpenAdd(true)}
+            />
+          </Stack>
         }
       >
-        {/* <TableDampak mode="view" /> */}
         <CollapsibleImpactTable
           handleEdit={() => setModalOpenEdit(true)}
           handleEditArea={() => setModalOpenEditArea(true)}
@@ -86,6 +94,15 @@ export default function CardDampak() {
         handleCloseModal={() => setModalDelete(false)}
         handleDelete={() => {}}
       />
-    </>
+      <DialogComponent
+        tableMode
+        width={1400}
+        dialogOpen={modalOpenRef}
+        dialogClose={() => setModalOpenRef(false)}
+        title="Referensi Kriteria Dampak"
+      >
+        <TableDampak mode="view" />
+      </DialogComponent>
+    </Fragment>
   );
 }

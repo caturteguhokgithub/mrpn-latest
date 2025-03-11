@@ -261,7 +261,9 @@ export default function CardItem({
                     ? settingButton
                     : null
                   : null} */}
-                {addButton ? addButton : setting ? settingButton : null}
+                {/* {addButton ? addButton : setting ? settingButton : null} */}
+                {addButton}
+                {setting && settingButton}
               </Stack>
             </>
           }

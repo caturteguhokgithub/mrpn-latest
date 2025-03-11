@@ -25,6 +25,13 @@ import { bgColorTh } from "@/app/utils/color";
 import Iconify from "@/app/components/icons/iconify";
 import DialogComponent from "@/app/components/dialog";
 import FormNote from "./form-note";
+import AddButton from "@/app/components/buttonAdd";
+import { VisuallyHiddenInput } from "@/app/utils/constant";
+import { IconFA } from "@/app/components/icons/icon-fa";
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+import DraggableScroll from "@/app/components/cardStakeholder/draggableScroll";
+import { styleOrgChart } from "@/app/executive-summary/style";
+import { SxParams } from "@/app/executive-summary/types";
 
 export default function TableNotaDinasViewOnly({
   notaDinas,
@@ -34,6 +41,7 @@ export default function TableNotaDinasViewOnly({
   actionApprove?: React.ReactNode;
 }) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
+  const [modalViewImage, setModalViewImage] = React.useState(false);
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -51,6 +59,10 @@ export default function TableNotaDinasViewOnly({
     "Kementerian Transmigrasi",
     "Kementerian PU",
   ];
+
+  const statusObject: "plan" | "reject" | "approved" = "plan";
+
+  const sxParamsFull: SxParams = { variant: "full" };
 
   return (
     <Fragment>
@@ -89,26 +101,51 @@ export default function TableNotaDinasViewOnly({
                     :
                   </TableCell>
                   <TableCell>
-                    <Typography>
-                      <Chip
-                        color="primary"
-                        label="Rancangan"
-                        variant="outlined"
-                        sx={{ fontWeight: 600 }}
-                      />
-                      <Chip
-                        color="error"
-                        label="Ditolak"
-                        variant="outlined"
-                        sx={{ fontWeight: 600 }}
-                      />
-                      <Chip
-                        color="success"
-                        label="Disetujui"
-                        variant="outlined"
-                        sx={{ fontWeight: 600 }}
-                      />
-                    </Typography>
+                    <Stack direction="row" alignItems="center" gap={1}>
+                      {statusObject === "plan" ? (
+                        <Fragment>
+                          <Chip
+                            color="primary"
+                            label="Rancangan"
+                            variant="outlined"
+                            sx={{ fontWeight: 600 }}
+                          />
+                          <AddButton
+                            title="Ajukan Pengesahan"
+                            filled
+                            noMargin
+                            startIcon={
+                              <Iconify name="mdi:check-circle" size={16} />
+                            }
+                            onclick={() => {}}
+                          />
+                        </Fragment>
+                      ) : statusObject === "reject" ? (
+                        <Fragment>
+                          <Chip
+                            color="error"
+                            label="Ditolak"
+                            variant="outlined"
+                            sx={{ fontWeight: 600 }}
+                          />
+                          <Typography color={grey[500]} fontSize={14}>
+                            Ditolak tanggal <strong>12 Februari 2025</strong>
+                          </Typography>
+                        </Fragment>
+                      ) : statusObject === "approved" ? (
+                        <Fragment>
+                          <Chip
+                            color="success"
+                            label="Disetujui"
+                            variant="outlined"
+                            sx={{ fontWeight: 600 }}
+                          />
+                          <Typography color={grey[500]} fontSize={14}>
+                            Disahkan tanggal <strong>5 September 2025</strong>
+                          </Typography>
+                        </Fragment>
+                      ) : null}
+                    </Stack>
                   </TableCell>
                 </TableRow>
                 {/* <TableRow>
@@ -304,7 +341,33 @@ export default function TableNotaDinasViewOnly({
         </Stack>
         {/* Bukti Dukung */}
         <Stack gap={1}>
-          <Typography fontWeight={600}>Bukti Dukung</Typography>
+          <Stack
+            direction="row"
+            gap={1}
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Typography fontWeight={600}>Bukti Dukung</Typography>
+            <Button
+              size="small"
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              startIcon={<Iconify name="mdi:upload" size={16} />}
+              sx={{
+                borderRadius: 50,
+                textTransform: "capitalize",
+              }}
+            >
+              Unggah Bukti Dukung
+              <VisuallyHiddenInput
+                type="file"
+                onChange={(event: any) => console.log(event.target.files)}
+                multiple
+              />
+            </Button>
+          </Stack>
           <TableContainer component={Paper} elevation={0} variant="outlined">
             <Table
               sx={{
@@ -355,8 +418,20 @@ export default function TableNotaDinasViewOnly({
                     DokumenPendukungObjekMRPNdenganTopikSwasembadaPangan.pdf
                   </TableCell>
                   <TableCell align="center">
-                    <IconButton color="primary">
+                    <IconButton color="primary" href="/">
                       <Iconify name="mdi:file-pdf" color="red" size={20} />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="center">2</TableCell>
+                  <TableCell>BuktiDukung.jpeg</TableCell>
+                  <TableCell align="center">
+                    <IconButton
+                      color="primary"
+                      onClick={() => setModalViewImage(true)}
+                    >
+                      <Iconify name="mdi:file-image" size={20} />
                     </IconButton>
                   </TableCell>
                 </TableRow>
@@ -366,8 +441,25 @@ export default function TableNotaDinasViewOnly({
         </Stack>
         {/* Pengajuan Pengesahan */}
         <Stack gap={1}>
-          <Typography fontWeight={600}>Pengajuan Pengesahan</Typography>
-          <Box>
+          <Stack
+            direction="row"
+            gap={1}
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Typography fontWeight={600}>Pengajuan Pengesahan</Typography>
+            {statusObject !== "plan" && (
+              <AddButton
+                title="Tambah Catatan"
+                filled
+                noMargin
+                startIcon={<Iconify name="mdi:plus-circle" size={16} />}
+                onclick={() => setModalOpenAdd(true)}
+              />
+            )}
+          </Stack>
+          <Typography>-</Typography>
+          {/* <Box>
             <Button
               color="primary"
               variant="contained"
@@ -375,7 +467,7 @@ export default function TableNotaDinasViewOnly({
             >
               Catatan
             </Button>
-          </Box>
+          </Box> */}
         </Stack>
         {/*<Typography fontWeight={600} mt={1}>*/}
         {/*  Usulan UPR Lintas Sektor*/}
@@ -640,6 +732,67 @@ export default function TableNotaDinasViewOnly({
         dialogFooter={dialogActionFooter}
       >
         <FormNote mode="add" />
+      </DialogComponent>
+      <DialogComponent
+        width="100%"
+        maxHeight="100vh"
+        dialogOpen={modalViewImage}
+        dialogClose={() => setModalViewImage(false)}
+        sx={{
+          ".transform-component-module_wrapper__SPB86": {
+            width: "100%",
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          ".react-transform-component": {
+            width: "100%",
+          },
+          ".MuiDialogContent-root": {
+            p: 0,
+          },
+        }}
+      >
+        <IconButton
+          sx={{ position: "absolute", top: 10, right: 10, zIndex: 9999 }}
+          onClick={() => setModalViewImage(false)}
+        >
+          <IconFA name="circle-xmark" color="red" size={32} />
+        </IconButton>
+        <TransformWrapper
+          initialScale={0.5}
+          minScale={0.1}
+          maxScale={3}
+          limitToBounds={true}
+          doubleClick={{ disabled: false }}
+          wheel={{ disabled: false }}
+          panning={{ disabled: false }}
+        >
+          <TransformComponent>
+            <Box sx={styleOrgChart(sxParamsFull)} mt={4}>
+              <DraggableScroll
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                  paddingBottom: 1,
+                  "&::-webkit-scrollbar": {
+                    height: "3px",
+                  },
+                }}
+              >
+                <Image
+                  alt="Instansi Pelaksana"
+                  src="https://res.cloudinary.com/caturteguh/image/upload/v1741666619/mrpn/document-872506_1280_sanrsj.jpg"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: "100%", height: "auto" }}
+                />
+              </DraggableScroll>
+            </Box>
+          </TransformComponent>
+        </TransformWrapper>
       </DialogComponent>
     </Fragment>
   );

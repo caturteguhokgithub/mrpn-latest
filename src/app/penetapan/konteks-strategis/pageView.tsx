@@ -37,26 +37,34 @@ export default function PageKonteksStrategisView({}) {
         // }`}
         title="Lingkup Objek"
         chooseObject={
-          <FormControl size="small" sx={{ width: "20vw" }}>
-            <AutocompleteSelectSingle
-              key={objects.length}
-              rounded
-              value={objectState}
-              options={objects}
-              getOptionLabel={(opt) => `${opt.rkp.code} - ${opt.rkp.value}`}
-              handleChange={(val: MasterListObjectRes) => setObjectState(val)}
-              placeHolder={"Pilih KP"}
-            />
-          </FormControl>
+          year == 0 ? (
+            ""
+          ) : (
+            <FormControl size="small" sx={{ width: "20vw" }}>
+              <AutocompleteSelectSingle
+                key={objects.length}
+                rounded
+                value={objectState}
+                options={objects}
+                getOptionLabel={(opt) => `${opt.rkp.code} - ${opt.rkp.value}`}
+                handleChange={(val: MasterListObjectRes) => setObjectState(val)}
+                placeHolder={"Pilih KP"}
+              />
+            </FormControl>
+          )
         }
         withCard={objectState === undefined}
       >
-        {objectState === undefined ? (
+        {objectState === undefined || year == 0 ? (
           <EmptyState
             dense
             icon={<IconEmptyData width={100} />}
-            title="Pilih KP"
-            description="Silahkan pilih KP terlebih dulu"
+            title={year == 0 ? "Tidak ada data yang ditampilkan" : "Pilih KP"}
+            description={
+              year == 0
+                ? "Silahkan pilih RKP terlebih dulu"
+                : "Silahkan pilih KP terlebih dulu"
+            }
           />
         ) : (
           <Stack gap={1}>

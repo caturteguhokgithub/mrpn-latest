@@ -327,7 +327,11 @@ export default function PageTemaView({}) {
                 ? "Tidak ada data yang ditampilkan"
                 : "Halaman Topik Kosong"
             }
-            description={year == 0 ? null : "Silahkan isi konten halaman ini"}
+            description={
+              year == 0
+                ? "Silahkan pilih RKP terlebih dulu"
+                : "Silahkan isi konten halaman ini"
+            }
           />
         ) : (
           <>
