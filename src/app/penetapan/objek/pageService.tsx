@@ -1,5 +1,5 @@
-import {del, get, post, put} from "@/lib/core/api/apiBase";
-import {ResponseBaseDto} from "@/lib/core/api/apiModel";
+import { del, get, post, put } from "@/lib/core/api/apiBase";
+import { ResponseBaseDto } from "@/lib/core/api/apiModel";
 import {
   GetPenetapanObjectCascadingServiceModel,
   GetPenetapanObjectEntityServiceModel,
@@ -7,7 +7,7 @@ import {
   GetPenetapanObjectIdServiceModel, GetPenetapanObjectNotaDinasServiceModel,
   GetPenetapanObjectShortListServiceModel, UpdateOrCreatePenetapanObjectEntityServiceModel,
   UpdateOrCreatePenetapanObjectLongListAssignObjectServiceModel,
-  UpdateOrCreatePenetapanObjectLongListServiceModel, UpdateOrCreatePenetapanObjectNotaDinasServiceModel
+  UpdateOrCreatePenetapanObjectLongListServiceModel, UpdateOrCreatePenetapanObjectNotaDinasServiceModel, LogActivityDto, LogActivityServiceModel
 } from "@/app/penetapan/objek/pageModel";
 
 export async function doGetPenetapanObject(param: GetPenetapanObjectIdServiceModel) {
@@ -110,6 +110,14 @@ export async function doUpdateOrCreateGetPenetapanObjectNotaDinas(param: UpdateO
   const resp = await post({
     ...param,
     url: "penetapan/object/notaDinas/add",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+export async function doLogActivity(param: LogActivityServiceModel) {
+  const resp = await post({
+    ...param,
+    url: "penetapan/object/getFlag",
   });
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }

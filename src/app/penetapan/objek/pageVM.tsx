@@ -7,7 +7,9 @@ import {
 import { useState } from "react";
 import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
 import {
+  initLogActivity,
   initPenetapanObjectState,
+  LogActivityDto,
   NotaDinasReqDto,
   PenetapanObjectEntityCheckedDto,
   PenetapanObjectEntityDto,
@@ -33,6 +35,7 @@ import {
   doGetPenetapanObjectEntityUsulan,
   doGetPenetapanObjectNotaDinas,
   doGetPenetapanObjectShortList,
+  doLogActivity,
   doUpdateOrCreateGetPenetapanObjectNotaDinas,
   doUpdateOrCreatePenetapanObjectEntityUsulan,
   doUpdatePenetapanObjectTopic,
@@ -72,6 +75,7 @@ const usePenetapanObjectVM = () => {
     PenetapanObjectStateEntityDto[]
   >([]);
 
+  const [getStateLogActivity, setLogActivity] = useState<LogActivityDto[]>([initLogActivity])
   const [optionPN, setOptionPN] = useState<ProjectDefaultDto[]>([]);
   const [modalAdd, setModalAdd] = useState<boolean>(false);
   const [modalLog, setModalLog] = useState<boolean>(false);
@@ -378,6 +382,22 @@ const usePenetapanObjectVM = () => {
     return false;
   }
 
+  async function getLogActivity() {
+    const response = await doLogActivity({
+      body: {
+        tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
+      },
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+    if (response?.code == API_CODE.success) {
+      let result: LogActivityDto[] = response.result;
+      setLogActivity(result);
+    } else {
+      setLogActivity([]);
+    }
+  }
+
   const useEffectGenerateOption = () => {
     setObjectState(undefined);
     getData();
@@ -449,6 +469,10 @@ const usePenetapanObjectVM = () => {
     }
   };
 
+  const useEffectLogActivity = () => {
+    getLogActivity();
+  };
+
   return {
     useEffectGenerateOption,
     useEffectObjectState,
@@ -477,6 +501,8 @@ const usePenetapanObjectVM = () => {
     manipulateStateUraianPriority,
     modalLog,
     setModalLog,
+    useEffectLogActivity,
+    getStateLogActivity
   };
 };
 

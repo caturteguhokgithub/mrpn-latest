@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Paper,
   Stack,
@@ -12,13 +12,27 @@ import {
 import { green, grey, red } from "@mui/material/colors";
 import { bgColorTh } from "@/app/utils/color";
 import Iconify from "@/app/components/icons/iconify";
+import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import { create } from "lodash";
 
 export default function TableLog() {
-  const data = [
-    { object: "Lalu Lintas", create: true, shortlist: false, approve: true },
-    { object: "MBG", create: true, shortlist: true, approve: true },
-    { object: "Pariwisata", create: true, shortlist: false, approve: false },
-  ];
+  const { rkp, year, rpjmn } = useRKPContext((state) => state);
+
+  const {
+    useEffectLogActivity,
+    getStateLogActivity
+  } = usePenetapanObjectVM();
+
+  useEffect(useEffectLogActivity, [year]);
+
+
+  const data = getStateLogActivity.map((item) => ({
+    object: item.topik,
+    create: true,
+    shortlist: item.shortlist,
+    approve: item.approval,
+  }));
 
   const checkIcon = (
     <Stack justifyContent="center" alignItems="center" height="100%">

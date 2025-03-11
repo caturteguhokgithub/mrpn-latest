@@ -1,4 +1,4 @@
-import React, {SetStateAction, useEffect, useMemo, useState} from "react";
+import React, { SetStateAction, useEffect, useMemo, useState } from "react";
 import OrgChart from "@dabeng/react-orgchart";
 import {
   Box,
@@ -25,7 +25,7 @@ import DraggableScroll from "@/app/executive-summary/partials/tab2Profile/partia
 import { SxParams } from "@/app/executive-summary/types";
 import { usePenetapanTopicContext } from "@/lib/core/hooks/useHooks";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
-import {FormatIDR} from "@/lib/utils/currency";
+import { FormatIDR } from "@/lib/utils/currency";
 
 const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
   const isAssistant = nodeData.isAssistant === true;
@@ -164,6 +164,131 @@ export default function CascadingPenetapanObjectOrgChart() {
     setModalOpenImg(false);
   };
 
+  // const GenerateData = () =>
+  //   useMemo(() => {
+  //     let object: OrgDto = {
+  //       name: ``,
+  //       title: ``,
+  //       children: [],
+  //     };
+
+  //     if (objectState !== undefined) {
+  //       object = {
+  //         name: `Topic`,
+  //         title: `${objectState.topik}`,
+  //         children: [],
+  //       };
+  //     }
+
+  //     let total = 0;
+
+  //     if (!Array.isArray(stateCascading)) {
+  //       console.error("stateCascading is undefined or not an array", stateCascading);
+  //       return object;
+  //     }
+
+  //     stateCascading.forEach((pnData) => {
+  //       total += pnData?.total_anggaran || 0;
+
+  //       const pn = pnData?.pn;
+  //       let result: OrgDto = {
+  //         name: `PN - ${pn?.code || "Unknown"}`,
+  //         title: pn?.value || "No Title",
+  //         children: [],
+  //       };
+
+  //       // **Gabungkan semua PP jadi satu string**
+  //       const allPPs = pn?.pp?.map((pp) => `(${pp.code}) ${pp.value}`).join(", ") || "No PP";
+
+  //       let ppData: OrgDto = {
+  //         name: `PP`,
+  //         title: allPPs,
+  //         children: [],
+  //       };
+
+  //       // **Gabungkan semua KP jadi satu string**
+  //       const allKPs = pn?.pp
+  //         ?.flatMap((pp) => pp.kp)
+  //         .map((kp) => `(${kp.code}) ${kp.value}`)
+  //         .join(", ") || "No KP";
+
+  //       let kpData: OrgDto = {
+  //         name: `KP`,
+  //         title: allKPs,
+  //         children: [],
+  //       };
+
+  //       // **Ambil sasaran (harus dari KP pertama)**
+  //       const firstKP = pn?.pp?.[0]?.kp?.[0];
+  //       if (firstKP?.sasaran) {
+  //         let ssrKPData: OrgDto = {
+  //           name: `SASARAN - ${firstKP.sasaran.code || "Unknown"}`,
+  //           title: firstKP.sasaran.value || "No Title",
+  //           children: [],
+  //         };
+
+  //         const ind = firstKP.sasaran.indikator;
+  //         if (ind) {
+  //           let indData: OrgDto = {
+  //             name: (
+  //               <Stack justifyContent="center" direction="row" alignItems="center">
+  //                 {`INDIKATOR`}
+  //               </Stack>
+  //             ),
+  //             title: (
+  //               <List dense sx={styleList}>
+  //                 {Array.isArray(ind?.value) ? (
+  //                   ind.value.map((ros, idx) => <ItemProP key={idx} description={ros} />)
+  //                 ) : (
+  //                   <></>
+  //                 )}
+  //               </List>
+  //             ),
+  //             children: [],
+  //           };
+
+  //           if (Array.isArray(ind?.prop)) {
+  //             ind.prop.forEach((props) => {
+  //               if (Array.isArray(props)) {
+  //                 props.forEach((prop) => {
+  //                   let propData: OrgDto = {
+  //                     name: prop?.value || "Unknown",
+  //                     title: (
+  //                       <List dense sx={styleList}>
+  //                         {Array.isArray(prop?.ro)
+  //                           ? prop.ro.map((ros, idx) => (
+  //                             <ItemProP
+  //                               key={idx}
+  //                               isKey={ros?.intervention || false}
+  //                               description={`${ros?.value || "No Value"} (${ros?.kementerian || "No Ministry"})`}
+  //                             />
+  //                           ))
+  //                           : null}
+  //                       </List>
+  //                     ),
+  //                     children: undefined,
+  //                   };
+  //                   indData.children?.push(propData);
+  //                 });
+  //               }
+  //             });
+  //           }
+
+  //           ssrKPData.children?.push(indData);
+  //         }
+
+  //         kpData.children?.push(ssrKPData);
+  //       }
+
+  //       ppData.children?.push(kpData);
+  //       result.children?.push(ppData);
+  //       object.children?.push(result);
+  //     });
+
+  //     setTotal(total);
+  //     return object;
+  //   }, [stateCascading]);
+
   const GenerateData = () =>
     useMemo(() => {
       let object: OrgDto = {
@@ -171,6 +296,7 @@ export default function CascadingPenetapanObjectOrgChart() {
         title: ``,
         children: [],
       };
+
       if (objectState !== undefined) {
         object = {
           name: `Topic`,
@@ -178,90 +304,10 @@ export default function CascadingPenetapanObjectOrgChart() {
           children: [],
         };
       }
-      let total = 0
-      stateCascading.map((pnData) => {
 
-        total = total + pnData.total_anggaran
-
-        const pn = pnData.pn;
-        let result: OrgDto = {
-          name: `PN - ${pn.code}`,
-          title: pn.value,
-          children: [],
-        };
-        // data.pp.map((pp) => {
-        const pp = pn.pp;
-        const ppData: OrgDto = {
-          name: `PP - ${pp.code}`,
-          title: pp.value,
-          children: [],
-        };
-        pp.kp.map((kp1) => {
-          kp1.map(kp => {
-              const kpData: OrgDto = {
-                name: `KP - ${kp.code}`,
-                title: kp.value,
-                children: [],
-              };
-              // kp.sasaran.map((ssrKP) => {
-                const ssrKP = kp.sasaran;
-                const ssrKPData: OrgDto = {
-                  name: `SASARAN - ${ssrKP.code}`,
-                  title: ssrKP.value,
-                  children: [],
-                };
-                // ssrKP.indikator.map((ind) => {
-                  const ind = ssrKP.indikator;
-                  const indData: OrgDto = {
-                    name: (
-                      <Stack justifyContent="center" direction="row" alignItems="center">
-                        {`INDIKATOR`}
-                      </Stack>
-                    ),
-                    title: (
-                      <List dense sx={styleList}>
-                        {ind.value.map((ros) => (
-                          <ItemProP description={ros} />
-                        ))}
-                      </List>
-                    ),
-                    children: [],
-                  };
-                  ind.prop.map((props) => {
-                    props.map((prop) => {
-                      const propData: OrgDto = {
-                        name: prop.value,
-                        title: (
-                          <List dense sx={styleList}>
-                            {prop.ro.map((ros) => (
-                              <ItemProP
-                                isKey={ros.intervention}
-                                description={`${ros.value} (${ros.kementerian})`}
-                              />
-                            ))}
-                          </List>
-                        ),
-                        children: undefined,
-                      };
-                      indData.children?.push(propData);
-                    });
-                  });
-                  // });
-                  ssrKPData.children?.push(indData);
-                // });
-                kpData.children?.push(ssrKPData);
-              // });
-              ppData.children?.push(kpData);
-          });
-        });
-        result.children?.push(ppData);
-        // });
-        object.children?.push(result);
-      });
-
-      setTotal(total)
       return object;
-    }, [stateCascading]);
+    }, [objectState]);
+
 
   const sxParamsFull: SxParams = { variant: "full" };
   const sxParamsZoom: SxParams = { variant: "zoom" };
@@ -287,7 +333,7 @@ export default function CascadingPenetapanObjectOrgChart() {
   return (
     <>
       <Stack gap={2} direction="row">
-        <FundSource value={`${FormatIDR(total/1000)} Juta`} />
+        <FundSource value={`${FormatIDR(total / 1000)} Juta`} />
         <Box>
           <Button
             variant="contained"
