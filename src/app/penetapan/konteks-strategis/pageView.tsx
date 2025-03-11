@@ -16,6 +16,8 @@ import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { MasterListObjectRes } from "@/app/misc/master/masterServiceModel";
 import CardStakeholderInternal from "@/app/penetapan/konteks-strategis/cardStakeholders/cardStakeholderInternal";
 import CardStakeholderEksternal from "@/app/penetapan/konteks-strategis/cardStakeholders/cardStakeholderEksternal";
+import CardLevelKebijakan from "./cardLevelKebijakan/cardLevelKebijakan";
+import CardPendanaan from "./cardPendanaan/cardPendanaan";
 
 export default function PageKonteksStrategisView({}) {
   const { year, rpjmn } = useRKPContext((state) => state);
@@ -69,6 +71,8 @@ export default function PageKonteksStrategisView({}) {
         ) : (
           <Stack gap={1}>
             <CardIndikasiSasaran />
+            <CardLevelKebijakan />
+            <CardPendanaan />
             <CardSasaranKinerjaUPR />
             {/* <CardRegulation />
             <CardStakeholderInternal />
