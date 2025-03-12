@@ -2,17 +2,17 @@
 
 import ContentPage from "@/app/components/contents/index";
 import React, { Fragment, useEffect } from "react";
-import { FormControl, Stack } from "@mui/material";
-import RiskContent from "./partials/risk";
+import { FormControl } from "@mui/material";
+// import RiskContent from "./partials/risk";
 import { AutocompleteSelectSingle } from "@/components/autocomplete";
 import { MasterListObjectRes } from "@/app/misc/master/masterServiceModel";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
-import CardRegulation from "../konteks-strategis/cardRegulasi/cardRegulation";
-import CardStakeholderInternal from "../konteks-strategis/cardStakeholders/cardStakeholderInternal";
-import CardStakeholderEksternal from "../konteks-strategis/cardStakeholders/cardStakeholderEksternal";
+// import CardRegulation from "../konteks-strategis/cardRegulasi/cardRegulation";
+// import CardStakeholderInternal from "../konteks-strategis/cardStakeholders/cardStakeholderInternal";
+// import CardStakeholderEksternal from "../konteks-strategis/cardStakeholders/cardStakeholderEksternal";
 import TabInternalEksternal from "./partials/tab";
 
 export default function PageSeleraRisikoView({}) {
@@ -24,8 +24,6 @@ export default function PageSeleraRisikoView({}) {
   useEffect(() => {
     getMasterListObject();
   }, [year]);
-
-  const handleModalOpenSave = () => {};
 
   return (
     <Fragment>

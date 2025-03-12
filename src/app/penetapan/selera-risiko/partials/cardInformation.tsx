@@ -6,7 +6,29 @@ import type ReactQuill from "react-quill";
 import dynamic from "next/dynamic";
 import DialogComponent from "@/app/components/dialog";
 import useCardSegmentVM from "@/app/executive-summary/partials/tab1Background/cardSegment/cardSegmentVM";
-import { Button, DialogActions } from "@mui/material";
+import {
+  Box,
+  Button,
+  DialogActions,
+  IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import Image from "next/image";
+import { bgColorTh } from "@/app/utils/color";
+import { grey } from "@mui/material/colors";
+import Iconify from "@/app/components/icons/iconify";
+import { IconFA } from "@/app/components/icons/icon-fa";
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+import { styleOrgChart } from "@/app/executive-summary/style";
+import DraggableScroll from "@/app/components/cardStakeholder/draggableScroll";
+import { SxParams } from "@/app/executive-summary/types";
+import FormInformation from "./form";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -17,7 +39,6 @@ export default function CardInformation({
 }: {
   activeSetting?: boolean;
 }) {
-  const emptyData = false;
   const {
     data,
     modal,
@@ -58,6 +79,29 @@ export default function CardInformation({
     }
   };
 
+  const emptyData = true;
+
+  const rowData = [
+    {
+      id: 1,
+      informasi:
+        "Memantapkan Sistem Pertahanan Keamanan Negara dan Mendorong Kemandirian Bangsa melalui Swasembada Pangan, Energi, Air, Ekonomi Syariah, Ekonomi Digital, Ekonomi Hijau, dan Ekonomi Biru",
+      jenis: "image",
+      url: "/",
+    },
+    {
+      id: 2,
+      informasi:
+        "Mencetak dan meningkatkan produktivitas lahan pertanian dengan lumbung pangan desa, daerah, dan nasional",
+      jenis: "pdf",
+      url: "/",
+    },
+  ];
+
+  const [modalViewImage, setModalViewImage] = React.useState(false);
+
+  const sxParamsFull: SxParams = { variant: "full" };
+
   return (
     <Fragment>
       <CardItem
@@ -73,12 +117,54 @@ export default function CardInformation({
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla
-            eveniet quos nisi hic consequatur repudiandae expedita quas quasi
-            sequi minima laudantium nobis cum similique rerum odio incidunt,
-            aliquam nesciunt. Neque!
-          </>
+          <TableContainer component={Paper} elevation={0} variant="outlined">
+            <Table
+              sx={{
+                minWidth: 650,
+                "tbody, thead": {
+                  "td, th": {
+                    borderRight: `1px solid ${grey[300]} !important`,
+                    "&:last-of-type": {
+                      borderRight: `0 !important`,
+                    },
+                  },
+                },
+              }}
+              size="small"
+            >
+              <TableHead sx={{ bgcolor: bgColorTh }}>
+                <TableRow>
+                  <TableCell align="center">Informasi</TableCell>
+                  <TableCell align="center">Berkas</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rowData.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell>{item.informasi}</TableCell>
+                    <TableCell align="center">
+                      {item.jenis == "pdf" ? (
+                        <IconButton
+                          color="primary"
+                          href={item.url}
+                          target="_blank"
+                        >
+                          <Iconify name="mdi:file-pdf" color="red" size={20} />
+                        </IconButton>
+                      ) : (
+                        <IconButton
+                          color="primary"
+                          onClick={() => setModalViewImage(true)}
+                        >
+                          <Iconify name="mdi:file-image" size={20} />
+                        </IconButton>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         )}
       </CardItem>
       <DialogComponent
@@ -100,12 +186,74 @@ export default function CardInformation({
           </DialogActions>
         }
       >
-        <ReactQuill
+        {/* <ReactQuill
           key={request.value}
           theme="snow"
           defaultValue={request.value}
           forwardedRef={quillRef}
-        />
+        /> */}
+        <FormInformation />
+      </DialogComponent>
+      <DialogComponent
+        width="100%"
+        maxHeight="100vh"
+        dialogOpen={modalViewImage}
+        dialogClose={() => setModalViewImage(false)}
+        sx={{
+          ".transform-component-module_wrapper__SPB86": {
+            width: "100%",
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          ".react-transform-component": {
+            width: "100%",
+          },
+          ".MuiDialogContent-root": {
+            p: 0,
+          },
+        }}
+      >
+        <IconButton
+          sx={{ position: "absolute", top: 10, right: 10, zIndex: 9999 }}
+          onClick={() => setModalViewImage(false)}
+        >
+          <IconFA name="circle-xmark" color="red" size={32} />
+        </IconButton>
+        <TransformWrapper
+          initialScale={0.5}
+          minScale={0.1}
+          maxScale={3}
+          limitToBounds={true}
+          doubleClick={{ disabled: false }}
+          wheel={{ disabled: false }}
+          panning={{ disabled: false }}
+        >
+          <TransformComponent>
+            <Box sx={styleOrgChart(sxParamsFull)} mt={4}>
+              <DraggableScroll
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                  paddingBottom: 1,
+                  "&::-webkit-scrollbar": {
+                    height: "3px",
+                  },
+                }}
+              >
+                <Image
+                  alt="Instansi Pelaksana"
+                  src="https://res.cloudinary.com/caturteguh/image/upload/v1741666619/mrpn/document-872506_1280_sanrsj.jpg"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: "100%", height: "auto" }}
+                />
+              </DraggableScroll>
+            </Box>
+          </TransformComponent>
+        </TransformWrapper>
       </DialogComponent>
     </Fragment>
   );
