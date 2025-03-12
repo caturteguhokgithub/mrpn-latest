@@ -31,7 +31,13 @@ import { styleOrgChart } from "@/app/executive-summary/style";
 import { SxParams } from "@/app/executive-summary/types";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 
-export default function CardStakeholder({ project }: { project?: string }) {
+export default function CardStakeholder({
+  project,
+  title,
+}: {
+  project?: string;
+  title?: string;
+}) {
   const {
     data,
     gambar,
@@ -125,7 +131,7 @@ export default function CardStakeholder({ project }: { project?: string }) {
 
   return (
     <CardItem
-      title="Instansi Pelaksana"
+      title={title ? title : "Instansi Pelaksana"}
       setting
       settingEditOnclick={handleModalOpenStakeholder}
     >
@@ -141,23 +147,23 @@ export default function CardStakeholder({ project }: { project?: string }) {
           <Stack direction="row" gap={1}>
             {(hasPrivilege(permission, pathname, "add") ||
               hasPrivilege(permission, pathname, "update")) && (
-                <AddButton
-                  noMargin
-                  small
-                  title="Ubah Logo"
-                  startIcon={
-                    <Icon
-                      baseClassName="fas"
-                      className={"fa-pencil"}
-                      sx={{
-                        fontSize: "12px !important",
-                      }}
-                    />
-                  }
-                  sx={{ paddingInline: 2 }}
-                  onclick={() => setModalListLogo(true)}
-                />
-              )}
+              <AddButton
+                noMargin
+                small
+                title="Ubah Logo"
+                startIcon={
+                  <Icon
+                    baseClassName="fas"
+                    className={"fa-pencil"}
+                    sx={{
+                      fontSize: "12px !important",
+                    }}
+                  />
+                }
+                sx={{ paddingInline: 2 }}
+                onclick={() => setModalListLogo(true)}
+              />
+            )}
 
             <Button
               component="label"
@@ -186,28 +192,27 @@ export default function CardStakeholder({ project }: { project?: string }) {
                 multiple
               />
             </Button>
-            {
-              gambar != undefined ?
-                <AddButton
-                  noMargin
-                  filled
-                  small
-                  title="Lihat Gambar"
-                  startIcon={
-                    <Icon
-                      baseClassName="fas"
-                      className={"fa-magnifying-glass-plus"}
-                      sx={{
-                        fontSize: "12px !important",
-                      }}
-                    />
-                  }
-                  sx={{ paddingInline: 2 }}
-                  onclick={() => setModalViewImage(true)}
-                />
-                : ""
-            }
-
+            {gambar != undefined ? (
+              <AddButton
+                noMargin
+                filled
+                small
+                title="Lihat Gambar"
+                startIcon={
+                  <Icon
+                    baseClassName="fas"
+                    className={"fa-magnifying-glass-plus"}
+                    sx={{
+                      fontSize: "12px !important",
+                    }}
+                  />
+                }
+                sx={{ paddingInline: 2 }}
+                onclick={() => setModalViewImage(true)}
+              />
+            ) : (
+              ""
+            )}
           </Stack>
           <StakeholderChart
             data={data}
@@ -308,7 +313,7 @@ export default function CardStakeholder({ project }: { project?: string }) {
                 src={
                   logoState.icon == ""
                     ? process.env.NEXT_PUBLIC_BASE_URL_FILES +
-                    logoState.iconPath
+                      logoState.iconPath
                     : ""
                 }
                 width={0}
@@ -389,7 +394,8 @@ export default function CardStakeholder({ project }: { project?: string }) {
                 <Image
                   alt="Instansi Pelaksana"
                   src={
-                    process.env.NEXT_PUBLIC_BASE_URL_FILES + (gambar?.value ?? "")
+                    process.env.NEXT_PUBLIC_BASE_URL_FILES +
+                    (gambar?.value ?? "")
                   }
                   width={0}
                   height={0}
