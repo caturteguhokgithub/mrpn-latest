@@ -35,7 +35,7 @@ export default function CardSelera() {
           <AddButton
             filled
             startIcon={<Iconify name="mdi:chart-bar-stacked" />}
-            title="Referensi Matriks"
+            title="Matriks Referensi"
             onclick={() => setModalOpenRef(true)}
           />
         }
@@ -55,7 +55,7 @@ export default function CardSelera() {
         width={1200}
         dialogOpen={modalOpenRef}
         dialogClose={() => setModalOpenRef(false)}
-        title={`Referensi Matriks Moderat`}
+        title={`Matriks Moderat Referensi`}
       >
         <SeleraMatriks levelId={1} levelDampak="rendah" />
       </DialogComponent>

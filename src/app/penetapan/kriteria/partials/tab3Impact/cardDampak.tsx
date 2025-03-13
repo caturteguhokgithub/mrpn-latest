@@ -43,7 +43,7 @@ export default function CardDampak() {
             <AddButton
               filled
               startIcon={<Iconify name="mdi:chart-bar-stacked" />}
-              title="Referensi Tabel"
+              title="Tabel Referensi"
               onclick={() => setModalOpenRef(true)}
             />
             <AddButton

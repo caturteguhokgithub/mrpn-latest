@@ -162,10 +162,10 @@ function Row(props: {
                       Tidak Signifikan
                     </TableCell>
                     <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
-                      Minor
+                      Kurang Signifikan
                     </TableCell>
                     <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
-                      Moderat
+                      Cukup Signifikan
                     </TableCell>
                     <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
                       Signifikan

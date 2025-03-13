@@ -135,7 +135,7 @@ export default function CardInformation({
               <TableHead sx={{ bgcolor: bgColorTh }}>
                 <TableRow>
                   <TableCell align="center">Informasi</TableCell>
-                  <TableCell align="center">Berkas</TableCell>
+                  <TableCell align="center">Bukti Dukung</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

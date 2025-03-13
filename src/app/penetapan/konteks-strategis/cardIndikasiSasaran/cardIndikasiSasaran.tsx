@@ -1,12 +1,5 @@
 import React, { useEffect } from "react";
 import {
-  alpha,
-  Box,
-  Button,
-  Chip,
-  DialogActions,
-  Icon,
-  IconButton,
   Paper,
   Stack,
   Table,
@@ -16,7 +9,6 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import theme from "@/theme";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
@@ -97,83 +89,81 @@ export default function CardIndikasiSasaran() {
   };
 
   return (
-    <>
-      <CardItem
-        title="Identifikasi Sasaran dan Indikator Objek MRPN Lintas Sektor"
-        infoTooltip={
-          <Stack spacing={2}>
-            <div>
-              <strong>MRPN Lintas Sektor</strong>
-              <p>
-                Kegiatan terkoordinasi untuk mengarahkan dan mengendalikan
-                Entitas MRPN sehubungan dengan adanya risiko Pembangunan
-                Nasional atas program, kegiatan, proyek, prioritas pembangunan,
-                dan risiko tertentu yang melibatkan dua atau lebih Entitas MRPN
-                pengelola keuangan negara.
-              </p>
-            </div>
-            <div>
-              <strong>Objek MRPN Lintas Sektor</strong>
-              <p>
-                PKPPR yang dikategorikan lintas sektor yang menjadi objek
-                penerapan MRPN LS, melalui penetapan oleh Komite MRPN.
-              </p>
-            </div>
-          </Stack>
-        }
-      >
-        {indikatorSasaranData == undefined ? (
-          <EmptyState
-            dense
-            icon={<IconEmptyData width={100} />}
-            title="Data Kosong"
-            description="Silahkan isi konten halaman ini"
-          />
-        ) : (
-          <TableContainer component={Paper} elevation={0} variant="outlined">
-            <Table size="small">
-              <TableHead sx={{ bgcolor: bgColorTh }}>
-                <TableRow>
-                  <TableCell>Uraian</TableCell>
-                  <TableCell>Sasaran</TableCell>
-                  <TableCell>Indikator</TableCell>
-                  <TableCell width={150}>Target</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {generateRows().map((row, rowIndex) =>
-                  row.indicator.map((subItem, subIndex) => (
-                    <TableRow key={`${rowIndex}-${subIndex}`}>
-                      {subIndex === 0 && (
-                        <TableCell
-                          rowSpan={row.indicator.length}
-                          sx={{ verticalAlign: "top" }}
-                        >
-                          {row.uraian}
-                        </TableCell>
-                      )}
-                      {subIndex === 0 && (
-                        <TableCell
-                          rowSpan={row.indicator.length}
-                          sx={{ verticalAlign: "top" }}
-                        >
-                          {row.sasaran}
-                        </TableCell>
-                      )}
-                      <TableCell sx={{ verticalAlign: "top" }}>
-                        {subItem}
+    <CardItem
+      title="Identifikasi Sasaran dan Indikator Objek MRPN Lintas Sektor"
+      infoTooltip={
+        <Stack spacing={2}>
+          <div>
+            <strong>MRPN Lintas Sektor</strong>
+            <p>
+              Kegiatan terkoordinasi untuk mengarahkan dan mengendalikan Entitas
+              MRPN sehubungan dengan adanya risiko Pembangunan Nasional atas
+              program, kegiatan, proyek, prioritas pembangunan, dan risiko
+              tertentu yang melibatkan dua atau lebih Entitas MRPN pengelola
+              keuangan negara.
+            </p>
+          </div>
+          <div>
+            <strong>Objek MRPN Lintas Sektor</strong>
+            <p>
+              PKPPR yang dikategorikan lintas sektor yang menjadi objek
+              penerapan MRPN LS, melalui penetapan oleh Komite MRPN.
+            </p>
+          </div>
+        </Stack>
+      }
+    >
+      {indikatorSasaranData == undefined ? (
+        <EmptyState
+          dense
+          icon={<IconEmptyData width={100} />}
+          title="Data Kosong"
+          description="Silahkan isi konten halaman ini"
+        />
+      ) : (
+        <TableContainer component={Paper} elevation={0} variant="outlined">
+          <Table size="small">
+            <TableHead sx={{ bgcolor: bgColorTh }}>
+              <TableRow>
+                <TableCell>Uraian</TableCell>
+                <TableCell>Sasaran</TableCell>
+                <TableCell>Indikator</TableCell>
+                <TableCell width={150}>Target</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {generateRows().map((row, rowIndex) =>
+                row.indicator.map((subItem, subIndex) => (
+                  <TableRow key={`${rowIndex}-${subIndex}`}>
+                    {subIndex === 0 && (
+                      <TableCell
+                        rowSpan={row.indicator.length}
+                        sx={{ verticalAlign: "top" }}
+                      >
+                        {row.uraian}
                       </TableCell>
-                      <TableCell sx={{ verticalAlign: "top" }}>
-                        {row.target[subIndex]}
+                    )}
+                    {subIndex === 0 && (
+                      <TableCell
+                        rowSpan={row.indicator.length}
+                        sx={{ verticalAlign: "top" }}
+                      >
+                        {row.sasaran}
                       </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        )}
-      </CardItem>
-    </>
+                    )}
+                    <TableCell sx={{ verticalAlign: "top" }}>
+                      {subItem}
+                    </TableCell>
+                    <TableCell sx={{ verticalAlign: "top" }}>
+                      {row.target[subIndex]}
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </CardItem>
   );
 }

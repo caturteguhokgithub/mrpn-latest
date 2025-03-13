@@ -38,7 +38,7 @@ export default function CardKemungkinan() {
           <AddButton
             filled
             startIcon={<Iconify name="mdi:chart-bar-stacked" />}
-            title="Referensi Tabel"
+            title="Tabel Referensi"
             onclick={() => setModalOpenRef(true)}
           />
         }

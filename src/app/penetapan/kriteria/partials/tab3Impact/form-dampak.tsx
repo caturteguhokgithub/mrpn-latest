@@ -226,8 +226,8 @@ export default function FormDampak({ mode }: { mode?: string }) {
                         <ItemDampak number={2}>
                           <TextareaComponent
                             row={2}
-                            label="Minor"
-                            placeholder="Minor"
+                            label="Kurang Signifikan"
+                            placeholder="Kurang Signifikan"
                             value={
                               mode == "edit"
                                 ? "Prosentase pemberitaan negatif 10% < x ≤ 20%"
@@ -240,8 +240,8 @@ export default function FormDampak({ mode }: { mode?: string }) {
                         <ItemDampak number={3}>
                           <TextareaComponent
                             row={2}
-                            label="Moderat"
-                            placeholder="Moderat"
+                            label="Cukup Signifikan"
+                            placeholder="Cukup Signifikan"
                             value={
                               mode == "edit"
                                 ? "Prosentase pemberitaan negatif 20% < x ≤ 30%"
