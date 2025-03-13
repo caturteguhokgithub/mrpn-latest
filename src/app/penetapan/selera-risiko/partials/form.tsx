@@ -217,7 +217,7 @@ export default function FormInformation({
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormControl fullWidth>
-                          <FieldLabelInfo title="Jenis Berkas" />
+                          <FieldLabelInfo title="Jenis Bukti Dukung" />
                           <RadioGroup row>
                             <FormControlLabel
                               value="pdf"
@@ -234,7 +234,7 @@ export default function FormInformation({
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormControl fullWidth>
-                          <FieldLabelInfo title="Unggah Berkas" />
+                          <FieldLabelInfo title="Unggah Bukti Dukung" />
                           <Button
                             component="label"
                             role={undefined}

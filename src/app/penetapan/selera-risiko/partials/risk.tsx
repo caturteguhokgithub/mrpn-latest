@@ -111,6 +111,32 @@ perencanaan pembangunan nasional"
           />
         </Stack>
         <TableRas />
+        <Stack gap={1}>
+          <Typography fontStyle="italic" fontSize={14} color={grey[600]}>
+            Tuliskan pernyataan selera risiko{" "}
+            {valueTheme == "1"
+              ? "Rendah"
+              : valueTheme == "2"
+              ? "Konservatif"
+              : valueTheme == "3"
+              ? "Moderat"
+              : "Tinggi"}
+          </Typography>
+
+          <TextareaComponent
+            label="Deskripsi"
+            placeholder={`Deskripsi ${
+              valueTheme == "1"
+                ? "Rendah"
+                : valueTheme == "2"
+                ? "Konservatif"
+                : valueTheme == "3"
+                ? "Moderat"
+                : "Tinggi"
+            }`}
+            width="100%"
+          />
+        </Stack>
       </Stack>
       <Stack gap={2} mt={3}>
         <Typography color={grey[600]} fontSize={14} fontStyle="italic">
