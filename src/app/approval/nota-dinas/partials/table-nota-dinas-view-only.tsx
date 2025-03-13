@@ -32,6 +32,7 @@ import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import DraggableScroll from "@/app/components/cardStakeholder/draggableScroll";
 import { styleOrgChart } from "@/app/executive-summary/style";
 import { SxParams } from "@/app/executive-summary/types";
+import useNotaDinasVM from "../notaDinasVM";
 
 export default function TableNotaDinasViewOnly({
   notaDinas,
@@ -42,6 +43,12 @@ export default function TableNotaDinasViewOnly({
 }) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalViewImage, setModalViewImage] = React.useState(false);
+  const [thisGambar, setThisGambar] = React.useState("");
+
+  const {
+    gambar,
+    uploadImage,
+  } = useNotaDinasVM();
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -63,6 +70,26 @@ export default function TableNotaDinasViewOnly({
   const statusObject: "plan" | "reject" | "approved" = "plan";
 
   const sxParamsFull: SxParams = { variant: "full" };
+
+  const handleUnggahBuktiDukung = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files?.[0];
+
+    if (files) {
+      const fileName = files.name;
+      const reader = new FileReader();
+
+      reader.readAsDataURL(files);
+      reader.onload = () => {
+        const res = reader.result as string;
+
+        uploadImage(res, fileName);
+      };
+
+      reader.onerror = (error) => {
+        console.error("Error: ", error);
+      };
+    }
+  };
 
   return (
     <Fragment>
@@ -117,7 +144,7 @@ export default function TableNotaDinasViewOnly({
                             startIcon={
                               <Iconify name="mdi:check-circle" size={16} />
                             }
-                            onclick={() => {}}
+                            onclick={() => { }}
                           />
                         </Fragment>
                       ) : statusObject === "reject" ? (
@@ -363,7 +390,7 @@ export default function TableNotaDinasViewOnly({
               Unggah Bukti Dukung
               <VisuallyHiddenInput
                 type="file"
-                onChange={(event: any) => console.log(event.target.files)}
+                onChange={(event: any) => handleUnggahBuktiDukung(event)}
                 multiple
               />
             </Button>
@@ -412,30 +439,38 @@ export default function TableNotaDinasViewOnly({
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow>
-                  <TableCell align="center">1</TableCell>
-                  <TableCell>
-                    DokumenPendukungObjekMRPNdenganTopikSwasembadaPangan.pdf
-                  </TableCell>
-                  <TableCell align="center">
-                    <IconButton color="primary" href="/">
-                      <Iconify name="mdi:file-pdf" color="red" size={20} />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="center">2</TableCell>
-                  <TableCell>BuktiDukung.jpeg</TableCell>
-                  <TableCell align="center">
-                    <IconButton
-                      color="primary"
-                      onClick={() => setModalViewImage(true)}
-                    >
-                      <Iconify name="mdi:file-image" size={20} />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
+                {gambar.map((item, index) => (
+                  <TableRow key={index}>
+                    <TableCell align="center">{index + 1}</TableCell>
+                    <TableCell>{item.file}</TableCell>
+                    <TableCell align="center">
+                      {item.file.toLowerCase().endsWith(".pdf") ? (
+                        <a
+                          href={`${process.env.NEXT_PUBLIC_BASE_URL_FILES}${item.file}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <IconButton color="primary">
+                            <Iconify name="mdi:file-pdf" color="red" size={20} />
+                          </IconButton>
+                        </a>
+
+                      ) : (
+                        <IconButton
+                          color="primary"
+                          onClick={() => {
+                            setModalViewImage(true);
+                            setThisGambar(item.file);
+                          }}
+                        >
+                          <Iconify name="mdi:file-image" size={20} />
+                        </IconButton>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
+
             </Table>
           </TableContainer>
         </Stack>
@@ -783,7 +818,8 @@ export default function TableNotaDinasViewOnly({
               >
                 <Image
                   alt="Instansi Pelaksana"
-                  src="https://res.cloudinary.com/caturteguh/image/upload/v1741666619/mrpn/document-872506_1280_sanrsj.jpg"
+                  // src="https://res.cloudinary.com/caturteguh/image/upload/v1741666619/mrpn/document-872506_1280_sanrsj.jpg"
+                  src={process.env.NEXT_PUBLIC_BASE_URL_FILES + thisGambar}
                   width={0}
                   height={0}
                   sizes="100vw"
