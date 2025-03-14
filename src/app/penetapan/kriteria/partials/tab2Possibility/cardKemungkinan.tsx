@@ -1,6 +1,6 @@
 import AddButton from "@/app/components/buttonAdd";
 import CardItem from "@/app/components/cardTabItem";
-import React from "react";
+import React, { Fragment } from "react";
 import TableKemungkinan from "./table-kriteria-kemungkinan";
 import DialogComponent from "@/app/components/dialog";
 import FormKemungkinan from "./form-kemungkinan";
@@ -28,7 +28,7 @@ export default function CardKemungkinan() {
   );
 
   return (
-    <>
+    <Fragment>
       <CardItem
         title="Kriteria Kemungkinan"
         setting
@@ -72,6 +72,6 @@ export default function CardKemungkinan() {
       >
         <TableKemungkinan mode="view" />
       </DialogComponent>
-    </>
+    </Fragment>
   );
 }

@@ -4,10 +4,8 @@ import {
   Button,
   Collapse,
   ListItem,
-  SelectChangeEvent,
   Stack,
   TextField,
-  ToggleButton,
   ToggleButtonGroup,
   Typography,
   alpha,
@@ -22,9 +20,6 @@ import { LabelRadio } from "@/app/components/labelRadio";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import SeleraMatriks from "../../kriteria/partials/tab4Selera/matriks";
-import DialogComponent from "@/app/components/dialog";
-import AddButton from "@/app/components/buttonAdd";
-import Iconify from "@/app/components/icons/iconify";
 import TableRas from "./table-ras";
 
 export default function RiskContent({
