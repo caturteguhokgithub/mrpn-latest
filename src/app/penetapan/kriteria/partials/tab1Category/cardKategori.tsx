@@ -1,15 +1,19 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Button, DialogActions } from "@mui/material";
 import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
 import CollapsibleTable from "./table-kategori-collapsible";
 import FormCategory from "./form-category";
 import DialogDelete from "@/app/components/dialogDelete";
+import AddButton from "@/app/components/buttonAdd";
+import Iconify from "@/app/components/icons/iconify";
+import TableRerefence from "./table-reference";
 
 export default function CardKategori() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalOpenCategory, setModalOpenCategory] = React.useState(false);
   const [modalOpenDelete, setModalDelete] = React.useState(false);
+  const [modalOpenRef, setModalOpenRef] = React.useState(false);
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -27,7 +31,7 @@ export default function CardKategori() {
   );
 
   return (
-    <>
+    <Fragment>
       <CardItem
         title="Kategori Risiko"
         infoTooltip={
@@ -42,6 +46,14 @@ export default function CardKategori() {
         }
         setting
         settingAddOnclickOnly={() => setModalOpenAdd(true)}
+        addButton={
+          <AddButton
+            filled
+            startIcon={<Iconify name="mdi:chart-bar-stacked" />}
+            title="Tabel Referensi"
+            onclick={() => setModalOpenRef(true)}
+          />
+        }
       >
         {/* <TableKategori mode="view" /> */}
         <CollapsibleTable
@@ -72,6 +84,15 @@ export default function CardKategori() {
         handleCloseModal={() => setModalDelete(false)}
         handleDelete={() => {}}
       />
-    </>
+      <DialogComponent
+        tableMode
+        width={1400}
+        dialogOpen={modalOpenRef}
+        dialogClose={() => setModalOpenRef(false)}
+        title="Referensi Kriteria Kemungkinan"
+      >
+        <TableRerefence />
+      </DialogComponent>
+    </Fragment>
   );
 }
