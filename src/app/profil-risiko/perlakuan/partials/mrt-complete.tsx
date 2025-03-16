@@ -29,6 +29,7 @@ function ChipLevelRisiko(props: { level: any }) {
     <Box display={"flex"} justifyContent={"center"} width={"100%"}>
       {props.level ? (
         <Chip
+          size="small"
           color={
             props.level === "Sangat Tinggi (5)"
               ? "error"
@@ -240,80 +241,122 @@ export default function MRTPerlakuanComplete({
             header: "Analisis & Evaluasi Risiko",
             columns: [
               {
-                accessorKey: "analisis_lk",
-                header: "LK",
-                enableColumnActions: false,
-                size: 120,
-                muiTableHeadCellProps: {
-                  align: "center",
-                },
-                muiTableBodyCellProps: {
-                  align: "center",
-                },
-                Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
-                  renderedCellValue == null ? "-" : renderedCellValue,
-                Header: ({ column }) => (
-                  <SortNumber
-                    column={column}
-                    numberSort={column.getIndex() + 1}
-                  />
+                header: "Nilai",
+                size: 240,
+                accessorFn: (row) => (
+                  <Stack direction="column" gap={1}>
+                    <Stack direction="row" alignItems="center" gap={0.5}>
+                      <Typography variant="body2">LK:</Typography>
+                      <Typography
+                        variant="body2"
+                        fontWeight={700}
+                        component="strong"
+                      >
+                        {row.analisis_lk}
+                      </Typography>
+                    </Stack>
+                    <Stack direction="row" alignItems="center" gap={0.5}>
+                      <Typography variant="body2">LD:</Typography>
+                      <Typography
+                        variant="body2"
+                        fontWeight={700}
+                        component="strong"
+                      >
+                        {row.analisis_ld}
+                      </Typography>
+                    </Stack>
+                    <Stack direction="row" alignItems="center" gap={0.5}>
+                      <Typography variant="body2">BR:</Typography>
+                      <Typography
+                        variant="body2"
+                        fontWeight={700}
+                        component="strong"
+                      >
+                        {row.analisis_br}
+                      </Typography>
+                    </Stack>
+                    <Stack direction="row" alignItems="center" gap={1}>
+                      <Typography variant="body2">LEVEL</Typography>
+                      <ChipLevelRisiko level={row.analisis_level} />
+                    </Stack>
+                  </Stack>
                 ),
               },
-              {
-                accessorKey: "analisis_ld",
-                header: "LD",
-                enableColumnActions: false,
-                size: 120,
-                muiTableHeadCellProps: {
-                  align: "center",
-                },
-                muiTableBodyCellProps: {
-                  align: "center",
-                },
-                Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
-                  renderedCellValue == null ? "-" : renderedCellValue,
-                Header: ({ column }) => (
-                  <SortNumber
-                    column={column}
-                    numberSort={column.getIndex() + 1}
-                  />
-                ),
-              },
-              {
-                id: "row-analisis_br",
-                accessorKey: "analisis_br",
-                header: "BR",
-                enableColumnActions: false,
-                size: 120,
-                muiTableHeadCellProps: {
-                  align: "center",
-                },
-                muiTableBodyCellProps: {
-                  align: "center",
-                },
-                Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
-                  renderedCellValue == null ? "-" : renderedCellValue,
-                Header: ({ column }) => (
-                  <SortNumber
-                    column={column}
-                    numberSort={column.getIndex() + 1}
-                  />
-                ),
-              },
-              {
-                accessorKey: "analisis_level",
-                header: "Level Risiko",
-                enableColumnActions: false,
-                Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
-                  <ChipLevelRisiko level={renderedCellValue} />
-                ),
-                Header: ({ column }) => (
-                  <SortNumber
-                    column={column}
-                    numberSort={column.getIndex() + 1}
-                  />
-                ),
-              },
+              // {
+              //   accessorKey: "analisis_lk",
+              //   header: "LK",
+              //   enableColumnActions: false,
+              //   size: 120,
+              //   muiTableHeadCellProps: {
+              //     align: "center",
+              //   },
+              //   muiTableBodyCellProps: {
+              //     align: "center",
+              //   },
+              //   Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+              //     renderedCellValue == null ? "-" : renderedCellValue,
+              //   Header: ({ column }) => (
+              //     <SortNumber
+              //       column={column}
+              //       numberSort={column.getIndex() + 1}
+              //     />
+              //   ),
+              // },
+              // {
+              //   accessorKey: "analisis_ld",
+              //   header: "LD",
+              //   enableColumnActions: false,
+              //   size: 120,
+              //   muiTableHeadCellProps: {
+              //     align: "center",
+              //   },
+              //   muiTableBodyCellProps: {
+              //     align: "center",
+              //   },
+              //   Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+              //     renderedCellValue == null ? "-" : renderedCellValue,
+              //   Header: ({ column }) => (
+              //     <SortNumber
+              //       column={column}
+              //       numberSort={column.getIndex() + 1}
+              //     />
+              //   ),
+              // },
+              // {
+              //   id: "row-analisis_br",
+              //   accessorKey: "analisis_br",
+              //   header: "BR",
+              //   enableColumnActions: false,
+              //   size: 120,
+              //   muiTableHeadCellProps: {
+              //     align: "center",
+              //   },
+              //   muiTableBodyCellProps: {
+              //     align: "center",
+              //   },
+              //   Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+              //     renderedCellValue == null ? "-" : renderedCellValue,
+              //   Header: ({ column }) => (
+              //     <SortNumber
+              //       column={column}
+              //       numberSort={column.getIndex() + 1}
+              //     />
+              //   ),
+              // },
+              // {
+              //   accessorKey: "analisis_level",
+              //   header: "Level Risiko",
+              //   enableColumnActions: false,
+              //   Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
+              //     <ChipLevelRisiko level={renderedCellValue} />
+              //   ),
+              //   Header: ({ column }) => (
+              //     <SortNumber
+              //       column={column}
+              //       numberSort={column.getIndex() + 1}
+              //     />
+              //   ),
+              // },
               {
                 id: "row-prioritas",
                 accessorKey: "prioritas",
@@ -387,68 +430,114 @@ export default function MRTPerlakuanComplete({
         header: "Risiko Residual Harapan",
         columns: [
           {
-            accessorKey: "perlakuan_lk",
-            header: "LK",
-            enableColumnActions: false,
-            size: 120,
-            muiTableHeadCellProps: {
-              align: "center",
-            },
-            muiTableBodyCellProps: {
-              align: "center",
-            },
-            Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
-              renderedCellValue == null ? "-" : renderedCellValue,
-            Header: ({ column }) => (
-              <SortNumber column={column} numberSort={column.getIndex() + 1} />
-            ),
-          },
-          {
-            accessorKey: "perlakuan_ld",
-            header: "LD",
-            enableColumnActions: false,
-            size: 120,
-            muiTableHeadCellProps: {
-              align: "center",
-            },
-            muiTableBodyCellProps: {
-              align: "center",
-            },
-            Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
-              renderedCellValue == null ? "-" : renderedCellValue,
-            Header: ({ column }) => (
-              <SortNumber column={column} numberSort={column.getIndex() + 1} />
-            ),
-          },
-          {
-            accessorKey: "perlakuan_br",
-            header: "BR",
-            enableColumnActions: false,
-            size: 120,
-            muiTableHeadCellProps: {
-              align: "center",
-            },
-            muiTableBodyCellProps: {
-              align: "center",
-            },
-            Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
-              renderedCellValue == null ? "-" : renderedCellValue,
-            Header: ({ column }) => (
-              <SortNumber column={column} numberSort={column.getIndex() + 1} />
-            ),
-          },
-          {
-            accessorKey: "perlakuan_level",
-            header: "Level Risiko",
-            enableColumnActions: false,
-            Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
-              <ChipLevelRisiko level={renderedCellValue} />
-            ),
-            Header: ({ column }) => (
-              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            accessorKey: "risiko_residual_harapan",
+            header: "",
+            enableSorting: false,
+            size: 240,
+            accessorFn: (row) => (
+              <Stack direction="column" gap={1}>
+                <Stack direction="row" alignItems="center" gap={0.5}>
+                  <Typography variant="body2">LK:</Typography>
+                  <Typography
+                    variant="body2"
+                    fontWeight={700}
+                    component="strong"
+                  >
+                    {row.perlakuan_lk}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" alignItems="center" gap={0.5}>
+                  <Typography variant="body2">LD:</Typography>
+                  <Typography
+                    variant="body2"
+                    fontWeight={700}
+                    component="strong"
+                  >
+                    {row.perlakuan_ld}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" alignItems="center" gap={0.5}>
+                  <Typography variant="body2">BR:</Typography>
+                  <Typography
+                    variant="body2"
+                    fontWeight={700}
+                    component="strong"
+                  >
+                    {row.perlakuan_br}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" alignItems="center" gap={1}>
+                  <Typography variant="body2">LEVEL</Typography>
+                  <ChipLevelRisiko level={row.perlakuan_level} />
+                </Stack>
+              </Stack>
             ),
           },
         ],
+        // columns: [
+        //   {
+        //     accessorKey: "perlakuan_lk",
+        //     header: "LK",
+        //     enableColumnActions: false,
+        //     size: 120,
+        //     muiTableHeadCellProps: {
+        //       align: "center",
+        //     },
+        //     muiTableBodyCellProps: {
+        //       align: "center",
+        //     },
+        //     Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+        //       renderedCellValue == null ? "-" : renderedCellValue,
+        //     Header: ({ column }) => (
+        //       <SortNumber column={column} numberSort={column.getIndex() + 1} />
+        //     ),
+        //   },
+        //   {
+        //     accessorKey: "perlakuan_ld",
+        //     header: "LD",
+        //     enableColumnActions: false,
+        //     size: 120,
+        //     muiTableHeadCellProps: {
+        //       align: "center",
+        //     },
+        //     muiTableBodyCellProps: {
+        //       align: "center",
+        //     },
+        //     Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+        //       renderedCellValue == null ? "-" : renderedCellValue,
+        //     Header: ({ column }) => (
+        //       <SortNumber column={column} numberSort={column.getIndex() + 1} />
+        //     ),
+        //   },
+        //   {
+        //     accessorKey: "perlakuan_br",
+        //     header: "BR",
+        //     enableColumnActions: false,
+        //     size: 120,
+        //     muiTableHeadCellProps: {
+        //       align: "center",
+        //     },
+        //     muiTableBodyCellProps: {
+        //       align: "center",
+        //     },
+        //     Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+        //       renderedCellValue == null ? "-" : renderedCellValue,
+        //     Header: ({ column }) => (
+        //       <SortNumber column={column} numberSort={column.getIndex() + 1} />
+        //     ),
+        //   },
+        //   {
+        //     accessorKey: "perlakuan_level",
+        //     header: "Level Risiko",
+        //     enableColumnActions: false,
+        //     Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
+        //       <ChipLevelRisiko level={renderedCellValue} />
+        //     ),
+        //     Header: ({ column }) => (
+        //       <SortNumber column={column} numberSort={column.getIndex() + 1} />
+        //     ),
+        //   },
+        // ],
       },
     ],
     []

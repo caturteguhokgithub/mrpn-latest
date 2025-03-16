@@ -13,55 +13,17 @@ import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import { bgColorTh } from "@/app/utils/color";
 import { grey } from "@mui/material/colors";
+import usePossibilityList from "./hooks/usePossibility";
+import { ResultPossibility } from "./hooks/possibilityModel";
 
 export default function TableKemungkinan({ mode }: { mode?: string }) {
-  function createData(
-    id: number,
-    level: string,
-    persentase: string,
-    jumlah: string,
-    lfe: string
-  ) {
-    return { id, level, persentase, jumlah, lfe };
-  }
+  const { listDataPossibility, loading } = usePossibilityList();
 
-  const rows = [
-    createData(
-      1,
-      "Hampir tidak terjadi (1)",
-      "P ≤ 10%",
-      "< 2 kali dalam 12 bulan terakhir",
-      "≤ 1 kejadian dalam lebih dari 5 tahun terakhir"
-    ),
-    createData(
-      2,
-      "Jarang terjadi (2)",
-      "10% <p ≤ 25%",
-      "2 kali s.d 5 kali dalam 12 bulan terakhir",
-      "Minimal 1 kejadian dalam 4 tahun terakhir"
-    ),
-    createData(
-      3,
-      "Kadang terjadi (3)",
-      "25% < p ≤ 50%",
-      "6 kali s.d 9 kali dalam 12 bulan terkahir",
-      "Minimal 1 kejadian dalam 3 tahun terakhir"
-    ),
-    createData(
-      4,
-      "Sering terjadi (4)",
-      "50% < p ≤ 75%",
-      "10 kali s.d 12 kali dalam 12 bulan terakhir",
-      "Minimal 1 kejadian dalam 2 tahun terakhir"
-    ),
-    createData(
-      5,
-      "Hampir pasti terjadi (5)",
-      "P > 75%",
-      "> 12 kali dalam 12 bulan terakhir",
-      "Minimal 1 kejadian dalam 1 tahun terakhir"
-    ),
-  ];
+  console.log({ listDataPossibility, loading });
+
+  if (loading) {
+    return <div>loading...</div>;
+  }
 
   return (
     <TableContainer component={Paper} elevation={0} variant="outlined">
@@ -81,7 +43,6 @@ export default function TableKemungkinan({ mode }: { mode?: string }) {
       >
         <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
           <TableRow>
-            {/* <TableCell width="70px"></TableCell> */}
             <TableCell rowSpan={3} sx={{ bgcolor: bgColorTh }} align="center">
               Level Kemungkinan
             </TableCell>
@@ -119,32 +80,15 @@ export default function TableKemungkinan({ mode }: { mode?: string }) {
             </TableRow>
           ) : (
             <>
-              {rows.map((row) => (
+              {listDataPossibility.map((row: ResultPossibility) => (
                 <TableRow
                   key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  {/* <TableCell sx={{ textAlign: "center" }}>
-            <Tooltip title="Delete" placement="top">
-             <IconButton
-              aria-label="delete"
-              color="error"
-              disabled={mode === "view"}
-             >
-              <Icon
-               baseClassName="fas"
-               className={`fa-trash-alt`}
-               sx={{
-                fontSize: "14px",
-               }}
-              />
-             </IconButton>
-            </Tooltip>
-           </TableCell> */}
-                  <TableCell>{row.level}</TableCell>
-                  <TableCell>{row.persentase}</TableCell>
-                  <TableCell>{row.jumlah}</TableCell>
-                  <TableCell>{row.lfe}</TableCell>
+                  <TableCell>{row.level_kemungkinan}</TableCell>
+                  <TableCell>{row.probabilitas}</TableCell>
+                  <TableCell>{row.jumlah_frekuensi}</TableCell>
+                  <TableCell>{row.low_frekuensi}</TableCell>
                 </TableRow>
               ))}
             </>

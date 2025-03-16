@@ -16,28 +16,30 @@ import { bgColorTh } from "@/app/utils/color";
 import { blue, grey, red } from "@mui/material/colors";
 import { Stack } from "@mui/material";
 import Iconify from "@/app/components/icons/iconify";
+import useCategoryList from "./hooks/useCategory";
+import { ResultCategory } from "./hooks/categoryModel";
 
-function createData(category: string, uraian: string) {
-  return {
-    category,
-    uraian,
-    history: [
-      {
-        subCategory: "Prospek Ekonomi",
-        uraian:
-          "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts.",
-      },
-      {
-        subCategory: "Variabel Ekonomi",
-        uraian:
-          "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts.",
-      },
-    ],
-  };
-}
+// function createData(category: string, uraian: string) {
+//   return {
+//     category,
+//     uraian,
+//     history: [
+//       {
+//         subCategory: "Prospek Ekonomi",
+//         uraian:
+//           "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts.",
+//       },
+//       {
+//         subCategory: "Variabel Ekonomi",
+//         uraian:
+//           "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts.",
+//       },
+//     ],
+//   };
+// }
 
 function Row(props: {
-  row: ReturnType<typeof createData>;
+  row: ResultCategory;
   handleEdit: any;
   handleDelete?: any;
 }) {
@@ -56,8 +58,8 @@ function Row(props: {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell>{row.category}</TableCell>
-        <TableCell>{row.uraian}</TableCell>
+        <TableCell>{row.value}</TableCell>
+        <TableCell>{row.desc}</TableCell>
         <TableCell>
           <Stack direction="row">
             <IconButton onClick={handleEdit}>
@@ -92,22 +94,22 @@ function Row(props: {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.subCategory}>
+                  {row.sub_kategori_risiko.map((historyRow) => (
+                    <TableRow key={historyRow.id}>
                       <TableCell
                         sx={{
                           whiteSpace: "nowrap",
                           bgcolor: grey[50],
                         }}
                       >
-                        {historyRow.subCategory}
+                        {historyRow.value}
                       </TableCell>
                       <TableCell
                         sx={{
                           bgcolor: grey[50],
                         }}
                       >
-                        {historyRow.uraian}
+                        {historyRow.desc}
                       </TableCell>
                       <TableCell
                         sx={{
@@ -135,20 +137,20 @@ function Row(props: {
   );
 }
 
-const rows = [
-  createData(
-    "Ekonomi",
-    "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
-  ),
-  createData(
-    "Geopolitik",
-    "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
-  ),
-  createData(
-    "Teknologi",
-    "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
-  ),
-];
+// const rows = [
+//   createData(
+//     "Ekonomi",
+//     "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
+//   ),
+//   createData(
+//     "Geopolitik",
+//     "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
+//   ),
+//   createData(
+//     "Teknologi",
+//     "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
+//   ),
+// ];
 
 export default function CollapsibleTable({
   handleEdit,
@@ -157,6 +159,10 @@ export default function CollapsibleTable({
   handleEdit?: any;
   handleDelete?: any;
 }) {
+  const { listDataCategory } = useCategoryList();
+
+  console.log({ listDataCategory });
+
   return (
     <TableContainer
       component={Paper}
@@ -186,9 +192,9 @@ export default function CollapsibleTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {listDataCategory.map((row: ResultCategory) => (
             <Row
-              key={row.category}
+              key={row.id}
               row={row}
               handleEdit={handleEdit}
               handleDelete={handleDelete}
