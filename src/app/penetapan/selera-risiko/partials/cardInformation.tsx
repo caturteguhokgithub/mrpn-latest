@@ -29,6 +29,7 @@ import { styleOrgChart } from "@/app/executive-summary/style";
 import DraggableScroll from "@/app/components/cardStakeholder/draggableScroll";
 import { SxParams } from "@/app/executive-summary/types";
 import FormInformation from "./form";
+import useInformationList from "../hooks/useInformation";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -51,6 +52,10 @@ export default function CardInformation({
     setModalDelete,
     handleModalDelete,
   } = useCardSegmentVM();
+
+  const { listData, loadingContext } = useInformationList();
+
+  // console.log(listData, loadingContext);
 
   const ReactQuill = dynamic(
     async () => {
@@ -81,26 +86,11 @@ export default function CardInformation({
 
   const emptyData = true;
 
-  const rowData = [
-    {
-      id: 1,
-      informasi:
-        "Memantapkan Sistem Pertahanan Keamanan Negara dan Mendorong Kemandirian Bangsa melalui Swasembada Pangan, Energi, Air, Ekonomi Syariah, Ekonomi Digital, Ekonomi Hijau, dan Ekonomi Biru",
-      jenis: "image",
-      url: "/",
-    },
-    {
-      id: 2,
-      informasi:
-        "Mencetak dan meningkatkan produktivitas lahan pertanian dengan lumbung pangan desa, daerah, dan nasional",
-      jenis: "pdf",
-      url: "/",
-    },
-  ];
-
   const [modalViewImage, setModalViewImage] = React.useState(false);
 
   const sxParamsFull: SxParams = { variant: "full" };
+
+  // console.log({ listData });
 
   return (
     <Fragment>
@@ -139,7 +129,7 @@ export default function CardInformation({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rowData.map((item) => (
+                {listData.map((item: any) => (
                   <TableRow key={item.id}>
                     <TableCell>{item.informasi}</TableCell>
                     <TableCell align="center">
