@@ -9,6 +9,7 @@ import dynamic from "next/dynamic";
 import type ReactQuill from "react-quill";
 import DialogDelete from "@/app/components/dialogDelete";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -17,9 +18,11 @@ interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
 export default function CardUrgent({
   project,
   activeSetting,
+  penetapan,
 }: {
   project?: string;
   activeSetting?: boolean;
+  penetapan?: boolean;
 }) {
   const {
     data,
@@ -33,6 +36,11 @@ export default function CardUrgent({
     setModalDelete,
     handleModalDelete,
   } = useCardUrgentVM();
+
+  const {
+    dataUrgensi,
+  } = useUrgensiVM();
+
   const { year } = useRKPContext((state) => state);
 
   const ReactQuill = dynamic(
@@ -69,16 +77,28 @@ export default function CardUrgent({
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
     >
-      {data.value == "" ? (
-        <EmptyState
-          dense
-          icon={<IconEmptyData width={100} />}
-          title="Data Kosong"
-          description="Silahkan isi konten halaman ini"
-        />
-      ) : (
-        <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
-      )}
+      {penetapan ?
+        dataUrgensi?.value == "" ? (
+          <EmptyState
+            dense
+            icon={<IconEmptyData width={100} />}
+            title="Data Kosong"
+            description="Silahkan isi konten halaman ini"
+          />
+        ) : (
+          <div dangerouslySetInnerHTML={{ __html: dataUrgensi?.value ?? "" }}></div>
+        )
+        :
+        data.value == "" ? (
+          <EmptyState
+            dense
+            icon={<IconEmptyData width={100} />}
+            title="Data Kosong"
+            description="Silahkan isi konten halaman ini"
+          />
+        ) : (
+          <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
+        )}
       <DialogComponent
         dialogOpen={modal}
         dialogClose={() => setModal(true)}

@@ -19,13 +19,7 @@ import CardItem from "@/components/cardTabItem";
 import useCardRegulasi from "@/app/penetapan/konteks-strategis/cardRegulasi/vm";
 
 export default function CardRegulation() {
-  const { objectState, getData, data } = useCardRegulasi();
-
-  useEffect(() => {
-    if (objectState !== undefined) {
-      getData();
-    }
-  }, [objectState]);
+  const { data } = useCardRegulasi();
 
   return (
     <>

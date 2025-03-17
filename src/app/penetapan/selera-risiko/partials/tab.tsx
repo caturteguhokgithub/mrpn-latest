@@ -72,7 +72,7 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-export default function TabInternalEksternal({}) {
+export default function TabInternalEksternal({ }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -122,9 +122,9 @@ export default function TabInternalEksternal({}) {
           />
         ) : (
           <Stack gap={1}>
-            <CardUrgent activeSetting />
-            <CardSegment activeSetting />
-            <CardSwot activeSetting />
+            <CardUrgent activeSetting penetapan />
+            <CardSegment activeSetting penetapan />
+            <CardSwot activeSetting penetapan />
           </Stack>
         )}
       </CustomTabPanel>

@@ -41,7 +41,7 @@ export default function CardInformation({
   activeSetting?: boolean;
 }) {
   const {
-    data,
+    // data,
     modal,
     setModal,
     updateData,
@@ -53,7 +53,7 @@ export default function CardInformation({
     handleModalDelete,
   } = useCardSegmentVM();
 
-  const { listData, loadingContext } = useInformationList();
+  const { data, listData, loadingContext } = useInformationList();
 
   // console.log(listData, loadingContext);
 
@@ -125,14 +125,14 @@ export default function CardInformation({
               <TableHead sx={{ bgcolor: bgColorTh }}>
                 <TableRow>
                   <TableCell align="center">Informasi</TableCell>
-                  <TableCell align="center">Bukti Dukung</TableCell>
+                  {/* <TableCell align="center">Bukti Dukung</TableCell> */}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {listData.map((item: any) => (
+                {data?.lists.map((item: any) => (
                   <TableRow key={item.id}>
-                    <TableCell>{item.informasi}</TableCell>
-                    <TableCell align="center">
+                    <TableCell>{item.value}</TableCell>
+                    {/* <TableCell align="center">
                       {item.jenis == "pdf" ? (
                         <IconButton
                           color="primary"
@@ -149,7 +149,7 @@ export default function CardInformation({
                           <Iconify name="mdi:file-image" size={20} />
                         </IconButton>
                       )}
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 ))}
               </TableBody>

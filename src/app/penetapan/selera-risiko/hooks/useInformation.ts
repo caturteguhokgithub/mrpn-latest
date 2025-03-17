@@ -8,14 +8,17 @@ import {
 } from "@/lib/core/hooks/useHooks";
 import { rowData } from "./mock";
 import { useSearchParams } from "next/navigation";
+import usePenetapanGlobalVM from "../../penetapanGlobalVM";
+import { InformasiLainnyaResDto, initInformasiLainnyaShow } from "./informationModel";
 
 const useInformationList = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState<InformasiLainnyaResDto>();
 
   const { exsum } = useExsumContext();
+  const { objectState } = usePenetapanGlobalVM()
 
   const searchParams = useSearchParams();
 
@@ -24,24 +27,17 @@ const useInformationList = () => {
   async function getData() {
     const response = await doGetInformation({
       body: {
-        exsum_id: 308,
+        uraian_penetapan_object_id: objectState?.id,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
     });
 
     if (response?.code == API_CODE.success) {
-      let result: any = response.result;
+      let result: InformasiLainnyaResDto = response.result;
 
       if (result) {
         setData(result);
-        // setData(rowData);
-
-        // setRequest(result);
-      } else {
-        setData([]);
-        // setData(rowData);
-        // setRequest({ [] });
       }
     }
   }
@@ -52,7 +48,7 @@ const useInformationList = () => {
     // }
   }, []);
 
-  return { listData: rowData, loadingContext };
+  return { data, listData: rowData, loadingContext };
 };
 
 export default useInformationList;

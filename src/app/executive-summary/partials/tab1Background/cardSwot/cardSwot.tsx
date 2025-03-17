@@ -33,13 +33,16 @@ import { IconFA } from "@/components/icons/icon-fa";
 import DialogDelete from "@/app/components/dialogDelete";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
+import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
 
 export default function CardSwot({
   project,
   activeSetting,
+  penetapan,
 }: {
   project?: string;
   activeSetting?: boolean;
+  penetapan?: boolean;
 }) {
   const {
     data,
@@ -56,6 +59,10 @@ export default function CardSwot({
     handleEdited,
     conditionEditing,
   } = useCardSWOTVM();
+
+  const {
+    dataSwot,
+  } = useUrgensiVM();
 
   return (
     <>
@@ -80,31 +87,58 @@ export default function CardSwot({
         settingDeleteOnclick={handleModalDelete}
         settingEditOnclick={() => setModal(true)}
       >
-        {data.values.length == 0 ? (
-          <EmptyState
-            dense
-            icon={<IconEmptyData width={100} />}
-            title="Data Kosong"
-            description="Silahkan isi konten halaman ini"
-          />
-        ) : (
-          <Stack direction="row" gap={2} width={"100%"}>
-            <GenerateCard
-              title="Faktor Internal"
-              sub1="strength"
-              sub2="weakness"
-              data={data.values}
-              conditionEditing={conditionEditing}
+        {penetapan ?
+          dataSwot?.values.length == 0 ? (
+            <EmptyState
+              dense
+              icon={<IconEmptyData width={100} />}
+              title="Data Kosong"
+              description="Silahkan isi konten halaman ini"
             />
-            <GenerateCard
-              title="Faktor Eksternal"
-              sub1="opportunity"
-              sub2="threat"
-              data={data.values}
-              conditionEditing={conditionEditing}
+          ) : (
+            <Stack direction="row" gap={2} width={"100%"}>
+              <GenerateCard
+                title="Faktor Internal"
+                sub1="strength"
+                sub2="weakness"
+                data={dataSwot?.values ?? []}
+                conditionEditing={conditionEditing}
+              />
+              <GenerateCard
+                title="Faktor Eksternal"
+                sub1="opportunity"
+                sub2="threat"
+                data={dataSwot?.values ?? []}
+                conditionEditing={conditionEditing}
+              />
+            </Stack>
+          )
+          :
+          data.values.length == 0 ? (
+            <EmptyState
+              dense
+              icon={<IconEmptyData width={100} />}
+              title="Data Kosong"
+              description="Silahkan isi konten halaman ini"
             />
-          </Stack>
-        )}
+          ) : (
+            <Stack direction="row" gap={2} width={"100%"}>
+              <GenerateCard
+                title="Faktor Internal"
+                sub1="strength"
+                sub2="weakness"
+                data={data.values}
+                conditionEditing={conditionEditing}
+              />
+              <GenerateCard
+                title="Faktor Eksternal"
+                sub1="opportunity"
+                sub2="threat"
+                data={data.values}
+                conditionEditing={conditionEditing}
+              />
+            </Stack>
+          )}
       </CardItem>
       <DialogComponent
         width={"80%"}
