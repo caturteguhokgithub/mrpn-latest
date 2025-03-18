@@ -1,7 +1,8 @@
 import { get, post, put } from "@/lib/core/api/apiBase";
 import { ResponseBaseDto } from "@/lib/core/api/apiModel";
-import { GetSegmenServiceModel, GetSwotServiceModel, GetUrgensiServiceModel } from "./pageModel";
+import { GetSegmenServiceModel, GetSwotServiceModel, GetUrgensiServiceModel, RequestSegmenServiceModel, RequestSwotServiceModel, RequestUrgensiServiceModel } from "./pageModel";
 
+// Urgensi
 export async function doGetUrgensi(param: GetUrgensiServiceModel) {
     const resp = await post({
         ...param,
@@ -10,6 +11,23 @@ export async function doGetUrgensi(param: GetUrgensiServiceModel) {
     if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
 
+export async function doUpdateUrgensi(param: RequestUrgensiServiceModel) {
+    const resp = await post({
+        ...param,
+        url: "penetapan/upr/urgensiProyek/update"
+    });
+    if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+export async function doCreateUrgensi(param: RequestUrgensiServiceModel) {
+    const resp = await post({
+        ...param,
+        url: "penetapan/upr/urgensiProyek/add"
+    });
+    if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+// Segmen
 export async function doGetSegmen(param: GetSegmenServiceModel) {
     const resp = await post({
         ...param,
@@ -18,6 +36,23 @@ export async function doGetSegmen(param: GetSegmenServiceModel) {
     if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
 
+export async function doCreateSegmen(param: RequestSegmenServiceModel) {
+    const resp = await post({
+        ...param,
+        url: "penetapan/upr/penerimaManfaat/add"
+    });
+    if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+export async function doUpdateSegmen(param: RequestSegmenServiceModel) {
+    const resp = await post({
+        ...param,
+        url: "penetapan/upr/penerimaManfaat/update"
+    });
+    if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+// Swot
 export async function doGetSwot(param: GetSwotServiceModel) {
     const resp = await post({
         ...param,
@@ -26,10 +61,18 @@ export async function doGetSwot(param: GetSwotServiceModel) {
     if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
 
-// export async function doUnggahBuktiDukung(param: UploadBuktiDukungServiceModel) {
-//     const resp = await post({
-//         ...param,
-//         url: "penetapan/object/buktiDukung/add",
-//     });
-//     if (resp) return Object.assign(new ResponseBaseDto(), resp);
-// }
+export async function doCreateSwot(param: RequestSwotServiceModel) {
+    const resp = await post({
+        ...param,
+        url: "penetapan/upr/swot/add"
+    });
+    if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+export async function doUpdateSwot(param: RequestSwotServiceModel) {
+    const resp = await post({
+        ...param,
+        url: "penetapan/upr/swot/update"
+    });
+    if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}

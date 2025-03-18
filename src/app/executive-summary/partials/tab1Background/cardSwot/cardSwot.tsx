@@ -34,6 +34,7 @@ import DialogDelete from "@/app/components/dialogDelete";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
+import { doRequestSwotDto } from "@/app/penetapan/internal-eksternal/pageModel";
 
 export default function CardSwot({
   project,
@@ -61,8 +62,14 @@ export default function CardSwot({
   } = useCardSWOTVM();
 
   const {
+    requestSwot,
+    setRequestSwot,
+    uriRequestSwot,
     dataSwot,
   } = useUrgensiVM();
+
+  console.log(requestSwot);
+
 
   return (
     <>
@@ -102,14 +109,14 @@ export default function CardSwot({
                 sub1="strength"
                 sub2="weakness"
                 data={dataSwot?.values ?? []}
-                conditionEditing={conditionEditing}
+                conditionEditing={"inherit"}
               />
               <GenerateCard
                 title="Faktor Eksternal"
                 sub1="opportunity"
                 sub2="threat"
                 data={dataSwot?.values ?? []}
-                conditionEditing={conditionEditing}
+                conditionEditing={"inherit"}
               />
             </Stack>
           )
@@ -154,7 +161,11 @@ export default function CardSwot({
               variant="contained"
               type="submit"
               onClick={() => {
-                updateData(), handleEdited();
+                if (penetapan) {
+                  uriRequestSwot(), handleEdited();
+                } else {
+                  updateData(), handleEdited();
+                }
               }}
             >
               Simpan
@@ -166,8 +177,8 @@ export default function CardSwot({
           {LISTSWOT.map((x, index) => (
             <GetGrid
               deleteDataRow={deleteDataRow}
-              request={request}
-              setRequest={setRequest}
+              request={penetapan ? requestSwot : request}
+              setRequest={penetapan ? setRequestSwot : setRequest}
               title={x}
               key={index}
             />
@@ -336,13 +347,13 @@ const GetGrid = ({
   title,
   deleteDataRow,
 }: {
-  request: ExsumSWOTRequestDto;
+  request: ExsumSWOTRequestDto | doRequestSwotDto;
   setRequest: any;
   title: string;
   deleteDataRow: any;
 }) => {
   const addNewRow = (type: string) => {
-    setRequest((prev: ExsumSWOTRequestDto) => {
+    setRequest((prev: ExsumSWOTRequestDto | doRequestSwotDto) => {
       const row = {
         id: 0,
         type: type,
@@ -359,29 +370,47 @@ const GetGrid = ({
   };
 
   const handleChangeKeyword = (newValue: string, index: number) => {
-    setRequest((prev: ExsumSWOTRequestDto) => {
+    setRequest((prev: ExsumSWOTRequestDto | doRequestSwotDto) => {
+      if (!prev.values || !Array.isArray(prev.values)) {
+        console.error("Values tidak terdefinisi atau bukan array");
+        return prev;
+      }
+
       const values = [...prev.values];
-      values[index].value = newValue;
-      return {
-        ...prev,
-        values: values,
-      };
+
+      if (index < 0 || index >= values.length) {
+        console.error(`Index ${index} di luar batas array values`);
+        return prev;
+      }
+
+      values[index] = { ...values[index], value: newValue };
+
+      return { ...prev, values };
     });
   };
 
   const handleChangeDesc = (e: string, index: number) => {
-    setRequest((prev: ExsumSWOTRequestDto) => {
+    setRequest((prev: ExsumSWOTRequestDto | doRequestSwotDto) => {
+      if (!prev.values || !Array.isArray(prev.values)) {
+        console.error("Values tidak terdefinisi atau bukan array");
+        return prev;
+      }
+
       const values = [...prev.values];
-      values[index].desc = e;
-      return {
-        ...prev,
-        values: values,
-      };
+
+      if (index < 0 || index >= values.length) {
+        console.error(`Index ${index} di luar batas array values`);
+        return prev;
+      }
+
+      values[index] = { ...values[index], desc: e }; // Aman untuk diubah
+
+      return { ...prev, values };
     });
   };
 
   const handleDelete = (index: number) => {
-    setRequest((prev: ExsumSWOTRequestDto) => {
+    setRequest((prev: ExsumSWOTRequestDto | doRequestSwotDto) => {
       const values = [...prev.values];
 
       deleteDataRow(values[index].id);

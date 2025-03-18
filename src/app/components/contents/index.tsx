@@ -20,6 +20,7 @@ import { listTriwulan } from "@/app/utils/data";
 import DateRangePicker from "@/components/dateRange";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import { InfoTooltip } from "../InfoTooltip";
+import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 
 export default function ContentPage({
   title,
@@ -96,6 +97,9 @@ export default function ContentPage({
   const [roDropdown, setRoDropdown] = React.useState("");
   const [triwulanDropdown, setTriwulanDropdown] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+
+  const { objectState } = usePenetapanGlobalVM();
+
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -281,7 +285,7 @@ export default function ContentPage({
                         }}
                       >
                         <Typography px={1.5} fontSize={13} fontWeight={600}>
-                          {nameOfKp}
+                          {`${objectState?.rkp.code} - ${objectState?.rkp.value}`}
                         </Typography>
                       </Box>
                     </Stack>
@@ -587,12 +591,12 @@ export default function ContentPage({
           heightTitleBreadcrumb
             ? "calc(100vh - 258px)"
             : overflowHidden
-            ? "calc(100vh - 240px)"
-            : heightNoSet
-            ? "auto"
-            : darkTheme
-            ? "calc(100vh - 180px)"
-            : "calc(100vh - 240px)"
+              ? "calc(100vh - 240px)"
+              : heightNoSet
+                ? "auto"
+                : darkTheme
+                  ? "calc(100vh - 180px)"
+                  : "calc(100vh - 240px)"
         }
         overflow={overflowHidden ? "hidden" : "auto"}
         margin={noMinusMargin ? 0 : -1}

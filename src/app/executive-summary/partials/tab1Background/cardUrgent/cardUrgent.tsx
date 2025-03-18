@@ -38,6 +38,8 @@ export default function CardUrgent({
   } = useCardUrgentVM();
 
   const {
+    requestUrgensi,
+    updateDataUrgensi,
     dataUrgensi,
   } = useUrgensiVM();
 
@@ -62,11 +64,21 @@ export default function CardUrgent({
   const handleCreateOrUpdateData = async () => {
     const text = quillRef.current?.value;
     if (text) {
-      const req = {
-        ...request,
-        value: text.toString(),
-      };
-      updateData(req);
+      if (penetapan) {
+        const req = {
+          ...requestUrgensi,
+          value: text.toString(),
+        };
+
+        updateDataUrgensi(req)
+      } else {
+        const req = {
+          ...request,
+          value: text.toString(),
+        };
+
+        updateData(req);
+      }
     }
   };
 
@@ -115,9 +127,9 @@ export default function CardUrgent({
         }
       >
         <ReactQuill
-          key={request.value}
+          key={penetapan ? dataUrgensi?.value : request.value}
           theme="snow"
-          defaultValue={request.value}
+          defaultValue={penetapan ? dataUrgensi?.value : request.value}
           forwardedRef={quillRef}
         />
       </DialogComponent>

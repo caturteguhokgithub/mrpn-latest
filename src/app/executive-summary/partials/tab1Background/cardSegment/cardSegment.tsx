@@ -40,7 +40,8 @@ export default function CardSegment({
 
   const {
     dataSegmen,
-    objectState,
+    requestSegmen,
+    uriRequestSegmen,
   } = useUrgensiVM();
 
   const { year } = useRKPContext((state) => state);
@@ -64,12 +65,30 @@ export default function CardSegment({
   const handleCreateOrUpdateData = async () => {
     const text = quillRef.current?.value;
     if (text) {
-      const req = {
-        ...request,
-        value: text.toString(),
-      };
-      updateData(req);
+      if (penetapan) {
+        const req = {
+          ...requestSegmen,
+          value: text.toString(),
+        };
+
+        uriRequestSegmen(req)
+      } else {
+        const req = {
+          ...request,
+          value: text.toString(),
+        };
+
+        updateData(req);
+      }
     }
+
+    // if (text) {
+    //   const req = {
+    //     ...request,
+    //     value: text.toString(),
+    //   };
+    //   updateData(req);
+    // }
   };
 
   return (
@@ -121,9 +140,9 @@ export default function CardSegment({
         }
       >
         <ReactQuill
-          key={request.value}
+          key={penetapan ? dataSegmen?.value : request.value}
           theme="snow"
-          defaultValue={request.value}
+          defaultValue={penetapan ? dataSegmen?.value : request.value}
           forwardedRef={quillRef}
         />
       </DialogComponent>

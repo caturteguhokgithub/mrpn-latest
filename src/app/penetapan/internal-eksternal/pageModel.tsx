@@ -1,9 +1,9 @@
 import { BaseAPIServiceParam } from "@/lib/core/api/apiModel";
 
-
+// Urgensi
 export interface doResUrgensi {
     id: number
-    exsum_id: number
+    uraian_penetapan_object_id: number
     value: string
 }
 
@@ -12,14 +12,16 @@ export interface doGetReqUrgensiDto {
     tahun: number | string
 }
 
-export interface doAddUrgensiDto {
+export interface doRequestUrgensiDto {
+    id: number;
     uraian_penetapan_object_id: number;
     value: string;
 }
 
-export const initUrgensi: doAddUrgensiDto = {
+export const initUrgensi: doRequestUrgensiDto = {
+    id: 0,
     uraian_penetapan_object_id: 0,
-    value: "0"
+    value: ""
 }
 
 export const initUrgensiShow: doGetReqUrgensiDto = {
@@ -31,8 +33,8 @@ export type GetUrgensiServiceModel = BaseAPIServiceParam & {
     body: doGetReqUrgensiDto
 };
 
-export type UrgensiServiceModel = BaseAPIServiceParam & {
-    body: doAddUrgensiDto;
+export type RequestUrgensiServiceModel = BaseAPIServiceParam & {
+    body: doRequestUrgensiDto;
 };
 
 export type UrgensiResDto = doResUrgensi;
@@ -50,12 +52,14 @@ export interface doGetReqSegmenDto {
     tahun: number | string
 }
 
-export interface doAddSegmenDto {
+export interface doRequestSegmenDto {
+    id: number
     uraian_penetapan_object_id: number;
     value: string;
 }
 
-export const initSegmen: doAddSegmenDto = {
+export const initSegmen: doRequestSegmenDto = {
+    id: 0,
     uraian_penetapan_object_id: 0,
     value: "0"
 }
@@ -69,8 +73,8 @@ export type GetSegmenServiceModel = BaseAPIServiceParam & {
     body: doGetReqSegmenDto
 };
 
-export type SegmenServiceModel = BaseAPIServiceParam & {
-    body: doAddSegmenDto;
+export type RequestSegmenServiceModel = BaseAPIServiceParam & {
+    body: doRequestSegmenDto;
 };
 
 export type SegmenResDto = doResSegmen;
@@ -86,13 +90,28 @@ export interface valueSwot {
 
 export interface doResSwot {
     id: number
-    exsum_id: number
+    uraian_penetapan_object_id: number
+    tahun: number | string,
     values: valueSwot[]
 }
 
 export interface doGetReqSwotDto {
     uraian_penetapan_object_id: number
     tahun: number | string
+}
+
+export interface doRequestSwotDto {
+    id: number
+    uraian_penetapan_object_id: number;
+    tahun: number | string;
+    values: valueSwot[]
+}
+
+export const initSwot: doRequestSwotDto = {
+    id: 0,
+    uraian_penetapan_object_id: 0,
+    tahun: 0,
+    values: []
 }
 
 export const initSwotShow: doGetReqSwotDto = {
@@ -102,6 +121,10 @@ export const initSwotShow: doGetReqSwotDto = {
 
 export type GetSwotServiceModel = BaseAPIServiceParam & {
     body: doGetReqSwotDto
+};
+
+export type RequestSwotServiceModel = BaseAPIServiceParam & {
+    body: doRequestSwotDto;
 };
 
 export type SwotResDto = doResSwot;
