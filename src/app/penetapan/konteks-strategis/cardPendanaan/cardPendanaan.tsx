@@ -5,9 +5,10 @@ import CardItem from "@/components/cardTabItem";
 import { FormatIDR } from "@/lib/utils/currency";
 import { grey } from "@mui/material/colors";
 import { Box, Stack, Typography } from "@mui/material";
+import TablePendanaan from "./partials/tablePendanaan";
 
 export default function CardPendanaan() {
-  const isEmpty = true;
+  const isEmpty = false;
 
   return (
     <CardItem
@@ -53,7 +54,7 @@ export default function CardPendanaan() {
           description="Silahkan isi konten halaman ini"
         />
       ) : (
-        <Fragment></Fragment>
+        <TablePendanaan />
       )}
     </CardItem>
   );

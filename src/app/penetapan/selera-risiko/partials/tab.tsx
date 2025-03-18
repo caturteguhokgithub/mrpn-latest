@@ -122,7 +122,7 @@ export default function TabInternalEksternal({}) {
           />
         ) : (
           <Stack gap={1}>
-            <CardUrgent activeSetting />
+            <CardUrgent activeSetting  />
             <CardSegment activeSetting />
             <CardSwot activeSetting />
           </Stack>
