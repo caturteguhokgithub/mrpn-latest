@@ -5,13 +5,14 @@ import CardItem from "@/components/cardTabItem";
 import { FormatIDR } from "@/lib/utils/currency";
 import { grey } from "@mui/material/colors";
 import { Box, Stack, Typography } from "@mui/material";
+import TablePendanaan from "./partials/table-pendanaan";
 
 export default function CardPendanaan() {
-  const isEmpty = true;
+  const isEmpty = false;
 
   return (
     <CardItem
-      title="Anggaran"
+      title="Indikator Sasaran Beserta Dukungan Anggaran dan Sumber Anggaran"
       addButton={
         <Stack direction="row" alignItems="center">
           <Box
@@ -53,7 +54,7 @@ export default function CardPendanaan() {
           description="Silahkan isi konten halaman ini"
         />
       ) : (
-        <Fragment></Fragment>
+        <TablePendanaan />
       )}
     </CardItem>
   );

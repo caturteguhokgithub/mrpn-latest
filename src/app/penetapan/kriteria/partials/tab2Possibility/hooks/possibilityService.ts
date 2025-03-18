@@ -9,4 +9,26 @@ export async function doGetPossibility(param: any) {
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
 
-// export async function doCreatePossibility(ps
+// export async function doCreatePossibility(param: any) {
+//   const resp = await post({
+//     ...param,
+//     url: "exsum/urgensiProyek/add",
+//   });
+//   if (resp) return Object.assign(new ResponseBaseDto(), resp);
+// }
+
+// export async function doUpdatePossibility(param: any) {
+//   const resp = await put({
+//     ...param,
+//     url: "exsum/urgensiProyek/update",
+//   });
+//   if (resp) return Object.assign(new ResponseBaseDto(), resp);
+// }
+
+// export async function doDeletePossibility(param: any) {
+//   const resp = await del({
+//     ...param,
+//     url: "exsum/urgensiProyek/delete",
+//   });
+//   if (resp) return Object.assign(new ResponseBaseDto(), resp);
+// }
