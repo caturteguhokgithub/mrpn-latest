@@ -49,7 +49,7 @@ function Row(props: {
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
+        <TableCell width={60}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -88,7 +88,11 @@ function Row(props: {
                     <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
                       Uraian
                     </TableCell>
-                    <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
+                    <TableCell
+                      width={100}
+                      align="center"
+                      sx={{ bgcolor: bgColorTh }}
+                    >
                       Aksi
                     </TableCell>
                   </TableRow>
@@ -186,7 +190,7 @@ export default function CollapsibleTable({
             <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
               Uraian
             </TableCell>
-            <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
+            <TableCell width={100} align="center" sx={{ bgcolor: bgColorTh }}>
               Aksi
             </TableCell>
           </TableRow>
