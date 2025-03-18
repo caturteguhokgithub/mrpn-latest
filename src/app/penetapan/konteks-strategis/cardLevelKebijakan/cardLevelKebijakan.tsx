@@ -50,7 +50,7 @@ export default function CardLevelKebijakan() {
   ];
 
   return (
-    <CardItem title="Level Kebijakan">
+    <CardItem title="Level Kebijakan Objek MRPN LS pada Struktur Prioritas Pembangunan">
       {isEmpty ? (
         <EmptyState
           dense
