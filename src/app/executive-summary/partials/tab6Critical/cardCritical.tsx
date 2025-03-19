@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import CardItem from "@/app/components/cardTabItem";
@@ -15,6 +15,8 @@ import DialogDelete from "@/app/components/dialogDelete";
 import GanttChartMonthly from "./gantt-critical/monthly";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import AddButton from "@/app/components/buttonAdd";
+import EmptyDevelopingState from "@/app/components/empty/developing";
+import { isDeveloping } from "@/app/components/layouts/layout";
 
 const ProjectType = ({ label, color }: { label: string; color: string }) => {
   return (
@@ -122,33 +124,41 @@ export default function CardCritical({
         settingAddOnclick={handleModalAdd}
         settingEditOnclick={handleModalOpen}
       >
-        {data.length == 0 || ganChart.length == 0 ? (
-          <EmptyState
-            dense
-            icon={<IconEmptyData width={100} />}
-            title="Data Kosong"
-            description="Silahkan isi konten halaman ini"
-          />
+        {isDeveloping ? (
+          <EmptyDevelopingState />
         ) : (
-          <Stack gap={3} maxWidth="calc(100vw - 200px)">
-            {/* <Stack direction="row" gap={1}> */}
-            {/*{groupProjectCategory().map((d, index) => (*/}
-            {/*  <ProjectType*/}
-            {/*    key={index}*/}
-            {/*    color={GetColor(d.id)}*/}
-            {/*    label={d.name}*/}
-            {/*  />*/}
-            {/*))}*/}
-            {/* </Stack> */}
-            {year == 0 && <GanttChart key={ganChart.length} tasks={ganChart} />}
-            {year > 0 && (
-              <GanttChartMonthly
-                key={ganChart.length}
-                tasks={tasksRKP}
-                setTasks={setTaskRKP}
+          <Fragment>
+            {data.length == 0 || ganChart.length == 0 ? (
+              <EmptyState
+                dense
+                icon={<IconEmptyData width={100} />}
+                title="Data Kosong"
+                description="Silahkan isi konten halaman ini"
               />
+            ) : (
+              <Stack gap={3} maxWidth="calc(100vw - 200px)">
+                {/* <Stack direction="row" gap={1}> */}
+                {/*{groupProjectCategory().map((d, index) => (*/}
+                {/*  <ProjectType*/}
+                {/*    key={index}*/}
+                {/*    color={GetColor(d.id)}*/}
+                {/*    label={d.name}*/}
+                {/*  />*/}
+                {/*))}*/}
+                {/* </Stack> */}
+                {year == 0 && (
+                  <GanttChart key={ganChart.length} tasks={ganChart} />
+                )}
+                {year > 0 && (
+                  <GanttChartMonthly
+                    key={ganChart.length}
+                    tasks={tasksRKP}
+                    setTasks={setTaskRKP}
+                  />
+                )}
+              </Stack>
             )}
-          </Stack>
+          </Fragment>
         )}
       </CardItem>
       <DialogComponent

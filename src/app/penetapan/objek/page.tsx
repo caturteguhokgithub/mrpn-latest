@@ -7,13 +7,14 @@ import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 import { PenetapanTopicProvider } from "@/lib/core/provider/penetapanTopicProvider";
 import { defaultPenetapanObjectState } from "@/lib/core/context/penetapanTopicContext";
 
-export default function PageTema({ }) {
+export default function PageTema({}) {
+  //  usePermissionChecker("penetapan.objectUpr")
 
-    //  usePermissionChecker("penetapan.objectUpr")
-
-    return <DashboardLayout>
-        <PenetapanTopicProvider state={defaultPenetapanObjectState}>
-            <PageTemaView />
-        </PenetapanTopicProvider>
+  return (
+    <DashboardLayout>
+      <PenetapanTopicProvider state={defaultPenetapanObjectState}>
+        <PageTemaView />
+      </PenetapanTopicProvider>
     </DashboardLayout>
+  );
 }

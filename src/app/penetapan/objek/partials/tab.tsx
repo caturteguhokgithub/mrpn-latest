@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Box, Tab, Tabs } from "@mui/material";
 import theme from "@/theme";
 import { IconFA } from "@/components/icons/icon-fa";
@@ -17,6 +17,8 @@ import CascadingPenetapanObjectOrgChart from "@/app/penetapan/objek/partials/org
 import AddButton from "@/components/buttonAdd";
 import TableNotaDinasViewOnly from "@/app/approval/nota-dinas/partials/table-nota-dinas-view-only";
 import { usePenetapanTopicContext } from "@/lib/core/hooks/useHooks";
+import { isDeveloping } from "@/app/components/layouts/layout";
+import EmptyDevelopingState from "@/app/components/empty/developing";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -123,7 +125,7 @@ export default function TabObject({}) {
             icon={<IconFA size={16} name="list-check" />}
           />
           <Tab
-            label="Usulan UPR Linsek"
+            label="Usulan UPR LS"
             {...a11yProps(3)}
             iconPosition="start"
             icon={<IconFA size={16} name="scroll" />}
@@ -179,7 +181,7 @@ export default function TabObject({}) {
         </CardItem>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        <CardItem title="Usulan UPR Linsek">
+        <CardItem title="Usulan UPR LS">
           {isEmpty ? (
             <EmptyState
               dense
@@ -194,7 +196,7 @@ export default function TabObject({}) {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
         <CardItem
-          // title="Nota Dinas Objek MRPN & UPR Linsek"
+          // title="Nota Dinas Objek MRPN & UPR LS"
           title="Pengesahan Objek & UPR LS"
           // addButton={
           //   !editNotaDinas && (
@@ -207,24 +209,33 @@ export default function TabObject({}) {
           //   )
           // }
         >
-          {isEmpty ? (
-            <EmptyState
-              dense
-              icon={<IconEmptyData width={100} />}
-              title="Data Kosong"
-              description="Silahkan isi konten halaman ini"
-            />
-          ) : editNotaDinas ? (
-            <TableNotaDinas edit={editNotaDinas} setEdit={setEditNotaDinas} />
-          ) : nota ? (
-            <TableNotaDinasViewOnly notaDinas={nota} />
+          {isDeveloping ? (
+            <EmptyDevelopingState />
           ) : (
-            <EmptyState
-              dense
-              icon={<IconEmptyData width={100} />}
-              title="Data Kosong"
-              description=""
-            />
+            <Fragment>
+              {isEmpty ? (
+                <EmptyState
+                  dense
+                  icon={<IconEmptyData width={100} />}
+                  title="Data Kosong"
+                  description="Silahkan isi konten halaman ini"
+                />
+              ) : editNotaDinas ? (
+                <TableNotaDinas
+                  edit={editNotaDinas}
+                  setEdit={setEditNotaDinas}
+                />
+              ) : nota ? (
+                <TableNotaDinasViewOnly notaDinas={nota} />
+              ) : (
+                <EmptyState
+                  dense
+                  icon={<IconEmptyData width={100} />}
+                  title="Data Kosong"
+                  description=""
+                />
+              )}
+            </Fragment>
           )}
         </CardItem>
       </CustomTabPanel>

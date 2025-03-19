@@ -7,6 +7,8 @@ import RiskContent from "@/app/penetapan/selera-risiko/partials/risk";
 import AddButton from "@/app/components/buttonAdd";
 import Iconify from "@/app/components/icons/iconify";
 import SeleraMatriks from "./matriks";
+import EmptyDevelopingState from "@/app/components/empty/developing";
+import { isDeveloping } from "@/app/components/layouts/layout";
 
 export default function CardSelera() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
@@ -40,7 +42,11 @@ export default function CardSelera() {
           />
         }
       >
-        <RiskContent handleSaveButton={handleModalOpenSave} />
+        {isDeveloping ? (
+          <EmptyDevelopingState />
+        ) : (
+          <RiskContent handleSaveButton={handleModalOpenSave} />
+        )}
       </CardItem>
       <DialogComponent
         width={1200}

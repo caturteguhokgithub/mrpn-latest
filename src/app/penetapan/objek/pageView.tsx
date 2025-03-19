@@ -111,7 +111,7 @@ const styleToggleButton = [
   },
 ];
 
-export default function PageTemaView({ }) {
+export default function PageTemaView({}) {
   const [modalDeleteTopic, setModalDeleteTopic] = useState(false);
 
   const { permission } = useAuthContext((state) => state);
@@ -137,7 +137,7 @@ export default function PageTemaView({ }) {
     modalLog,
     setModalLog,
     useEffectLogActivity,
-    getStateLogActivity
+    getStateLogActivity,
   } = usePenetapanObjectVM();
 
   useEffect(useEffectGenerateOption, [year]);
@@ -205,14 +205,14 @@ export default function PageTemaView({ }) {
     </DialogActions>
   );
 
-
   return (
     <>
       <ContentPage
-        title={`Objek MRPN & UPR Linsek ${year == 0
-          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-          : "Tahun " + year
-          }`}
+        title={`Objek MRPN & UPR LS ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip={
           <Stack spacing={2}>
             <div>

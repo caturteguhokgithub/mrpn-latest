@@ -9,6 +9,8 @@ import DialogDelete from "@/app/components/dialogDelete";
 import TableDampak from "./table-kriteria-dampak";
 import AddButton from "@/app/components/buttonAdd";
 import Iconify from "@/app/components/icons/iconify";
+import EmptyDevelopingState from "@/app/components/empty/developing";
+import { isDeveloping } from "@/app/components/layouts/layout";
 
 export default function CardDampak() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
@@ -46,20 +48,28 @@ export default function CardDampak() {
               title="Tabel Referensi"
               onclick={() => setModalOpenRef(true)}
             />
-            <AddButton
-              filled
-              startIcon={<Iconify name="mdi:plus-circle" />}
-              title="Tambah Kriteria Dampak"
-              onclick={() => setModalOpenAdd(true)}
-            />
+            {!isDeveloping && (
+              <AddButton
+                filled
+                startIcon={<Iconify name="mdi:plus-circle" />}
+                title="Tambah Kriteria Dampak"
+                onclick={() => setModalOpenAdd(true)}
+              />
+            )}
           </Stack>
         }
       >
-        <CollapsibleImpactTable
-          handleEdit={() => setModalOpenEdit(true)}
-          handleEditArea={() => setModalOpenEditArea(true)}
-          handleDelete={() => setModalDelete(true)}
-        />
+        {isDeveloping ? (
+          <EmptyDevelopingState />
+        ) : (
+          <Fragment>
+            <CollapsibleImpactTable
+              handleEdit={() => setModalOpenEdit(true)}
+              handleEditArea={() => setModalOpenEditArea(true)}
+              handleDelete={() => setModalDelete(true)}
+            />
+          </Fragment>
+        )}
       </CardItem>
       <DialogComponent
         width={1200}

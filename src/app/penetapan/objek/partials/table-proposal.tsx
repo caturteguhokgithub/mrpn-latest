@@ -106,7 +106,7 @@ lainnya"
                 </Stack>
               </TableCell>
               <TableCell colSpan={5} align="center">
-                Kriteria Pemilihan Prioritas UPR Linsek
+                Kriteria Pemilihan Prioritas UPR LS
               </TableCell>
             </TableRow>
             <TableRow>

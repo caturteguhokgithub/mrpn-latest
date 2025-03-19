@@ -79,7 +79,7 @@ function Row(props: {
         <TableCell colSpan={7} sx={{ fontWeight: 600, bgcolor: blue[100] }}>
           {row.areaDampak}
         </TableCell>
-        <TableCell>
+        {/* <TableCell>
           <Stack direction="row">
             <IconButton onClick={handleEditArea}>
               <Iconify name="mdi:pencil" color={blue[500]} />
@@ -88,7 +88,7 @@ function Row(props: {
               <Iconify name="mdi:trash" color={red[500]} />
             </IconButton>
           </Stack>
-        </TableCell>
+        </TableCell> */}
       </TableRow>
       <TableRow>
         <TableCell colSpan={9} sx={{ bgcolor: grey[200], p: 0 }}>
@@ -274,9 +274,9 @@ export default function CollapsibleImpactTable({
             <TableCell colSpan={7} align="center" sx={{ bgcolor: bgColorTh }}>
               Area Dampak
             </TableCell>
-            <TableCell width={110} align="center" sx={{ bgcolor: bgColorTh }}>
+            {/* <TableCell width={110} align="center" sx={{ bgcolor: bgColorTh }}>
               Aksi
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>

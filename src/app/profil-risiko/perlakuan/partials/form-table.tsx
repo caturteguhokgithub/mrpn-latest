@@ -1,4 +1,4 @@
-import React, {SetStateAction, useEffect, useState} from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import {
   Autocomplete,
   Box,
@@ -28,37 +28,41 @@ import {
   listPenanggungjawab,
   listPeristiwaRisiko,
 } from "../setting";
-import {grey, red} from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import {SxAutocompleteTextField} from "@/app/components/dropdown/dropdownDefault";
+import { SxAutocompleteTextField } from "@/app/components/dropdown/dropdownDefault";
 import DateRangePicker, {
   convertDateToString,
   convertStringToDate,
   DateRangeState,
 } from "@/app/components/dateRange";
 import theme from "@/theme";
-import {paramVariantDefault} from "@/app/utils/constant";
+import { paramVariantDefault } from "@/app/utils/constant";
 import Matriks from "../../analisis-evaluasi/partials/matriks";
 import {
   RiskTreatmentResDto,
   RiskTreatmentState,
 } from "@/app/profil-risiko/perlakuan/pageModel";
-import {AutocompleteSelectSingle} from "@/components/autocomplete";
-import {RiskAnalysisDto} from "@/app/profil-risiko/analisis-evaluasi/pageModel";
+import { AutocompleteSelectSingle } from "@/components/autocomplete";
+import { RiskAnalysisDto } from "@/app/profil-risiko/analisis-evaluasi/pageModel";
 import {
   MasterRiskMatrixRes,
   MiscMasterListStakeholderRes,
 } from "@/app/misc/master/masterServiceModel";
-import {RODataTable, RoDetailDto, RoDto} from "@/app/misc/rkp/rkpServiceModel";
+import {
+  RODataTable,
+  RoDetailDto,
+  RoDto,
+} from "@/app/misc/rkp/rkpServiceModel";
 import dayjs from "dayjs";
 import DialogComponent from "@/components/dialog";
-import TextareaComponent, {TextareaStyled} from "@/app/components/textarea";
-import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import {useRKPContext} from "@/lib/core/hooks/useHooks";
-import {GenerateRpjmnYear} from "@/lib/utils/common";
-import {FormatIDR} from "@/lib/utils/currency";
-import {getDetailRO} from "@/lib/utils/roDetail";
+import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import { GenerateRpjmnYear } from "@/lib/utils/common";
+import { FormatIDR } from "@/lib/utils/currency";
+import { getDetailRO } from "@/lib/utils/roDetail";
 
 const highlightText = (text: any, highlight: any) => {
   if (!highlight.trim() || text == "" || text == undefined) {
@@ -68,7 +72,7 @@ const highlightText = (text: any, highlight: any) => {
   const parts = text.split(regex);
   return parts.map((part: any, index: any) =>
     regex.test(part) ? (
-      <span key={index} style={{backgroundColor: "yellow"}}>
+      <span key={index} style={{ backgroundColor: "yellow" }}>
         {part}
       </span>
     ) : (
@@ -78,17 +82,16 @@ const highlightText = (text: any, highlight: any) => {
 };
 
 const TablePerlakuanMultiCheck = ({
-                                    mode,
-                                    data,
-                                    state,
-                                    setState,
-                                  }: {
+  mode,
+  data,
+  state,
+  setState,
+}: {
   mode?: string;
   data: RoDto[];
   state: RiskTreatmentState;
   setState: (value: SetStateAction<RiskTreatmentState>) => void;
 }) => {
-
   const { year, rpjmn } = useRKPContext((store) => store);
 
   let multiyear: number[] = [year];
@@ -138,15 +141,19 @@ const TablePerlakuanMultiCheck = ({
     return getIndex > -1;
   }
 
-  const getRowData = (key:string, year: number, data: RoDetailDto[]| undefined) => {
-    return getDetailRO(key, year, data)
+  const getRowData = (
+    key: string,
+    year: number,
+    data: RoDetailDto[] | undefined
+  ) => {
+    return getDetailRO(key, year, data);
   };
 
   return (
     <Paper
       elevation={0}
       variant="outlined"
-      sx={{minWidth: "100% !important", mt: 1}}
+      sx={{ minWidth: "100% !important", mt: 1 }}
     >
       <Box p={1}>
         <TextField
@@ -162,11 +169,11 @@ const TablePerlakuanMultiCheck = ({
           size="small"
         />
       </Box>
-      <TableContainer sx={{maxHeight: 200}}>
+      <TableContainer sx={{ maxHeight: 200 }}>
         <Table stickyHeader size="small">
-          <TableHead sx={{bgcolor: theme.palette.primary.light}}>
+          <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
             <TableRow>
-              <TableCell rowSpan={2} sx={{width: 30}}></TableCell>
+              <TableCell rowSpan={2} sx={{ width: 30 }}></TableCell>
               <TableCell rowSpan={2}>Nomenklatur RO</TableCell>
               {/*{multiyear.map((y, iY) => (*/}
               {/*  <TableCell colSpan={4} align={"center"}>*/}
@@ -223,15 +230,15 @@ const TablePerlakuanMultiCheck = ({
 };
 
 export default function FormTable({
-                                    mode,
-                                    data,
-                                    state,
-                                    setState,
-                                    optionsRiskProfile,
-                                    optionsRiskDecision,
-                                    optionsStakeholder,
-                                    optionsRiskMatrix,
-                                  }: {
+  mode,
+  data,
+  state,
+  setState,
+  optionsRiskProfile,
+  optionsRiskDecision,
+  optionsStakeholder,
+  optionsRiskMatrix,
+}: {
   mode?: string;
   data?: RiskTreatmentResDto;
   state: RiskTreatmentState;
@@ -256,7 +263,7 @@ export default function FormTable({
           src_matriks_risiko: optionsRiskMatrix[getIndex],
         };
       });
-      setClickedCell({rowIndex, colIndex, value});
+      setClickedCell({ rowIndex, colIndex, value });
     }
   };
 
@@ -267,13 +274,13 @@ export default function FormTable({
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Divider>
-            <Chip label="Identifikasi Risiko" size="small"/>
+            <Chip label="Identifikasi Risiko" size="small" />
           </Divider>
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo
-              title="Peristiwa Risiko Strategis MRPN Linsek"
+              title="Peristiwa Risiko Strategis MRPN LS"
               titleField
               information={
                 <>
@@ -327,7 +334,7 @@ export default function FormTable({
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo
-              title="Kategori Risiko MRPN Linsek"
+              title="Kategori Risiko MRPN LS"
               titleField
               information={
                 <>
@@ -351,12 +358,12 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12}>
           <Divider>
-            <Chip label="Analisis & Evaluasi Risiko" size="small"/>
+            <Chip label="Analisis & Evaluasi Risiko" size="small" />
           </Divider>
         </Grid>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Level Dampak (LD)"/>
+            <FieldLabelInfo title="Level Dampak (LD)" />
             <Typography fontWeight={600}>
               {state.profil_risiko?.analisis.matriks.dampak ?? "-"}
             </Typography>
@@ -364,7 +371,7 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Level Kemungkinan (LK)"/>
+            <FieldLabelInfo title="Level Kemungkinan (LK)" />
             <Typography fontWeight={600}>
               {state.profil_risiko?.analisis.matriks.kemungkinan ?? "-"}
             </Typography>
@@ -372,7 +379,7 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Besaran Risiko (BR)"/>
+            <FieldLabelInfo title="Besaran Risiko (BR)" />
             <Typography fontWeight={600}>
               {state.profil_risiko?.analisis.matriks.nilai ?? "-"}
             </Typography>
@@ -380,7 +387,7 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Level Risiko"/>
+            <FieldLabelInfo title="Level Risiko" />
             {/*<Box>*/}
             {/*  <Chip*/}
             {/*    color="error"*/}
@@ -407,7 +414,7 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Prioritas Risiko"/>
+            <FieldLabelInfo title="Prioritas Risiko" />
             <Typography fontWeight={600}>
               {state.profil_risiko
                 ? state.profil_risiko.analisis.matriks.level.replace(/\D/g, "")
@@ -417,13 +424,13 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12}>
           <Divider>
-            <Chip label="Perlakuan Risiko" size="small"/>
+            <Chip label="Perlakuan Risiko" size="small" />
           </Divider>
         </Grid>
 
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Keputusan"/>
+            <FieldLabelInfo title="Keputusan" />
             {mode !== "read" ? (
               <AutocompleteSelectSingle
                 key={state.keputusan ? state.keputusan : "keputusan"}
@@ -461,24 +468,25 @@ export default function FormTable({
                 </>
               }
             />
-            {mode != "read" ?
+            {mode != "read" ? (
               <TextareaStyled
-              value={state.keterangan_risiko}
-              onChange={(e) =>
-                setState((prevState) => {
-                  return {
-                    ...prevState,
-                    keterangan_risiko: e.target.value
-                  };
-                })}
-              placeholder="Keterangan Perlakuan Risiko"
-              minRows={2}
-            />
-            :
-              <Typography fontWeight={600} sx={{marginBottom:2}}>
+                value={state.keterangan_risiko}
+                onChange={(e) =>
+                  setState((prevState) => {
+                    return {
+                      ...prevState,
+                      keterangan_risiko: e.target.value,
+                    };
+                  })
+                }
+                placeholder="Keterangan Perlakuan Risiko"
+                minRows={2}
+              />
+            ) : (
+              <Typography fontWeight={600} sx={{ marginBottom: 2 }}>
                 {state.keterangan_risiko}
               </Typography>
-            }
+            )}
             <TablePerlakuanMultiCheck
               data={data?.optionRo ?? []}
               state={state}
@@ -525,9 +533,8 @@ export default function FormTable({
 
         <Grid item xs={12} md={3}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Waktu Mulai Rencana"/>
-            {mode != "read"
-              ?
+            <FieldLabelInfo title="Waktu Mulai Rencana" />
+            {mode != "read" ? (
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   sx={{
@@ -540,7 +547,7 @@ export default function FormTable({
                   value={dayjs(state.start_date)}
                   onChange={(e: any) =>
                     setState((prevState) => {
-                      const thisDate = dayjs(e).format("YYYY-MM-DD")
+                      const thisDate = dayjs(e).format("YYYY-MM-DD");
                       return {
                         ...prevState,
                         start_date: thisDate,
@@ -549,18 +556,18 @@ export default function FormTable({
                   }
                 />
               </LocalizationProvider>
-              :
+            ) : (
               <Typography fontWeight={600}>
                 {`${dayjs(state.start_date).format("MMM YYYY")}`}
               </Typography>
-            }
+            )}
           </FormControl>
         </Grid>
 
         <Grid item xs={12} md={3}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Waktu Selesai Rencana"/>
-            {mode != "read" ?
+            <FieldLabelInfo title="Waktu Selesai Rencana" />
+            {mode != "read" ? (
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   sx={{
@@ -573,7 +580,7 @@ export default function FormTable({
                   value={dayjs(state.start_date)}
                   onChange={(e: any) =>
                     setState((prevState) => {
-                      const thisDate = dayjs(e).format("YYYY-MM-DD")
+                      const thisDate = dayjs(e).format("YYYY-MM-DD");
                       return {
                         ...prevState,
                         end_date: thisDate,
@@ -582,17 +589,17 @@ export default function FormTable({
                   }
                 />
               </LocalizationProvider>
-              :
+            ) : (
               <Typography fontWeight={600}>
                 {`${dayjs(state.end_date).format("MMM YYYY")}`}
               </Typography>
-            }
+            )}
           </FormControl>
         </Grid>
 
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Penanggungjawab"/>
+            <FieldLabelInfo title="Penanggungjawab" />
             {mode !== "read" ? (
               <AutocompleteSelectSingle
                 key={
@@ -648,7 +655,7 @@ export default function FormTable({
 
         <Grid item xs={12}>
           <Divider>
-            <Chip label="Risiko Residual Harapan" size="small"/>
+            <Chip label="Risiko Residual Harapan" size="small" />
           </Divider>
         </Grid>
 
@@ -668,7 +675,7 @@ export default function FormTable({
 
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Level Kemungkinan (LK)"/>
+            <FieldLabelInfo title="Level Kemungkinan (LK)" />
             <Typography fontWeight={600}>
               {state.src_matriks_risiko?.kemungkinan ?? "-"}
             </Typography>
@@ -676,7 +683,7 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Level Dampak (LD)"/>
+            <FieldLabelInfo title="Level Dampak (LD)" />
             <Typography fontWeight={600}>
               {state.src_matriks_risiko?.dampak ?? "-"}
             </Typography>
@@ -684,8 +691,8 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Besaran Risiko (BR)"/>
-            <Stack sx={{height: 40}} direction="row" alignItems="center">
+            <FieldLabelInfo title="Besaran Risiko (BR)" />
+            <Stack sx={{ height: 40 }} direction="row" alignItems="center">
               <Typography fontWeight={600}>
                 {state.src_matriks_risiko?.nilai ?? "-"}
               </Typography>
@@ -694,7 +701,7 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Level Risiko"/>
+            <FieldLabelInfo title="Level Risiko" />
             {/*<Box>*/}
             {/*  <Chip*/}
             {/*    color="error"*/}

@@ -114,7 +114,7 @@ export default function TableNotaDinas({
             <TableRow>
               <TableCell sx={{ verticalAlign: "top" }}>
                 <Typography fontSize={14} color={grey[600]}>
-                  Usulan Objek MRPN Lintas Sektor
+                  Usulan Objek MRPN LS
                 </Typography>
               </TableCell>
               <TableCell width={2} sx={{ px: 0, verticalAlign: "top" }}>
@@ -135,8 +135,8 @@ export default function TableNotaDinas({
                 </Typography>
                 {edit ? (
                   <TextareaStyled
-                    aria-label="Justifikasi & Penjelasan Usulan Objek MRPN Lintas Sektor"
-                    placeholder="Justifikasi & Penjelasan Usulan Objek MRPN Lintas Sektor"
+                    aria-label="Justifikasi & Penjelasan Usulan Objek MRPN LS"
+                    placeholder="Justifikasi & Penjelasan Usulan Objek MRPN LS"
                     minRows={3}
                     value={nota?.penjelasan_objek_mrpn}
                     onChange={(e) => {

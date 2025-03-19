@@ -218,13 +218,13 @@ perencanaan pembangunan nasional"
                   <Stack gap={1}>
                     <FormatBP
                       levelId={1}
-                      form={
-                        <TextareaComponent
-                          label="Deskripsi"
-                          placeholder="Deskripsi rendah"
-                          width="100%"
-                        />
-                      }
+                      // form={
+                      //   <TextareaComponent
+                      //     label="Deskripsi"
+                      //     placeholder="Deskripsi rendah"
+                      //     width="100%"
+                      //   />
+                      // }
                       target="Sama atau meningkat ≤ 5%"
                       kapasitas="Rendah/tetap/sebanding dengan peningkatan target"
                       inherent="Sangat Rendah"
@@ -281,13 +281,13 @@ perencanaan pembangunan nasional"
                   <Stack gap={1}>
                     <FormatBP
                       levelId={2}
-                      form={
-                        <TextareaComponent
-                          label="Deskripsi"
-                          placeholder="Deskripsi konservatif"
-                          width="100%"
-                        />
-                      }
+                      // form={
+                      //   <TextareaComponent
+                      //     label="Deskripsi"
+                      //     placeholder="Deskripsi konservatif"
+                      //     width="100%"
+                      //   />
+                      // }
                       target="Meningkat 5% < x ≤ 10%"
                       kapasitas="Rendah/tetap/sebanding dengan peningkatan target"
                       inherent="Rendah"
@@ -351,13 +351,13 @@ perencanaan pembangunan nasional"
                   <Stack gap={1}>
                     <FormatBP
                       levelId={3}
-                      form={
-                        <TextareaComponent
-                          label="Deskripsi"
-                          placeholder="Deskripsi moderat"
-                          width="100%"
-                        />
-                      }
+                      // form={
+                      //   <TextareaComponent
+                      //     label="Deskripsi"
+                      //     placeholder="Deskripsi moderat"
+                      //     width="100%"
+                      //   />
+                      // }
                       target="Meningkat 10% < x < 50%"
                       kapasitas="Rendah/tetap/meningkat tetapi tidak sebanding dengan peningkatan target"
                       inherent="Sedang"
@@ -425,13 +425,13 @@ perencanaan pembangunan nasional"
                   <Stack gap={1}>
                     <FormatBP
                       levelId={4}
-                      form={
-                        <TextareaComponent
-                          label="Deskripsi"
-                          placeholder="Deskripsi tinggi"
-                          width="100%"
-                        />
-                      }
+                      // form={
+                      //   <TextareaComponent
+                      //     label="Deskripsi"
+                      //     placeholder="Deskripsi tinggi"
+                      //     width="100%"
+                      //   />
+                      // }
                       target="Meningkat sangat signifikan > 50%"
                       kapasitas="Rendah/tetap/meningkat tetapi tidak sebanding dengan peningkatan target"
                       inherent="Tinggi"

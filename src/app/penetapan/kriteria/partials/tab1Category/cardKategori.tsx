@@ -8,6 +8,8 @@ import DialogDelete from "@/app/components/dialogDelete";
 import AddButton from "@/app/components/buttonAdd";
 import Iconify from "@/app/components/icons/iconify";
 import TableRerefence from "./table-reference";
+import EmptyDevelopingState from "@/app/components/empty/developing";
+import { isDeveloping } from "@/app/components/layouts/layout";
 
 export default function CardKategori() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
@@ -44,7 +46,7 @@ export default function CardKategori() {
             strategi penanganannya
           </>
         }
-        setting
+        setting={!isDeveloping}
         settingAddOnclickOnly={() => setModalOpenAdd(true)}
         addButton={
           <AddButton
@@ -55,11 +57,17 @@ export default function CardKategori() {
           />
         }
       >
-        {/* <TableKategori mode="view" /> */}
-        <CollapsibleTable
-          handleEdit={() => setModalOpenCategory(true)}
-          handleDelete={() => setModalDelete(true)}
-        />
+        {isDeveloping ? (
+          <EmptyDevelopingState />
+        ) : (
+          <Fragment>
+            {/* <TableKategori mode="view" /> */}
+            <CollapsibleTable
+              handleEdit={() => setModalOpenCategory(true)}
+              handleDelete={() => setModalDelete(true)}
+            />
+          </Fragment>
+        )}
       </CardItem>
       <DialogComponent
         dialogOpen={modalOpenAdd}
