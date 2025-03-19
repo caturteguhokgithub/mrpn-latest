@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   Box,
   Button,
@@ -30,6 +30,8 @@ import DraggableScroll from "@/app/components/cardStakeholder/draggableScroll";
 import { styleOrgChart } from "@/app/executive-summary/style";
 import { SxParams } from "@/app/executive-summary/types";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
+import EmptyDevelopingState from "@/app/components/empty/developing";
+import { isDeveloping } from "@/app/components/layouts/layout";
 
 export default function CardStakeholder({
   project,
@@ -135,90 +137,96 @@ export default function CardStakeholder({
       setting
       settingEditOnclick={handleModalOpenStakeholder}
     >
-      {data.length == 0 ? (
-        <EmptyState
-          dense
-          icon={<IconEmptyData width={100} />}
-          title="Data Kosong"
-          description="Silahkan isi konten halaman ini"
-        />
+      {isDeveloping ? (
+        <EmptyDevelopingState />
       ) : (
-        <>
-          <Stack direction="row" gap={1}>
-            {(hasPrivilege(permission, pathname, "add") ||
-              hasPrivilege(permission, pathname, "update")) && (
-              <AddButton
-                noMargin
-                small
-                title="Ubah Logo"
-                startIcon={
-                  <Icon
-                    baseClassName="fas"
-                    className={"fa-pencil"}
-                    sx={{
-                      fontSize: "12px !important",
-                    }}
+        <Fragment>
+          {data.length == 0 ? (
+            <EmptyState
+              dense
+              icon={<IconEmptyData width={100} />}
+              title="Data Kosong"
+              description="Silahkan isi konten halaman ini"
+            />
+          ) : (
+            <>
+              <Stack direction="row" gap={1}>
+                {(hasPrivilege(permission, pathname, "add") ||
+                  hasPrivilege(permission, pathname, "update")) && (
+                  <AddButton
+                    noMargin
+                    small
+                    title="Ubah Logo"
+                    startIcon={
+                      <Icon
+                        baseClassName="fas"
+                        className={"fa-pencil"}
+                        sx={{
+                          fontSize: "12px !important",
+                        }}
+                      />
+                    }
+                    sx={{ paddingInline: 2 }}
+                    onclick={() => setModalListLogo(true)}
                   />
-                }
-                sx={{ paddingInline: 2 }}
-                onclick={() => setModalListLogo(true)}
-              />
-            )}
+                )}
 
-            <Button
-              component="label"
-              size="small"
-              variant="outlined"
-              tabIndex={-1}
-              startIcon={
-                <Icon
-                  baseClassName="fas"
-                  className={"fa-upload"}
+                <Button
+                  component="label"
+                  size="small"
+                  variant="outlined"
+                  tabIndex={-1}
+                  startIcon={
+                    <Icon
+                      baseClassName="fas"
+                      className={"fa-upload"}
+                      sx={{
+                        fontSize: "12px !important",
+                      }}
+                    />
+                  }
                   sx={{
-                    fontSize: "12px !important",
+                    paddingInline: 2,
+                    borderRadius: "50px",
+                    textTransform: "capitalize",
                   }}
-                />
-              }
-              sx={{
-                paddingInline: 2,
-                borderRadius: "50px",
-                textTransform: "capitalize",
-              }}
-            >
-              Unggah Gambar
-              <VisuallyHiddenInput
-                type="file"
-                onChange={(event) => handleGambarChange(event)}
-                multiple
-              />
-            </Button>
-            {gambar != undefined ? (
-              <AddButton
-                noMargin
-                filled
-                small
-                title="Lihat Gambar"
-                startIcon={
-                  <Icon
-                    baseClassName="fas"
-                    className={"fa-magnifying-glass-plus"}
-                    sx={{
-                      fontSize: "12px !important",
-                    }}
+                >
+                  Unggah Gambar
+                  <VisuallyHiddenInput
+                    type="file"
+                    onChange={(event) => handleGambarChange(event)}
+                    multiple
                   />
-                }
-                sx={{ paddingInline: 2 }}
-                onclick={() => setModalViewImage(true)}
+                </Button>
+                {gambar != undefined ? (
+                  <AddButton
+                    noMargin
+                    filled
+                    small
+                    title="Lihat Gambar"
+                    startIcon={
+                      <Icon
+                        baseClassName="fas"
+                        className={"fa-magnifying-glass-plus"}
+                        sx={{
+                          fontSize: "12px !important",
+                        }}
+                      />
+                    }
+                    sx={{ paddingInline: 2 }}
+                    onclick={() => setModalViewImage(true)}
+                  />
+                ) : (
+                  ""
+                )}
+              </Stack>
+              <StakeholderChart
+                data={data}
+                conditionEditingImg={conditionEditingImg}
               />
-            ) : (
-              ""
-            )}
-          </Stack>
-          <StakeholderChart
-            data={data}
-            conditionEditingImg={conditionEditingImg}
-          />
-        </>
+            </>
+          )}
+        </Fragment>
       )}
       <DialogComponent
         dialogOpen={modalOpenStakeholder}

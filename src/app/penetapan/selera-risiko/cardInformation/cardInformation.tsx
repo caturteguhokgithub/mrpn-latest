@@ -30,6 +30,8 @@ import DraggableScroll from "@/app/components/cardStakeholder/draggableScroll";
 import { SxParams } from "@/app/executive-summary/types";
 import FormInformation from "./form";
 import useInformationList from "../hooks/useInformation";
+import EmptyDevelopingState from "@/app/components/empty/developing";
+import { isDeveloping } from "@/app/components/layouts/layout";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -99,62 +101,78 @@ export default function CardInformation({
         setting={activeSetting}
         settingEditOnclick={() => setModal(true)}
       >
-        {!emptyData ? (
-          <EmptyState
-            dense
-            icon={<IconEmptyData width={100} />}
-            title="Data Kosong"
-            description="Silahkan isi konten halaman ini"
-          />
+        {isDeveloping ? (
+          <EmptyDevelopingState />
         ) : (
-          <TableContainer component={Paper} elevation={0} variant="outlined">
-            <Table
-              sx={{
-                minWidth: 650,
-                "tbody, thead": {
-                  "td, th": {
-                    borderRight: `1px solid ${grey[300]} !important`,
-                    "&:last-of-type": {
-                      borderRight: `0 !important`,
+          <Fragment>
+            {!emptyData ? (
+              <EmptyState
+                dense
+                icon={<IconEmptyData width={100} />}
+                title="Data Kosong"
+                description="Silahkan isi konten halaman ini"
+              />
+            ) : (
+              <TableContainer
+                component={Paper}
+                elevation={0}
+                variant="outlined"
+              >
+                <Table
+                  sx={{
+                    minWidth: 650,
+                    "tbody, thead": {
+                      "td, th": {
+                        borderRight: `1px solid ${grey[300]} !important`,
+                        "&:last-of-type": {
+                          borderRight: `0 !important`,
+                        },
+                      },
                     },
-                  },
-                },
-              }}
-              size="small"
-            >
-              <TableHead sx={{ bgcolor: bgColorTh }}>
-                <TableRow>
-                  <TableCell align="center">Informasi</TableCell>
-                  {/* <TableCell align="center">Bukti Dukung</TableCell> */}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {data?.lists.map((item: any) => (
-                  <TableRow key={item.id}>
-                    <TableCell>{item.value}</TableCell>
-                    {/* <TableCell align="center">
-                      {item.jenis == "pdf" ? (
-                        <IconButton
-                          color="primary"
-                          href={item.url}
-                          target="_blank"
-                        >
-                          <Iconify name="mdi:file-pdf" color="red" size={20} />
-                        </IconButton>
-                      ) : (
-                        <IconButton
-                          color="primary"
-                          onClick={() => setModalViewImage(true)}
-                        >
-                          <Iconify name="mdi:file-image" size={20} />
-                        </IconButton>
-                      )}
-                    </TableCell> */}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  }}
+                  size="small"
+                >
+                  <TableHead sx={{ bgcolor: bgColorTh }}>
+                    <TableRow>
+                      <TableCell align="center">Informasi</TableCell>
+                      <TableCell align="center" width={150}>
+                        Bukti Dukung
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {data?.lists.map((item: any) => (
+                      <TableRow key={item.id}>
+                        <TableCell>{item.value}</TableCell>
+                        <TableCell align="center">
+                          {item.jenis == "pdf" ? (
+                            <IconButton
+                              color="primary"
+                              href={item.url}
+                              target="_blank"
+                            >
+                              <Iconify
+                                name="mdi:file-pdf"
+                                color="red"
+                                size={20}
+                              />
+                            </IconButton>
+                          ) : (
+                            <IconButton
+                              color="primary"
+                              onClick={() => setModalViewImage(true)}
+                            >
+                              <Iconify name="mdi:file-image" size={20} />
+                            </IconButton>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
+          </Fragment>
         )}
       </CardItem>
       <DialogComponent

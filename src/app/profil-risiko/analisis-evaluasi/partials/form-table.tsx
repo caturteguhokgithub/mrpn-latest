@@ -57,7 +57,7 @@ export default function FormTable({
       <Grid item xs={12}>
         <FormControl fullWidth>
           <FieldLabelInfo
-            title="Peristiwa Risiko Strategis MRPN Linsek"
+            title="Peristiwa Risiko Strategis MRPN LS"
             titleField
             information={
               <>

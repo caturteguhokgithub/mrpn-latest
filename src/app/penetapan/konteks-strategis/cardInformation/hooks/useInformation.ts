@@ -1,57 +1,57 @@
 import { useEffect, useState } from "react";
-import { doGetPossibility } from "./possibilityService";
+import { doGetInformation } from "./informationService";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import {
   useExsumContext,
   useGlobalModalContext,
   useLoading,
 } from "@/lib/core/hooks/useHooks";
+import { rowData } from "./mock";
 import { useSearchParams } from "next/navigation";
-import { ResultPossibility } from "./possibilityModel";
+import {
+  InformasiLainnyaResDto,
+  initInformasiLainnyaShow,
+} from "./informationModel";
+import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 
-const usePossibilityList = () => {
+const useInformationList = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
   const [loading, setLoading] = useState(false);
-  const [dataPossibility, setDataPossibility] = useState<ResultPossibility[]>(
-    []
-  );
+  const [data, setData] = useState<InformasiLainnyaResDto>();
+
+  const { exsum } = useExsumContext();
+  const { objectState } = usePenetapanGlobalVM();
 
   const searchParams = useSearchParams();
 
   const search = searchParams.get("search");
 
   async function getData() {
-    setLoading(true);
-    const response = await doGetPossibility({
+    const response = await doGetInformation({
       body: {
-        uraian_penetapan_objek_id: 78,
+        uraian_penetapan_object_id: objectState?.id,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
     });
 
     if (response?.code == API_CODE.success) {
-      let result: ResultPossibility[] = response.result;
-      // console.log({ result });
+      let result: InformasiLainnyaResDto = response.result;
+
       if (result) {
-        setDataPossibility(result);
-        setLoading(false);
-      } else {
-        setDataPossibility([]);
-        setLoading(false);
+        setData(result);
       }
     }
   }
 
   useEffect(() => {
     // if (exsum.id !== 0) {
-    // console.log("debug");
     getData();
     // }
   }, []);
 
-  return { listDataPossibility: dataPossibility, loading };
+  return { data, listData: rowData, loadingContext };
 };
 
-export default usePossibilityList;
+export default useInformationList;

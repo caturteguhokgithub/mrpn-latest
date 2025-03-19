@@ -50,7 +50,7 @@ export default function FormTable({
         <Grid item xs={12} sm={8}>
           <FormControl fullWidth>
             <FieldLabelInfo
-              title="Kategori Risiko MRPN Linsek"
+              title="Kategori Risiko MRPN LS"
               titleField
               information={
                 <>
@@ -150,15 +150,15 @@ export default function FormTable({
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Peristiwa Risiko Strategis MRPN Linsek" />
+            <FieldLabelInfo title="Peristiwa Risiko Strategis MRPN LS" />
             {mode === "read" ? (
               <Typography fontWeight={500}>
                 {request.peristiwa_risiko}
               </Typography>
             ) : (
               <TextareaStyled
-                aria-label="Peristiwa Risiko Strategis MRPN Linsek"
-                placeholder="Peristiwa Risiko Strategis MRPN Linsek"
+                aria-label="Peristiwa Risiko Strategis MRPN LS"
+                placeholder="Peristiwa Risiko Strategis MRPN LS"
                 value={request.peristiwa_risiko}
                 onChange={(e) =>
                   setRequest((prevState) => {
@@ -181,7 +181,7 @@ export default function FormTable({
               marginY={1}
             >
               <FieldLabelInfo
-                title="Penyebab/Faktor Risiko Strategis MRPN Linsek"
+                title="Penyebab/Faktor Risiko Strategis MRPN LS"
                 titleField
                 information={
                   <>
@@ -228,8 +228,8 @@ export default function FormTable({
                     ) : (
                       <TextareaStyled
                         key={`ip-${pi}`}
-                        aria-label="Penyebab/Faktor Risiko Strategis MRPN Linsek"
-                        placeholder="Penyebab/Faktor Risiko Strategis MRPN Linsek"
+                        aria-label="Penyebab/Faktor Risiko Strategis MRPN LS"
+                        placeholder="Penyebab/Faktor Risiko Strategis MRPN LS"
                         value={p}
                         onChange={(e) =>
                           setRequest((prevState) => {
@@ -304,7 +304,7 @@ export default function FormTable({
               marginY={1}
             >
               <FieldLabelInfo
-                title="Dampak Strategis MRPN Linsek"
+                title="Dampak Strategis MRPN LS"
                 titleField
                 information={
                   <>
@@ -347,8 +347,8 @@ export default function FormTable({
                     ) : (
                       <TextareaStyled
                         key={`ip-${pi}`}
-                        aria-label="Dampak Strategis MRPN Linsek"
-                        placeholder="Dampak Strategis MRPN Linsek"
+                        aria-label="Dampak Strategis MRPN LS"
+                        placeholder="Dampak Strategis MRPN LS"
                         value={p}
                         onChange={(e) =>
                           setRequest((prevState) => {

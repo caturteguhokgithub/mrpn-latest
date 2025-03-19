@@ -98,9 +98,17 @@ export default function ContentPage({
   const [triwulanDropdown, setTriwulanDropdown] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
+<<<<<<< Updated upstream
   const { objectState } = usePenetapanGlobalVM();
 
 
+=======
+<<<<<<< Updated upstream
+=======
+  const { objectState } = usePenetapanGlobalVM();
+
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -284,9 +292,46 @@ export default function ContentPage({
                           },
                         }}
                       >
+<<<<<<< Updated upstream
                         <Typography px={1.5} fontSize={13} fontWeight={600}>
                           {`${objectState?.rkp.code} - ${objectState?.rkp.value}`}
                         </Typography>
+=======
+                        {objectState &&
+                        objectState.rkp &&
+                        objectState.rkp.value &&
+                        objectState.rkp.value.length >= 35 ? (
+                          <Tooltip
+                            title={objectState?.rkp.value}
+                            followCursor
+                            TransitionComponent={Grow}
+                          >
+                            <Typography
+                              aria-owns={
+                                open ? "mouse-over-popover" : undefined
+                              }
+                              aria-haspopup="true"
+                              onMouseEnter={handlePopoverOpen}
+                              onMouseLeave={handlePopoverClose}
+                              px={1.5}
+                              fontSize={13}
+                              fontWeight={600}
+                            >
+                              {objectState?.rkp.code +
+                                " - " +
+                                objectState?.rkp.value.substring(0, 35) +
+                                "..."}
+                            </Typography>
+                          </Tooltip>
+                        ) : (
+                          <Typography px={1.5} fontSize={13} fontWeight={600}>
+                            {`${objectState?.rkp.code} - ${objectState?.rkp.value}`}
+                          </Typography>
+                        )}
+                        {/* <Typography px={1.5} fontSize={13} fontWeight={600}>
+                          {`${objectState?.rkp.code} - ${objectState?.rkp.value}`}
+                        </Typography> */}
+>>>>>>> Stashed changes
                       </Box>
                     </Stack>
                   </>

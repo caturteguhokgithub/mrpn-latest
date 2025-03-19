@@ -18,6 +18,7 @@ import CardStakeholderInternal from "@/app/penetapan/konteks-strategis/cardStake
 import CardStakeholderEksternal from "@/app/penetapan/konteks-strategis/cardStakeholders/cardStakeholderEksternal";
 import CardLevelKebijakan from "./cardLevelKebijakan/cardLevelKebijakan";
 import CardPendanaan from "./cardPendanaan/cardPendanaan";
+import CardInformation from "./cardInformation/cardInformation";
 
 export default function PageKonteksStrategisView({}) {
   const { year, rpjmn } = useRKPContext((state) => state);
@@ -73,11 +74,12 @@ export default function PageKonteksStrategisView({}) {
             <CardIndikasiSasaran />
             <CardLevelKebijakan />
             <CardPendanaan />
-            <CardSasaranKinerjaUPR />
-            {/* <CardRegulation />
+            {/* <CardSasaranKinerjaUPR />
+             <CardRegulation />
             <CardStakeholderInternal />
-            <CardStakeholderEksternal /> */}
-            <CardProfileIntervensi />
+            <CardStakeholderEksternal /> 
+            <CardProfileIntervensi /> */}
+            <CardInformation />
           </Stack>
         )}
       </ContentPage>

@@ -8,6 +8,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { bgColorTh } from "@/app/utils/color";
 import { grey } from "@mui/material/colors";
@@ -51,16 +52,29 @@ export default function TablePendanaan() {
       <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
         <TableHead>
           <TableRow>
-            <TableCell width={150} sx={{ bgcolor: bgColorTh }}>
+            <TableCell align="center" width={120} sx={{ bgcolor: bgColorTh }}>
               Item
             </TableCell>
-            <TableCell sx={{ bgcolor: bgColorTh }}>Uraian</TableCell>
+            <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
+              Uraian
+            </TableCell>
             {[2025, 2026, 2027, 2028, 2029].map((cellYear) => (
-              <TableCell align="center" width={200} sx={{ bgcolor: bgColorTh }}>
+              <TableCell align="center" width={160} sx={{ bgcolor: bgColorTh }}>
                 {cellYear}
               </TableCell>
             ))}
           </TableRow>
+          {[...new Array(7)].map((_, i) => (
+            <TableCell sx={{ bgcolor: grey[100] }}>
+              <Typography
+                color={`${grey[500]} !important`}
+                fontSize={12}
+                textAlign="center"
+              >
+                {i + 1}
+              </Typography>
+            </TableCell>
+          ))}
         </TableHead>
         <TableBody>
           {rows.map((row, index) => (
@@ -74,7 +88,7 @@ export default function TablePendanaan() {
                     bgcolor: bgColorTh,
                   }}
                 >
-                  Indikator
+                  RO/Project
                 </TableCell>
               )}
               <TableCell>{row.uraian}</TableCell>

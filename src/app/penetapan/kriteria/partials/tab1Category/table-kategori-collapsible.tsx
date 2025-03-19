@@ -60,7 +60,7 @@ function Row(props: {
         </TableCell>
         <TableCell>{row.value}</TableCell>
         <TableCell>{row.desc}</TableCell>
-        <TableCell>
+        {/* <TableCell>
           <Stack direction="row">
             <IconButton onClick={handleEdit}>
               <Iconify name="mdi:pencil" color={blue[500]} />
@@ -69,7 +69,7 @@ function Row(props: {
               <Iconify name="mdi:trash" color={red[500]} />
             </IconButton>
           </Stack>
-        </TableCell>
+        </TableCell> */}
       </TableRow>
       <TableRow>
         <TableCell colSpan={4} sx={{ bgcolor: grey[200], p: 0 }}>
@@ -165,7 +165,7 @@ export default function CollapsibleTable({
 }) {
   const { listDataCategory } = useCategoryList();
 
-  console.log({ listDataCategory });
+  // console.log({ listDataCategory });
 
   return (
     <TableContainer
@@ -190,9 +190,9 @@ export default function CollapsibleTable({
             <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
               Uraian
             </TableCell>
-            <TableCell width={100} align="center" sx={{ bgcolor: bgColorTh }}>
+            {/* <TableCell width={100} align="center" sx={{ bgcolor: bgColorTh }}>
               Aksi
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
