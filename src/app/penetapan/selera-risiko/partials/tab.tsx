@@ -10,10 +10,11 @@ import CardRegulation from "../../konteks-strategis/cardRegulasi/cardRegulation"
 // import CardStakeholderEksternal from "../../konteks-strategis/cardStakeholders/cardStakeholderEksternal";
 import CardCritical from "@/app/executive-summary/partials/tab6Critical/cardCritical";
 import CardStakeholder from "@/app/executive-summary/partials/tab7Regulation/cardStakeholder/cardStakeholder";
-import CardInformation from "./cardInformation";
+
 import CardUrgent from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgent";
 import CardSegment from "@/app/executive-summary/partials/tab1Background/cardSegment/cardSegment";
 import CardSwot from "@/app/executive-summary/partials/tab1Background/cardSwot/cardSwot";
+import CardInformation from "../cardInformation/cardInformation";
 // import CardKategori from "./tab1Category/cardKategori";
 // import CardKemungkinan from "./tab2Possibility/cardKemungkinan";
 // import CardDampak from "./tab3Impact/cardDampak";
@@ -72,7 +73,7 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-export default function TabInternalEksternal({ }) {
+export default function TabInternalEksternal({}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {

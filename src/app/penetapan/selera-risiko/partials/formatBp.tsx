@@ -21,7 +21,7 @@ export default function FormatBP({
   inherent,
   note,
 }: {
-  form: React.ReactNode;
+  form?: React.ReactNode;
   target: React.ReactNode;
   kapasitas: React.ReactNode;
   inherent: React.ReactNode;
@@ -70,18 +70,18 @@ export default function FormatBP({
           {note}
         </Typography>
       </Stack> */}
-      <Stack gap={0.5}>
+      {/* <Stack gap={0.5}>
         <Typography fontStyle="italic" fontSize={14}>
           Tuliskan pernyataan selera risiko
         </Typography>
         <Box>
           <FormControl sx={{ width: "50%" }}>{form}</FormControl>
-        </Box>
-        {/* <Stack display="grid" gridTemplateColumns="2.75fr 1.25fr" gap={2}>
+        </Box> */}
+      {/* <Stack display="grid" gridTemplateColumns="2.75fr 1.25fr" gap={2}>
     {matriksFive}
     {levelMatriks}
    </Stack> */}
-      </Stack>
+      {/* </Stack> */}
     </Stack>
   );
 }

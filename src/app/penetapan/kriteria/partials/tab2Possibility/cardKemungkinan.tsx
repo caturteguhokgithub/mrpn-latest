@@ -6,6 +6,8 @@ import DialogComponent from "@/app/components/dialog";
 import FormKemungkinan from "./form-kemungkinan";
 import { DialogActions, Button } from "@mui/material";
 import Iconify from "@/app/components/icons/iconify";
+import EmptyDevelopingState from "@/app/components/empty/developing";
+import { isDeveloping } from "@/app/components/layouts/layout";
 
 export default function CardKemungkinan() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
@@ -31,7 +33,7 @@ export default function CardKemungkinan() {
     <Fragment>
       <CardItem
         title="Kriteria Kemungkinan"
-        setting
+        setting={!isDeveloping}
         settingEditOnclick={() => setModalOpenEdit(true)}
         settingAddOnclick={() => setModalOpenAdd(true)}
         addButton={
@@ -43,7 +45,13 @@ export default function CardKemungkinan() {
           />
         }
       >
-        <TableKemungkinan mode="view" />
+        {isDeveloping ? (
+          <EmptyDevelopingState />
+        ) : (
+          <Fragment>
+            <TableKemungkinan mode="view" />
+          </Fragment>
+        )}
       </CardItem>
       <DialogComponent
         width={1200}

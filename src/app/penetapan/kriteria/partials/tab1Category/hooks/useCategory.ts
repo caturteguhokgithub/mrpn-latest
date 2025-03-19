@@ -31,7 +31,7 @@ const useCategoryList = () => {
 
     if (response?.code == API_CODE.success) {
       let result: ResultCategory[] = response.result;
-      console.log({ result });
+      // console.log({ result });
       if (result) {
         setDataCategory(result);
         setLoading(false);
@@ -44,7 +44,7 @@ const useCategoryList = () => {
 
   useEffect(() => {
     // if (exsum.id !== 0) {
-    console.log("debug");
+    // console.log("debug");
     getData();
     // }
   }, []);

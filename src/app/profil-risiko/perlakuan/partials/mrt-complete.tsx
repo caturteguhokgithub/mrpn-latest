@@ -9,7 +9,7 @@ import {
 } from "material-react-table";
 import ActionColumn from "@/app/components/actions/action";
 import AddButton from "@/app/components/buttonAdd";
-import { blue, green, grey, orange, red } from "@mui/material/colors";
+import { blue, green, grey, orange, red, yellow } from "@mui/material/colors";
 import { RiskOverviewData } from "@/app/profil-risiko/overview/pageModel";
 
 export interface CustomColumn {
@@ -35,7 +35,9 @@ function ChipLevelRisiko(props: { level: any }) {
               ? "error"
               : props.level === "Tinggi (4)"
               ? "warning"
-              : "success"
+              : props.level === "Rendah (2)"
+              ? "success"
+              : undefined
           }
           sx={{
             minWidth: 80,
@@ -58,6 +60,18 @@ function ChipLevelRisiko(props: { level: any }) {
               bgcolor: green[100],
               borderColor: green[400],
               color: green[900],
+            },
+            "&.MuiChip-root": {
+              ...(props.level === "Sedang (3)" && {
+                bgcolor: yellow[100],
+                borderColor: yellow[700],
+                color: yellow[900],
+              }),
+              ...(props.level === "Sangat Rendah (1)" && {
+                bgcolor: blue[100],
+                borderColor: yellow[700],
+                color: yellow[900],
+              }),
             },
           }}
           label={props.level}
@@ -281,6 +295,12 @@ export default function MRTPerlakuanComplete({
                     </Stack>
                   </Stack>
                 ),
+                Header: ({ column }) => (
+                  <SortNumber
+                    column={column}
+                    numberSort={column.getIndex() + 1}
+                  />
+                ),
               },
               // {
               //   accessorKey: "analisis_lk",
@@ -471,6 +491,9 @@ export default function MRTPerlakuanComplete({
                   <ChipLevelRisiko level={row.perlakuan_level} />
                 </Stack>
               </Stack>
+            ),
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
             ),
           },
         ],

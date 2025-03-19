@@ -49,6 +49,7 @@ import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { FormatIDR } from "@/lib/utils/currency";
 import { getDetailRO } from "@/lib/utils/roDetail";
 import { SortNumber } from "./partials/mrt-complete";
+import { bgColorTh } from "@/app/utils/color";
 
 export default function PagePerlakuanView({}) {
   const { permission } = useAuthContext((state) => state);
@@ -407,17 +408,39 @@ export default function PagePerlakuanView({}) {
             "&::-webkit-scrollbar": {
               width: "3px",
             },
+            "tbody, thead": {
+              "td, th": {
+                borderRight: `1px solid ${grey[300]} !important`,
+                "&:last-of-type": {
+                  borderRight: `1px solid ${grey[300]} !important`,
+                },
+              },
+            },
           }}
         >
           <Table stickyHeader size="small">
             <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
               <TableRow>
-                <TableCell rowSpan={2} sx={{ width: 30 }}>
+                <TableCell
+                  rowSpan={2}
+                  align="center"
+                  sx={{ bgcolor: bgColorTh, width: 30 }}
+                >
                   No
                 </TableCell>
-                <TableCell rowSpan={2}>Nomenklatur RO</TableCell>
+                <TableCell
+                  rowSpan={2}
+                  align="center"
+                  sx={{ bgcolor: bgColorTh }}
+                >
+                  Nomenklatur RO
+                </TableCell>
                 {multiyear.map((y, iY) => (
-                  <TableCell colSpan={4} align={"center"}>
+                  <TableCell
+                    colSpan={4}
+                    align={"center"}
+                    sx={{ bgcolor: bgColorTh }}
+                  >
                     {y}
                   </TableCell>
                 ))}
@@ -425,12 +448,32 @@ export default function PagePerlakuanView({}) {
               <TableRow>
                 {multiyear.map((y, iY) => (
                   <>
-                    <TableCell style={{ top: "37px" }}>Target</TableCell>
-                    <TableCell style={{ top: "37px" }}>Satuan</TableCell>
-                    <TableCell style={{ top: "37px" }}>
+                    <TableCell
+                      align="center"
+                      style={{ top: "37px" }}
+                      sx={{ bgcolor: bgColorTh }}
+                    >
+                      Target
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      style={{ top: "37px" }}
+                      sx={{ bgcolor: bgColorTh }}
+                    >
+                      Satuan
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      style={{ top: "37px" }}
+                      sx={{ bgcolor: bgColorTh }}
+                    >
                       Pembiayaan (Juta)
                     </TableCell>
-                    <TableCell style={{ top: "37px" }}>
+                    <TableCell
+                      align="center"
+                      style={{ top: "37px" }}
+                      sx={{ bgcolor: bgColorTh }}
+                    >
                       Sumber Pembiayaan
                     </TableCell>
                   </>

@@ -88,10 +88,10 @@ export default function TableLonglistStepOne({ mode }: { mode?: string }) {
               No.
             </TableCell>
             <TableCell rowSpan={2} sx={{ textAlign: "center" }}>
-              Uraian Objek MRPN Linsek
+              Uraian Objek MRPN LS
             </TableCell>
             <TableCell colSpan={4} align="center">
-              Dasar Pemilihan Prioritas Objek MRPN Linsek
+              Dasar Pemilihan Prioritas Objek MRPN LS
             </TableCell>
           </TableRow>
           <TableRow>

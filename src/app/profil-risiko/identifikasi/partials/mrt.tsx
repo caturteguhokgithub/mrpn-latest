@@ -1,44 +1,43 @@
-import React, {useMemo} from "react";
-import {advancedTable} from "@/app/components/table";
-import {Box, Paper, Stack} from "@mui/material";
+import React, { useMemo } from "react";
+import { advancedTable } from "@/app/components/table";
+import { Box, Paper, Stack } from "@mui/material";
 import {
   useMaterialReactTable,
   MaterialReactTable,
 } from "material-react-table";
 import ActionColumn from "@/app/components/actions/action";
 import AddButton from "@/app/components/buttonAdd";
-import {data} from "../setting";
+import { data } from "../setting";
 import HeaderIdentifikasi from "./header";
 
-export default function MRTIdentifikasi(
-  {
-    handleModalOpenView,
-    handleModalOpenDelete,
-    handleModalOpenAdd,
-    handleModalOpenEdit,
-    viewOnly,
-    headerOnly,
-    renderCaption,
-  }: {
-    handleModalOpenView?: () => void;
-    handleModalOpenDelete?: () => void;
-    handleModalOpenAdd?: () => void;
-    handleModalOpenEdit?: () => void;
-    viewOnly?: boolean;
-    headerOnly?: boolean;
-    renderCaption?: React.ReactNode;
-  }) {
+export default function MRTIdentifikasi({
+  handleModalOpenView,
+  handleModalOpenDelete,
+  handleModalOpenAdd,
+  handleModalOpenEdit,
+  viewOnly,
+  headerOnly,
+  renderCaption,
+}: {
+  handleModalOpenView?: () => void;
+  handleModalOpenDelete?: () => void;
+  handleModalOpenAdd?: () => void;
+  handleModalOpenEdit?: () => void;
+  viewOnly?: boolean;
+  headerOnly?: boolean;
+  renderCaption?: React.ReactNode;
+}) {
   const columns = useMemo(
     () => [
       {
         accessorKey: "peristiwa",
-        header: "Peristiwa Risiko Strategis MRPN Linsek",
+        header: "Peristiwa Risiko Strategis MRPN LS",
         size: 250,
         enableColumnActions: false,
       },
       {
         accessorKey: "pemilik",
-        header: "Pemilik Risiko MRPN Linsek",
+        header: "Pemilik Risiko MRPN LS",
         size: 250,
         enableColumnActions: false,
       },
@@ -50,7 +49,7 @@ export default function MRTIdentifikasi(
 
   const renderTopToolbar: ColumnsType = {
     renderTopToolbarCustomActions: () => (
-      <AddButton onclick={handleModalOpenAdd} title="Tambah Identifikasi"/>
+      <AddButton onclick={handleModalOpenAdd} title="Tambah Identifikasi" />
     ),
   };
 
@@ -91,10 +90,10 @@ export default function MRTIdentifikasi(
                 m: 1,
               }}
             >
-              <HeaderIdentifikasi asTable viewOnly/>
+              <HeaderIdentifikasi asTable viewOnly />
             </Paper>
           ) : (
-            <HeaderIdentifikasi asTable/>
+            <HeaderIdentifikasi asTable />
           )}
         </>
       ) : (
@@ -108,10 +107,10 @@ export default function MRTIdentifikasi(
                 m: 1,
               }}
             >
-              <HeaderIdentifikasi asTable viewOnly/>
+              <HeaderIdentifikasi asTable viewOnly />
             </Paper>
           ) : (
-            <HeaderIdentifikasi asTable/>
+            <HeaderIdentifikasi asTable />
           )}
           <Box
             sx={{
@@ -124,7 +123,7 @@ export default function MRTIdentifikasi(
               },
             }}
           >
-            <MaterialReactTable table={table}/>
+            <MaterialReactTable table={table} />
           </Box>
         </>
       )}

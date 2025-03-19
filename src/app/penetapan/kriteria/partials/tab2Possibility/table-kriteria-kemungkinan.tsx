@@ -19,7 +19,7 @@ import { ResultPossibility } from "./hooks/possibilityModel";
 export default function TableKemungkinan({ mode }: { mode?: string }) {
   const { listDataPossibility, loading } = usePossibilityList();
 
-  console.log({ listDataPossibility, loading });
+  // console.log({ listDataPossibility, loading });
 
   if (loading) {
     return <div>loading...</div>;
@@ -60,7 +60,7 @@ export default function TableKemungkinan({ mode }: { mode?: string }) {
           </TableRow>
           <TableRow>
             <TableCell sx={{ bgcolor: bgColorTh }} align="center">
-              Probabilitias
+              Probabilitas
             </TableCell>
             <TableCell sx={{ bgcolor: bgColorTh }} align="center">
               Jumlah Frekuensi

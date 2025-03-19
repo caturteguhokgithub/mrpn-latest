@@ -37,9 +37,13 @@ export default function CardUrgent({
     handleModalDelete,
   } = useCardUrgentVM();
 
+<<<<<<< Updated upstream
   const {
     dataUrgensi,
   } = useUrgensiVM();
+=======
+  const { requestUrgensi, updateDataUrgensi, dataUrgensi } = useUrgensiVM();
+>>>>>>> Stashed changes
 
   const { year } = useRKPContext((state) => state);
 
@@ -62,11 +66,31 @@ export default function CardUrgent({
   const handleCreateOrUpdateData = async () => {
     const text = quillRef.current?.value;
     if (text) {
+<<<<<<< Updated upstream
       const req = {
         ...request,
         value: text.toString(),
       };
       updateData(req);
+=======
+      if (penetapan) {
+        const req = {
+          ...requestUrgensi,
+          value: text.toString(),
+        };
+
+        updateDataUrgensi(req);
+        setModal(false);
+      } else {
+        const req = {
+          ...request,
+          value: text.toString(),
+        };
+
+        updateData(req);
+        setModal(false);
+      }
+>>>>>>> Stashed changes
     }
   };
 
@@ -77,7 +101,7 @@ export default function CardUrgent({
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
     >
-      {penetapan ?
+      {penetapan ? (
         dataUrgensi?.value == "" ? (
           <EmptyState
             dense
@@ -86,22 +110,23 @@ export default function CardUrgent({
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <div dangerouslySetInnerHTML={{ __html: dataUrgensi?.value ?? "" }}></div>
+          <div
+            dangerouslySetInnerHTML={{ __html: dataUrgensi?.value ?? "" }}
+          ></div>
         )
-        :
-        data.value == "" ? (
-          <EmptyState
-            dense
-            icon={<IconEmptyData width={100} />}
-            title="Data Kosong"
-            description="Silahkan isi konten halaman ini"
-          />
-        ) : (
-          <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
-        )}
+      ) : data.value == "" ? (
+        <EmptyState
+          dense
+          icon={<IconEmptyData width={100} />}
+          title="Data Kosong"
+          description="Silahkan isi konten halaman ini"
+        />
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
+      )}
       <DialogComponent
         dialogOpen={modal}
-        dialogClose={() => setModal(true)}
+        dialogClose={() => setModal(false)}
         title="Urgensi Proyek"
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>

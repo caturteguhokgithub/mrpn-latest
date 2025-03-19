@@ -36,7 +36,7 @@ import { blue, grey, red } from "@mui/material/colors";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import { SortNumber } from "../perlakuan/partials/mrt-complete";
 
-export default function PageIdentifikasiView({ }) {
+export default function PageIdentifikasiView({}) {
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
   pathname =
@@ -75,7 +75,7 @@ export default function PageIdentifikasiView({ }) {
   const columns = [
     {
       accessorKey: "peristiwa_risiko",
-      header: "Peristiwa Risiko Strategis MRPN Linsek",
+      header: "Peristiwa Risiko Strategis MRPN LS",
       size: 250,
       enableColumnActions: false,
       Header: ({ column }: any) => (
@@ -310,10 +310,11 @@ export default function PageIdentifikasiView({ }) {
   return (
     <>
       <ContentPage
-        title={`Identifikasi Risiko ${year == 0
-          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-          : "Tahun " + year
-          }`}
+        title={`Identifikasi Risiko ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip="Proses menemukenali dan mendeskripsikan risiko"
         withCard={objectState === undefined}
         chooseObject={
@@ -387,12 +388,13 @@ export default function PageIdentifikasiView({ }) {
         width={"50%"}
         dialogOpen={modal.isOpen && modal.action != "delete"}
         dialogClose={() => actionModal(true, "create")}
-        title={`${modal.action == "read"
-          ? "Detail"
-          : modal.action == "update"
+        title={`${
+          modal.action == "read"
+            ? "Detail"
+            : modal.action == "update"
             ? "Ubah"
             : "Tambah"
-          } Identifikasi Risiko`}
+        } Identifikasi Risiko`}
         dialogFooter={dialogActionFooter}
       >
         <FormTable

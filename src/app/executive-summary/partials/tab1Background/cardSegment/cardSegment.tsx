@@ -19,7 +19,7 @@ interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
 export default function CardSegment({
   project,
   activeSetting,
-  penetapan
+  penetapan,
 }: {
   project?: string;
   activeSetting?: boolean;
@@ -38,10 +38,14 @@ export default function CardSegment({
     handleModalDelete,
   } = useCardSegmentVM();
 
+<<<<<<< Updated upstream
   const {
     dataSegmen,
     objectState,
   } = useUrgensiVM();
+=======
+  const { dataSegmen, requestSegmen, uriRequestSegmen } = useUrgensiVM();
+>>>>>>> Stashed changes
 
   const { year } = useRKPContext((state) => state);
 
@@ -64,11 +68,31 @@ export default function CardSegment({
   const handleCreateOrUpdateData = async () => {
     const text = quillRef.current?.value;
     if (text) {
+<<<<<<< Updated upstream
       const req = {
         ...request,
         value: text.toString(),
       };
       updateData(req);
+=======
+      if (penetapan) {
+        const req = {
+          ...requestSegmen,
+          value: text.toString(),
+        };
+
+        uriRequestSegmen(req);
+        setModal(false);
+      } else {
+        const req = {
+          ...request,
+          value: text.toString(),
+        };
+
+        updateData(req);
+        setModal(false);
+      }
+>>>>>>> Stashed changes
     }
   };
 
@@ -79,7 +103,7 @@ export default function CardSegment({
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
     >
-      {penetapan ?
+      {penetapan ? (
         dataSegmen?.value == "" ? (
           <EmptyState
             dense
@@ -88,19 +112,20 @@ export default function CardSegment({
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <div dangerouslySetInnerHTML={{ __html: dataSegmen?.value ?? "" }}></div>
+          <div
+            dangerouslySetInnerHTML={{ __html: dataSegmen?.value ?? "" }}
+          ></div>
         )
-        :
-        data.value == "" ? (
-          <EmptyState
-            dense
-            icon={<IconEmptyData width={100} />}
-            title="Data Kosong"
-            description="Silahkan isi konten halaman ini"
-          />
-        ) : (
-          <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
-        )}
+      ) : data.value == "" ? (
+        <EmptyState
+          dense
+          icon={<IconEmptyData width={100} />}
+          title="Data Kosong"
+          description="Silahkan isi konten halaman ini"
+        />
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
+      )}
       <DialogComponent
         dialogOpen={modal}
         dialogClose={() => setModal(false)}

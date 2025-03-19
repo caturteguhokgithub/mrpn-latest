@@ -31,7 +31,7 @@ export default function CardSasaranKinerjaUPR() {
   return (
     <>
       <CardItem
-        title="Sasaran, Indikator, dan Target Kinerja UPR Lintas Sektor"
+        title="Sasaran, Indikator, dan Target Kinerja UPR LS"
         infoTooltip={
           <>
             <strong>Unit Pemilik Risiko (UPR) Lintas Sektor</strong>

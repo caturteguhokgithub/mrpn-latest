@@ -30,6 +30,8 @@ import { MiscMasterRPJMNRes } from "@/app/misc/master/masterServiceModel";
 
 const Aside = dynamic(() => import("./aside"), { ssr: false });
 
+export const isDeveloping = false;
+
 export default function DashboardLayout(props: {
   children: React.ReactNode;
   noOverflow?: boolean;
@@ -221,7 +223,7 @@ export default function DashboardLayout(props: {
       width: "calc(100vw - 404px)",
     },
     ".table-fund, .table-overflow-x-indication": {
-      maxWidth: "calc(100vw - 374px)",
+      maxWidth: "calc(100vw - 392px)",
     },
     ".wording-kp-ellipsis": {
       span: {
@@ -247,7 +249,7 @@ export default function DashboardLayout(props: {
         width: "calc(100vw - 188px)",
       },
       ".table-fund, .table-overflow-x-indication": {
-        maxWidth: "calc(100vw - 175px)",
+        maxWidth: "calc(100vw - 192px)",
       },
       ".wording-kp-ellipsis": {
         span: {

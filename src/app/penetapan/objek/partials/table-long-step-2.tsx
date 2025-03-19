@@ -51,7 +51,7 @@ export default function TableLonglistStepTwo({ mode }: { mode?: string }) {
         <TableHead sx={{ bgcolor: bgColorTh }}>
           <TableRow>
             <TableCell width={70}>No.</TableCell>
-            <TableCell>Uraian Objek MRPN Linsek</TableCell>
+            <TableCell>Uraian Objek MRPN LS</TableCell>
             <TableCell align="center">Prioritas</TableCell>
             <TableCell align="center">Pilih sebagai Objek</TableCell>
           </TableRow>
