@@ -37,15 +37,7 @@ export default function CardUrgent({
     handleModalDelete,
   } = useCardUrgentVM();
 
-<<<<<<< Updated upstream
-  const {
-    requestUrgensi,
-    updateDataUrgensi,
-    dataUrgensi,
-  } = useUrgensiVM();
-=======
   const { requestUrgensi, updateDataUrgensi, dataUrgensi } = useUrgensiVM();
->>>>>>> Stashed changes
 
   const { year } = useRKPContext((state) => state);
 
@@ -68,28 +60,14 @@ export default function CardUrgent({
   const handleCreateOrUpdateData = async () => {
     const text = quillRef.current?.value;
     if (text) {
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-      const req = {
-        ...request,
-        value: text.toString(),
-      };
-      updateData(req);
-=======
->>>>>>> Stashed changes
       if (penetapan) {
         const req = {
           ...requestUrgensi,
           value: text.toString(),
         };
 
-<<<<<<< Updated upstream
-        updateDataUrgensi(req)
-=======
         updateDataUrgensi(req);
         setModal(false);
->>>>>>> Stashed changes
       } else {
         const req = {
           ...request,
@@ -97,13 +75,8 @@ export default function CardUrgent({
         };
 
         updateData(req);
-<<<<<<< Updated upstream
-      }
-=======
         setModal(false);
       }
->>>>>>> Stashed changes
->>>>>>> Stashed changes
     }
   };
 

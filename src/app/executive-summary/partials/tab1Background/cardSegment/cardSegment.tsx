@@ -38,15 +38,7 @@ export default function CardSegment({
     handleModalDelete,
   } = useCardSegmentVM();
 
-<<<<<<< Updated upstream
-  const {
-    dataSegmen,
-    requestSegmen,
-    uriRequestSegmen,
-  } = useUrgensiVM();
-=======
   const { dataSegmen, requestSegmen, uriRequestSegmen } = useUrgensiVM();
->>>>>>> Stashed changes
 
   const { year } = useRKPContext((state) => state);
 
@@ -69,28 +61,14 @@ export default function CardSegment({
   const handleCreateOrUpdateData = async () => {
     const text = quillRef.current?.value;
     if (text) {
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-      const req = {
-        ...request,
-        value: text.toString(),
-      };
-      updateData(req);
-=======
->>>>>>> Stashed changes
       if (penetapan) {
         const req = {
           ...requestSegmen,
           value: text.toString(),
         };
 
-<<<<<<< Updated upstream
-        uriRequestSegmen(req)
-=======
         uriRequestSegmen(req);
         setModal(false);
->>>>>>> Stashed changes
       } else {
         const req = {
           ...request,
@@ -98,13 +76,8 @@ export default function CardSegment({
         };
 
         updateData(req);
-<<<<<<< Updated upstream
-      }
-=======
         setModal(false);
       }
->>>>>>> Stashed changes
->>>>>>> Stashed changes
     }
 
     // if (text) {

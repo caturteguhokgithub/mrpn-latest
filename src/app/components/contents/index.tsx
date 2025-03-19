@@ -98,17 +98,8 @@ export default function ContentPage({
   const [triwulanDropdown, setTriwulanDropdown] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
-<<<<<<< Updated upstream
   const { objectState } = usePenetapanGlobalVM();
 
-
-=======
-<<<<<<< Updated upstream
-=======
-  const { objectState } = usePenetapanGlobalVM();
-
->>>>>>> Stashed changes
->>>>>>> Stashed changes
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -292,11 +283,6 @@ export default function ContentPage({
                           },
                         }}
                       >
-<<<<<<< Updated upstream
-                        <Typography px={1.5} fontSize={13} fontWeight={600}>
-                          {`${objectState?.rkp.code} - ${objectState?.rkp.value}`}
-                        </Typography>
-=======
                         {objectState &&
                         objectState.rkp &&
                         objectState.rkp.value &&
@@ -331,7 +317,6 @@ export default function ContentPage({
                         {/* <Typography px={1.5} fontSize={13} fontWeight={600}>
                           {`${objectState?.rkp.code} - ${objectState?.rkp.value}`}
                         </Typography> */}
->>>>>>> Stashed changes
                       </Box>
                     </Stack>
                   </>
@@ -636,12 +621,12 @@ export default function ContentPage({
           heightTitleBreadcrumb
             ? "calc(100vh - 258px)"
             : overflowHidden
-              ? "calc(100vh - 240px)"
-              : heightNoSet
-                ? "auto"
-                : darkTheme
-                  ? "calc(100vh - 180px)"
-                  : "calc(100vh - 240px)"
+            ? "calc(100vh - 240px)"
+            : heightNoSet
+            ? "auto"
+            : darkTheme
+            ? "calc(100vh - 180px)"
+            : "calc(100vh - 240px)"
         }
         overflow={overflowHidden ? "hidden" : "auto"}
         margin={noMinusMargin ? 0 : -1}
