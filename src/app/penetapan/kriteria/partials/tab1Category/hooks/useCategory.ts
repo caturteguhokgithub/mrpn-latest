@@ -15,9 +15,9 @@ const useCategoryList = () => {
   const [loading, setLoading] = useState(false);
   const [dataCategory, setDataCategory] = useState<ResultCategory[]>([]);
 
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
-  const search = searchParams.get("search");
+  // const search = searchParams.get("search");
 
   async function getData() {
     setLoading(true);
