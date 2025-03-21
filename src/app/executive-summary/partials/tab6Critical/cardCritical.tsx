@@ -36,9 +36,11 @@ const ProjectType = ({ label, color }: { label: string; color: string }) => {
 export default function CardCritical({
   project,
   title,
+  isIntExtPage,
 }: {
   project?: string;
   title?: string;
+  isIntExtPage?: boolean;
 }) {
   const {
     optionRO,
@@ -124,7 +126,7 @@ export default function CardCritical({
         settingAddOnclick={handleModalAdd}
         settingEditOnclick={handleModalOpen}
       >
-        {isDeveloping ? (
+        {isIntExtPage && isDeveloping ? (
           <EmptyDevelopingState />
         ) : (
           <Fragment>
