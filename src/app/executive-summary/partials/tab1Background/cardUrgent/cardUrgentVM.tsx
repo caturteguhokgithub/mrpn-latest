@@ -26,6 +26,8 @@ const useCardUrgentVM = () => {
   const [modal, setModal] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
 
+  const [modalKonteksIntExt, setModalKonteksIntExt] = useState(false);
+
   const handleModalDelete = () => {
     setModalDelete(true);
   };
@@ -92,7 +94,7 @@ const useCardUrgentVM = () => {
     };
     await doDeleteUrgent(params);
     getData();
-    setModalDelete(false)
+    setModalDelete(false);
   }
 
   return {
@@ -108,6 +110,8 @@ const useCardUrgentVM = () => {
     modalDelete,
     setModalDelete,
     handleModalDelete,
+    modalKonteksIntExt,
+    setModalKonteksIntExt,
   };
 };
 

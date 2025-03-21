@@ -153,7 +153,7 @@ export default function TabInternalEksternal({}) {
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <CardCritical title="Perencanaan Lintasan Kritis" />
+          <CardCritical title="Perencanaan Lintasan Kritis" isIntExtPage />
         )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>

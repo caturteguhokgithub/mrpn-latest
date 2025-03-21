@@ -1,5 +1,12 @@
-import React from "react";
-import { Button, DialogActions, Typography } from "@mui/material";
+import React, { Fragment } from "react";
+import {
+  Box,
+  Button,
+  Chip,
+  DialogActions,
+  Divider,
+  Typography,
+} from "@mui/material";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import CardItem from "@/app/components/cardTabItem";
@@ -14,6 +21,22 @@ import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
 }
+
+export const DividerIntExt = () => {
+  return (
+    <Divider
+      sx={{
+        my: 1,
+      }}
+    >
+      <Chip
+        label="Data Konteks Internal Eksternal"
+        size="small"
+        sx={{ px: 1 }}
+      />
+    </Divider>
+  );
+};
 
 export default function CardUrgent({
   project,
@@ -96,9 +119,15 @@ export default function CardUrgent({
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <div
-            dangerouslySetInnerHTML={{ __html: dataUrgensi?.value ?? "" }}
-          ></div>
+          <Fragment>
+            <Box sx={{ opacity: 0.6 }}>
+              <div
+                dangerouslySetInnerHTML={{ __html: dataUrgensi?.value ?? "" }}
+              ></div>
+            </Box>
+            <DividerIntExt />
+            <div>Data urgensi di konteks internal eksternal</div>
+          </Fragment>
         )
       ) : data.value == "" ? (
         <EmptyState

@@ -15,44 +15,12 @@ import {
 } from "@mui/material";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 import AddButton from "@/app/components/buttonAdd";
-import TextareaComponent from "@/app/components/textarea";
-import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
 import Iconify from "@/app/components/icons/iconify";
 import DialogComponent from "@/app/components/dialog";
 import dynamic from "next/dynamic";
 import type ReactQuill from "react-quill";
 import useCardSegmentVM from "@/app/executive-summary/partials/tab1Background/cardSegment/cardSegmentVM";
 import { VisuallyHiddenInput } from "@/app/utils/constant";
-
-const ItemDampak = ({
-  children,
-  number,
-}: {
-  children: React.ReactNode;
-  number: number;
-}) => {
-  return (
-    <FormControl fullWidth sx={{ position: "relative" }}>
-      {children}
-      <Box
-        position="absolute"
-        top="8px"
-        right="8px"
-        bgcolor="black"
-        color="white"
-        borderRadius="50%"
-        width="20px"
-        height="20px"
-        display="inline-flex"
-        alignItems="center"
-        justifyContent="center"
-        fontSize={12}
-      >
-        {number}
-      </Box>
-    </FormControl>
-  );
-};
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
