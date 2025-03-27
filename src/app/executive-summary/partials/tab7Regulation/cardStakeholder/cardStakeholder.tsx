@@ -36,9 +36,11 @@ import { isDeveloping } from "@/app/components/layouts/layout";
 export default function CardStakeholder({
   project,
   title,
+  isIntExtPage,
 }: {
   project?: string;
   title?: string;
+  isIntExtPage?: boolean;
 }) {
   const {
     data,
@@ -137,7 +139,7 @@ export default function CardStakeholder({
       setting
       settingEditOnclick={handleModalOpenStakeholder}
     >
-      {isDeveloping ? (
+      {isIntExtPage && isDeveloping ? (
         <EmptyDevelopingState />
       ) : (
         <Fragment>
@@ -363,9 +365,9 @@ export default function CardStakeholder({
           ".transform-component-module_wrapper__SPB86": {
             width: "100%",
             height: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            // display: "flex",
+            // alignItems: "center",
+            // justifyContent: "center",
           },
           ".MuiDialogContent-root": {
             p: 0,

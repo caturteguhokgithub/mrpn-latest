@@ -52,7 +52,7 @@ function CustomTabPanel(props: TabPanelProps) {
             p: 0,
             mt: 2,
             //   height: "calc(100vh - 344px)",
-            height: "calc(100vh - 320px)",
+            height: "calc(100vh - 332px)",
             overflow: "auto",
             "&::-webkit-scrollbar": {
               width: "3px",
