@@ -239,6 +239,7 @@ export default function PageTemaView({}) {
         selectedTopic={
           <Collapse in={objectState !== undefined}>
             <Chip
+              size="small"
               variant="outlined"
               label={
                 <Stack direction="row" alignItems="center">
@@ -246,8 +247,9 @@ export default function PageTemaView({}) {
                     direction="row"
                     bgcolor={theme.palette.primary.main}
                     px={2}
+                    py={1}
                     alignItems="center"
-                    height="34px"
+                    height="32px"
                     sx={{
                       borderTopLeftRadius: 24,
                       borderBottomLeftRadius: 24,
@@ -265,7 +267,7 @@ export default function PageTemaView({}) {
                       Topik Terpilih
                     </Typography>
                   </Stack>
-                  <Typography px={2} fontSize={16} fontWeight={600}>
+                  <Typography px={2} fontSize={14} fontWeight={600}>
                     {objectState?.topik}
                   </Typography>
                 </Stack>

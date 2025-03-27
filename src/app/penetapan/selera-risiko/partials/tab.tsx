@@ -140,7 +140,7 @@ export default function TabInternalEksternal({}) {
         ) : (
           <Stack gap={1}>
             <CardRegulation />
-            <CardStakeholder title="Stakeholder Mapping" />
+            <CardStakeholder title="Stakeholder Mapping" isIntExtPage />
           </Stack>
         )}
       </CustomTabPanel>
