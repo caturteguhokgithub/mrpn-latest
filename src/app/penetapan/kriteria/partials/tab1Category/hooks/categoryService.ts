@@ -1,5 +1,6 @@
 import { del, post, put } from "@/lib/core/api/apiBase";
 import { ResponseBaseDto } from "@/lib/core/api/apiModel";
+import { CreateCategoryServiceModel } from "./categoryModel";
 
 export async function doGetCategory(param: any) {
   const resp = await post({
@@ -9,13 +10,13 @@ export async function doGetCategory(param: any) {
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
 
-// export async function doCreateCategory(param: any) {
-//   const resp = await post({
-//     ...param,
-//     url: "exsum/urgensiProyek/add",
-//   });
-//   if (resp) return Object.assign(new ResponseBaseDto(), resp);
-// }
+export async function doCreateCategory(param: CreateCategoryServiceModel) {
+  const resp = await post({
+    ...param,
+    url: "penetapan/object/kategoriRisiko/add",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
 
 // export async function doUpdateCategory(param: any) {
 //   const resp = await put({

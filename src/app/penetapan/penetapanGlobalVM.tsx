@@ -1,8 +1,10 @@
-import {MasterListObjectRes} from "@/app/misc/master/masterServiceModel";
-import {useGlobalModalContext, useLoading, useRKPContext} from "@/lib/core/hooks/useHooks";
-import {doGetMasterListObject} from "@/app/misc/master/masterService";
-import {API_CODE} from "@/lib/core/api/apiModel";
-import {usePenetapanContext} from "@/lib/core/hooks/useHooks";
+import { MasterListObjectRes } from "@/app/misc/master/masterServiceModel";
+import { useGlobalModalContext, useLoading, useRKPContext } from "@/lib/core/hooks/useHooks";
+import { doGetMasterListObject } from "@/app/misc/master/masterService";
+import { API_CODE } from "@/lib/core/api/apiModel";
+import { usePenetapanContext } from "@/lib/core/hooks/useHooks";
+import useRkpVM from "../components/dropdown/rkpVM";
+import { useEffect } from "react";
 
 const usePenetapanGlobalVM = () => {
 
@@ -15,6 +17,11 @@ const usePenetapanGlobalVM = () => {
   } = useRKPContext(state => state)
 
   const {
+    handleChangeOptions,
+    triggerChange,
+  } = useRkpVM();
+
+  const {
     objects,
     setObjects,
     objectState,
@@ -24,7 +31,7 @@ const usePenetapanGlobalVM = () => {
   const getMasterListObject = async () => {
     const response = await doGetMasterListObject({
       body: {
-        tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year
+        tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext
@@ -32,15 +39,24 @@ const usePenetapanGlobalVM = () => {
     if (response?.code == API_CODE.success) {
       const result: MasterListObjectRes[] = response.result
       setObjects(result)
+
       const getIndex = result.findIndex(x => x.id == objectState?.id)
-      if (getIndex == -1){
+
+      if (getIndex == -1) {
         setObjectState(undefined)
       }
-    }else{
+    } else {
       setObjects([])
       setObjectState(undefined)
     }
   }
+
+  useEffect(() => {
+    if (objectState != undefined) {
+      triggerChange(objectState.rkp, "penetapan")
+      handleChangeOptions(objectState.rkp)
+    };
+  }, [objectState]);
 
   return {
     objects,

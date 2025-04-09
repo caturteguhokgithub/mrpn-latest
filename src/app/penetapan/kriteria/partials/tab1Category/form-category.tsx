@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, SetStateAction } from "react";
 import {
   Box,
   Button,
@@ -12,10 +12,12 @@ import {
 } from "@mui/material";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 import AddButton from "@/app/components/buttonAdd";
-import TextareaComponent from "@/app/components/textarea";
+import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
 import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
 import Iconify from "@/app/components/icons/iconify";
 import DialogComponent from "@/app/components/dialog";
+import useCategoryList from "./hooks/useCategory";
+import { doRequestCategoryDto, doSubCategory } from "./hooks/categoryModel";
 
 const ItemDampak = ({
   children,
@@ -50,9 +52,13 @@ const ItemDampak = ({
 export default function FormCategory({
   mode,
   handleOpenCategory,
+  state,
+  setState,
 }: {
   mode?: string;
   handleOpenCategory?: any;
+  state: doRequestCategoryDto
+  setState: (value: SetStateAction<doRequestCategoryDto>) => void;
 }) {
   const [items, setItem] = React.useState([{ id: 1 }]);
 
@@ -79,15 +85,18 @@ export default function FormCategory({
     setItem(newArr);
   };
 
+  // Menangani perubahan input
+  const handleSubChange = (index: number, field: keyof doSubCategory, value: string) => {
+    setState((prevState) => {
+      const updatedSub = [...prevState.sub];
+      updatedSub[index] = { ...updatedSub[index], [field]: value };
+      return { ...prevState, sub: updatedSub };
+    });
+  };
+
   const listCategory = ["Ekonomi", "Geopolitik", "Teknologi"];
 
-  const [value, setValue] = React.useState(null);
-
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
-
-  const handleChangeSelect = (newValue: any) => {
-    setValue(newValue);
-  };
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -117,10 +126,16 @@ export default function FormCategory({
               />
             ) : (
               <AutocompleteSelectSingle
-                value={value}
+                value={state.value}
                 options={listCategory.map((option) => option)}
                 getOptionLabel={(option) => `${option}`}
-                handleChange={(newValue: any) => handleChangeSelect(newValue)}
+                // handleChange={(newValue: any) => handleChangeSelect(newValue)}
+                handleChange={(newValue: any) =>
+                  setState((prevState) => ({
+                    ...prevState,
+                    value: newValue
+                  }))
+                }
                 placeHolder={"Pilih kategori"}
                 actionButton={
                   <Button
@@ -140,15 +155,24 @@ export default function FormCategory({
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Uraian" titleField />
-            <TextareaComponent
-              row={2}
-              label="Uraian"
+            <TextareaStyled
+              minRows={2}
+              aria-label="Uraian"
               placeholder="Uraian"
-              value={
-                mode == "edit"
-                  ? "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
-                  : ""
+              value={state.desc}
+              onChange={(e) =>
+                setState((prevState) => {
+                  return {
+                    ...prevState,
+                    desc: e.target.value,
+                  };
+                })
               }
+            // value={
+            //   mode == "edit"
+            //     ? "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
+            //     : ""
+            // }
             />
           </FormControl>
         </Grid>
@@ -202,20 +226,22 @@ export default function FormCategory({
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormControl fullWidth>
-                          <TextareaComponent
-                            width="100%"
-                            row={2}
-                            label=""
+                          <TextareaStyled
+                            // width="100%"
+                            minRows={2}
+                            aria-label=""
                             placeholder="Sub Kategori"
+                            onChange={(e) => handleSubChange(key, "value", e.target.value)}
                           />
                         </FormControl>
                       </Grid>
                       <Grid item xs={12} md={6}>
-                        <TextareaComponent
-                          width="100%"
-                          row={2}
-                          label=""
+                        <TextareaStyled
+                          // width="100%"
+                          minRows={2}
+                          aria-label=""
                           placeholder="Uraian"
+                          onChange={(e) => handleSubChange(key, "desc", e.target.value)}
                         />
                       </Grid>
                     </Grid>

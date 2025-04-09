@@ -10,12 +10,23 @@ import Iconify from "@/app/components/icons/iconify";
 import TableRerefence from "./table-reference";
 import EmptyDevelopingState from "@/app/components/empty/developing";
 import { isDeveloping } from "@/app/components/layouts/layout";
+import useCategoryList from "./hooks/useCategory";
 
 export default function CardKategori() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalOpenCategory, setModalOpenCategory] = React.useState(false);
   const [modalOpenDelete, setModalDelete] = React.useState(false);
   const [modalOpenRef, setModalOpenRef] = React.useState(false);
+
+  const {
+    createCategory,
+    requestCategory,
+    setRequestCategory
+  } = useCategoryList();
+
+  const handleCreate = async () => {
+    createCategory(requestCategory)
+  };
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -26,9 +37,12 @@ export default function CardKategori() {
       >
         Batal
       </Button>
-      <Button variant="contained" type="submit">
+      <Button variant="contained" onClick={handleCreate}>
         Simpan
       </Button>
+      {/* <Button variant="contained" type="submit">
+        Simpan
+      </Button> */}
     </DialogActions>
   );
 
@@ -75,7 +89,11 @@ export default function CardKategori() {
         title="Tambah Kategori Risiko"
         dialogFooter={dialogActionFooter}
       >
-        <FormCategory mode="add" />
+        <FormCategory
+          mode="add"
+          state={requestCategory}
+          setState={setRequestCategory}
+        />
       </DialogComponent>
       <DialogComponent
         width={500}
@@ -84,13 +102,17 @@ export default function CardKategori() {
         title="Ubah Kategori"
         dialogFooter={dialogActionFooter}
       >
-        <FormCategory mode="edit" />
+        <FormCategory
+          mode="edit"
+          state={requestCategory}
+          setState={setRequestCategory}
+        />
       </DialogComponent>
       <DialogDelete
         title="Hapus Data"
         handleOpenModal={modalOpenDelete}
         handleCloseModal={() => setModalDelete(false)}
-        handleDelete={() => {}}
+        handleDelete={() => { }}
       />
       <DialogComponent
         tableMode

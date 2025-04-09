@@ -68,8 +68,6 @@ export default function CardSwot({
     dataSwot,
   } = useUrgensiVM();
 
-  console.log(requestSwot);
-
 
   return (
     <>

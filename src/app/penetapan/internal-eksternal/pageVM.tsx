@@ -2,7 +2,8 @@ import {
     useGlobalModalContext,
     useLoading,
     useRKPContext,
-    useAuthContext
+    useAuthContext,
+    useExsumContext
 } from "@/lib/core/hooks/useHooks";
 import React, { useEffect, useState } from "react";
 import { API_CODE, ResponseBaseDto } from "@/lib/core/api/apiModel";
@@ -10,17 +11,21 @@ import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { doCreateSegmen, doCreateSwot, doCreateUrgensi, doGetSegmen, doGetSwot, doGetUrgensi, doUpdateSegmen, doUpdateSwot, doUpdateUrgensi } from "./pageService";
 import { SegmenResDto, SwotResDto, UrgensiResDto, doRequestSegmenDto, doRequestSwotDto, doRequestUrgensiDto, initUrgensi, initSwot } from "./pageModel";
 import useCardUrgentVM from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgentVM";
+import { doGetUrgent } from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgentService";
+import { ExsumUrgentDto, initExsumUrgentDto } from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgentModel";
 
 const useUrgensiVM = () => {
 
     const loadingContext = useLoading();
     const errorModalContext = useGlobalModalContext();
+    const { exsum } = useExsumContext();
     const { objectState } = usePenetapanGlobalVM();
     const { year } = useRKPContext((state) => state);
     const { setModal } = useCardUrgentVM();
 
     // Urgensi
     const [dataUrgensi, setDataUrgensi] = useState<UrgensiResDto>();
+    const [dataUrgensiExsum, setDataUrgensiExsum] = useState<ExsumUrgentDto>({ ...initExsumUrgentDto });
     const [requestUrgensi, setRequestUrgensi] = useState<doRequestUrgensiDto>({ ...initUrgensi });
     const [requestSegmen, setRequestSegmen] = useState<doRequestSegmenDto>({ ...initUrgensi });
     const [requestSwot, setRequestSwot] = useState<doRequestSwotDto>({ ...initSwot });
@@ -43,6 +48,25 @@ const useUrgensiVM = () => {
             if (result) {
                 setDataUrgensi(result);
                 setRequestUrgensi(result);
+            }
+        }
+    }
+
+    async function getDataUrgensiExsum() {
+        const response = await doGetUrgent({
+            body: {
+                exsum_id: exsum.id,
+            },
+            loadingContext: loadingContext,
+            errorModalContext: errorModalContext,
+        });
+
+        if (response?.code == API_CODE.success) {
+            let result: ExsumUrgentDto = response.result;
+            if (result) {
+                setDataUrgensiExsum(result);
+            } else {
+                setDataUrgensiExsum({ ...initExsumUrgentDto });
             }
         }
     }
@@ -177,6 +201,7 @@ const useUrgensiVM = () => {
 
     useEffect(() => {
         getDataUrgensi();
+        // getDataUrgensiExsum();
         getDataSegmen();
         getDataSwot();
     }, [objectState?.id]);
@@ -185,6 +210,7 @@ const useUrgensiVM = () => {
         requestUrgensi,
         updateDataUrgensi,
         dataUrgensi,
+        dataUrgensiExsum,
         requestSegmen,
         uriRequestSegmen,
         dataSegmen,

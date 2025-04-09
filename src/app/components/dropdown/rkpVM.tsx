@@ -21,6 +21,7 @@ const useRkpVM = () => {
   const errorModalContext = useGlobalModalContext();
   const rkpContext = useRKPContext((state) => state);
   const exsumContext = useExsumContext();
+  const { exsum } = useExsumContext();
 
   const { rkpOption, setRkpOption, rkpState, setRkpState, year, rpjmn } =
     rkpContext;
@@ -161,16 +162,28 @@ const useRkpVM = () => {
     }
   }
 
-  function triggerChange(params: ProjectDefaultDto) {
+  function triggerChange(params: ProjectDefaultDto, module: string = "exsum") {
+
     const getRpjmn = () => {
       return rpjmn?.start + "-" + rpjmn?.end;
     };
 
-    if (allowedSelectRKP.includes(params.level)) {
+    if (module == "exsum") {
+      if (allowedSelectRKP.includes(params.level)) {
+        let req: ExsumDto = {
+          id: 0,
+          tahun: year == 0 ? getRpjmn() : year,
+          level: params.level,
+          ref_id: params.id,
+          approval: undefined,
+        };
+        getExsum(req);
+      }
+    } else {
       let req: ExsumDto = {
         id: 0,
         tahun: year == 0 ? getRpjmn() : year,
-        level: params.level,
+        level: params.level || "KP",
         ref_id: params.id,
         approval: undefined,
       };
@@ -224,10 +237,10 @@ const useRkpVM = () => {
 
   const filteredOptions = searchKeyword
     ? (rkpOption || []).filter(
-        (option) =>
-          option.value.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-          option.code.toLowerCase().includes(searchKeyword.toLowerCase())
-      )
+      (option) =>
+        option.value.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        option.code.toLowerCase().includes(searchKeyword.toLowerCase())
+    )
     : rkpOption || [];
 
   return {

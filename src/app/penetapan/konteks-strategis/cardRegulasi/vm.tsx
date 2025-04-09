@@ -10,36 +10,32 @@ import {
 } from "@/app/penetapan/konteks-strategis/cardRegulasi/service";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { MiscMasterListPerpresRes } from "@/app/misc/master/masterServiceModel";
+import { ExsumRegulationResDto } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
 
 const useCardRegulasi = () => {
 
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
-  const { objectState } = usePenetapanGlobalVM()
+  const { objectState } = usePenetapanGlobalVM();
+  const { year } = useRKPContext((state) => state);
 
-  const [data, setData] = useState<MiscMasterListPerpresRes[]>([])
+  const [data, setData] = useState<ExsumRegulationResDto[]>([])
 
   async function getData() {
     const response = await doGetRegulasi({
       body: {
-        id: objectState?.id ?? 0,
+        uraian_penetapan_object_id: objectState?.id ?? 0,
+        tahun: year
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
     })
 
     if (response?.code == API_CODE.success) {
-      let result: RegulasiResDto = response.result
-
-      let data: MiscMasterListPerpresRes[] = []
-
-      if (result.exsum != null) {
-        result.exsum.regulasi.map(res => {
-          data = [...data, ...res.perpres]
-        })
+      const result: ExsumRegulationResDto[] = response.result
+      if (result) {
+        setData(result)
       }
-
-      setData(data)
     }
   }
 

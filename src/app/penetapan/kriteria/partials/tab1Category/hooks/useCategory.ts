@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { doGetCategory } from "./categoryService";
+import { doCreateCategory, doGetCategory } from "./categoryService";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import {
   useExsumContext,
@@ -7,13 +7,17 @@ import {
   useLoading,
 } from "@/lib/core/hooks/useHooks";
 import { useSearchParams } from "next/navigation";
-import { ResultCategory } from "./categoryModel";
+import { ResultCategory, doRequestCategoryDto, initCategory } from "./categoryModel";
+import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 
 const useCategoryList = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
   const [loading, setLoading] = useState(false);
   const [dataCategory, setDataCategory] = useState<ResultCategory[]>([]);
+  const { objectState } = usePenetapanGlobalVM();
+
+  const [requestCategory, setRequestCategory] = useState<doRequestCategoryDto>({ ...initCategory });
 
   // const searchParams = useSearchParams();
 
@@ -23,7 +27,7 @@ const useCategoryList = () => {
     setLoading(true);
     const response = await doGetCategory({
       body: {
-        uraian_penetapan_object_id: 78,
+        uraian_penetapan_object_id: objectState?.id,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -42,6 +46,24 @@ const useCategoryList = () => {
     }
   }
 
+  async function createCategory(param: doRequestCategoryDto) {
+    const req: doRequestCategoryDto = {
+      ...param,
+      uraian_penetapan_object_id: objectState?.id ?? 0,
+    };
+
+    const params = {
+      body: req,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    };
+
+    const response = await doCreateCategory(params);
+    if (response?.code == API_CODE.success) {
+      getData();
+    }
+  }
+
   useEffect(() => {
     // if (exsum.id !== 0) {
     // console.log("debug");
@@ -49,7 +71,13 @@ const useCategoryList = () => {
     // }
   }, []);
 
-  return { listDataCategory: dataCategory, loading };
+  return {
+    listDataCategory: dataCategory,
+    loading,
+    createCategory,
+    requestCategory,
+    setRequestCategory
+  };
 };
 
 export default useCategoryList;
