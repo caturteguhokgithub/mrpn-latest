@@ -8,9 +8,13 @@ import { Box, Stack, Typography } from "@mui/material";
 import TablePendanaan from "./partials/table-pendanaan";
 import { isDeveloping } from "@/app/components/layouts/layout";
 import EmptyDevelopingState from "@/app/components/empty/developing";
+import TableFund from "./partials/tableFund";
+import useCardFundVM from "@/app/executive-summary/partials/tab8Fund/cardFundVM";
 
-export default function CardPendanaan() {
+export default function CardPendanaan({ project }: { project: string }) {
   const isEmpty = false;
+  const { exsum, dataFund, dataTableFund, getDataFund } =
+    useCardFundVM(project);
 
   return (
     <CardItem
@@ -64,7 +68,7 @@ export default function CardPendanaan() {
               description="Silahkan isi konten halaman ini"
             />
           ) : (
-            <TablePendanaan />
+            <TableFund project={project} data={dataTableFund} />
           )}
         </Fragment>
       )}

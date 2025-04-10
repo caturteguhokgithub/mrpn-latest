@@ -152,6 +152,7 @@ export default function CascadingPenetapanObjectOrgChart() {
     if (objectState !== undefined) {
       getPenetapanObjectCascading();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [objectState]);
 
   const [modalOpenImg, setModalOpenImg] = React.useState(false);
@@ -306,6 +307,7 @@ export default function CascadingPenetapanObjectOrgChart() {
       }
 
       return object;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [objectState]);
 
   const sxParamsFull: SxParams = { variant: "full" };
