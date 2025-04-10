@@ -13,7 +13,6 @@ import { isDeveloping } from "@/app/components/layouts/layout";
 import useCategoryList from "./hooks/useCategory";
 
 export default function CardKategori() {
-  const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalOpenCategory, setModalOpenCategory] = React.useState(false);
   const [modalOpenDelete, setModalDelete] = React.useState(false);
   const [modalOpenRef, setModalOpenRef] = React.useState(false);
@@ -21,11 +20,13 @@ export default function CardKategori() {
   const {
     createCategory,
     requestCategory,
-    setRequestCategory
+    setRequestCategory,
+    modalOpenAdd,
+    setModalOpenAdd,
   } = useCategoryList();
 
   const handleCreate = async () => {
-    createCategory(requestCategory)
+    createCategory(requestCategory);
   };
 
   const dialogActionFooter = (
@@ -112,7 +113,7 @@ export default function CardKategori() {
         title="Hapus Data"
         handleOpenModal={modalOpenDelete}
         handleCloseModal={() => setModalDelete(false)}
-        handleDelete={() => { }}
+        handleDelete={() => {}}
       />
       <DialogComponent
         tableMode
