@@ -1,5 +1,6 @@
 import { del, post, put } from "@/lib/core/api/apiBase";
 import { ResponseBaseDto } from "@/lib/core/api/apiModel";
+import { UpdatePossibilityServiceModel } from "./possibilityModel";
 
 export async function doGetPossibility(param: any) {
   const resp = await post({
@@ -17,13 +18,13 @@ export async function doGetPossibility(param: any) {
 //   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 // }
 
-// export async function doUpdatePossibility(param: any) {
-//   const resp = await put({
-//     ...param,
-//     url: "exsum/urgensiProyek/update",
-//   });
-//   if (resp) return Object.assign(new ResponseBaseDto(), resp);
-// }
+export async function doUpdatePossibility(param: UpdatePossibilityServiceModel) {
+  const resp = await put({
+    ...param,
+    url: "penetapan/kriteriaRisiko/update",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
 
 // export async function doDeletePossibility(param: any) {
 //   const resp = await del({

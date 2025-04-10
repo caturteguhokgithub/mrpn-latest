@@ -8,11 +8,23 @@ import { DialogActions, Button } from "@mui/material";
 import Iconify from "@/app/components/icons/iconify";
 import EmptyDevelopingState from "@/app/components/empty/developing";
 import { isDeveloping } from "@/app/components/layouts/layout";
+import usePossibilityList from "./hooks/usePossibility";
 
 export default function CardKemungkinan() {
-  const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalOpenEdit, setModalOpenEdit] = React.useState(false);
   const [modalOpenRef, setModalOpenRef] = React.useState(false);
+
+  const {
+    modalOpenAdd,
+    setModalOpenAdd,
+    requestPossibility,
+    setRequestPossibility,
+    updatePossibility,
+  } = usePossibilityList();
+
+  const handleCreate = async () => {
+    updatePossibility(requestPossibility);
+  };
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -23,7 +35,8 @@ export default function CardKemungkinan() {
       >
         Batal
       </Button>
-      <Button variant="contained" type="submit">
+      {/* <Button variant="contained" type="submit"> */}
+      <Button variant="contained" onClick={handleCreate}>
         Simpan
       </Button>
     </DialogActions>
@@ -60,7 +73,7 @@ export default function CardKemungkinan() {
         title="Tambah Kriteria Kemungkinan"
         dialogFooter={dialogActionFooter}
       >
-        <FormKemungkinan mode="add" />
+        <FormKemungkinan state={requestPossibility} setState={setRequestPossibility} mode="add" />
       </DialogComponent>
       <DialogComponent
         width={1200}
@@ -69,7 +82,7 @@ export default function CardKemungkinan() {
         title="Ubah Kriteria Kemungkinan"
         dialogFooter={dialogActionFooter}
       >
-        <FormKemungkinan mode="edit" />
+        <FormKemungkinan state={requestPossibility} setState={setRequestPossibility} mode="edit" />
       </DialogComponent>
       <DialogComponent
         tableMode
