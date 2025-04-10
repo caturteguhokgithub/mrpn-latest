@@ -7,7 +7,11 @@ import {
   useLoading,
 } from "@/lib/core/hooks/useHooks";
 import { useSearchParams } from "next/navigation";
-import { ResultCategory, doRequestCategoryDto, initCategory } from "./categoryModel";
+import {
+  ResultCategory,
+  doRequestCategoryDto,
+  initCategory,
+} from "./categoryModel";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 
 const useCategoryList = () => {
@@ -16,8 +20,11 @@ const useCategoryList = () => {
   const [loading, setLoading] = useState(false);
   const [dataCategory, setDataCategory] = useState<ResultCategory[]>([]);
   const { objectState } = usePenetapanGlobalVM();
+  const [modalOpenAdd, setModalOpenAdd] = useState(false);
 
-  const [requestCategory, setRequestCategory] = useState<doRequestCategoryDto>({ ...initCategory });
+  const [requestCategory, setRequestCategory] = useState<doRequestCategoryDto>({
+    ...initCategory,
+  });
 
   // const searchParams = useSearchParams();
 
@@ -61,6 +68,7 @@ const useCategoryList = () => {
     const response = await doCreateCategory(params);
     if (response?.code == API_CODE.success) {
       getData();
+      setModalOpenAdd(false);
     }
   }
 
@@ -76,7 +84,9 @@ const useCategoryList = () => {
     loading,
     createCategory,
     requestCategory,
-    setRequestCategory
+    setRequestCategory,
+    modalOpenAdd,
+    setModalOpenAdd,
   };
 };
 
