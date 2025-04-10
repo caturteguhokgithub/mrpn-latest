@@ -73,7 +73,7 @@ export default function PageKonteksStrategisView({ }) {
           <Stack gap={1}>
             <CardIndikasiSasaran />
             <CardLevelKebijakan />
-            <CardPendanaan />
+            <CardPendanaan project="" />
             {/* <CardSasaranKinerjaUPR />
              <CardRegulation />
             <CardStakeholderInternal />

@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: "standalone",
   output: "export",
+  // output: "standalone",
 
   // basePath: "/fe",
   // assetPrefix: "https://mrpn.bappenas.go.id/fe",

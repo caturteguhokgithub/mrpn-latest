@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import {
   Box,
@@ -14,7 +14,6 @@ import {
   useTheme,
 } from "@mui/material";
 import Footer from "./footer";
-// import Aside from "./aside";
 import Header from "./header";
 import { grey } from "@mui/material/colors";
 import React from "react";
@@ -30,7 +29,7 @@ import { MiscMasterRPJMNRes } from "@/app/misc/master/masterServiceModel";
 
 const Aside = dynamic(() => import("./aside"), { ssr: false });
 
-export const isDeveloping = true;
+export const isDeveloping = false;
 
 export default function DashboardLayout(props: {
   children: React.ReactNode;
@@ -56,6 +55,7 @@ export default function DashboardLayout(props: {
     // else {
     //   if (year == 0) setYear(rpjmn.start);
     // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rpjmn]);
 
   const pathname = usePathname();
