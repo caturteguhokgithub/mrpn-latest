@@ -35,7 +35,7 @@ import {
   MRT_ColumnDef,
   useMaterialReactTable,
 } from "material-react-table";
-import { blue, green, grey, orange, red } from "@mui/material/colors";
+import { blue, green, grey, orange, red, yellow } from "@mui/material/colors";
 import { advancedTable } from "@/components/table";
 import ActionColumn from "@/components/actions/action";
 import theme from "@/theme";
@@ -266,7 +266,9 @@ export default function PagePerlakuanView({}) {
                     ? "error"
                     : renderedCellValue === "Tinggi (4)"
                     ? "warning"
-                    : "success"
+                    : renderedCellValue === "Rendah (2)"
+                    ? "success"
+                    : undefined
                 }
                 sx={{
                   minWidth: 80,
@@ -289,6 +291,18 @@ export default function PagePerlakuanView({}) {
                     bgcolor: green[100],
                     borderColor: green[400],
                     color: green[900],
+                  },
+                  "&.MuiChip-root": {
+                    ...(renderedCellValue === "Sedang (3)" && {
+                      bgcolor: yellow[100],
+                      borderColor: yellow[700],
+                      color: yellow[900],
+                    }),
+                    ...(renderedCellValue === "Sangat Rendah (1)" && {
+                      bgcolor: blue[100],
+                      borderColor: blue[700],
+                      color: blue[900],
+                    }),
                   },
                 }}
                 label={renderedCellValue}

@@ -57,7 +57,7 @@ export default function FormCategory({
 }: {
   mode?: string;
   handleOpenCategory?: any;
-  state: doRequestCategoryDto
+  state: doRequestCategoryDto;
   setState: (value: SetStateAction<doRequestCategoryDto>) => void;
 }) {
   const [items, setItem] = React.useState([{ id: 1 }]);
@@ -86,7 +86,11 @@ export default function FormCategory({
   };
 
   // Menangani perubahan input
-  const handleSubChange = (index: number, field: keyof doSubCategory, value: string) => {
+  const handleSubChange = (
+    index: number,
+    field: keyof doSubCategory,
+    value: string
+  ) => {
     setState((prevState) => {
       const updatedSub = [...prevState.sub];
       updatedSub[index] = { ...updatedSub[index], [field]: value };
@@ -112,14 +116,14 @@ export default function FormCategory({
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Kategori" titleField />
+            <FieldLabelInfo title="Sub Kategori" titleField />
             {mode == "edit" || mode == "add-category" ? (
               <TextField
                 fullWidth
-                value="Ekonomi"
+                // value="Ekonomi"
                 variant="outlined"
                 size="small"
-                placeholder="Kategori"
+                placeholder="Sub Kategori"
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -133,26 +137,26 @@ export default function FormCategory({
                 handleChange={(newValue: any) =>
                   setState((prevState) => ({
                     ...prevState,
-                    value: newValue
+                    value: newValue,
                   }))
                 }
                 placeHolder={"Pilih kategori"}
-                actionButton={
-                  <Button
-                    fullWidth
-                    variant="outlined"
-                    color="primary"
-                    startIcon={<Iconify name="mdi:plus-circle" />}
-                    onMouseDown={() => setModalOpenAdd(true)}
-                  >
-                    Tambah Kategori
-                  </Button>
-                }
+                // actionButton={
+                //   <Button
+                //     fullWidth
+                //     variant="outlined"
+                //     color="primary"
+                //     startIcon={<Iconify name="mdi:plus-circle" />}
+                //     onMouseDown={() => setModalOpenAdd(true)}
+                //   >
+                //     Tambah Kategori
+                //   </Button>
+                // }
               />
             )}
           </FormControl>
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Uraian" titleField />
             <TextareaStyled
@@ -175,8 +179,9 @@ export default function FormCategory({
             // }
             />
           </FormControl>
-        </Grid>
-        {mode !== "edit" && (
+        </Grid> */}
+
+        {mode !== "edit" ? (
           <Fragment>
             <Grid item xs={12}>
               <Stack
@@ -231,7 +236,9 @@ export default function FormCategory({
                             minRows={2}
                             aria-label=""
                             placeholder="Sub Kategori"
-                            onChange={(e) => handleSubChange(key, "value", e.target.value)}
+                            onChange={(e) =>
+                              handleSubChange(key, "value", e.target.value)
+                            }
                           />
                         </FormControl>
                       </Grid>
@@ -241,7 +248,9 @@ export default function FormCategory({
                           minRows={2}
                           aria-label=""
                           placeholder="Uraian"
-                          onChange={(e) => handleSubChange(key, "desc", e.target.value)}
+                          onChange={(e) =>
+                            handleSubChange(key, "desc", e.target.value)
+                          }
                         />
                       </Grid>
                     </Grid>
@@ -250,6 +259,18 @@ export default function FormCategory({
               </Stack>
             </Grid>
           </Fragment>
+        ) : (
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <FieldLabelInfo title="Uraian" titleField />
+              <TextareaStyled
+                minRows={2}
+                aria-label=""
+                placeholder="Sub Kategori"
+                // onChange={(e) => handleSubChange(key, "value", e.target.value)}
+              />
+            </FormControl>
+          </Grid>
         )}
       </Grid>
       <DialogComponent

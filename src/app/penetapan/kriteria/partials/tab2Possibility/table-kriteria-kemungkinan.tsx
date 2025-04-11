@@ -15,11 +15,10 @@ import { bgColorTh } from "@/app/utils/color";
 import { grey } from "@mui/material/colors";
 import usePossibilityList from "./hooks/usePossibility";
 import { ResultPossibility } from "./hooks/possibilityModel";
+import { referencePossibility } from "./reference";
 
 export default function TableKemungkinan({ mode }: { mode?: string }) {
   const { listDataPossibility, loading } = usePossibilityList();
-
-  // console.log({ listDataPossibility, loading });
 
   if (loading) {
     return <div>loading...</div>;
@@ -78,6 +77,20 @@ export default function TableKemungkinan({ mode }: { mode?: string }) {
                 />
               </TableCell>
             </TableRow>
+          ) : mode === "reference" ? (
+            <>
+              {referencePossibility.map((item) => (
+                <TableRow
+                  key={item.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell>{item.level}</TableCell>
+                  <TableCell>{item.persentase}</TableCell>
+                  <TableCell>{item.jumlah}</TableCell>
+                  <TableCell>{item.lfe}</TableCell>
+                </TableRow>
+              ))}
+            </>
           ) : (
             <>
               {listDataPossibility.map((row: ResultPossibility) => (
