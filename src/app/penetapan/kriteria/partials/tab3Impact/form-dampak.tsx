@@ -130,17 +130,17 @@ export default function FormDampak({ mode }: { mode?: string }) {
                       handleChangeSelect(newValue)
                     }
                     placeHolder={"Pilih area dampak"}
-                    actionButton={
-                      <Button
-                        fullWidth
-                        variant="outlined"
-                        color="primary"
-                        startIcon={<Iconify name="mdi:plus-circle" />}
-                        onMouseDown={() => setModalOpenAdd(true)}
-                      >
-                        Tambah Area Dampak
-                      </Button>
-                    }
+                    // actionButton={
+                    //   <Button
+                    //     fullWidth
+                    //     variant="outlined"
+                    //     color="primary"
+                    //     startIcon={<Iconify name="mdi:plus-circle" />}
+                    //     onMouseDown={() => setModalOpenAdd(true)}
+                    //   >
+                    //     Tambah Area Dampak
+                    //   </Button>
+                    // }
                   />
                 )}
               </Fragment>
@@ -205,7 +205,7 @@ export default function FormDampak({ mode }: { mode?: string }) {
                             value={
                               mode == "edit"
                                 ? "Jumlah keluhan atau prosentase berita negatif dari total berita tentang Obyek MRPN LS"
-                                : ""
+                                : undefined
                             }
                           />
                         </FormControl>
@@ -215,9 +215,11 @@ export default function FormDampak({ mode }: { mode?: string }) {
                           <TextareaComponent
                             row={2}
                             label="Tidak Signifikan"
-                            placeholder="Tidak Signifikan"
+                            placeholder="Level Dampak (Tidak Signifikan)"
                             value={
-                              mode == "edit" ? "Jumlah Keluhan x ≤ 10" : ""
+                              mode == "edit"
+                                ? "Jumlah Keluhan x ≤ 10"
+                                : undefined
                             }
                           />
                         </ItemDampak>
@@ -227,11 +229,11 @@ export default function FormDampak({ mode }: { mode?: string }) {
                           <TextareaComponent
                             row={2}
                             label="Kurang Signifikan"
-                            placeholder="Kurang Signifikan"
+                            placeholder="Level Dampak (Kurang Signifikan)"
                             value={
                               mode == "edit"
                                 ? "Prosentase pemberitaan negatif 10% < x ≤ 20%"
-                                : ""
+                                : undefined
                             }
                           />
                         </ItemDampak>
@@ -241,11 +243,11 @@ export default function FormDampak({ mode }: { mode?: string }) {
                           <TextareaComponent
                             row={2}
                             label="Cukup Signifikan"
-                            placeholder="Cukup Signifikan"
+                            placeholder="Level Dampak (Cukup Signifikan)"
                             value={
                               mode == "edit"
                                 ? "Prosentase pemberitaan negatif 20% < x ≤ 30%"
-                                : ""
+                                : undefined
                             }
                           />
                         </ItemDampak>
@@ -256,11 +258,11 @@ export default function FormDampak({ mode }: { mode?: string }) {
                             width="100%"
                             row={2}
                             label="Signifikan"
-                            placeholder="Signifikan"
+                            placeholder="Level Dampak (Signifikan)"
                             value={
                               mode == "edit"
                                 ? "Prosentase pemberitaan negatif 30% < x ≤ 40%"
-                                : ""
+                                : undefined
                             }
                           />
                         </ItemDampak>
@@ -271,11 +273,11 @@ export default function FormDampak({ mode }: { mode?: string }) {
                             width="100%"
                             row={2}
                             label="Sangat Signifikan"
-                            placeholder="Sangat Signifikan"
+                            placeholder="Level Dampak (Sangat Signifikan)"
                             value={
                               mode == "edit"
                                 ? "Prosentase pemberitaan negatif > 40%"
-                                : ""
+                                : undefined
                             }
                           />
                         </ItemDampak>

@@ -100,7 +100,7 @@ export default function CardKategori() {
         width={500}
         dialogOpen={modalOpenCategory}
         dialogClose={() => setModalOpenCategory(false)}
-        title="Ubah Kategori"
+        title="Ubah Sub Kategori"
         dialogFooter={dialogActionFooter}
       >
         <FormCategory

@@ -91,7 +91,7 @@ export default function CardKemungkinan() {
         dialogClose={() => setModalOpenRef(false)}
         title="Referensi Kriteria Kemungkinan"
       >
-        <TableKemungkinan mode="view" />
+        <TableKemungkinan mode="reference" />
       </DialogComponent>
     </Fragment>
   );

@@ -69,8 +69,8 @@ function ChipLevelRisiko(props: { level: any }) {
               }),
               ...(props.level === "Sangat Rendah (1)" && {
                 bgcolor: blue[100],
-                borderColor: yellow[700],
-                color: yellow[900],
+                borderColor: blue[700],
+                color: blue[900],
               }),
             },
           }}

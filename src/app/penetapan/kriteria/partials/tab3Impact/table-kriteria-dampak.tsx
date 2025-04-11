@@ -77,8 +77,8 @@ export default function TableDampak({ mode }: { mode?: string }) {
             </TableRow>
             <TableRow>
               <TableCell align="center">Tidak Signifikan</TableCell>
-              <TableCell align="center">Minor</TableCell>
-              <TableCell align="center">Moderat</TableCell>
+              <TableCell align="center">Kurang Signifikan</TableCell>
+              <TableCell align="center">Cukup Signifikan</TableCell>
               <TableCell align="center">Signifikan</TableCell>
               <TableCell align="center">Sangat Signifikan</TableCell>
             </TableRow>
