@@ -52,7 +52,7 @@ export default function CardKemungkinan() {
         addButton={
           <AddButton
             filled
-            startIcon={<Iconify name="mdi:chart-bar-stacked" />}
+            startIcon={<Iconify name="mdi:table" />}
             title="Tabel Referensi"
             onclick={() => setModalOpenRef(true)}
           />
@@ -73,7 +73,11 @@ export default function CardKemungkinan() {
         title="Tambah Kriteria Kemungkinan"
         dialogFooter={dialogActionFooter}
       >
-        <FormKemungkinan state={requestPossibility} setState={setRequestPossibility} mode="add" />
+        <FormKemungkinan
+          state={requestPossibility}
+          setState={setRequestPossibility}
+          mode="add"
+        />
       </DialogComponent>
       <DialogComponent
         width={1200}
@@ -82,7 +86,11 @@ export default function CardKemungkinan() {
         title="Ubah Kriteria Kemungkinan"
         dialogFooter={dialogActionFooter}
       >
-        <FormKemungkinan state={requestPossibility} setState={setRequestPossibility} mode="edit" />
+        <FormKemungkinan
+          state={requestPossibility}
+          setState={setRequestPossibility}
+          mode="edit"
+        />
       </DialogComponent>
       <DialogComponent
         tableMode

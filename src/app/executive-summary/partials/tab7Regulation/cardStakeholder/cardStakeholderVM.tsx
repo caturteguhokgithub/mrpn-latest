@@ -2,7 +2,7 @@ import {
   useExsumContext,
   useGlobalModalContext,
   useLoading,
-  useRKPContext
+  useRKPContext,
 } from "@/lib/core/hooks/useHooks";
 import React, { useEffect, useState } from "react";
 import {
@@ -57,9 +57,14 @@ const useCardStakeholderVM = () => {
   const [logoState, setLogoState] =
     useState<UpdateLogoStakeholderDto>(initUploadLogo);
   const [modalViewImage, setModalViewImage] = useState<boolean>(false);
+  const [modalViewImageIntExt, setModalViewImageIntExt] =
+    useState<boolean>(false);
 
-  const initUploadImage = JSON.parse(JSON.stringify(initUploadImageStakeholderDto));
-  const [gambarState, setGambarState] = useState<ExsumStakeholderImageReqDto>(initUploadImage);
+  const initUploadImage = JSON.parse(
+    JSON.stringify(initUploadImageStakeholderDto)
+  );
+  const [gambarState, setGambarState] =
+    useState<ExsumStakeholderImageReqDto>(initUploadImage);
 
   const [edited, setEdited] = useState(false);
 
@@ -179,7 +184,7 @@ const useCardStakeholderVM = () => {
       errorModalContext: errorModalContext,
     });
     if (response?.code == API_CODE.success) {
-      getDataImage()
+      getDataImage();
     }
   }
 
@@ -261,6 +266,8 @@ const useCardStakeholderVM = () => {
     handleEdited,
     conditionEditing,
     conditionEditingImg,
+    modalViewImageIntExt,
+    setModalViewImageIntExt,
   };
 };
 export default useCardStakeholderVM;

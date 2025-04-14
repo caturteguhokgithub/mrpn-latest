@@ -66,7 +66,7 @@ export default function CardKategori() {
         addButton={
           <AddButton
             filled
-            startIcon={<Iconify name="mdi:chart-bar-stacked" />}
+            startIcon={<Iconify name="mdi:table" />}
             title="Tabel Referensi"
             onclick={() => setModalOpenRef(true)}
           />

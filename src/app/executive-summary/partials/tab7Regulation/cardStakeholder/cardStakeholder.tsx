@@ -64,6 +64,8 @@ export default function CardStakeholder({
     setModalLogo,
     modalViewImage,
     setModalViewImage,
+    modalViewImageIntExt,
+    setModalViewImageIntExt,
   } = useCardStakeholderVM();
 
   const { handleEdited, conditionEditingImg } = useCardLocationVM();
@@ -138,9 +140,39 @@ export default function CardStakeholder({
       title={title ? title : "Instansi Pelaksana"}
       setting
       settingEditOnclick={handleModalOpenStakeholder}
+      addButton={
+        <Box>
+          <Button
+            size="small"
+            variant="outlined"
+            color="primary"
+            startIcon={<IconFA name="magnifying-glass-plus" size={14} />}
+            sx={{ borderRadius: 50, mr: 1 }}
+            onClick={() => setModalViewImageIntExt(true)}
+          >
+            Perbesar Gambar
+          </Button>
+        </Box>
+      }
     >
       {isIntExtPage && isDeveloping ? (
         <EmptyDevelopingState />
+      ) : isIntExtPage ? (
+        <Stack width="100%" direction="row" justifyContent="center">
+          <Box>
+            <Image
+              alt="MRPN"
+              src="https://res.cloudinary.com/caturteguh/image/upload/v1738912448/mrpn/hierarchy_ic8yuc.jpg"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{
+                width: "auto",
+                height: "300px",
+              }}
+            />
+          </Box>
+        </Stack>
       ) : (
         <Fragment>
           {data.length == 0 ? (
@@ -407,6 +439,63 @@ export default function CardStakeholder({
                     process.env.NEXT_PUBLIC_BASE_URL_FILES +
                     (gambar?.value ?? "")
                   }
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: "100%", height: "auto" }}
+                />
+              </DraggableScroll>
+            </Box>
+          </TransformComponent>
+        </TransformWrapper>
+      </DialogComponent>
+
+      <DialogComponent
+        width="100%"
+        maxHeight="100vh"
+        dialogOpen={modalViewImageIntExt}
+        dialogClose={() => setModalViewImageIntExt(false)}
+        sx={{
+          ".transform-component-module_wrapper__SPB86": {
+            width: "100%",
+            height: "100vh",
+          },
+          ".MuiDialogContent-root": {
+            p: 0,
+          },
+        }}
+      >
+        <IconButton
+          sx={{ position: "absolute", top: 10, right: 10, zIndex: 9999 }}
+          onClick={() => setModalViewImageIntExt(false)}
+        >
+          <IconFA name="circle-xmark" color="red" size={32} />
+        </IconButton>
+        <TransformWrapper
+          centerOnInit
+          initialScale={0.5}
+          minScale={0.1}
+          maxScale={3}
+          limitToBounds={true}
+          doubleClick={{ disabled: false }}
+          wheel={{ disabled: false }}
+          panning={{ disabled: false }}
+        >
+          <TransformComponent>
+            <Box sx={styleOrgChart(sxParamsFull)} mt={4}>
+              <DraggableScroll
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                  paddingBottom: 1,
+                  "&::-webkit-scrollbar": {
+                    height: "3px",
+                  },
+                }}
+              >
+                <Image
+                  alt="Instansi Pelaksana"
+                  src="https://res.cloudinary.com/caturteguh/image/upload/v1738912448/mrpn/hierarchy_ic8yuc.jpg"
                   width={0}
                   height={0}
                   sizes="100vw"
