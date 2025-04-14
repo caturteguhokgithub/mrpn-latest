@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Button, DialogActions, Typography } from "@mui/material";
+import { Box, Button, DialogActions, Typography } from "@mui/material";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import CardItem from "@/app/components/cardTabItem";
@@ -11,6 +11,7 @@ import useCardSegmentVM from "@/app/executive-summary/partials/tab1Background/ca
 import DialogDelete from "@/app/components/dialogDelete";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
+import { DividerIntExt } from "../cardUrgent/cardUrgent";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -105,9 +106,19 @@ export default function CardSegment({
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <div
-            dangerouslySetInnerHTML={{ __html: dataSegmen?.value ?? "" }}
-          ></div>
+          <Fragment>
+            <Box sx={{ opacity: 0.6 }}>
+              <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
+            </Box>
+            {dataSegmen?.value == "" ? null : (
+              <>
+                <DividerIntExt />
+                <div
+                  dangerouslySetInnerHTML={{ __html: dataSegmen?.value ?? "" }}
+                ></div>
+              </>
+            )}
+          </Fragment>
         )
       ) : data.value == "" ? (
         <EmptyState

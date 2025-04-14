@@ -60,7 +60,8 @@ export default function CardUrgent({
     handleModalDelete,
   } = useCardUrgentVM();
 
-  const { requestUrgensi, updateDataUrgensi, dataUrgensi, dataUrgensiExsum } = useUrgensiVM();
+  const { requestUrgensi, updateDataUrgensi, dataUrgensi, dataUrgensiExsum } =
+    useUrgensiVM();
 
   const { year } = useRKPContext((state) => state);
 
@@ -127,7 +128,6 @@ export default function CardUrgent({
             <div
               dangerouslySetInnerHTML={{ __html: dataUrgensi?.value ?? "" }}
             ></div>
-            {/* <div>Data urgensi di konteks internal eksternal</div> */}
           </Fragment>
         )
       ) : data.value == "" ? (
