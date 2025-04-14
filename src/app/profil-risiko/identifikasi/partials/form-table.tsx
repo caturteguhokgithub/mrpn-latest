@@ -5,11 +5,12 @@ import {
   FormControlLabel,
   Grid,
   IconButton,
+  MenuItem,
   Stack,
   Typography,
 } from "@mui/material";
 import { TextareaStyled } from "@/app/components/textarea";
-import { red } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 import HeaderIdentifikasi from "./header";
 import {
@@ -29,12 +30,14 @@ export default function FormTable({
   request,
   setRequest,
   optionRiskType,
+  optionImpactArea,
 }: {
   mode?: string;
   data: IdentificationRiskResDto | undefined;
   request: IdentificationRiskAddReqDto;
   setRequest: (value: SetStateAction<IdentificationRiskAddReqDto>) => void;
   optionRiskType: string[];
+  optionImpactArea: string[];
 }) {
   const { rpjmn, year } = useRKPContext((store) => store);
 
@@ -275,22 +278,21 @@ export default function FormTable({
           <FormControl fullWidth>
             <FieldLabelInfo title="Area Dampak" />
             {mode === "read" ? (
-              <Typography fontWeight={500}>
-                {"request.peristiwa_risiko"}
-              </Typography>
+              <Typography fontWeight={500}>{request.area_dampak}</Typography>
             ) : (
-              <TextareaStyled
-                aria-label="Area Dampak"
-                placeholder="Area Dampak"
-                value={"request.peristiwa_risiko"}
-                onChange={(e) =>
+              <AutocompleteSelectSingle
+                value={request.area_dampak}
+                options={optionImpactArea}
+                getOptionLabel={(opt) => opt}
+                handleChange={(e: string) =>
                   setRequest((prevState) => {
                     return {
                       ...prevState,
-                      peristiwa_risiko: e.target.value,
+                      area_dampak: e,
                     };
                   })
                 }
+                placeHolder={"Pilih area dampak"}
               />
             )}
           </FormControl>
