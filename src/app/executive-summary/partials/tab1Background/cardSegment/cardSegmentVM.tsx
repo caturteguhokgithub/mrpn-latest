@@ -21,6 +21,7 @@ const useCardSegmentVM = () => {
   });
   const [modal, setModal] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
+  const [modalObjectScope, setModalObjectScope] = useState(false);
 
   const handleModalDelete = () => {
     setModalDelete(true);
@@ -88,7 +89,7 @@ const useCardSegmentVM = () => {
     };
     await doDelete(params);
     getData();
-    setModalDelete(false)
+    setModalDelete(false);
   }
 
   return {
@@ -104,6 +105,8 @@ const useCardSegmentVM = () => {
     modalDelete,
     setModalDelete,
     handleModalDelete,
+    modalObjectScope,
+    setModalObjectScope,
   };
 };
 
