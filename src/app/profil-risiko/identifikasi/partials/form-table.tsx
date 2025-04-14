@@ -5,11 +5,12 @@ import {
   FormControlLabel,
   Grid,
   IconButton,
+  MenuItem,
   Stack,
   Typography,
 } from "@mui/material";
 import { TextareaStyled } from "@/app/components/textarea";
-import { red } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 import HeaderIdentifikasi from "./header";
 import {
@@ -22,6 +23,7 @@ import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
 import AddButton from "@/components/buttonAdd";
 import { IconFA } from "@/components/icons/icon-fa";
 import { GetTarget } from "@/lib/utils/common";
+import useIdentificationRiskVM from "../pageVM";
 
 export default function FormTable({
   mode,
@@ -41,6 +43,13 @@ export default function FormTable({
   const getTarget = (indikator: IndikatorDto) => {
     return GetTarget(rpjmn, year, indikator);
   };
+
+  const listAreaDampak = [
+    "Keuangan Negara",
+    "Reputasi",
+    "Layanan Publik",
+    "Capaian Kinerja",
+  ];
 
   return (
     <Stack gap={2}>
@@ -275,22 +284,21 @@ export default function FormTable({
           <FormControl fullWidth>
             <FieldLabelInfo title="Area Dampak" />
             {mode === "read" ? (
-              <Typography fontWeight={500}>
-                {"request.peristiwa_risiko"}
-              </Typography>
+              <Typography fontWeight={500}>{request.area_dampak}</Typography>
             ) : (
-              <TextareaStyled
-                aria-label="Area Dampak"
-                placeholder="Area Dampak"
-                value={"request.peristiwa_risiko"}
-                onChange={(e) =>
+              <AutocompleteSelectSingle
+                value={request.area_dampak}
+                options={listAreaDampak}
+                getOptionLabel={(opt) => opt}
+                handleChange={(e: string) =>
                   setRequest((prevState) => {
                     return {
                       ...prevState,
-                      peristiwa_risiko: e.target.value,
+                      area_dampak: e,
                     };
                   })
                 }
+                placeHolder={"Pilih area dampak"}
               />
             )}
           </FormControl>

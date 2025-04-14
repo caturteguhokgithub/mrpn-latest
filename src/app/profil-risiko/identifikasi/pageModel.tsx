@@ -39,6 +39,7 @@ export interface IdentificationRiskAddReqDto {
   peristiwa_risiko: string
   penyebab: string[]
   dampak: string[]
+  area_dampak: string
 }
 
 export type UpdateOrCreateIdentificationRiskServiceModel = BaseAPIServiceParam & {
@@ -52,5 +53,6 @@ export const initIdentificationRiskAddReqDto: IdentificationRiskAddReqDto = {
   insidentil: false,
   peristiwa_risiko: "",
   penyebab: [""],
-  dampak: [""]
+  dampak: [""],
+  area_dampak: ""
 }
