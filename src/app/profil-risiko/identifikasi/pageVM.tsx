@@ -44,6 +44,8 @@ const useIdentificationRiskVM = () => {
   };
 
   const [optionRiskType, setOptionRiskType] = useState<string[]>([]);
+  const [optionImpactArea, setOptionImpactArea] = useState<string[]>([]);
+
   async function getOptionRiskType() {
     const response = await doGetSystemParamByModuleAndName({
       body: {
@@ -58,6 +60,23 @@ const useIdentificationRiskVM = () => {
       let result: GetSysParamsServiceResModel = response.result;
       const paramValue: string[] = JSON.parse(result.value);
       setOptionRiskType(paramValue);
+    }
+  }
+
+  async function getOptionImpactArea() {
+    const response = await doGetSystemParamByModuleAndName({
+      body: {
+        module: "IMPACT",
+        name: "IMPACT_AREA",
+      },
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+
+    if (response?.code == API_CODE.success) {
+      let result: GetSysParamsServiceResModel = response.result;
+      const paramValue: string[] = JSON.parse(result.value);
+      setOptionImpactArea(paramValue);
     }
   }
 
@@ -143,6 +162,8 @@ const useIdentificationRiskVM = () => {
     optionRiskType,
     getOptionRiskType,
     actionModal,
+    optionImpactArea,
+    getOptionImpactArea,
   };
 };
 

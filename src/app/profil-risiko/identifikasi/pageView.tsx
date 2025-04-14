@@ -65,6 +65,7 @@ export default function PageIdentifikasiView({}) {
     optionRiskType,
     getOptionRiskType,
     actionModal,
+    optionImpactArea,
   } = useIdentificationRiskVM();
 
   useEffect(() => {
@@ -403,6 +404,7 @@ export default function PageIdentifikasiView({}) {
           request={request}
           setRequest={setRequest}
           optionRiskType={optionRiskType}
+          optionImpactArea={optionImpactArea}
         />
       </DialogComponent>
 

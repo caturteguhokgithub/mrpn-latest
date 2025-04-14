@@ -23,7 +23,6 @@ import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
 import AddButton from "@/components/buttonAdd";
 import { IconFA } from "@/components/icons/icon-fa";
 import { GetTarget } from "@/lib/utils/common";
-import useIdentificationRiskVM from "../pageVM";
 
 export default function FormTable({
   mode,
@@ -31,25 +30,20 @@ export default function FormTable({
   request,
   setRequest,
   optionRiskType,
+  optionImpactArea,
 }: {
   mode?: string;
   data: IdentificationRiskResDto | undefined;
   request: IdentificationRiskAddReqDto;
   setRequest: (value: SetStateAction<IdentificationRiskAddReqDto>) => void;
   optionRiskType: string[];
+  optionImpactArea: string[];
 }) {
   const { rpjmn, year } = useRKPContext((store) => store);
 
   const getTarget = (indikator: IndikatorDto) => {
     return GetTarget(rpjmn, year, indikator);
   };
-
-  const listAreaDampak = [
-    "Keuangan Negara",
-    "Reputasi",
-    "Layanan Publik",
-    "Capaian Kinerja",
-  ];
 
   return (
     <Stack gap={2}>
@@ -288,7 +282,7 @@ export default function FormTable({
             ) : (
               <AutocompleteSelectSingle
                 value={request.area_dampak}
-                options={listAreaDampak}
+                options={optionImpactArea}
                 getOptionLabel={(opt) => opt}
                 handleChange={(e: string) =>
                   setRequest((prevState) => {
