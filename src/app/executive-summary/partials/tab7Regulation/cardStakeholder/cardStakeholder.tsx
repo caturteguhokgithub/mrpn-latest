@@ -138,21 +138,52 @@ export default function CardStakeholder({
   return (
     <CardItem
       title={title ? title : "Instansi Pelaksana"}
-      setting
+      setting={isIntExtPage ? false : true}
       settingEditOnclick={handleModalOpenStakeholder}
       addButton={
-        <Box>
-          <Button
-            size="small"
-            variant="outlined"
-            color="primary"
-            startIcon={<IconFA name="magnifying-glass-plus" size={14} />}
-            sx={{ borderRadius: 50, mr: 1 }}
-            onClick={() => setModalViewImageIntExt(true)}
-          >
-            Perbesar Gambar
-          </Button>
-        </Box>
+        isIntExtPage ? (
+          <Box>
+            <Button
+              size="small"
+              variant="outlined"
+              color="primary"
+              startIcon={<IconFA name="magnifying-glass-plus" size={14} />}
+              sx={{ borderRadius: 50, mr: 1 }}
+              onClick={() => setModalViewImageIntExt(true)}
+            >
+              Perbesar Gambar
+            </Button>
+            <Button
+              component="label"
+              size="small"
+              variant="contained"
+              tabIndex={-1}
+              startIcon={
+                <Icon
+                  baseClassName="fas"
+                  className={"fa-upload"}
+                  sx={{
+                    fontSize: "12px !important",
+                  }}
+                />
+              }
+              sx={{
+                paddingInline: 2,
+                borderRadius: "50px",
+                textTransform: "capitalize",
+              }}
+            >
+              Unggah Gambar
+              <VisuallyHiddenInput
+                type="file"
+                onChange={(event) => handleGambarChange(event)}
+                multiple
+              />
+            </Button>
+          </Box>
+        ) : (
+          false
+        )
       }
     >
       {isIntExtPage && isDeveloping ? (
@@ -169,7 +200,9 @@ export default function CardStakeholder({
               style={{
                 width: "auto",
                 height: "300px",
+                cursor: "pointer",
               }}
+              onClick={() => setModalViewImageIntExt(true)}
             />
           </Box>
         </Stack>
