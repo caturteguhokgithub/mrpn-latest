@@ -10,6 +10,7 @@ import {
   Typography,
   Tab,
   Tabs,
+  useMediaQuery,
 } from "@mui/material";
 import MRTPerlakuanComplete from "../perlakuan/partials/mrt-complete";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
@@ -25,6 +26,9 @@ import Iconify from "@/app/components/icons/iconify";
 import { styleTab } from "@/app/executive-summary/style";
 import { TabPanelProps } from "@/app/executive-summary/types";
 import theme from "@/theme";
+import SeleraMatriks from "./partials/matriks";
+import CardItem from "@/app/components/cardTabItem";
+import { IconFA } from "@/app/components/icons/icon-fa";
 
 interface SxParams {
   variant?: string;
@@ -88,6 +92,7 @@ export default function PageOverviewView() {
   }, [objectState]);
 
   const sxParams: SxParams = { variant: "default" };
+  const onlySmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isEmpty = false;
 
   return (
@@ -140,13 +145,19 @@ export default function PageOverviewView() {
                   label="Indikasi Profil Risiko"
                   {...a11yProps(0)}
                   iconPosition="start"
-                  icon={<Iconify name="mdi:table" />}
+                  icon={<Iconify name="mdi:gauge" />}
                 />
                 <Tab
                   label="Profil Risiko"
                   {...a11yProps(1)}
                   iconPosition="start"
-                  icon={<Iconify name="mdi:table" />}
+                  icon={<Iconify name="mdi:account-box" />}
+                />
+                <Tab
+                  label="Selera Risiko"
+                  {...a11yProps(2)}
+                  iconPosition="start"
+                  icon={<Iconify name="mdi:flask" />}
                 />
               </Tabs>
               <CustomTabPanel value={valueOverview} index={0}>
@@ -165,13 +176,30 @@ export default function PageOverviewView() {
                       renderCaption={
                         <Stack direction="row" alignItems="center">
                           <Typography fontWeight={600} fontSize={17} px={1}>
-                            Perlakuan Risiko
+                            Perlakuan Risiko (Indikasi Profil Risiko)
                           </Typography>
                           <AddButton
+                            fullWidth={onlySmallScreen}
+                            noMargin
                             filled
-                            startIcon={<Iconify name="mdi:table" />}
-                            title="Tabel Referensi"
-                            // onclick={() => setModalOpenRef(true)}
+                            title="Download Excel"
+                            color="success"
+                            startIcon={<Iconify name="mdi:file-excel" />}
+                            // onclick={() => {
+                            //   const uri =
+                            //     process.env.NEXT_PUBLIC_BASE_URL_API +
+                            //     "export/exsum/indikasi/excel";
+                            //   const token = sessionStorage.getItem(
+                            //     API_CONSTANT.token
+                            //   );
+                            //   const exsum_id = exsum.id;
+                            //   const params =
+                            //     "token=" + token + "&exsum_id=" + exsum_id;
+
+                            //   window
+                            //     .open(uri + "?" + params, "_blank")
+                            //     ?.focus();
+                            // }}
                           />
                         </Stack>
                       }
@@ -195,18 +223,26 @@ export default function PageOverviewView() {
                       renderCaption={
                         <Stack direction="row" alignItems="center">
                           <Typography fontWeight={600} fontSize={17} px={1}>
-                            Perlakuan Risiko
+                            Perlakuan Risiko (Profil Risiko)
                           </Typography>
-                          <AddButton
-                            filled
-                            startIcon={<Iconify name="mdi:table" />}
-                            title="Tabel Referensi"
-                            // onclick={() => setModalOpenRef(true)}
-                          />
                         </Stack>
                       }
                     />
                   </Box>
+                )}
+              </CustomTabPanel>
+              <CustomTabPanel value={valueOverview} index={2}>
+                {isEmpty ? (
+                  <EmptyState
+                    dense
+                    icon={<IconEmptyData width={100} />}
+                    title="Data Kosong"
+                    description="Silahkan isi konten halaman ini"
+                  />
+                ) : (
+                  <CardItem title="Selera Risiko">
+                    <SeleraMatriks levelId={1} levelDampak="rendah" />
+                  </CardItem>
                 )}
               </CustomTabPanel>
             </Box>
