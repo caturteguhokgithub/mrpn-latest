@@ -51,7 +51,7 @@ export default function TableKemungkinan({ mode }: { mode?: string }) {
               Level Kemungkinan
             </TableCell>
             <TableCell colSpan={2} align="center" sx={{ bgcolor: bgColorTh }}>
-              Kriteria Kemungkinan
+              Kemungkinan Terjadi
             </TableCell>
           </TableRow>
           <TableRow>
