@@ -16,8 +16,8 @@ export default function FormKemungkinan({
   state,
   setState,
 }: {
-  mode?: string
-  state: doRequestPossibilityDto
+  mode?: string;
+  state: doRequestPossibilityDto;
   setState: (value: SetStateAction<doRequestPossibilityDto>) => void;
 }) {
   const dataKemungkinan = [
@@ -28,7 +28,12 @@ export default function FormKemungkinan({
     "Hampir pasti terjadi (5)",
   ];
 
-  const handleChange = (index: number, field: keyof doValues, level_kemungkinan: string, value: string) => {
+  const handleChange = (
+    index: number,
+    field: keyof doValues,
+    level_kemungkinan: string,
+    value: string
+  ) => {
     setState((prev) => {
       const updatedValues = [...prev.values];
       updatedValues[index] = {
@@ -43,7 +48,6 @@ export default function FormKemungkinan({
       };
     });
   };
-
 
   return (
     <Paper sx={{ overflowX: "auto", minWidth: "100% !important" }}>
@@ -61,9 +65,7 @@ export default function FormKemungkinan({
             let detail = null;
 
             if (state !== undefined) {
-              detail = state.values.find(
-                (d) => d.level_kemungkinan === item
-              );
+              detail = state.values.find((d) => d.level_kemungkinan === item);
             }
 
             return (
@@ -75,7 +77,9 @@ export default function FormKemungkinan({
                     minRows={2}
                     // width="100%"
                     value={detail?.probabilitas}
-                    onChange={(e) => handleChange(index, "probabilitas", item, e.target.value)}
+                    onChange={(e) =>
+                      handleChange(index, "probabilitas", item, e.target.value)
+                    }
                   />
                 </TableCell>
                 <TableCell>
@@ -85,7 +89,12 @@ export default function FormKemungkinan({
                     // width="100%"
                     value={detail?.jumlah_frekuensi}
                     onChange={(e) =>
-                      handleChange(index, "jumlah_frekuensi", item, e.target.value)
+                      handleChange(
+                        index,
+                        "jumlah_frekuensi",
+                        item,
+                        e.target.value
+                      )
                     }
                   />
                 </TableCell>
@@ -104,7 +113,6 @@ export default function FormKemungkinan({
             );
           })}
         </TableBody>
-
       </Table>
     </Paper>
   );

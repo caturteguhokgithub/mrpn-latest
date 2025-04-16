@@ -174,7 +174,7 @@ export default function PageOverviewView() {
                       dataTable={dataRiskOverview?.overviews}
                       viewOnly
                       renderCaption={
-                        <Stack direction="row" alignItems="center">
+                        <Stack direction="row" alignItems="center" gap={1}>
                           <Typography fontWeight={600} fontSize={17} px={1}>
                             Perlakuan Risiko (Indikasi Profil Risiko)
                           </Typography>

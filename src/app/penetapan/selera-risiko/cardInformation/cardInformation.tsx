@@ -12,6 +12,7 @@ import {
   DialogActions,
   IconButton,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -21,7 +22,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { bgColorTh } from "@/app/utils/color";
-import { grey } from "@mui/material/colors";
+import { blue, grey, red } from "@mui/material/colors";
 import Iconify from "@/app/components/icons/iconify";
 import { IconFA } from "@/app/components/icons/icon-fa";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
@@ -32,6 +33,7 @@ import FormInformation from "./form";
 import useInformationList from "../hooks/useInformation";
 import EmptyDevelopingState from "@/app/components/empty/developing";
 import { isDeveloping } from "@/app/components/layouts/layout";
+import DialogDelete from "@/app/components/dialogDelete";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -43,24 +45,15 @@ export default function CardInformation({
   activeSetting?: boolean;
 }) {
   const {
-    // data,
-    // modal,
-    // setModal,
-    updateData,
-    deleteData,
-    // request,
-    // setRequest,
-    modalDelete,
-    setModalDelete,
-    handleModalDelete,
-  } = useCardSegmentVM();
-
-  const {
     data,
     modal,
     setModal,
     request,
     setRequest,
+    modalViewImage,
+    setModalViewImage,
+    modalOpenDelete,
+    setModalDelete,
   } = useInformationList();
 
   // console.log(listData, loadingContext);
@@ -94,8 +87,6 @@ export default function CardInformation({
 
   const emptyData = true;
 
-  const [modalViewImage, setModalViewImage] = React.useState(false);
-
   const sxParamsFull: SxParams = { variant: "full" };
 
   // console.log({ listData });
@@ -104,8 +95,25 @@ export default function CardInformation({
     <Fragment>
       <CardItem
         title="Informasi Lain"
-        setting={activeSetting}
-        settingEditOnclick={() => setModal(true)}
+        // setting={activeSetting}
+        // settingEditOnclick={() => setModal(true)}
+        addButton={
+          <Button
+            onClick={() => setModal(true)}
+            component="label"
+            size="small"
+            variant="contained"
+            tabIndex={-1}
+            startIcon={<Iconify name="mdi:plus-circle" size={16} />}
+            sx={{
+              paddingInline: 1.5,
+              borderRadius: "50px",
+              textTransform: "capitalize",
+            }}
+          >
+            Tambah Informasi Lain
+          </Button>
+        }
       >
         {isDeveloping ? (
           <EmptyDevelopingState />
@@ -141,8 +149,11 @@ export default function CardInformation({
                   <TableHead sx={{ bgcolor: bgColorTh }}>
                     <TableRow>
                       <TableCell align="center">Informasi</TableCell>
-                      <TableCell align="center" width={150}>
+                      <TableCell align="center" width={200}>
                         Bukti Dukung
+                      </TableCell>
+                      <TableCell align="center" width={150}>
+                        Aksi
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -172,6 +183,21 @@ export default function CardInformation({
                             </IconButton>
                           )}
                         </TableCell>
+                        <TableCell
+                          align="center"
+                          sx={{
+                            bgcolor: grey[50],
+                          }}
+                        >
+                          <Stack direction="row">
+                            <IconButton onClick={() => setModal(true)}>
+                              <Iconify name="mdi:pencil" color={blue[500]} />
+                            </IconButton>
+                            <IconButton onClick={() => setModalDelete(true)}>
+                              <Iconify name="mdi:trash" color={red[500]} />
+                            </IconButton>
+                          </Stack>
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -193,7 +219,7 @@ export default function CardInformation({
             <Button
               variant="contained"
               type="submit"
-            // onClick={handleCreateOrUpdateData}
+              // onClick={handleCreateOrUpdateData}
             >
               Simpan
             </Button>
@@ -206,10 +232,7 @@ export default function CardInformation({
           defaultValue={request.value}
           forwardedRef={quillRef}
         /> */}
-        <FormInformation
-          state={request}
-          setState={setRequest}
-        />
+        <FormInformation state={request} setState={setRequest} />
       </DialogComponent>
 
       <DialogComponent
@@ -273,6 +296,12 @@ export default function CardInformation({
           </TransformComponent>
         </TransformWrapper>
       </DialogComponent>
+      <DialogDelete
+        title="Hapus Data"
+        handleOpenModal={modalOpenDelete}
+        handleCloseModal={() => setModalDelete(false)}
+        handleDelete={() => {}}
+      />
     </Fragment>
   );
 }
