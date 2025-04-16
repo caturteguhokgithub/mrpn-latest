@@ -9,7 +9,11 @@ import {
 import { rowData } from "./mock";
 import { useSearchParams } from "next/navigation";
 import usePenetapanGlobalVM from "../../penetapanGlobalVM";
-import { InformasiLainnyaResDto, doReqInformasiLainnya, initAddInformasiLainnyaDto } from "./informationModel";
+import {
+  InformasiLainnyaResDto,
+  doReqInformasiLainnya,
+  initAddInformasiLainnyaDto,
+} from "./informationModel";
 
 const useInformationList = () => {
   const loadingContext = useLoading();
@@ -18,13 +22,16 @@ const useInformationList = () => {
   const [data, setData] = useState<InformasiLainnyaResDto>();
 
   const { exsum } = useExsumContext();
-  const { objectState } = usePenetapanGlobalVM()
+  const { objectState } = usePenetapanGlobalVM();
 
   const searchParams = useSearchParams();
 
   const search = searchParams.get("search");
 
   const [modal, setModal] = useState(false);
+  const [modalViewImage, setModalViewImage] = useState(false);
+  const [modalOpenDelete, setModalDelete] = useState(false);
+
   const [request, setRequest] = useState<doReqInformasiLainnya>({
     ...initAddInformasiLainnyaDto,
   });
@@ -59,6 +66,10 @@ const useInformationList = () => {
     setModal,
     request,
     setRequest,
+    modalViewImage,
+    setModalViewImage,
+    modalOpenDelete,
+    setModalDelete,
   };
 };
 

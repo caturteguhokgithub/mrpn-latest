@@ -1,8 +1,6 @@
 import React, { Fragment } from "react";
 import {
   Box,
-  Button,
-  DialogActions,
   Paper,
   Table,
   TableBody,
@@ -11,63 +9,48 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import DialogComponent from "@/app/components/dialog";
-import FormKemungkinan from "../tab2Possibility/form-kemungkinan";
 import { bgColorTh } from "@/app/utils/color";
 import { grey } from "@mui/material/colors";
-import { sub } from "date-fns/esm";
 
 export default function TableRerefence() {
-  const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
-
-  const handleModalOpenAdd = () => {
-    setModalOpenAdd(true);
-  };
-
-  const handleModalClose = () => {
-    setModalOpenAdd(false);
-  };
-
   const rows = [
-    {
-      category: "Keuangan",
-      uraianCategory: [
-        "Risiko yang muncul akibat gangguan yang timbul dari perubahan dalam kondisi ekonomi, pasar keuangan, dan dinamika perdagangan global yang dapat memengaruhi kestabilan anggaran, keberlanjutan proyek, kegiatan, program, atau prioritas pembangunan dan pencapaian sasaran Pembangunan Nasional.",
-        "Kategori risiko keuangan terdiri dari risiko finansial terkait prospek ekonomi, variabel ekonomi makro, krisis pasar, dan lingkungan perdagangan.",
-      ],
-      sub: [
-        {
-          subName: "Prospek Ekonomi",
-          detailSub: [
-            "Kondisi makroekonomi dapat secara signifikan memengaruhi perencanaan, pelaksanaan, dan pencapaian sasaran kegiatan, proyek, dan/atau prioritas Pembangunan Nasional.",
-            "Risiko ini mencakup potensi perubahan atau gangguan terhadap prospek ekonomi yang dapat melemahkan stabilitas keuangan, menurunkan daya beli masyarakat, atau menimbulkan tantangan baru bagi pemerintah dalam mengelola sumber daya pembangunan.",
-          ],
-        },
-        {
-          subName: "Variabel Ekonomi Makro",
-          detailSub: [
-            "Risiko yang muncul dari ketidakpastian terhadap pertumbuhan ekonomi nasional atau global. Ketidakpastian ini dapat memengaruhi penerimaan negara, kemampuan belanja pemerintah, dan efektivitas program pembangunan.",
-            "Volatilitas dalam variabel ekonomi utama, seperti suku bunga, nilai tukar, harga komoditas, dan inflasi, menciptakan ketidakpastian yang dapat mengganggu rantai nilai ekonomi, stabilitas pasar keuangan, dan kelancaran pelaksanaan Pembangunan Nasional. Risiko ini berpotensi meningkatkan biaya, mengurangi daya beli masyarakat, dan melemahkan daya saing ekonomi nasional.",
-          ],
-        },
-        {
-          subName: "Krisis Pasar",
-          detailSub: [
-            "Risiko yang timbul dari gangguan pada pasar keuangan, seperti krisis likuiditas, volatilitas harga aset, atau penurunan kepercayaan investor, yang dapat menghambat akses pemerintah pada sumber pembiayaan.",
-            "Kegagalan atau runtuhnya pasar keuangan yang menyebarkan kerugian signifikan ke seluruh sistem ekonomi, yang berdampak pada likuiditas, stabilitas keuangan, dan kepercayaan publik. Krisis pasar disebabkan oleh ketidakseimbangan struktural, kegagalan tata kelola, atau perilaku spekulatif yang menyebabkan kerugian besar pada skala sistemis.",
-          ],
-        },
-        {
-          subName: "Lingkungan Perdagangan",
-          detailSub: [
-            "Risiko yang disebabkan oleh perubahan dalam dinamika perdagangan internasional, seperti kebijakan dagang proteksionis, atau sanksi ekonomi, yang dapat memengaruhi stabilitas neraca perdagangan dan daya saing nasional.",
-            "Perubahan kebijakan investasi: revisi Undang-Undang Minerba yang membatasi ekspor bahan mentah mineral dan mewajibkan pengolahan dalam negeri, memengaruhi investasi asing di sektor pertambangan.",
-          ],
-        },
-      ],
-    },
+    // {
+    //   category: "Keuangan",
+    //   uraianCategory: [
+    //     "Risiko yang muncul akibat gangguan yang timbul dari perubahan dalam kondisi ekonomi, pasar keuangan, dan dinamika perdagangan global yang dapat memengaruhi kestabilan anggaran, keberlanjutan proyek, kegiatan, program, atau prioritas pembangunan dan pencapaian sasaran Pembangunan Nasional.",
+    //     "Kategori risiko keuangan terdiri dari risiko finansial terkait prospek ekonomi, variabel ekonomi makro, krisis pasar, dan lingkungan perdagangan.",
+    //   ],
+    //   sub: [
+    //     {
+    //       subName: "Prospek Ekonomi",
+    //       detailSub: [
+    //         "Kondisi makroekonomi dapat secara signifikan memengaruhi perencanaan, pelaksanaan, dan pencapaian sasaran kegiatan, proyek, dan/atau prioritas Pembangunan Nasional.",
+    //         "Risiko ini mencakup potensi perubahan atau gangguan terhadap prospek ekonomi yang dapat melemahkan stabilitas keuangan, menurunkan daya beli masyarakat, atau menimbulkan tantangan baru bagi pemerintah dalam mengelola sumber daya pembangunan.",
+    //       ],
+    //     },
+    //     {
+    //       subName: "Variabel Ekonomi Makro",
+    //       detailSub: [
+    //         "Risiko yang muncul dari ketidakpastian terhadap pertumbuhan ekonomi nasional atau global. Ketidakpastian ini dapat memengaruhi penerimaan negara, kemampuan belanja pemerintah, dan efektivitas program pembangunan.",
+    //         "Volatilitas dalam variabel ekonomi utama, seperti suku bunga, nilai tukar, harga komoditas, dan inflasi, menciptakan ketidakpastian yang dapat mengganggu rantai nilai ekonomi, stabilitas pasar keuangan, dan kelancaran pelaksanaan Pembangunan Nasional. Risiko ini berpotensi meningkatkan biaya, mengurangi daya beli masyarakat, dan melemahkan daya saing ekonomi nasional.",
+    //       ],
+    //     },
+    //     {
+    //       subName: "Krisis Pasar",
+    //       detailSub: [
+    //         "Risiko yang timbul dari gangguan pada pasar keuangan, seperti krisis likuiditas, volatilitas harga aset, atau penurunan kepercayaan investor, yang dapat menghambat akses pemerintah pada sumber pembiayaan.",
+    //         "Kegagalan atau runtuhnya pasar keuangan yang menyebarkan kerugian signifikan ke seluruh sistem ekonomi, yang berdampak pada likuiditas, stabilitas keuangan, dan kepercayaan publik. Krisis pasar disebabkan oleh ketidakseimbangan struktural, kegagalan tata kelola, atau perilaku spekulatif yang menyebabkan kerugian besar pada skala sistemis.",
+    //       ],
+    //     },
+    //     {
+    //       subName: "Lingkungan Perdagangan",
+    //       detailSub: [
+    //         "Risiko yang disebabkan oleh perubahan dalam dinamika perdagangan internasional, seperti kebijakan dagang proteksionis, atau sanksi ekonomi, yang dapat memengaruhi stabilitas neraca perdagangan dan daya saing nasional.",
+    //         "Perubahan kebijakan investasi: revisi Undang-Undang Minerba yang membatasi ekspor bahan mentah mineral dan mewajibkan pengolahan dalam negeri, memengaruhi investasi asing di sektor pertambangan.",
+    //       ],
+    //     },
+    //   ],
+    // },
     // {
     //   category: "Ekonomi",
     //   sub: ["Prospek Ekonomi", "Variabel Ekonomi", "Krisis Pasar"],
@@ -75,13 +58,38 @@ export default function TableRerefence() {
     //     "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts.",
     // },
     {
+      category: "Ekonomi",
+      uraianCategory: [
+        "Risiko yang muncul akibat gangguan yang timbul dari perubahan dalam kondisi ekonomi, pasar keuangan, dan dinamika perdagangan global yang dapat memengaruhi kestabilan anggaran, keberlanjutan proyek, kegiatan, program, atau Prioritas Pembangunan dan pencapaian sasaran Pembangunan Nasional.",
+        "Kategori risiko keuangan terdiri dari risiko finansial terkait prospek ekonomi, variabel ekonomi makro, krisis pasar, dan lingkungan perdagangan.",
+      ],
+      sub: [
+        {
+          subName: "Prospek Ekonomi",
+          detailSub: [],
+        },
+        {
+          subName: "Variabel Ekonomi Makro",
+          detailSub: [],
+        },
+        {
+          subName: "Krisis Pasar",
+          detailSub: [],
+        },
+        {
+          subName: "Lingkungan Perdagangan",
+          detailSub: [],
+        },
+      ],
+    },
+    {
       category: "Geopolitik",
       // sub: ["Korupsi", "Pergantian Pemerintahan", "Konflik Global"],
       // uraian:
       //   "Risiko kondisi politik dan kriminalitas di masyarakat, perubahan ideologi, perubahan kepemimpinan dan peraturan, konflik yang bermuatan politik di dalam atau di antara negara b mengancam operasi dan prospek bisnis. Contoh: Korupsi, politik golongan kanan/kiri, konflik antar negara.",
       uraianCategory: [
-        "Ancaman yang muncul dari memburuknya situasi politik, kriminal, atau sosial dalam masyarakat, perubahan ideologi, kepemimpinan, dan regulasi, serta konflik yang bermuatan politik baik di dalam maupun antarnegara.",
-        "Risiko ini berpotensi mengganggu program, kegiatan, proyek, dan/atau prioritas pembangunan, serta memengaruhi prospek ekonomi. Kategori risiko geopolitik terdiri dari risiko geopolitik terkait konflik antarnegara, kekerasan politik, dan lingkungan bisnis.",
+        "Ancaman yang muncul dari memburuknya situasi politik, kriminal, atau sosial dalam masyarakat, perubahan ideologi, kepemimpinan, dan regulasi, serta konflik yang bermuatan politik baik di dalam maupun antarnegara. Risiko ini berpotensi mengganggu program, kegiatan, proyek, dan/atau prioritas pembangunan, serta memengaruhi prospek ekonomi.",
+        "Kategori risiko geopolitik terdiri dari risiko geopolitik terkait konflik antarnegara, kekerasan politik, dan lingkungan bisnis.",
       ],
       sub: [
         {
@@ -143,7 +151,7 @@ export default function TableRerefence() {
           ],
         },
         {
-          subName: "Kekurangan SDA",
+          subName: "Kekurangan Sumber Daya Alam",
           detailSub: [
             "Risiko kekurangan sumber daya seperti air bersih, energi, dan mineral akibat eksploitasi berlebih dan ketidakseimbangan distribusi.",
             "Contoh: Krisis bahan baku industri akibat berkurangnya cadangan mineral seperti nikel di Sulawesi.",
@@ -263,12 +271,12 @@ export default function TableRerefence() {
             "Risiko yang terkait dengan ketidaksesuaian antara strategi organisasi dan perubahan lingkungan eksternal. Risiko yang timbul dari kelemahan dalam model bisnis organisasi yang tidak sesuai dengan kebutuhan dan tantangan saat ini.",
           ],
         },
-        {
-          subName: "Operasional",
-          detailSub: [
-            "Risiko yang terkait dengan efektivitas keputusan operasional yang dibuat oleh manajemen organisasi.",
-          ],
-        },
+        // {
+        //   subName: "Operasional",
+        //   detailSub: [
+        //     "Risiko yang terkait dengan efektivitas keputusan operasional yang dibuat oleh manajemen organisasi.",
+        //   ],
+        // },
         {
           subName: "Layanan Publik",
           detailSub: [
@@ -276,36 +284,38 @@ export default function TableRerefence() {
           ],
         },
         {
+          subName: "Fraud",
+          detailSub: [],
+        },
+        {
           subName: "Kelembagaan",
           detailSub: ["Tumpang tindih tugas, pokok, dan fungsi organisasi."],
         },
       ],
     },
+    // {
+    //   category: "Korupsi",
+    //    uraianCategory: [
+    //     "Korupsi atau penipuan internal yang menyebabkan pelanggaran terhadap peraturan utama. Contoh: korupsi internal & fraud.",
+    //   ],
+    //   sub: [
+    //     {
+    //       subName: "-",
+    //       detailSub: ["-"],
+    //     },
+    //   ],
+    // },
     {
-      category: "Korupsi",
-      // sub: ["Reputasi"],
-      // uraian:
-      //   "Risiko akibat menurunnya tingkat kepercayaan pemangku kepentingan (stakeholder) yang bersumber dari persepsi negatif terhadap kebijakan dan/atau kegiatan. Contoh: Pemberitaan negatif oleh media dan organisasi kemasyarakatan",
-      uraianCategory: [
-        "Korupsi atau penipuan internal yang menyebabkan pelanggaran terhadap peraturan utama. Contoh: korupsi internal & fraud.",
-      ],
+      category: "Operasional",
+      uraianCategory: [],
       sub: [
         {
-          subName: "-",
-          detailSub: ["-"],
+          subName: "",
+          detailSub: [],
         },
       ],
     },
   ];
-
-  const dialogActionFooter = (
-    <DialogActions sx={{ p: 2, px: 3 }}>
-      <Button onClick={handleModalClose}>Batal</Button>
-      <Button variant="contained" type="submit">
-        Simpan
-      </Button>
-    </DialogActions>
-  );
 
   return (
     <Fragment>
@@ -314,7 +324,7 @@ export default function TableRerefence() {
         elevation={0}
         variant="outlined"
         sx={{
-          maxHeight: "calc(100vh - 430px)",
+          maxHeight: "calc(100vh - 200px)",
           "&::-webkit-scrollbar": {
             width: "6px",
             cursor: "pointer",
@@ -335,11 +345,13 @@ export default function TableRerefence() {
               <TableCell width={150} sx={{ bgcolor: bgColorTh }}>
                 Kategori Risiko
               </TableCell>
-              <TableCell sx={{ bgcolor: bgColorTh }}>Uraian Kategori</TableCell>
-              <TableCell width={250} sx={{ bgcolor: bgColorTh }}>
-                Sub Kategori Risiko
+              <TableCell sx={{ bgcolor: bgColorTh }}>
+                Uraian Kategori Risiko
               </TableCell>
-              <TableCell sx={{ bgcolor: bgColorTh }}>Uraian</TableCell>
+              <TableCell width={250} sx={{ bgcolor: bgColorTh }}>
+                Subkategori Risiko
+              </TableCell>
+              {/* <TableCell sx={{ bgcolor: bgColorTh }}>Uraian</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -389,7 +401,7 @@ export default function TableRerefence() {
                   <TableCell sx={{ verticalAlign: "top" }}>
                     {subItem.subName}
                   </TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     <Box
                       component="ul"
                       sx={{
@@ -411,22 +423,13 @@ export default function TableRerefence() {
                         )
                       )}
                     </Box>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               ))
             )}
           </TableBody>
         </Table>
       </TableContainer>
-      <DialogComponent
-        width={800}
-        dialogOpen={modalOpenAdd}
-        dialogClose={handleModalClose}
-        title="Tambah Kriteria Kemungkinan"
-        dialogFooter={dialogActionFooter}
-      >
-        <FormKemungkinan mode="add" />
-      </DialogComponent>
     </Fragment>
   );
 }

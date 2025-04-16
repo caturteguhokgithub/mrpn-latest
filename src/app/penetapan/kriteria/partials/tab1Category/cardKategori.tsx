@@ -120,7 +120,8 @@ export default function CardKategori() {
         width={1400}
         dialogOpen={modalOpenRef}
         dialogClose={() => setModalOpenRef(false)}
-        title="Referensi Kriteria Kemungkinan"
+        title="Referensi Kategori Risiko"
+        closeButton
       >
         <TableRerefence />
       </DialogComponent>

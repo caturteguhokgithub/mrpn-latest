@@ -161,7 +161,7 @@ export default function PageIdentifikasiView({ }) {
       header: "Dampak",
       enableColumnActions: false,
       Header: ({ column }: any) => (
-        <SortNumber column={column} numberSort={column.getIndex() + 3} />
+        <SortNumber column={column} numberSort={column.getIndex() + 1} />
       ),
       Cell: ({ cell }: { cell: any }) => (
         <Paper

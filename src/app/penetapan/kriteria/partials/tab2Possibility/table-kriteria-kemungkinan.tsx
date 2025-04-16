@@ -42,29 +42,36 @@ export default function TableKemungkinan({ mode }: { mode?: string }) {
       >
         <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
           <TableRow>
-            <TableCell rowSpan={3} sx={{ bgcolor: bgColorTh }} align="center">
+            <TableCell
+              rowSpan={2}
+              sx={{ bgcolor: bgColorTh }}
+              align="center"
+              width={200}
+            >
               Level Kemungkinan
             </TableCell>
-            <TableCell colSpan={3} align="center" sx={{ bgcolor: bgColorTh }}>
+            <TableCell colSpan={2} align="center" sx={{ bgcolor: bgColorTh }}>
               Kriteria Kemungkinan
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={2} align="center" sx={{ bgcolor: bgColorTh }}>
-              Non low frequency event dalam 1 periode analisis
+            <TableCell align="center" sx={{ bgcolor: bgColorTh }} width={300}>
+              {/* Non low frequency event dalam 1 periode analisis */}
+              Persentase
             </TableCell>
-            <TableCell rowSpan={2} sx={{ bgcolor: bgColorTh }} align="center">
-              Low Frequency Event
+            <TableCell sx={{ bgcolor: bgColorTh }} align="center">
+              {/* Low Frequency Event */}
+              Frekuensi
             </TableCell>
           </TableRow>
-          <TableRow>
+          {/* <TableRow>
             <TableCell sx={{ bgcolor: bgColorTh }} align="center">
               Probabilitas
             </TableCell>
             <TableCell sx={{ bgcolor: bgColorTh }} align="center">
               Jumlah Frekuensi
             </TableCell>
-          </TableRow>
+          </TableRow> */}
         </TableHead>
         <TableBody>
           {mode === "add" ? (
@@ -86,8 +93,10 @@ export default function TableKemungkinan({ mode }: { mode?: string }) {
                 >
                   <TableCell>{item.level}</TableCell>
                   <TableCell>{item.persentase}</TableCell>
-                  <TableCell>{item.jumlah}</TableCell>
-                  <TableCell>{item.lfe}</TableCell>
+                  <TableCell>
+                    {item.jumlah} atau {item.lfe}
+                  </TableCell>
+                  {/* <TableCell>{item.lfe}</TableCell> */}
                 </TableRow>
               ))}
             </>
@@ -100,8 +109,10 @@ export default function TableKemungkinan({ mode }: { mode?: string }) {
                 >
                   <TableCell>{row.level_kemungkinan}</TableCell>
                   <TableCell>{row.probabilitas}</TableCell>
-                  <TableCell>{row.jumlah_frekuensi}</TableCell>
-                  <TableCell>{row.low_frekuensi}</TableCell>
+                  <TableCell>
+                    {row.jumlah_frekuensi} atau {row.low_frekuensi}
+                  </TableCell>
+                  {/* <TableCell>{row.low_frekuensi}</TableCell> */}
                 </TableRow>
               ))}
             </>
