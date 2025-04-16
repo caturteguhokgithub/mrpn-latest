@@ -94,6 +94,7 @@ export default function CardKemungkinan() {
       </DialogComponent>
       <DialogComponent
         tableMode
+        closeButton
         width={1200}
         dialogOpen={modalOpenRef}
         dialogClose={() => setModalOpenRef(false)}

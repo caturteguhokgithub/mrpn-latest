@@ -59,6 +59,7 @@ export default function CardSelera() {
       </DialogComponent>
       <DialogComponent
         width={1200}
+        closeButton
         dialogOpen={modalOpenRef}
         dialogClose={() => setModalOpenRef(false)}
         title={`Matriks Referensi Selera Risiko Moderat`}
