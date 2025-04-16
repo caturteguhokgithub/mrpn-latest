@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { doGetInformation } from "./informationService";
+import { doCreateInformation, doDeleteInformation, doGetInformation, doUpdateInformation } from "./informationService";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import {
   useExsumContext,
@@ -10,7 +10,8 @@ import { rowData } from "./mock";
 import { useSearchParams } from "next/navigation";
 import {
   InformasiLainnyaResDto,
-  initInformasiLainnyaShow,
+  doAddInformasiLainnyaDto,
+  initAddInformasiLainnyaDto,
 } from "./informationModel";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 
@@ -27,10 +28,17 @@ const useInformationList = () => {
 
   const search = searchParams.get("search");
 
+  const [request, setRequest] = useState<doAddInformasiLainnyaDto>({
+    ...initAddInformasiLainnyaDto,
+  });
+
+  const [modalObjectScope, setModalObjectScope] = useState(false);
+
   async function getData() {
     const response = await doGetInformation({
       body: {
-        uraian_penetapan_object_id: objectState?.id,
+        uraian_penetapan_object_id: objectState?.id ?? 0,
+        // uraian_penetapan_object_id: objectState?.id,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -41,17 +49,71 @@ const useInformationList = () => {
 
       if (result) {
         setData(result);
+        setRequest(result);
       }
     }
   }
 
-  useEffect(() => {
-    // if (exsum.id !== 0) {
-    getData();
-    // }
-  }, []);
+  async function updateData(param: doAddInformasiLainnyaDto) {
+    const req: doAddInformasiLainnyaDto = {
+      ...param,
+      uraian_penetapan_object_id: objectState?.id ?? 0,
+    };
 
-  return { data, listData: rowData, loadingContext };
+    const params = {
+      body: req,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    };
+
+    if (request.id !== 0) {
+      const response = await doUpdateInformation(params);
+      if (response?.code == API_CODE.success) {
+        getData();
+        setModalObjectScope(false);
+      }
+    } else {
+      const response = await doCreateInformation(params);
+      if (response?.code == API_CODE.success) {
+        getData();
+        setModalObjectScope(false);
+      }
+    }
+  }
+
+  // async function deleteData(param: doAddInformasiLainnyaDto) {
+  //   const req: doAddInformasiLainnyaDto = {
+  //     ...param,
+  //     uraian_penetapan_object_id: objectState?.id ?? 0,
+  //   };
+
+  //   const params = {
+  //     body: req,
+  //     loadingContext: loadingContext,
+  //     errorModalContext: errorModalContext,
+  //   };
+
+  //   const response = await doDeleteInformation(params);
+  //   if (response?.code == API_CODE.success) {
+  //     getData();
+  //     setModalObjectScope(false);
+  //   }
+  // }
+
+  useEffect(() => {
+    getData();
+  }, [objectState]);
+
+  return {
+    data,
+    updateData,
+    listData: rowData,
+    loadingContext,
+    request,
+    setRequest,
+    modalObjectScope,
+    setModalObjectScope,
+  };
 };
 
 export default useInformationList;

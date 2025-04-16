@@ -20,15 +20,22 @@ export default function CardInformation({
 }: {
   activeSetting?: boolean;
 }) {
+  // const {
+  //   // setModal,
+  //   // updateData,
+  //   // request,
+  //   // modalObjectScope,
+  //   // setModalObjectScope,
+  // } = useCardSegmentVM();
+
   const {
-    setModal,
+    data,
     updateData,
     request,
+    setRequest,
     modalObjectScope,
     setModalObjectScope,
-  } = useCardSegmentVM();
-
-  const { data } = useInformationList();
+  } = useInformationList();
 
   const ReactQuill = dynamic(
     async () => {
@@ -78,11 +85,7 @@ export default function CardInformation({
                 description="Silahkan isi konten halaman ini"
               />
             ) : (
-              <>
-                {data?.lists.map((item: any) => (
-                  <>{item.value}</>
-                ))}
-              </>
+              <div dangerouslySetInnerHTML={{ __html: data?.value ?? "" }} />
             )}
           </Fragment>
         )}
@@ -102,7 +105,7 @@ export default function CardInformation({
             <Button
               variant="contained"
               type="submit"
-              // onClick={handleCreateOrUpdateData}
+              onClick={handleCreateOrUpdateData}
             >
               Simpan
             </Button>

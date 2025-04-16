@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, SetStateAction } from "react";
 import {
   Box,
   Button,
@@ -21,6 +21,7 @@ import dynamic from "next/dynamic";
 import type ReactQuill from "react-quill";
 import useCardSegmentVM from "@/app/executive-summary/partials/tab1Background/cardSegment/cardSegmentVM";
 import { VisuallyHiddenInput } from "@/app/utils/constant";
+import { doReqInformasiLainnya } from "../hooks/informationModel";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -29,9 +30,13 @@ interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
 export default function FormInformation({
   mode,
   handleOpenCategory,
+  state,
+  setState,
 }: {
   mode?: string;
   handleOpenCategory?: any;
+  state: doReqInformasiLainnya;
+  setState: (value: SetStateAction<doReqInformasiLainnya>) => void;
 }) {
   const { request } = useCardSegmentVM();
 

@@ -8,7 +8,20 @@ export interface listsDao {
 export interface doResInformasiLainnya {
     id: number
     uraian_penetapan_object_id: number
-    lists: listsDao[]
+    value: string
+    // lists: listsDao[]
+}
+
+export interface doAddInformasiLainnyaDto {
+    id: number
+    uraian_penetapan_object_id: number
+    value: string
+}
+
+export const initAddInformasiLainnyaDto: doAddInformasiLainnyaDto = {
+    id: 0,
+    uraian_penetapan_object_id: 0,
+    value: ""
 }
 
 export interface doGetReqInformasiLainnyaDto {
@@ -21,6 +34,10 @@ export const initInformasiLainnyaShow: doGetReqInformasiLainnyaDto = {
 
 export type GetInformasiLainnyaServiceModel = BaseAPIServiceParam & {
     body: doGetReqInformasiLainnyaDto
+};
+
+export type AddInformasiLainnyaServiceModel = BaseAPIServiceParam & {
+    body: doAddInformasiLainnyaDto;
 };
 
 export type InformasiLainnyaResDto = doResInformasiLainnya;

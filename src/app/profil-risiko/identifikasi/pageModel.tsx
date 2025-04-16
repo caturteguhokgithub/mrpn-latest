@@ -9,10 +9,10 @@ export interface ProfileRiskDto {
   insidentil: boolean
   peristiwa_risiko: string
   keterangan_risiko: string
+  area_dampak: string
   penyebab_dampak: {
     penyebab: string[]
     dampak: string[]
-    area_dampak: string
   }
 }
 

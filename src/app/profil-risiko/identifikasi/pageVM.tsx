@@ -76,6 +76,7 @@ const useIdentificationRiskVM = () => {
     if (response?.code == API_CODE.success) {
       let result: GetSysParamsServiceResModel = response.result;
       const paramValue: string[] = JSON.parse(result.value);
+
       setOptionImpactArea(paramValue);
     }
   }
@@ -102,7 +103,7 @@ const useIdentificationRiskVM = () => {
           peristiwa_risiko: reqData.peristiwa_risiko,
           penyebab: reqData.penyebab_dampak.penyebab,
           dampak: reqData.penyebab_dampak.dampak,
-          area_dampak: reqData.penyebab_dampak.area_dampak,
+          area_dampak: reqData.area_dampak,
         };
       }
     }

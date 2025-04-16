@@ -9,7 +9,7 @@ import {
 import { rowData } from "./mock";
 import { useSearchParams } from "next/navigation";
 import usePenetapanGlobalVM from "../../penetapanGlobalVM";
-import { InformasiLainnyaResDto, initInformasiLainnyaShow } from "./informationModel";
+import { InformasiLainnyaResDto, doReqInformasiLainnya, initAddInformasiLainnyaDto } from "./informationModel";
 
 const useInformationList = () => {
   const loadingContext = useLoading();
@@ -23,6 +23,11 @@ const useInformationList = () => {
   const searchParams = useSearchParams();
 
   const search = searchParams.get("search");
+
+  const [modal, setModal] = useState(false);
+  const [request, setRequest] = useState<doReqInformasiLainnya>({
+    ...initAddInformasiLainnyaDto,
+  });
 
   async function getData() {
     const response = await doGetInformation({
@@ -43,12 +48,18 @@ const useInformationList = () => {
   }
 
   useEffect(() => {
-    // if (exsum.id !== 0) {
     getData();
-    // }
   }, []);
 
-  return { data, listData: rowData, loadingContext };
+  return {
+    data,
+    listData: rowData,
+    loadingContext,
+    modal,
+    setModal,
+    request,
+    setRequest,
+  };
 };
 
 export default useInformationList;

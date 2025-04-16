@@ -44,18 +44,24 @@ export default function CardInformation({
 }) {
   const {
     // data,
-    modal,
-    setModal,
+    // modal,
+    // setModal,
     updateData,
     deleteData,
-    request,
-    setRequest,
+    // request,
+    // setRequest,
     modalDelete,
     setModalDelete,
     handleModalDelete,
   } = useCardSegmentVM();
 
-  const { data, listData, loadingContext } = useInformationList();
+  const {
+    data,
+    modal,
+    setModal,
+    request,
+    setRequest,
+  } = useInformationList();
 
   // console.log(listData, loadingContext);
 
@@ -75,16 +81,16 @@ export default function CardInformation({
   );
   const quillRef = React.useRef<ReactQuill>(null);
 
-  const handleCreateOrUpdateData = async () => {
-    const text = quillRef.current?.value;
-    if (text) {
-      const req = {
-        ...request,
-        value: text.toString(),
-      };
-      updateData(req);
-    }
-  };
+  // const handleCreateOrUpdateData = async () => {
+  //   const text = quillRef.current?.value;
+  //   if (text) {
+  //     const req = {
+  //       ...request,
+  //       value: text.toString(),
+  //     };
+  //     updateData(req);
+  //   }
+  // };
 
   const emptyData = true;
 
@@ -187,7 +193,7 @@ export default function CardInformation({
             <Button
               variant="contained"
               type="submit"
-              onClick={handleCreateOrUpdateData}
+            // onClick={handleCreateOrUpdateData}
             >
               Simpan
             </Button>
@@ -200,8 +206,12 @@ export default function CardInformation({
           defaultValue={request.value}
           forwardedRef={quillRef}
         /> */}
-        <FormInformation />
+        <FormInformation
+          state={request}
+          setState={setRequest}
+        />
       </DialogComponent>
+
       <DialogComponent
         width="100%"
         maxHeight="100vh"
