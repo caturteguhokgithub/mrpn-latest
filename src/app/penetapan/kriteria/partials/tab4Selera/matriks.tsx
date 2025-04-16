@@ -388,7 +388,7 @@ export default function SeleraMatriks({
   );
 
   return (
-    <Stack mt={2}>
+    <Stack>
       {matriksFive}
       {/* {levelMatriks} */}
     </Stack>

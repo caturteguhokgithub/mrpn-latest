@@ -106,10 +106,11 @@ export default function CardDampak() {
       />
       <DialogComponent
         tableMode
-        width={1400}
+        width={1560}
         dialogOpen={modalOpenRef}
         dialogClose={() => setModalOpenRef(false)}
         title="Referensi Kriteria Dampak"
+        closeButton
       >
         <TableDampak mode="view" />
       </DialogComponent>
