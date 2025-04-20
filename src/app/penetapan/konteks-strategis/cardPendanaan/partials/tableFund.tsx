@@ -19,11 +19,15 @@ import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { FormatIDR } from "@/lib/utils/currency";
 import { bgColorTh } from "@/app/utils/color";
+import usePendanaanList from "../hooks/vm";
 
 const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
   const { row, project } = props;
-
   const { year, rpjmn } = useRKPContext((store) => store);
+  const { data, dataTableFund, loadingContext } = usePendanaanList();
+
+  console.log(dataTableFund);
+
 
   let multiyear: number[] = [year];
   if (year == 0) {
@@ -87,12 +91,12 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
           tableLayout: "fixed",
           ...(year > 0
             ? {
-                width: "100%",
-                [theme.breakpoints.down("xl")]: {
-                  ...styleFixedColumn,
-                  width: 1500,
-                },
-              }
+              width: "100%",
+              [theme.breakpoints.down("xl")]: {
+                ...styleFixedColumn,
+                width: 1500,
+              },
+            }
             : { width: 4000 }),
         }}
         stickyHeader
@@ -208,7 +212,7 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {row?.map((fundRow, index) => (
+          {dataTableFund?.map((fundRow, index) => (
             <TableRow key={index}>
               <TableCell
                 sx={{
