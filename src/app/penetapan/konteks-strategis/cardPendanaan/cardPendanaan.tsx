@@ -49,29 +49,29 @@ export default function CardPendanaan({ project }: { project: string }) {
               }}
             >
               <Typography fontSize={14} fontWeight={600}>{`${FormatIDR(
-                356000000000
+                0
               )} Juta`}</Typography>
             </Box>
           </Stack>
         )
       }
     >
-      {isDeveloping ? (
+      {/* {isDeveloping ? (
         <EmptyDevelopingState />
-      ) : (
-        <Fragment>
-          {isEmpty ? (
-            <EmptyState
-              dense
-              icon={<IconEmptyData width={100} />}
-              title="Data Kosong"
-              description="Silahkan isi konten halaman ini"
-            />
-          ) : (
-            <TableFund project={project} data={dataTableFund} />
-          )}
-        </Fragment>
-      )}
+      ) : ( */}
+      <Fragment>
+        {isEmpty ? (
+          <EmptyState
+            dense
+            icon={<IconEmptyData width={100} />}
+            title="Data Kosong"
+            description="Silahkan isi konten halaman ini"
+          />
+        ) : (
+          <TableFund project={project} data={dataTableFund} />
+        )}
+      </Fragment>
+      {/* )} */}
     </CardItem>
   );
 }

@@ -48,6 +48,8 @@ export default function CardInformation({
     data,
     modal,
     setModal,
+    modalEdit,
+    setModalEdit,
     request,
     setRequest,
     modalViewImage,
@@ -190,7 +192,7 @@ export default function CardInformation({
                           }}
                         >
                           <Stack direction="row">
-                            <IconButton onClick={() => setModal(true)}>
+                            <IconButton onClick={() => setModalEdit(true)}>
                               <Iconify name="mdi:pencil" color={blue[500]} />
                             </IconButton>
                             <IconButton onClick={() => setModalDelete(true)}>
@@ -210,7 +212,7 @@ export default function CardInformation({
       <DialogComponent
         dialogOpen={modal}
         dialogClose={() => setModal(false)}
-        title="Informasi Lain"
+        title="Tambah Informasi Lain"
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button variant="outlined" onClick={() => setModal(false)}>
@@ -233,6 +235,27 @@ export default function CardInformation({
           forwardedRef={quillRef}
         /> */}
         <FormInformation state={request} setState={setRequest} />
+      </DialogComponent>
+      <DialogComponent
+        dialogOpen={modalEdit}
+        dialogClose={() => setModalEdit(false)}
+        title="Ubah Informasi Lain"
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button variant="outlined" onClick={() => setModalEdit(false)}>
+              Batal
+            </Button>
+            <Button
+              variant="contained"
+              type="submit"
+              // onClick={handleCreateOrUpdateData}
+            >
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <FormInformation state={request} setState={setRequest} mode="edit" />
       </DialogComponent>
 
       <DialogComponent

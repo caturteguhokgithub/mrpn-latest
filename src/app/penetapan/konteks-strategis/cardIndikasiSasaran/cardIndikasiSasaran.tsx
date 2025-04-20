@@ -208,7 +208,7 @@ export default function CardIndikasiSasaran() {
                     <TableCell sx={{ verticalAlign: "top" }}>
                       {subItem}
                     </TableCell>
-                    <TableCell sx={{ verticalAlign: "top" }}>
+                    <TableCell align="right" sx={{ verticalAlign: "top" }}>
                       {row.target[subIndex]}
                     </TableCell>
                     <TableCell sx={{ verticalAlign: "top" }}>

@@ -134,7 +134,7 @@ export default function CardLevelKebijakan() {
                         <TableCell sx={{ verticalAlign: "top" }}>
                           {row.indikator[0]}
                         </TableCell>
-                        <TableCell sx={{ verticalAlign: "top" }}>
+                        <TableCell align="right" sx={{ verticalAlign: "top" }}>
                           {row.target[0]}
                         </TableCell>
                         <TableCell sx={{ verticalAlign: "top" }}>
@@ -148,7 +148,10 @@ export default function CardLevelKebijakan() {
                             <TableCell sx={{ verticalAlign: "top" }}>
                               {indikator}
                             </TableCell>
-                            <TableCell sx={{ verticalAlign: "top" }}>
+                            <TableCell
+                              align="right"
+                              sx={{ verticalAlign: "top" }}
+                            >
                               {row.target[indikatorIndex + 1]}
                             </TableCell>
                             <TableCell sx={{ verticalAlign: "top" }}>

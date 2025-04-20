@@ -163,7 +163,7 @@ export default function TableKategori({ mode }: { mode?: string }) {
         title="Tambah Kriteria Kemungkinan"
         dialogFooter={dialogActionFooter}
       >
-        <FormKemungkinan mode="add" />
+        {/* <FormKemungkinan mode="add" /> */}
       </DialogComponent>
     </Fragment>
   );

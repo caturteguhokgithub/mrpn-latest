@@ -126,8 +126,28 @@ export default function CardCritical({
         settingAddOnclick={handleModalAdd}
         settingEditOnclick={handleModalOpen}
       >
-        {isIntExtPage && isDeveloping ? (
-          <EmptyDevelopingState />
+        {/* {isIntExtPage && isDeveloping ? ( */}
+        {isIntExtPage ? (
+          <>
+            {/* <EmptyDevelopingState /> */}{" "}
+            <EmptyState
+              dense
+              icon={<IconEmptyData width={100} />}
+              // title="Critical Path akan muncul setelah Penginputan Rencana Aksi di
+              // E-monev"
+              description={
+                <>
+                  <Typography component="span" fontWeight={500}>
+                    Critical Path
+                  </Typography>{" "}
+                  akan muncul setelah{" "}
+                  <Typography component="span" color="red" fontWeight={600}>
+                    Penginputan Rencana Aksi di E-monev
+                  </Typography>
+                </>
+              }
+            />
+          </>
         ) : (
           <Fragment>
             {data.length == 0 || ganChart.length == 0 ? (
