@@ -35,7 +35,7 @@ const usePendanaanList = () => {
             if (result) {
                 setData(result);
 
-                const dataTable = GenerateProjectData(result, year, rpjmn)
+                const dataTable = GenerateProjectData(result, 0, rpjmn)
 
                 setDataTableFund(dataTable)
             }

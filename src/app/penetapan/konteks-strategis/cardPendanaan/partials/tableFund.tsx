@@ -30,9 +30,11 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
 
 
   let multiyear: number[] = [year];
-  if (year == 0) {
-    multiyear = GenerateRpjmnYear(rpjmn);
-  }
+  // if (year == 0) {
+  //   multiyear = GenerateRpjmnYear(rpjmn);
+  // }
+
+  multiyear = GenerateRpjmnYear(rpjmn);
 
   const getRowData = (key: string, data: RODataTable | undefined) => {
     if (data == undefined) return "";
