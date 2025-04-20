@@ -31,6 +31,7 @@ const useInformationList = () => {
   const [modal, setModal] = useState(false);
   const [modalViewImage, setModalViewImage] = useState(false);
   const [modalOpenDelete, setModalDelete] = useState(false);
+  const [modalEdit, setModalEdit] = useState(false);
 
   const [request, setRequest] = useState<doReqInformasiLainnya>({
     ...initAddInformasiLainnyaDto,
@@ -70,6 +71,8 @@ const useInformationList = () => {
     setModalViewImage,
     modalOpenDelete,
     setModalDelete,
+    modalEdit,
+    setModalEdit,
   };
 };
 

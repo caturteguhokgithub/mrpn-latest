@@ -45,10 +45,7 @@ export default function TableNotaDinasViewOnly({
   const [modalViewImage, setModalViewImage] = React.useState(false);
   const [thisGambar, setThisGambar] = React.useState("");
 
-  const {
-    gambar,
-    uploadImage,
-  } = useNotaDinasVM();
+  const { gambar, uploadImage } = useNotaDinasVM();
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -71,7 +68,9 @@ export default function TableNotaDinasViewOnly({
 
   const sxParamsFull: SxParams = { variant: "full" };
 
-  const handleUnggahBuktiDukung = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUnggahBuktiDukung = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const files = e.target.files?.[0];
 
     if (files) {
@@ -144,7 +143,7 @@ export default function TableNotaDinasViewOnly({
                             startIcon={
                               <Iconify name="mdi:check-circle" size={16} />
                             }
-                            onclick={() => { }}
+                            onclick={() => {}}
                           />
                         </Fragment>
                       ) : statusObject === "reject" ? (
@@ -451,10 +450,13 @@ export default function TableNotaDinasViewOnly({
                           rel="noopener noreferrer"
                         >
                           <IconButton color="primary">
-                            <Iconify name="mdi:file-pdf" color="red" size={20} />
+                            <Iconify
+                              name="mdi:file-pdf"
+                              color="red"
+                              size={20}
+                            />
                           </IconButton>
                         </a>
-
                       ) : (
                         <IconButton
                           color="primary"
@@ -470,7 +472,6 @@ export default function TableNotaDinasViewOnly({
                   </TableRow>
                 ))}
               </TableBody>
-
             </Table>
           </TableContainer>
         </Stack>

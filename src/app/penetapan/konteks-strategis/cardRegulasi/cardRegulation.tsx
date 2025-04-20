@@ -1,5 +1,6 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
+  Box,
   Button,
   DialogActions,
   Paper,
@@ -22,21 +23,36 @@ import { isDeveloping } from "@/app/components/layouts/layout";
 
 import useCardRegulationVM from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationVM";
 import TablePeraturan from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/table-peraturan";
+import DialogDelete from "@/app/components/dialogDelete";
+import DialogComponent from "@/app/components/dialog";
+import FormRegulation from "./partials/form";
+import { ExsumRegulationDto } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
+import { DividerIntExt } from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgent";
 
-export default function CardRegulation({
-  penetapan
-}: {
-  penetapan?: boolean;
-}) {
-  const { data } = useCardRegulasi();
+export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
+  const { data, modal, setModal, modalDelete, setModalDelete } =
+    useCardRegulasi();
 
-  const {
-    deleteData,
-  } = useCardRegulationVM();
+  const { deleteData } = useCardRegulationVM();
+  const [state, setState] = useState<ExsumRegulationDto>({
+    id: 0,
+    tahun: [],
+    exsum_id: 0,
+    amanat: "",
+    perpres_state: undefined,
+    perpres: [],
+    stakeholder: [],
+    stakeholder_id: [],
+  });
 
   return (
     <>
-      <CardItem title="Daftar Regulasi, Kebijakan, Peraturan, Prosedur Terkait">
+      <CardItem
+        title="Daftar Regulasi, Kebijakan, Peraturan, Prosedur Terkait"
+        setting
+        settingDeleteOnclick={() => setModalDelete(true)}
+        settingEditOnclick={() => setModal(true)}
+      >
         {penetapan ? (
           <Fragment>
             {data.length == 0 ? (
@@ -47,7 +63,21 @@ export default function CardRegulation({
                 description="Silahkan isi konten halaman ini"
               />
             ) : (
-              <TablePeraturan data={data} deleteData={deleteData} />
+              <Fragment>
+                <Box sx={{ opacity: 0.6 }}>
+                  <TablePeraturan data={data} deleteData={deleteData} />
+                </Box>
+                <Box my={3}>
+                  <DividerIntExt />
+                </Box>
+                <TablePeraturan
+                  penetapan
+                  data={data}
+                  deleteData={deleteData}
+                  setModal={() => setModal(true)}
+                  setModalDelete={() => setModal(true)}
+                />
+              </Fragment>
             )}
           </Fragment>
         ) : (
@@ -96,6 +126,35 @@ export default function CardRegulation({
           // </Fragment>
         )}
       </CardItem>
+      <DialogComponent
+        dialogOpen={modal}
+        dialogClose={() => setModal(false)}
+        title="Tambah Daftar Regulasi, Kebijakan, Peraturan, Prosedur Terkait"
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button variant="outlined" onClick={() => setModal(false)}>
+              Batal
+            </Button>
+            <Button variant="contained" onClick={() => {}}>
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <FormRegulation
+          options={[]}
+          optionStakeholder={[]}
+          state={state}
+          setState={() => {}}
+          setModalPeraturan={() => {}}
+        />
+      </DialogComponent>
+      <DialogDelete
+        title="Hapus Data"
+        handleOpenModal={modalDelete}
+        handleCloseModal={() => setModalDelete(false)}
+        // handleDelete={() => deleteData()}
+      />
     </>
   );
 }

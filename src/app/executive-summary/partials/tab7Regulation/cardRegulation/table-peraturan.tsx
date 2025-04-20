@@ -35,13 +35,22 @@ import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import { bgColorTh } from "@/utils/color";
 import useCardRegulationVM from "./cardRegulationVM";
+import Iconify from "@/app/components/icons/iconify";
+import { blue, grey, red } from "@mui/material/colors";
+import useCardRegulasi from "@/app/penetapan/konteks-strategis/cardRegulasi/vm";
 
 export default function TablePeraturan({
   data,
   deleteData,
+  penetapan,
+  setModal,
+  setModalDelete,
 }: {
   data: ExsumRegulationResDto[];
   deleteData: any;
+  penetapan?: boolean;
+  setModal?: () => void;
+  setModalDelete?: () => void;
 }) {
   const { permission } = useAuthContext((state) => state);
   const pathname = usePathname();
@@ -73,6 +82,7 @@ export default function TablePeraturan({
               <TableCell width={500}>Entitas</TableCell>
               <TableCell width={240}>Peraturan Terkait</TableCell>
               <TableCell>Amanat Peraturan yang Terkait</TableCell>
+              {penetapan && <TableCell align="center">Aksi</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -155,6 +165,22 @@ export default function TablePeraturan({
                   <TableCell sx={{ verticalAlign: "top" }}>
                     {row.amanat}
                   </TableCell>
+                  {penetapan && (
+                    <TableCell
+                      sx={{
+                        bgcolor: grey[50],
+                      }}
+                    >
+                      <Stack direction="row">
+                        <IconButton onClick={setModal}>
+                          <Iconify name="mdi:pencil" color={blue[500]} />
+                        </IconButton>
+                        <IconButton onClick={setModalDelete}>
+                          <Iconify name="mdi:trash" color={red[500]} />
+                        </IconButton>
+                      </Stack>
+                    </TableCell>
+                  )}
                 </TableRow>
               </>
             ))}

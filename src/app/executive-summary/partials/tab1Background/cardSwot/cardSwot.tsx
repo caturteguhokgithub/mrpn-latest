@@ -35,6 +35,7 @@ import { InfoTooltip } from "@/app/components/InfoTooltip";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
 import { doRequestSwotDto } from "@/app/penetapan/internal-eksternal/pageModel";
+import { DividerIntExt } from "../cardUrgent/cardUrgent";
 
 export default function CardSwot({
   project,
@@ -61,13 +62,8 @@ export default function CardSwot({
     conditionEditing,
   } = useCardSWOTVM();
 
-  const {
-    requestSwot,
-    setRequestSwot,
-    uriRequestSwot,
-    dataSwot,
-  } = useUrgensiVM();
-
+  const { requestSwot, setRequestSwot, uriRequestSwot, dataSwot } =
+    useUrgensiVM();
 
   return (
     <>
@@ -92,7 +88,7 @@ export default function CardSwot({
         settingDeleteOnclick={handleModalDelete}
         settingEditOnclick={() => setModal(true)}
       >
-        {penetapan ?
+        {penetapan ? (
           dataSwot?.values.length == 0 ? (
             <EmptyState
               dense
@@ -101,49 +97,78 @@ export default function CardSwot({
               description="Silahkan isi konten halaman ini"
             />
           ) : (
-            <Stack direction="row" gap={2} width={"100%"}>
-              <GenerateCard
-                title="Faktor Internal"
-                sub1="strength"
-                sub2="weakness"
-                data={dataSwot?.values ?? []}
-                conditionEditing={"inherit"}
-              />
-              <GenerateCard
-                title="Faktor Eksternal"
-                sub1="opportunity"
-                sub2="threat"
-                data={dataSwot?.values ?? []}
-                conditionEditing={"inherit"}
-              />
+            <Stack direction="column" gap={2}>
+              <Stack
+                direction="row"
+                gap={2}
+                width={"100%"}
+                sx={{
+                  opacity: 0.6,
+                }}
+              >
+                <GenerateCard
+                  title="Faktor Internal"
+                  sub1="strength"
+                  sub2="weakness"
+                  data={data.values}
+                  conditionEditing={conditionEditing}
+                />
+                <GenerateCard
+                  title="Faktor Eksternal"
+                  sub1="opportunity"
+                  sub2="threat"
+                  data={data.values}
+                  conditionEditing={conditionEditing}
+                />
+              </Stack>
+              {dataSwot?.values.length == 0 ? null : (
+                <>
+                  <DividerIntExt />
+                  <Stack direction="row" gap={2} width={"100%"}>
+                    <GenerateCard
+                      title="Faktor Internal"
+                      sub1="strength"
+                      sub2="weakness"
+                      data={dataSwot?.values ?? []}
+                      conditionEditing={"inherit"}
+                    />
+                    <GenerateCard
+                      title="Faktor Eksternal"
+                      sub1="opportunity"
+                      sub2="threat"
+                      data={dataSwot?.values ?? []}
+                      conditionEditing={"inherit"}
+                    />
+                  </Stack>
+                </>
+              )}
             </Stack>
           )
-          :
-          data.values.length == 0 ? (
-            <EmptyState
-              dense
-              icon={<IconEmptyData width={100} />}
-              title="Data Kosong"
-              description="Silahkan isi konten halaman ini"
+        ) : data.values.length == 0 ? (
+          <EmptyState
+            dense
+            icon={<IconEmptyData width={100} />}
+            title="Data Kosong"
+            description="Silahkan isi konten halaman ini"
+          />
+        ) : (
+          <Stack direction="row" gap={2} width={"100%"}>
+            <GenerateCard
+              title="Faktor Internal"
+              sub1="strength"
+              sub2="weakness"
+              data={data.values}
+              conditionEditing={conditionEditing}
             />
-          ) : (
-            <Stack direction="row" gap={2} width={"100%"}>
-              <GenerateCard
-                title="Faktor Internal"
-                sub1="strength"
-                sub2="weakness"
-                data={data.values}
-                conditionEditing={conditionEditing}
-              />
-              <GenerateCard
-                title="Faktor Eksternal"
-                sub1="opportunity"
-                sub2="threat"
-                data={data.values}
-                conditionEditing={conditionEditing}
-              />
-            </Stack>
-          )}
+            <GenerateCard
+              title="Faktor Eksternal"
+              sub1="opportunity"
+              sub2="threat"
+              data={data.values}
+              conditionEditing={conditionEditing}
+            />
+          </Stack>
+        )}
       </CardItem>
       <DialogComponent
         width={"80%"}

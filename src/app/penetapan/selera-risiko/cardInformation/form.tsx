@@ -95,7 +95,7 @@ export default function FormInformation({
   return (
     <Fragment>
       <Grid container spacing={2}>
-        {mode !== "edit" && (
+        {mode !== "edit" ? (
           <Fragment>
             <Grid item xs={12}>
               <Stack
@@ -229,6 +229,74 @@ export default function FormInformation({
                     </Grid>
                   </Paper>
                 ))}
+              </Stack>
+            </Grid>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <Grid item xs={12}>
+              <Stack gap={2}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth>
+                      <FieldLabelInfo title="Informasi" />
+                      <Box
+                        sx={{
+                          ".ql-container": {
+                            minHeight: "0 !important",
+                          },
+                          ".ql-editor": {
+                            height: "100px !important",
+                            minHeight: "100px",
+                          },
+                        }}
+                      >
+                        <ReactQuill
+                          key={request.value}
+                          theme="snow"
+                          defaultValue={request.value}
+                          forwardedRef={quillRef}
+                        />
+                      </Box>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth>
+                      <FieldLabelInfo title="Jenis Bukti Dukung" />
+                      <RadioGroup row>
+                        <FormControlLabel
+                          value="pdf"
+                          control={<Radio />}
+                          label="PDF"
+                        />
+                        <FormControlLabel
+                          value="image"
+                          control={<Radio />}
+                          label="Gambar"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth>
+                      <FieldLabelInfo title="Unggah Bukti Dukung" />
+                      <Button
+                        component="label"
+                        role={undefined}
+                        variant="contained"
+                        tabIndex={-1}
+                        startIcon={<Iconify name="mdi:upload" size={14} />}
+                      >
+                        Upload files
+                        <VisuallyHiddenInput
+                          type="file"
+                          onChange={(event) => console.log(event.target.files)}
+                          multiple
+                        />
+                      </Button>
+                    </FormControl>
+                  </Grid>
+                </Grid>
               </Stack>
             </Grid>
           </Fragment>
