@@ -143,7 +143,7 @@ export default function TableNotaDinasViewOnly({
                             startIcon={
                               <Iconify name="mdi:check-circle" size={16} />
                             }
-                            onclick={() => { }}
+                            onclick={() => {}}
                           />
                         </Fragment>
                       ) : statusObject === "reject" ? (
@@ -778,12 +778,6 @@ export default function TableNotaDinasViewOnly({
           ".transform-component-module_wrapper__SPB86": {
             width: "100%",
             height: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          },
-          ".react-transform-component": {
-            width: "100%",
           },
           ".MuiDialogContent-root": {
             p: 0,
@@ -820,7 +814,11 @@ export default function TableNotaDinasViewOnly({
                 <Image
                   alt="Instansi Pelaksana"
                   // src="https://res.cloudinary.com/caturteguh/image/upload/v1741666619/mrpn/document-872506_1280_sanrsj.jpg"
-                  src={process.env.NEXT_PUBLIC_BASE_URL_FILES + "bukti_dukung/" + thisGambar}
+                  src={
+                    process.env.NEXT_PUBLIC_BASE_URL_FILES +
+                    "bukti_dukung/" +
+                    thisGambar
+                  }
                   width={0}
                   height={0}
                   sizes="100vw"

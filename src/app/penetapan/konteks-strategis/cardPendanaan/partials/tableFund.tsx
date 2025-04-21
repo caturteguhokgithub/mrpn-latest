@@ -223,7 +223,10 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
               {multiyear.map((y, iY) => (
                 <>
                   <TableCell align="right">
-                    {FormatCurrency(getRowData(`target_${iY}`, fundRow))}
+                    {/* {FormatCurrency(getRowData(`target_${iY}`, fundRow) ?? 0)} */}
+                    {getRowData(`target_${iY}`, fundRow) > 0
+                      ? FormatCurrency(getRowData(`target_${iY}`, fundRow))
+                      : getRowData(`target_${iY}`, fundRow)}
                   </TableCell>
                   <TableCell>{getRowData(`satuan_${iY}`, fundRow)}</TableCell>
                   <TableCell align={"right"}>
