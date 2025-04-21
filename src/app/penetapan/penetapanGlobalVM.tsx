@@ -56,7 +56,7 @@ const usePenetapanGlobalVM = () => {
       triggerChange(objectState.rkp, "penetapan")
       handleChangeOptions(objectState.rkp)
     };
-  }, [objectState]);
+  }, [objectState?.id]);
 
   return {
     objects,

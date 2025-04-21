@@ -47,10 +47,12 @@ const useInformationList = () => {
     if (response?.code == API_CODE.success) {
       let result: InformasiLainnyaResDto = response.result;
 
-      if (result) {
-        setData(result);
-        setRequest(result);
-      }
+      setData(result);
+      setRequest(result);
+      // if (result) {
+      //   setData(result);
+      //   setRequest(result);
+      // }
     }
   }
 
@@ -102,7 +104,7 @@ const useInformationList = () => {
 
   useEffect(() => {
     getData();
-  }, [objectState]);
+  }, [objectState?.id]);
 
   return {
     data,

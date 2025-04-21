@@ -113,9 +113,9 @@ export default function CardInformation({
         }
       >
         <ReactQuill
-          key={request.value}
+          key={request?.value}
           theme="snow"
-          defaultValue={request.value}
+          defaultValue={request?.value}
           forwardedRef={quillRef}
         />
       </DialogComponent>
