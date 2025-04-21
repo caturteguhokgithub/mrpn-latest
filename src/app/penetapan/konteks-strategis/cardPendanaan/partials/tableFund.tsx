@@ -26,7 +26,6 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
   const { year, rpjmn } = useRKPContext((store) => store);
   const { data, dataTableFund, loadingContext } = usePendanaanList();
 
-  console.log(dataTableFund);
 
   let multiyear: number[] = [year];
   // if (year == 0) {
@@ -217,7 +216,8 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
                   {fundRow.code}
                 </Typography>
                 <br />
-                {fundRow.value}
+                {fundRow.value} <br />
+                {fundRow.intervention ? "(key)" : ""}
               </TableCell>
 
               {multiyear.map((y, iY) => (
@@ -251,10 +251,10 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
 
 export default function TableFund({
   project,
-  data,
+  // data,
 }: {
   project?: string;
-  data: ExsumFundDataTableRes[];
+  // data: ExsumFundDataTableRes[];
 }) {
   return <TableFundPPKP project="KP" />;
 }

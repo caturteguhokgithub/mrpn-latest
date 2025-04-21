@@ -53,6 +53,7 @@ const usePenetapanGlobalVM = () => {
 
   useEffect(() => {
     if (objectState != undefined) {
+      objectState.rkp.level = "KP"
       triggerChange(objectState.rkp, "penetapan")
       handleChangeOptions(objectState.rkp)
     };

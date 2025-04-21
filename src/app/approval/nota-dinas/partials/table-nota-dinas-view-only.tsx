@@ -143,7 +143,7 @@ export default function TableNotaDinasViewOnly({
                             startIcon={
                               <Iconify name="mdi:check-circle" size={16} />
                             }
-                            onclick={() => {}}
+                            onclick={() => { }}
                           />
                         </Fragment>
                       ) : statusObject === "reject" ? (
@@ -445,7 +445,7 @@ export default function TableNotaDinasViewOnly({
                     <TableCell align="center">
                       {item.file.toLowerCase().endsWith(".pdf") ? (
                         <a
-                          href={`${process.env.NEXT_PUBLIC_BASE_URL_FILES}${item.file}`}
+                          href={`${process.env.NEXT_PUBLIC_BASE_URL_FILES}bukti_dukung/${item.file}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -820,7 +820,7 @@ export default function TableNotaDinasViewOnly({
                 <Image
                   alt="Instansi Pelaksana"
                   // src="https://res.cloudinary.com/caturteguh/image/upload/v1741666619/mrpn/document-872506_1280_sanrsj.jpg"
-                  src={process.env.NEXT_PUBLIC_BASE_URL_FILES + thisGambar}
+                  src={process.env.NEXT_PUBLIC_BASE_URL_FILES + "bukti_dukung/" + thisGambar}
                   width={0}
                   height={0}
                   sizes="100vw"
