@@ -2,7 +2,7 @@ import {
   useExsumContext,
   useGlobalModalContext,
   useLoading,
-  useRKPContext
+  useRKPContext,
 } from "@/lib/core/hooks/useHooks";
 import { useEffect, useState } from "react";
 import { API_CODE } from "@/lib/core/api/apiModel";
@@ -13,7 +13,13 @@ import {
   initExsumSWOTResponseDto,
   LISTSWOT,
 } from "./cardSwotModel";
-import { doCreate, doDelete, doDeleteRow, doGet, doUpdate } from "./cardSwotService";
+import {
+  doCreate,
+  doDelete,
+  doDeleteRow,
+  doGet,
+  doUpdate,
+} from "./cardSwotService";
 import { grey } from "@mui/material/colors";
 
 const useCardSWOTVM = () => {
@@ -62,7 +68,6 @@ const useCardSWOTVM = () => {
         setData({ ...initExsumSWOTResponseDto });
         setRequest({ ...initExsumSWOTRequestDto });
       }
-
     }
   }
 
@@ -107,7 +112,7 @@ const useCardSWOTVM = () => {
     };
     await doDelete(params);
     getData();
-    setModalDelete(false)
+    setModalDelete(false);
   }
 
   async function deleteDataRow(id: number) {

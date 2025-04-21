@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Button,
+  Grow,
   Paper,
   Table,
   TableBody,
@@ -8,11 +9,12 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import theme from "@/theme";
 import { IconFA } from "@/app/components/icons/icon-fa";
-import { grey } from "@mui/material/colors";
+import { grey, orange } from "@mui/material/colors";
 import { ExsumFundDataTableRes } from "@/app/executive-summary/partials/tab8Fund/cardFundModel";
 import { RODataTable } from "@/app/misc/rkp/rkpServiceModel";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
@@ -20,12 +22,12 @@ import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { FormatCurrency, FormatIDR } from "@/lib/utils/currency";
 import { bgColorTh } from "@/app/utils/color";
 import usePendanaanList from "../hooks/vm";
+import Iconify from "@/app/components/icons/iconify";
 
 const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
   const { row, project } = props;
   const { year, rpjmn } = useRKPContext((store) => store);
   const { data, dataTableFund, loadingContext } = usePendanaanList();
-
 
   let multiyear: number[] = [year];
   // if (year == 0) {
@@ -216,14 +218,42 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
                   {fundRow.code}
                 </Typography>
                 <br />
-                {fundRow.value} <br />
-                {fundRow.intervention ? "(key)" : ""}
+                {fundRow.intervention ? (
+                  <Tooltip
+                    title="Intervensi Kunci"
+                    followCursor
+                    TransitionComponent={Grow}
+                    sx={{ cursor: "default" }}
+                  >
+                    <Typography
+                      component="p"
+                      color={orange[700]}
+                      fontSize="0.9rem"
+                      lineHeight={1.3}
+                    >
+                      {fundRow.value}{" "}
+                      <Iconify
+                        name="mdi:key-variant"
+                        size={14}
+                        sx={{ position: "relative", top: 2 }}
+                      />
+                    </Typography>
+                  </Tooltip>
+                ) : (
+                  <Typography
+                    component="p"
+                    color={grey[900]}
+                    fontSize="0.9rem"
+                    lineHeight={1.3}
+                  >
+                    {fundRow.value}
+                  </Typography>
+                )}
               </TableCell>
 
               {multiyear.map((y, iY) => (
                 <>
                   <TableCell align="right">
-                    {/* {FormatCurrency(getRowData(`target_${iY}`, fundRow) ?? 0)} */}
                     {getRowData(`target_${iY}`, fundRow) > 0
                       ? FormatCurrency(getRowData(`target_${iY}`, fundRow))
                       : getRowData(`target_${iY}`, fundRow)}
@@ -254,8 +284,8 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
 
 export default function TableFund({
   project,
-  // data,
-}: {
+}: // data,
+{
   project?: string;
   // data: ExsumFundDataTableRes[];
 }) {
