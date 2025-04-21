@@ -10,6 +10,7 @@ import { Button, DialogActions } from "@mui/material";
 import useInformationList from "./hooks/useInformation";
 import { isDeveloping } from "@/app/components/layouts/layout";
 import EmptyDevelopingState from "@/app/components/empty/developing";
+import DialogDelete from "@/app/components/dialogDelete";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -35,6 +36,9 @@ export default function CardInformation({
     setRequest,
     modalObjectScope,
     setModalObjectScope,
+    modalDelete,
+    setModalDelete,
+    deleteData,
   } = useInformationList();
 
   const ReactQuill = dynamic(
@@ -72,6 +76,7 @@ export default function CardInformation({
         title="Informasi Lain yang Relevan terkait Lingkup Objek MRPN LS"
         setting={activeSetting}
         settingEditOnclick={() => setModalObjectScope(true)}
+        settingDeleteOnclick={() => setModalDelete(true)}
       >
         {isDeveloping ? (
           <EmptyDevelopingState />
@@ -119,6 +124,12 @@ export default function CardInformation({
           forwardedRef={quillRef}
         />
       </DialogComponent>
+      <DialogDelete
+        title="Hapus Data"
+        handleOpenModal={modalDelete}
+        handleCloseModal={() => setModalDelete(false)}
+        handleDelete={() => deleteData()}
+      />
     </Fragment>
   );
 }

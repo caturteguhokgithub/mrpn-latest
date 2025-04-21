@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { doCreateInformation, doDeleteInformation, doGetInformation, doUpdateInformation } from "./informationService";
+import {
+  doCreateInformation,
+  doDeleteInformation,
+  doGetInformation,
+  doUpdateInformation,
+} from "./informationService";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import {
   useExsumContext,
@@ -20,6 +25,7 @@ const useInformationList = () => {
   const errorModalContext = useGlobalModalContext();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<InformasiLainnyaResDto>();
+  const [modalDelete, setModalDelete] = useState(false);
 
   const { exsum } = useExsumContext();
   const { objectState } = usePenetapanGlobalVM();
@@ -102,6 +108,17 @@ const useInformationList = () => {
   //   }
   // }
 
+  async function deleteData() {
+    const params = {
+      body: request,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    };
+    await doDeleteInformation(params);
+    getData();
+    setModalDelete(false);
+  }
+
   useEffect(() => {
     getData();
   }, [objectState?.id]);
@@ -115,6 +132,9 @@ const useInformationList = () => {
     setRequest,
     modalObjectScope,
     setModalObjectScope,
+    modalDelete,
+    setModalDelete,
+    deleteData,
   };
 };
 

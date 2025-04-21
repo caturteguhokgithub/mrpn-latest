@@ -1,6 +1,10 @@
 import { del, post, put } from "@/lib/core/api/apiBase";
 import { ResponseBaseDto } from "@/lib/core/api/apiModel";
-import { AddInformasiLainnyaServiceModel, GetInformasiLainnyaServiceModel } from "./informationModel";
+import {
+  AddInformasiLainnyaServiceModel,
+  GetInformasiLainnyaServiceModel,
+  UpdateInformasiLainnyaServiceModel,
+} from "./informationModel";
 
 export async function doGetInformation(param: GetInformasiLainnyaServiceModel) {
   const resp = await post({
@@ -11,7 +15,9 @@ export async function doGetInformation(param: GetInformasiLainnyaServiceModel) {
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
 
-export async function doCreateInformation(param: AddInformasiLainnyaServiceModel) {
+export async function doCreateInformation(
+  param: AddInformasiLainnyaServiceModel
+) {
   const resp = await post({
     ...param,
     url: "penetapan/upr/informasiLingkup/add",
@@ -19,7 +25,9 @@ export async function doCreateInformation(param: AddInformasiLainnyaServiceModel
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
 
-export async function doUpdateInformation(param: AddInformasiLainnyaServiceModel) {
+export async function doUpdateInformation(
+  param: AddInformasiLainnyaServiceModel
+) {
   const resp = await post({
     ...param,
     url: "penetapan/upr/informasiLingkup/update",
@@ -27,7 +35,9 @@ export async function doUpdateInformation(param: AddInformasiLainnyaServiceModel
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
 
-export async function doDeleteInformation(param: AddInformasiLainnyaServiceModel) {
+export async function doDeleteInformation(
+  param: UpdateInformasiLainnyaServiceModel
+) {
   const resp = await post({
     ...param,
     url: "penetapan/upr/informasiLingkup/delete",

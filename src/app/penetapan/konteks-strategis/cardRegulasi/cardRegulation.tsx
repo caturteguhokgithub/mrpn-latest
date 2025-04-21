@@ -49,9 +49,9 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
     <>
       <CardItem
         title="Daftar Regulasi, Kebijakan, Peraturan, Prosedur Terkait"
-        setting
-        settingDeleteOnclick={() => setModalDelete(true)}
-        settingEditOnclick={() => setModal(true)}
+        // setting
+        // settingDeleteOnclick={() => setModalDelete(true)}
+        // settingEditOnclick={() => setModal(true)}
       >
         {penetapan ? (
           <Fragment>
@@ -75,7 +75,7 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
                   data={data}
                   deleteData={deleteData}
                   setModal={() => setModal(true)}
-                  setModalDelete={() => setModal(true)}
+                  setModalDelete={() => setModalDelete(true)}
                 />
               </Fragment>
             )}
