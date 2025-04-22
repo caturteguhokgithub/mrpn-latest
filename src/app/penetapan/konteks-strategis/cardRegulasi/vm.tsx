@@ -25,6 +25,7 @@ const useCardRegulasi = () => {
   const [data, setData] = useState<ExsumRegulationResDto[]>([]);
   const [modal, setModal] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
+  const [modalEdit, setModalEdit] = useState(false);
 
   async function getData() {
     const response = await doGetRegulasi({
@@ -58,6 +59,8 @@ const useCardRegulasi = () => {
     setModal,
     modalDelete,
     setModalDelete,
+    modalEdit,
+    setModalEdit,
   };
 };
 
