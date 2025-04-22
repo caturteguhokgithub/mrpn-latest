@@ -191,7 +191,7 @@ export default function CardInformation({
                             bgcolor: grey[50],
                           }}
                         >
-                          <Stack direction="row">
+                          <Stack direction="row" justifyContent="center">
                             <IconButton onClick={() => setModalEdit(true)}>
                               <Iconify name="mdi:pencil" color={blue[500]} />
                             </IconButton>

@@ -23,9 +23,12 @@ export default function CardPendanaan({ project }: { project: string }) {
 
   function getFormattedGrandTotal(data: any[], multiyear: any[]): string {
     const total = data.reduce((acc, item) => {
-      return acc + multiyear.reduce((sum, _, iY) => {
-        return sum + Number(item[`anggaran_${iY}`] || 0);
-      }, 0);
+      return (
+        acc +
+        multiyear.reduce((sum, _, iY) => {
+          return sum + Number(item[`anggaran_${iY}`] || 0);
+        }, 0)
+      );
     }, 0);
 
     return (total / 1000).toFixed(2);
