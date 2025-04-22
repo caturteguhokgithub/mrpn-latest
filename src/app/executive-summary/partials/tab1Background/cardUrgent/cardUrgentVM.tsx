@@ -53,12 +53,6 @@ const useCardUrgentVM = () => {
     }
   }
 
-  useEffect(() => {
-    if (exsum.id !== 0) {
-      getData();
-    }
-  }, [exsum]);
-
   async function updateData(param: ExsumUrgentDto) {
     const req: ExsumUrgentDto = {
       ...param,
@@ -96,6 +90,12 @@ const useCardUrgentVM = () => {
     getData();
     setModalDelete(false);
   }
+
+  useEffect(() => {
+    if (exsum.id !== 0) {
+      getData();
+    }
+  }, [exsum?.id]);
 
   return {
     data,

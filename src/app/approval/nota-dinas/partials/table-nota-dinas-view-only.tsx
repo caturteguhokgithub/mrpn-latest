@@ -64,8 +64,6 @@ export default function TableNotaDinasViewOnly({
     "Kementerian PU",
   ];
 
-  const statusObject: "plan" | "reject" | "approved" = "plan";
-
   const sxParamsFull: SxParams = { variant: "full" };
 
   const handleUnggahBuktiDukung = async (
@@ -89,6 +87,8 @@ export default function TableNotaDinasViewOnly({
       };
     }
   };
+
+  const statusObject: "plan" | "reject" | "approved" = "plan";
 
   return (
     <Fragment>
@@ -441,33 +441,58 @@ export default function TableNotaDinasViewOnly({
                 {gambar.map((item, index) => (
                   <TableRow key={index}>
                     <TableCell align="center">{index + 1}</TableCell>
-                    <TableCell>{item.file}</TableCell>
-                    <TableCell align="center">
-                      {item.file.toLowerCase().endsWith(".pdf") ? (
-                        <a
-                          href={`${process.env.NEXT_PUBLIC_BASE_URL_FILES}bukti_dukung/${item.file}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <IconButton color="primary">
+                    <TableCell>
+                      <Stack direction="row" alignItems="center" gap={1}>
+                        {item.file.toLowerCase().endsWith(".pdf") ? (
+                          <a
+                            href={`${process.env.NEXT_PUBLIC_BASE_URL_FILES}bukti_dukung/${item.file}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Button color="primary" sx={{ gap: 1 }}>
+                              <Iconify
+                                name="mdi:file-pdf"
+                                color="red"
+                                size={16}
+                              />
+                              <Typography
+                                component="span"
+                                fontSize={14}
+                                textTransform="lowercase"
+                              >
+                                {item.file}
+                              </Typography>
+                            </Button>
+                          </a>
+                        ) : (
+                          <Button
+                            color="primary"
+                            onClick={() => {
+                              setModalViewImage(true);
+                              setThisGambar(item.file);
+                            }}
+                            sx={{ gap: 1 }}
+                          >
                             <Iconify
-                              name="mdi:file-pdf"
-                              color="red"
-                              size={20}
+                              name="mdi:file-image"
+                              color={grey[800]}
+                              size={16}
                             />
-                          </IconButton>
-                        </a>
-                      ) : (
-                        <IconButton
-                          color="primary"
-                          onClick={() => {
-                            setModalViewImage(true);
-                            setThisGambar(item.file);
-                          }}
-                        >
-                          <Iconify name="mdi:file-image" size={20} />
-                        </IconButton>
-                      )}
+                            <Typography
+                              component="span"
+                              fontSize={14}
+                              textTransform="lowercase"
+                            >
+                              {item.file}
+                            </Typography>
+                          </Button>
+                        )}
+                      </Stack>
+                    </TableCell>
+                    <TableCell align="center">
+                      <IconButton color="error">
+                        <Iconify name="mdi:trash" color="red" size={16} />
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -812,8 +837,7 @@ export default function TableNotaDinasViewOnly({
                 }}
               >
                 <Image
-                  alt="Instansi Pelaksana"
-                  // src="https://res.cloudinary.com/caturteguh/image/upload/v1741666619/mrpn/document-872506_1280_sanrsj.jpg"
+                  alt="Bukti Dukung"
                   src={
                     process.env.NEXT_PUBLIC_BASE_URL_FILES +
                     "bukti_dukung/" +

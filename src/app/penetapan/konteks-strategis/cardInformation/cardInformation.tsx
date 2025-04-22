@@ -78,22 +78,22 @@ export default function CardInformation({
         settingEditOnclick={() => setModalObjectScope(true)}
         settingDeleteOnclick={() => setModalDelete(true)}
       >
-        {isDeveloping ? (
+        {/* {isDeveloping ? (
           <EmptyDevelopingState />
-        ) : (
-          <Fragment>
-            {emptyData ? (
-              <EmptyState
-                dense
-                icon={<IconEmptyData width={100} />}
-                title="Data Kosong"
-                description="Silahkan isi konten halaman ini"
-              />
-            ) : (
-              <div dangerouslySetInnerHTML={{ __html: data?.value ?? "" }} />
-            )}
-          </Fragment>
-        )}
+        ) : ( */}
+        <Fragment>
+          {data?.value == null ? (
+            <EmptyState
+              dense
+              icon={<IconEmptyData width={100} />}
+              title="Data Kosong"
+              description="Silahkan isi konten halaman ini"
+            />
+          ) : (
+            <div dangerouslySetInnerHTML={{ __html: data?.value ?? "" }} />
+          )}
+        </Fragment>
+        {/* )} */}
       </CardItem>
       <DialogComponent
         dialogOpen={modalObjectScope}
