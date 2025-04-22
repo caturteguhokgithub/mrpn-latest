@@ -81,11 +81,14 @@ export default function TableSupport({
       >
         <TableHead sx={{ bgcolor: bgColorTh }}>
           <TableRow>
-            <TableCell sx={{ bgcolor: bgColorTh, textAlign: "center" }}>
+            <TableCell
+              width={year > 0 ? "auto" : "10%"}
+              sx={{ bgcolor: bgColorTh, textAlign: "center" }}
+            >
               {getLevel(exsum.level)}
             </TableCell>
             <TableCell
-              width="10%"
+              width={100}
               sx={{
                 bgcolor: bgColorTh,
                 textAlign: "center",
@@ -95,7 +98,7 @@ export default function TableSupport({
               Kode Sasaran {getLevel(exsum.level)}
             </TableCell>
             <TableCell
-              width="30%"
+              width="25%"
               sx={{
                 bgcolor: bgColorTh,
                 textAlign: "center",

@@ -28,10 +28,19 @@ import DialogComponent from "@/app/components/dialog";
 import FormRegulation from "./partials/form";
 import { ExsumRegulationDto } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
 import { DividerIntExt } from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgent";
+import AddButton from "@/app/components/buttonAdd";
+import Iconify from "@/app/components/icons/iconify";
 
 export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
-  const { data, modal, setModal, modalDelete, setModalDelete } =
-    useCardRegulasi();
+  const {
+    data,
+    modal,
+    setModal,
+    modalDelete,
+    setModalDelete,
+    modalEdit,
+    setModalEdit,
+  } = useCardRegulasi();
 
   const { deleteData } = useCardRegulationVM();
   const [state, setState] = useState<ExsumRegulationDto>({
@@ -52,6 +61,14 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
         // setting
         // settingDeleteOnclick={() => setModalDelete(true)}
         // settingEditOnclick={() => setModal(true)}
+        addButton={
+          <AddButton
+            filled
+            startIcon={<Iconify name="mdi:plus-circle" />}
+            title="Tambah Kriteria Dampak"
+            onclick={() => setModal(true)}
+          />
+        }
       >
         {penetapan ? (
           <Fragment>
@@ -67,16 +84,22 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
                 <Box sx={{ opacity: 0.6 }}>
                   <TablePeraturan data={data} deleteData={deleteData} />
                 </Box>
-                <Box my={3}>
-                  <DividerIntExt />
-                </Box>
-                <TablePeraturan
-                  penetapan
-                  data={data}
-                  deleteData={deleteData}
-                  setModal={() => setModal(true)}
-                  setModalDelete={() => setModalDelete(true)}
-                />
+                {isDeveloping ? (
+                  <EmptyDevelopingState />
+                ) : (
+                  <Fragment>
+                    <Box my={3}>
+                      <DividerIntExt />
+                    </Box>
+                    <TablePeraturan
+                      penetapan
+                      data={data}
+                      deleteData={deleteData}
+                      setModal={() => setModalEdit(true)}
+                      setModalDelete={() => setModalDelete(true)}
+                    />
+                  </Fragment>
+                )}
               </Fragment>
             )}
           </Fragment>
@@ -133,6 +156,29 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button variant="outlined" onClick={() => setModal(false)}>
+              Batal
+            </Button>
+            <Button variant="contained" onClick={() => {}}>
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <FormRegulation
+          options={[]}
+          optionStakeholder={[]}
+          state={state}
+          setState={() => {}}
+          setModalPeraturan={() => {}}
+        />
+      </DialogComponent>
+      <DialogComponent
+        dialogOpen={modalEdit}
+        dialogClose={() => setModalEdit(false)}
+        title="Ubah Daftar Regulasi, Kebijakan, Peraturan, Prosedur Terkait"
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button variant="outlined" onClick={() => setModalEdit(false)}>
               Batal
             </Button>
             <Button variant="contained" onClick={() => {}}>
