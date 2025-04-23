@@ -61,7 +61,7 @@ export interface doRequestSegmenDto {
 export const initSegmen: doRequestSegmenDto = {
     id: 0,
     uraian_penetapan_object_id: 0,
-    value: "0"
+    value: ""
 }
 
 export const initSegmenShow: doGetReqSegmenDto = {
@@ -128,3 +128,34 @@ export type RequestSwotServiceModel = BaseAPIServiceParam & {
 };
 
 export type SwotResDto = doResSwot;
+
+// Stakeholder
+export interface StakeholderImageResDto {
+    id: number,
+    uraian_penetapan_objek_id: number;
+    file: string;
+}
+export interface StakeholderImageReqDto {
+    uraian_penetapan_objek_id: number;
+    file: string;
+}
+
+export const initStakeholderShow: StakeholderImageResDto = {
+    id: 0,
+    uraian_penetapan_objek_id: 0,
+    file: ""
+}
+
+export interface StakeholderGetReqDto {
+    uraian_penetapan_objek_id: number;
+}
+
+export type UploadStakeholderServiceModel = BaseAPIServiceParam & {
+    body: StakeholderImageReqDto;
+};
+
+export type GetStakeholderServiceModel = BaseAPIServiceParam & {
+    body: StakeholderGetReqDto;
+};
+
+export type StakeholderResDto = StakeholderImageResDto;

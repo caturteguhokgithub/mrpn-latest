@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import {
   Box,
   Button,
@@ -33,6 +33,18 @@ import DraggableScroll from "@/app/components/cardStakeholder/draggableScroll";
 import { styleOrgChart } from "@/app/executive-summary/style";
 import { SxParams } from "@/app/executive-summary/types";
 import useNotaDinasVM from "../notaDinasVM";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
+
+type Row = {
+  object: string;
+  sasaran: string;
+  indicator: string[];
+  target: string[];
+  coordinator: string[];
+  main: string[];
+  support: string[];
+};
 
 export default function TableNotaDinasViewOnly({
   notaDinas,
@@ -44,8 +56,100 @@ export default function TableNotaDinasViewOnly({
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalViewImage, setModalViewImage] = React.useState(false);
   const [thisGambar, setThisGambar] = React.useState("");
-
   const { gambar, uploadImage } = useNotaDinasVM();
+
+  const { rpjmn, year } = useRKPContext((state) => state);
+
+  const { objectState } = usePenetapanObjectVM();
+  const { stateShorList, getPenetapanObjectShortList } = usePenetapanObjectVM();
+
+  useEffect(() => {
+    if (objectState !== undefined) {
+      getPenetapanObjectShortList();
+    }
+  }, [objectState]);
+
+  const generateRows = () => {
+    let index = 0;
+
+    if (rpjmn != undefined) {
+      for (let i = rpjmn.start; i <= rpjmn.end; i++) {
+        if (i !== year && i <= year) {
+          index++;
+        }
+      }
+    }
+
+    let rows: Row[] = [];
+    stateShorList.map((data) => {
+      let row: Row = {
+        object: data.rkp.value,
+        sasaran: "",
+        indicator: [],
+        target: [],
+        coordinator: [],
+        main: [],
+        support: [],
+      };
+      data.rkp.sasaran.map((sasaran) => {
+        row.sasaran = sasaran.value;
+        sasaran.indikator.map((indikator) => {
+          row.indicator.push(indikator.value);
+          let target = "";
+          switch (index) {
+            case 0:
+              target = indikator.target_0 + " " + indikator.satuan;
+              break;
+            case 1:
+              target = indikator.target_1 + " " + indikator.satuan;
+              break;
+            case 2:
+              target = indikator.target_2 + " " + indikator.satuan;
+              break;
+            case 3:
+              target = indikator.target_3 + " " + indikator.satuan;
+              break;
+            case 4:
+              target = indikator.target_4 + " " + indikator.satuan;
+              break;
+            default:
+              target = indikator.target_0 + " " + indikator.satuan;
+              break;
+          }
+          row.target.push(target);
+        });
+      });
+      if (data.exsum !== null) {
+        let coordinator: string[] = [];
+        let main: string[] = [];
+        let support: string[] = [];
+        data.exsum.kelembagaan.map((kl) => {
+          if (kl.type == "COORDINATION") {
+            kl.stakeholder.map((st) => {
+              coordinator.push(st.value);
+            });
+          }
+          if (kl.type == "MAIN_ENTITY") {
+            kl.stakeholder.map((st) => {
+              main.push(st.value);
+            });
+          }
+          if (kl.type == "SUPPORT") {
+            kl.stakeholder.map((st) => {
+              support.push(st.value);
+            });
+          }
+        });
+
+        row.coordinator = coordinator;
+        row.main = main;
+        row.support = support;
+      }
+      rows.push(row);
+    });
+
+    return rows;
+  };
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -276,7 +380,103 @@ export default function TableNotaDinasViewOnly({
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow>
+                {generateRows().map((row, rowIndex) =>
+                  <TableRow>
+                    <TableCell sx={{ verticalAlign: "top" }}>{++rowIndex}</TableCell>
+                    <TableCell sx={{ verticalAlign: "top" }}>{row.object}</TableCell>
+                    <TableCell width={300}>
+                      {row.coordinator.length === 0 ? (
+                        "-"
+                      ) : (
+                        <Stack
+                          display="inline-flex"
+                          alignItems="center"
+                          direction="row"
+                          gap={0.5}
+                          flexWrap="wrap"
+                        >
+                          {row.coordinator.map((item, index) => (
+                            <Box component="div" key={index}>
+                              <Chip
+                                label={item}
+                                size="small"
+                                sx={{
+                                  height: "auto",
+                                  ".MuiChip-label": {
+                                    whiteSpace: "wrap",
+                                    lineHeight: 1.2,
+                                    py: 0.6,
+                                  },
+                                }}
+                              />
+                            </Box>
+                          ))}
+                        </Stack>
+                      )}
+                    </TableCell>
+                    <TableCell width={300}>
+                      {row.main.length === 0 ? (
+                        "-"
+                      ) : (
+                        <Stack
+                          display="inline-flex"
+                          alignItems="center"
+                          direction="row"
+                          gap={0.5}
+                          flexWrap="wrap"
+                        >
+                          {row.main.map((item, index) => (
+                            <Box component="div" key={index}>
+                              <Chip
+                                label={item}
+                                size="small"
+                                sx={{
+                                  height: "auto",
+                                  ".MuiChip-label": {
+                                    whiteSpace: "wrap",
+                                    lineHeight: 1.2,
+                                    py: 0.6,
+                                  },
+                                }}
+                              />
+                            </Box>
+                          ))}
+                        </Stack>
+                      )}
+                    </TableCell>
+                    <TableCell width={300}>
+                      {row.support.length === 0 ? (
+                        "-"
+                      ) : (
+                        <Stack
+                          display="inline-flex"
+                          alignItems="center"
+                          direction="row"
+                          gap={0.5}
+                          flexWrap="wrap"
+                        >
+                          {row.support.map((item, index) => (
+                            <Box component="div" key={index}>
+                              <Chip
+                                label={item}
+                                size="small"
+                                sx={{
+                                  height: "auto",
+                                  ".MuiChip-label": {
+                                    whiteSpace: "wrap",
+                                    lineHeight: 1.2,
+                                    py: 0.6,
+                                  },
+                                }}
+                              />
+                            </Box>
+                          ))}
+                        </Stack>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                )}
+                {/* <TableRow>
                   <TableCell align="center">1</TableCell>
                   <TableCell>
                     Pengembangan Kawasan Sentra Produksi Pangan (KSPP)/Lumbung
@@ -360,7 +560,7 @@ export default function TableNotaDinasViewOnly({
                       ))}
                     </Stack>
                   </TableCell>
-                </TableRow>
+                </TableRow> */}
               </TableBody>
             </Table>
           </TableContainer>

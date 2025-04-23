@@ -112,24 +112,24 @@ export default function CardUrgent({
       settingEditOnclick={() => setModal(true)}
     >
       {penetapan ? (
-        dataUrgensi?.value == "" ? (
-          <EmptyState
-            dense
-            icon={<IconEmptyData width={100} />}
-            title="Data Kosong"
-            description="Silahkan isi konten halaman ini"
-          />
-        ) : (
-          <Fragment>
-            <Box sx={{ opacity: 0.6 }}>
-              <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
-            </Box>
-            <DividerIntExt />
+        <Fragment>
+          <Box sx={{ opacity: 0.6 }}>
+            <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
+          </Box>
+          <DividerIntExt />
+          {dataUrgensi?.value == "" ? (
+            <EmptyState
+              dense
+              icon={<IconEmptyData width={100} />}
+              title="Data Kosong"
+              description="Silahkan isi konten halaman ini"
+            />
+          ) : (
             <div
               dangerouslySetInnerHTML={{ __html: dataUrgensi?.value ?? "" }}
             ></div>
-          </Fragment>
-        )
+          )}
+        </Fragment>
       ) : data.value == "" ? (
         <EmptyState
           dense

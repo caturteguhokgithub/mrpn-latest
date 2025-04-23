@@ -89,41 +89,41 @@ export default function CardSwot({
         settingEditOnclick={() => setModal(true)}
       >
         {penetapan ? (
-          dataSwot?.values.length == 0 ? (
-            <EmptyState
-              dense
-              icon={<IconEmptyData width={100} />}
-              title="Data Kosong"
-              description="Silahkan isi konten halaman ini"
-            />
-          ) : (
-            <Stack direction="column" gap={2}>
-              <Stack
-                direction="row"
-                gap={2}
-                width={"100%"}
-                sx={{
-                  opacity: 0.6,
-                }}
-              >
-                <GenerateCard
-                  title="Faktor Internal"
-                  sub1="strength"
-                  sub2="weakness"
-                  data={data.values}
-                  conditionEditing={conditionEditing}
+          <Stack direction="column" gap={2}>
+            <Stack
+              direction="row"
+              gap={2}
+              width={"100%"}
+              sx={{
+                opacity: 0.6,
+              }}
+            >
+              <GenerateCard
+                title="Faktor Internal"
+                sub1="strength"
+                sub2="weakness"
+                data={data.values}
+                conditionEditing={conditionEditing}
+              />
+              <GenerateCard
+                title="Faktor Eksternal"
+                sub1="opportunity"
+                sub2="threat"
+                data={data.values}
+                conditionEditing={conditionEditing}
+              />
+            </Stack>
+            <DividerIntExt />
+            {dataSwot?.values.length == 0 ?
+              (
+                <EmptyState
+                  dense
+                  icon={<IconEmptyData width={100} />}
+                  title="Data Kosong"
+                  description="Silahkan isi konten halaman ini"
                 />
-                <GenerateCard
-                  title="Faktor Eksternal"
-                  sub1="opportunity"
-                  sub2="threat"
-                  data={data.values}
-                  conditionEditing={conditionEditing}
-                />
-              </Stack>
-              {dataSwot?.values.length == 0 ? null : (
+              ) : (
                 <>
-                  <DividerIntExt />
                   <Stack direction="row" gap={2} width={"100%"}>
                     <GenerateCard
                       title="Faktor Internal"
@@ -142,8 +142,7 @@ export default function CardSwot({
                   </Stack>
                 </>
               )}
-            </Stack>
-          )
+          </Stack>
         ) : data.values.length == 0 ? (
           <EmptyState
             dense

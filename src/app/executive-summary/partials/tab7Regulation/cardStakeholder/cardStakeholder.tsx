@@ -32,6 +32,7 @@ import { SxParams } from "@/app/executive-summary/types";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 import EmptyDevelopingState from "@/app/components/empty/developing";
 import { isDeveloping } from "@/app/components/layouts/layout";
+import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
 
 export default function CardStakeholder({
   project,
@@ -69,6 +70,8 @@ export default function CardStakeholder({
   } = useCardStakeholderVM();
 
   const { handleEdited, conditionEditingImg } = useCardLocationVM();
+  const { uploadStakeholder, stakeholderMapping } = useUrgensiVM();
+
 
   const handleModalOpenStakeholder = () => {
     setModalOpenStakeholder(true);
@@ -131,6 +134,24 @@ export default function CardStakeholder({
     }
   };
 
+  const handleStakeholderChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files?.[0];
+
+    if (files) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(files);
+      reader.onload = () => {
+        const res = reader.result as string;
+        uploadStakeholder(res);
+      };
+
+      reader.onerror = (error) => {
+        console.error("Error: ", error);
+      };
+    }
+  };
+
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
   const sxParamsFull: SxParams = { variant: "full" };
@@ -176,7 +197,7 @@ export default function CardStakeholder({
               Unggah Gambar
               <VisuallyHiddenInput
                 type="file"
-                onChange={(event) => handleGambarChange(event)}
+                onChange={(event) => handleStakeholderChange(event)}
                 multiple
               />
             </Button>
@@ -190,21 +211,36 @@ export default function CardStakeholder({
         <EmptyDevelopingState />
       ) : isIntExtPage ? (
         <Stack width="100%" direction="row" justifyContent="center">
-          <Box>
-            <Image
-              alt="MRPN"
-              src="https://res.cloudinary.com/caturteguh/image/upload/v1738912448/mrpn/hierarchy_ic8yuc.jpg"
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{
-                width: "auto",
-                height: "300px",
-                cursor: "pointer",
-              }}
-              onClick={() => setModalViewImageIntExt(true)}
-            />
-          </Box>
+          {
+            stakeholderMapping?.file != "" ? (
+              <Box>
+                <Image
+                  alt="MRPN"
+                  // src="https://res.cloudinary.com/caturteguh/image/upload/v1738912448/mrpn/hierarchy_ic8yuc.jpg"
+                  src={
+                    process.env.NEXT_PUBLIC_BASE_URL_FILES + stakeholderMapping.file
+                  }
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{
+                    width: "auto",
+                    height: "300px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setModalViewImageIntExt(true)}
+                />
+              </Box>
+            ) : (
+              <EmptyState
+                dense
+                icon={<IconEmptyData width={100} />}
+                title="Data Kosong"
+                description="Silahkan isi konten halaman ini"
+              />
+            )
+          }
+
         </Stack>
       ) : (
         <Fragment>
@@ -220,23 +256,23 @@ export default function CardStakeholder({
               <Stack direction="row" gap={1}>
                 {(hasPrivilege(permission, pathname, "add") ||
                   hasPrivilege(permission, pathname, "update")) && (
-                  <AddButton
-                    noMargin
-                    small
-                    title="Ubah Logo"
-                    startIcon={
-                      <Icon
-                        baseClassName="fas"
-                        className={"fa-pencil"}
-                        sx={{
-                          fontSize: "12px !important",
-                        }}
-                      />
-                    }
-                    sx={{ paddingInline: 2 }}
-                    onclick={() => setModalListLogo(true)}
-                  />
-                )}
+                    <AddButton
+                      noMargin
+                      small
+                      title="Ubah Logo"
+                      startIcon={
+                        <Icon
+                          baseClassName="fas"
+                          className={"fa-pencil"}
+                          sx={{
+                            fontSize: "12px !important",
+                          }}
+                        />
+                      }
+                      sx={{ paddingInline: 2 }}
+                      onclick={() => setModalListLogo(true)}
+                    />
+                  )}
 
                 <Button
                   component="label"
@@ -388,7 +424,7 @@ export default function CardStakeholder({
                 src={
                   logoState.icon == ""
                     ? process.env.NEXT_PUBLIC_BASE_URL_FILES +
-                      logoState.iconPath
+                    logoState.iconPath
                     : ""
                 }
                 width={0}
@@ -528,7 +564,10 @@ export default function CardStakeholder({
               >
                 <Image
                   alt="Instansi Pelaksana"
-                  src="https://res.cloudinary.com/caturteguh/image/upload/v1738912448/mrpn/hierarchy_ic8yuc.jpg"
+                  // src="https://res.cloudinary.com/caturteguh/image/upload/v1738912448/mrpn/hierarchy_ic8yuc.jpg"
+                  src={
+                    process.env.NEXT_PUBLIC_BASE_URL_FILES + stakeholderMapping.file
+                  }
                   width={0}
                   height={0}
                   sizes="100vw"

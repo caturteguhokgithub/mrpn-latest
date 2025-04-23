@@ -8,8 +8,8 @@ import {
 import React, { useEffect, useState } from "react";
 import { API_CODE, ResponseBaseDto } from "@/lib/core/api/apiModel";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
-import { doCreateSegmen, doCreateSwot, doCreateUrgensi, doGetSegmen, doGetSwot, doGetUrgensi, doUpdateSegmen, doUpdateSwot, doUpdateUrgensi } from "./pageService";
-import { SegmenResDto, SwotResDto, UrgensiResDto, doRequestSegmenDto, doRequestSwotDto, doRequestUrgensiDto, initUrgensi, initSwot } from "./pageModel";
+import { doCreateSegmen, doCreateSwot, doCreateUrgensi, doGetSegmen, doGetStakeholder, doGetSwot, doGetUrgensi, doUnggahStakeholder, doUpdateSegmen, doUpdateSwot, doUpdateUrgensi } from "./pageService";
+import { SegmenResDto, SwotResDto, UrgensiResDto, doRequestSegmenDto, doRequestSwotDto, doRequestUrgensiDto, initUrgensi, initSwot, initSegmen, StakeholderImageReqDto, StakeholderResDto, initStakeholderShow } from "./pageModel";
 import useCardUrgentVM from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgentVM";
 import { doGetUrgent } from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgentService";
 import { ExsumUrgentDto, initExsumUrgentDto } from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgentModel";
@@ -27,11 +27,17 @@ const useUrgensiVM = () => {
     const [dataUrgensi, setDataUrgensi] = useState<UrgensiResDto>();
     const [dataUrgensiExsum, setDataUrgensiExsum] = useState<ExsumUrgentDto>({ ...initExsumUrgentDto });
     const [requestUrgensi, setRequestUrgensi] = useState<doRequestUrgensiDto>({ ...initUrgensi });
-    const [requestSegmen, setRequestSegmen] = useState<doRequestSegmenDto>({ ...initUrgensi });
-    const [requestSwot, setRequestSwot] = useState<doRequestSwotDto>({ ...initSwot });
 
+    // Segmen
+    const [requestSegmen, setRequestSegmen] = useState<doRequestSegmenDto>({ ...initUrgensi });
     const [dataSegmen, setDataSegmen] = useState<SegmenResDto>();
+
+    // Swot
+    const [requestSwot, setRequestSwot] = useState<doRequestSwotDto>({ ...initSwot });
     const [dataSwot, setDataSwot] = useState<SwotResDto>();
+
+    // Stakeholder
+    const [stakeholderMapping, setStakeholderMapping] = useState<StakeholderResDto>(initStakeholderShow);
 
     // Urgensi
     async function getDataUrgensi() {
@@ -48,25 +54,9 @@ const useUrgensiVM = () => {
             if (result) {
                 setDataUrgensi(result);
                 setRequestUrgensi(result);
-            }
-        }
-    }
-
-    async function getDataUrgensiExsum() {
-        const response = await doGetUrgent({
-            body: {
-                exsum_id: exsum.id,
-            },
-            loadingContext: loadingContext,
-            errorModalContext: errorModalContext,
-        });
-
-        if (response?.code == API_CODE.success) {
-            let result: ExsumUrgentDto = response.result;
-            if (result) {
-                setDataUrgensiExsum(result);
             } else {
-                setDataUrgensiExsum({ ...initExsumUrgentDto });
+                setDataUrgensi(initUrgensi);
+                setRequestUrgensi(initUrgensi);
             }
         }
     }
@@ -110,9 +100,13 @@ const useUrgensiVM = () => {
         });
         if (response?.code == API_CODE.success) {
             const result: SegmenResDto = response.result;
+
             if (result) {
                 setDataSegmen(result);
                 setRequestSegmen(result);
+            } else {
+                setDataSegmen(initSegmen);
+                setRequestSegmen(initSegmen);
             }
         }
     }
@@ -169,6 +163,10 @@ const useUrgensiVM = () => {
 
                 setRequestSwot(initReqState);
             }
+            else {
+                setDataSwot(initSwot);
+                setRequestSwot(initSwot);
+            }
         }
     }
 
@@ -199,11 +197,46 @@ const useUrgensiVM = () => {
         }
     }
 
+    // Stakeholder
+    async function getStakeholder() {
+        const response = await doGetStakeholder({
+            body: { uraian_penetapan_objek_id: objectState?.id ?? 0 },
+            loadingContext: loadingContext,
+            errorModalContext: errorModalContext,
+        });
+        if (response?.code == API_CODE.success) {
+            const result: StakeholderResDto = response.result;
+            if (result) {
+                setStakeholderMapping(result);
+            } else {
+                setStakeholderMapping(initStakeholderShow)
+            }
+        }
+    }
+
+    async function uploadStakeholder(file: string) {
+        if (file == undefined) return;
+
+        const req: StakeholderImageReqDto = {
+            uraian_penetapan_objek_id: objectState?.id ?? 0,
+            file: file ?? "",
+        };
+
+        const response = await doUnggahStakeholder({
+            body: req,
+            loadingContext: loadingContext,
+            errorModalContext: errorModalContext,
+        });
+        if (response?.code == API_CODE.success) {
+            getStakeholder();
+        }
+    }
+
     useEffect(() => {
         getDataUrgensi();
-        // getDataUrgensiExsum();
         getDataSegmen();
         getDataSwot();
+        getStakeholder();
     }, [objectState?.id]);
 
     return {
@@ -219,6 +252,8 @@ const useUrgensiVM = () => {
         uriRequestSwot,
         dataSwot,
         objectState,
+        uploadStakeholder,
+        stakeholderMapping
     };
 };
 export default useUrgensiVM;

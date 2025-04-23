@@ -49,7 +49,7 @@ const useCardRegulasi = () => {
     if (objectState !== undefined) {
       getData();
     }
-  }, [objectState]);
+  }, [objectState?.id]);
 
   return {
     objectState,

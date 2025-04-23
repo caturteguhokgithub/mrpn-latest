@@ -1,6 +1,6 @@
 import { get, post, put } from "@/lib/core/api/apiBase";
 import { ResponseBaseDto } from "@/lib/core/api/apiModel";
-import { GetSegmenServiceModel, GetSwotServiceModel, GetUrgensiServiceModel, RequestSegmenServiceModel, RequestSwotServiceModel, RequestUrgensiServiceModel } from "./pageModel";
+import { GetSegmenServiceModel, GetStakeholderServiceModel, GetSwotServiceModel, GetUrgensiServiceModel, RequestSegmenServiceModel, RequestSwotServiceModel, RequestUrgensiServiceModel, UploadStakeholderServiceModel } from "./pageModel";
 
 // Urgensi
 export async function doGetUrgensi(param: GetUrgensiServiceModel) {
@@ -73,6 +73,23 @@ export async function doUpdateSwot(param: RequestSwotServiceModel) {
     const resp = await post({
         ...param,
         url: "penetapan/upr/swot/update"
+    });
+    if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+// Stakeholder
+export async function doGetStakeholder(param: GetStakeholderServiceModel) {
+    const resp = await post({
+        ...param,
+        url: "penetapan/upr/stakeholderMapping/show",
+    });
+    if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+export async function doUnggahStakeholder(param: UploadStakeholderServiceModel) {
+    const resp = await post({
+        ...param,
+        url: "penetapan/upr/stakeholderMapping/add",
     });
     if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }

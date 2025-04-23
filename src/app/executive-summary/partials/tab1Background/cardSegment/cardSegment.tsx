@@ -98,28 +98,26 @@ export default function CardSegment({
       settingEditOnclick={() => setModal(true)}
     >
       {penetapan ? (
-        dataSegmen?.value == "" ? (
-          <EmptyState
-            dense
-            icon={<IconEmptyData width={100} />}
-            title="Data Kosong"
-            description="Silahkan isi konten halaman ini"
-          />
-        ) : (
-          <Fragment>
-            <Box sx={{ opacity: 0.6 }}>
-              <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
-            </Box>
-            {dataSegmen?.value == "" ? null : (
-              <>
-                <DividerIntExt />
-                <div
-                  dangerouslySetInnerHTML={{ __html: dataSegmen?.value ?? "" }}
-                ></div>
-              </>
+        <Fragment>
+          <Box sx={{ opacity: 0.6 }}>
+            <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
+          </Box>
+          <>
+            <DividerIntExt />
+            {dataSegmen?.value == "" ? (
+              <EmptyState
+                dense
+                icon={<IconEmptyData width={100} />}
+                title="Data Kosong"
+                description="Silahkan isi konten halaman ini"
+              />
+            ) : (
+              <div
+                dangerouslySetInnerHTML={{ __html: dataSegmen?.value ?? "" }}
+              ></div>
             )}
-          </Fragment>
-        )
+          </>
+        </Fragment>
       ) : data.value == "" ? (
         <EmptyState
           dense
