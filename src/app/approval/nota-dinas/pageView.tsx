@@ -100,7 +100,7 @@ export default function PageApprovalNotaDinasView({}) {
       }
     >
       {nota !== undefined ? (
-        <TableNotaDinasViewOnly notaDinas={nota} />
+        <TableNotaDinasViewOnly notaDinas={nota} pageApproval />
       ) : (
         <EmptyState
           icon={<IconEmptyPage />}
