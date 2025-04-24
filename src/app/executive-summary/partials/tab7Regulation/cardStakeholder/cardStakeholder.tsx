@@ -72,7 +72,6 @@ export default function CardStakeholder({
   const { handleEdited, conditionEditingImg } = useCardLocationVM();
   const { uploadStakeholder, stakeholderMapping } = useUrgensiVM();
 
-
   const handleModalOpenStakeholder = () => {
     setModalOpenStakeholder(true);
   };
@@ -134,7 +133,9 @@ export default function CardStakeholder({
     }
   };
 
-  const handleStakeholderChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleStakeholderChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const files = e.target.files?.[0];
 
     if (files) {
@@ -207,40 +208,39 @@ export default function CardStakeholder({
         )
       }
     >
-      {isIntExtPage && isDeveloping ? (
+      {/* {isIntExtPage && isDeveloping ? (
         <EmptyDevelopingState />
-      ) : isIntExtPage ? (
+      ) :  */}
+      {isIntExtPage ? (
         <Stack width="100%" direction="row" justifyContent="center">
-          {
-            stakeholderMapping?.file != "" ? (
-              <Box>
-                <Image
-                  alt="MRPN"
-                  // src="https://res.cloudinary.com/caturteguh/image/upload/v1738912448/mrpn/hierarchy_ic8yuc.jpg"
-                  src={
-                    process.env.NEXT_PUBLIC_BASE_URL_FILES + stakeholderMapping.file
-                  }
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  style={{
-                    width: "auto",
-                    height: "300px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => setModalViewImageIntExt(true)}
-                />
-              </Box>
-            ) : (
-              <EmptyState
-                dense
-                icon={<IconEmptyData width={100} />}
-                title="Data Kosong"
-                description="Silahkan isi konten halaman ini"
+          {stakeholderMapping?.file != "" ? (
+            <Box>
+              <Image
+                alt="MRPN"
+                // src="https://res.cloudinary.com/caturteguh/image/upload/v1738912448/mrpn/hierarchy_ic8yuc.jpg"
+                src={
+                  process.env.NEXT_PUBLIC_BASE_URL_FILES +
+                  stakeholderMapping.file
+                }
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{
+                  width: "auto",
+                  height: "300px",
+                  cursor: "pointer",
+                }}
+                onClick={() => setModalViewImageIntExt(true)}
               />
-            )
-          }
-
+            </Box>
+          ) : (
+            <EmptyState
+              dense
+              icon={<IconEmptyData width={100} />}
+              title="Data Kosong"
+              description="Silahkan isi konten halaman ini"
+            />
+          )}
         </Stack>
       ) : (
         <Fragment>
@@ -256,23 +256,23 @@ export default function CardStakeholder({
               <Stack direction="row" gap={1}>
                 {(hasPrivilege(permission, pathname, "add") ||
                   hasPrivilege(permission, pathname, "update")) && (
-                    <AddButton
-                      noMargin
-                      small
-                      title="Ubah Logo"
-                      startIcon={
-                        <Icon
-                          baseClassName="fas"
-                          className={"fa-pencil"}
-                          sx={{
-                            fontSize: "12px !important",
-                          }}
-                        />
-                      }
-                      sx={{ paddingInline: 2 }}
-                      onclick={() => setModalListLogo(true)}
-                    />
-                  )}
+                  <AddButton
+                    noMargin
+                    small
+                    title="Ubah Logo"
+                    startIcon={
+                      <Icon
+                        baseClassName="fas"
+                        className={"fa-pencil"}
+                        sx={{
+                          fontSize: "12px !important",
+                        }}
+                      />
+                    }
+                    sx={{ paddingInline: 2 }}
+                    onclick={() => setModalListLogo(true)}
+                  />
+                )}
 
                 <Button
                   component="label"
@@ -424,7 +424,7 @@ export default function CardStakeholder({
                 src={
                   logoState.icon == ""
                     ? process.env.NEXT_PUBLIC_BASE_URL_FILES +
-                    logoState.iconPath
+                      logoState.iconPath
                     : ""
                 }
                 width={0}
@@ -566,7 +566,8 @@ export default function CardStakeholder({
                   alt="Instansi Pelaksana"
                   // src="https://res.cloudinary.com/caturteguh/image/upload/v1738912448/mrpn/hierarchy_ic8yuc.jpg"
                   src={
-                    process.env.NEXT_PUBLIC_BASE_URL_FILES + stakeholderMapping.file
+                    process.env.NEXT_PUBLIC_BASE_URL_FILES +
+                    stakeholderMapping.file
                   }
                   width={0}
                   height={0}

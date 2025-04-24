@@ -18,7 +18,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { blue, green, grey, red } from "@mui/material/colors";
 import Image from "next/image";
 import { PenetapanObjectNotaDto } from "@/lib/core/context/penetapanTopicContext";
 import { bgColorTh } from "@/app/utils/color";
@@ -35,6 +35,8 @@ import { SxParams } from "@/app/executive-summary/types";
 import useNotaDinasVM from "../notaDinasVM";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
+import EmptyState from "@/app/components/empty";
+import { IconEmptyData } from "@/app/components/icons";
 
 type Row = {
   object: string;
@@ -49,9 +51,11 @@ type Row = {
 export default function TableNotaDinasViewOnly({
   notaDinas,
   actionApprove,
+  pageApproval,
 }: {
   notaDinas: PenetapanObjectNotaDto;
   actionApprove?: React.ReactNode;
+  pageApproval?: boolean;
 }) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalViewImage, setModalViewImage] = React.useState(false);
@@ -192,7 +196,9 @@ export default function TableNotaDinasViewOnly({
     }
   };
 
-  const statusObject: "plan" | "reject" | "approved" = "plan";
+  // const statusObject: "" | "draft" | "plan" | "reject" | "approved" = "draft";
+
+  let statusObject = "reject";
 
   return (
     <Fragment>
@@ -232,16 +238,21 @@ export default function TableNotaDinasViewOnly({
                   </TableCell>
                   <TableCell>
                     <Stack direction="row" alignItems="center" gap={1}>
-                      {statusObject === "plan" ? (
-                        <Fragment>
-                          <Chip
-                            color="primary"
-                            label="Rancangan"
-                            variant="outlined"
-                            sx={{ fontWeight: 600 }}
+                      {pageApproval ? (
+                        <Stack direction="row" alignItems="center" gap={1}>
+                          <AddButton
+                            errorColor
+                            title="Tolak Pengesahan"
+                            filled
+                            noMargin
+                            startIcon={
+                              <Iconify name="mdi:close-circle" size={16} />
+                            }
+                            onclick={() => {}}
                           />
                           <AddButton
-                            title="Ajukan Pengesahan"
+                            color="success"
+                            title="Terima Pengesahan"
                             filled
                             noMargin
                             startIcon={
@@ -249,32 +260,85 @@ export default function TableNotaDinasViewOnly({
                             }
                             onclick={() => {}}
                           />
-                        </Fragment>
-                      ) : statusObject === "reject" ? (
+                        </Stack>
+                      ) : (
                         <Fragment>
-                          <Chip
-                            color="error"
-                            label="Ditolak"
-                            variant="outlined"
-                            sx={{ fontWeight: 600 }}
-                          />
-                          <Typography color={grey[500]} fontSize={14}>
-                            Ditolak tanggal <strong>12 Februari 2025</strong>
-                          </Typography>
+                          {statusObject == "" || statusObject == "draft" ? (
+                            <Fragment>
+                              <Chip
+                                color="default"
+                                label="Draf"
+                                variant="outlined"
+                                sx={{
+                                  fontWeight: 600,
+                                  bgcolor: grey[100],
+                                  textTransform: "uppercase",
+                                }}
+                              />
+                              <AddButton
+                                title="Ajukan Pengesahan"
+                                filled
+                                noMargin
+                                startIcon={
+                                  <Iconify name="mdi:check-circle" size={16} />
+                                }
+                                onclick={() => {}}
+                              />
+                            </Fragment>
+                          ) : statusObject == "plan" ? (
+                            <Fragment>
+                              <Chip
+                                color="primary"
+                                label="Rancangan"
+                                variant="outlined"
+                                sx={{
+                                  fontWeight: 600,
+                                  bgcolor: blue[100],
+                                  textTransform: "uppercase",
+                                }}
+                              />
+                            </Fragment>
+                          ) : statusObject == "reject" ? (
+                            <Fragment>
+                              <Chip
+                                color="error"
+                                label="Ditolak"
+                                variant="outlined"
+                                sx={{
+                                  fontWeight: 600,
+                                  bgcolor: red[100],
+                                  textTransform: "uppercase",
+                                }}
+                              />
+                              {!pageApproval && (
+                                <Typography color={grey[500]} fontSize={14}>
+                                  Ditolak tanggal{" "}
+                                  <strong>12 Februari 2025</strong>
+                                </Typography>
+                              )}
+                            </Fragment>
+                          ) : statusObject == "approved" ? (
+                            <Fragment>
+                              <Chip
+                                color="success"
+                                label="Disetujui"
+                                variant="outlined"
+                                sx={{
+                                  fontWeight: 600,
+                                  bgcolor: green[100],
+                                  textTransform: "uppercase",
+                                }}
+                              />
+                              {!pageApproval && (
+                                <Typography color={grey[500]} fontSize={14}>
+                                  Disahkan tanggal{" "}
+                                  <strong>5 September 2025</strong>
+                                </Typography>
+                              )}
+                            </Fragment>
+                          ) : null}
                         </Fragment>
-                      ) : statusObject === "approved" ? (
-                        <Fragment>
-                          <Chip
-                            color="success"
-                            label="Disetujui"
-                            variant="outlined"
-                            sx={{ fontWeight: 600 }}
-                          />
-                          <Typography color={grey[500]} fontSize={14}>
-                            Disahkan tanggal <strong>5 September 2025</strong>
-                          </Typography>
-                        </Fragment>
-                      ) : null}
+                      )}
                     </Stack>
                   </TableCell>
                 </TableRow>
@@ -323,160 +387,183 @@ export default function TableNotaDinasViewOnly({
         {/* OBJEK UPR */}
         <Stack gap={1}>
           <Typography fontWeight={600}>Objek & UPR LS</Typography>
-          <TableContainer component={Paper} elevation={0} variant="outlined">
-            <Table
-              sx={{
-                minWidth: 650,
-                "tbody, thead": {
-                  "td, th": {
-                    borderRight: `1px solid ${grey[300]} !important`,
-                    "&:last-of-type": {
-                      borderRight: `0 !important`,
+          {generateRows().length == 0 ? (
+            <Paper elevation={0} variant="outlined">
+              <EmptyState
+                dense
+                icon={<IconEmptyData width={100} />}
+                title="Objek & UPR LS Kosong"
+              />
+            </Paper>
+          ) : (
+            <TableContainer component={Paper} elevation={0} variant="outlined">
+              <Table
+                sx={{
+                  minWidth: 650,
+                  "tbody, thead": {
+                    "td, th": {
+                      borderRight: `1px solid ${grey[300]} !important`,
+                      "&:last-of-type": {
+                        borderRight: `0 !important`,
+                      },
                     },
                   },
-                },
-              }}
-              size="small"
-            >
-              <TableHead sx={{ bgcolor: bgColorTh }}>
-                <TableRow>
-                  <TableCell
-                    rowSpan={2}
-                    width={70}
-                    sx={{ textAlign: "center" }}
-                  >
-                    No.
-                  </TableCell>
-                  <TableCell rowSpan={2} sx={{ textAlign: "center" }}>
-                    Objek MRPN LS
-                  </TableCell>
-                  <TableCell colSpan={3} align="center">
-                    Unit Pengelola Risiko
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="center">Koordinator</TableCell>
-                  <TableCell align="center">Utama</TableCell>
-                  <TableCell align="center">Pendukung</TableCell>
-                </TableRow>
-                <TableRow
-                  sx={{
-                    ".MuiTableCell-stickyHeader": {
-                      top: 37,
-                    },
-                  }}
-                >
-                  {[...new Array(5)].map((_, i) => (
-                    <TableCell sx={{ bgcolor: grey[100] }}>
-                      <Typography
-                        color={`${grey[500]} !important`}
-                        fontSize={14}
-                        textAlign="center"
-                      >
-                        {i + 1}
-                      </Typography>
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {generateRows().map((row, rowIndex) =>
+                }}
+                size="small"
+              >
+                <TableHead sx={{ bgcolor: bgColorTh }}>
                   <TableRow>
-                    <TableCell sx={{ verticalAlign: "top" }}>{++rowIndex}</TableCell>
-                    <TableCell sx={{ verticalAlign: "top" }}>{row.object}</TableCell>
-                    <TableCell width={300}>
-                      {row.coordinator.length === 0 ? (
-                        "-"
-                      ) : (
-                        <Stack
-                          display="inline-flex"
-                          alignItems="center"
-                          direction="row"
-                          gap={0.5}
-                          flexWrap="wrap"
-                        >
-                          {row.coordinator.map((item, index) => (
-                            <Box component="div" key={index}>
-                              <Chip
-                                label={item}
-                                size="small"
-                                sx={{
-                                  height: "auto",
-                                  ".MuiChip-label": {
-                                    whiteSpace: "wrap",
-                                    lineHeight: 1.2,
-                                    py: 0.6,
-                                  },
-                                }}
-                              />
-                            </Box>
-                          ))}
-                        </Stack>
-                      )}
+                    <TableCell
+                      rowSpan={2}
+                      width={70}
+                      sx={{ textAlign: "center" }}
+                    >
+                      No.
                     </TableCell>
-                    <TableCell width={300}>
-                      {row.main.length === 0 ? (
-                        "-"
-                      ) : (
-                        <Stack
-                          display="inline-flex"
-                          alignItems="center"
-                          direction="row"
-                          gap={0.5}
-                          flexWrap="wrap"
-                        >
-                          {row.main.map((item, index) => (
-                            <Box component="div" key={index}>
-                              <Chip
-                                label={item}
-                                size="small"
-                                sx={{
-                                  height: "auto",
-                                  ".MuiChip-label": {
-                                    whiteSpace: "wrap",
-                                    lineHeight: 1.2,
-                                    py: 0.6,
-                                  },
-                                }}
-                              />
-                            </Box>
-                          ))}
-                        </Stack>
-                      )}
+                    <TableCell
+                      width={400}
+                      rowSpan={2}
+                      sx={{ textAlign: "center" }}
+                    >
+                      Objek MRPN LS
                     </TableCell>
-                    <TableCell width={300}>
-                      {row.support.length === 0 ? (
-                        "-"
-                      ) : (
-                        <Stack
-                          display="inline-flex"
-                          alignItems="center"
-                          direction="row"
-                          gap={0.5}
-                          flexWrap="wrap"
-                        >
-                          {row.support.map((item, index) => (
-                            <Box component="div" key={index}>
-                              <Chip
-                                label={item}
-                                size="small"
-                                sx={{
-                                  height: "auto",
-                                  ".MuiChip-label": {
-                                    whiteSpace: "wrap",
-                                    lineHeight: 1.2,
-                                    py: 0.6,
-                                  },
-                                }}
-                              />
-                            </Box>
-                          ))}
-                        </Stack>
-                      )}
+                    <TableCell colSpan={3} align="center">
+                      Unit Pengelola Risiko
                     </TableCell>
                   </TableRow>
-                )}
-                {/* <TableRow>
+                  <TableRow>
+                    <TableCell width="20%" align="center">
+                      Koordinator
+                    </TableCell>
+                    <TableCell width="20%" align="center">
+                      Utama
+                    </TableCell>
+                    <TableCell width="20%" align="center">
+                      Pendukung
+                    </TableCell>
+                  </TableRow>
+                  <TableRow
+                    sx={{
+                      ".MuiTableCell-stickyHeader": {
+                        top: 37,
+                      },
+                    }}
+                  >
+                    {[...new Array(5)].map((_, i) => (
+                      <TableCell sx={{ bgcolor: grey[100] }}>
+                        <Typography
+                          color={`${grey[500]} !important`}
+                          fontSize={14}
+                          textAlign="center"
+                        >
+                          {i + 1}
+                        </Typography>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {generateRows().map((row, rowIndex) => (
+                    <TableRow>
+                      <TableCell align="center" sx={{ verticalAlign: "top" }}>
+                        {++rowIndex}
+                      </TableCell>
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        {row.object}
+                      </TableCell>
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        {row.coordinator.length === 0 ? (
+                          "-"
+                        ) : (
+                          <Stack
+                            display="inline-flex"
+                            alignItems="center"
+                            direction="row"
+                            gap={0.5}
+                            flexWrap="wrap"
+                          >
+                            {row.coordinator.map((item, index) => (
+                              <Box component="div" key={index}>
+                                <Chip
+                                  label={item}
+                                  size="small"
+                                  sx={{
+                                    height: "auto",
+                                    ".MuiChip-label": {
+                                      whiteSpace: "wrap",
+                                      lineHeight: 1.2,
+                                      py: 0.6,
+                                    },
+                                  }}
+                                />
+                              </Box>
+                            ))}
+                          </Stack>
+                        )}
+                      </TableCell>
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        {row.main.length === 0 ? (
+                          "-"
+                        ) : (
+                          <Stack
+                            display="inline-flex"
+                            alignItems="center"
+                            direction="row"
+                            gap={0.5}
+                            flexWrap="wrap"
+                          >
+                            {row.main.map((item, index) => (
+                              <Box component="div" key={index}>
+                                <Chip
+                                  label={item}
+                                  size="small"
+                                  sx={{
+                                    height: "auto",
+                                    ".MuiChip-label": {
+                                      whiteSpace: "wrap",
+                                      lineHeight: 1.2,
+                                      py: 0.6,
+                                    },
+                                  }}
+                                />
+                              </Box>
+                            ))}
+                          </Stack>
+                        )}
+                      </TableCell>
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        {row.support.length === 0 ? (
+                          "-"
+                        ) : (
+                          <Stack
+                            display="inline-flex"
+                            alignItems="center"
+                            direction="row"
+                            gap={0.5}
+                            flexWrap="wrap"
+                          >
+                            {row.support.map((item, index) => (
+                              <Box component="div" key={index}>
+                                <Chip
+                                  label={item}
+                                  size="small"
+                                  sx={{
+                                    height: "auto",
+                                    ".MuiChip-label": {
+                                      whiteSpace: "wrap",
+                                      lineHeight: 1.2,
+                                      py: 0.6,
+                                    },
+                                  }}
+                                />
+                              </Box>
+                            ))}
+                          </Stack>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {/* <TableRow>
                   <TableCell align="center">1</TableCell>
                   <TableCell>
                     Pengembangan Kawasan Sentra Produksi Pangan (KSPP)/Lumbung
@@ -561,9 +648,10 @@ export default function TableNotaDinasViewOnly({
                     </Stack>
                   </TableCell>
                 </TableRow> */}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </Stack>
         {/* Bukti Dukung */}
         <Stack gap={1}>
@@ -574,85 +662,119 @@ export default function TableNotaDinasViewOnly({
             justifyContent="space-between"
           >
             <Typography fontWeight={600}>Bukti Dukung</Typography>
-            <Button
-              size="small"
-              component="label"
-              role={undefined}
-              variant="contained"
-              tabIndex={-1}
-              startIcon={<Iconify name="mdi:upload" size={16} />}
-              sx={{
-                borderRadius: 50,
-                textTransform: "capitalize",
-              }}
-            >
-              Unggah Bukti Dukung
-              <VisuallyHiddenInput
-                type="file"
-                onChange={(event: any) => handleUnggahBuktiDukung(event)}
-                multiple
-              />
-            </Button>
+            {!pageApproval && (
+              <Button
+                size="small"
+                component="label"
+                role={undefined}
+                variant="contained"
+                tabIndex={-1}
+                startIcon={<Iconify name="mdi:upload" size={16} />}
+                sx={{
+                  borderRadius: 50,
+                  textTransform: "capitalize",
+                }}
+              >
+                Unggah Bukti Dukung
+                <VisuallyHiddenInput
+                  type="file"
+                  onChange={(event: any) => handleUnggahBuktiDukung(event)}
+                  multiple
+                />
+              </Button>
+            )}
           </Stack>
-          <TableContainer component={Paper} elevation={0} variant="outlined">
-            <Table
-              sx={{
-                minWidth: 650,
-                "tbody, thead": {
-                  "td, th": {
-                    borderRight: `1px solid ${grey[300]} !important`,
-                    "&:last-of-type": {
-                      borderRight: `0 !important`,
+          {gambar?.length == 0 ? (
+            <Paper elevation={0} variant="outlined">
+              <EmptyState
+                dense
+                icon={<IconEmptyData width={100} />}
+                title="Bukti Dukung Kosong"
+              />
+            </Paper>
+          ) : (
+            <TableContainer component={Paper} elevation={0} variant="outlined">
+              <Table
+                sx={{
+                  minWidth: 650,
+                  "tbody, thead": {
+                    "td, th": {
+                      borderRight: `1px solid ${grey[300]} !important`,
+                      "&:last-of-type": {
+                        borderRight: `0 !important`,
+                      },
                     },
                   },
-                },
-              }}
-              size="small"
-            >
-              <TableHead sx={{ bgcolor: bgColorTh }}>
-                <TableRow>
-                  <TableCell width={70} align="center">
-                    No.
-                  </TableCell>
-                  <TableCell align="center">File Bukti Dukung</TableCell>
-                  <TableCell align="center">Aksi</TableCell>
-                </TableRow>
-                <TableRow
-                  sx={{
-                    ".MuiTableCell-stickyHeader": {
-                      top: 37,
-                    },
-                  }}
-                >
-                  {[...new Array(3)].map((_, i) => (
-                    <TableCell sx={{ bgcolor: grey[100] }}>
-                      <Typography
-                        color={`${grey[500]} !important`}
-                        fontSize={14}
-                        textAlign="center"
-                      >
-                        {i + 1}
-                      </Typography>
+                }}
+                size="small"
+              >
+                <TableHead sx={{ bgcolor: bgColorTh }}>
+                  <TableRow>
+                    <TableCell width={70} align="center">
+                      No.
                     </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {gambar.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell align="center">{index + 1}</TableCell>
-                    <TableCell>
-                      <Stack direction="row" alignItems="center" gap={1}>
-                        {item.file.toLowerCase().endsWith(".pdf") ? (
-                          <a
-                            href={`${process.env.NEXT_PUBLIC_BASE_URL_FILES}bukti_dukung/${item.file}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <Button color="primary" sx={{ gap: 1 }}>
+                    <TableCell align="center">File Bukti Dukung</TableCell>
+                    <TableCell align="center">Aksi</TableCell>
+                  </TableRow>
+                  <TableRow
+                    sx={{
+                      ".MuiTableCell-stickyHeader": {
+                        top: 37,
+                      },
+                    }}
+                  >
+                    {[...new Array(3)].map((_, i) => (
+                      <TableCell sx={{ bgcolor: grey[100] }}>
+                        <Typography
+                          color={`${grey[500]} !important`}
+                          fontSize={14}
+                          textAlign="center"
+                        >
+                          {i + 1}
+                        </Typography>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {gambar.map((item, index) => (
+                    <TableRow key={index}>
+                      <TableCell align="center">{index + 1}</TableCell>
+                      <TableCell>
+                        <Stack direction="row" alignItems="center" gap={1}>
+                          {item.file.toLowerCase().endsWith(".pdf") ? (
+                            <a
+                              href={`${process.env.NEXT_PUBLIC_BASE_URL_FILES}bukti_dukung/${item.file}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Button color="primary" sx={{ gap: 1 }}>
+                                <Iconify
+                                  name="mdi:file-pdf"
+                                  color="red"
+                                  size={16}
+                                />
+                                <Typography
+                                  component="span"
+                                  fontSize={14}
+                                  textTransform="lowercase"
+                                >
+                                  {item.file}
+                                </Typography>
+                              </Button>
+                            </a>
+                          ) : (
+                            <Button
+                              color="primary"
+                              onClick={() => {
+                                setModalViewImage(true);
+                                setThisGambar(item.file);
+                              }}
+                              sx={{ gap: 1 }}
+                            >
                               <Iconify
-                                name="mdi:file-pdf"
-                                color="red"
+                                name="mdi:file-image"
+                                color={grey[800]}
                                 size={16}
                               />
                               <Typography
@@ -663,42 +785,20 @@ export default function TableNotaDinasViewOnly({
                                 {item.file}
                               </Typography>
                             </Button>
-                          </a>
-                        ) : (
-                          <Button
-                            color="primary"
-                            onClick={() => {
-                              setModalViewImage(true);
-                              setThisGambar(item.file);
-                            }}
-                            sx={{ gap: 1 }}
-                          >
-                            <Iconify
-                              name="mdi:file-image"
-                              color={grey[800]}
-                              size={16}
-                            />
-                            <Typography
-                              component="span"
-                              fontSize={14}
-                              textTransform="lowercase"
-                            >
-                              {item.file}
-                            </Typography>
-                          </Button>
-                        )}
-                      </Stack>
-                    </TableCell>
-                    <TableCell align="center">
-                      <IconButton color="error">
-                        <Iconify name="mdi:trash" color="red" size={16} />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                          )}
+                        </Stack>
+                      </TableCell>
+                      <TableCell align="center">
+                        <IconButton color="error">
+                          <Iconify name="mdi:trash" color="red" size={16} />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </Stack>
         {/* Pengajuan Pengesahan */}
         <Stack gap={1}>
@@ -709,7 +809,7 @@ export default function TableNotaDinasViewOnly({
             justifyContent="space-between"
           >
             <Typography fontWeight={600}>Pengajuan Pengesahan</Typography>
-            {statusObject !== "plan" && (
+            {(statusObject == "reject" || statusObject == "approved") && (
               <AddButton
                 title="Tambah Catatan"
                 filled

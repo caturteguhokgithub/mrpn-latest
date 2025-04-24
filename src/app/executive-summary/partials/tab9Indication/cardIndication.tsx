@@ -77,8 +77,9 @@ export default function CardIndication({ project }: { project: string }) {
     <>
       <Stack gap={1}>
         <CardItem
-          title={`Indikasi Risiko ${year == 0 ? "RPJMN 5 Tahunan" : "RKP Tahun " + year
-            }`}
+          title={`Indikasi Profil Risiko ${
+            year == 0 ? "Objek MRPN LS" : "RKP Tahun " + year
+          }`}
           infoTooltip={
             <Stack spacing={2}>
               <div>
@@ -237,8 +238,9 @@ export default function CardIndication({ project }: { project: string }) {
         width={"80%"}
         dialogOpen={modalOutput.type != "delete" && modalOutput.action}
         dialogClose={() => handleModalOutputOpen(-1, false, "")}
-        title={`Tambah ${modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
-          }`}
+        title={`Tambah ${
+          modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
+        }`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button
@@ -359,7 +361,9 @@ export default function CardIndication({ project }: { project: string }) {
       <DialogDelete
         title="Hapus Data"
         handleOpenModal={modalOpen.action && modalOpen.type == "delete"}
-        handleCloseModal={() => setModalOpen({ index: -1, action: false, type: "" })}
+        handleCloseModal={() =>
+          setModalOpen({ index: -1, action: false, type: "" })
+        }
         handleDelete={() => deleteData()}
       />
     </>
