@@ -283,6 +283,28 @@ export default function PageLoginView() {
             }}
           />
           <Image
+            alt="Berakhlak"
+            src="https://res.cloudinary.com/caturteguh/image/upload/v1745805935/mrpn/berakhlak_trj3o9.png"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{
+              width: "auto",
+              height: "50px",
+            }}
+          />
+          <Image
+            alt="Bangga"
+            src="https://res.cloudinary.com/caturteguh/image/upload/v1745805935/mrpn/bangga_hhbvqp.png"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{
+              width: "auto",
+              height: "50px",
+            }}
+          />
+          {/* <Image
             alt="Indonesia Emas 2045"
             src="https://res.cloudinary.com/caturteguh/image/upload/v1724121579/mrpn/logo-id-emas-sm_ptgbn4.png"
             width={0}
@@ -297,7 +319,7 @@ export default function PageLoginView() {
             height={0}
             sizes="100vw"
             style={{ width: "auto", height: "50px" }}
-          />
+          /> */}
         </Stack>
       </Box>
     </Box>

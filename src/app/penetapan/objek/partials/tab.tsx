@@ -209,34 +209,31 @@ export default function TabObject({}) {
           //   )
           // }
         >
-          {isDeveloping ? (
+          {/* {isDeveloping ? (
             <EmptyDevelopingState />
-          ) : (
-            <Fragment>
-              {isEmpty ? (
-                <EmptyState
-                  dense
-                  icon={<IconEmptyData width={100} />}
-                  title="Data Kosong"
-                  description="Silahkan isi konten halaman ini"
-                />
-              ) : editNotaDinas ? (
-                <TableNotaDinas
-                  edit={editNotaDinas}
-                  setEdit={setEditNotaDinas}
-                />
-              ) : nota ? (
-                <TableNotaDinasViewOnly notaDinas={nota} />
-              ) : (
-                <EmptyState
-                  dense
-                  icon={<IconEmptyData width={100} />}
-                  title="Data Kosong"
-                  description=""
-                />
-              )}
-            </Fragment>
-          )}
+          ) : ( */}
+          <Fragment>
+            {isEmpty ? (
+              <EmptyState
+                dense
+                icon={<IconEmptyData width={100} />}
+                title="Data Kosong"
+                description="Silahkan isi konten halaman ini"
+              />
+            ) : editNotaDinas ? (
+              <TableNotaDinas edit={editNotaDinas} setEdit={setEditNotaDinas} />
+            ) : nota ? (
+              <TableNotaDinasViewOnly notaDinas={nota} />
+            ) : (
+              <EmptyState
+                dense
+                icon={<IconEmptyData width={100} />}
+                title="Data Kosong"
+                description=""
+              />
+            )}
+          </Fragment>
+          {/* )} */}
         </CardItem>
       </CustomTabPanel>
     </Box>
