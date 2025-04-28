@@ -78,7 +78,9 @@ export default function FormInformation({
 
     setState((prevState) => ({
       ...prevState,
-      lists: prevState.lists.filter((listItem, index) => index !== items.findIndex(i => i.id === nowId)),
+      lists: prevState.lists.filter(
+        (listItem, index) => index !== items.findIndex((i) => i.id === nowId)
+      ),
     }));
   };
 
@@ -115,15 +117,18 @@ export default function FormInformation({
       lists: prevState.lists.map((item, index) =>
         index === key
           ? {
-            ...item,
-            value: value
-          }
+              ...item,
+              value: value,
+            }
           : item
       ),
     }));
   };
 
-  const handleUnggahBuktiDukung = async (e: React.ChangeEvent<HTMLInputElement>, key: number) => {
+  const handleUnggahBuktiDukung = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    key: number
+  ) => {
     const files = e.target.files?.[0];
 
     if (files) {
@@ -135,9 +140,7 @@ export default function FormInformation({
         setState((prevState) => ({
           ...prevState,
           lists: prevState.lists.map((item, idx) =>
-            idx === key
-              ? { ...item, file: res, filename: files.name }
-              : item
+            idx === key ? { ...item, file: res, filename: files.name } : item
           ),
         }));
       };
@@ -221,7 +224,9 @@ export default function FormInformation({
                                 rows={4}
                                 variant="outlined"
                                 value={state.lists[key]?.value}
-                                onChange={(e) => handleChangeEditor(e.target.value, key)}
+                                onChange={(e) =>
+                                  handleChangeEditor(e.target.value, key)
+                                }
                               />
 
                               {/* <ReactQuill
@@ -251,7 +256,9 @@ export default function FormInformation({
                                 rows={4}
                                 variant="outlined"
                                 value={state.lists[key]?.value}
-                                onChange={(e) => handleChangeEditor(e.target.value, key)}
+                                onChange={(e) =>
+                                  handleChangeEditor(e.target.value, key)
+                                }
                               />
 
                               {/* <ReactQuill
@@ -283,10 +290,11 @@ export default function FormInformation({
                           </RadioGroup>
                         </FormControl>
                       </Grid> */}
-                      <Grid item xs={12} md={6}>
+                      <Grid item xs={12} md={12}>
                         <FormControl fullWidth>
                           <FieldLabelInfo title="Unggah Bukti Dukung" />
                           <Button
+                            fullWidth
                             component="label"
                             role={undefined}
                             variant="contained"
@@ -299,7 +307,7 @@ export default function FormInformation({
                               onChange={(event) =>
                                 handleUnggahBuktiDukung(event, key)
                               }
-                            // multiple
+                              // multiple
                             />
                           </Button>
                         </FormControl>

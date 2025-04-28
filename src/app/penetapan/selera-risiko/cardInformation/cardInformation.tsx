@@ -83,27 +83,27 @@ export default function CardInformation({
 
   const handleCreateOrUpdateData = async () => {
     const req = {
-      ...request
+      ...request,
     };
-    createOrUpdateData(req)
+    createOrUpdateData(req);
   };
 
   const handleDeleteListData = async () => {
     const req = {
-      id: deleteID
+      id: deleteID,
     };
-    deleteListData(req)
+    deleteListData(req);
   };
 
   const handleViewBD = async (file: string) => {
-    setLihatBD(file)
-    setModalViewImage(true)
-  }
+    setLihatBD(file);
+    setModalViewImage(true);
+  };
 
   const handleBtnDelete = async (id: number) => {
-    setDeleteID(id)
-    setModalDelete(true)
-  }
+    setDeleteID(id);
+    setModalDelete(true);
+  };
 
   const emptyData = true;
 
@@ -135,54 +135,50 @@ export default function CardInformation({
           </Button>
         }
       >
-        {isDeveloping ? (
+        {/* {isDeveloping ? (
           <EmptyDevelopingState />
-        ) : (
-          <Fragment>
-            {!emptyData ? (
-              <EmptyState
-                dense
-                icon={<IconEmptyData width={100} />}
-                title="Data Kosong"
-                description="Silahkan isi konten halaman ini"
-              />
-            ) : (
-              <TableContainer
-                component={Paper}
-                elevation={0}
-                variant="outlined"
-              >
-                <Table
-                  sx={{
-                    minWidth: 650,
-                    "tbody, thead": {
-                      "td, th": {
-                        borderRight: `1px solid ${grey[300]} !important`,
-                        "&:last-of-type": {
-                          borderRight: `0 !important`,
-                        },
+        ) : ( */}
+        <Fragment>
+          {data?.lists.length == 0 ? (
+            <EmptyState
+              dense
+              icon={<IconEmptyData width={100} />}
+              title="Data Kosong"
+              description="Silahkan isi konten halaman ini"
+            />
+          ) : (
+            <TableContainer component={Paper} elevation={0} variant="outlined">
+              <Table
+                sx={{
+                  minWidth: 650,
+                  "tbody, thead": {
+                    "td, th": {
+                      borderRight: `1px solid ${grey[300]} !important`,
+                      "&:last-of-type": {
+                        borderRight: `0 !important`,
                       },
                     },
-                  }}
-                  size="small"
-                >
-                  <TableHead sx={{ bgcolor: bgColorTh }}>
-                    <TableRow>
-                      <TableCell align="center">Informasi</TableCell>
-                      <TableCell align="center" width={200}>
-                        Bukti Dukung
-                      </TableCell>
-                      <TableCell align="center" width={150}>
-                        Aksi
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {data?.lists.map((item: listsDao) => (
-                      <TableRow key={item.id}>
-                        <TableCell>{item.value}</TableCell>
-                        <TableCell align="center">
-                          {/* {item.jenis == "pdf" ? (
+                  },
+                }}
+                size="small"
+              >
+                <TableHead sx={{ bgcolor: bgColorTh }}>
+                  <TableRow>
+                    <TableCell align="center">Informasi</TableCell>
+                    <TableCell align="center" width={200}>
+                      Bukti Dukung
+                    </TableCell>
+                    <TableCell align="center" width={150}>
+                      Aksi
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data?.lists.map((item: listsDao) => (
+                    <TableRow key={item.id}>
+                      <TableCell>{item.value}</TableCell>
+                      <TableCell align="center">
+                        {/* {item.jenis == "pdf" ? (
                             <IconButton
                               color="primary"
                               href={item.url}
@@ -202,56 +198,65 @@ export default function CardInformation({
                               <Iconify name="mdi:file-image" size={20} />
                             </IconButton>
                           )} */}
-                          {/* <IconButton
+                        {/* <IconButton
                             color="primary"
                             onClick={() => handleViewBD(item.file)}
                           >
                             <Iconify name="mdi:file-image" size={20} />
                           </IconButton> */}
 
-                          {item.file?.toLowerCase().endsWith(".pdf") ? (
-                            <IconButton
-                              color="primary"
-                              href={process.env.NEXT_PUBLIC_BASE_URL_FILES + "bukti_dukung/" + item.file}
-                              target="_blank"
-                            >
-                              <Iconify name="mdi:file-pdf" color="red" size={20} />
-                            </IconButton>
-                          ) : (
-                            <IconButton
-                              color="primary"
-                              onClick={() => handleViewBD(item.file)}
-                            >
-                              <Iconify name="mdi:file-image" size={20} />
-                            </IconButton>
-                          )}
-                        </TableCell>
-                        <TableCell
-                          align="center"
-                          sx={{
-                            bgcolor: grey[50],
-                          }}
-                        >
-                          <Stack direction="row" justifyContent="center">
-                            <IconButton onClick={() => setModalEdit(true)}>
-                              <Iconify name="mdi:pencil" color={blue[500]} />
-                            </IconButton>
-                            <IconButton onClick={() => handleBtnDelete(item.id)}>
-                              <Iconify name="mdi:trash" color={red[500]} />
-                            </IconButton>
-                          </Stack>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )}
-          </Fragment>
-        )}
+                        {item.file?.toLowerCase().endsWith(".pdf") ? (
+                          <IconButton
+                            color="primary"
+                            href={
+                              process.env.NEXT_PUBLIC_BASE_URL_FILES +
+                              "bukti_dukung/" +
+                              item.file
+                            }
+                            target="_blank"
+                          >
+                            <Iconify
+                              name="mdi:file-pdf"
+                              color="red"
+                              size={20}
+                            />
+                          </IconButton>
+                        ) : (
+                          <IconButton
+                            color="primary"
+                            onClick={() => handleViewBD(item.file)}
+                          >
+                            <Iconify name="mdi:file-image" size={20} />
+                          </IconButton>
+                        )}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          bgcolor: grey[50],
+                        }}
+                      >
+                        <Stack direction="row" justifyContent="center">
+                          <IconButton onClick={() => setModalEdit(true)}>
+                            <Iconify name="mdi:pencil" color={blue[500]} />
+                          </IconButton>
+                          <IconButton onClick={() => handleBtnDelete(item.id)}>
+                            <Iconify name="mdi:trash" color={red[500]} />
+                          </IconButton>
+                        </Stack>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </Fragment>
+        {/* )} */}
       </CardItem>
       <DialogComponent
         dialogOpen={modal}
+        width={600}
         dialogClose={() => setModal(false)}
         title="Tambah Informasi Lain"
         dialogFooter={
@@ -289,7 +294,7 @@ export default function CardInformation({
             <Button
               variant="contained"
               type="submit"
-            // onClick={handleCreateOrUpdateData}
+              // onClick={handleCreateOrUpdateData}
             >
               Simpan
             </Button>
@@ -308,12 +313,6 @@ export default function CardInformation({
           ".transform-component-module_wrapper__SPB86": {
             width: "100%",
             height: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          },
-          ".react-transform-component": {
-            width: "100%",
           },
           ".MuiDialogContent-root": {
             p: 0,
@@ -351,7 +350,9 @@ export default function CardInformation({
                   alt="Instansi Pelaksana"
                   // src="https://res.cloudinary.com/caturteguh/image/upload/v1741666619/mrpn/document-872506_1280_sanrsj.jpg"
                   src={
-                    process.env.NEXT_PUBLIC_BASE_URL_FILES + "bukti_dukung/" + lihatBD
+                    process.env.NEXT_PUBLIC_BASE_URL_FILES +
+                    "bukti_dukung/" +
+                    lihatBD
                   }
                   width={0}
                   height={0}
