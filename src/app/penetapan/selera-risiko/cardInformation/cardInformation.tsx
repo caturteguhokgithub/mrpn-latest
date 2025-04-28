@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import CardItem from "@/app/components/cardTabItem";
@@ -34,6 +34,7 @@ import useInformationList from "../hooks/useInformation";
 import EmptyDevelopingState from "@/app/components/empty/developing";
 import { isDeveloping } from "@/app/components/layouts/layout";
 import DialogDelete from "@/app/components/dialogDelete";
+import { listsDao } from "../hooks/informationModel";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -56,9 +57,12 @@ export default function CardInformation({
     setModalViewImage,
     modalOpenDelete,
     setModalDelete,
+    createOrUpdateData,
+    deleteListData,
   } = useInformationList();
 
-  // console.log(listData, loadingContext);
+  const [lihatBD, setLihatBD] = useState("");
+  const [deleteID, setDeleteID] = useState(0);
 
   const ReactQuill = dynamic(
     async () => {
@@ -74,18 +78,32 @@ export default function CardInformation({
       ssr: false,
     }
   );
+
   const quillRef = React.useRef<ReactQuill>(null);
 
-  // const handleCreateOrUpdateData = async () => {
-  //   const text = quillRef.current?.value;
-  //   if (text) {
-  //     const req = {
-  //       ...request,
-  //       value: text.toString(),
-  //     };
-  //     updateData(req);
-  //   }
-  // };
+  const handleCreateOrUpdateData = async () => {
+    const req = {
+      ...request
+    };
+    createOrUpdateData(req)
+  };
+
+  const handleDeleteListData = async () => {
+    const req = {
+      id: deleteID
+    };
+    deleteListData(req)
+  };
+
+  const handleViewBD = async (file: string) => {
+    setLihatBD(file)
+    setModalViewImage(true)
+  }
+
+  const handleBtnDelete = async (id: number) => {
+    setDeleteID(id)
+    setModalDelete(true)
+  }
 
   const emptyData = true;
 
@@ -160,11 +178,11 @@ export default function CardInformation({
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {data?.lists.map((item: any) => (
+                    {data?.lists.map((item: listsDao) => (
                       <TableRow key={item.id}>
                         <TableCell>{item.value}</TableCell>
                         <TableCell align="center">
-                          {item.jenis == "pdf" ? (
+                          {/* {item.jenis == "pdf" ? (
                             <IconButton
                               color="primary"
                               href={item.url}
@@ -183,6 +201,29 @@ export default function CardInformation({
                             >
                               <Iconify name="mdi:file-image" size={20} />
                             </IconButton>
+                          )} */}
+                          {/* <IconButton
+                            color="primary"
+                            onClick={() => handleViewBD(item.file)}
+                          >
+                            <Iconify name="mdi:file-image" size={20} />
+                          </IconButton> */}
+
+                          {item.file?.toLowerCase().endsWith(".pdf") ? (
+                            <IconButton
+                              color="primary"
+                              href={process.env.NEXT_PUBLIC_BASE_URL_FILES + "bukti_dukung/" + item.file}
+                              target="_blank"
+                            >
+                              <Iconify name="mdi:file-pdf" color="red" size={20} />
+                            </IconButton>
+                          ) : (
+                            <IconButton
+                              color="primary"
+                              onClick={() => handleViewBD(item.file)}
+                            >
+                              <Iconify name="mdi:file-image" size={20} />
+                            </IconButton>
                           )}
                         </TableCell>
                         <TableCell
@@ -195,7 +236,7 @@ export default function CardInformation({
                             <IconButton onClick={() => setModalEdit(true)}>
                               <Iconify name="mdi:pencil" color={blue[500]} />
                             </IconButton>
-                            <IconButton onClick={() => setModalDelete(true)}>
+                            <IconButton onClick={() => handleBtnDelete(item.id)}>
                               <Iconify name="mdi:trash" color={red[500]} />
                             </IconButton>
                           </Stack>
@@ -221,7 +262,7 @@ export default function CardInformation({
             <Button
               variant="contained"
               type="submit"
-              // onClick={handleCreateOrUpdateData}
+              onClick={handleCreateOrUpdateData}
             >
               Simpan
             </Button>
@@ -248,7 +289,7 @@ export default function CardInformation({
             <Button
               variant="contained"
               type="submit"
-              // onClick={handleCreateOrUpdateData}
+            // onClick={handleCreateOrUpdateData}
             >
               Simpan
             </Button>
@@ -308,7 +349,10 @@ export default function CardInformation({
               >
                 <Image
                   alt="Instansi Pelaksana"
-                  src="https://res.cloudinary.com/caturteguh/image/upload/v1741666619/mrpn/document-872506_1280_sanrsj.jpg"
+                  // src="https://res.cloudinary.com/caturteguh/image/upload/v1741666619/mrpn/document-872506_1280_sanrsj.jpg"
+                  src={
+                    process.env.NEXT_PUBLIC_BASE_URL_FILES + "bukti_dukung/" + lihatBD
+                  }
                   width={0}
                   height={0}
                   sizes="100vw"
@@ -323,7 +367,7 @@ export default function CardInformation({
         title="Hapus Data"
         handleOpenModal={modalOpenDelete}
         handleCloseModal={() => setModalDelete(false)}
-        handleDelete={() => {}}
+        handleDelete={() => handleDeleteListData()}
       />
     </Fragment>
   );

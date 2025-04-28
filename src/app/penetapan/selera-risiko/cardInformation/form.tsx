@@ -51,6 +51,18 @@ export default function FormInformation({
     }
     const newItem = arr;
     setItem(newItem);
+
+    setState((prevState) => ({
+      ...prevState,
+      lists: [
+        ...prevState.lists,
+        {
+          value: "",
+          filename: "",
+          file: "",
+        },
+      ],
+    }));
   };
 
   const minus = (nowId: any) => {
@@ -63,6 +75,11 @@ export default function FormInformation({
       }
     });
     setItem(newArr);
+
+    setState((prevState) => ({
+      ...prevState,
+      lists: prevState.lists.filter((listItem, index) => index !== items.findIndex(i => i.id === nowId)),
+    }));
   };
 
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
@@ -91,6 +108,45 @@ export default function FormInformation({
       </Button>
     </DialogActions>
   );
+
+  const handleChangeEditor = (value: string, key: number) => {
+    setState((prevState) => ({
+      ...prevState,
+      lists: prevState.lists.map((item, index) =>
+        index === key
+          ? {
+            ...item,
+            value: value
+          }
+          : item
+      ),
+    }));
+  };
+
+  const handleUnggahBuktiDukung = async (e: React.ChangeEvent<HTMLInputElement>, key: number) => {
+    const files = e.target.files?.[0];
+
+    if (files) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(files);
+      reader.onload = () => {
+        const res = reader.result as string;
+        setState((prevState) => ({
+          ...prevState,
+          lists: prevState.lists.map((item, idx) =>
+            idx === key
+              ? { ...item, file: res, filename: files.name }
+              : item
+          ),
+        }));
+      };
+
+      reader.onerror = (error) => {
+        console.error("Error: ", error);
+      };
+    }
+  };
 
   return (
     <Fragment>
@@ -159,12 +215,23 @@ export default function FormInformation({
                                 },
                               }}
                             >
-                              <ReactQuill
-                                key={request.value}
-                                theme="snow"
-                                defaultValue={request.value}
-                                forwardedRef={quillRef}
+                              <TextField
+                                fullWidth
+                                multiline
+                                rows={4}
+                                variant="outlined"
+                                value={state.lists[key]?.value}
+                                onChange={(e) => handleChangeEditor(e.target.value, key)}
                               />
+
+                              {/* <ReactQuill
+                                key={state.lists[key].value}
+                                theme="snow"
+                                defaultValue={state.lists[key].value}
+                                // value={state.lists[key]?.value ?? ""}
+                                onKeyUp={(val) => handleChangeEditor(val, key)}
+                                forwardedRef={quillRef}
+                              /> */}
                             </Box>
                           ) : (
                             <Box
@@ -178,17 +245,28 @@ export default function FormInformation({
                                 },
                               }}
                             >
-                              <ReactQuill
-                                key={request.value}
-                                theme="snow"
-                                defaultValue={request.value}
-                                forwardedRef={quillRef}
+                              <TextField
+                                fullWidth
+                                multiline
+                                rows={4}
+                                variant="outlined"
+                                value={state.lists[key]?.value}
+                                onChange={(e) => handleChangeEditor(e.target.value, key)}
                               />
+
+                              {/* <ReactQuill
+                                key={state.lists[key].value}
+                                theme="snow"
+                                defaultValue={state.lists[key].value}
+                                // value={state.lists[key]?.value ?? ""}
+                                onKeyUp={(val) => handleChangeEditor(val, key)}
+                                forwardedRef={quillRef}
+                              /> */}
                             </Box>
                           )}
                         </FormControl>
                       </Grid>
-                      <Grid item xs={12} md={6}>
+                      {/* <Grid item xs={12} md={6}>
                         <FormControl fullWidth>
                           <FieldLabelInfo title="Jenis Bukti Dukung" />
                           <RadioGroup row>
@@ -204,7 +282,7 @@ export default function FormInformation({
                             />
                           </RadioGroup>
                         </FormControl>
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={12} md={6}>
                         <FormControl fullWidth>
                           <FieldLabelInfo title="Unggah Bukti Dukung" />
@@ -219,9 +297,9 @@ export default function FormInformation({
                             <VisuallyHiddenInput
                               type="file"
                               onChange={(event) =>
-                                console.log(event.target.files)
+                                handleUnggahBuktiDukung(event, key)
                               }
-                              multiple
+                            // multiple
                             />
                           </Button>
                         </FormControl>

@@ -6,6 +6,13 @@ export interface listsDao {
     value: string
     file: string
 }
+
+export interface reqListDto {
+    value: string
+    filename: string
+    file: string
+}
+
 export interface doResInformasiLainnya {
     id: number
     uraian_penetapan_object_id: number
@@ -15,7 +22,11 @@ export interface doResInformasiLainnya {
 export interface doReqInformasiLainnya {
     id: number
     uraian_penetapan_object_id: number
-    lists: listsDao[]
+    lists: reqListDto[]
+}
+
+export interface doReqDeleteList {
+    id: number
 }
 
 export const initAddInformasiLainnyaDto: doReqInformasiLainnya = {
@@ -23,8 +34,7 @@ export const initAddInformasiLainnyaDto: doReqInformasiLainnya = {
     uraian_penetapan_object_id: 0,
     lists: [
         {
-            id: 0,
-            upr_informasi_lainnya_id: 0,
+            filename: "",
             value: "",
             file: "",
         }
@@ -45,6 +55,10 @@ export type GetInformasiLainnyaServiceModel = BaseAPIServiceParam & {
 
 export type AddInformasiLainnyaServiceModel = BaseAPIServiceParam & {
     body: doReqInformasiLainnya;
+};
+
+export type DeleteListInformasiLainnyaServiceModel = BaseAPIServiceParam & {
+    body: doReqDeleteList;
 };
 
 export type InformasiLainnyaResDto = doResInformasiLainnya;

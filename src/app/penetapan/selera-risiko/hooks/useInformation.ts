@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { doGetInformation } from "./informationService";
+import { doCreateInformation, doDeleteListInformation, doGetInformation, doUpdateInformation } from "./informationService";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import {
   useExsumContext,
@@ -11,6 +11,7 @@ import { useSearchParams } from "next/navigation";
 import usePenetapanGlobalVM from "../../penetapanGlobalVM";
 import {
   InformasiLainnyaResDto,
+  doReqDeleteList,
   doReqInformasiLainnya,
   initAddInformasiLainnyaDto,
 } from "./informationModel";
@@ -55,6 +56,54 @@ const useInformationList = () => {
     }
   }
 
+  async function createOrUpdateData(param: doReqInformasiLainnya) {
+    const req: doReqInformasiLainnya = {
+      ...param,
+      uraian_penetapan_object_id: objectState?.id ?? 0,
+    };
+
+    const params = {
+      body: req,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    };
+
+    if (req.id == 0) {
+      const response = await doCreateInformation(params);
+      if (response?.code == API_CODE.success) {
+        getData();
+        setRequest(initAddInformasiLainnyaDto);
+        setModal(false);
+      }
+    } else {
+      const response = await doUpdateInformation(params);
+      if (response?.code == API_CODE.success) {
+        getData();
+        setRequest(initAddInformasiLainnyaDto);
+        setModal(false);
+      }
+    }
+  }
+
+  async function deleteListData(param: doReqDeleteList) {
+    const req: doReqDeleteList = {
+      ...param,
+    };
+
+    const params = {
+      body: req,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    };
+
+    const response = await doDeleteListInformation(params);
+    if (response?.code == API_CODE.success) {
+      getData();
+      setRequest(initAddInformasiLainnyaDto);
+      setModalDelete(false);
+    }
+  }
+
   useEffect(() => {
     getData();
   }, []);
@@ -73,6 +122,8 @@ const useInformationList = () => {
     setModalDelete,
     modalEdit,
     setModalEdit,
+    createOrUpdateData,
+    deleteListData
   };
 };
 
