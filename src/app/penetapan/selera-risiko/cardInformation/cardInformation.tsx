@@ -237,9 +237,9 @@ export default function CardInformation({
                         }}
                       >
                         <Stack direction="row" justifyContent="center">
-                          <IconButton onClick={() => setModalEdit(true)}>
+                          {/* <IconButton onClick={() => setModalEdit(true)}>
                             <Iconify name="mdi:pencil" color={blue[500]} />
-                          </IconButton>
+                          </IconButton> */}
                           <IconButton onClick={() => handleBtnDelete(item.id)}>
                             <Iconify name="mdi:trash" color={red[500]} />
                           </IconButton>

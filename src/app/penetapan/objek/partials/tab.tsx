@@ -118,21 +118,21 @@ export default function TabObject({}) {
             iconPosition="start"
             icon={<IconFA size={16} name="arrow-down-wide-short" />}
           />
-          <Tab
+          {/* <Tab
             label="Cascading Objek Terpilih"
             {...a11yProps(2)}
             iconPosition="start"
             icon={<IconFA size={16} name="list-check" />}
-          />
+          /> */}
           <Tab
             label="Usulan UPR LS"
-            {...a11yProps(3)}
+            {...a11yProps(2)}
             iconPosition="start"
             icon={<IconFA size={16} name="scroll" />}
           />
           <Tab
             label="Pengesahan"
-            {...a11yProps(4)}
+            {...a11yProps(3)}
             iconPosition="start"
             icon={<IconFA size={16} name="newspaper" sx={{ width: "auto" }} />}
           />
@@ -166,7 +166,7 @@ export default function TabObject({}) {
           )}
         </CardItem>
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
+      {/* <CustomTabPanel value={value} index={2}>
         <CardItem title="Cascading Objek Terpilih">
           {isEmpty ? (
             <EmptyState
@@ -179,8 +179,8 @@ export default function TabObject({}) {
             <CascadingPenetapanObjectOrgChart />
           )}
         </CardItem>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={3}>
+      </CustomTabPanel> */}
+      <CustomTabPanel value={value} index={2}>
         <CardItem title="Usulan UPR LS">
           {isEmpty ? (
             <EmptyState
@@ -194,7 +194,7 @@ export default function TabObject({}) {
           )}
         </CardItem>
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={4}>
+      <CustomTabPanel value={value} index={3}>
         <CardItem
           // title="Nota Dinas Objek MRPN & UPR LS"
           title="Pengesahan Objek & UPR LS"

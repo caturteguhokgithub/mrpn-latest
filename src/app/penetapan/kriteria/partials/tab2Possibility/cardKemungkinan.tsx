@@ -4,11 +4,13 @@ import React, { Fragment } from "react";
 import TableKemungkinan from "./table-kriteria-kemungkinan";
 import DialogComponent from "@/app/components/dialog";
 import FormKemungkinan from "./form-kemungkinan";
-import { DialogActions, Button } from "@mui/material";
+import { DialogActions, Button, Stack } from "@mui/material";
 import Iconify from "@/app/components/icons/iconify";
 import EmptyDevelopingState from "@/app/components/empty/developing";
 import { isDeveloping } from "@/app/components/layouts/layout";
 import usePossibilityList from "./hooks/usePossibility";
+import FormPossibility from "./form-possibility";
+import DialogDelete from "@/app/components/dialogDelete";
 
 export default function CardKemungkinan() {
   const [modalOpenEdit, setModalOpenEdit] = React.useState(false);
@@ -20,9 +22,13 @@ export default function CardKemungkinan() {
     requestPossibility,
     setRequestPossibility,
     updatePossibility,
+    modalOpenDelete,
+    setModalDelete,
   } = usePossibilityList();
 
   const handleCreate = async () => {
+    setModalOpenAdd(false);
+    setModalOpenEdit(false);
     updatePossibility(requestPossibility);
   };
 
@@ -46,51 +52,66 @@ export default function CardKemungkinan() {
     <Fragment>
       <CardItem
         title="Kriteria Kemungkinan"
-        setting={!isDeveloping}
-        settingEditOnclick={() => setModalOpenEdit(true)}
-        settingAddOnclick={() => setModalOpenAdd(true)}
+        // setting={!isDeveloping}
+        // settingEditOnclick={() => setModalOpenEdit(true)}
+        // settingAddOnclick={() => setModalOpenAdd(true)}
         addButton={
-          <AddButton
-            filled
-            startIcon={<Iconify name="mdi:table" />}
-            title="Tabel Referensi"
-            onclick={() => setModalOpenRef(true)}
-          />
+          <Stack gap={1} direction="row" alignItems="center">
+            <AddButton
+              noMargin
+              startIcon={<Iconify name="mdi:table" />}
+              title="Tabel Referensi"
+              onclick={() => setModalOpenRef(true)}
+            />
+            <AddButton
+              noMargin
+              filled
+              startIcon={<Iconify name="mdi:plus-circle" />}
+              title="Tambah Kriteria Kemungkinan"
+              onclick={() => setModalOpenAdd(true)}
+            />
+          </Stack>
         }
       >
         {isDeveloping ? (
           <EmptyDevelopingState />
         ) : (
           <Fragment>
-            <TableKemungkinan mode="view" />
+            <TableKemungkinan
+              mode="view"
+              handleModalEdit={() => setModalOpenEdit(true)}
+              handleModalDelete={() => setModalDelete(true)}
+            />
           </Fragment>
         )}
       </CardItem>
       <DialogComponent
-        width={1200}
+        width={400}
         dialogOpen={modalOpenAdd}
         dialogClose={() => setModalOpenAdd(false)}
         title="Tambah Kriteria Kemungkinan"
         dialogFooter={dialogActionFooter}
       >
-        <FormKemungkinan
+        {/* <FormKemungkinan
           state={requestPossibility}
           setState={setRequestPossibility}
           mode="add"
-        />
+        /> */}
+        <FormPossibility mode="add" />
       </DialogComponent>
       <DialogComponent
-        width={1200}
+        width={400}
         dialogOpen={modalOpenEdit}
         dialogClose={() => setModalOpenEdit(false)}
         title="Ubah Kriteria Kemungkinan"
         dialogFooter={dialogActionFooter}
       >
-        <FormKemungkinan
+        {/* <FormKemungkinan
           state={requestPossibility}
           setState={setRequestPossibility}
           mode="edit"
-        />
+        /> */}
+        <FormPossibility mode="edit" />
       </DialogComponent>
       <DialogComponent
         tableMode
@@ -102,6 +123,14 @@ export default function CardKemungkinan() {
       >
         <TableKemungkinan mode="reference" />
       </DialogComponent>
+      <DialogDelete
+        title="Hapus Data"
+        handleOpenModal={modalOpenDelete}
+        handleCloseModal={() => setModalDelete(false)}
+        // handleDelete={() => {
+        //   handleDeleteSubCategory();
+        // }}
+      />
     </Fragment>
   );
 }

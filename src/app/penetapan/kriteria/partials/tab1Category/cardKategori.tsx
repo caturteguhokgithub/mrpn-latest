@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Button, DialogActions } from "@mui/material";
+import { Button, DialogActions, Stack } from "@mui/material";
 import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
 import CollapsibleTable from "./table-kategori-collapsible";
@@ -37,12 +37,12 @@ export default function CardKategori() {
   };
 
   const handleUpdateSubCategory = async () => {
-    updateSubCategory(requestSubCategory)
-  }
+    updateSubCategory(requestSubCategory);
+  };
 
   const handleDeleteSubCategory = async () => {
-    deleteSubCategory(requestSubCategory)
-  }
+    deleteSubCategory(requestSubCategory);
+  };
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -94,15 +94,24 @@ export default function CardKategori() {
             strategi penanganannya
           </>
         }
-        setting={!isDeveloping}
-        settingAddOnclickOnly={() => setModalOpenAdd(true)}
+        // setting={!isDeveloping}
+        // settingAddOnclickOnly={() => setModalOpenAdd(true)}
         addButton={
-          <AddButton
-            filled
-            startIcon={<Iconify name="mdi:table" />}
-            title="Tabel Referensi"
-            onclick={() => setModalOpenRef(true)}
-          />
+          <Stack gap={1} direction="row" alignItems="center">
+            <AddButton
+              noMargin
+              startIcon={<Iconify name="mdi:table" />}
+              title="Tabel Referensi"
+              onclick={() => setModalOpenRef(true)}
+            />
+            <AddButton
+              noMargin
+              filled
+              startIcon={<Iconify name="mdi:plus-circle" />}
+              title="Tambah Kriteria Kemungkinan"
+              onclick={() => setModalOpenAdd(true)}
+            />
+          </Stack>
         }
       >
         {isDeveloping ? (
@@ -149,7 +158,9 @@ export default function CardKategori() {
         title="Hapus Data"
         handleOpenModal={modalOpenDelete}
         handleCloseModal={() => setModalDelete(false)}
-        handleDelete={() => { handleDeleteSubCategory() }}
+        handleDelete={() => {
+          handleDeleteSubCategory();
+        }}
       />
       <DialogComponent
         tableMode

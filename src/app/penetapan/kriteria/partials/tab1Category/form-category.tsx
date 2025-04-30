@@ -17,7 +17,12 @@ import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
 import Iconify from "@/app/components/icons/iconify";
 import DialogComponent from "@/app/components/dialog";
 import useCategoryList from "./hooks/useCategory";
-import { SubKategoriRisiko, doMasterKategori, doRequestCategoryDto, doSubCategory } from "./hooks/categoryModel";
+import {
+  SubKategoriRisiko,
+  doMasterKategori,
+  doRequestCategoryDto,
+  doSubCategory,
+} from "./hooks/categoryModel";
 
 const ItemDampak = ({
   children,
@@ -62,8 +67,8 @@ export default function FormCategory({
   handleOpenCategory?: any;
   state?: doRequestCategoryDto;
   setState?: (value: SetStateAction<doRequestCategoryDto>) => void;
-  listMasterCategory: doMasterKategori[]
-  stateSubCat?: SubKategoriRisiko
+  listMasterCategory: doMasterKategori[];
+  stateSubCat?: SubKategoriRisiko;
   setStateSubCat?: (value: SetStateAction<SubKategoriRisiko>) => void;
 }) {
   const [items, setItem] = React.useState([{ id: 1 }]);
@@ -119,16 +124,27 @@ export default function FormCategory({
   return (
     <Fragment>
       <Grid container spacing={2}>
+        {mode == "edit" && (
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <FieldLabelInfo title="Kategori" titleField />
+              <Typography>Geopolitik</Typography>
+            </FormControl>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Sub Kategori" titleField />
+            <FieldLabelInfo
+              title={mode == "edit" ? "Subkategori" : "Kategori"}
+              titleField
+            />
             {mode == "edit" || mode == "add-category" ? (
               <TextField
                 fullWidth
                 value={stateSubCat?.value}
                 variant="outlined"
                 size="small"
-                placeholder="Sub Kategori"
+                placeholder={mode == "edit" ? "Subkategori" : "Kategori"}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -143,30 +159,34 @@ export default function FormCategory({
             ) : (
               <AutocompleteSelectSingle<doMasterKategori>
                 // value={state.src_kategori_id}
-                value={listMasterCategory.find(category => category.id === state?.src_kategori_id)}
+                value={listMasterCategory.find(
+                  (category) => category.id === state?.src_kategori_id
+                )}
                 options={listMasterCategory}
                 getOptionLabel={(option) => option.value}
                 // handleChange={(newValue: any) => {
                 //   console.log(newValue);
                 // }}
                 handleChange={(newValue: doMasterKategori) =>
-                  setState ? setState((prevState) => ({
-                    ...prevState,
-                    src_kategori_id: newValue.id,
-                  })) : ""
+                  setState
+                    ? setState((prevState) => ({
+                        ...prevState,
+                        src_kategori_id: newValue.id,
+                      }))
+                    : ""
                 }
                 placeHolder={"Pilih kategori"}
-              // actionButton={
-              //   <Button
-              //     fullWidth
-              //     variant="outlined"
-              //     color="primary"
-              //     startIcon={<Iconify name="mdi:plus-circle" />}
-              //     onMouseDown={() => setModalOpenAdd(true)}
-              //   >
-              //     Tambah Kategori
-              //   </Button>
-              // }
+                // actionButton={
+                //   <Button
+                //     fullWidth
+                //     variant="outlined"
+                //     color="primary"
+                //     startIcon={<Iconify name="mdi:plus-circle" />}
+                //     onMouseDown={() => setModalOpenAdd(true)}
+                //   >
+                //     Tambah Kategori
+                //   </Button>
+                // }
               />
             )}
           </FormControl>
@@ -187,16 +207,16 @@ export default function FormCategory({
                   };
                 })
               }
-            // value={
-            //   mode == "edit"
-            //     ? "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
-            //     : ""
-            // }
+              // value={
+              //   mode == "edit"
+              //     ? "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
+              //     : ""
+              // }
             />
           </FormControl>
         </Grid> */}
 
-        {mode !== "edit" ? (
+        {mode !== "edit" && (
           <Fragment>
             <Grid item xs={12}>
               <Stack
@@ -216,48 +236,51 @@ export default function FormCategory({
               </Stack>
             </Grid>
             <Grid item xs={12}>
-              <Stack gap={2}>
+              <Grid container spacing={2}>
                 {/* ITEM DAMPAK */}
                 {items.map((tags: any, key: any) => (
-                  <Paper
-                    key={`${tags.id}`}
-                    variant="outlined"
-                    elevation={0}
-                    sx={{ p: 2, minWidth: "0 !important" }}
-                  >
-                    <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                        <FormControl fullWidth>
-                          <Stack justifyContent="space-between" direction="row">
-                            <Typography fontWeight={600}>
-                              Sub Kategori #{key + 1}
-                            </Typography>
-                            {key > 0 && (
-                              <AddButton
-                                small
-                                errorColor
-                                title="Hapus"
-                                noMargin
-                                onclick={() => minus(tags.id)}
-                              />
-                            )}
-                          </Stack>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormControl fullWidth>
-                          <TextareaStyled
-                            // width="100%"
-                            minRows={2}
-                            aria-label=""
-                            placeholder="Sub Kategori"
-                            onChange={(e) =>
-                              handleSubChange(key, "value", e.target.value)
-                            }
-                          />
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
+                  <Grid item xs={key === 0 ? 12 : 6} key={`${tags.id}`}>
+                    <Paper
+                      variant="outlined"
+                      elevation={0}
+                      sx={{ p: 2, minWidth: "0 !important" }}
+                    >
+                      <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                          <FormControl fullWidth>
+                            <Stack
+                              justifyContent="space-between"
+                              direction="row"
+                            >
+                              <Typography fontWeight={600}>
+                                Sub Kategori #{key + 1}
+                              </Typography>
+                              {key > 0 && (
+                                <AddButton
+                                  small
+                                  errorColor
+                                  title="Hapus"
+                                  noMargin
+                                  onclick={() => minus(tags.id)}
+                                />
+                              )}
+                            </Stack>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <FormControl fullWidth>
+                            <TextareaStyled
+                              // width="100%"
+                              minRows={2}
+                              aria-label=""
+                              placeholder="Sub Kategori"
+                              onChange={(e) =>
+                                handleSubChange(key, "value", e.target.value)
+                              }
+                            />
+                          </FormControl>
+                        </Grid>
+                        {/* <Grid item xs={12} md={6}>
                         <TextareaStyled
                           // width="100%"
                           minRows={2}
@@ -267,33 +290,34 @@ export default function FormCategory({
                             handleSubChange(key, "desc", e.target.value)
                           }
                         />
+                      </Grid> */}
                       </Grid>
-                    </Grid>
-                  </Paper>
+                    </Paper>
+                  </Grid>
                 ))}
-              </Stack>
+              </Grid>
             </Grid>
           </Fragment>
-        ) : (
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <FieldLabelInfo title="Uraian" titleField />
-              <TextareaStyled
-                minRows={2}
-                aria-label=""
-                placeholder="Sub Kategori"
-                value={stateSubCat?.desc}
-                onChange={(e) =>
-                  setStateSubCat &&
-                  setStateSubCat((prevState) => ({
-                    ...prevState,
-                    desc: e.target.value,
-                  }))
-                }
-              // onChange={(e) => handleSubChange(key, "value", e.target.value)}
-              />
-            </FormControl>
-          </Grid>
+          // ) : (
+          //   <Grid item xs={12}>
+          //     <FormControl fullWidth>
+          //       <FieldLabelInfo title="Uraian" titleField />
+          //       <TextareaStyled
+          //         minRows={2}
+          //         aria-label=""
+          //         placeholder="Sub Kategori"
+          //         value={stateSubCat?.desc}
+          //         onChange={(e) =>
+          //           setStateSubCat &&
+          //           setStateSubCat((prevState) => ({
+          //             ...prevState,
+          //             desc: e.target.value,
+          //           }))
+          //         }
+          //         // onChange={(e) => handleSubChange(key, "value", e.target.value)}
+          //       />
+          //     </FormControl>
+          //   </Grid>
         )}
       </Grid>
       <DialogComponent
