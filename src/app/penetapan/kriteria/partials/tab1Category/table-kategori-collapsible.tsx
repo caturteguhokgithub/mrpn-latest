@@ -17,7 +17,7 @@ import { blue, grey, red } from "@mui/material/colors";
 import { Stack } from "@mui/material";
 import Iconify from "@/app/components/icons/iconify";
 import useCategoryList from "./hooks/useCategory";
-import { ResultCategory } from "./hooks/categoryModel";
+import { ResultCategory, SubKategoriRisiko } from "./hooks/categoryModel";
 
 // function createData(category: string, uraian: string) {
 //   return {
@@ -42,9 +42,31 @@ function Row(props: {
   row: ResultCategory;
   handleEdit: any;
   handleDelete?: any;
+  setRequestEdit?: (value: React.SetStateAction<SubKategoriRisiko>) => void;
 }) {
-  const { row, handleEdit, handleDelete } = props;
+  const { row, handleEdit, handleDelete, setRequestEdit } = props;
   const [open, setOpen] = React.useState(false);
+
+  const prosesBtnEdit = (value: SubKategoriRisiko, proses: string) => {
+    const updated = {
+      id: value.id,
+      penetapan_kategori_risiko_id: value.penetapan_kategori_risiko_id,
+      value: value.value ?? "",
+      desc: value.desc ?? "",
+    };
+
+    if (setRequestEdit) {
+      setRequestEdit(updated);
+    }
+
+    if (proses == "edit") {
+      handleEdit();
+    }
+
+    if (proses == "delete") {
+      handleDelete();
+    }
+  };
 
   return (
     <React.Fragment>
@@ -58,8 +80,8 @@ function Row(props: {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell>{row.value}</TableCell>
-        <TableCell>{row.desc}</TableCell>
+        <TableCell>{row.src_kategori_risiko.value}</TableCell>
+        <TableCell>{row.src_kategori_risiko.uraian}</TableCell>
         {/* <TableCell>
           <Stack direction="row">
             <IconButton onClick={handleEdit}>
@@ -121,10 +143,11 @@ function Row(props: {
                         }}
                       >
                         <Stack direction="row">
-                          <IconButton onClick={handleEdit}>
+                          <IconButton onClick={() => prosesBtnEdit(historyRow, "edit")}>
+                            {/* <IconButton onClick={handleEdit}> */}
                             <Iconify name="mdi:pencil" color={blue[500]} />
                           </IconButton>
-                          <IconButton onClick={handleDelete}>
+                          <IconButton onClick={() => prosesBtnEdit(historyRow, "delete")}>
                             <Iconify name="mdi:trash" color={red[500]} />
                           </IconButton>
                         </Stack>
@@ -159,9 +182,11 @@ function Row(props: {
 export default function CollapsibleTable({
   handleEdit,
   handleDelete,
+  setRequestEdit,
 }: {
   handleEdit?: any;
   handleDelete?: any;
+  setRequestEdit?: (value: React.SetStateAction<SubKategoriRisiko>) => void;
 }) {
   const { listDataCategory } = useCategoryList();
 
@@ -202,6 +227,7 @@ export default function CollapsibleTable({
               row={row}
               handleEdit={handleEdit}
               handleDelete={handleDelete}
+              setRequestEdit={setRequestEdit}
             />
           ))}
         </TableBody>

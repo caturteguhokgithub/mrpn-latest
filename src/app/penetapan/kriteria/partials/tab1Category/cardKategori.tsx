@@ -13,8 +13,6 @@ import { isDeveloping } from "@/app/components/layouts/layout";
 import useCategoryList from "./hooks/useCategory";
 
 export default function CardKategori() {
-  const [modalOpenCategory, setModalOpenCategory] = React.useState(false);
-  const [modalOpenDelete, setModalDelete] = React.useState(false);
   const [modalOpenRef, setModalOpenRef] = React.useState(false);
 
   const {
@@ -23,11 +21,28 @@ export default function CardKategori() {
     setRequestCategory,
     modalOpenAdd,
     setModalOpenAdd,
+    masterCategory,
+    modalOpenCategory,
+    setModalOpenCategory,
+    updateSubCategory,
+    requestSubCategory,
+    setRequestSubCategory,
+    modalOpenDelete,
+    setModalDelete,
+    deleteSubCategory,
   } = useCategoryList();
 
   const handleCreate = async () => {
     createCategory(requestCategory);
   };
+
+  const handleUpdateSubCategory = async () => {
+    updateSubCategory(requestSubCategory)
+  }
+
+  const handleDeleteSubCategory = async () => {
+    deleteSubCategory(requestSubCategory)
+  }
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -39,6 +54,24 @@ export default function CardKategori() {
         Batal
       </Button>
       <Button variant="contained" onClick={handleCreate}>
+        Simpan
+      </Button>
+      {/* <Button variant="contained" type="submit">
+        Simpan
+      </Button> */}
+    </DialogActions>
+  );
+
+  const dialogActionFooterEdit = (
+    <DialogActions sx={{ p: 2, px: 3 }}>
+      <Button
+        onClick={() => {
+          setModalOpenCategory(false);
+        }}
+      >
+        Batal
+      </Button>
+      <Button variant="contained" onClick={handleUpdateSubCategory}>
         Simpan
       </Button>
       {/* <Button variant="contained" type="submit">
@@ -80,6 +113,7 @@ export default function CardKategori() {
             <CollapsibleTable
               handleEdit={() => setModalOpenCategory(true)}
               handleDelete={() => setModalDelete(true)}
+              setRequestEdit={setRequestSubCategory}
             />
           </Fragment>
         )}
@@ -94,6 +128,7 @@ export default function CardKategori() {
           mode="add"
           state={requestCategory}
           setState={setRequestCategory}
+          listMasterCategory={masterCategory}
         />
       </DialogComponent>
       <DialogComponent
@@ -101,19 +136,20 @@ export default function CardKategori() {
         dialogOpen={modalOpenCategory}
         dialogClose={() => setModalOpenCategory(false)}
         title="Ubah Sub Kategori"
-        dialogFooter={dialogActionFooter}
+        dialogFooter={dialogActionFooterEdit}
       >
         <FormCategory
           mode="edit"
-          state={requestCategory}
-          setState={setRequestCategory}
+          stateSubCat={requestSubCategory}
+          setStateSubCat={setRequestSubCategory}
+          listMasterCategory={masterCategory}
         />
       </DialogComponent>
       <DialogDelete
         title="Hapus Data"
         handleOpenModal={modalOpenDelete}
         handleCloseModal={() => setModalDelete(false)}
-        handleDelete={() => {}}
+        handleDelete={() => { handleDeleteSubCategory() }}
       />
       <DialogComponent
         tableMode

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { doCreateCategory, doGetCategory } from "./categoryService";
+import { doCreateCategory, doDeleteSubCategory, doGetCategory, doGetMasterCategory, doUpdateSubCategory } from "./categoryService";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import {
   useExsumContext,
@@ -9,8 +9,11 @@ import {
 import { useSearchParams } from "next/navigation";
 import {
   ResultCategory,
+  SubKategoriRisiko,
+  doMasterKategori,
   doRequestCategoryDto,
   initCategory,
+  initSubCategory,
 } from "./categoryModel";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 
@@ -19,11 +22,18 @@ const useCategoryList = () => {
   const errorModalContext = useGlobalModalContext();
   const [loading, setLoading] = useState(false);
   const [dataCategory, setDataCategory] = useState<ResultCategory[]>([]);
+  const [masterCategory, setMasterCategory] = useState<doMasterKategori[]>([]);
   const { objectState } = usePenetapanGlobalVM();
   const [modalOpenAdd, setModalOpenAdd] = useState(false);
+  const [modalOpenCategory, setModalOpenCategory] = useState(false);
+  const [modalOpenDelete, setModalDelete] = useState(false);
 
   const [requestCategory, setRequestCategory] = useState<doRequestCategoryDto>({
     ...initCategory,
+  });
+
+  const [requestSubCategory, setRequestSubCategory] = useState<SubKategoriRisiko>({
+    ...initSubCategory,
   });
 
   // const searchParams = useSearchParams();
@@ -72,12 +82,63 @@ const useCategoryList = () => {
     }
   }
 
+  async function getMasterCategory() {
+    setLoading(true);
+    const response = await doGetMasterCategory();
+
+    if (response?.code == API_CODE.success) {
+      let result: doMasterKategori[] = response.result;
+      // console.log({ result });
+      if (result) {
+        setMasterCategory(result);
+        setLoading(false);
+      } else {
+        setMasterCategory([]);
+        setLoading(false);
+      }
+    }
+  }
+
+  async function updateSubCategory(param: SubKategoriRisiko) {
+    const req: SubKategoriRisiko = {
+      ...param
+    };
+
+    const request = {
+      body: req,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    };
+
+    const response = await doUpdateSubCategory(request);
+    if (response?.code == API_CODE.success) {
+      getData();
+      setModalOpenCategory(false);
+    }
+  }
+
+  async function deleteSubCategory(param: SubKategoriRisiko) {
+    const req: SubKategoriRisiko = {
+      ...param
+    };
+
+    const request = {
+      body: req,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    };
+
+    const response = await doDeleteSubCategory(request);
+    if (response?.code == API_CODE.success) {
+      getData();
+      setModalDelete(false);
+    }
+  }
+
   useEffect(() => {
-    // if (exsum.id !== 0) {
-    // console.log("debug");
     getData();
-    // }
-  }, []);
+    getMasterCategory();
+  }, [objectState?.id]);
 
   return {
     listDataCategory: dataCategory,
@@ -87,6 +148,15 @@ const useCategoryList = () => {
     setRequestCategory,
     modalOpenAdd,
     setModalOpenAdd,
+    masterCategory,
+    modalOpenCategory,
+    setModalOpenCategory,
+    updateSubCategory,
+    requestSubCategory,
+    setRequestSubCategory,
+    modalOpenDelete,
+    setModalDelete,
+    deleteSubCategory,
   };
 };
 

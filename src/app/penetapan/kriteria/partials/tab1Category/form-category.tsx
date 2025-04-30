@@ -17,7 +17,7 @@ import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
 import Iconify from "@/app/components/icons/iconify";
 import DialogComponent from "@/app/components/dialog";
 import useCategoryList from "./hooks/useCategory";
-import { doRequestCategoryDto, doSubCategory } from "./hooks/categoryModel";
+import { SubKategoriRisiko, doMasterKategori, doRequestCategoryDto, doSubCategory } from "./hooks/categoryModel";
 
 const ItemDampak = ({
   children,
@@ -54,11 +54,17 @@ export default function FormCategory({
   handleOpenCategory,
   state,
   setState,
+  listMasterCategory,
+  stateSubCat,
+  setStateSubCat,
 }: {
   mode?: string;
   handleOpenCategory?: any;
-  state: doRequestCategoryDto;
-  setState: (value: SetStateAction<doRequestCategoryDto>) => void;
+  state?: doRequestCategoryDto;
+  setState?: (value: SetStateAction<doRequestCategoryDto>) => void;
+  listMasterCategory: doMasterKategori[]
+  stateSubCat?: SubKategoriRisiko
+  setStateSubCat?: (value: SetStateAction<SubKategoriRisiko>) => void;
 }) {
   const [items, setItem] = React.useState([{ id: 1 }]);
 
@@ -85,20 +91,19 @@ export default function FormCategory({
     setItem(newArr);
   };
 
-  // Menangani perubahan input
   const handleSubChange = (
     index: number,
     field: keyof doSubCategory,
     value: string
   ) => {
-    setState((prevState) => {
-      const updatedSub = [...prevState.sub];
-      updatedSub[index] = { ...updatedSub[index], [field]: value };
-      return { ...prevState, sub: updatedSub };
-    });
+    if (setState) {
+      setState((prevState) => {
+        const updatedSub = [...prevState.sub];
+        updatedSub[index] = { ...updatedSub[index], [field]: value };
+        return { ...prevState, sub: updatedSub };
+      });
+    }
   };
-
-  const listCategory = ["Ekonomi", "Geopolitik", "Teknologi"];
 
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
 
@@ -120,38 +125,48 @@ export default function FormCategory({
             {mode == "edit" || mode == "add-category" ? (
               <TextField
                 fullWidth
-                // value="Ekonomi"
+                value={stateSubCat?.value}
                 variant="outlined"
                 size="small"
                 placeholder="Sub Kategori"
                 InputLabelProps={{
                   shrink: true,
                 }}
-              />
-            ) : (
-              <AutocompleteSelectSingle
-                value={state.value}
-                options={listCategory.map((option) => option)}
-                getOptionLabel={(option) => `${option}`}
-                // handleChange={(newValue: any) => handleChangeSelect(newValue)}
-                handleChange={(newValue: any) =>
-                  setState((prevState) => ({
+                onChange={(e) =>
+                  setStateSubCat &&
+                  setStateSubCat((prevState) => ({
                     ...prevState,
-                    value: newValue,
+                    value: e.target.value,
                   }))
                 }
+              />
+            ) : (
+              <AutocompleteSelectSingle<doMasterKategori>
+                // value={state.src_kategori_id}
+                value={listMasterCategory.find(category => category.id === state?.src_kategori_id)}
+                options={listMasterCategory}
+                getOptionLabel={(option) => option.value}
+                // handleChange={(newValue: any) => {
+                //   console.log(newValue);
+                // }}
+                handleChange={(newValue: doMasterKategori) =>
+                  setState ? setState((prevState) => ({
+                    ...prevState,
+                    src_kategori_id: newValue.id,
+                  })) : ""
+                }
                 placeHolder={"Pilih kategori"}
-                // actionButton={
-                //   <Button
-                //     fullWidth
-                //     variant="outlined"
-                //     color="primary"
-                //     startIcon={<Iconify name="mdi:plus-circle" />}
-                //     onMouseDown={() => setModalOpenAdd(true)}
-                //   >
-                //     Tambah Kategori
-                //   </Button>
-                // }
+              // actionButton={
+              //   <Button
+              //     fullWidth
+              //     variant="outlined"
+              //     color="primary"
+              //     startIcon={<Iconify name="mdi:plus-circle" />}
+              //     onMouseDown={() => setModalOpenAdd(true)}
+              //   >
+              //     Tambah Kategori
+              //   </Button>
+              // }
               />
             )}
           </FormControl>
@@ -267,7 +282,15 @@ export default function FormCategory({
                 minRows={2}
                 aria-label=""
                 placeholder="Sub Kategori"
-                // onChange={(e) => handleSubChange(key, "value", e.target.value)}
+                value={stateSubCat?.desc}
+                onChange={(e) =>
+                  setStateSubCat &&
+                  setStateSubCat((prevState) => ({
+                    ...prevState,
+                    desc: e.target.value,
+                  }))
+                }
+              // onChange={(e) => handleSubChange(key, "value", e.target.value)}
               />
             </FormControl>
           </Grid>
