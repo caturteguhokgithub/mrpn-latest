@@ -37,6 +37,7 @@ import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
+import DialogDelete from "@/app/components/dialogDelete";
 
 type Row = {
   object: string;
@@ -60,7 +61,7 @@ export default function TableNotaDinasViewOnly({
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalViewImage, setModalViewImage] = React.useState(false);
   const [thisGambar, setThisGambar] = React.useState("");
-  const { gambar, uploadImage } = useNotaDinasVM();
+  const { gambar, uploadImage, modalDelete, setModalDelete } = useNotaDinasVM();
 
   const { rpjmn, year } = useRKPContext((state) => state);
 
@@ -798,7 +799,10 @@ export default function TableNotaDinasViewOnly({
                         </Stack>
                       </TableCell>
                       <TableCell align="center">
-                        <IconButton color="error">
+                        <IconButton
+                          color="error"
+                          onClick={() => setModalDelete(true)}
+                        >
                           <Iconify name="mdi:trash" color="red" size={16} />
                         </IconButton>
                       </TableCell>
@@ -1162,6 +1166,12 @@ export default function TableNotaDinasViewOnly({
           </TransformComponent>
         </TransformWrapper>
       </DialogComponent>
+      <DialogDelete
+        title="Hapus Data"
+        handleOpenModal={modalDelete}
+        handleCloseModal={() => setModalDelete(false)}
+        // handleDelete={() => deleteData()}
+      />
     </Fragment>
   );
 }

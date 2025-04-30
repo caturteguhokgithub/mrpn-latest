@@ -41,21 +41,20 @@ export default function CardDampak() {
       <CardItem
         title="Kriteria Dampak"
         addButton={
-          <Stack direction="row" alignItems="center">
+          <Stack gap={1} direction="row" alignItems="center">
             <AddButton
-              filled
+              noMargin
               startIcon={<Iconify name="mdi:table" />}
               title="Tabel Referensi"
               onclick={() => setModalOpenRef(true)}
             />
-            {!isDeveloping && (
-              <AddButton
-                filled
-                startIcon={<Iconify name="mdi:plus-circle" />}
-                title="Tambah Kriteria Dampak"
-                onclick={() => setModalOpenAdd(true)}
-              />
-            )}
+            <AddButton
+              noMargin
+              filled
+              startIcon={<Iconify name="mdi:plus-circle" />}
+              title="Tambah Kriteria Dampak"
+              onclick={() => setModalOpenAdd(true)}
+            />
           </Stack>
         }
       >

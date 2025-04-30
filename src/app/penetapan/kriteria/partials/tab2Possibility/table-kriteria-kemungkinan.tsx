@@ -1,6 +1,8 @@
 import React from "react";
 import {
+  IconButton,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -12,12 +14,21 @@ import theme from "@/theme";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import { bgColorTh } from "@/app/utils/color";
-import { grey } from "@mui/material/colors";
+import { blue, grey, red } from "@mui/material/colors";
 import usePossibilityList from "./hooks/usePossibility";
 import { ResultPossibility } from "./hooks/possibilityModel";
 import { referencePossibility } from "./reference";
+import Iconify from "@/app/components/icons/iconify";
 
-export default function TableKemungkinan({ mode }: { mode?: string }) {
+export default function TableKemungkinan({
+  mode,
+  handleModalEdit,
+  handleModalDelete,
+}: {
+  mode?: string;
+  handleModalEdit?: () => void;
+  handleModalDelete?: () => void;
+}) {
   const { listDataPossibility, loading } = usePossibilityList();
 
   if (loading) {
@@ -33,9 +44,6 @@ export default function TableKemungkinan({ mode }: { mode?: string }) {
           "tbody, thead": {
             "td, th": {
               borderRight: `1px solid ${grey[300]} !important`,
-              "&:last-of-type": {
-                borderRight: `0 !important`,
-              },
             },
           },
         }}
@@ -52,6 +60,9 @@ export default function TableKemungkinan({ mode }: { mode?: string }) {
             </TableCell>
             <TableCell colSpan={2} align="center" sx={{ bgcolor: bgColorTh }}>
               Kemungkinan Terjadi
+            </TableCell>
+            <TableCell rowSpan={2} align="center" sx={{ bgcolor: bgColorTh }}>
+              Aksi
             </TableCell>
           </TableRow>
           <TableRow>
@@ -112,7 +123,32 @@ export default function TableKemungkinan({ mode }: { mode?: string }) {
                   <TableCell>
                     {row.jumlah_frekuensi} atau {row.low_frekuensi}
                   </TableCell>
-                  {/* <TableCell>{row.low_frekuensi}</TableCell> */}
+                  <TableCell>
+                    <Stack direction="row">
+                      <IconButton
+                        onClick={handleModalEdit}
+                        sx={{
+                          py: 0,
+                          "&:hover": {
+                            bgcolor: "transparent",
+                          },
+                        }}
+                      >
+                        <Iconify name="mdi:pencil" color={blue[500]} />
+                      </IconButton>
+                      <IconButton
+                        onClick={handleModalDelete}
+                        sx={{
+                          py: 0,
+                          "&:hover": {
+                            bgcolor: "transparent",
+                          },
+                        }}
+                      >
+                        <Iconify name="mdi:trash" color={red[500]} />
+                      </IconButton>
+                    </Stack>
+                  </TableCell>
                 </TableRow>
               ))}
             </>

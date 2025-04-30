@@ -7,19 +7,27 @@ import {
   useLoading,
 } from "@/lib/core/hooks/useHooks";
 import { useSearchParams } from "next/navigation";
-import { ResultPossibility, doRequestPossibilityDto, initPossibility } from "./possibilityModel";
+import {
+  ResultPossibility,
+  doRequestPossibilityDto,
+  initPossibility,
+} from "./possibilityModel";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 
 const usePossibilityList = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
   const [loading, setLoading] = useState(false);
-  const [dataPossibility, setDataPossibility] = useState<ResultPossibility[]>([]);
+  const [dataPossibility, setDataPossibility] = useState<ResultPossibility[]>(
+    []
+  );
   const { objectState } = usePenetapanGlobalVM();
   const [modalOpenAdd, setModalOpenAdd] = useState(false);
-  const [requestPossibility, setRequestPossibility] = useState<doRequestPossibilityDto>({
-    ...initPossibility,
-  });
+  const [requestPossibility, setRequestPossibility] =
+    useState<doRequestPossibilityDto>({
+      ...initPossibility,
+    });
+  const [modalOpenDelete, setModalDelete] = useState(false);
 
   // const searchParams = useSearchParams();
 
@@ -44,12 +52,12 @@ const usePossibilityList = () => {
           level_kemungkinan: item.level_kemungkinan,
           probabilitas: item.probabilitas,
           jumlah_frekuensi: item.jumlah_frekuensi,
-          low_frekuensi: item.low_frekuensi
+          low_frekuensi: item.low_frekuensi,
         }));
 
         setRequestPossibility({
           uraian_penetapan_objek_id: result[0]?.uraian_penetapan_objek_id ?? 0,
-          values: mappedValues
+          values: mappedValues,
         });
 
         setLoading(false);
@@ -94,7 +102,9 @@ const usePossibilityList = () => {
     requestPossibility,
     setRequestPossibility,
     listDataPossibility: dataPossibility,
-    loading
+    loading,
+    modalOpenDelete,
+    setModalDelete,
   };
 };
 

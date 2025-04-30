@@ -4,6 +4,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
 } from "@mui/material";
@@ -50,14 +51,37 @@ export default function FormKemungkinan({
   };
 
   return (
-    <Paper sx={{ overflowX: "auto", minWidth: "100% !important" }}>
+    <TableContainer
+      component={Paper}
+      elevation={0}
+      variant="outlined"
+      sx={{
+        // overflowX: "auto",
+        // maxHeight: "48vh",
+        "td, th": {
+          "&.MuiTableCell-root": {
+            border: "1px solid rgb(224, 224, 224)",
+          },
+          "&:first-of-type": {
+            borderLeft: 0,
+          },
+        },
+        "&::-webkit-scrollbar": {
+          height: "6px",
+          cursor: "pointer",
+        },
+      }}
+    >
       <Table size="small">
         <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
           <TableRow>
-            <TableCell width="30%">Level Kemungkinan</TableCell>
-            <TableCell>Probabilitas</TableCell>
-            <TableCell>Jumlah Frekuensi</TableCell>
-            <TableCell>Low frequency event</TableCell>
+            <TableCell width={240} align="center">
+              Level Kemungkinan
+            </TableCell>
+            <TableCell align="center">Persentase</TableCell>
+            <TableCell colSpan={2} align="center">
+              Frekuensi
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -73,7 +97,7 @@ export default function FormKemungkinan({
                 <TableCell>{item}</TableCell>
                 <TableCell>
                   <TextareaStyled
-                    placeholder="Probabilitas"
+                    placeholder="Persentase"
                     minRows={2}
                     // width="100%"
                     value={detail?.probabilitas}
@@ -84,7 +108,7 @@ export default function FormKemungkinan({
                 </TableCell>
                 <TableCell>
                   <TextareaStyled
-                    placeholder="Jumlah Frekuensi"
+                    placeholder="Frekuensi"
                     minRows={2}
                     // width="100%"
                     value={detail?.jumlah_frekuensi}
@@ -100,7 +124,7 @@ export default function FormKemungkinan({
                 </TableCell>
                 <TableCell>
                   <TextareaStyled
-                    placeholder="Low Frequency Event"
+                    placeholder="Frekuensi"
                     minRows={2}
                     // width="100%"
                     value={detail?.low_frekuensi}
@@ -114,6 +138,6 @@ export default function FormKemungkinan({
           })}
         </TableBody>
       </Table>
-    </Paper>
+    </TableContainer>
   );
 }

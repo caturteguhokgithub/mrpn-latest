@@ -39,12 +39,13 @@ import { ResultCategory, SubKategoriRisiko } from "./hooks/categoryModel";
 // }
 
 function Row(props: {
+  rowIndex: number;
   row: ResultCategory;
   handleEdit: any;
   handleDelete?: any;
   setRequestEdit?: (value: React.SetStateAction<SubKategoriRisiko>) => void;
 }) {
-  const { row, handleEdit, handleDelete, setRequestEdit } = props;
+  const { row, handleEdit, handleDelete, setRequestEdit, rowIndex } = props;
   const [open, setOpen] = React.useState(false);
 
   const prosesBtnEdit = (value: SubKategoriRisiko, proses: string) => {
@@ -70,7 +71,74 @@ function Row(props: {
 
   return (
     <React.Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+      {row.sub_kategori_risiko.map((subItem: any, subIndex) => (
+        <TableRow
+          key={`${rowIndex}-${subIndex}`}
+          sx={{
+            // "& > *": { borderBottom: "unset" },
+            backgroundColor: rowIndex % 2 === 0 ? grey[100] : "transparent",
+          }}
+        >
+          {subIndex === 0 && (
+            <React.Fragment>
+              <TableCell
+                rowSpan={row.sub_kategori_risiko.length}
+                sx={{ verticalAlign: "top" }}
+              >
+                {row.src_kategori_risiko.value}
+              </TableCell>
+              <TableCell
+                rowSpan={row.sub_kategori_risiko.length}
+                sx={{ verticalAlign: "top" }}
+              >
+                <Box
+                  component="ul"
+                  sx={{
+                    ml: row.src_kategori_risiko.uraian.length > 1 ? 2 : 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 1,
+                  }}
+                >
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: row.src_kategori_risiko.uraian,
+                    }}
+                  ></div>
+                </Box>
+              </TableCell>
+            </React.Fragment>
+          )}
+          <TableCell sx={{ verticalAlign: "top" }}>{subItem.value}</TableCell>
+          <TableCell>
+            <Stack direction="row">
+              <IconButton
+                onClick={() => prosesBtnEdit(subItem, "edit")}
+                sx={{
+                  py: 0,
+                  "&:hover": {
+                    bgcolor: "transparent",
+                  },
+                }}
+              >
+                <Iconify name="mdi:pencil" color={blue[500]} />
+              </IconButton>
+              <IconButton
+                onClick={() => prosesBtnEdit(subItem, "delete")}
+                sx={{
+                  py: 0,
+                  "&:hover": {
+                    bgcolor: "transparent",
+                  },
+                }}
+              >
+                <Iconify name="mdi:trash" color={red[500]} />
+              </IconButton>
+            </Stack>
+          </TableCell>
+        </TableRow>
+      ))}
+      {/* <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell width={60}>
           <IconButton
             aria-label="expand row"
@@ -81,17 +149,23 @@ function Row(props: {
           </IconButton>
         </TableCell>
         <TableCell>{row.src_kategori_risiko.value}</TableCell>
-        <TableCell>{row.src_kategori_risiko.uraian}</TableCell>
-        {/* <TableCell>
-          <Stack direction="row">
-            <IconButton onClick={handleEdit}>
-              <Iconify name="mdi:pencil" color={blue[500]} />
-            </IconButton>
-            <IconButton onClick={handleDelete}>
-              <Iconify name="mdi:trash" color={red[500]} />
-            </IconButton>
-          </Stack>
-        </TableCell> */}
+        <TableCell>
+          <Box
+            component="ul"
+            sx={{
+              ml: 2,
+              display: "flex",
+              flexDirection: "column",
+              gap: 1,
+            }}
+          >
+            <div
+              dangerouslySetInnerHTML={{
+                __html: row.src_kategori_risiko.uraian,
+              }}
+            ></div>
+          </Box>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell colSpan={4} sx={{ bgcolor: grey[200], p: 0 }}>
@@ -106,9 +180,6 @@ function Row(props: {
                       sx={{ bgcolor: bgColorTh }}
                     >
                       Sub Kategori
-                    </TableCell>
-                    <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
-                      Uraian
                     </TableCell>
                     <TableCell
                       width={100}
@@ -135,19 +206,15 @@ function Row(props: {
                           bgcolor: grey[50],
                         }}
                       >
-                        {historyRow.desc}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          bgcolor: grey[50],
-                        }}
-                      >
                         <Stack direction="row">
-                          <IconButton onClick={() => prosesBtnEdit(historyRow, "edit")}>
-                            {/* <IconButton onClick={handleEdit}> */}
+                          <IconButton
+                            onClick={() => prosesBtnEdit(historyRow, "edit")}
+                          >
                             <Iconify name="mdi:pencil" color={blue[500]} />
                           </IconButton>
-                          <IconButton onClick={() => prosesBtnEdit(historyRow, "delete")}>
+                          <IconButton
+                            onClick={() => prosesBtnEdit(historyRow, "delete")}
+                          >
                             <Iconify name="mdi:trash" color={red[500]} />
                           </IconButton>
                         </Stack>
@@ -159,25 +226,10 @@ function Row(props: {
             </Box>
           </Collapse>
         </TableCell>
-      </TableRow>
+      </TableRow> */}
     </React.Fragment>
   );
 }
-
-// const rows = [
-//   createData(
-//     "Ekonomi",
-//     "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
-//   ),
-//   createData(
-//     "Geopolitik",
-//     "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
-//   ),
-//   createData(
-//     "Teknologi",
-//     "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
-//   ),
-// ];
 
 export default function CollapsibleTable({
   handleEdit,
@@ -190,8 +242,6 @@ export default function CollapsibleTable({
 }) {
   const { listDataCategory } = useCategoryList();
 
-  // console.log({ listDataCategory });
-
   return (
     <TableContainer
       component={Paper}
@@ -203,28 +253,40 @@ export default function CollapsibleTable({
           width: "6px",
           cursor: "pointer",
         },
+        "tbody, thead": {
+          "td, th": {
+            borderRight: `1px solid ${grey[300]} !important`,
+            "&:last-of-type": {
+              borderRight: `1px solid ${grey[300]} !important`,
+            },
+          },
+        },
       }}
     >
       <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
         <TableHead>
           <TableRow>
-            <TableCell sx={{ bgcolor: bgColorTh }} />
+            {/* <TableCell sx={{ bgcolor: bgColorTh }} /> */}
             <TableCell align="center" width={180} sx={{ bgcolor: bgColorTh }}>
               Kategori Risiko
             </TableCell>
             <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
-              Uraian
+              Uraian Kategori Risiko
             </TableCell>
-            {/* <TableCell width={100} align="center" sx={{ bgcolor: bgColorTh }}>
+            <TableCell align="center" width={300} sx={{ bgcolor: bgColorTh }}>
+              Subkategori Risiko
+            </TableCell>
+            <TableCell width={100} align="center" sx={{ bgcolor: bgColorTh }}>
               Aksi
-            </TableCell> */}
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {listDataCategory.map((row: ResultCategory) => (
+          {listDataCategory.map((row: ResultCategory, rowIndex) => (
             <Row
               key={row.id}
               row={row}
+              rowIndex={rowIndex}
               handleEdit={handleEdit}
               handleDelete={handleDelete}
               setRequestEdit={setRequestEdit}

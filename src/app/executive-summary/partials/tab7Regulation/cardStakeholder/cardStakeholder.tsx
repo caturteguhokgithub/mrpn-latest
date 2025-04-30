@@ -228,6 +228,7 @@ export default function CardStakeholder({
                 style={{
                   width: "auto",
                   height: "300px",
+                  // maxWidth: "100%",
                   cursor: "pointer",
                 }}
                 onClick={() => setModalViewImageIntExt(true)}
