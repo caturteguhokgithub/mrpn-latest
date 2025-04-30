@@ -245,12 +245,12 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
                           fontSize="0.9rem"
                           lineHeight={1.3}
                         >
-                          {fundRow.value}{" "}
                           <Iconify
                             name="mdi:key-variant"
                             size={14}
                             sx={{ position: "relative", top: 2 }}
-                          />
+                          />{" "}
+                          {fundRow.value}
                         </Typography>
                       </Tooltip>
                     ) : (
