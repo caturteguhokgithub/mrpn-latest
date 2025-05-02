@@ -97,22 +97,36 @@ export default function CardKemungkinan() {
           setState={setRequestPossibility}
           mode="add"
         /> */}
-        <FormPossibility mode="add" />
+        <FormPossibility
+          mode="add"
+          state={requestPossibility.values[0]} // Pass the first value for the form
+          setState={(value) =>
+            setRequestPossibility({ ...requestPossibility, values: [value] })
+          }
+        />
       </DialogComponent>
-      <DialogComponent
-        width={400}
-        dialogOpen={modalOpenEdit}
-        dialogClose={() => setModalOpenEdit(false)}
-        title="Ubah Kriteria Kemungkinan"
-        dialogFooter={dialogActionFooter}
-      >
-        {/* <FormKemungkinan
+      {modalOpenEdit && (
+        <DialogComponent
+          width={400}
+          dialogOpen={modalOpenEdit}
+          dialogClose={() => setModalOpenEdit(false)}
+          title="Ubah Kriteria Kemungkinan"
+          dialogFooter={dialogActionFooter}
+        >
+          {/* <FormKemungkinan
           state={requestPossibility}
           setState={setRequestPossibility}
           mode="edit"
         /> */}
-        <FormPossibility mode="edit" />
-      </DialogComponent>
+          <FormPossibility
+            mode="edit"
+            state={requestPossibility.values[0]} // Pass the first value for the form
+            setState={(value) =>
+              setRequestPossibility({ ...requestPossibility, values: [value] })
+            }
+          />
+        </DialogComponent>
+      )}
       <DialogComponent
         tableMode
         closeButton

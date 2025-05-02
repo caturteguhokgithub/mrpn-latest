@@ -296,46 +296,49 @@ export default function PageTemaView({}) {
                 onclick={() => setObjectState(undefined)}
               />
             </Collapse>
-            {year > 0 && (
-              <Fragment>
-                <AddButton
-                  title="Log Activity"
-                  noMargin
-                  startIcon={<Iconify name="mdi:update" size={18} />}
-                  onclick={() => setModalLog(true)}
-                />
-                {objectState == undefined &&
-                  hasPrivilege(
-                    permission,
-                    pathname,
-                    "add",
-                    "penetapan.objectUpr"
-                  ) && (
-                    <AddButton
-                      title="Tambah Topik"
-                      filled
-                      noMargin
-                      onclick={() => setModalAdd(true)}
-                    />
-                  )}
-              </Fragment>
-            )}
+            {/* {year > 0 && ( */}
+            <Fragment>
+              <AddButton
+                title="Log Activity"
+                noMargin
+                startIcon={<Iconify name="mdi:update" size={18} />}
+                onclick={() => setModalLog(true)}
+              />
+              {objectState == undefined &&
+                hasPrivilege(
+                  permission,
+                  pathname,
+                  "add",
+                  "penetapan.objectUpr"
+                ) && (
+                  <AddButton
+                    title="Tambah Topik"
+                    filled
+                    noMargin
+                    onclick={() => setModalAdd(true)}
+                  />
+                )}
+            </Fragment>
+            {/* )} */}
           </Stack>
         }
       >
-        {objects.length == 0 || year == 0 ? (
+        {/* {objects.length == 0 || year == 0 ? ( */}
+        {objects.length == 0 ? (
           <EmptyState
             icon={<IconEmptyPage />}
-            title={
-              year == 0
-                ? "Tidak ada data yang ditampilkan"
-                : "Halaman Topik Kosong"
-            }
-            description={
-              year == 0
-                ? "Silahkan pilih RKP terlebih dulu"
-                : "Silahkan isi konten halaman ini"
-            }
+            // title={
+            //   year == 0
+            //     ? "Tidak ada data yang ditampilkan"
+            //     : "Halaman Topik Kosong"
+            // }
+            // description={
+            //   year == 0
+            //     ? "Silahkan pilih RKP terlebih dulu"
+            //     : "Silahkan isi konten halaman ini"
+            // }
+            title="Tidak ada data yang ditampilkan"
+            description="Silahkan pilih RPJMN/RKP terlebih dulu"
           />
         ) : (
           <>

@@ -29,6 +29,9 @@ const useIdentificationRiskVM = () => {
   const [dataIdentificationRisk, setDataIdentificationRisk] = useState<
     IdentificationRiskResDto | undefined
   >(undefined);
+
+  const [modalPeristiwa, setModalPeristiwa] = useState(false);
+
   const getIdentificationRiskData = async () => {
     const response = await doGetIdentificationRisk({
       body: {
@@ -165,6 +168,8 @@ const useIdentificationRiskVM = () => {
     actionModal,
     optionImpactArea,
     getOptionImpactArea,
+    modalPeristiwa,
+    setModalPeristiwa,
   };
 };
 

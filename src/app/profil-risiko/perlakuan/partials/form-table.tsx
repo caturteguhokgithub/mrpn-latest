@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { Fragment, SetStateAction, useEffect, useState } from "react";
 import {
   Autocomplete,
   Box,
@@ -153,7 +153,7 @@ const TablePerlakuanMultiCheck = ({
     <Paper
       elevation={0}
       variant="outlined"
-      sx={{ minWidth: "100% !important", mt: 1 }}
+      sx={{ minWidth: "100% !important" }}
     >
       <Box p={1}>
         <TextField
@@ -169,7 +169,14 @@ const TablePerlakuanMultiCheck = ({
           size="small"
         />
       </Box>
-      <TableContainer sx={{ maxHeight: 200 }}>
+      <TableContainer
+        sx={{
+          maxHeight: 200,
+          "&::-webkit-scrollbar": {
+            width: "3px",
+          },
+        }}
+      >
         <Table stickyHeader size="small">
           <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
             <TableRow>
@@ -270,7 +277,7 @@ export default function FormTable({
   const [modal, setModal] = useState<boolean>(false);
 
   return (
-    <>
+    <Fragment>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Divider>
@@ -283,7 +290,7 @@ export default function FormTable({
               title="Peristiwa Risiko Strategis MRPN LS"
               titleField
               information={
-                <>
+                <Fragment>
                   <strong>Risiko Strategis</strong>
                   <p>
                     Risiko yang terkait dengan kebijakan publik atau keputusan
@@ -295,7 +302,7 @@ export default function FormTable({
                     dilihat pada saat pengambilan keputusan yang buruk, dan
                     alokasi sumber daya yang tidak memadai
                   </p>
-                </>
+                </Fragment>
               }
             />
             {mode !== "read" && mode !== "update" ? (
@@ -487,15 +494,74 @@ export default function FormTable({
                 {state.keterangan_risiko}
               </Typography>
             )}
-            <TablePerlakuanMultiCheck
-              data={data?.optionRo ?? []}
-              state={state}
-              setState={setState}
-              mode={mode}
-            />
           </FormControl>
         </Grid>
 
+        <Grid item xs={12}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={3}>
+              <FormControl fullWidth>
+                <FieldLabelInfo title="Triwulan I" titleField />
+                <TextField
+                  size="small"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  placeholder="Triwulan I"
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <FormControl fullWidth>
+                <FieldLabelInfo title="Triwulan II" titleField />
+                <TextField
+                  size="small"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  placeholder="Triwulan II"
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <FormControl fullWidth>
+                <FieldLabelInfo title="Triwulan III" titleField />
+                <TextField
+                  size="small"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  placeholder="Triwulan III"
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <FormControl fullWidth>
+                <FieldLabelInfo title="Triwulan IV" titleField />
+                <TextField
+                  size="small"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  placeholder="Triwulan IV"
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12}>
+          <TablePerlakuanMultiCheck
+            data={data?.optionRo ?? []}
+            state={state}
+            setState={setState}
+            mode={mode}
+          />
+        </Grid>
         {/*<Grid item xs={12} md={6}>*/}
         {/*  <FormControl fullWidth>*/}
         {/*    <FieldLabelInfo title="Waktu Rencana" />*/}
@@ -734,6 +800,6 @@ export default function FormTable({
       >
         Harap mengisi analisis risiko terlebih dahulu
       </DialogComponent>
-    </>
+    </Fragment>
   );
 }
