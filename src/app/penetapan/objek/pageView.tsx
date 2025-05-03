@@ -46,6 +46,7 @@ import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
 import { forEach } from "lodash";
 import Iconify from "@/app/components/icons/iconify";
 import TableLog from "./partials/table-log";
+import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
 
 const styleToggleButton = [
   {
@@ -138,6 +139,8 @@ export default function PageTemaView({}) {
     setModalLog,
     useEffectLogActivity,
     getStateLogActivity,
+    modalUpr,
+    setModalUpr,
   } = usePenetapanObjectVM();
 
   useEffect(useEffectGenerateOption, [year]);
@@ -296,46 +299,49 @@ export default function PageTemaView({}) {
                 onclick={() => setObjectState(undefined)}
               />
             </Collapse>
-            {year > 0 && (
-              <Fragment>
-                <AddButton
-                  title="Log Activity"
-                  noMargin
-                  startIcon={<Iconify name="mdi:update" size={18} />}
-                  onclick={() => setModalLog(true)}
-                />
-                {objectState == undefined &&
-                  hasPrivilege(
-                    permission,
-                    pathname,
-                    "add",
-                    "penetapan.objectUpr"
-                  ) && (
-                    <AddButton
-                      title="Tambah Topik"
-                      filled
-                      noMargin
-                      onclick={() => setModalAdd(true)}
-                    />
-                  )}
-              </Fragment>
-            )}
+            {/* {year > 0 && ( */}
+            <Fragment>
+              <AddButton
+                title="Log Activity"
+                noMargin
+                startIcon={<Iconify name="mdi:update" size={18} />}
+                onclick={() => setModalLog(true)}
+              />
+              {objectState == undefined &&
+                hasPrivilege(
+                  permission,
+                  pathname,
+                  "add",
+                  "penetapan.objectUpr"
+                ) && (
+                  <AddButton
+                    title="Tambah Topik"
+                    filled
+                    noMargin
+                    onclick={() => setModalAdd(true)}
+                  />
+                )}
+            </Fragment>
+            {/* )} */}
           </Stack>
         }
       >
-        {objects.length == 0 || year == 0 ? (
+        {/* {objects.length == 0 || year == 0 ? ( */}
+        {objects.length == 0 ? (
           <EmptyState
             icon={<IconEmptyPage />}
-            title={
-              year == 0
-                ? "Tidak ada data yang ditampilkan"
-                : "Halaman Topik Kosong"
-            }
-            description={
-              year == 0
-                ? "Silahkan pilih RKP terlebih dulu"
-                : "Silahkan isi konten halaman ini"
-            }
+            // title={
+            //   year == 0
+            //     ? "Tidak ada data yang ditampilkan"
+            //     : "Halaman Topik Kosong"
+            // }
+            // description={
+            //   year == 0
+            //     ? "Silahkan pilih RKP terlebih dulu"
+            //     : "Silahkan isi konten halaman ini"
+            // }
+            title="Tidak ada data yang ditampilkan"
+            description="Silahkan pilih RPJMN/RKP terlebih dulu"
           />
         ) : (
           <>
@@ -371,7 +377,7 @@ export default function PageTemaView({}) {
               </>
             )}
             <Collapse in={objectState !== undefined}>
-              <TabObject />
+              <TabObject setModalUpr={setModalUpr} />
             </Collapse>
           </>
         )}
@@ -411,6 +417,51 @@ export default function PageTemaView({}) {
         dialogFooter={false}
       >
         <TableLog />
+      </DialogComponent>
+
+      <DialogComponent
+        title="Tambah UPR"
+        width={600}
+        dialogOpen={modalUpr}
+        dialogClose={() => setModalUpr(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button onClick={() => setModalUpr(false)}>Batal</Button>
+            <Button
+              variant="contained"
+              // onClick={() => updateOrCreateTopic()}
+              sx={{
+                color: "white !important",
+              }}
+            >
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <AutocompleteSelectSingle
+          value={""}
+          options={[
+            "Badan Pengawas Tenaga Nuklir (BAPETEN)",
+            "Pemerintah Kabupaten Kepulauan Mentawai",
+            "Kementerian Lingkungan Hidup dan Kehutanan (KLHK)",
+            "Kementerian Kelautan dan Sumber Daya Manusia (Kemenkes)",
+            "Mahkamah Agung (MA)",
+            "Kementerian Perhubungan (Kemenhub)",
+            "Kementerian Dalam Negeri (Kemendagri)",
+            "Kementerian Keuangan (Kemenkeu)",
+            "Kementerian Energi dan Sumber Daya Mineral (ESDM)",
+            "Kementerian Perindustrian (Kemenperin)",
+          ]}
+          getOptionLabel={(option) => option}
+          handleChange={(newValue: string) =>
+            setStateTopic((prev) => ({
+              ...prev,
+              level_kemungkinan: newValue,
+            }))
+          }
+          placeHolder={"Pilih UPR"}
+        />
       </DialogComponent>
 
       {/*<DialogComponent*/}

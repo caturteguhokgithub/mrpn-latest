@@ -1,5 +1,12 @@
-import React from "react";
-import { Button, Grow, Stack, Tooltip, Typography } from "@mui/material";
+import React, { CSSProperties } from "react";
+import {
+  Button,
+  Grow,
+  Stack,
+  SxProps,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { IconFA } from "../icons/icon-fa";
 import { grey } from "@mui/material/colors";
 import { InfoTooltip } from "../InfoTooltip";
@@ -12,6 +19,7 @@ export default function FieldLabelInfo({
   buttonInfo,
   buttonInfoOnclick,
   titleField,
+  sx,
 }: {
   title?: string | React.ReactNode;
   information?: React.ReactNode;
@@ -20,6 +28,7 @@ export default function FieldLabelInfo({
   buttonInfo?: boolean;
   buttonInfoOnclick?: () => void;
   titleField?: boolean;
+  sx?: SxProps;
 }) {
   const buttonInfoContent = (
     <Button
@@ -41,7 +50,7 @@ export default function FieldLabelInfo({
           titleField={titleField}
         />
       ) : (
-        <Stack direction="row" alignItems="center" gap={0.5}>
+        <Stack direction="row" alignItems="center" gap={0.5} sx={sx}>
           {titleSection ? (
             <Typography fontWeight={600}>{title}</Typography>
           ) : (

@@ -35,8 +35,9 @@ import { advancedTable } from "@/app/components/table";
 import { blue, grey, red } from "@mui/material/colors";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import { SortNumber } from "../perlakuan/partials/mrt-complete";
+import FormPeristiwa from "./partials/form-peristiwa";
 
-export default function PageIdentifikasiView({ }) {
+export default function PageIdentifikasiView({}) {
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
   pathname =
@@ -67,6 +68,8 @@ export default function PageIdentifikasiView({ }) {
     actionModal,
     optionImpactArea,
     getOptionImpactArea,
+    modalPeristiwa,
+    setModalPeristiwa,
   } = useIdentificationRiskVM();
 
   useEffect(() => {
@@ -313,10 +316,11 @@ export default function PageIdentifikasiView({ }) {
   return (
     <>
       <ContentPage
-        title={`Identifikasi Risiko ${year == 0
-          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-          : "Tahun " + year
-          }`}
+        title={`Identifikasi Risiko ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip="Proses menemukenali dan mendeskripsikan risiko"
         withCard={objectState === undefined}
         chooseObject={
@@ -359,7 +363,7 @@ export default function PageIdentifikasiView({ }) {
             }
           />
         ) : (
-          <Stack gap={2}>
+          <Stack gap={1}>
             <Paper elevation={2} sx={{ borderRadius: "1.25rem", p: 0, m: 1 }}>
               <HeaderTable viewOnly data={dataIdentificationRisk} />
               {/* <HeaderIdentifikasi
@@ -390,13 +394,24 @@ export default function PageIdentifikasiView({ }) {
         width={"50%"}
         dialogOpen={modal.isOpen && modal.action != "delete"}
         dialogClose={() => actionModal(true, "create")}
-        title={`${modal.action == "read"
-          ? "Detail"
-          : modal.action == "update"
+        title={`${
+          modal.action == "read"
+            ? "Detail"
+            : modal.action == "update"
             ? "Ubah"
             : "Tambah"
-          } Identifikasi Risiko`}
+        } Identifikasi Risiko`}
         dialogFooter={dialogActionFooter}
+        sx={{
+          ".MuiDialogContent-root": {
+            "&::-webkit-scrollbar": {
+              width: "12px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: grey[300],
+            },
+          },
+        }}
       >
         <FormTable
           mode={modal.action == "read" ? "read" : undefined}
@@ -405,7 +420,29 @@ export default function PageIdentifikasiView({ }) {
           setRequest={setRequest}
           optionRiskType={optionRiskType}
           optionImpactArea={optionImpactArea}
+          setModalPeristiwa={setModalPeristiwa}
         />
+      </DialogComponent>
+
+      <DialogComponent
+        width={600}
+        dialogOpen={modalPeristiwa}
+        dialogClose={() => setModalPeristiwa(false)}
+        title="Tambah Peristiwa Risiko Baru"
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button onClick={() => setModalPeristiwa(false)}>Batal</Button>
+            <Button
+              variant="contained"
+              // type="submit"
+              // onClick={() => updateOrCreateOrDelete()}
+            >
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <FormPeristiwa />
       </DialogComponent>
 
       <DialogComponent

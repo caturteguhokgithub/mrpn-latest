@@ -1,7 +1,7 @@
 "use client";
 
 import ContentPage from "@/app/components/contents";
-import React, { useEffect, useMemo } from "react";
+import React, { Fragment, useEffect, useMemo } from "react";
 import {
   Box,
   Button,
@@ -17,6 +17,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import DialogComponent from "@/app/components/dialog";
 import FormTable from "./partials/form-table";
@@ -149,6 +150,11 @@ export default function PagePerlakuanView({}) {
                     numberSort={column.getIndex() + 1}
                   />
                 ),
+                muiTableBodyCellProps: {
+                  sx: {
+                    alignItems: "flex-start",
+                  },
+                },
               },
               {
                 accessorKey: "kategori",
@@ -160,51 +166,125 @@ export default function PagePerlakuanView({}) {
                     numberSort={column.getIndex() + 1}
                   />
                 ),
+                muiTableBodyCellProps: {
+                  sx: {
+                    alignItems: "flex-start",
+                  },
+                },
               },
             ],
           },
         ],
       },
-      {
-        id: "perlakuan_risiko",
-        header: "Perlakuan Risiko",
-        columns: [
-          {
-            accessorKey: "keputusan",
-            header: "Keputusan Perlakuan Risiko",
-            enableColumnActions: false,
-            Header: ({ column }) => (
-              <SortNumber column={column} numberSort={column.getIndex() + 1} />
-            ),
-          },
-          {
-            accessorKey: "keterangan_risiko",
-            header: "Keterangan Perlakuan Risiko",
-            enableColumnActions: false,
-            size: 300,
-            Header: ({ column }) => (
-              <SortNumber column={column} numberSort={column.getIndex() + 1} />
-            ),
-          },
-          {
-            accessorKey: "waktu",
-            header: "Waktu Rencana Perlakuan Risiko",
-            enableColumnActions: false,
-            Header: ({ column }) => (
-              <SortNumber column={column} numberSort={column.getIndex() + 1} />
-            ),
-          },
-          {
-            accessorKey: "penanggung_jawab",
-            header: "Penanggung Jawab",
-            enableColumnActions: false,
-            size: 220,
-            Header: ({ column }) => (
-              <SortNumber column={column} numberSort={column.getIndex() + 1} />
-            ),
-          },
-        ],
-      },
+      // {
+      //   id: "perlakuan_risiko",
+      //   header: "Perlakuan Risiko",
+      //   columns: [
+      //     {
+      //       accessorKey: "keputusan",
+      //       header: "Keputusan Perlakuan Risiko",
+      //       enableColumnActions: false,
+      //       Header: ({ column }) => (
+      //         <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      //       ),
+      //       muiTableBodyCellProps: {
+      //         sx: {
+      //           alignItems: "flex-start",
+      //         },
+      //       },
+      //     },
+      //     {
+      //       accessorKey: "keterangan_risiko",
+      //       header: "Keterangan Perlakuan Risiko",
+      //       enableColumnActions: false,
+      //       size: 300,
+      //       Header: ({ column }) => (
+      //         <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      //       ),
+      //       muiTableBodyCellProps: {
+      //         sx: {
+      //           alignItems: "flex-start",
+      //         },
+      //       },
+      //     },
+      //     {
+      //       accessorKey: "target",
+      //       header: "Target",
+      //       enableColumnActions: false,
+      //       Header: ({ column }) => (
+      //         <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      //       ),
+      //       Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
+      //         <Stack>
+      //           <Stack direction={"row"} gap={1} alignItems="center">
+      //             <Typography width={44} fontSize={14}>
+      //               TW I:
+      //             </Typography>
+      //             <Typography fontWeight={600} fontSize={14}>
+      //               -
+      //             </Typography>
+      //           </Stack>
+      //           <Stack direction={"row"} gap={1} alignItems="center">
+      //             <Typography width={44} fontSize={14}>
+      //               TW II:
+      //             </Typography>
+      //             <Typography fontWeight={600} fontSize={14}>
+      //               -
+      //             </Typography>
+      //           </Stack>
+      //           <Stack direction={"row"} gap={1} alignItems="center">
+      //             <Typography width={44} fontSize={14}>
+      //               TW III:
+      //             </Typography>
+      //             <Typography fontWeight={600} fontSize={14}>
+      //               -
+      //             </Typography>
+      //           </Stack>
+      //           <Stack direction={"row"} gap={1} alignItems="center">
+      //             <Typography width={44} fontSize={14}>
+      //               TW IV:
+      //             </Typography>
+      //             <Typography fontWeight={600} fontSize={14}>
+      //               -
+      //             </Typography>
+      //           </Stack>
+      //         </Stack>
+      //       ),
+      //       muiTableBodyCellProps: {
+      //         sx: {
+      //           alignItems: "flex-start",
+      //         },
+      //       },
+      //     },
+      //     {
+      //       accessorKey: "waktu",
+      //       header: "Waktu Rencana Perlakuan Risiko",
+      //       enableColumnActions: false,
+      //       Header: ({ column }) => (
+      //         <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      //       ),
+      //       muiTableBodyCellProps: {
+      //         sx: {
+      //           alignItems: "flex-start",
+      //         },
+      //       },
+      //     },
+      //     {
+      //       accessorKey: "penanggung_jawab",
+      //       header: "Penanggung Jawab",
+      //       enableColumnActions: false,
+      //       size: 220,
+      //       Header: ({ column }) => (
+      //         <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      //       ),
+      //       muiTableBodyCellProps: {
+      //         sx: {
+      //           alignItems: "flex-start",
+      //         },
+      //       },
+      //     },
+      //   ],
+      // },
       {
         id: "risiko_residual_harapan",
         header: "Risiko Residual Harapan",
@@ -219,6 +299,9 @@ export default function PagePerlakuanView({}) {
             },
             muiTableBodyCellProps: {
               align: "center",
+              sx: {
+                alignItems: "flex-start",
+              },
             },
             Header: ({ column }) => (
               <SortNumber column={column} numberSort={column.getIndex() + 1} />
@@ -234,6 +317,9 @@ export default function PagePerlakuanView({}) {
             },
             muiTableBodyCellProps: {
               align: "center",
+              sx: {
+                alignItems: "flex-start",
+              },
             },
             Header: ({ column }) => (
               <SortNumber column={column} numberSort={column.getIndex() + 1} />
@@ -250,6 +336,9 @@ export default function PagePerlakuanView({}) {
             },
             muiTableBodyCellProps: {
               align: "center",
+              sx: {
+                alignItems: "flex-start",
+              },
             },
             Header: ({ column }) => (
               <SortNumber column={column} numberSort={column.getIndex() + 1} />
@@ -311,6 +400,11 @@ export default function PagePerlakuanView({}) {
             Header: ({ column }) => (
               <SortNumber column={column} numberSort={column.getIndex() + 1} />
             ),
+            muiTableBodyCellProps: {
+              sx: {
+                alignItems: "flex-start",
+              },
+            },
           },
         ],
       },
@@ -347,9 +441,12 @@ export default function PagePerlakuanView({}) {
     data,
     ...renderTopToolbar,
     ...advancedTable,
+    enableRowVirtualization: true,
+    rowVirtualizerOptions: { overscan: 5 },
     muiTableContainerProps: {
       sx: {
         maxWidth: "calc(100vw - 348px)",
+        maxHeight: "calc(100vh - 390px)",
         overflowX: "auto",
         transition: "max-width 500ms ease-in-out",
         "&::-webkit-scrollbar": {
@@ -390,6 +487,7 @@ export default function PagePerlakuanView({}) {
         size: 150,
         Cell: (item: any) => (
           <ActionColumn
+            center
             viewClick={
               hasPrivilege(permission, pathname, "list")
                 ? () => actionModal(true, "read", item.cell.row.original.id)
@@ -415,119 +513,200 @@ export default function PagePerlakuanView({}) {
     filterFromLeafRows: true,
     enableExpanding: true,
     renderDetailPanel: (row) => (
-      <Box bgcolor={theme.palette.primary.light}>
-        <TableContainer
-          sx={{
-            maxHeight: 300,
-            "&::-webkit-scrollbar": {
-              width: "3px",
-            },
-            "tbody, thead": {
-              "td, th": {
-                borderRight: `1px solid ${grey[300]} !important`,
-                "&:last-of-type": {
+      <Stack
+        direction="column"
+        gap={2}
+        bgcolor={theme.palette.primary.light}
+        width="100%"
+        m={-2}
+        p={1}
+      >
+        {/* Tabel Pendanaan */}
+        <Box>
+          <Typography fontWeight={600}>Pendanaan</Typography>
+          <TableContainer
+            sx={{
+              maxHeight: 300,
+              "&::-webkit-scrollbar": {
+                width: "3px",
+              },
+              "tbody, thead": {
+                "td, th": {
                   borderRight: `1px solid ${grey[300]} !important`,
+                  "&:last-of-type": {
+                    borderRight: `1px solid ${grey[300]} !important`,
+                  },
                 },
               },
-            },
-          }}
-        >
-          <Table stickyHeader size="small">
-            <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
-              <TableRow>
-                <TableCell
-                  rowSpan={2}
-                  align="center"
-                  sx={{ bgcolor: bgColorTh, width: 30 }}
-                >
-                  No
-                </TableCell>
-                <TableCell
-                  rowSpan={2}
-                  align="center"
-                  sx={{ bgcolor: bgColorTh }}
-                >
-                  Nomenklatur RO
-                </TableCell>
-                {multiyear.map((y, iY) => (
+            }}
+          >
+            <Table stickyHeader size="small">
+              <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
+                <TableRow>
                   <TableCell
-                    colSpan={4}
-                    align={"center"}
+                    rowSpan={2}
+                    align="center"
+                    sx={{ bgcolor: bgColorTh, width: 30 }}
+                  >
+                    No
+                  </TableCell>
+                  <TableCell
+                    rowSpan={2}
+                    align="center"
                     sx={{ bgcolor: bgColorTh }}
                   >
-                    {y}
+                    Nomenklatur RO
                   </TableCell>
-                ))}
-              </TableRow>
-              <TableRow>
-                {multiyear.map((y, iY) => (
-                  <>
+                  {multiyear.map((y, iY) => (
                     <TableCell
-                      align="center"
-                      style={{ top: "37px" }}
+                      colSpan={4}
+                      align={"center"}
                       sx={{ bgcolor: bgColorTh }}
                     >
-                      Target
+                      {y}
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      style={{ top: "37px" }}
-                      sx={{ bgcolor: bgColorTh }}
-                    >
-                      Satuan
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      style={{ top: "37px" }}
-                      sx={{ bgcolor: bgColorTh }}
-                    >
-                      Pembiayaan (Juta)
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      style={{ top: "37px" }}
-                      sx={{ bgcolor: bgColorTh }}
-                    >
-                      Sumber Pembiayaan
-                    </TableCell>
-                  </>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {row.row.original.rincian_output.map(
-                (r: RoDto, index: number) => (
-                  <TableRow key={r.id}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{r.value}</TableCell>
-                    {multiyear.map((y, iY) => (
-                      <>
-                        <TableCell>
-                          {getDetailRO("target", y, r.detail)}
-                        </TableCell>
-                        <TableCell>
-                          {getDetailRO("satuan", y, r.detail)}
-                        </TableCell>
-                        <TableCell align={"right"}>
-                          {getDetailRO("anggaran", y, r.detail)}
-                        </TableCell>
-                        <TableCell>
-                          {getDetailRO("sumber_anggaran", y, r.detail)}
-                        </TableCell>
-                      </>
-                    ))}
-                  </TableRow>
-                )
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  {multiyear.map((y, iY) => (
+                    <>
+                      <TableCell
+                        align="center"
+                        style={{ top: "37px" }}
+                        sx={{ bgcolor: bgColorTh }}
+                      >
+                        Target
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ top: "37px" }}
+                        sx={{ bgcolor: bgColorTh }}
+                      >
+                        Satuan
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ top: "37px" }}
+                        sx={{ bgcolor: bgColorTh }}
+                      >
+                        Pembiayaan (Juta)
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ top: "37px" }}
+                        sx={{ bgcolor: bgColorTh }}
+                      >
+                        Sumber Pembiayaan
+                      </TableCell>
+                    </>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {row.row.original.rincian_output.map(
+                  (r: RoDto, index: number) => (
+                    <TableRow key={r.id}>
+                      <TableCell sx={{ bgcolor: "white" }}>
+                        {index + 1}
+                      </TableCell>
+                      <TableCell sx={{ bgcolor: "white" }}>{r.value}</TableCell>
+                      {multiyear.map((y, iY) => (
+                        <>
+                          <TableCell sx={{ bgcolor: "white" }}>
+                            {getDetailRO("target", y, r.detail)}
+                          </TableCell>
+                          <TableCell sx={{ bgcolor: "white" }}>
+                            {getDetailRO("satuan", y, r.detail)}
+                          </TableCell>
+                          <TableCell align={"right"} sx={{ bgcolor: "white" }}>
+                            {getDetailRO("anggaran", y, r.detail)}
+                          </TableCell>
+                          <TableCell sx={{ bgcolor: "white" }}>
+                            {getDetailRO("sumber_anggaran", y, r.detail)}
+                          </TableCell>
+                        </>
+                      ))}
+                    </TableRow>
+                  )
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+        {/* Tabel Perlakuan */}
+        <Box>
+          <Typography fontWeight={600}>Perlakuan Risiko</Typography>
+          <TableContainer
+            sx={{
+              maxHeight: 300,
+              "&::-webkit-scrollbar": {
+                width: "3px",
+              },
+              "tbody, thead": {
+                "td, th": {
+                  borderRight: `1px solid ${grey[300]} !important`,
+                  "&:last-of-type": {
+                    borderRight: `1px solid ${grey[300]} !important`,
+                  },
+                },
+              },
+            }}
+          >
+            <Table stickyHeader size="small">
+              <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
+                <TableRow>
+                  <TableCell
+                    align="center"
+                    sx={{ bgcolor: bgColorTh, width: 30 }}
+                  >
+                    No
+                  </TableCell>
+                  <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
+                    Keputusan Perlakuan Risiko
+                  </TableCell>
+                  <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
+                    Keterangan Perlakuan Risiko
+                  </TableCell>
+                  <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
+                    Target
+                  </TableCell>
+                  <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
+                    Waktu Rencana Perlakuan Risiko
+                  </TableCell>
+                  <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
+                    Penanggung Jawab
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell align="center" sx={{ bgcolor: "white" }}>
+                    No
+                  </TableCell>
+                  <TableCell sx={{ bgcolor: "white" }}>
+                    Keputusan Perlakuan Risiko
+                  </TableCell>
+                  <TableCell sx={{ bgcolor: "white" }}>
+                    Keterangan Perlakuan Risiko
+                  </TableCell>
+                  <TableCell sx={{ bgcolor: "white" }}>Target</TableCell>
+                  <TableCell sx={{ bgcolor: "white" }}>
+                    Waktu Rencana Perlakuan Risiko
+                  </TableCell>
+                  <TableCell sx={{ bgcolor: "white" }}>
+                    Penanggung Jawab
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </Stack>
     ),
   });
 
   return (
-    <>
+    <Fragment>
       <ContentPage
         title={`Perlakuan Risiko ${
           year == 0
@@ -595,6 +774,13 @@ yang telah ditetapkan"
             : "Tambah"
         } Perlakuan Risiko`}
         dialogFooter={dialogActionFooter}
+        sx={{
+          ".MuiDialogContent-root": {
+            "&::-webkit-scrollbar": {
+              width: "12px",
+            },
+          },
+        }}
       >
         <FormTable
           mode={modal.action}
@@ -617,6 +803,6 @@ yang telah ditetapkan"
       >
         Anda yakin akan menghapus data ini?
       </DialogComponent>
-    </>
+    </Fragment>
   );
 }

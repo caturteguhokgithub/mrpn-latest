@@ -19,14 +19,21 @@ export default function HeaderIdentifikasi({
   viewOnly,
   data,
   noPaddingChip,
+  isModal,
 }: {
   noPadding?: boolean;
   asTable?: boolean;
   viewOnly?: boolean;
   data?: IdentificationRiskResDto;
   noPaddingChip?: boolean;
+  isModal?: boolean;
 }) {
   return (
-    <HeaderTable data={data} asTable={asTable} noPaddingChip={noPaddingChip} />
+    <HeaderTable
+      data={data}
+      asTable={asTable}
+      noPaddingChip={noPaddingChip}
+      isModal={isModal}
+    />
   );
 }

@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { Fragment, SetStateAction, useEffect, useState } from "react";
 import {
   Autocomplete,
   Box,
@@ -63,6 +63,7 @@ import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { FormatIDR } from "@/lib/utils/currency";
 import { getDetailRO } from "@/lib/utils/roDetail";
+import AddButton from "@/app/components/buttonAdd";
 
 const highlightText = (text: any, highlight: any) => {
   if (!highlight.trim() || text == "" || text == undefined) {
@@ -153,7 +154,7 @@ const TablePerlakuanMultiCheck = ({
     <Paper
       elevation={0}
       variant="outlined"
-      sx={{ minWidth: "100% !important", mt: 1 }}
+      sx={{ minWidth: "100% !important" }}
     >
       <Box p={1}>
         <TextField
@@ -169,7 +170,14 @@ const TablePerlakuanMultiCheck = ({
           size="small"
         />
       </Box>
-      <TableContainer sx={{ maxHeight: 200 }}>
+      <TableContainer
+        sx={{
+          maxHeight: 200,
+          "&::-webkit-scrollbar": {
+            width: "3px",
+          },
+        }}
+      >
         <Table stickyHeader size="small">
           <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
             <TableRow>
@@ -229,6 +237,32 @@ const TablePerlakuanMultiCheck = ({
   );
 };
 
+const DividerSection = ({ title }: { title: string }) => {
+  return (
+    <Divider
+      sx={{
+        "&:before, &:after": {
+          borderTopColor: grey[500],
+        },
+      }}
+    >
+      <Chip
+        label={title}
+        size="small"
+        sx={{
+          fontWeight: 600,
+          fontSize: 12,
+          py: 2,
+          px: 1,
+          textTransform: "uppercase",
+          bgcolor: grey[800],
+          color: "white",
+        }}
+      />
+    </Divider>
+  );
+};
+
 export default function FormTable({
   mode,
   data,
@@ -268,14 +302,36 @@ export default function FormTable({
   };
 
   const [modal, setModal] = useState<boolean>(false);
+  const [items, setItem] = useState([{ id: 1 }]);
+
+  const perlakuanAdd = () => {
+    let arr = [...items];
+    if (arr.length >= 10) {
+      return;
+    } else {
+      arr.push({ id: Math.floor(Math.random() * 1000) });
+    }
+    const newItem = arr;
+    setItem(newItem);
+  };
+
+  const perlakuanMinus = (nowId: any) => {
+    let arr = [...items];
+    let newArr = arr.filter((val) => {
+      if (nowId === val.id) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+    setItem(newArr);
+  };
 
   return (
-    <>
+    <Fragment>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Divider>
-            <Chip label="Identifikasi Risiko" size="small" />
-          </Divider>
+          <DividerSection title="Identifikasi Risiko" />
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
@@ -283,7 +339,7 @@ export default function FormTable({
               title="Peristiwa Risiko Strategis MRPN LS"
               titleField
               information={
-                <>
+                <Fragment>
                   <strong>Risiko Strategis</strong>
                   <p>
                     Risiko yang terkait dengan kebijakan publik atau keputusan
@@ -295,7 +351,7 @@ export default function FormTable({
                     dilihat pada saat pengambilan keputusan yang buruk, dan
                     alokasi sumber daya yang tidak memadai
                   </p>
-                </>
+                </Fragment>
               }
             />
             {mode !== "read" && mode !== "update" ? (
@@ -357,9 +413,7 @@ export default function FormTable({
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <Divider>
-            <Chip label="Analisis & Evaluasi Risiko" size="small" />
-          </Divider>
+          <DividerSection title="Analisis & Evaluasi Risiko" />
         </Grid>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
@@ -423,79 +477,297 @@ export default function FormTable({
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <Divider>
-            <Chip label="Perlakuan Risiko" size="small" />
-          </Divider>
+          <DividerSection title="Perlakuan Risiko" />
         </Grid>
 
         <Grid item xs={12}>
-          <FormControl fullWidth>
-            <FieldLabelInfo title="Keputusan" />
-            {mode !== "read" ? (
-              <AutocompleteSelectSingle
-                key={state.keputusan ? state.keputusan : "keputusan"}
-                value={state.keputusan}
-                options={optionsRiskDecision}
-                getOptionLabel={(opt) => opt}
-                handleChange={(e: string) =>
-                  setState((prevState) => {
-                    return {
-                      ...prevState,
-                      keputusan: e,
-                    };
-                  })
-                }
-                placeHolder={"Pilih keputusan"}
-              />
-            ) : (
-              <Typography fontWeight={600}>{state.keputusan}</Typography>
-            )}
-          </FormControl>
-        </Grid>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent={"space-between"}
+            mb={2}
+          >
+            <Typography
+              fontWeight={600}
+              fontSize={14}
+              textTransform={"uppercase"}
+            >
+              Perlakuan Risiko
+            </Typography>
 
-        <Grid item xs={12}>
-          <FormControl fullWidth>
-            <FieldLabelInfo
-              title="Keterangan Perlakuan Risiko"
-              titleField
-              information={
-                <>
-                  <strong>Perlakuan Risiko</strong>
-                  <p>
-                    Proses untuk menurunkan keterpaparan risiko yang dikaitkan
-                    dengan toleransi dan selera risiko yang telah ditetapkan
-                  </p>
-                </>
-              }
+            <AddButton
+              noMargin
+              title="Tambah Perlakuan Risiko"
+              onclick={perlakuanAdd}
             />
-            {mode != "read" ? (
-              <TextareaStyled
-                value={state.keterangan_risiko}
-                onChange={(e) =>
-                  setState((prevState) => {
-                    return {
-                      ...prevState,
-                      keterangan_risiko: e.target.value,
-                    };
-                  })
-                }
-                placeholder="Keterangan Perlakuan Risiko"
-                minRows={2}
-              />
-            ) : (
-              <Typography fontWeight={600} sx={{ marginBottom: 2 }}>
-                {state.keterangan_risiko}
-              </Typography>
-            )}
-            <TablePerlakuanMultiCheck
-              data={data?.optionRo ?? []}
-              state={state}
-              setState={setState}
-              mode={mode}
-            />
-          </FormControl>
-        </Grid>
+          </Stack>
 
+          <Stack direction="column" gap={2}>
+            {items.map((tags: any) => (
+              <Paper
+                key={tags.id}
+                elevation={0}
+                variant="outlined"
+                sx={{ p: 2, bgcolor: grey[50] }}
+              >
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <Stack direction={"row"} justifyContent="space-between">
+                      <Typography fontWeight={600}>
+                        Perlakuan Risiko #1
+                      </Typography>
+                      {tags.id > 1 && (
+                        <Box>
+                          <AddButton
+                            small
+                            errorColor
+                            title="Hapus"
+                            noMargin
+                            onclick={() => perlakuanMinus(tags.id)}
+                          />
+                        </Box>
+                      )}
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth>
+                      <FieldLabelInfo title="Keputusan" />
+                      {mode !== "read" ? (
+                        <AutocompleteSelectSingle
+                          bgWhite
+                          key={state.keputusan ? state.keputusan : "keputusan"}
+                          value={state.keputusan}
+                          options={optionsRiskDecision}
+                          getOptionLabel={(opt) => opt}
+                          handleChange={(e: string) =>
+                            setState((prevState) => {
+                              return {
+                                ...prevState,
+                                keputusan: e,
+                              };
+                            })
+                          }
+                          placeHolder={"Pilih keputusan"}
+                        />
+                      ) : (
+                        <Typography fontWeight={600}>
+                          {state.keputusan}
+                        </Typography>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth>
+                      <FieldLabelInfo
+                        title="Keterangan Perlakuan Risiko"
+                        titleField
+                        information={
+                          <>
+                            <strong>Perlakuan Risiko</strong>
+                            <p>
+                              Proses untuk menurunkan keterpaparan risiko yang
+                              dikaitkan dengan toleransi dan selera risiko yang
+                              telah ditetapkan
+                            </p>
+                          </>
+                        }
+                      />
+                      {mode != "read" ? (
+                        <TextareaStyled
+                          value={state.keterangan_risiko}
+                          onChange={(e) =>
+                            setState((prevState) => {
+                              return {
+                                ...prevState,
+                                keterangan_risiko: e.target.value,
+                              };
+                            })
+                          }
+                          placeholder="Keterangan Perlakuan Risiko"
+                          minRows={2}
+                        />
+                      ) : (
+                        <Typography fontWeight={600} sx={{ marginBottom: 2 }}>
+                          {state.keterangan_risiko}
+                        </Typography>
+                      )}
+                    </FormControl>
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} md={3}>
+                        <FormControl fullWidth>
+                          <FieldLabelInfo title="Triwulan I" titleField />
+                          <TextField
+                            size="small"
+                            fullWidth
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            placeholder="Triwulan I"
+                            sx={{ bgcolor: "white" }}
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12} md={3}>
+                        <FormControl fullWidth>
+                          <FieldLabelInfo title="Triwulan II" titleField />
+                          <TextField
+                            size="small"
+                            fullWidth
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            placeholder="Triwulan II"
+                            sx={{ bgcolor: "white" }}
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12} md={3}>
+                        <FormControl fullWidth>
+                          <FieldLabelInfo title="Triwulan III" titleField />
+                          <TextField
+                            size="small"
+                            fullWidth
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            placeholder="Triwulan III"
+                            sx={{ bgcolor: "white" }}
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12} md={3}>
+                        <FormControl fullWidth>
+                          <FieldLabelInfo title="Triwulan IV" titleField />
+                          <TextField
+                            size="small"
+                            fullWidth
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            placeholder="Triwulan IV"
+                            sx={{ bgcolor: "white" }}
+                          />
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TablePerlakuanMultiCheck
+                      data={data?.optionRo ?? []}
+                      state={state}
+                      setState={setState}
+                      mode={mode}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} md={3}>
+                    <FormControl fullWidth>
+                      <FieldLabelInfo title="Waktu Mulai Rencana" />
+                      {mode != "read" ? (
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            sx={{
+                              ".MuiInputBase-root": {
+                                height: 40,
+                                bgcolor: "white",
+                              },
+                            }}
+                            format={"MMM YYYY"}
+                            views={["month", "year"]}
+                            value={dayjs(state.start_date)}
+                            onChange={(e: any) =>
+                              setState((prevState) => {
+                                const thisDate = dayjs(e).format("YYYY-MM-DD");
+                                return {
+                                  ...prevState,
+                                  start_date: thisDate,
+                                };
+                              })
+                            }
+                          />
+                        </LocalizationProvider>
+                      ) : (
+                        <Typography fontWeight={600}>
+                          {`${dayjs(state.start_date).format("MMM YYYY")}`}
+                        </Typography>
+                      )}
+                    </FormControl>
+                  </Grid>
+
+                  <Grid item xs={12} md={3}>
+                    <FormControl fullWidth>
+                      <FieldLabelInfo title="Waktu Selesai Rencana" />
+                      {mode != "read" ? (
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            sx={{
+                              ".MuiInputBase-root": {
+                                height: 40,
+                                bgcolor: "white",
+                              },
+                            }}
+                            format={"MMM YYYY"}
+                            views={["month", "year"]}
+                            value={dayjs(state.start_date)}
+                            onChange={(e: any) =>
+                              setState((prevState) => {
+                                const thisDate = dayjs(e).format("YYYY-MM-DD");
+                                return {
+                                  ...prevState,
+                                  end_date: thisDate,
+                                };
+                              })
+                            }
+                          />
+                        </LocalizationProvider>
+                      ) : (
+                        <Typography fontWeight={600}>
+                          {`${dayjs(state.end_date).format("MMM YYYY")}`}
+                        </Typography>
+                      )}
+                    </FormControl>
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <FieldLabelInfo title="Penanggungjawab" />
+                      {mode !== "read" ? (
+                        <AutocompleteSelectSingle
+                          bgWhite
+                          key={
+                            state.src_stakeholder
+                              ? state.src_stakeholder.id
+                              : "stakeholder"
+                          }
+                          value={state.src_stakeholder}
+                          options={optionsStakeholder}
+                          getOptionLabel={(opt) => opt.value}
+                          handleChange={(e: MiscMasterListStakeholderRes) =>
+                            setState((prevState) => {
+                              return {
+                                ...prevState,
+                                src_stakeholder: e,
+                              };
+                            })
+                          }
+                          placeHolder={"Pilih penanggungjawab"}
+                        />
+                      ) : (
+                        <Typography fontWeight={600}>
+                          {state.src_stakeholder?.value ?? ""}
+                        </Typography>
+                      )}
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </Paper>
+            ))}
+          </Stack>
+        </Grid>
         {/*<Grid item xs={12} md={6}>*/}
         {/*  <FormControl fullWidth>*/}
         {/*    <FieldLabelInfo title="Waktu Rencana" />*/}
@@ -531,103 +803,6 @@ export default function FormTable({
         {/*  </FormControl>*/}
         {/*</Grid>*/}
 
-        <Grid item xs={12} md={3}>
-          <FormControl fullWidth>
-            <FieldLabelInfo title="Waktu Mulai Rencana" />
-            {mode != "read" ? (
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  sx={{
-                    ".MuiInputBase-root": {
-                      height: 40,
-                    },
-                  }}
-                  format={"MMM YYYY"}
-                  views={["month", "year"]}
-                  value={dayjs(state.start_date)}
-                  onChange={(e: any) =>
-                    setState((prevState) => {
-                      const thisDate = dayjs(e).format("YYYY-MM-DD");
-                      return {
-                        ...prevState,
-                        start_date: thisDate,
-                      };
-                    })
-                  }
-                />
-              </LocalizationProvider>
-            ) : (
-              <Typography fontWeight={600}>
-                {`${dayjs(state.start_date).format("MMM YYYY")}`}
-              </Typography>
-            )}
-          </FormControl>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <FormControl fullWidth>
-            <FieldLabelInfo title="Waktu Selesai Rencana" />
-            {mode != "read" ? (
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  sx={{
-                    ".MuiInputBase-root": {
-                      height: 40,
-                    },
-                  }}
-                  format={"MMM YYYY"}
-                  views={["month", "year"]}
-                  value={dayjs(state.start_date)}
-                  onChange={(e: any) =>
-                    setState((prevState) => {
-                      const thisDate = dayjs(e).format("YYYY-MM-DD");
-                      return {
-                        ...prevState,
-                        end_date: thisDate,
-                      };
-                    })
-                  }
-                />
-              </LocalizationProvider>
-            ) : (
-              <Typography fontWeight={600}>
-                {`${dayjs(state.end_date).format("MMM YYYY")}`}
-              </Typography>
-            )}
-          </FormControl>
-        </Grid>
-
-        <Grid item xs={12} sm={6}>
-          <FormControl fullWidth>
-            <FieldLabelInfo title="Penanggungjawab" />
-            {mode !== "read" ? (
-              <AutocompleteSelectSingle
-                key={
-                  state.src_stakeholder
-                    ? state.src_stakeholder.id
-                    : "stakeholder"
-                }
-                value={state.src_stakeholder}
-                options={optionsStakeholder}
-                getOptionLabel={(opt) => opt.value}
-                handleChange={(e: MiscMasterListStakeholderRes) =>
-                  setState((prevState) => {
-                    return {
-                      ...prevState,
-                      src_stakeholder: e,
-                    };
-                  })
-                }
-                placeHolder={"Pilih penanggungjawab"}
-              />
-            ) : (
-              <Typography fontWeight={600}>
-                {state.src_stakeholder?.value ?? ""}
-              </Typography>
-            )}
-          </FormControl>
-        </Grid>
-
         {/*<Grid item xs={12} sm={6}>*/}
         {/* <FormControl fullWidth>*/}
         {/*  <FieldLabelInfo title="Target Capaian Progress Project/RO" />*/}
@@ -654,9 +829,7 @@ export default function FormTable({
         {/*</Grid>*/}
 
         <Grid item xs={12}>
-          <Divider>
-            <Chip label="Risiko Residual Harapan" size="small" />
-          </Divider>
+          <DividerSection title="Risiko Residual Harapan" />
         </Grid>
 
         <Grid item xs={12}>
@@ -734,6 +907,6 @@ export default function FormTable({
       >
         Harap mengisi analisis risiko terlebih dahulu
       </DialogComponent>
-    </>
+    </Fragment>
   );
 }

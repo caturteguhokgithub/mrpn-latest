@@ -6,6 +6,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
   Tooltip,
@@ -25,12 +26,14 @@ export default function HeaderTable({
   viewOnly,
   data,
   noPaddingChip,
+  isModal,
 }: {
   noPadding?: boolean;
   noPaddingChip?: boolean;
   asTable?: boolean;
   viewOnly?: boolean;
   data?: IdentificationRiskResDto;
+  isModal?: boolean;
 }) {
   const { rpjmn, year } = useRKPContext((store) => store);
 
@@ -81,98 +84,161 @@ export default function HeaderTable({
           </Box>
         </Stack>
       </Stack>
-      <Table
-        size="small"
+      <TableContainer
         sx={{
-          ...(asTable && {
-            border: "1px solid #e0e0e0",
-            borderRadius: 5,
-            borderCollapse: "unset",
-          }),
-          tr: {
-            td: {
-              py: noPadding ? 0.5 : 1.5,
-            },
-          },
-          "tbody, thead": {
-            "td, th": {
-              borderRight: `1px solid ${grey[300]} !important`,
-              "&:last-of-type": {
-                borderRight: `0 !important`,
-              },
-            },
+          maxHeight: "64vh",
+          overflowX: "hidden",
+          "&::-webkit-scrollbar": {
+            width: "3px",
           },
         }}
       >
-        <TableHead>
-          <TableRow>
-            <TableCell
-              align="center"
-              sx={{ bgcolor: blue[50], borderTopLeftRadius: 20 }}
-            >
-              Sasaran
-            </TableCell>
-            <TableCell align="center" sx={{ bgcolor: blue[50] }}>
-              Indikator
-            </TableCell>
-            <TableCell align="center" sx={{ bgcolor: blue[50] }}>
-              Target
-            </TableCell>
-            <TableCell
-              align="center"
+        <Table
+          size="small"
+          stickyHeader
+          sx={{
+            ...(asTable && {
+              border: "1px solid #e0e0e0",
+              // borderRadius: 5,
+              borderCollapse: "unset",
+            }),
+            tr: {
+              td: {
+                py: noPadding ? 0.5 : 1.5,
+              },
+            },
+            "tbody, thead": {
+              "td, th": {
+                borderRight: `1px solid ${grey[300]} !important`,
+                "&:last-of-type": {
+                  borderRight: `0 !important`,
+                },
+              },
+            },
+          }}
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell
+                align="center"
+                sx={{
+                  bgcolor: blue[50],
+                  // borderTopLeftRadius: 20,
+                }}
+              >
+                Sasaran
+              </TableCell>
+              <TableCell align="center" sx={{ bgcolor: blue[50] }}>
+                Indikator
+              </TableCell>
+              <TableCell
+                width={isModal ? 140 : 200}
+                align="center"
+                sx={{ bgcolor: blue[50] }}
+              >
+                Target
+              </TableCell>
+              <TableCell
+                width={isModal ? 60 : "auto"}
+                align="center"
+                sx={{
+                  bgcolor: blue[50],
+                  // borderTopRightRadius: 20,
+                  whiteSpace: isModal ? "wrap" : "nowrap",
+                  lineHeight: isModal ? 1.2 : 1,
+                }}
+              >
+                Periode Pemantauan
+              </TableCell>
+            </TableRow>
+            <TableRow
               sx={{
-                bgcolor: blue[50],
-                borderTopRightRadius: 20,
-                whiteSpace: "nowrap",
+                ".MuiTableCell-stickyHeader": {
+                  top: isModal ? 47 : 37,
+                },
               }}
             >
-              Periode Pemantauan
-            </TableCell>
-          </TableRow>
-          <TableRow
-            sx={{
-              ".MuiTableCell-stickyHeader": {
-                top: 37,
-              },
-            }}
-          >
-            {[...new Array(4)].map((_, i) => (
-              <TableCell sx={{ bgcolor: grey[100] }}>
-                <Typography
-                  color={`${grey[500]} !important`}
-                  fontSize={14}
-                  textAlign="center"
-                >
-                  {i + 1}
-                </Typography>
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data &&
-            data.sasaran &&
-            data.sasaran.map((ssr, index) => (
-              <React.Fragment key={index}>
-                <TableRow>
-                  <TableCell rowSpan={data.indikator.length}>{ssr}</TableCell>
-                  <TableCell>{data.indikator[0].value}</TableCell>
-                  <TableCell align="center">
-                    {getTarget(data.indikator[0])}
-                  </TableCell>
-                  <TableCell align="center">{data.periode}</TableCell>
-                </TableRow>
-                {data.indikator.slice(1).map((child, childIndex) => (
-                  <TableRow key={childIndex}>
-                    <TableCell>{child.value}</TableCell>
-                    <TableCell align="center">{getTarget(child)}</TableCell>
-                    <TableCell align="center">{data.periode}</TableCell>
+              {[...new Array(4)].map((_, i) => (
+                <TableCell sx={{ bgcolor: grey[100] }}>
+                  <Typography
+                    color={`${grey[500]} !important`}
+                    fontSize={12}
+                    textAlign="center"
+                  >
+                    {i + 1}
+                  </Typography>
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data &&
+              data.sasaran &&
+              data.sasaran.map((ssr, index) => (
+                <React.Fragment key={index}>
+                  <TableRow>
+                    <TableCell
+                      rowSpan={data.indikator.length}
+                      sx={{
+                        verticalAlign: "top",
+                      }}
+                    >
+                      {ssr}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        verticalAlign: "top",
+                      }}
+                    >
+                      {data.indikator[0].value}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        verticalAlign: "top",
+                      }}
+                    >
+                      {getTarget(data.indikator[0])}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        verticalAlign: "top",
+                      }}
+                    >
+                      {data.periode}
+                    </TableCell>
                   </TableRow>
-                ))}
-              </React.Fragment>
-            ))}
-        </TableBody>
-      </Table>
+                  {data.indikator.slice(1).map((child, childIndex) => (
+                    <TableRow key={childIndex}>
+                      <TableCell
+                        sx={{
+                          verticalAlign: "top",
+                        }}
+                      >
+                        {child.value}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          verticalAlign: "top",
+                        }}
+                      >
+                        {getTarget(child)}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          verticalAlign: "top",
+                        }}
+                      >
+                        {data.periode}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </React.Fragment>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </React.Fragment>
   );
 }

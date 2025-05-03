@@ -1,5 +1,6 @@
 import React, { SetStateAction } from "react";
 import {
+  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -23,6 +24,7 @@ import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
 import AddButton from "@/components/buttonAdd";
 import { IconFA } from "@/components/icons/icon-fa";
 import { GetTarget } from "@/lib/utils/common";
+import Iconify from "@/app/components/icons/iconify";
 
 export default function FormTable({
   mode,
@@ -31,6 +33,7 @@ export default function FormTable({
   setRequest,
   optionRiskType,
   optionImpactArea,
+  setModalPeristiwa,
 }: {
   mode?: string;
   data: IdentificationRiskResDto | undefined;
@@ -38,6 +41,7 @@ export default function FormTable({
   setRequest: (value: SetStateAction<IdentificationRiskAddReqDto>) => void;
   optionRiskType: string[];
   optionImpactArea: string[];
+  setModalPeristiwa: (value: boolean) => void;
 }) {
   const { rpjmn, year } = useRKPContext((store) => store);
 
@@ -47,7 +51,7 @@ export default function FormTable({
 
   return (
     <Stack gap={2}>
-      <HeaderIdentifikasi noPadding noPaddingChip asTable data={data} />
+      <HeaderIdentifikasi noPadding noPaddingChip asTable isModal data={data} />
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={8}>
@@ -159,19 +163,62 @@ export default function FormTable({
                 {request.peristiwa_risiko}
               </Typography>
             ) : (
-              <TextareaStyled
-                aria-label="Peristiwa Risiko Strategis MRPN LS"
-                placeholder="Peristiwa Risiko Strategis MRPN LS"
-                value={request.peristiwa_risiko}
-                onChange={(e) =>
-                  setRequest((prevState) => {
-                    return {
-                      ...prevState,
-                      peristiwa_risiko: e.target.value,
-                    };
-                  })
-                }
-              />
+              <>
+                {/* <TextareaStyled
+                  aria-label="Peristiwa Risiko Strategis MRPN LS"
+                  placeholder="Peristiwa Risiko Strategis MRPN LS"
+                  value={request.peristiwa_risiko}
+                  onChange={(e) =>
+                    setRequest((prevState) => {
+                      return {
+                        ...prevState,
+                        peristiwa_risiko: e.target.value,
+                      };
+                    })
+                  }
+                /> */}
+                {/* <AutocompleteSelectSingle<doMasterKategori>
+                  value={listMasterCategory.find(
+                    (category) => category.id === state?.src_kategori_id
+                  )}
+                  options={listMasterCategory}
+                  getOptionLabel={(option) => option.value}
+                  handleChange={(newValue: doMasterKategori) =>
+                    setState
+                      ? setState((prevState) => ({
+                          ...prevState,
+                          src_kategori_id: newValue.id,
+                        }))
+                      : ""
+                  }
+                  placeHolder={"Pilih kategori"}
+                /> */}
+                <AutocompleteSelectSingle
+                  value={request.peristiwa_risiko}
+                  options={optionRiskType}
+                  getOptionLabel={(opt) => opt}
+                  handleChange={(e: string) =>
+                    setRequest((prevState) => {
+                      return {
+                        ...prevState,
+                        peristiwa_risiko: e,
+                      };
+                    })
+                  }
+                  placeHolder={"Pilih peristiwa risiko"}
+                  actionButton={
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      startIcon={<Iconify name="mdi:plus-circle" />}
+                      onMouseDown={() => setModalPeristiwa(true)}
+                    >
+                      Tambah Peristiwa Risiko
+                    </Button>
+                  }
+                />
+              </>
             )}
           </FormControl>
         </Grid>
