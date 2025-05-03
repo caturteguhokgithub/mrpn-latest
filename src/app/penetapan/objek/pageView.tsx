@@ -46,6 +46,7 @@ import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
 import { forEach } from "lodash";
 import Iconify from "@/app/components/icons/iconify";
 import TableLog from "./partials/table-log";
+import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
 
 const styleToggleButton = [
   {
@@ -138,6 +139,8 @@ export default function PageTemaView({}) {
     setModalLog,
     useEffectLogActivity,
     getStateLogActivity,
+    modalUpr,
+    setModalUpr,
   } = usePenetapanObjectVM();
 
   useEffect(useEffectGenerateOption, [year]);
@@ -374,7 +377,7 @@ export default function PageTemaView({}) {
               </>
             )}
             <Collapse in={objectState !== undefined}>
-              <TabObject />
+              <TabObject setModalUpr={setModalUpr} />
             </Collapse>
           </>
         )}
@@ -414,6 +417,51 @@ export default function PageTemaView({}) {
         dialogFooter={false}
       >
         <TableLog />
+      </DialogComponent>
+
+      <DialogComponent
+        title="Tambah UPR"
+        width={600}
+        dialogOpen={modalUpr}
+        dialogClose={() => setModalUpr(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button onClick={() => setModalUpr(false)}>Batal</Button>
+            <Button
+              variant="contained"
+              // onClick={() => updateOrCreateTopic()}
+              sx={{
+                color: "white !important",
+              }}
+            >
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <AutocompleteSelectSingle
+          value={""}
+          options={[
+            "Badan Pengawas Tenaga Nuklir (BAPETEN)",
+            "Pemerintah Kabupaten Kepulauan Mentawai",
+            "Kementerian Lingkungan Hidup dan Kehutanan (KLHK)",
+            "Kementerian Kelautan dan Sumber Daya Manusia (Kemenkes)",
+            "Mahkamah Agung (MA)",
+            "Kementerian Perhubungan (Kemenhub)",
+            "Kementerian Dalam Negeri (Kemendagri)",
+            "Kementerian Keuangan (Kemenkeu)",
+            "Kementerian Energi dan Sumber Daya Mineral (ESDM)",
+            "Kementerian Perindustrian (Kemenperin)",
+          ]}
+          getOptionLabel={(option) => option}
+          handleChange={(newValue: string) =>
+            setStateTopic((prev) => ({
+              ...prev,
+              level_kemungkinan: newValue,
+            }))
+          }
+          placeHolder={"Pilih UPR"}
+        />
       </DialogComponent>
 
       {/*<DialogComponent*/}

@@ -75,10 +75,13 @@ const usePenetapanObjectVM = () => {
     PenetapanObjectStateEntityDto[]
   >([]);
 
-  const [getStateLogActivity, setLogActivity] = useState<LogActivityDto[]>([initLogActivity])
+  const [getStateLogActivity, setLogActivity] = useState<LogActivityDto[]>([
+    initLogActivity,
+  ]);
   const [optionPN, setOptionPN] = useState<ProjectDefaultDto[]>([]);
   const [modalAdd, setModalAdd] = useState<boolean>(false);
   const [modalLog, setModalLog] = useState<boolean>(false);
+  const [modalUpr, setModalUpr] = useState<boolean>(false);
 
   const generateOptionPN = () => {
     let opt: ProjectDefaultDto[] = [];
@@ -502,7 +505,9 @@ const usePenetapanObjectVM = () => {
     modalLog,
     setModalLog,
     useEffectLogActivity,
-    getStateLogActivity
+    getStateLogActivity,
+    modalUpr,
+    setModalUpr,
   };
 };
 

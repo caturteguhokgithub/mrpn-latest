@@ -114,18 +114,18 @@ export default function CardKategori() {
           </Stack>
         }
       >
-        {isDeveloping ? (
+        {/* {isDeveloping ? (
           <EmptyDevelopingState />
-        ) : (
-          <Fragment>
-            {/* <TableKategori mode="view" /> */}
-            <CollapsibleTable
-              handleEdit={() => setModalOpenCategory(true)}
-              handleDelete={() => setModalDelete(true)}
-              setRequestEdit={setRequestSubCategory}
-            />
-          </Fragment>
-        )}
+        ) : ( */}
+        <Fragment>
+          {/* <TableKategori mode="view" /> */}
+          <CollapsibleTable
+            handleEdit={() => setModalOpenCategory(true)}
+            handleDelete={() => setModalDelete(true)}
+            setRequestEdit={setRequestSubCategory}
+          />
+        </Fragment>
+        {/* )} */}
       </CardItem>
       <DialogComponent
         dialogOpen={modalOpenAdd}

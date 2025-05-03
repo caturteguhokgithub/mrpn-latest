@@ -72,7 +72,11 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-export default function TabObject({}) {
+export default function TabObject({
+  setModalUpr,
+}: {
+  setModalUpr: (value: boolean) => void;
+}) {
   const { nota } = usePenetapanTopicContext((store) => store);
 
   const { updateOrCreateLongList } = usePenetapanObjectVM();
@@ -181,7 +185,17 @@ export default function TabObject({}) {
         </CardItem>
       </CustomTabPanel> */}
       <CustomTabPanel value={value} index={2}>
-        <CardItem title="Usulan UPR LS">
+        <CardItem
+          title="Usulan UPR LS"
+          addButton={
+            <AddButton
+              title="Tambah UPR"
+              filled
+              noMargin
+              onclick={() => setModalUpr(true)}
+            />
+          }
+        >
           {isEmpty ? (
             <EmptyState
               dense
