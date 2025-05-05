@@ -23,7 +23,6 @@ export default function FormTable(
 ) {
 
  return (
-  <>
    <Grid container spacing={2}>
     <Grid item lg={4}>
      <FormControl fullWidth>
@@ -85,6 +84,5 @@ export default function FormTable(
       </FormControl>
     </Grid>
    </Grid>
-  </>
  );
 }

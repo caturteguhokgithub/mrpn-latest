@@ -4,54 +4,80 @@ import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceMod
 import { IndikatorDto, ProPDto, RoDto } from "@/app/misc/rkp/rkpServiceModel";
 
 export const DasarPemilihan: {
-  id: number
-  value: string
+  id: number;
+  value: string;
 }[] = [
-    {
-      id: 1,
-      value: "Merupakan Fokus & Perhatian Presiden"
-    },
-    {
-      id: 2,
-      value: "Mempunyai Nilai Strategis dalam Pencapaian Sasaran Prioritas Nasional/Agenda Pembangunan"
-    }, {
-      id: 3,
-      value: "Memiliki Faktor Risiko yang Tinggi (Diantaranya Anggaran, Ruang Lingkup, Kinerja, & Rekam Jejak Akuntabilitas)"
-    }, {
-      id: 4,
-      value: "Pertimbangan Lain yang Relevan"
-    },
-  ]
+  {
+    id: 1,
+    value: "Merupakan Fokus & Perhatian Presiden",
+  },
+  {
+    id: 2,
+    value:
+      "Mempunyai Nilai Strategis dalam Pencapaian Sasaran Prioritas Nasional/Agenda Pembangunan",
+  },
+  {
+    id: 3,
+    value:
+      "Memiliki Faktor Risiko yang Tinggi (Diantaranya Anggaran, Ruang Lingkup, Kinerja, & Rekam Jejak Akuntabilitas)",
+  },
+  {
+    id: 4,
+    value: "Pertimbangan Lain yang Relevan",
+  },
+];
 
 export const KriteriaPemilihanEntity: {
-  id: number
-  value: string
+  id: number;
+  value: string;
 }[] = [
-    {
-      id: 1,
-      value: "Kesesuaian dengan Arahan (Direktif) Presiden"
-    },
-    {
-      id: 2,
-      value: "Memiliki Amanat dalam Peraturan Perundang-undangan"
-    }, {
-      id: 3,
-      value: "Tercantum dalam Dokumen RKP & RPJMN"
-    }, {
-      id: 4,
-      value: "Memiliki Tuga & Fungsi yang Relevan"
-    }, {
-      id: 5,
-      value: "Memiliki Kontribusi Intervensi yang Signifikan Sesuai dengan Kerangka Kerja Logis (Diantaranya Anggaran, Kelembagaan, & Regulasi)"
-    },
-  ]
+  {
+    id: 1,
+    value: "Kesesuaian dengan Arahan (Direktif) Presiden",
+  },
+  {
+    id: 2,
+    value: "Memiliki Amanat dalam Peraturan Perundang-undangan",
+  },
+  {
+    id: 3,
+    value: "Tercantum dalam Dokumen RKP & RPJMN",
+  },
+  {
+    id: 4,
+    value: "Memiliki Tuga & Fungsi yang Relevan",
+  },
+  {
+    id: 5,
+    value:
+      "Memiliki Kontribusi Intervensi yang Signifikan Sesuai dengan Kerangka Kerja Logis (Diantaranya Anggaran, Kelembagaan, & Regulasi)",
+  },
+];
+
+export const UnitPengelolaRisikoEntity: {
+  id: number;
+  value: string;
+}[] = [
+  {
+    id: 1,
+    value: "UPR Koordinator",
+  },
+  {
+    id: 2,
+    value: "UPR Utama",
+  },
+  {
+    id: 3,
+    value: "UPR Pendukung",
+  },
+];
 
 export interface PenetapanObjectVMState {
-  id: number
-  code: string
-  topik: string
-  tahun: number
-  values: ProjectDefaultDto[]
+  id: number;
+  code: string;
+  topik: string;
+  tahun: number;
+  values: ProjectDefaultDto[];
 }
 
 export const initPenetapanObjectState: PenetapanObjectVMState = {
@@ -59,45 +85,45 @@ export const initPenetapanObjectState: PenetapanObjectVMState = {
   code: "",
   topik: "",
   tahun: 2025,
-  values: []
-}
+  values: [],
+};
 
 export const initLogActivity: LogActivityDto = {
   topik: "",
   shortlist: false,
   approval: false,
-  status: ""
-}
+  status: "",
+};
 
 export interface PenetapanObjectReqDto {
-  id: number
-  code: string
-  topik: string
-  tahun: number | string
-  values: ProjectDefaultDto[]
+  id: number;
+  code: string;
+  topik: string;
+  tahun: number | string;
+  values: ProjectDefaultDto[];
 }
 
 export interface PenetapanObjectLongListReqValueDto {
-  uraian_id: number,
-  prioritas: string[]
+  uraian_id: number;
+  prioritas: string[];
 }
 export interface PenetapanObjectLongListReqDto {
-  values: PenetapanObjectLongListReqValueDto[]
+  values: PenetapanObjectLongListReqValueDto[];
 }
 
 export interface PenetapanObjectLongListAssignObjectReqValueDto {
-  uraian_id: number,
-  assignObjek: boolean
+  uraian_id: number;
+  assignObjek: boolean;
 }
 export interface PenetapanObjectLongListAssignObjectReqDto {
-  values: PenetapanObjectLongListAssignObjectReqValueDto[]
+  values: PenetapanObjectLongListAssignObjectReqValueDto[];
 }
 
 export interface LogActivityDto {
-  topik: string
-  shortlist: boolean
-  approval: boolean
-  status: string
+  topik: string;
+  shortlist: boolean;
+  approval: boolean;
+  status: string;
 }
 
 export type GetPenetapanObjectIdServiceModel = BaseAPIServiceParam & {
@@ -108,48 +134,49 @@ export type UpdateOrCreatePenetapanObjectServiceModel = BaseAPIServiceParam & {
   body: PenetapanObjectReqDto;
 };
 
-export type UpdateOrCreatePenetapanObjectLongListServiceModel = BaseAPIServiceParam & {
-  body: PenetapanObjectLongListReqDto;
-};
+export type UpdateOrCreatePenetapanObjectLongListServiceModel =
+  BaseAPIServiceParam & {
+    body: PenetapanObjectLongListReqDto;
+  };
 
-export type UpdateOrCreatePenetapanObjectLongListAssignObjectServiceModel = BaseAPIServiceParam & {
-  body: PenetapanObjectLongListAssignObjectReqDto;
-};
+export type UpdateOrCreatePenetapanObjectLongListAssignObjectServiceModel =
+  BaseAPIServiceParam & {
+    body: PenetapanObjectLongListAssignObjectReqDto;
+  };
 
-
-export type PenetapanObjectShortListSasaranIndikatorDto = IndikatorDto
+export type PenetapanObjectShortListSasaranIndikatorDto = IndikatorDto;
 
 export interface PenetapanObjectShortListSasaranDto {
-  id: number
-  code: string
-  value: string
-  indikator: PenetapanObjectShortListSasaranIndikatorDto[]
+  id: number;
+  code: string;
+  value: string;
+  indikator: PenetapanObjectShortListSasaranIndikatorDto[];
 }
 
 export type PenetapanObjectShortListRKPDto = ProjectDefaultDto & {
-  sasaran: PenetapanObjectShortListSasaranDto[]
-}
+  sasaran: PenetapanObjectShortListSasaranDto[];
+};
 
 export interface PenetapanObjectEntityDto {
-  type: string
-  value: string
-  stakeholder: MiscMasterListStakeholderRes[]
+  type: string;
+  value: string;
+  stakeholder: MiscMasterListStakeholderRes[];
 }
 
 export interface PenetapanObjectShortListExsumDto {
-  id: number,
-  kelembagaan: PenetapanObjectEntityDto[]
+  id: number;
+  kelembagaan: PenetapanObjectEntityDto[];
 }
 
 export interface PenetapanObjectShortListDto {
-  id: number
-  penetapan_object_rkp_id: number
-  level: string
-  ref_id: number
-  objek: boolean
-  approve_profil_risiko: boolean
-  rkp: PenetapanObjectShortListRKPDto
-  exsum: PenetapanObjectShortListExsumDto | null
+  id: number;
+  penetapan_object_rkp_id: number;
+  level: string;
+  ref_id: number;
+  objek: boolean;
+  approve_profil_risiko: boolean;
+  rkp: PenetapanObjectShortListRKPDto;
+  exsum: PenetapanObjectShortListExsumDto | null;
 }
 
 export type GetPenetapanObjectShortListServiceModel = BaseAPIServiceParam & {
@@ -169,17 +196,17 @@ export type GetPenetapanObjectNotaDinasServiceModel = BaseAPIServiceParam & {
 };
 
 export interface PenetapanObjectEntityItemDto {
-  id: number,
-  value: string
+  id: number;
+  value: string;
 }
 
 export type PenetapanObjectStateEntityDto = MiscMasterListStakeholderRes & {
-  items: PenetapanObjectEntityItemDto[]
-}
+  items: PenetapanObjectEntityItemDto[];
+};
 
 export interface PenetapanObjectEntityCheckedDto {
-  entitas: MiscMasterListStakeholderRes
-  items: PenetapanObjectEntityItemDto[]
+  entitas: MiscMasterListStakeholderRes;
+  items: PenetapanObjectEntityItemDto[];
 }
 
 export type GetPenetapanObjectEntityUsulanServiceModel = BaseAPIServiceParam & {
@@ -187,68 +214,70 @@ export type GetPenetapanObjectEntityUsulanServiceModel = BaseAPIServiceParam & {
 };
 
 export interface PenetapanObjectEntityValueReqDto {
-  entitas: number,
-  kriteria: string[]
+  entitas: number;
+  kriteria: string[];
 }
 
 export interface PenetapanObjectEntityReqDto {
-  id_objek: number
-  values: PenetapanObjectEntityValueReqDto[]
+  id_objek: number;
+  values: PenetapanObjectEntityValueReqDto[];
 }
 
-export type UpdateOrCreatePenetapanObjectEntityServiceModel = BaseAPIServiceParam & {
-  body: PenetapanObjectEntityReqDto;
-};
+export type UpdateOrCreatePenetapanObjectEntityServiceModel =
+  BaseAPIServiceParam & {
+    body: PenetapanObjectEntityReqDto;
+  };
 
 export interface NotaDinasReqDto {
-  penetapan_object_id: number
-  penjelasan_objek_mrpn: string
-  penjelasan_usulan_upr: string
-  lokasi: string
-  tanggal: string
-  direktorat: string
-  dibuat: string
-  disetujui: string
-  ttd_pembuat: string
-  ttd_pembuat_filename: string
-  ttd_penyetuju: string
-  ttd_penyetuju_filename: string
+  penetapan_object_id: number;
+  penjelasan_objek_mrpn: string;
+  penjelasan_usulan_upr: string;
+  lokasi: string;
+  tanggal: string;
+  direktorat: string;
+  dibuat: string;
+  disetujui: string;
+  ttd_pembuat: string;
+  ttd_pembuat_filename: string;
+  ttd_penyetuju: string;
+  ttd_penyetuju_filename: string;
 }
 
-export type UpdateOrCreatePenetapanObjectNotaDinasServiceModel = BaseAPIServiceParam & {
-  body: NotaDinasReqDto;
-};
+export type UpdateOrCreatePenetapanObjectNotaDinasServiceModel =
+  BaseAPIServiceParam & {
+    body: NotaDinasReqDto;
+  };
 
 export type PropDto = ProPDto & {
-  ro: RoDto[]
-}
+  ro: RoDto[];
+};
 
 export interface SasaranDto {
-  id: number
-  code: string
-  value: string
+  id: number;
+  code: string;
+  value: string;
   indikator: {
-    value: string[]
-    prop: PropDto[][]
-  }
+    value: string[];
+    prop: PropDto[][];
+  };
 }
 
 export type KPDto = ProjectDefaultDto & {
-  sasaran: SasaranDto
-}
+  sasaran: SasaranDto;
+};
 
 export type PPDto = ProjectDefaultDto & {
-  kp: KPDto[][]
-}
+  kp: KPDto[][];
+};
 
 export type PNDto = ProjectDefaultDto & {
-  pp: PPDto
-}
+  pp: PPDto;
+};
 
 export type RKPCascadingDto = {
-  pn: PNDto
-  total_anggaran: number
-}
+  pn: PNDto;
+  total_anggaran: number;
+};
 
 export type LogActivityServiceModel = BaseAPIServiceParam & {
   body: {};
