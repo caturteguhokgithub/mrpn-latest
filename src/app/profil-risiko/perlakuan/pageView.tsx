@@ -176,115 +176,115 @@ export default function PagePerlakuanView({}) {
           },
         ],
       },
-      // {
-      //   id: "perlakuan_risiko",
-      //   header: "Perlakuan Risiko",
-      //   columns: [
-      //     {
-      //       accessorKey: "keputusan",
-      //       header: "Keputusan Perlakuan Risiko",
-      //       enableColumnActions: false,
-      //       Header: ({ column }) => (
-      //         <SortNumber column={column} numberSort={column.getIndex() + 1} />
-      //       ),
-      //       muiTableBodyCellProps: {
-      //         sx: {
-      //           alignItems: "flex-start",
-      //         },
-      //       },
-      //     },
-      //     {
-      //       accessorKey: "keterangan_risiko",
-      //       header: "Keterangan Perlakuan Risiko",
-      //       enableColumnActions: false,
-      //       size: 300,
-      //       Header: ({ column }) => (
-      //         <SortNumber column={column} numberSort={column.getIndex() + 1} />
-      //       ),
-      //       muiTableBodyCellProps: {
-      //         sx: {
-      //           alignItems: "flex-start",
-      //         },
-      //       },
-      //     },
-      //     {
-      //       accessorKey: "target",
-      //       header: "Target",
-      //       enableColumnActions: false,
-      //       Header: ({ column }) => (
-      //         <SortNumber column={column} numberSort={column.getIndex() + 1} />
-      //       ),
-      //       Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
-      //         <Stack>
-      //           <Stack direction={"row"} gap={1} alignItems="center">
-      //             <Typography width={44} fontSize={14}>
-      //               TW I:
-      //             </Typography>
-      //             <Typography fontWeight={600} fontSize={14}>
-      //               -
-      //             </Typography>
-      //           </Stack>
-      //           <Stack direction={"row"} gap={1} alignItems="center">
-      //             <Typography width={44} fontSize={14}>
-      //               TW II:
-      //             </Typography>
-      //             <Typography fontWeight={600} fontSize={14}>
-      //               -
-      //             </Typography>
-      //           </Stack>
-      //           <Stack direction={"row"} gap={1} alignItems="center">
-      //             <Typography width={44} fontSize={14}>
-      //               TW III:
-      //             </Typography>
-      //             <Typography fontWeight={600} fontSize={14}>
-      //               -
-      //             </Typography>
-      //           </Stack>
-      //           <Stack direction={"row"} gap={1} alignItems="center">
-      //             <Typography width={44} fontSize={14}>
-      //               TW IV:
-      //             </Typography>
-      //             <Typography fontWeight={600} fontSize={14}>
-      //               -
-      //             </Typography>
-      //           </Stack>
-      //         </Stack>
-      //       ),
-      //       muiTableBodyCellProps: {
-      //         sx: {
-      //           alignItems: "flex-start",
-      //         },
-      //       },
-      //     },
-      //     {
-      //       accessorKey: "waktu",
-      //       header: "Waktu Rencana Perlakuan Risiko",
-      //       enableColumnActions: false,
-      //       Header: ({ column }) => (
-      //         <SortNumber column={column} numberSort={column.getIndex() + 1} />
-      //       ),
-      //       muiTableBodyCellProps: {
-      //         sx: {
-      //           alignItems: "flex-start",
-      //         },
-      //       },
-      //     },
-      //     {
-      //       accessorKey: "penanggung_jawab",
-      //       header: "Penanggung Jawab",
-      //       enableColumnActions: false,
-      //       size: 220,
-      //       Header: ({ column }) => (
-      //         <SortNumber column={column} numberSort={column.getIndex() + 1} />
-      //       ),
-      //       muiTableBodyCellProps: {
-      //         sx: {
-      //           alignItems: "flex-start",
-      //         },
-      //       },
-      //     },
-      //   ],
-      // },
+      {
+        id: "perlakuan_risiko",
+        header: "Perlakuan Risiko",
+        columns: [
+          {
+            accessorKey: "keputusan",
+            header: "Keputusan Perlakuan Risiko",
+            enableColumnActions: false,
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
+            muiTableBodyCellProps: {
+              sx: {
+                alignItems: "flex-start",
+              },
+            },
+          },
+          {
+            accessorKey: "keterangan_risiko",
+            header: "Keterangan Perlakuan Risiko",
+            enableColumnActions: false,
+            size: 300,
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
+            muiTableBodyCellProps: {
+              sx: {
+                alignItems: "flex-start",
+              },
+            },
+          },
+          {
+            accessorKey: "target",
+            header: "Target",
+            enableColumnActions: false,
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
+            Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
+              <Stack>
+                <Stack direction={"row"} gap={1} alignItems="center">
+                  <Typography width={44} fontSize={14}>
+                    TW I:
+                  </Typography>
+                  <Typography fontWeight={600} fontSize={14}>
+                    -
+                  </Typography>
+                </Stack>
+                <Stack direction={"row"} gap={1} alignItems="center">
+                  <Typography width={44} fontSize={14}>
+                    TW II:
+                  </Typography>
+                  <Typography fontWeight={600} fontSize={14}>
+                    -
+                  </Typography>
+                </Stack>
+                <Stack direction={"row"} gap={1} alignItems="center">
+                  <Typography width={44} fontSize={14}>
+                    TW III:
+                  </Typography>
+                  <Typography fontWeight={600} fontSize={14}>
+                    -
+                  </Typography>
+                </Stack>
+                <Stack direction={"row"} gap={1} alignItems="center">
+                  <Typography width={44} fontSize={14}>
+                    TW IV:
+                  </Typography>
+                  <Typography fontWeight={600} fontSize={14}>
+                    -
+                  </Typography>
+                </Stack>
+              </Stack>
+            ),
+            muiTableBodyCellProps: {
+              sx: {
+                alignItems: "flex-start",
+              },
+            },
+          },
+          {
+            accessorKey: "waktu",
+            header: "Waktu Rencana Perlakuan Risiko",
+            enableColumnActions: false,
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
+            muiTableBodyCellProps: {
+              sx: {
+                alignItems: "flex-start",
+              },
+            },
+          },
+          {
+            accessorKey: "penanggung_jawab",
+            header: "Penanggung Jawab",
+            enableColumnActions: false,
+            size: 220,
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
+            muiTableBodyCellProps: {
+              sx: {
+                alignItems: "flex-start",
+              },
+            },
+          },
+        ],
+      },
       {
         id: "risiko_residual_harapan",
         header: "Risiko Residual Harapan",
@@ -523,7 +523,6 @@ export default function PagePerlakuanView({}) {
       >
         {/* Tabel Pendanaan */}
         <Box>
-          <Typography fontWeight={600}>Pendanaan</Typography>
           <TableContainer
             sx={{
               maxHeight: 300,
@@ -629,74 +628,6 @@ export default function PagePerlakuanView({}) {
                     </TableRow>
                   )
                 )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
-        {/* Tabel Perlakuan */}
-        <Box>
-          <Typography fontWeight={600}>Perlakuan Risiko</Typography>
-          <TableContainer
-            sx={{
-              maxHeight: 300,
-              "&::-webkit-scrollbar": {
-                width: "3px",
-              },
-              "tbody, thead": {
-                "td, th": {
-                  borderRight: `1px solid ${grey[300]} !important`,
-                  "&:last-of-type": {
-                    borderRight: `1px solid ${grey[300]} !important`,
-                  },
-                },
-              },
-            }}
-          >
-            <Table stickyHeader size="small">
-              <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
-                <TableRow>
-                  <TableCell
-                    align="center"
-                    sx={{ bgcolor: bgColorTh, width: 30 }}
-                  >
-                    No
-                  </TableCell>
-                  <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
-                    Keputusan Perlakuan Risiko
-                  </TableCell>
-                  <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
-                    Keterangan Perlakuan Risiko
-                  </TableCell>
-                  <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
-                    Target
-                  </TableCell>
-                  <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
-                    Waktu Rencana Perlakuan Risiko
-                  </TableCell>
-                  <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
-                    Penanggung Jawab
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell align="center" sx={{ bgcolor: "white" }}>
-                    No
-                  </TableCell>
-                  <TableCell sx={{ bgcolor: "white" }}>
-                    Keputusan Perlakuan Risiko
-                  </TableCell>
-                  <TableCell sx={{ bgcolor: "white" }}>
-                    Keterangan Perlakuan Risiko
-                  </TableCell>
-                  <TableCell sx={{ bgcolor: "white" }}>Target</TableCell>
-                  <TableCell sx={{ bgcolor: "white" }}>
-                    Waktu Rencana Perlakuan Risiko
-                  </TableCell>
-                  <TableCell sx={{ bgcolor: "white" }}>
-                    Penanggung Jawab
-                  </TableCell>
-                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>

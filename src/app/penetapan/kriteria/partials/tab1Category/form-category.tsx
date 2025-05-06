@@ -18,6 +18,7 @@ import Iconify from "@/app/components/icons/iconify";
 import DialogComponent from "@/app/components/dialog";
 import useCategoryList from "./hooks/useCategory";
 import {
+  ResultCategory,
   SubKategoriRisiko,
   doMasterKategori,
   doRequestCategoryDto,
@@ -58,6 +59,7 @@ export default function FormCategory({
   mode,
   handleOpenCategory,
   state,
+  stateCategory,
   setState,
   listMasterCategory,
   stateSubCat,
@@ -68,6 +70,7 @@ export default function FormCategory({
   state?: doRequestCategoryDto;
   setState?: (value: SetStateAction<doRequestCategoryDto>) => void;
   listMasterCategory: doMasterKategori[];
+  stateCategory?: doMasterKategori;
   stateSubCat?: SubKategoriRisiko;
   setStateSubCat?: (value: SetStateAction<SubKategoriRisiko>) => void;
 }) {
@@ -128,7 +131,9 @@ export default function FormCategory({
           <Grid item xs={12}>
             <FormControl fullWidth>
               <FieldLabelInfo title="Kategori" titleField />
-              <Typography>Geopolitik</Typography>
+              <Typography>
+                {stateCategory?.value ?? "Kategori tidak ditemukan"}
+              </Typography>
             </FormControl>
           </Grid>
         )}

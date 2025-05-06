@@ -47,6 +47,7 @@ import { forEach } from "lodash";
 import Iconify from "@/app/components/icons/iconify";
 import TableLog from "./partials/table-log";
 import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
+import FormUPR from "./partials/form-upr";
 
 const styleToggleButton = [
   {
@@ -439,29 +440,7 @@ export default function PageTemaView({}) {
           </DialogActions>
         }
       >
-        <AutocompleteSelectSingle
-          value={""}
-          options={[
-            "Badan Pengawas Tenaga Nuklir (BAPETEN)",
-            "Pemerintah Kabupaten Kepulauan Mentawai",
-            "Kementerian Lingkungan Hidup dan Kehutanan (KLHK)",
-            "Kementerian Kelautan dan Sumber Daya Manusia (Kemenkes)",
-            "Mahkamah Agung (MA)",
-            "Kementerian Perhubungan (Kemenhub)",
-            "Kementerian Dalam Negeri (Kemendagri)",
-            "Kementerian Keuangan (Kemenkeu)",
-            "Kementerian Energi dan Sumber Daya Mineral (ESDM)",
-            "Kementerian Perindustrian (Kemenperin)",
-          ]}
-          getOptionLabel={(option) => option}
-          handleChange={(newValue: string) =>
-            setStateTopic((prev) => ({
-              ...prev,
-              level_kemungkinan: newValue,
-            }))
-          }
-          placeHolder={"Pilih UPR"}
-        />
+        <FormUPR />
       </DialogComponent>
 
       {/*<DialogComponent*/}

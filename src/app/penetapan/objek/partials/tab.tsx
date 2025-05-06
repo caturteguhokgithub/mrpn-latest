@@ -19,6 +19,8 @@ import TableNotaDinasViewOnly from "@/app/approval/nota-dinas/partials/table-not
 import { usePenetapanTopicContext } from "@/lib/core/hooks/useHooks";
 import { isDeveloping } from "@/app/components/layouts/layout";
 import EmptyDevelopingState from "@/app/components/empty/developing";
+import TableUPR from "./table-upr";
+import CollapsibleTableUpr from "./table-upr";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -204,7 +206,9 @@ export default function TabObject({
               description="Silahkan isi konten halaman ini"
             />
           ) : (
-            <TableProposal />
+            <Fragment>
+              {isDeveloping ? <TableProposal /> : <CollapsibleTableUpr />}
+            </Fragment>
           )}
         </CardItem>
       </CustomTabPanel>
