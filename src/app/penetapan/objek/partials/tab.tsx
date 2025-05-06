@@ -207,8 +207,7 @@ export default function TabObject({
             />
           ) : (
             <Fragment>
-              {/* <TableProposal /> */}
-              <CollapsibleTableUpr />
+              {isDeveloping ? <TableProposal /> : <CollapsibleTableUpr />}
             </Fragment>
           )}
         </CardItem>

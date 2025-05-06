@@ -19,25 +19,6 @@ import Iconify from "@/app/components/icons/iconify";
 import useCategoryList from "./hooks/useCategory";
 import { ResultCategory, SubKategoriRisiko } from "./hooks/categoryModel";
 
-// function createData(category: string, uraian: string) {
-//   return {
-//     category,
-//     uraian,
-//     history: [
-//       {
-//         subCategory: "Prospek Ekonomi",
-//         uraian:
-//           "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts.",
-//       },
-//       {
-//         subCategory: "Variabel Ekonomi",
-//         uraian:
-//           "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts.",
-//       },
-//     ],
-//   };
-// }
-
 function Row(props: {
   rowIndex: number;
   row: ResultCategory;
@@ -46,7 +27,7 @@ function Row(props: {
   setRequestEdit?: (value: React.SetStateAction<SubKategoriRisiko>) => void;
 }) {
   const { row, handleEdit, handleDelete, setRequestEdit, rowIndex } = props;
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
 
   const prosesBtnEdit = (value: SubKategoriRisiko, proses: string) => {
     const updated = {

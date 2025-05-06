@@ -152,6 +152,7 @@ export default function CardKategori() {
           stateSubCat={requestSubCategory}
           setStateSubCat={setRequestSubCategory}
           listMasterCategory={masterCategory}
+          // stateCategory={requestCategory}
         />
       </DialogComponent>
       <DialogDelete
