@@ -559,7 +559,7 @@ export default function FormTable({
                   <Grid item xs={12}>
                     <FormControl fullWidth>
                       <FieldLabelInfo
-                        title="Keterangan Perlakuan Risiko"
+                        title="Deskripsi Perlakuan Risiko"
                         titleField
                         information={
                           <>
@@ -583,7 +583,7 @@ export default function FormTable({
                               };
                             })
                           }
-                          placeholder="Keterangan Perlakuan Risiko"
+                          placeholder="Deskripsi Perlakuan Risiko"
                           minRows={2}
                         />
                       ) : (

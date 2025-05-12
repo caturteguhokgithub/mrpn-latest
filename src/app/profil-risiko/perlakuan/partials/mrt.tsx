@@ -76,7 +76,7 @@ export default function MRTPerlakuan({
           },
           {
             accessorKey: "deskripsi",
-            header: "Keterangan Perlakuan Risiko",
+            header: "Deskripsi Perlakuan Risiko",
             enableColumnActions: false,
             size: 300,
             Cell: ({ cell }: { cell: any }) => (

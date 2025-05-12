@@ -153,6 +153,7 @@ export default function PageIdentifikasiView({}) {
     {
       accessorKey: "area_dampak",
       header: "Area Dampak",
+      size: 150,
       enableColumnActions: false,
       Header: ({ column }: any) => (
         <SortNumber column={column} numberSort={column.getIndex() + 1} />
@@ -202,7 +203,7 @@ export default function PageIdentifikasiView({}) {
     },
     {
       accessorKey: "kategori_risiko",
-      header: "Action",
+      header: "Aksi",
       size: 100,
       enableColumnActions: false,
       Header: ({ column }: any) => (
@@ -210,6 +211,7 @@ export default function PageIdentifikasiView({}) {
       ),
       Cell: (item: any) => (
         <ActionColumn
+          center
           viewClick={
             hasPrivilege(permission, pathname, "list")
               ? () => actionModal(true, "read", item.cell.row.original.id)

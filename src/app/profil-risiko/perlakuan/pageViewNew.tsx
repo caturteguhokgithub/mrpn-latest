@@ -380,6 +380,10 @@ export default function PagePerlakuanViewNew({}) {
       },
     },
     displayColumnDefOptions: {
+      "mrt-row-expand": {
+        enableColumnActions: true,
+        size: 10,
+      },
       "mrt-row-actions": {
         header: "Aksi",
         size: 50,
