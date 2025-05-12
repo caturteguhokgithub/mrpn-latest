@@ -415,7 +415,7 @@ export default function MRTPerlakuanComplete({
           },
           {
             accessorKey: "keterangan_risiko",
-            header: "Keterangan Perlakuan Risiko",
+            header: "Deskripsi Perlakuan Risiko",
             enableColumnActions: false,
             size: 300,
             Header: ({ column }) => (

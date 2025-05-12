@@ -25,6 +25,13 @@ export default function PageSeleraRisikoView({}) {
     getMasterListObject();
   }, [year]);
 
+  const handleSetObjectState = (val: MasterListObjectRes) => {
+    // Set to local storage
+    localStorage.setItem("kpPenetapan", JSON.stringify(val));
+    setObjectState(val);
+  };
+
+
   return (
     <Fragment>
       <ContentPage
@@ -47,7 +54,9 @@ export default function PageSeleraRisikoView({}) {
                 value={objectState}
                 options={objects}
                 getOptionLabel={(opt) => `${opt.rkp.code} - ${opt.rkp.value}`}
-                handleChange={(val: MasterListObjectRes) => setObjectState(val)}
+                handleChange={(val: MasterListObjectRes) =>
+                  handleSetObjectState(val)
+                }
                 placeHolder={"Pilih KP"}
               />
             </FormControl>

@@ -1,6 +1,5 @@
-import React from "react";
-import { Icon, IconButton, Link, Stack, styled } from "@mui/material";
-import theme from "@/theme";
+import React, { Fragment } from "react";
+import { IconButton, Link, Stack } from "@mui/material";
 import { blue, green, red } from "@mui/material/colors";
 import { IconFA } from "../icons/icon-fa";
 
@@ -37,7 +36,7 @@ export const ActionIcon = ({
   };
 
   return (
-    <>
+    <Fragment>
       {onclick ? (
         <IconButton
           aria-label="edit"
@@ -66,7 +65,7 @@ export const ActionIcon = ({
           />
         </IconButton>
       )}
-    </>
+    </Fragment>
   );
 };
 

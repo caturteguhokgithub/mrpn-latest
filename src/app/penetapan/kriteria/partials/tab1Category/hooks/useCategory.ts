@@ -157,6 +157,7 @@ const useCategoryList = () => {
     modalOpenDelete,
     setModalDelete,
     deleteSubCategory,
+    setDataCategory
   };
 };
 

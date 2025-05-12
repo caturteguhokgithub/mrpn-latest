@@ -42,7 +42,7 @@ function Row(props: {
     }
 
     if (proses == "edit") {
-      handleEdit();
+      handleEdit(row);
     }
 
     if (proses == "delete") {
@@ -55,10 +55,12 @@ function Row(props: {
       {row.sub_kategori_risiko.map((subItem: any, subIndex) => (
         <TableRow
           key={`${rowIndex}-${subIndex}`}
-          sx={{
-            // "& > *": { borderBottom: "unset" },
-            backgroundColor: rowIndex % 2 === 0 ? grey[100] : "transparent",
-          }}
+          sx={
+            {
+              // "& > *": { borderBottom: "unset" },
+              // backgroundColor: rowIndex % 2 === 0 ? grey[100] : "transparent",
+            }
+          }
         >
           {subIndex === 0 && (
             <React.Fragment>

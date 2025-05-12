@@ -58,6 +58,7 @@ const ItemDampak = ({
 export default function FormCategory({
   mode,
   handleOpenCategory,
+  cat,
   state,
   stateCategory,
   setState,
@@ -67,6 +68,7 @@ export default function FormCategory({
 }: {
   mode?: string;
   handleOpenCategory?: any;
+  cat?: ResultCategory[];
   state?: doRequestCategoryDto;
   setState?: (value: SetStateAction<doRequestCategoryDto>) => void;
   listMasterCategory: doMasterKategori[];
@@ -75,6 +77,8 @@ export default function FormCategory({
   setStateSubCat?: (value: SetStateAction<SubKategoriRisiko>) => void;
 }) {
   const [items, setItem] = React.useState([{ id: 1 }]);
+
+  console.log(cat);
 
   const add = () => {
     let arr = [...items];
@@ -132,7 +136,8 @@ export default function FormCategory({
             <FormControl fullWidth>
               <FieldLabelInfo title="Kategori" titleField />
               <Typography>
-                {stateCategory?.value ?? "Kategori tidak ditemukan"}
+                {/* {cat[0]?.src_kategori_risiko.value ?? "Kategori tidak ditemukan"} */}
+                {/* {stateCategory?.value ?? "Kategori tidak ditemukan"} */}
               </Typography>
             </FormControl>
           </Grid>

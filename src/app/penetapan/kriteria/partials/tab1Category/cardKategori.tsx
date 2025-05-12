@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Button, DialogActions, Stack } from "@mui/material";
 import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
@@ -11,6 +11,7 @@ import TableRerefence from "./table-reference";
 import EmptyDevelopingState from "@/app/components/empty/developing";
 import { isDeveloping } from "@/app/components/layouts/layout";
 import useCategoryList from "./hooks/useCategory";
+import { ResultCategory } from "./hooks/categoryModel";
 
 export default function CardKategori() {
   const [modalOpenRef, setModalOpenRef] = React.useState(false);
@@ -30,6 +31,8 @@ export default function CardKategori() {
     modalOpenDelete,
     setModalDelete,
     deleteSubCategory,
+    setDataCategory,
+    listDataCategory,
   } = useCategoryList();
 
   const handleCreate = async () => {
@@ -42,6 +45,21 @@ export default function CardKategori() {
 
   const handleDeleteSubCategory = async () => {
     deleteSubCategory(requestSubCategory);
+  };
+
+  const handleEdit = (item: any) => {
+    console.log(item);
+    setModalOpenCategory(true);
+    const tempItem = {
+      penetapan_kategori_risiko_id: item.id,
+      id: item.sub_category_risiko[0].id,
+      desc: item.sub_category_risiko[0].desc,
+      value: item.sub_category_risiko[0].value,
+    };
+    setRequestSubCategory(tempItem);
+    setDataCategory(item);
+    // console.log(tempItem);
+    // setRequestSubCategory(item);
   };
 
   const dialogActionFooter = (
@@ -108,7 +126,7 @@ export default function CardKategori() {
               noMargin
               filled
               startIcon={<Iconify name="mdi:plus-circle" />}
-              title="Tambah Kriteria Kemungkinan"
+              title="Tambah Kategori Risiko"
               onclick={() => setModalOpenAdd(true)}
             />
           </Stack>
@@ -120,7 +138,7 @@ export default function CardKategori() {
         <Fragment>
           {/* <TableKategori mode="view" /> */}
           <CollapsibleTable
-            handleEdit={() => setModalOpenCategory(true)}
+            handleEdit={(row: any) => handleEdit(row)}
             handleDelete={() => setModalDelete(true)}
             setRequestEdit={setRequestSubCategory}
           />
@@ -152,7 +170,7 @@ export default function CardKategori() {
           stateSubCat={requestSubCategory}
           setStateSubCat={setRequestSubCategory}
           listMasterCategory={masterCategory}
-          // stateCategory={requestCategory}
+          cat={listDataCategory}
         />
       </DialogComponent>
       <DialogDelete

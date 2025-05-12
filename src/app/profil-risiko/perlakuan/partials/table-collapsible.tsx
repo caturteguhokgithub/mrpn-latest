@@ -319,7 +319,7 @@ export default function CollapsibleTable({}: {}) {
                 Keputusan Perlakuan Risiko
               </TableCell>
               <TableCell align="center" sx={{ bgcolor: orange[50] }}>
-                Keterangan Perlakuan Risiko
+                Deskripsi Perlakuan Risiko
               </TableCell>
               <TableCell
                 align="center"

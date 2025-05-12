@@ -65,7 +65,7 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
           <AddButton
             filled
             startIcon={<Iconify name="mdi:plus-circle" />}
-            title="Tambah Kriteria Dampak"
+            title="Tambah Daftar"
             onclick={() => setModal(true)}
           />
         }
