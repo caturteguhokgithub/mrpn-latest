@@ -29,7 +29,7 @@ export default function TableKemungkinan({
   handleModalEdit?: () => void;
   handleModalDelete?: () => void;
 }) {
-  const { listDataPossibility, loading } = usePossibilityList();
+  const { listDataPossibility, loading, isDisabledAdd } = usePossibilityList();
 
   if (loading) {
     return <div>loading...</div>;
@@ -61,12 +61,12 @@ export default function TableKemungkinan({
             <TableCell colSpan={2} align="center" sx={{ bgcolor: bgColorTh }}>
               Kemungkinan Terjadi
             </TableCell>
-            <TableCell rowSpan={2} align="center" sx={{ bgcolor: bgColorTh }}>
+            {/* <TableCell rowSpan={2} align="center" sx={{ bgcolor: bgColorTh }}>
               Aksi
-            </TableCell>
+            </TableCell> */}
           </TableRow>
           <TableRow>
-            <TableCell align="center" sx={{ bgcolor: bgColorTh }} width={300}>
+            <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
               {/* Non low frequency event dalam 1 periode analisis */}
               Persentase
             </TableCell>
@@ -121,9 +121,10 @@ export default function TableKemungkinan({
                   <TableCell>{row.level_kemungkinan}</TableCell>
                   <TableCell>{row.probabilitas}</TableCell>
                   <TableCell>
-                    {row.jumlah_frekuensi} atau {row.low_frekuensi}
+                    {/* {row.jumlah_frekuensi} atau {row.low_frekuensi} */}
+                    {row.jumlah_frekuensi}
                   </TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     <Stack direction="row">
                       <IconButton
                         onClick={handleModalEdit}
@@ -148,7 +149,7 @@ export default function TableKemungkinan({
                         <Iconify name="mdi:trash" color={red[500]} />
                       </IconButton>
                     </Stack>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               ))}
             </>

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { doCreateCategory, doDeleteSubCategory, doGetCategory, doGetMasterCategory, doUpdateSubCategory } from "./categoryService";
-import { API_CODE } from "@/lib/core/api/apiModel";
 import {
-  useExsumContext,
-  useGlobalModalContext,
-  useLoading,
-} from "@/lib/core/hooks/useHooks";
-import { useSearchParams } from "next/navigation";
+  doCreateCategory,
+  doDeleteSubCategory,
+  doGetCategory,
+  doGetMasterCategory,
+  doUpdateSubCategory,
+} from "./categoryService";
+import { API_CODE } from "@/lib/core/api/apiModel";
+import { useGlobalModalContext, useLoading } from "@/lib/core/hooks/useHooks";
 import {
   ResultCategory,
   SubKategoriRisiko,
@@ -32,19 +33,29 @@ const useCategoryList = () => {
     ...initCategory,
   });
 
-  const [requestSubCategory, setRequestSubCategory] = useState<SubKategoriRisiko>({
-    ...initSubCategory,
-  });
+  const [requestSubCategory, setRequestSubCategory] =
+    useState<SubKategoriRisiko>({
+      ...initSubCategory,
+    });
 
   // const searchParams = useSearchParams();
 
   // const search = searchParams.get("search");
 
+  // ini data yang didapat dari local storage
+  const kpPenetapan = localStorage.getItem("kpPenetapan");
+  const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
+
+  const isEmptyPenetapanObject =
+    !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
+
   async function getData() {
     setLoading(true);
     const response = await doGetCategory({
       body: {
-        uraian_penetapan_object_id: objectState?.id,
+        // uraian_penetapan_object_id: objectState?.id,
+
+        uraian_penetapan_object_id: kpPenetapanObj?.id,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -101,7 +112,7 @@ const useCategoryList = () => {
 
   async function updateSubCategory(param: SubKategoriRisiko) {
     const req: SubKategoriRisiko = {
-      ...param
+      ...param,
     };
 
     const request = {
@@ -119,7 +130,7 @@ const useCategoryList = () => {
 
   async function deleteSubCategory(param: SubKategoriRisiko) {
     const req: SubKategoriRisiko = {
-      ...param
+      ...param,
     };
 
     const request = {
@@ -136,7 +147,9 @@ const useCategoryList = () => {
   }
 
   useEffect(() => {
-    getData();
+    if (!isEmptyPenetapanObject) {
+      getData();
+    }
     getMasterCategory();
   }, [objectState?.id]);
 
@@ -157,7 +170,7 @@ const useCategoryList = () => {
     modalOpenDelete,
     setModalDelete,
     deleteSubCategory,
-    setDataCategory
+    setDataCategory,
   };
 };
 

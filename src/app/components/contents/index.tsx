@@ -15,7 +15,7 @@ import theme from "@/theme";
 import SelectCustomTheme from "../select";
 import DropdownRkp from "@/components/dropdown/dropdownRkp";
 import { grey } from "@mui/material/colors";
-import { listSelectKp } from "@/app/executive-summary/data";
+// import { listSelectKp } from "@/app/executive-summary/data";
 import { listTriwulan } from "@/app/utils/data";
 import DateRangePicker from "@/components/dateRange";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
@@ -131,7 +131,11 @@ export default function ContentPage({
 
   const labelChipRo = "Peningkatan ketersediaan pangan keluarga 1000 HPK";
 
-  const nameOfKp = listSelectKp[2].name;
+  // const nameOfKp = listSelectKp[2].name;
+
+  // get local storage selectedRKP
+  // const items = JSON.parse(localStorage?.getItem("selectedRKP"));
+  // console.log({ items });
 
   const currentDate = new Date();
 
@@ -237,7 +241,7 @@ export default function ContentPage({
                           KP
                         </Typography>
                       </Stack>
-                      <Box
+                      {/* <Box
                         sx={{
                           [theme.breakpoints.up("sm")]: {
                             display: "none",
@@ -272,7 +276,7 @@ export default function ContentPage({
                             {nameOfKp}
                           </Typography>
                         )}
-                      </Box>
+                      </Box> */}
                       <Box
                         sx={{
                           [theme.breakpoints.up("sm")]: {

@@ -1,9 +1,10 @@
 import React from "react";
 import theme from "@/theme";
-import { Typography, ListItemButton, Stack } from "@mui/material";
+import { Typography, ListItemButton, Stack, Box } from "@mui/material";
 import Link from "next/link";
 import { grey } from "@mui/material/colors";
 import { usePathname } from "next/navigation";
+import { InfoTooltip } from "../../InfoTooltip";
 
 export const SubmenuItem = ({ label, url, urlLv2 }: IMenu) => {
   const pathname = usePathname();
@@ -31,7 +32,7 @@ export const SubmenuItem = ({ label, url, urlLv2 }: IMenu) => {
         "&:hover": { bgcolor: "transparent" },
       }}
     >
-      <Link href={`/${urlLv2}`} passHref>
+      <Link href={disabledMenu ? "#" : `/${urlLv2}`} passHref>
         <Stack direction="row" alignItems="center" py="5px">
           <Typography
             ml="20px"
@@ -48,6 +49,11 @@ export const SubmenuItem = ({ label, url, urlLv2 }: IMenu) => {
             sx={{
               transition: "all 300ms",
               position: "relative",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "4px",
+              color: disabledMenu ? grey[500] : grey[700],
+              cursor: disabledMenu ? "not-allowed" : "pointer",
               "&.link-active": {
                 fontWeight: 600,
                 color: theme.palette.primary.main,
@@ -71,7 +77,7 @@ export const SubmenuItem = ({ label, url, urlLv2 }: IMenu) => {
                 transition: "all 300ms",
               },
               "&:hover": {
-                fontWeight: 600,
+                fontWeight: disabledMenu ? 400 : 600,
                 "&:before": {
                   backgroundColor: theme.palette.primary.main,
                   outline: "3px solid",
@@ -80,7 +86,16 @@ export const SubmenuItem = ({ label, url, urlLv2 }: IMenu) => {
               },
             }}
           >
-            {label} {disabledMenu && <span>gak bisa diklik</span>}
+            <Box
+              component="span"
+              sx={{
+                pointerEvents: disabledMenu ? "none" : "auto",
+                userSelect: disabledMenu ? "none" : "auto",
+              }}
+            >
+              {label}
+            </Box>
+            {disabledMenu && <InfoTooltip title="Pilih KP terlebih dahulu" />}
           </Typography>
         </Stack>
       </Link>
