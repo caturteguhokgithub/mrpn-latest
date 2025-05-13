@@ -18,7 +18,9 @@ export async function doGetPossibility(param: any) {
 //   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 // }
 
-export async function doUpdatePossibility(param: UpdatePossibilityServiceModel) {
+export async function doUpdatePossibility(
+  param: UpdatePossibilityServiceModel
+) {
   const resp = await put({
     ...param,
     url: "penetapan/kriteriaRisiko/update",
@@ -26,10 +28,10 @@ export async function doUpdatePossibility(param: UpdatePossibilityServiceModel) 
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
 
-// export async function doDeletePossibility(param: any) {
-//   const resp = await del({
-//     ...param,
-//     url: "exsum/urgensiProyek/delete",
-//   });
-//   if (resp) return Object.assign(new ResponseBaseDto(), resp);
-// }
+export async function doDeletePossibility(param: any) {
+  const resp = await del({
+    ...param,
+    url: "penetapan/kriteriaRisiko/delete",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}

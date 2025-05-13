@@ -1,22 +1,24 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FormControl, Grid, Typography } from "@mui/material";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 import { TextareaStyled } from "@/app/components/textarea";
 import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
 import { doValues } from "./hooks/possibilityModel";
+import { cloneDeep, isEmpty } from "lodash";
 
 interface FormPossibilityProps {
   mode?: string;
-  state: doValues; // Expecting state to be of type doValues
+  state?: doValues; // Expecting state to be of type doValues
   setState: (value: doValues) => void; // Function to update state
+  dropDownOptions: string[];
 }
 
 export default function FormPossibility({
   mode,
   state,
   setState,
+  dropDownOptions,
 }: FormPossibilityProps) {
-  console.log("FormPossibility state", state, mode);
   // useEffect(() => {
   //   if (mode === "edit" && state) {
   //     // Set initial values for edit mode
@@ -26,10 +28,23 @@ export default function FormPossibility({
 
   const handleChange = (field: keyof doValues, value: string) => {
     // Update state directly with a new object
-    setState({
-      ...state,
-      [field]: value,
-    });
+    const tempState: any = !isEmpty(state)
+      ? cloneDeep(state)
+      : {
+          level_kemungkinan: "",
+          probabilitas: "",
+          jumlah_frekuensi: "",
+          low_frekuensi: "",
+        };
+
+    console.log({ tempState });
+    if (!isEmpty(tempState)) {
+      console.log({ tempState, value, field });
+      setState({
+        ...tempState,
+        [field]: value,
+      });
+    }
   };
 
   return (
@@ -38,17 +53,11 @@ export default function FormPossibility({
         <FormControl fullWidth>
           <FieldLabelInfo title="Level Kemungkinan" titleField />
           {mode == "edit" ? (
-            <Typography>{state.level_kemungkinan}</Typography>
+            <Typography>{state?.level_kemungkinan}</Typography>
           ) : (
             <AutocompleteSelectSingle
-              value={state.level_kemungkinan}
-              options={[
-                "Hampir tidak terjadi (1)",
-                "Jarang terjadi (2)",
-                "Kadang terjadi (3)",
-                "Sering terjadi (4)",
-                "Hampir pasti terjadi (5)",
-              ]}
+              value={state?.level_kemungkinan}
+              options={dropDownOptions}
               getOptionLabel={(option) => option}
               handleChange={(newValue: string) =>
                 handleChange("level_kemungkinan", newValue)
@@ -64,7 +73,7 @@ export default function FormPossibility({
           <TextareaStyled
             minRows={2}
             placeholder="Persentase"
-            value={state.probabilitas}
+            value={state?.probabilitas}
             onChange={(e) => handleChange("probabilitas", e.target.value)}
           />
         </FormControl>
@@ -75,7 +84,7 @@ export default function FormPossibility({
           <TextareaStyled
             minRows={2}
             placeholder="Frekuensi"
-            value={state.jumlah_frekuensi}
+            value={state?.jumlah_frekuensi}
             onChange={(e) => handleChange("jumlah_frekuensi", e.target.value)}
           />
         </FormControl>
