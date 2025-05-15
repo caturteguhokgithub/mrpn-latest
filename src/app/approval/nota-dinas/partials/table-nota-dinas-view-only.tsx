@@ -822,14 +822,18 @@ export default function TableNotaDinasViewOnly({
             justifyContent="space-between"
           >
             <Typography fontWeight={600}>Pengajuan Pengesahan</Typography>
-            {(statusObject == "reject" || statusObject == "approved") && (
-              <AddButton
-                title="Tambah Catatan"
-                filled
-                noMargin
-                startIcon={<Iconify name="mdi:plus-circle" size={16} />}
-                onclick={() => setModalOpenAdd(true)}
-              />
+            {pageApproval && (
+              <Fragment>
+                {(statusObject == "reject" || statusObject == "approved") && (
+                  <AddButton
+                    title="Tambah Catatan"
+                    filled
+                    noMargin
+                    startIcon={<Iconify name="mdi:plus-circle" size={16} />}
+                    onclick={() => setModalOpenAdd(true)}
+                  />
+                )}
+              </Fragment>
             )}
           </Stack>
           <Typography>-</Typography>

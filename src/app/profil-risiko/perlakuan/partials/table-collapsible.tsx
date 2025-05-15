@@ -106,11 +106,11 @@ function Row(props: { row: ReturnType<typeof createData>; index?: number }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell width={300} sx={{ verticalAlign: "top" }}>
+        {/* <TableCell width={300} sx={{ verticalAlign: "top" }}>
           {row.keputusan}
-        </TableCell>
+        </TableCell> */}
         <TableCell sx={{ verticalAlign: "top" }}>{row.keterangan}</TableCell>
-        <TableCell sx={{ verticalAlign: "top" }}>
+        <TableCell sx={{ verticalAlign: "top" }} width={200}>
           <Stack direction={"row"} gap={1} alignItems="center">
             <Typography width={52} fontSize={14}>
               TW I :
@@ -144,8 +144,10 @@ function Row(props: { row: ReturnType<typeof createData>; index?: number }) {
             </Typography>
           </Stack>
         </TableCell>
-        <TableCell sx={{ verticalAlign: "top" }}>{row.waktu}</TableCell>
-        <TableCell sx={{ verticalAlign: "top" }}>
+        <TableCell sx={{ verticalAlign: "top" }} width={250}>
+          {row.waktu}
+        </TableCell>
+        <TableCell sx={{ verticalAlign: "top" }} width={300}>
           {row.penanggungjawab}
         </TableCell>
       </TableRow>
@@ -235,7 +237,23 @@ function Row(props: { row: ReturnType<typeof createData>; index?: number }) {
                     {row.pembiayaan.map((rowItem) => (
                       <TableRow key={rowItem.id}>
                         <TableCell align="center">{rowItem.id}</TableCell>
-                        <TableCell>{rowItem.ro}</TableCell>
+                        <TableCell>
+                          <Typography
+                            component="span"
+                            fontSize={14}
+                            color={grey[600]}
+                          >
+                            02.10.01
+                          </Typography>{" "}
+                          - {rowItem.ro}{" "}
+                          <Typography
+                            component="span"
+                            fontSize={14}
+                            color={orange[600]}
+                          >
+                            (NON RO)
+                          </Typography>
+                        </TableCell>
                         <TableCell align="right">{rowItem.target}</TableCell>
                         <TableCell>{rowItem.satuan}</TableCell>
                         <TableCell align="right">{rowItem.anggaran}</TableCell>
@@ -315,9 +333,9 @@ export default function CollapsibleTable({}: {}) {
           <TableHead>
             <TableRow>
               <TableCell sx={{ bgcolor: orange[50] }} />
-              <TableCell align="center" sx={{ bgcolor: orange[50] }}>
+              {/* <TableCell align="center" sx={{ bgcolor: orange[50] }}>
                 Keputusan Perlakuan Risiko
-              </TableCell>
+              </TableCell> */}
               <TableCell align="center" sx={{ bgcolor: orange[50] }}>
                 Deskripsi Perlakuan Risiko
               </TableCell>
