@@ -596,60 +596,104 @@ export default function FormTable({
 
                   <Grid item xs={12}>
                     <Grid container spacing={2}>
-                      <Grid item xs={12} md={3}>
+                      <Grid item xs={12} md={6}>
                         <FormControl fullWidth>
                           <FieldLabelInfo title="Triwulan I" titleField />
-                          <TextField
-                            size="small"
-                            fullWidth
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                            placeholder="Triwulan I"
-                            sx={{ bgcolor: "white" }}
-                          />
+                          <Stack direction="row" gap={1}>
+                            <TextField
+                              size="small"
+                              fullWidth
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              placeholder="Target TW I"
+                              sx={{ bgcolor: "white" }}
+                            />
+                            <TextField
+                              size="small"
+                              fullWidth
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              placeholder="Satuan TW I"
+                              sx={{ bgcolor: "white" }}
+                            />
+                          </Stack>
                         </FormControl>
                       </Grid>
-                      <Grid item xs={12} md={3}>
+                      <Grid item xs={12} md={6}>
                         <FormControl fullWidth>
                           <FieldLabelInfo title="Triwulan II" titleField />
-                          <TextField
-                            size="small"
-                            fullWidth
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                            placeholder="Triwulan II"
-                            sx={{ bgcolor: "white" }}
-                          />
+                          <Stack direction="row" gap={1}>
+                            <TextField
+                              size="small"
+                              fullWidth
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              placeholder="Target TW II"
+                              sx={{ bgcolor: "white" }}
+                            />
+                            <TextField
+                              size="small"
+                              fullWidth
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              placeholder="Satuan TW II"
+                              sx={{ bgcolor: "white" }}
+                            />
+                          </Stack>
                         </FormControl>
                       </Grid>
-                      <Grid item xs={12} md={3}>
+                      <Grid item xs={12} md={6}>
                         <FormControl fullWidth>
                           <FieldLabelInfo title="Triwulan III" titleField />
-                          <TextField
-                            size="small"
-                            fullWidth
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                            placeholder="Triwulan III"
-                            sx={{ bgcolor: "white" }}
-                          />
+                          <Stack direction="row" gap={1}>
+                            <TextField
+                              size="small"
+                              fullWidth
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              placeholder="Target TW III"
+                              sx={{ bgcolor: "white" }}
+                            />
+                            <TextField
+                              size="small"
+                              fullWidth
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              placeholder="Satuan TW III"
+                              sx={{ bgcolor: "white" }}
+                            />
+                          </Stack>
                         </FormControl>
                       </Grid>
-                      <Grid item xs={12} md={3}>
+                      <Grid item xs={12} md={6}>
                         <FormControl fullWidth>
                           <FieldLabelInfo title="Triwulan IV" titleField />
-                          <TextField
-                            size="small"
-                            fullWidth
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                            placeholder="Triwulan IV"
-                            sx={{ bgcolor: "white" }}
-                          />
+                          <Stack direction="row" gap={1}>
+                            <TextField
+                              size="small"
+                              fullWidth
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              placeholder="Target TW IV"
+                              sx={{ bgcolor: "white" }}
+                            />
+                            <TextField
+                              size="small"
+                              fullWidth
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              placeholder="Satuan TW IV"
+                              sx={{ bgcolor: "white" }}
+                            />
+                          </Stack>
                         </FormControl>
                       </Grid>
                     </Grid>

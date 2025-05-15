@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { Fragment, useMemo } from "react";
 import { advancedTable } from "@/app/components/table";
 import { Box, Chip, Paper, Stack, Typography } from "@mui/material";
 import {
@@ -115,6 +115,33 @@ export default function MRTPerlakuanComplete({
 }) {
   const columns = useMemo<MRT_ColumnDef<RiskOverviewData>[]>(
     () => [
+      {
+        id: "rincian_output",
+        header: "",
+        columns: [
+          {
+            id: "rincian_output",
+            header: "",
+            columns: [
+              {
+                accessorKey: "rincian_output",
+                header: "Rincian Output",
+                size: 250,
+                enableColumnActions: false,
+                Header: ({ column }) => (
+                  <SortNumber
+                    column={column}
+                    numberSort={column.getIndex() + 1}
+                  />
+                ),
+                Cell: ({ cell }: { cell: any }) => (
+                  <Fragment>Rincian Output</Fragment>
+                ),
+              },
+            ],
+          },
+        ],
+      },
       {
         id: "penilaian_risiko",
         header: "Penilaian Risiko",

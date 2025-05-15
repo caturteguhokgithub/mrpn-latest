@@ -345,9 +345,9 @@ export default function PageTemaView({}) {
             description="Silahkan pilih RPJMN/RKP terlebih dulu"
           />
         ) : (
-          <>
+          <Fragment>
             {objectState === undefined && (
-              <>
+              <Fragment>
                 <Typography color={grey[600]} fontSize={14} fontStyle="italic">
                   Pilih salah satu objek
                 </Typography>
@@ -375,12 +375,12 @@ export default function PageTemaView({}) {
                     ))}
                   </ToggleButtonGroup>
                 </Box>
-              </>
+              </Fragment>
             )}
             <Collapse in={objectState !== undefined}>
               <TabObject setModalUpr={setModalUpr} />
             </Collapse>
-          </>
+          </Fragment>
         )}
       </ContentPage>
 

@@ -211,6 +211,7 @@ export default function PagePerlakuanViewNew({}) {
                 ),
                 muiTableBodyCellProps: {
                   sx: {
+                    borderLeft: `1px solid ${grey[300]}`,
                     borderRight: `1px solid ${grey[300]}`,
                     alignItems: "flex-start",
                   },
@@ -229,11 +230,31 @@ export default function PagePerlakuanViewNew({}) {
                 ),
                 muiTableBodyCellProps: {
                   sx: {
+                    borderRight: `1px solid ${grey[300]}`,
                     alignItems: "flex-start",
                   },
                 },
               },
             ],
+          },
+        ],
+      },
+      {
+        id: "perlakuan_risiko",
+        header: "Perlakuan Risiko",
+        columns: [
+          {
+            accessorKey: "keputusan",
+            header: "Keputusan Perlakuan Risiko",
+            enableColumnActions: false,
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
+            muiTableBodyCellProps: {
+              sx: {
+                alignItems: "flex-start",
+              },
+            },
           },
         ],
       },
@@ -246,6 +267,13 @@ export default function PagePerlakuanViewNew({}) {
             header: "",
             enableSorting: false,
             size: 100,
+            muiTableBodyCellProps: {
+              sx: {
+                borderLeft: `1px solid ${grey[300]}`,
+                borderRight: `1px solid ${grey[300]}`,
+                alignItems: "flex-start",
+              },
+            },
             accessorFn: (row) => (
               <Stack direction="column" gap={1}>
                 <Stack direction="row" alignItems="center" gap={0.5}>
@@ -310,12 +338,12 @@ export default function PagePerlakuanViewNew({}) {
       ),
   };
 
-  const actionRight = {
-    initialState: {
-      columnPinning: { right: ["mrt-row-actions"] },
-      showGlobalFilter: true,
-    },
-  };
+  // const actionRight = {
+  //   initialState: {
+  //     columnPinning: { right: ["mrt-row-actions"] },
+  //     showGlobalFilter: true,
+  //   },
+  // };
 
   const data = dataTable;
   const table = useMaterialReactTable({
@@ -376,7 +404,7 @@ export default function PagePerlakuanViewNew({}) {
     },
     muiTableBodyCellProps: {
       sx: {
-        border: `1px solid ${grey[300]}`,
+        // border: `1px solid ${grey[300]}`,
       },
     },
     displayColumnDefOptions: {
