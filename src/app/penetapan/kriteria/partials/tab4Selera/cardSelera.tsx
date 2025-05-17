@@ -9,10 +9,20 @@ import Iconify from "@/app/components/icons/iconify";
 import SeleraMatriks from "./matriks";
 import EmptyDevelopingState from "@/app/components/empty/developing";
 import { isDeveloping } from "@/app/components/layouts/layout";
+import useAuthorizationVM from "@/app/authorizationVM";
+import usePenetapanSelera from "./hooks/vm";
 
 export default function CardSelera() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalOpenRef, setModalOpenRef] = React.useState(false);
+  const { user } = useAuthorizationVM();
+
+  const {
+    loading,
+    createSelera,
+    requestSelera,
+    setRequestSelera,
+  } = usePenetapanSelera();
 
   const handleModalClose = () => {
     setModalOpenAdd(false);
@@ -27,25 +37,33 @@ export default function CardSelera() {
     </DialogActions>
   );
 
-  const handleModalOpenSave = () => {};
+  const handleModalOpenSave = () => {
+    createSelera(requestSelera);
+  };
 
   return (
     <Fragment>
       <CardItem
         title="Selera Risiko"
         addButton={
-          <AddButton
-            filled
-            startIcon={<Iconify name="mdi:chart-bar-stacked" />}
-            title="Matriks Referensi"
-            onclick={() => setModalOpenRef(true)}
-          />
+          user?.role.name == "Komite MRPN LS" || user?.role.name == "Super Admin" ?
+            <AddButton
+              filled
+              startIcon={<Iconify name="mdi:chart-bar-stacked" />}
+              title="Matriks Referensi"
+              onclick={() => setModalOpenRef(true)}
+            /> :
+            ""
         }
       >
         {isDeveloping ? (
           <EmptyDevelopingState />
         ) : (
-          <RiskContent handleSaveButton={handleModalOpenSave} />
+          <RiskContent
+            handleSaveButton={handleModalOpenSave}
+            state={requestSelera}
+            setState={setRequestSelera}
+          />
         )}
       </CardItem>
       <DialogComponent

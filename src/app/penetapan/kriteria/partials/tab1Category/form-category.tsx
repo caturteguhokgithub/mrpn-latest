@@ -68,7 +68,7 @@ export default function FormCategory({
 }: {
   mode?: string;
   handleOpenCategory?: any;
-  cat?: ResultCategory[];
+  cat?: string;
   state?: doRequestCategoryDto;
   setState?: (value: SetStateAction<doRequestCategoryDto>) => void;
   listMasterCategory: doMasterKategori[];
@@ -77,8 +77,6 @@ export default function FormCategory({
   setStateSubCat?: (value: SetStateAction<SubKategoriRisiko>) => void;
 }) {
   const [items, setItem] = React.useState([{ id: 1 }]);
-
-  console.log(cat);
 
   const add = () => {
     let arr = [...items];
@@ -136,8 +134,7 @@ export default function FormCategory({
             <FormControl fullWidth>
               <FieldLabelInfo title="Kategori" titleField />
               <Typography>
-                {/* {cat[0]?.src_kategori_risiko.value ?? "Kategori tidak ditemukan"} */}
-                {/* {stateCategory?.value ?? "Kategori tidak ditemukan"} */}
+                {cat}
               </Typography>
             </FormControl>
           </Grid>
@@ -180,23 +177,23 @@ export default function FormCategory({
                 handleChange={(newValue: doMasterKategori) =>
                   setState
                     ? setState((prevState) => ({
-                        ...prevState,
-                        src_kategori_id: newValue.id,
-                      }))
+                      ...prevState,
+                      src_kategori_id: newValue.id,
+                    }))
                     : ""
                 }
                 placeHolder={"Pilih kategori"}
-                // actionButton={
-                //   <Button
-                //     fullWidth
-                //     variant="outlined"
-                //     color="primary"
-                //     startIcon={<Iconify name="mdi:plus-circle" />}
-                //     onMouseDown={() => setModalOpenAdd(true)}
-                //   >
-                //     Tambah Kategori
-                //   </Button>
-                // }
+              // actionButton={
+              //   <Button
+              //     fullWidth
+              //     variant="outlined"
+              //     color="primary"
+              //     startIcon={<Iconify name="mdi:plus-circle" />}
+              //     onMouseDown={() => setModalOpenAdd(true)}
+              //   >
+              //     Tambah Kategori
+              //   </Button>
+              // }
               />
             )}
           </FormControl>

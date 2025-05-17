@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, SetStateAction } from "react";
 import {
   Box,
   Button,
@@ -13,7 +13,7 @@ import {
 import { grey } from "@mui/material/colors";
 import theme from "@/theme";
 import CustomToggleButton from "@/app/components/toggleButton";
-import TextareaComponent from "@/app/components/textarea";
+import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
 import FormatBP from "./formatBp";
 import FormatKL from "./formatKl";
 import { LabelRadio } from "@/app/components/labelRadio";
@@ -21,11 +21,16 @@ import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import SeleraMatriks from "../../kriteria/partials/tab4Selera/matriks";
 import TableRas from "./table-ras";
+import { doReqSeleraDto } from "../../kriteria/partials/tab4Selera/hooks/model";
 
 export default function RiskContent({
   handleSaveButton,
+  state,
+  setState
 }: {
   handleSaveButton?: () => void;
+  state: doReqSeleraDto;
+  setState: (value: SetStateAction<doReqSeleraDto>) => void;
 }) {
   const { user } = useAuthContext((state) => state);
 
@@ -46,6 +51,32 @@ export default function RiskContent({
     newAlignment: string | null
   ) => {
     setValueTheme(newAlignment);
+    var type_nilai = ""
+
+    switch (newAlignment) {
+      case "1":
+        type_nilai = "Rendah"
+        break;
+      case "2":
+        type_nilai = "Konservatif"
+        break;
+      case "3":
+        type_nilai = "Moderat"
+        break;
+      case "4":
+        type_nilai = "Tinggi"
+        break;
+
+      default:
+        type_nilai = ""
+        break;
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      type_nilai: type_nilai
+    }))
+
   };
 
   const handleModalOpenRef = () => {
@@ -112,24 +143,30 @@ perencanaan pembangunan nasional"
             {valueTheme == "1"
               ? "Rendah"
               : valueTheme == "2"
-              ? "Konservatif"
-              : valueTheme == "3"
-              ? "Moderat"
-              : "Tinggi"}
-          </Typography>
-
-          <TextareaComponent
-            label="Deskripsi"
-            placeholder={`Deskripsi ${
-              valueTheme == "1"
-                ? "Rendah"
-                : valueTheme == "2"
                 ? "Konservatif"
                 : valueTheme == "3"
-                ? "Moderat"
-                : "Tinggi"
-            }`}
-            width="100%"
+                  ? "Moderat"
+                  : "Tinggi"}
+          </Typography>
+
+          <TextareaStyled
+            aria-label="Deskripsi"
+            minRows={3}
+            onChange={(e) => {
+              setState((prevState) => ({
+                ...prevState,
+                pernyataan: e.target.value,
+              }))
+            }}
+            placeholder={`Deskripsi ${valueTheme == "1"
+              ? "Rendah"
+              : valueTheme == "2"
+                ? "Konservatif"
+                : valueTheme == "3"
+                  ? "Moderat"
+                  : "Tinggi"
+              }`}
+          // width="100%"
           />
         </Stack>
       </Stack>

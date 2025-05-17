@@ -12,9 +12,11 @@ import EmptyDevelopingState from "@/app/components/empty/developing";
 import { isDeveloping } from "@/app/components/layouts/layout";
 import useCategoryList from "./hooks/useCategory";
 import { ResultCategory } from "./hooks/categoryModel";
+import useAuthorizationVM from "@/app/authorizationVM";
 
 export default function CardKategori() {
   const [modalOpenRef, setModalOpenRef] = React.useState(false);
+  const [dataValueCategory, setDataValueCategory] = useState<string>("");
 
   const {
     createCategory,
@@ -48,18 +50,15 @@ export default function CardKategori() {
   };
 
   const handleEdit = (item: any) => {
-    console.log(item);
     setModalOpenCategory(true);
     const tempItem = {
       penetapan_kategori_risiko_id: item.id,
-      id: item.sub_category_risiko[0].id,
-      desc: item.sub_category_risiko[0].desc,
-      value: item.sub_category_risiko[0].value,
+      id: item.sub_kategori_risiko[0].id,
+      desc: item.sub_kategori_risiko[0].desc,
+      value: item.sub_kategori_risiko[0].value,
     };
     setRequestSubCategory(tempItem);
-    setDataCategory(item);
-    // console.log(tempItem);
-    // setRequestSubCategory(item);
+    setDataValueCategory(item.src_kategori_risiko.value)
   };
 
   const dialogActionFooter = (
@@ -136,7 +135,6 @@ export default function CardKategori() {
           <EmptyDevelopingState />
         ) : ( */}
         <Fragment>
-          {/* <TableKategori mode="view" /> */}
           <CollapsibleTable
             handleEdit={(row: any) => handleEdit(row)}
             handleDelete={() => setModalDelete(true)}
@@ -170,7 +168,7 @@ export default function CardKategori() {
           stateSubCat={requestSubCategory}
           setStateSubCat={setRequestSubCategory}
           listMasterCategory={masterCategory}
-          cat={listDataCategory}
+          cat={dataValueCategory}
         />
       </DialogComponent>
       <DialogDelete
