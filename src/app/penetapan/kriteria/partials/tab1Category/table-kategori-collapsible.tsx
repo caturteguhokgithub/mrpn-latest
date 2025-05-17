@@ -42,7 +42,12 @@ function Row(props: {
     }
 
     if (proses == "edit") {
-      handleEdit(row);
+      const dataEdit = {
+        value: row.src_kategori_risiko.value,
+        sub_kategori_risiko: updated
+      }
+
+      handleEdit(dataEdit);
     }
 
     if (proses == "delete") {

@@ -51,14 +51,16 @@ export default function CardKategori() {
 
   const handleEdit = (item: any) => {
     setModalOpenCategory(true);
+    console.log(item);
+
     const tempItem = {
       penetapan_kategori_risiko_id: item.id,
-      id: item.sub_kategori_risiko[0].id,
-      desc: item.sub_kategori_risiko[0].desc,
-      value: item.sub_kategori_risiko[0].value,
+      id: item.sub_kategori_risiko.id,
+      desc: item.sub_kategori_risiko.desc,
+      value: item.sub_kategori_risiko.value,
     };
     setRequestSubCategory(tempItem);
-    setDataValueCategory(item.src_kategori_risiko.value)
+    setDataValueCategory(item.value)
   };
 
   const dialogActionFooter = (
