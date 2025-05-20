@@ -84,40 +84,27 @@ export default function FormRegulation({
               })
             }
             placeHolder={"Pilih peraturan terkait"}
-            // actionButton={
-            //   <Box onMouseDown={(e) => e.preventDefault()}>
-            //     <Button
-            //       startIcon={<IconFA name="circle-plus" size={14} />}
-            //       fullWidth
-            //       onClick={(e) => {
-            //         e.preventDefault();
-            //         setModalPeraturan(-1, true, "update");
-            //       }}
-            //     >
-            //       Tambah Peraturan
-            //     </Button>
-            //   </Box>
-            // }
+          // actionButton={
+          //   <Box onMouseDown={(e) => e.preventDefault()}>
+          //     <Button
+          //       startIcon={<IconFA name="circle-plus" size={14} />}
+          //       fullWidth
+          //       onClick={(e) => {
+          //         e.preventDefault();
+          //         setModalPeraturan(-1, true, "update");
+          //       }}
+          //     >
+          //       Tambah Peraturan
+          //     </Button>
+          //   </Box>
+          // }
           />
         </FormControl>
       </Grid>
       <Grid item xs={12}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Amanat Peraturan yang Terkait" />
-          <TextareaStyled
-            value={"state.indikator"}
-            onChange={(e) =>
-              setState((prev) => {
-                return {
-                  ...prev,
-                  indikator: e.target.value,
-                };
-              })
-            }
-            aria-label="Tuliskan Indikator Project"
-            placeholder="Tuliskan Indikator Project"
-            minRows={3}
-          />
+          <Typography fontWeight={500}>{state.amanat || "-"}</Typography>
         </FormControl>
       </Grid>
     </Grid>

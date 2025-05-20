@@ -44,3 +44,24 @@ export type GetByRefIdAndLevelServiceModel = BaseAPIServiceParam & {
 export type CreateUpdateDeleteServiceModel = BaseAPIServiceParam & {
   body: RegulasiValueDto;
 };
+
+// Regulasi Peetapan
+export interface doRequestRegulasiDto {
+  id: number;
+  uraian_penetapan_object_id: number;
+  amanat: string
+  perpres: string;
+  entitas_id: number[]
+}
+
+export const initRegulasi: doRequestRegulasiDto = {
+  id: 0,
+  uraian_penetapan_object_id: 0,
+  amanat: "",
+  perpres: "",
+  entitas_id: [0],
+};
+
+export type RequestRegulasiServiceModel = BaseAPIServiceParam & {
+  body: doRequestRegulasiDto;
+};

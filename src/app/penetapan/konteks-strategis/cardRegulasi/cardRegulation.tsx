@@ -30,6 +30,9 @@ import { ExsumRegulationDto } from "@/app/executive-summary/partials/tab7Regulat
 import { DividerIntExt } from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgent";
 import AddButton from "@/app/components/buttonAdd";
 import Iconify from "@/app/components/icons/iconify";
+import useUrgensiVM from "../../internal-eksternal/pageVM";
+import useCardIndicationVM from "@/app/executive-summary/partials/tab9Indication/cardIndicationVM";
+import { doRequestRegulasiDto } from "./model";
 
 export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
   const {
@@ -40,19 +43,32 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
     setModalDelete,
     modalEdit,
     setModalEdit,
+    requestRegulasi,
+    setRequestRegulasi,
+    uriRequestRegulasi
   } = useCardRegulasi();
 
+  const {
+    optionStakeholder,
+    listPerpres,
+    stateRegulation,
+    setStateRegulation,
+  } = useCardIndicationVM();
+
+
   const { deleteData } = useCardRegulationVM();
-  const [state, setState] = useState<ExsumRegulationDto>({
-    id: 0,
-    tahun: [],
-    exsum_id: 0,
-    amanat: "",
-    perpres_state: undefined,
-    perpres: [],
-    stakeholder: [],
-    stakeholder_id: [],
-  });
+
+  const handleSubmitRegulation = async () => {
+    const dataRequest: doRequestRegulasiDto = {
+      id: stateRegulation.id,
+      amanat: stateRegulation.amanat,
+      entitas_id: stateRegulation.stakeholder_id,
+      perpres: stateRegulation.perpres_state?.title ?? "",
+      uraian_penetapan_object_id: 0
+    }
+
+    uriRequestRegulasi(dataRequest);
+  }
 
   return (
     <>
@@ -105,48 +121,6 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
           </Fragment>
         ) : (
           <EmptyDevelopingState />
-          // <Fragment>
-          //   {data.length == 0 ? (
-          //     <EmptyState
-          //       dense
-          //       icon={<IconEmptyData width={100} />}
-          //       title="Data Kosong"
-          //       description="Silahkan isi konten halaman ini"
-          //     />
-          //   ) : (
-          //     <TableContainer
-          //       component={Paper}
-          //       elevation={0}
-          //       variant="outlined"
-          //     >
-          //       <Table size="small">
-          //         <TableHead
-          //           sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}
-          //         >
-          //           <TableRow>
-          //             <TableCell>
-          //               Regulasi, Kebijakan, Peraturan, dan Prosedur Terkait
-          //             </TableCell>
-          //             <TableCell>Keterangan</TableCell>
-          //           </TableRow>
-          //         </TableHead>
-          //         <TableBody>
-          //           {data.map((row) => (
-          //             <TableRow
-          //               key={row.id}
-          //               sx={{
-          //                 "&:last-child td, &:last-child th": { border: 0 },
-          //               }}
-          //             >
-          //               <TableCell>{row.title}</TableCell>
-          //               <TableCell>{row.value}</TableCell>
-          //             </TableRow>
-          //           ))}
-          //         </TableBody>
-          //       </Table>
-          //     </TableContainer>
-          //   )}
-          // </Fragment>
         )}
       </CardItem>
       <DialogComponent
@@ -158,18 +132,18 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
             <Button variant="outlined" onClick={() => setModal(false)}>
               Batal
             </Button>
-            <Button variant="contained" onClick={() => {}}>
+            <Button variant="contained" onClick={handleSubmitRegulation}>
               Simpan
             </Button>
           </DialogActions>
         }
       >
         <FormRegulation
-          options={[]}
-          optionStakeholder={[]}
-          state={state}
-          setState={() => {}}
-          setModalPeraturan={() => {}}
+          options={listPerpres}
+          optionStakeholder={optionStakeholder}
+          state={stateRegulation}
+          setState={setStateRegulation}
+          setModalPeraturan={() => { }}
         />
       </DialogComponent>
       <DialogComponent
@@ -181,25 +155,25 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
             <Button variant="outlined" onClick={() => setModalEdit(false)}>
               Batal
             </Button>
-            <Button variant="contained" onClick={() => {}}>
+            <Button variant="contained" onClick={handleSubmitRegulation}>
               Simpan
             </Button>
           </DialogActions>
         }
       >
         <FormRegulation
-          options={[]}
-          optionStakeholder={[]}
-          state={state}
-          setState={() => {}}
-          setModalPeraturan={() => {}}
+          options={listPerpres}
+          optionStakeholder={optionStakeholder}
+          state={stateRegulation}
+          setState={setStateRegulation}
+          setModalPeraturan={() => { }}
         />
       </DialogComponent>
       <DialogDelete
         title="Hapus Data"
         handleOpenModal={modalDelete}
         handleCloseModal={() => setModalDelete(false)}
-        // handleDelete={() => deleteData()}
+      // handleDelete={() => deleteData()}
       />
     </>
   );

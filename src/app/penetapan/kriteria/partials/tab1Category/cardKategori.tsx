@@ -51,7 +51,6 @@ export default function CardKategori() {
 
   const handleEdit = (item: any) => {
     setModalOpenCategory(true);
-    console.log(item);
 
     const tempItem = {
       penetapan_kategori_risiko_id: item.id,
