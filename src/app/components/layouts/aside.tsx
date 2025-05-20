@@ -111,7 +111,6 @@ function getMenuItem(
   }
 }
 
-
 export default function Aside({
   isExpanded,
   isMobile,
@@ -190,8 +189,25 @@ export default function Aside({
         pt: isMobile ? 3 : 0,
         overflowY: "auto",
         overflowX: "hidden",
+        transition: "width 1000ms ease-in",
         "&::-webkit-scrollbar": {
-          width: "3px",
+          width: "4px",
+          transition: "width 1000ms ease-in",
+          opacity: 0,
+        },
+        "&::-webkit-scrollbar-track": {
+          WebkitBoxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.1)",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "rgba(0, 0, 0, 0)",
+          borderRadius: "2px",
+          transition: "background-color 500ms ease-in",
+        },
+
+        "&:hover": {
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+          },
         },
       }}
     >

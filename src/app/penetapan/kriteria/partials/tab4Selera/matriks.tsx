@@ -88,6 +88,7 @@ export default function SeleraMatriks({
             <>
               <Table
                 sx={{
+                  border: `1px solid ${grey[300]}`,
                   td: {
                     "&:first-of-type, &:nth-of-type(2)": {
                       color: darkMode ? "white" : theme.palette.secondary.dark,

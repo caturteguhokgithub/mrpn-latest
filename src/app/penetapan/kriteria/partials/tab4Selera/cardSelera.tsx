@@ -15,14 +15,12 @@ import usePenetapanSelera from "./hooks/vm";
 export default function CardSelera() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalOpenRef, setModalOpenRef] = React.useState(false);
+  const [emptyRisk, setEmptyRisk] = React.useState(false);
+
   const { user } = useAuthorizationVM();
 
-  const {
-    loading,
-    createSelera,
-    requestSelera,
-    setRequestSelera,
-  } = usePenetapanSelera();
+  const { loading, createSelera, requestSelera, setRequestSelera } =
+    usePenetapanSelera();
 
   const handleModalClose = () => {
     setModalOpenAdd(false);
@@ -41,19 +39,41 @@ export default function CardSelera() {
     createSelera(requestSelera);
   };
 
+  const handleSetRisk = () => {
+    setEmptyRisk(!emptyRisk);
+  };
+
+  const isEmptyRisk = true;
+
   return (
     <Fragment>
       <CardItem
         title="Selera Risiko"
         addButton={
-          user?.role.name == "Komite MRPN LS" || user?.role.name == "Super Admin" ?
-            <AddButton
-              filled
-              startIcon={<Iconify name="mdi:chart-bar-stacked" />}
-              title="Matriks Referensi"
-              onclick={() => setModalOpenRef(true)}
-            /> :
-            ""
+          <Fragment>
+            {user?.role.name == "Komite MRPN LS" ||
+            user?.role.name == "Super Admin" ? (
+              <AddButton
+                noMargin
+                startIcon={<Iconify name="mdi:chart-bar-stacked" />}
+                title="Matriks Referensi"
+                onclick={() => setModalOpenRef(true)}
+              />
+            ) : (
+              ""
+            )}
+            <Fragment>
+              {!isEmptyRisk && (
+                <AddButton
+                  noMargin
+                  filled
+                  startIcon={<Iconify name="mdi:pencil" />}
+                  title="Edit Selera Risiko"
+                  onclick={handleSetRisk}
+                />
+              )}
+            </Fragment>
+          </Fragment>
         }
       >
         {isDeveloping ? (
@@ -63,6 +83,7 @@ export default function CardSelera() {
             handleSaveButton={handleModalOpenSave}
             state={requestSelera}
             setState={setRequestSelera}
+            isEmptyRisk={isEmptyRisk}
           />
         )}
       </CardItem>

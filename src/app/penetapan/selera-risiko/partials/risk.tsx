@@ -26,65 +26,53 @@ import { doReqSeleraDto } from "../../kriteria/partials/tab4Selera/hooks/model";
 export default function RiskContent({
   handleSaveButton,
   state,
-  setState
+  setState,
+  isEmptyRisk,
 }: {
   handleSaveButton?: () => void;
   state: doReqSeleraDto;
   setState: (value: SetStateAction<doReqSeleraDto>) => void;
+  isEmptyRisk?: boolean;
 }) {
   const { user } = useAuthContext((state) => state);
+  const initialValue = isEmptyRisk ? "" : "1";
 
   const userLv = user?.type === "BAPPENAS" ? "bappenas" : "kl";
-  const [valueTheme, setValueTheme] = React.useState<string | null>("");
+  const [valueTheme, setValueTheme] = React.useState<string | null>(
+    initialValue
+  );
   const [userLevel, setUserLevel] = React.useState<string | null>(userLv);
-  const [modalOpenRef, setModalOpenRef] = React.useState(false);
-
-  const handleUserLevel = (
-    event: React.MouseEvent<HTMLElement>,
-    newUserLevel: string | null
-  ) => {
-    setUserLevel(newUserLevel);
-  };
 
   const handleAlignment = (
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string | null
   ) => {
     setValueTheme(newAlignment);
-    var type_nilai = ""
+    var type_nilai = "";
 
     switch (newAlignment) {
       case "1":
-        type_nilai = "Rendah"
+        type_nilai = "Rendah";
         break;
       case "2":
-        type_nilai = "Konservatif"
+        type_nilai = "Konservatif";
         break;
       case "3":
-        type_nilai = "Moderat"
+        type_nilai = "Moderat";
         break;
       case "4":
-        type_nilai = "Tinggi"
+        type_nilai = "Tinggi";
         break;
 
       default:
-        type_nilai = ""
+        type_nilai = "";
         break;
     }
 
     setState((prevState) => ({
       ...prevState,
-      type_nilai: type_nilai
-    }))
-
-  };
-
-  const handleModalOpenRef = () => {
-    setModalOpenRef(true);
-  };
-
-  const handleModalClose = () => {
-    setModalOpenRef(false);
+      type_nilai: type_nilai,
+    }));
   };
 
   const saveButton = (
@@ -112,69 +100,76 @@ export default function RiskContent({
         </Typography>
       </Box>
 
-      {/*<ToggleButtonGroup*/}
-      {/*  value={userLevel}*/}
-      {/*  exclusive*/}
-      {/*  onChange={handleUserLevel}*/}
-      {/*  sx={{*/}
-      {/*    mb: 2,*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <ToggleButton value="bappenas">User Bappenas</ToggleButton>*/}
-      {/*  <ToggleButton value="kl">User KL</ToggleButton>*/}
-      {/*</ToggleButtonGroup>*/}
-      <Stack gap={2}>
-        <Stack direction="row" alignItems="center" gap={0.5}>
-          <Typography fontSize={18} fontWeight={600}>
-            Risk Appetite Statement (RAS)/Pernyataan Selera Risiko
-          </Typography>
-          <InfoTooltip
-            title="Pernyataan formal yang menentukan sejauh mana perusahaan bersedia mengambil risiko dalam
+      {isEmptyRisk && (
+        <Stack gap={2}>
+          <Stack direction="row" alignItems="center" gap={0.5}>
+            <Typography fontSize={18} fontWeight={600}>
+              Risk Appetite Statement (RAS)/Pernyataan Selera Risiko
+            </Typography>
+            <InfoTooltip
+              title="Pernyataan formal yang menentukan sejauh mana perusahaan bersedia mengambil risiko dalam
 mencapai tujuan bisnisnya. Hal ini penting dalam membimbing pengambilan keputusan dan
 menetapkan batasan yang diterima oleh perusahaan dalam menghadapi risiko. Selera risiko RPJMN
 dan RKP ditentukan oleh Kementerian yang menyelenggarakan urusan pemerintahan di bidang
 perencanaan pembangunan nasional"
-          />
-        </Stack>
-        <TableRas />
-        <Stack gap={1}>
-          <Typography fontStyle="italic" fontSize={14} color={grey[600]}>
-            Tuliskan pernyataan selera risiko{" "}
-            {valueTheme == "1"
-              ? "Rendah"
-              : valueTheme == "2"
+            />
+          </Stack>
+          <TableRas />
+          <Stack gap={1}>
+            <Typography fontStyle="italic" fontSize={14} color={grey[600]}>
+              Tuliskan pernyataan selera risiko{" "}
+              {valueTheme == "1"
+                ? "Rendah"
+                : valueTheme == "2"
                 ? "Konservatif"
                 : valueTheme == "3"
-                  ? "Moderat"
-                  : "Tinggi"}
-          </Typography>
+                ? "Moderat"
+                : "Tinggi"}
+            </Typography>
 
-          <TextareaStyled
-            aria-label="Deskripsi"
-            minRows={3}
-            onChange={(e) => {
-              setState((prevState) => ({
-                ...prevState,
-                pernyataan: e.target.value,
-              }))
-            }}
-            placeholder={`Deskripsi ${valueTheme == "1"
-              ? "Rendah"
-              : valueTheme == "2"
-                ? "Konservatif"
-                : valueTheme == "3"
+            <TextareaStyled
+              aria-label="Deskripsi"
+              minRows={3}
+              onChange={(e) => {
+                setState((prevState) => ({
+                  ...prevState,
+                  pernyataan: e.target.value,
+                }));
+              }}
+              placeholder={`Deskripsi ${
+                valueTheme == "1"
+                  ? "Rendah"
+                  : valueTheme == "2"
+                  ? "Konservatif"
+                  : valueTheme == "3"
                   ? "Moderat"
                   : "Tinggi"
               }`}
-          // width="100%"
-          />
+              // width="100%"
+            />
+          </Stack>
         </Stack>
-      </Stack>
+      )}
       <Stack gap={2} mt={3}>
-        <Typography color={grey[600]} fontSize={14} fontStyle="italic">
-          Pilih salah satu untuk memberikan{" "}
-          {userLevel === "bappenas" ? "deskripsi" : "nilai"}
-        </Typography>
+        {!isEmptyRisk && (
+          <Stack gap={0}>
+            <Typography fontStyle="italic" fontSize={14} color={grey[600]}>
+              Pernyataan selera risiko
+            </Typography>
+            <Typography component="p">
+              Pernyataan Selera Risiko: Lorem ipsum dolor sit amet consectetur
+              adipisicing elit. Inventore sapiente magni qui libero, impedit
+              tempora odit maiores omnis accusantium voluptates debitis tempore
+              a sit, quo nisi necessitatibus esse incidunt in!
+            </Typography>
+          </Stack>
+        )}
+        {isEmptyRisk && (
+          <Typography color={grey[600]} fontSize={14} fontStyle="italic">
+            Pilih salah satu untuk memberikan{" "}
+            {userLevel === "bappenas" ? "deskripsi" : "nilai"}
+          </Typography>
+        )}
         <ToggleButtonGroup
           value={valueTheme}
           exclusive
@@ -514,7 +509,7 @@ perencanaan pembangunan nasional"
         </Box>
         {/* {saveButton} */}
       </Collapse>
-      {saveButton}
+      {isEmptyRisk && saveButton}
     </Fragment>
   );
 }

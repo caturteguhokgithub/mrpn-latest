@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   Box,
   Button,
@@ -52,7 +52,7 @@ export default function TablePeraturan({
   penetapan?: boolean;
   setModal?: () => void;
   setModalDelete?: () => void;
-  intExt?: boolean
+  intExt?: boolean;
 }) {
   const { permission } = useAuthContext((state) => state);
   const pathname = usePathname();
@@ -148,27 +148,26 @@ export default function TablePeraturan({
                     </Stack>
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>
-                    {intExt && typeof row.perpres === 'string' ? (
-                      row.perpres // perpres bertipe string
-                    ) : Array.isArray(row.perpres) ? (
-                      row.perpres.map((y, index2) => (
-                        <Chip
-                          key={index2}
-                          size="small"
-                          label={y.title}
-                          sx={
-                            y.flag != null
-                              ? {
-                                background: "#EA6228",
-                                color: "white",
-                              }
-                              : undefined
-                          }
-                        />
-                      ))
-                    ) : (
-                      '-' // fallback kalau bukan array
-                    )}
+                    {intExt && typeof row.perpres === "string"
+                      ? row.perpres // perpres bertipe string
+                      : Array.isArray(row.perpres)
+                      ? row.perpres.map((y, index2) => (
+                          <Chip
+                            key={index2}
+                            size="small"
+                            label={y.title}
+                            sx={
+                              y.flag != null
+                                ? {
+                                    background: "#EA6228",
+                                    color: "white",
+                                  }
+                                : undefined
+                            }
+                          />
+                        ))
+                      : "-" // fallback kalau bukan array
+                    }
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>
                     {row.amanat}
