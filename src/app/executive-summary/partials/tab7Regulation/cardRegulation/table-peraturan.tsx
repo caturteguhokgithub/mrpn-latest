@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SetStateAction } from "react";
 import {
   Box,
   Button,
@@ -38,6 +38,7 @@ import useCardRegulationVM from "./cardRegulationVM";
 import Iconify from "@/app/components/icons/iconify";
 import { blue, grey, red } from "@mui/material/colors";
 import useCardRegulasi from "@/app/penetapan/konteks-strategis/cardRegulasi/vm";
+import { doRequestRegulasiDto } from "@/app/penetapan/konteks-strategis/cardRegulasi/model";
 
 export default function TablePeraturan({
   data,
@@ -46,6 +47,7 @@ export default function TablePeraturan({
   setModal,
   setModalDelete,
   intExt,
+  setState,
 }: {
   data: ExsumRegulationResDto[];
   deleteData: any;
@@ -53,11 +55,39 @@ export default function TablePeraturan({
   setModal?: () => void;
   setModalDelete?: () => void;
   intExt?: boolean
+  setState?: (value: SetStateAction<ExsumRegulationDto>) => void;
 }) {
   const { permission } = useAuthContext((state) => state);
   const pathname = usePathname();
 
   const { conditionEditing } = useCardRegulationVM();
+
+  const handleBtnEdit = async (params: ExsumRegulationResDto, act: string) => {
+
+    if (intExt) {
+      setState?.((prevState) => ({
+        ...prevState,
+        id: params.id,
+        amanat: params.amanat,
+        stakeholder: params.entitas,
+        stakeholder_id: Array.isArray(params.entitas)
+          ? params.entitas.map((e) => e.id)
+          : [],
+        entitas_id: Array.isArray(params.entitas)
+          ? params.entitas.map((e) => e.id)
+          : [],
+        perpres: Array.isArray(params.perpres)
+          ? params.perpres.map((p) => p.id).join(",")
+          : params.perpres,
+      }));
+    }
+
+    if (act == "delete") {
+      setModalDelete?.();
+    } else {
+      setModal?.();
+    }
+  };
 
   return (
     <>
@@ -128,23 +158,47 @@ export default function TablePeraturan({
                       gap={0.5}
                       flexWrap="wrap"
                     >
-                      {row.entitas.map((e) => (
-                        <Box component="span">
-                          <Chip
-                            key={e.id}
-                            label={e.value}
-                            size="small"
-                            sx={{
-                              height: "auto",
-                              ".MuiChip-label": {
-                                whiteSpace: "wrap",
-                                lineHeight: 1.2,
-                                py: 0.6,
-                              },
-                            }}
-                          />
-                        </Box>
-                      ))}
+                      {Array.isArray(row.entitas) &&
+                        row.entitas.map((e, idx) => {
+                          if (typeof e === "object" && e !== null && "value" in e) {
+                            // Jika entitas bertipe object
+                            return (
+                              <Box key={e.id} component="span">
+                                <Chip
+                                  label={e.value}
+                                  size="small"
+                                  sx={{
+                                    height: "auto",
+                                    ".MuiChip-label": {
+                                      whiteSpace: "wrap",
+                                      lineHeight: 1.2,
+                                      py: 0.6,
+                                    },
+                                  }}
+                                />
+                              </Box>
+                            );
+                          } else {
+                            // Jika entitas berupa number (ID), fallback ditampilkan sebagai angka
+                            return (
+                              <Box key={idx} component="span">
+                                <Chip
+                                  label={`Entitas ID: ${e}`}
+                                  size="small"
+                                  color="default"
+                                  sx={{
+                                    height: "auto",
+                                    ".MuiChip-label": {
+                                      whiteSpace: "wrap",
+                                      lineHeight: 1.2,
+                                      py: 0.6,
+                                    },
+                                  }}
+                                />
+                              </Box>
+                            );
+                          }
+                        })}
                     </Stack>
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>
@@ -180,10 +234,10 @@ export default function TablePeraturan({
                       }}
                     >
                       <Stack direction="row">
-                        <IconButton onClick={setModal}>
+                        <IconButton onClick={() => handleBtnEdit(row, "edit")}>
                           <Iconify name="mdi:pencil" color={blue[500]} />
                         </IconButton>
-                        <IconButton onClick={setModalDelete}>
+                        <IconButton onClick={() => handleBtnEdit(row, "delete")}>
                           <Iconify name="mdi:trash" color={red[500]} />
                         </IconButton>
                       </Stack>

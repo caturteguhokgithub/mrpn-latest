@@ -44,9 +44,8 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
     setModalDelete,
     modalEdit,
     setModalEdit,
-    requestRegulasi,
-    setRequestRegulasi,
-    uriRequestRegulasi
+    uriRequestRegulasi,
+    uriDeleteRegulasi
   } = useCardRegulasi();
 
   const {
@@ -61,18 +60,23 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
     setStateRegulation,
   } = useCardIndicationVM();
 
-  console.log(data);
-
-  const handleSubmitRegulation = async () => {
+  const handleSubmitRegulation = async (act: string) => {
     const dataRequest: doRequestRegulasiDto = {
       id: stateRegulation.id,
       amanat: stateRegulation.amanat,
       entitas_id: stateRegulation.stakeholder_id,
-      perpres: stateRegulation.perpres_state?.title ?? "",
+      perpres: stateRegulation.perpres_state?.title
+        ?? (typeof stateRegulation.perpres === "string"
+          ? stateRegulation.perpres
+          : ""),
       uraian_penetapan_object_id: 0
     }
 
-    uriRequestRegulasi(dataRequest);
+    if (act == "delete") {
+      uriDeleteRegulasi(dataRequest);
+    } else {
+      uriRequestRegulasi(dataRequest);
+    }
   }
 
   return (
@@ -122,6 +126,7 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
                       setModal={() => setModalEdit(true)}
                       setModalDelete={() => setModalDelete(true)}
                       intExt={true}
+                      setState={setStateRegulation}
                     />
                   </Fragment>
                 )}
@@ -141,7 +146,7 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
             <Button variant="outlined" onClick={() => setModal(false)}>
               Batal
             </Button>
-            <Button variant="contained" onClick={handleSubmitRegulation}>
+            <Button variant="contained" onClick={() => handleSubmitRegulation("add")}>
               Simpan
             </Button>
           </DialogActions>
@@ -164,7 +169,7 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
             <Button variant="outlined" onClick={() => setModalEdit(false)}>
               Batal
             </Button>
-            <Button variant="contained" onClick={handleSubmitRegulation}>
+            <Button variant="contained" onClick={() => handleSubmitRegulation("edit")}>
               Simpan
             </Button>
           </DialogActions>
@@ -182,7 +187,7 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
         title="Hapus Data"
         handleOpenModal={modalDelete}
         handleCloseModal={() => setModalDelete(false)}
-      // handleDelete={() => deleteData()}
+        handleDelete={() => handleSubmitRegulation("delete")}
       />
     </>
   );

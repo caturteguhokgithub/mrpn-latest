@@ -17,7 +17,7 @@ export interface ExsumRegulationDto {
   exsum_id: number
   amanat: string
   perpres_state: MiscMasterListPerpresRes | undefined
-  perpres: { id: number }[]
+  perpres: { id: number }[] | string
   stakeholder: MiscMasterListStakeholderRes[]
   stakeholder_id: number[]
 }

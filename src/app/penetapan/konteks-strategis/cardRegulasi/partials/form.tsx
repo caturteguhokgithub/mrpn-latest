@@ -4,7 +4,7 @@ import {
 } from "@/app/misc/master/masterServiceModel";
 import { ExsumRegulationDto } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
 import React, { SetStateAction } from "react";
-import { Box, Button, FormControl, Grid, Typography } from "@mui/material";
+import { Box, Button, FormControl, Grid, TextField, Typography } from "@mui/material";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
 import {
   AutocompleteSelectMultiple,
@@ -14,6 +14,7 @@ import { IconFA } from "@/components/icons/icon-fa";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { TextareaStyled } from "@/app/components/textarea";
+import useCardRegulasi from "../vm";
 
 export default function FormRegulation({
   options,
@@ -68,7 +69,23 @@ export default function FormRegulation({
       <Grid item xs={12}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Peraturan Terkait" />
-          <AutocompleteSelectSingle
+          <TextField
+            fullWidth
+            value={state.perpres}
+            variant="outlined"
+            size="small"
+            placeholder={"Perpres"}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={(e) =>
+              setState((prevState) => ({
+                ...prevState,
+                perpres: e.target.value,
+              }))
+            }
+          />
+          {/* <AutocompleteSelectSingle
             key={state.perpres_state?.id ?? 0}
             value={state.perpres_state}
             options={options}
@@ -84,27 +101,30 @@ export default function FormRegulation({
               })
             }
             placeHolder={"Pilih peraturan terkait"}
-          // actionButton={
-          //   <Box onMouseDown={(e) => e.preventDefault()}>
-          //     <Button
-          //       startIcon={<IconFA name="circle-plus" size={14} />}
-          //       fullWidth
-          //       onClick={(e) => {
-          //         e.preventDefault();
-          //         setModalPeraturan(-1, true, "update");
-          //       }}
-          //     >
-          //       Tambah Peraturan
-          //     </Button>
-          //   </Box>
-          // }
-          />
+          /> */}
         </FormControl>
       </Grid>
       <Grid item xs={12}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Amanat Peraturan yang Terkait" />
-          <Typography fontWeight={500}>{state.amanat || "-"}</Typography>
+          <TextField
+            fullWidth
+            minRows={3}
+            value={state.amanat}
+            variant="outlined"
+            size="small"
+            placeholder={"Amanat"}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={(e) =>
+              setState((prevState) => ({
+                ...prevState,
+                amanat: e.target.value,
+              }))
+            }
+          />
+          {/* <Typography fontWeight={500/}>{state.amanat || "-"}</Typography> */}
         </FormControl>
       </Grid>
     </Grid>
