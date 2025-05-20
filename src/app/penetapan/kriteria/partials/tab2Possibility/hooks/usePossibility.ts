@@ -5,19 +5,14 @@ import {
   doUpdatePossibility,
 } from "./possibilityService";
 import { API_CODE } from "@/lib/core/api/apiModel";
-import {
-  useExsumContext,
-  useGlobalModalContext,
-  useLoading,
-} from "@/lib/core/hooks/useHooks";
-import { useSearchParams } from "next/navigation";
+import { useGlobalModalContext, useLoading } from "@/lib/core/hooks/useHooks";
 import {
   ResultPossibility,
   doRequestPossibilityDto,
   initPossibility,
 } from "./possibilityModel";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
-import { cloneDeep } from "lodash";
+// import { cloneDeep } from "lodash";
 
 const usePossibilityList = () => {
   const loadingContext = useLoading();
@@ -151,7 +146,7 @@ const usePossibilityList = () => {
   ];
 
   const { listDropDown, listSorterPossibility } = useMemo(() => {
-    const listDropDown = cloneDeep(defaultDropdownList);
+    // const listDropDown = cloneDeep(defaultDropdownList);
     let filtered: any = [];
     let listSorterPossibility: any = [];
 

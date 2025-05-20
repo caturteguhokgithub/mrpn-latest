@@ -37,7 +37,7 @@ import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import AddButton from "../components/buttonAdd";
 
-export default function PageExecutiveSummary({ }) {
+export default function PageExecutiveSummary({}) {
   const { permission, user } = useAuthContext((state) => state);
   const pathname = usePathname();
 
@@ -158,15 +158,15 @@ export default function PageExecutiveSummary({ }) {
     let label: string = "Draft";
     let color:
       | OverridableStringUnion<
-        | "default"
-        | "primary"
-        | "secondary"
-        | "error"
-        | "info"
-        | "success"
-        | "warning",
-        ChipPropsColorOverrides
-      >
+          | "default"
+          | "primary"
+          | "secondary"
+          | "error"
+          | "info"
+          | "success"
+          | "warning",
+          ChipPropsColorOverrides
+        >
       | undefined = "default";
     let sx: any = { bgcolor: grey[600], color: "white", px: 1 };
 
@@ -193,6 +193,7 @@ export default function PageExecutiveSummary({ }) {
 
   return (
     <ContentPage
+      noMinusMargin
       title="Executive Summary"
       overflowHidden
       chooseProject={rkpState !== undefined}
@@ -226,7 +227,7 @@ export default function PageExecutiveSummary({ }) {
         </Collapse>
       }
     >
-      <Box mb={2} p={1}>
+      <Box mb={2} p={0}>
         {toogleShowTab && (
           <Stack direction="row" alignItems="center" mb={2}>
             <Box flexGrow={1}>
