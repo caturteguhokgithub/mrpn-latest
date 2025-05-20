@@ -6,7 +6,7 @@ export interface ExsumRegulationResDto {
   tahun: number[]
   exsum_id: number
   amanat: string
-  perpres: MiscMasterListPerpresRes[]
+  perpres: MiscMasterListPerpresRes[] | string
   entitas: MiscMasterListStakeholderRes[],
   isEdit: boolean
 }

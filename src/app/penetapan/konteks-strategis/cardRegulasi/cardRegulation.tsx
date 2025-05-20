@@ -36,7 +36,8 @@ import { doRequestRegulasiDto } from "./model";
 
 export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
   const {
-    data,
+    dataRegulasi,
+    setDataRegulasi,
     modal,
     setModal,
     modalDelete,
@@ -49,14 +50,18 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
   } = useCardRegulasi();
 
   const {
+    data,
+    deleteData,
+  } = useCardRegulationVM();
+
+  const {
     optionStakeholder,
     listPerpres,
     stateRegulation,
     setStateRegulation,
   } = useCardIndicationVM();
 
-
-  const { deleteData } = useCardRegulationVM();
+  console.log(data);
 
   const handleSubmitRegulation = async () => {
     const dataRequest: doRequestRegulasiDto = {
@@ -98,7 +103,10 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
             ) : (
               <Fragment>
                 <Box sx={{ opacity: 0.6 }}>
-                  <TablePeraturan data={data} deleteData={deleteData} />
+                  <TablePeraturan
+                    data={data}
+                    deleteData={deleteData}
+                  />
                 </Box>
                 {isDeveloping ? (
                   <EmptyDevelopingState />
@@ -109,10 +117,11 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
                     </Box>
                     <TablePeraturan
                       penetapan
-                      data={data}
+                      data={dataRegulasi}
                       deleteData={deleteData}
                       setModal={() => setModalEdit(true)}
                       setModalDelete={() => setModalDelete(true)}
+                      intExt={true}
                     />
                   </Fragment>
                 )}
