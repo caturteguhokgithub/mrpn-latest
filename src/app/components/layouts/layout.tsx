@@ -167,8 +167,8 @@ export default function DashboardLayout(props: {
 
   const sxAside = {
     gridArea: "aside",
-    //  bgcolor: theme.palette.primary.main,
-    bgcolor: theme.palette.secondary.dark,
+    bgcolor: theme.palette.primary.main,
+    // bgcolor: theme.palette.secondary.dark,
     width: checked ? 280 : 64,
     transition: "width 600ms ease",
     [theme.breakpoints.down("md")]: {
@@ -233,7 +233,7 @@ export default function DashboardLayout(props: {
       },
     },
     ".mrpn-card-content": {
-      maxWidth: "calc(100vw - 348px)",
+      // maxWidth: "calc(100vw - 348px)",
     },
     ".collapse-active": {
       ".table-sticky-actions-column": {
@@ -338,8 +338,9 @@ export default function DashboardLayout(props: {
         component="main"
         bgcolor={themeCondition}
         gridArea="main"
-        p="42px"
-        pb="24px"
+        // p="42px"
+        p="24px"
+        // pb="24px"
         position="relative"
         className={checked ? "" : "collapse-active"}
         sx={sxMain}

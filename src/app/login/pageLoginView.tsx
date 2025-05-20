@@ -381,7 +381,7 @@ export default function PageLoginView() {
                 style={{
                   display: !showLogin ? "inline-block" : "none",
                   width: "auto",
-                  height: "250px",
+                  height: "25vh",
                   filter: "drop-shadow(0px 12px 14px #000000)",
                 }}
               />
@@ -392,7 +392,7 @@ export default function PageLoginView() {
             >
               <Typography
                 fontWeight={900}
-                fontSize="clamp(3rem, 100vw, 6rem)"
+                fontSize="clamp(3rem, 10vh, 6rem)"
                 color="white"
                 component="h1"
                 lineHeight={1}
@@ -414,14 +414,14 @@ export default function PageLoginView() {
                 // fontStyle="italic"
                 color="white"
                 component="h1"
-                fontSize="clamp(1rem, 2vw, 1.15rem)"
+                fontSize="clamp(0.5rem, 3vh, 1.15rem)"
                 lineHeight={1.4}
                 textTransform="uppercase"
-                sx={{
-                  [theme.breakpoints.down("md")]: {
-                    fontSize: "0.8rem",
-                  },
-                }}
+                // sx={{
+                //   [theme.breakpoints.down("md")]: {
+                //     fontSize: "0.8rem",
+                //   },
+                // }}
               >
                 {/* National Risk Management Information System */}
                 Manajemen Risiko Pembangunan Nasional
@@ -690,12 +690,19 @@ export default function PageLoginView() {
   const batikCenter = (
     <Box
       position="fixed"
-      top="50%"
-      left="50%"
+      // top="50%"
+      // left="50%"
+      top={0}
+      left={0}
+      right={0}
+      bottom={0}
       zIndex={1}
       sx={{
-        transform: "translate(-50%, -50%)",
-        [theme.breakpoints.down("md")]: { img: { height: "70vh !important" } },
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        // transform: "translate(-50%, -50%)",
+        // [theme.breakpoints.down("md")]: { img: { height: "70vh !important" } },
       }}
       className="map-parallax-bg"
     >
@@ -709,6 +716,7 @@ export default function PageLoginView() {
         style={{
           width: "auto",
           height: "150vh",
+          objectFit: "cover",
           //  opacity: 0.4,
           //  transform: "scale(1.2)",
         }}
@@ -719,10 +727,12 @@ export default function PageLoginView() {
   const batikBg = (
     <Box
       position="fixed"
-      top="50%"
-      left="50%"
-      zIndex={0}
-      sx={{ transform: "translate(-50%, -50%)" }}
+      top={0}
+      left={0}
+      right={0}
+      bottom={0}
+      zIndex={-1}
+      // sx={{ transform: "translate(-50%, -50%)" }}
       //    className="box-parallax-bg"
     >
       <Image
@@ -732,9 +742,10 @@ export default function PageLoginView() {
         height={0}
         sizes="100vw"
         style={{
-          width: "auto",
-          height: "120vh",
+          width: "100%",
+          height: "100vh",
           opacity: 0.07,
+          objectFit: "cover",
           //  transform: "scale(1.2)",
         }}
       />

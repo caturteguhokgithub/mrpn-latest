@@ -8,26 +8,26 @@ import EmptyState from "@/app/components/empty";
 import { IconEmptyPage } from "@/app/components/icons";
 
 export default function PageFAQ() {
- const [project, setProject] = React.useState("");
+  const [project, setProject] = React.useState("");
 
- const handleChangeProject = (event: SelectChangeEvent) => {
-  setProject(event.target.value);
- };
+  const handleChangeProject = (event: SelectChangeEvent) => {
+    setProject(event.target.value);
+  };
 
- return (
-  <DashboardLayout>
-   <ContentPage
-    title="FAQ (Frequently Ask Question)"
-    withCard
-    project={project}
-    // handleChangeProject={handleChangeProject}
-   >
-    <EmptyState
-     icon={<IconEmptyPage />}
-     title="Halaman FAQ (Frequently Ask Question) Kosong"
-     description="Silahkan isi konten halaman ini"
-    />
-   </ContentPage>
-  </DashboardLayout>
- );
+  return (
+    <DashboardLayout>
+      <ContentPage
+        title="FAQ (Frequently Asked Question)"
+        withCard
+        project={project}
+        // handleChangeProject={handleChangeProject}
+      >
+        <EmptyState
+          icon={<IconEmptyPage />}
+          title="Halaman FAQ (Frequently Asked Question) Kosong"
+          description="Silahkan isi konten halaman ini"
+        />
+      </ContentPage>
+    </DashboardLayout>
+  );
 }

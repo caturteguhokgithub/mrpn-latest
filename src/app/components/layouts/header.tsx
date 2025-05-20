@@ -279,7 +279,8 @@ export default function Header({}) {
                     id="sliderValue"
                     sx={{
                       "&.abbreviation": {
-                        color: theme.palette.primary.main,
+                        // color: theme.palette.primary.main,
+                        color: "white",
                       },
                       "&.full-form": {
                         color: "white",
@@ -326,8 +327,10 @@ export default function Header({}) {
             sx={{
               px: 2,
               borderRadius: 50,
+              bgcolor: orange[800],
               "&:hover": {
-                bgcolor: blue[800],
+                // bgcolor: blue[800],
+                bgcolor: orange[900],
               },
             }}
             startIcon={<IconFA size={16} name="list-ol" />}
