@@ -45,13 +45,10 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
     modalEdit,
     setModalEdit,
     uriRequestRegulasi,
-    uriDeleteRegulasi
+    uriDeleteRegulasi,
   } = useCardRegulasi();
 
-  const {
-    data,
-    deleteData,
-  } = useCardRegulationVM();
+  const { data, deleteData } = useCardRegulationVM();
 
   const {
     optionStakeholder,
@@ -65,19 +62,20 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
       id: stateRegulation.id,
       amanat: stateRegulation.amanat,
       entitas_id: stateRegulation.stakeholder_id,
-      perpres: stateRegulation.perpres_state?.title
-        ?? (typeof stateRegulation.perpres === "string"
+      perpres:
+        stateRegulation.perpres_state?.title ??
+        (typeof stateRegulation.perpres === "string"
           ? stateRegulation.perpres
           : ""),
-      uraian_penetapan_object_id: 0
-    }
+      uraian_penetapan_object_id: 0,
+    };
 
     if (act == "delete") {
       uriDeleteRegulasi(dataRequest);
     } else {
       uriRequestRegulasi(dataRequest);
     }
-  }
+  };
 
   return (
     <>
@@ -95,46 +93,31 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
           />
         }
       >
-        {penetapan ? (
-          <Fragment>
-            {data.length == 0 ? (
-              <EmptyState
-                dense
-                icon={<IconEmptyData width={100} />}
-                title="Data Kosong"
-                description="Silahkan isi konten halaman ini"
-              />
-            ) : (
-              <Fragment>
-                <Box sx={{ opacity: 0.6 }}>
-                  <TablePeraturan
-                    data={data}
-                    deleteData={deleteData}
-                  />
-                </Box>
-                {isDeveloping ? (
-                  <EmptyDevelopingState />
-                ) : (
-                  <Fragment>
-                    <Box my={3}>
-                      <DividerIntExt />
-                    </Box>
-                    <TablePeraturan
-                      penetapan
-                      data={dataRegulasi}
-                      deleteData={deleteData}
-                      setModal={() => setModalEdit(true)}
-                      setModalDelete={() => setModalDelete(true)}
-                      intExt={true}
-                      setState={setStateRegulation}
-                    />
-                  </Fragment>
-                )}
-              </Fragment>
-            )}
-          </Fragment>
+        {data.length == 0 ? (
+          <EmptyState
+            dense
+            icon={<IconEmptyData width={100} />}
+            title="Data Kosong"
+            description="Silahkan isi konten halaman ini"
+          />
         ) : (
-          <EmptyDevelopingState />
+          <Fragment>
+            <Box sx={{ opacity: 0.6 }}>
+              <TablePeraturan data={data} deleteData={deleteData} />
+            </Box>
+            <Box my={3}>
+              <DividerIntExt />
+            </Box>
+            <TablePeraturan
+              penetapan
+              data={dataRegulasi}
+              deleteData={deleteData}
+              setModal={() => setModalEdit(true)}
+              setModalDelete={() => setModalDelete(true)}
+              intExt={true}
+              setState={setStateRegulation}
+            />
+          </Fragment>
         )}
       </CardItem>
       <DialogComponent
@@ -146,7 +129,10 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
             <Button variant="outlined" onClick={() => setModal(false)}>
               Batal
             </Button>
-            <Button variant="contained" onClick={() => handleSubmitRegulation("add")}>
+            <Button
+              variant="contained"
+              onClick={() => handleSubmitRegulation("add")}
+            >
               Simpan
             </Button>
           </DialogActions>
@@ -157,7 +143,7 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
           optionStakeholder={optionStakeholder}
           state={stateRegulation}
           setState={setStateRegulation}
-          setModalPeraturan={() => { }}
+          setModalPeraturan={() => {}}
         />
       </DialogComponent>
       <DialogComponent
@@ -169,7 +155,10 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
             <Button variant="outlined" onClick={() => setModalEdit(false)}>
               Batal
             </Button>
-            <Button variant="contained" onClick={() => handleSubmitRegulation("edit")}>
+            <Button
+              variant="contained"
+              onClick={() => handleSubmitRegulation("edit")}
+            >
               Simpan
             </Button>
           </DialogActions>
@@ -180,7 +169,7 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
           optionStakeholder={optionStakeholder}
           state={stateRegulation}
           setState={setStateRegulation}
-          setModalPeraturan={() => { }}
+          setModalPeraturan={() => {}}
         />
       </DialogComponent>
       <DialogDelete

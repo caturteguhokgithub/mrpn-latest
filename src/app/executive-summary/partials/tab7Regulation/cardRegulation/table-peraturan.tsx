@@ -54,7 +54,7 @@ export default function TablePeraturan({
   penetapan?: boolean;
   setModal?: () => void;
   setModalDelete?: () => void;
-  intExt?: boolean
+  intExt?: boolean;
   setState?: (value: SetStateAction<ExsumRegulationDto>) => void;
 }) {
   const { permission } = useAuthContext((state) => state);
@@ -63,7 +63,6 @@ export default function TablePeraturan({
   const { conditionEditing } = useCardRegulationVM();
 
   const handleBtnEdit = async (params: ExsumRegulationResDto, act: string) => {
-
     if (intExt) {
       setState?.((prevState) => ({
         ...prevState,
@@ -90,7 +89,7 @@ export default function TablePeraturan({
   };
 
   return (
-    <>
+    <Fragment>
       <Stack
         mb={2}
         direction="row"
@@ -103,23 +102,26 @@ export default function TablePeraturan({
           title="Daftar Peraturan Perundang-Undangan yang Terkait"
         />
       </Stack>
-      <TableContainer component={Paper} elevation={0} variant="outlined">
-        <Table size="small">
-          <TableHead sx={{ bgcolor: bgColorTh }}>
-            <TableRow>
-              {/*{(hasPrivilege(permission, pathname, "update") ||*/}
-              {/*  hasPrivilege(permission, pathname, "delete")) && (*/}
-              {/*  <TableCell width="70px"></TableCell>*/}
-              {/*)}*/}
-              <TableCell width={500}>Entitas</TableCell>
-              <TableCell width={240}>Peraturan Terkait</TableCell>
-              <TableCell>Amanat Peraturan yang Terkait</TableCell>
-              {penetapan && <TableCell align="center">Aksi</TableCell>}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((row) => (
-              <>
+      {data.length === 0 ? (
+        <EmptyState
+          dense
+          icon={<IconEmptyData width={100} />}
+          title="Data Kosong"
+          description="Silahkan isi konten halaman ini"
+        />
+      ) : (
+        <TableContainer component={Paper} elevation={0} variant="outlined">
+          <Table size="small">
+            <TableHead sx={{ bgcolor: bgColorTh }}>
+              <TableRow>
+                <TableCell width={500}>Entitas</TableCell>
+                <TableCell width={240}>Peraturan Terkait</TableCell>
+                <TableCell>Amanat Peraturan yang Terkait</TableCell>
+                {penetapan && <TableCell align="center">Aksi</TableCell>}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.map((row) => (
                 <TableRow
                   key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -160,7 +162,11 @@ export default function TablePeraturan({
                     >
                       {Array.isArray(row.entitas) &&
                         row.entitas.map((e, idx) => {
-                          if (typeof e === "object" && e !== null && "value" in e) {
+                          if (
+                            typeof e === "object" &&
+                            e !== null &&
+                            "value" in e
+                          ) {
                             // Jika entitas bertipe object
                             return (
                               <Box key={e.id} component="span">
@@ -202,24 +208,32 @@ export default function TablePeraturan({
                     </Stack>
                   </TableCell>
                   <TableCell sx={{ verticalAlign: "top" }}>
-                    {intExt && typeof row.perpres === "string"
-                      ? row.perpres // perpres bertipe string
-                      : Array.isArray(row.perpres)
+                    {
+                      intExt && typeof row.perpres === "string"
+                        ? row.perpres // perpres bertipe string
+                        : Array.isArray(row.perpres)
                         ? row.perpres.map((y, index2) => (
-                          <Chip
-                            key={index2}
-                            size="small"
-                            label={y.title}
-                            sx={
-                              y.flag != null
-                                ? {
-                                  background: "#EA6228",
-                                  color: "white",
-                                }
-                                : undefined
-                            }
-                          />
-                        ))
+                            <Chip
+                              key={index2}
+                              size="small"
+                              label={y.title}
+                              sx={
+                                y.flag != null
+                                  ? {
+                                      background: "#EA6228",
+                                      color: "white",
+                                      height: "auto",
+                                      ".MuiChip-label": {
+                                        whiteSpace: "wrap",
+                                        lineHeight: 1.2,
+                                        paddingTop: "4.8px",
+                                        paddingBottom: "4.8px",
+                                      },
+                                    }
+                                  : undefined
+                              }
+                            />
+                          ))
                         : "-" // fallback kalau bukan array
                     }
                   </TableCell>
@@ -236,18 +250,20 @@ export default function TablePeraturan({
                         <IconButton onClick={() => handleBtnEdit(row, "edit")}>
                           <Iconify name="mdi:pencil" color={blue[500]} />
                         </IconButton>
-                        <IconButton onClick={() => handleBtnEdit(row, "delete")}>
+                        <IconButton
+                          onClick={() => handleBtnEdit(row, "delete")}
+                        >
                           <Iconify name="mdi:trash" color={red[500]} />
                         </IconButton>
                       </Stack>
                     </TableCell>
                   )}
                 </TableRow>
-              </>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </Fragment>
   );
 }
