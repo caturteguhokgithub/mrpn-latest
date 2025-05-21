@@ -19,8 +19,6 @@ export function hasPrivilege(
   if (currentPath == "penetapan.objek") currentPath = "penetapan.objectUpr";
   if (currentPath == "penetapan.konteks-strategis")
     currentPath = "penetapan.eksplorasiKonteks";
-  if (currentPath == "penetapan.internal-eksternal")
-    currentPath = "penetapan.selera-risiko";
 
   // Manajemen
   if (currentPath == "manajemen-role") currentPath = "manajemenRole";

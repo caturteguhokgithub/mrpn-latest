@@ -29,7 +29,7 @@ import { MiscMasterRPJMNRes } from "@/app/misc/master/masterServiceModel";
 
 const Aside = dynamic(() => import("./aside"), { ssr: false });
 
-export const isDeveloping = false;
+export const isDeveloping = true;
 
 export default function DashboardLayout(props: {
   children: React.ReactNode;
