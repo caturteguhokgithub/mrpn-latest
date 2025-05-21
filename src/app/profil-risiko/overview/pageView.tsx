@@ -29,6 +29,8 @@ import theme from "@/theme";
 import SeleraMatriks from "./partials/matriks";
 import CardItem from "@/app/components/cardTabItem";
 import { IconFA } from "@/app/components/icons/icon-fa";
+import { isDeveloping } from "@/app/components/layouts/layout";
+import EmptyDevelopingState from "@/app/components/empty/developing";
 
 interface SxParams {
   variant?: string;
@@ -241,7 +243,11 @@ export default function PageOverviewView() {
                   />
                 ) : (
                   <CardItem title="Selera Risiko">
-                    <SeleraMatriks levelId={1} levelDampak="rendah" />
+                    {isDeveloping ? (
+                      <EmptyDevelopingState />
+                    ) : (
+                      <SeleraMatriks levelId={1} levelDampak="rendah" />
+                    )}
                   </CardItem>
                 )}
               </CustomTabPanel>
