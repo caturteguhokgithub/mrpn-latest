@@ -31,7 +31,6 @@ export default function PageSeleraRisikoView({}) {
     setObjectState(val);
   };
 
-
   return (
     <Fragment>
       <ContentPage
@@ -48,7 +47,7 @@ export default function PageSeleraRisikoView({}) {
           year == 0 ? (
             ""
           ) : (
-            <FormControl size="small" sx={{ width: "20vw" }}>
+            <FormControl size="small">
               <AutocompleteSelectSingle
                 rounded
                 value={objectState}
