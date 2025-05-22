@@ -114,34 +114,33 @@ export default function CardSwot({
               />
             </Stack>
             <DividerIntExt />
-            {dataSwot?.values.length == 0 ?
-              (
-                <EmptyState
-                  dense
-                  icon={<IconEmptyData width={100} />}
-                  title="Data Kosong"
-                  description="Silahkan isi konten halaman ini"
-                />
-              ) : (
-                <>
-                  <Stack direction="row" gap={2} width={"100%"}>
-                    <GenerateCard
-                      title="Faktor Internal"
-                      sub1="strength"
-                      sub2="weakness"
-                      data={dataSwot?.values ?? []}
-                      conditionEditing={"inherit"}
-                    />
-                    <GenerateCard
-                      title="Faktor Eksternal"
-                      sub1="opportunity"
-                      sub2="threat"
-                      data={dataSwot?.values ?? []}
-                      conditionEditing={"inherit"}
-                    />
-                  </Stack>
-                </>
-              )}
+            {dataSwot?.values.length == 0 ? (
+              <EmptyState
+                dense
+                icon={<IconEmptyData width={100} />}
+                title="Data Kosong"
+                description="Silahkan isi konten halaman ini"
+              />
+            ) : (
+              <>
+                <Stack direction="row" gap={2} width={"100%"}>
+                  <GenerateCard
+                    title="Faktor Internal"
+                    sub1="strength"
+                    sub2="weakness"
+                    data={dataSwot?.values ?? []}
+                    conditionEditing={"inherit"}
+                  />
+                  <GenerateCard
+                    title="Faktor Eksternal"
+                    sub1="opportunity"
+                    sub2="threat"
+                    data={dataSwot?.values ?? []}
+                    conditionEditing={"inherit"}
+                  />
+                </Stack>
+              </>
+            )}
           </Stack>
         ) : data.values.length == 0 ? (
           <EmptyState
@@ -184,7 +183,7 @@ export default function CardSwot({
               type="submit"
               onClick={() => {
                 if (penetapan) {
-                  uriRequestSwot(), handleEdited();
+                  uriRequestSwot(), handleEdited(), setModal(false);
                 } else {
                   updateData(), handleEdited();
                 }
