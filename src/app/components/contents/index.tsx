@@ -649,7 +649,7 @@ export default function ContentPage({
             sx={{
               borderRadius: "1.25rem",
               p: noPadding ? 0 : "1.5rem",
-              m: 1,
+              // m: 1,
               ...sxCard,
             }}
           >

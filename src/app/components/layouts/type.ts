@@ -17,4 +17,5 @@ type IMenu = {
   setOpenSubmenu?: () => void;
   clickOpenCollapse?: () => void;
   clickOutsideCollapse?: any;
+  isOpen?: boolean;
 };

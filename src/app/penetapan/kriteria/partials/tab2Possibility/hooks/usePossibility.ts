@@ -32,18 +32,19 @@ const usePossibilityList = () => {
   // const searchParams = useSearchParams();
 
   // const search = searchParams.get("search");
-  const kpPenetapan = localStorage.getItem("kpPenetapan");
-  const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
+  // const kpPenetapan = localStorage.getItem("kpPenetapan");
+  // const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
 
-  const isEmptyPenetapanObject =
-    !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
+  // const isEmptyPenetapanObject =
+  //   !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
 
   async function getData() {
     setLoading(true);
     const response = await doGetPossibility({
       body: {
         // uraian_penetapan_objek_id: 78,
-        uraian_penetapan_objek_id: kpPenetapanObj?.id,
+        uraian_penetapan_object_id: objectState?.id,
+        // uraian_penetapan_objek_id: kpPenetapanObj?.id,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -78,8 +79,8 @@ const usePossibilityList = () => {
   async function updatePossibility(param: doRequestPossibilityDto) {
     const req: doRequestPossibilityDto = {
       ...param,
-      // uraian_penetapan_objek_id: objectState?.id ?? 0,
-      uraian_penetapan_objek_id: kpPenetapanObj?.id ?? 0,
+      uraian_penetapan_objek_id: objectState?.id ?? 0,
+      // uraian_penetapan_objek_id: kpPenetapanObj?.id ?? 0,
     };
 
     const params = {
@@ -99,7 +100,8 @@ const usePossibilityList = () => {
   const handleDeleteTables = async () => {
     const response = await doDeletePossibility({
       body: {
-        uraian_penetapan_objek_id: kpPenetapanObj?.id,
+        uraian_penetapan_objek_id: objectState?.id ?? 0,
+        // uraian_penetapan_objek_id: kpPenetapanObj?.id,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -132,9 +134,9 @@ const usePossibilityList = () => {
   };
 
   useEffect(() => {
-    if (!isEmptyPenetapanObject) {
-      getData();
-    }
+    // if (!isEmptyPenetapanObject) {
+    getData();
+    // }
   }, [objectState?.id]);
 
   const defaultDropdownList = [

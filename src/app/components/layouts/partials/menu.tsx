@@ -193,7 +193,8 @@ export const MenuItem = ({
     },
     collapseActiveStyle: {
       "&.expand-active": {
-        backgroundColor: alpha(blue[900], 0.5),
+        // backgroundColor: alpha(blue[900], 0.5),
+        backgroundColor: theme.palette.blueMrpn.dark,
         transition: "all 1s ease",
         "&.Mui-focusVisible, &:hover": {
           backgroundColor: alpha(blue[900], 0.7),
@@ -332,7 +333,7 @@ export const MenuItem = ({
               in={isExpanded && openSubmenu}
               timeout="auto"
               unmountOnExit
-              sx={{ bgcolor: theme.palette.primary.light, py: 1, mt: 1 }}
+              sx={{ bgcolor: theme.palette.blueMrpn.dark, py: 1, mt: 1 }}
             >
               <List component="div" disablePadding>
                 {children}

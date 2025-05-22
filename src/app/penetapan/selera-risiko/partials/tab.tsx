@@ -73,7 +73,7 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-export default function TabInternalEksternal({ }) {
+export default function TabInternalEksternal({}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -99,15 +99,15 @@ export default function TabInternalEksternal({ }) {
             iconPosition="start"
             icon={<IconFA size={16} name="gavel" />}
           />
-          <Tab
+          {/* <Tab
             label="Perencanaan Lintasan Kritis"
             {...a11yProps(2)}
             iconPosition="start"
             icon={<IconFA size={16} name="exclamation-triangle" />}
-          />
+          /> */}
           <Tab
             label="Informasi Lain"
-            {...a11yProps(3)}
+            {...a11yProps(2)}
             iconPosition="start"
             icon={<IconFA size={16} name="ellipsis" />}
           />
@@ -144,7 +144,7 @@ export default function TabInternalEksternal({ }) {
           </Stack>
         )}
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
+      {/* <CustomTabPanel value={value} index={2}>
         {isEmpty ? (
           <EmptyState
             dense
@@ -155,8 +155,8 @@ export default function TabInternalEksternal({ }) {
         ) : (
           <CardCritical title="Perencanaan Lintasan Kritis" isIntExtPage />
         )}
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={3}>
+      </CustomTabPanel> */}
+      <CustomTabPanel value={value} index={2}>
         {isEmpty ? (
           <EmptyState
             dense

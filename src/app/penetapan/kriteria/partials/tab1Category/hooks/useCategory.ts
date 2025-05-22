@@ -43,19 +43,19 @@ const useCategoryList = () => {
   // const search = searchParams.get("search");
 
   // ini data yang didapat dari local storage
-  const kpPenetapan = localStorage.getItem("kpPenetapan");
-  const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
+  // const kpPenetapan = localStorage.getItem("kpPenetapan");
+  // const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
 
-  const isEmptyPenetapanObject =
-    !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
+  // const isEmptyPenetapanObject =
+  //   !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
 
   async function getData() {
     setLoading(true);
     const response = await doGetCategory({
       body: {
-        // uraian_penetapan_object_id: objectState?.id,
+        uraian_penetapan_object_id: objectState?.id,
 
-        uraian_penetapan_object_id: kpPenetapanObj?.id,
+        // uraian_penetapan_object_id: kpPenetapanObj?.id,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -147,9 +147,9 @@ const useCategoryList = () => {
   }
 
   useEffect(() => {
-    if (!isEmptyPenetapanObject) {
-      getData();
-    }
+    // if (!isEmptyPenetapanObject) {
+    getData();
+    // }
     getMasterCategory();
   }, [objectState?.id]);
 

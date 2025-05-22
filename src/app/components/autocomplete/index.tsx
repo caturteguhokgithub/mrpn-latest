@@ -8,6 +8,7 @@ import {
   FormControlLabel,
   Paper,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import {
   SxAutocomplete,
@@ -122,7 +123,7 @@ export function AutocompleteSelectSingle<T>({
   placeHolder,
   bgWhite,
   rounded,
-  actionButton
+  actionButton,
 }: AutoCompleteSingleProp<T>) {
   return (
     <Autocomplete

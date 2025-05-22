@@ -8,6 +8,12 @@
 //  transition: 0.4s;
 // }
 
+:root {
+  --blue-loader: rgba(79, 195, 247, 0.6);
+  --orange-loader: rgba(255, 183, 77, 0.8);
+  --green-loader: rgba(129, 199, 132, 0.6);
+}
+
 .wrap-input-8 .input:focus {
   outline: none;
 }
@@ -119,6 +125,78 @@
   }
 }
 
+.clones-loader {
+  width: 14px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--orange-loader);
+  animation: l10 1.5s infinite linear;
+}
+@keyframes l10 {
+  0% {
+    box-shadow: 0 -30px var(--blue-loader),
+      calc(30px * 0.707) calc(-30px * 0.707) var(--green-loader),
+      30px 0 var(--blue-loader), 0 0 var(--green-loader), 0 0 var(--blue-loader),
+      0 0 var(--green-loader), 0 0 var(--blue-loader), 0 0 var(--green-loader);
+  }
+  12.5% {
+    box-shadow: 0 0 var(--blue-loader),
+      calc(30px * 0.707) calc(-30px * 0.707) var(--green-loader),
+      30px 0 var(--blue-loader),
+      calc(30px * 0.707) calc(30px * 0.707) var(--green-loader),
+      0 0 var(--blue-loader), 0 0 var(--green-loader), 0 0 var(--blue-loader),
+      0 0 var(--green-loader);
+  }
+  25% {
+    box-shadow: 0 0 var(--blue-loader), 0 0 var(--green-loader),
+      30px 0 var(--blue-loader),
+      calc(30px * 0.707) calc(30px * 0.707) var(--green-loader),
+      0 30px var(--blue-loader), 0 0 var(--green-loader), 0 0 var(--blue-loader),
+      0 0 var(--green-loader);
+  }
+  37.5% {
+    box-shadow: 0 0 var(--blue-loader), 0 0 var(--green-loader),
+      0 0 var(--blue-loader),
+      calc(30px * 0.707) calc(30px * 0.707) var(--green-loader),
+      0 30px var(--blue-loader),
+      calc(-30px * 0.707) calc(30px * 0.707) var(--green-loader),
+      0 0 var(--blue-loader), 0 0 var(--green-loader);
+  }
+  50% {
+    box-shadow: 0 0 var(--blue-loader), 0 0 var(--green-loader),
+      0 0 var(--blue-loader), 0 0 var(--green-loader), 0 30px var(--blue-loader),
+      calc(-30px * 0.707) calc(30px * 0.707) var(--green-loader),
+      -30px 0 var(--blue-loader), 0 0 var(--green-loader);
+  }
+  62.5% {
+    box-shadow: 0 0 var(--blue-loader), 0 0 var(--green-loader),
+      0 0 var(--blue-loader), 0 0 var(--green-loader), 0 0 var(--blue-loader),
+      calc(-30px * 0.707) calc(30px * 0.707) var(--green-loader),
+      -30px 0 var(--blue-loader),
+      calc(-30px * 0.707) calc(-30px * 0.707) var(--green-loader);
+  }
+  75% {
+    box-shadow: 0 -30px var(--blue-loader), 0 0 var(--green-loader),
+      0 0 var(--blue-loader), 0 0 var(--green-loader), 0 0 var(--blue-loader),
+      0 0 var(--green-loader), -30px 0 var(--blue-loader),
+      calc(-30px * 0.707) calc(-30px * 0.707) var(--green-loader);
+  }
+  87.5% {
+    box-shadow: 0 -30px var(--blue-loader),
+      calc(30px * 0.707) calc(-30px * 0.707) var(--green-loader),
+      0 0 var(--blue-loader), 0 0 var(--green-loader), 0 0 var(--blue-loader),
+      0 0 var(--green-loader), 0 0 var(--blue-loader),
+      calc(-30px * 0.707) calc(-30px * 0.707) var(--green-loader);
+  }
+  100% {
+    box-shadow: 0 -30px var(--blue-loader),
+      calc(30px * 0.707) calc(-30px * 0.707) var(--green-loader),
+      30px 0 var(--blue-loader), 0 0 var(--green-loader), 0 0 var(--blue-loader),
+      0 0 var(--green-loader), 0 0 var(--blue-loader), 0 0 var(--green-loader);
+  }
+}
+//
+
 .blobs {
   width: 50vh;
   height: 50vh;
@@ -134,7 +212,7 @@
   height: 100%;
   border-radius: 100%;
   position: absolute;
-  background-color: #ff4d00;
+  background-color: var(--blue-loader);
   mix-blend-mode: multiply;
   filter: blur(120px);
   opacity: 0.2;
@@ -145,12 +223,12 @@
   animation: circular2 40s linear infinite;
 }
 .blobs .blob.b {
-  background-color: #33cc33;
+  background-color: var(--green-loader);
   -webkit-animation: circular 20s linear infinite;
   animation: circular 20s linear infinite;
 }
 .blobs .blob.c {
-  background-color: #33cc33;
+  background-color: var(--green-loader);
   -webkit-animation: circular3 60s linear infinite;
   animation: circular3 60s linear infinite;
 }
@@ -160,7 +238,7 @@
   animation: circular 10s linear infinite;
 }
 .blobs .blob.e {
-  background-color: #ff4d00;
+  background-color: var(--blue-loader);
   -webkit-animation: circular 30s linear infinite;
   animation: circular2 30s linear infinite;
 }

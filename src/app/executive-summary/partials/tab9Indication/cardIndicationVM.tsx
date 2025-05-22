@@ -442,10 +442,20 @@ const useCardIndicationVM = () => {
           tahun: rg.tahun,
           exsum_id: rg.exsum_id,
           amanat: rg.amanat,
-          perpres_state: rg.perpres.length > 0 ? rg.perpres[0] : undefined,
-          perpres: rg.perpres.reduce<{ id: number }[]>((a, b) => {
-            return [...a, { id: b.id }];
-          }, []),
+          // perpres_state: rg.perpres.length > 0 ? rg.perpres[0] : undefined,
+          // perpres: rg.perpres.reduce<{ id: number }[]>((a, b) => {
+          //   return [...a, { id: b.id }];
+          // }, []),
+          perpres_state:
+            rg.perpres.length > 0 && typeof rg.perpres[0] !== "string"
+              ? rg.perpres[0]
+              : undefined,
+          perpres: Array.isArray(rg.perpres)
+            ? rg.perpres.reduce<{ id: number }[]>(
+                (a, b) => [...a, { id: b.id }],
+                []
+              )
+            : [],
           stakeholder: rg.entitas,
           stakeholder_id: rg.entitas.reduce<number[]>((a, b) => {
             return [...a, b.id];

@@ -104,6 +104,7 @@ function getMenuItem(
             label={sm.name}
             url={mn.route}
             urlLv2={sm.route}
+            isOpen={!isExpanded}
           />
         ))}
       </MenuItem>

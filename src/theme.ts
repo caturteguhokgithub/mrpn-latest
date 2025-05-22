@@ -9,6 +9,27 @@ import { createTheme } from "@mui/material/styles";
 //  display: "swap",
 // });
 
+declare module "@mui/material/styles" {
+  interface Palette {
+    blueMrpn: {
+      light: string;
+      main: string;
+      dark: string;
+      contrastText: string;
+      darker: string;
+    };
+  }
+  interface PaletteOptions {
+    blueMrpn?: {
+      light?: string;
+      main?: string;
+      dark?: string;
+      contrastText?: string;
+      darker?: string;
+    };
+  }
+}
+
 const theme = createTheme({
   typography: {
     //   fontFamily: "'Poppins', sans-serif",
@@ -27,6 +48,9 @@ const theme = createTheme({
       main: "#1880C9",
       dark: "#1f2937",
       light: "#F6B236",
+    },
+    blueMrpn: {
+      dark: "#2E6FAD",
     },
   },
   components: {

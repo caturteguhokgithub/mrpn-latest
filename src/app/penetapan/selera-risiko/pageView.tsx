@@ -2,7 +2,7 @@
 
 import ContentPage from "@/app/components/contents/index";
 import React, { Fragment, useEffect } from "react";
-import { FormControl } from "@mui/material";
+import { FormControl, Tooltip } from "@mui/material";
 // import RiskContent from "./partials/risk";
 import { AutocompleteSelectSingle } from "@/components/autocomplete";
 import { MasterListObjectRes } from "@/app/misc/master/masterServiceModel";
@@ -47,7 +47,8 @@ export default function PageSeleraRisikoView({}) {
           year == 0 ? (
             ""
           ) : (
-            <FormControl size="small">
+            <FormControl size="small" sx={{ minWidth: "20vw" }}>
+              {/* <Tooltip title="Test"> */}
               <AutocompleteSelectSingle
                 rounded
                 value={objectState}
@@ -58,6 +59,7 @@ export default function PageSeleraRisikoView({}) {
                 }
                 placeHolder={"Pilih KP"}
               />
+              {/* </Tooltip> */}
             </FormControl>
           )
         }

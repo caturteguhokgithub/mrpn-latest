@@ -29,7 +29,7 @@ import { MiscMasterRPJMNRes } from "@/app/misc/master/masterServiceModel";
 
 const Aside = dynamic(() => import("./aside"), { ssr: false });
 
-export const isDeveloping = true;
+export const isDeveloping = false;
 
 export default function DashboardLayout(props: {
   children: React.ReactNode;
@@ -62,11 +62,18 @@ export default function DashboardLayout(props: {
   const theme = useTheme();
   const drawerOpenKey = "drawerOpen";
   const [openNav, setOpenNav] = React.useState(true);
-  const [checked, setChecked] = React.useState(
-    typeof window !== "undefined"
-      ? localStorage.getItem(drawerOpenKey) === "true"
-      : false
-  );
+  // const [checked, setChecked] = React.useState(
+  //   typeof window !== "undefined"
+  //     ? localStorage.getItem(drawerOpenKey) === "true"
+  //     : false
+  // );
+  const [checked, setChecked] = React.useState(() => {
+    if (typeof window !== "undefined") {
+      const storedValue = localStorage.getItem(drawerOpenKey);
+      return storedValue !== null ? storedValue === "true" : true;
+    }
+    return true;
+  });
 
   const handleChange = () => {
     setChecked((prev) => !prev);
@@ -215,7 +222,8 @@ export default function DashboardLayout(props: {
     },
     ".table-sticky-horizontal": {
       ".MuiTableContainer-root": {
-        maxWidth: "calc(100vw - 368px)",
+        // maxWidth: "calc(100vw - 368px)",
+        maxWidth: "calc(100vw - 331px)",
       },
     },
     ".orgchart-container": {
@@ -241,7 +249,8 @@ export default function DashboardLayout(props: {
       },
       ".table-sticky-horizontal": {
         ".MuiTableContainer-root": {
-          maxWidth: "calc(100vw - 148px)",
+          // maxWidth: "calc(100vw - 148px)",
+          maxWidth: "calc(100vw - 131px)",
         },
       },
       ".orgchart-container": {

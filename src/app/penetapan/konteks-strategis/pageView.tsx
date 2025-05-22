@@ -38,12 +38,13 @@ export default function PageKonteksStrategisView({}) {
         //     ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
         //     : "Tahun " + year
         // }`}
+        noMinusMargin
         title="Lingkup Objek"
         chooseObject={
           year == 0 ? (
             ""
           ) : (
-            <FormControl size="small" sx={{ width: "20vw" }}>
+            <FormControl size="small" sx={{ minWidth: "20vw" }}>
               <AutocompleteSelectSingle
                 key={objects.length}
                 rounded

@@ -2,26 +2,26 @@ import React from "react";
 import theme from "@/theme";
 import { Typography, ListItemButton, Stack, Box } from "@mui/material";
 import Link from "next/link";
-import { grey } from "@mui/material/colors";
+import { grey, orange } from "@mui/material/colors";
 import { usePathname } from "next/navigation";
 import { InfoTooltip } from "../../InfoTooltip";
 
-export const SubmenuItem = ({ label, url, urlLv2 }: IMenu) => {
+export const SubmenuItem = ({ label, url, urlLv2, isOpen }: IMenu) => {
   const pathname = usePathname();
 
-  const kpPenetapan = localStorage.getItem("kpPenetapan");
-  const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
+  // const kpPenetapan = localStorage.getItem("kpPenetapan");
+  // const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
 
-  const isEmptyPenetapanObject =
-    !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
+  // const isEmptyPenetapanObject =
+  //   !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
 
-  // if disabledMenu:false menu Kriteria Risiko active else disabled
-  const disabledMenu =
-    isEmptyPenetapanObject && `${label}`.toLowerCase() === "kriteria risiko";
+  // // if disabledMenu:false menu Kriteria Risiko active else disabled
+  // const disabledMenu =
+  //   isEmptyPenetapanObject && `${label}`.toLowerCase() === "kriteria risiko";
 
-  console.log("kpPenetapan", kpPenetapan);
-  console.log("kpPenetapanObj", kpPenetapanObj, label);
-  console.log("disabledMenu", disabledMenu);
+  // console.log("kpPenetapan", kpPenetapan);
+  // console.log("kpPenetapanObj", kpPenetapanObj, label);
+  // console.log("disabledMenu", disabledMenu);
 
   return (
     <ListItemButton
@@ -32,7 +32,8 @@ export const SubmenuItem = ({ label, url, urlLv2 }: IMenu) => {
         "&:hover": { bgcolor: "transparent" },
       }}
     >
-      <Link href={disabledMenu ? "#" : `/${urlLv2}`} passHref>
+      {/* <Link href={disabledMenu ? "#" : `/${urlLv2}`} passHref> */}
+      <Link href={`/${urlLv2}`} passHref>
         <Stack direction="row" alignItems="center" py="5px">
           <Typography
             ml="20px"
@@ -52,14 +53,20 @@ export const SubmenuItem = ({ label, url, urlLv2 }: IMenu) => {
               display: "inline-flex",
               alignItems: "center",
               gap: "4px",
-              color: disabledMenu ? grey[500] : grey[700],
-              cursor: disabledMenu ? "not-allowed" : "pointer",
+              // color: disabledMenu ? grey[500] : grey[700],
+              // cursor: disabledMenu ? "not-allowed" : "pointer",
+              color: grey[700],
+              cursor: "pointer",
               "&.link-active": {
-                fontWeight: 600,
-                color: theme.palette.primary.main,
+                "& > span": {
+                  fontWeight: 700,
+                  color: isOpen ? grey[700] : orange[300],
+                },
                 "&:before": {
-                  backgroundColor: theme.palette.primary.main,
-                  outline: "3px solid",
+                  backgroundColor: isOpen
+                    ? theme.palette.primary.main
+                    : orange[300],
+                  outline: isOpen ? "3px solid" : "none",
                   outlineColor: grey[300],
                 },
               },
@@ -67,7 +74,8 @@ export const SubmenuItem = ({ label, url, urlLv2 }: IMenu) => {
                 content: "''",
                 width: "7px",
                 height: "7px",
-                backgroundColor: grey[700],
+                // backgroundColor: grey[700],
+                backgroundColor: isOpen ? grey[500] : grey[300],
                 display: "block",
                 borderRadius: "50%",
                 position: "absolute",
@@ -77,7 +85,8 @@ export const SubmenuItem = ({ label, url, urlLv2 }: IMenu) => {
                 transition: "all 300ms",
               },
               "&:hover": {
-                fontWeight: disabledMenu ? 400 : 600,
+                // fontWeight: disabledMenu ? 400 : 600,
+                fontWeight: 600,
                 "&:before": {
                   backgroundColor: theme.palette.primary.main,
                   outline: "3px solid",
@@ -89,13 +98,16 @@ export const SubmenuItem = ({ label, url, urlLv2 }: IMenu) => {
             <Box
               component="span"
               sx={{
-                pointerEvents: disabledMenu ? "none" : "auto",
-                userSelect: disabledMenu ? "none" : "auto",
+                // pointerEvents: disabledMenu ? "none" : "auto",
+                // userSelect: disabledMenu ? "none" : "auto",
+                pointerEvents: "auto",
+                userSelect: "auto",
+                color: isOpen ? grey[700] : grey[300],
               }}
             >
               {label}
             </Box>
-            {disabledMenu && <InfoTooltip title="Pilih KP terlebih dahulu" />}
+            {/* {disabledMenu && <InfoTooltip title="Pilih KP terlebih dahulu" />} */}
           </Typography>
         </Stack>
       </Link>

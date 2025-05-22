@@ -8,7 +8,7 @@ import { PenetapanTopicProvider } from "@/lib/core/provider/penetapanTopicProvid
 import { defaultPenetapanObjectState } from "@/lib/core/context/penetapanTopicContext";
 
 export default function PageTema({}) {
-  //  usePermissionChecker("penetapan.objectUpr")
+  usePermissionChecker("penetapan.objectUpr");
 
   return (
     <DashboardLayout>
