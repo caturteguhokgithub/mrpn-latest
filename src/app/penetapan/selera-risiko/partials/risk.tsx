@@ -30,8 +30,8 @@ export default function RiskContent({
   isEmptyRisk,
 }: {
   handleSaveButton?: () => void;
-  state: doReqSeleraDto;
-  setState: (value: SetStateAction<doReqSeleraDto>) => void;
+  state?: doReqSeleraDto;
+  setState?: (value: SetStateAction<doReqSeleraDto>) => void;
   isEmptyRisk?: boolean;
 }) {
   const { user } = useAuthContext((state) => state);
@@ -69,7 +69,7 @@ export default function RiskContent({
         break;
     }
 
-    setState((prevState) => ({
+    setState && setState((prevState) => ({
       ...prevState,
       type_nilai: type_nilai,
     }));
@@ -121,31 +121,30 @@ perencanaan pembangunan nasional"
               {valueTheme == "1"
                 ? "Rendah"
                 : valueTheme == "2"
-                ? "Konservatif"
-                : valueTheme == "3"
-                ? "Moderat"
-                : "Tinggi"}
+                  ? "Konservatif"
+                  : valueTheme == "3"
+                    ? "Moderat"
+                    : "Tinggi"}
             </Typography>
 
             <TextareaStyled
               aria-label="Deskripsi"
               minRows={3}
               onChange={(e) => {
-                setState((prevState) => ({
+                setState && setState((prevState) => ({
                   ...prevState,
                   pernyataan: e.target.value,
                 }));
               }}
-              placeholder={`Deskripsi ${
-                valueTheme == "1"
-                  ? "Rendah"
-                  : valueTheme == "2"
+              placeholder={`Deskripsi ${valueTheme == "1"
+                ? "Rendah"
+                : valueTheme == "2"
                   ? "Konservatif"
                   : valueTheme == "3"
-                  ? "Moderat"
-                  : "Tinggi"
-              }`}
-              // width="100%"
+                    ? "Moderat"
+                    : "Tinggi"
+                }`}
+            // width="100%"
             />
           </Stack>
         </Stack>
