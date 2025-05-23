@@ -92,6 +92,7 @@ export default function CardInformation({
     const req = {
       id: deleteID,
     };
+
     deleteListData(req);
   };
 
@@ -221,13 +222,20 @@ export default function CardInformation({
                               size={20}
                             />
                           </IconButton>
-                        ) : (
+                        ) : item.file?.toLowerCase().endsWith(".jpg") ||
+                          item.file?.toLowerCase().endsWith(".jpeg") ||
+                          item.file?.toLowerCase().endsWith(".png") ||
+                          item.file?.toLowerCase().endsWith(".bmp") ||
+                          item.file?.toLowerCase().endsWith(".webp") ||
+                          item.file?.toLowerCase().endsWith(".gif") ? (
                           <IconButton
                             color="primary"
                             onClick={() => handleViewBD(item.file)}
                           >
                             <Iconify name="mdi:file-image" size={20} />
                           </IconButton>
+                        ) : (
+                          "-"
                         )}
                       </TableCell>
                       <TableCell

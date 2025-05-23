@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import {
-  alpha,
   Box,
   Button,
   Checkbox,
@@ -14,7 +13,6 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import theme from "@/theme";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
@@ -24,7 +22,6 @@ import {
   PenetapanObjectEntityItemDto,
   PenetapanObjectStateEntityDto,
 } from "@/app/penetapan/objek/pageModel";
-import { PenetapanObjectPrioritas } from "@/lib/core/context/penetapanTopicContext";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import { grey } from "@mui/material/colors";
 import { bgColorTh } from "@/app/utils/color";
@@ -35,6 +32,8 @@ export default function TableProposal({ mode }: { mode?: string }) {
     setStateEntity,
     getPenetapanObjectEntity,
     updateOrCreateEntity,
+    showSave,
+    setShowSave,
   } = usePenetapanObjectVM();
 
   const { objectState } = usePenetapanTopicContext((state) => state);
@@ -70,7 +69,7 @@ export default function TableProposal({ mode }: { mode?: string }) {
   }
 
   return (
-    <>
+    <Fragment>
       <TableContainer component={Paper} elevation={0} variant="outlined">
         <Table
           sx={{
@@ -171,17 +170,22 @@ lainnya"
           </TableBody>
         </Table>
       </TableContainer>
-      <Stack direction="row" justifyContent="flex-end">
-        <Box mt={2}>
-          <Button
-            variant="contained"
-            sx={{ borderRadius: 24, px: 4 }}
-            onClick={() => updateOrCreateEntity()}
-          >
-            Simpan
-          </Button>
-        </Box>
-      </Stack>
-    </>
+      {showSave && (
+        <Stack direction="row" justifyContent="flex-end">
+          <Box mt={2}>
+            <Button
+              variant="contained"
+              sx={{ borderRadius: 24, px: 4 }}
+              onClick={() => {
+                setShowSave(true);
+                updateOrCreateEntity();
+              }}
+            >
+              Simpan
+            </Button>
+          </Box>
+        </Stack>
+      )}
+    </Fragment>
   );
 }

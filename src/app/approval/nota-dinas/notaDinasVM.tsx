@@ -7,7 +7,11 @@ import {
 } from "@/lib/core/hooks/useHooks";
 import React, { useEffect, useState } from "react";
 import { API_CODE, ResponseBaseDto } from "@/lib/core/api/apiModel";
-import { doGetBuktiDukung, doUnggahBuktiDukung } from "./notaDinasService";
+import {
+  doDeleteNodin,
+  doGetBuktiDukung,
+  doUnggahBuktiDukung,
+} from "./notaDinasService";
 import {
   BuktiDukungReqDto,
   BuktiDukungResDto,
@@ -64,6 +68,21 @@ const useNotaDinasVM = () => {
     }
   }
 
+  async function deleteNodin(id: number) {
+    const params = {
+      body: {
+        id: id,
+      },
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    };
+
+    const response = await doDeleteNodin(params);
+    if (response?.code == API_CODE.success) {
+      getDataImage();
+    }
+  }
+
   useEffect(() => {
     getDataImage();
   }, [objectState?.id]);
@@ -77,6 +96,7 @@ const useNotaDinasVM = () => {
     setObjectState,
     modalDelete,
     setModalDelete,
+    deleteNodin,
   };
 };
 export default useNotaDinasVM;

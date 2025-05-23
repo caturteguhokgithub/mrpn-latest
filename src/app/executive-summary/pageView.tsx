@@ -1,7 +1,7 @@
 "use client";
 
 import ContentPage from "@/app/components/contents";
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import {
   Box,
   Button,
@@ -36,6 +36,7 @@ import { InfoTooltip } from "../components/InfoTooltip";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import AddButton from "../components/buttonAdd";
+import Iconify from "../components/icons/iconify";
 
 export default function PageExecutiveSummary({}) {
   const { permission, user } = useAuthContext((state) => state);
@@ -205,7 +206,19 @@ export default function PageExecutiveSummary({}) {
           </Stack>
         )
       }
-      titleChild={approvalStatus(exsum.approval)}
+      titleChild={
+        <Stack direction="row" alignItems="center" gap={1}>
+          {approvalStatus(exsum.approval)}
+          {/* Jika Status Approved maka muncul tanggal approval */}
+
+          {/* <Stack direction="row" alignItems="center" gap={0.5}>
+            <Iconify name="mdi:calendar" color={grey[600]} />
+            <Typography component="span" fontSize={14} color={grey[600]}>
+              16 Mei 2025
+            </Typography>
+          </Stack> */}
+        </Stack>
+      }
       tabArrow={
         <Collapse in={btnShowTab}>
           <Chip

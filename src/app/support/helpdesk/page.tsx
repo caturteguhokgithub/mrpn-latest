@@ -6,28 +6,31 @@ import DashboardLayout from "@/app/components/layouts/layout";
 import { SelectChangeEvent } from "@mui/material";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyPage } from "@/app/components/icons";
+import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 
 export default function PageHelpdesk() {
- const [project, setProject] = React.useState("");
+  usePermissionChecker("support.helpdesk");
 
- const handleChangeProject = (event: SelectChangeEvent) => {
-  setProject(event.target.value);
- };
+  const [project, setProject] = React.useState("");
 
- return (
-  <DashboardLayout>
-   <ContentPage
-    title="Helpdesk"
-    withCard
-    project={project}
-    // handleChangeProject={handleChangeProject}
-   >
-    <EmptyState
-     icon={<IconEmptyPage />}
-     title="Halaman Helpdesk Kosong"
-     description="Silahkan isi konten halaman ini"
-    />
-   </ContentPage>
-  </DashboardLayout>
- );
+  const handleChangeProject = (event: SelectChangeEvent) => {
+    setProject(event.target.value);
+  };
+
+  return (
+    <DashboardLayout>
+      <ContentPage
+        title="Helpdesk"
+        withCard
+        project={project}
+        // handleChangeProject={handleChangeProject}
+      >
+        <EmptyState
+          icon={<IconEmptyPage />}
+          title="Halaman Helpdesk Kosong"
+          description="Silahkan isi konten halaman ini"
+        />
+      </ContentPage>
+    </DashboardLayout>
+  );
 }
