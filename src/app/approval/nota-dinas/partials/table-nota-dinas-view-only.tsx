@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -61,12 +61,24 @@ export default function TableNotaDinasViewOnly({
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalViewImage, setModalViewImage] = React.useState(false);
   const [thisGambar, setThisGambar] = React.useState("");
-  const { gambar, uploadImage, modalDelete, setModalDelete } = useNotaDinasVM();
+  const [deleteID, setDeleteID] = useState(0);
 
   const { rpjmn, year } = useRKPContext((state) => state);
 
   const { objectState } = usePenetapanObjectVM();
   const { stateShorList, getPenetapanObjectShortList } = usePenetapanObjectVM();
+  const { gambar, uploadImage, modalDelete, setModalDelete, deleteNodin } =
+    useNotaDinasVM();
+
+  const handleDeleteListData = async () => {
+    deleteNodin(deleteID);
+    setModalDelete(false);
+  };
+
+  const handleBtnDelete = async (id: number) => {
+    setDeleteID(id);
+    setModalDelete(true);
+  };
 
   useEffect(() => {
     if (objectState !== undefined) {
@@ -801,7 +813,7 @@ export default function TableNotaDinasViewOnly({
                       <TableCell align="center">
                         <IconButton
                           color="error"
-                          onClick={() => setModalDelete(true)}
+                          onClick={() => handleBtnDelete(item.id)}
                         >
                           <Iconify name="mdi:trash" color="red" size={16} />
                         </IconButton>
@@ -1186,7 +1198,7 @@ export default function TableNotaDinasViewOnly({
         title="Hapus Data"
         handleOpenModal={modalDelete}
         handleCloseModal={() => setModalDelete(false)}
-        // handleDelete={() => deleteData()}
+        handleDelete={() => handleDeleteListData()}
       />
     </Fragment>
   );

@@ -38,6 +38,7 @@ import Image from "next/image";
 import theme from "@/theme";
 import { dataSub } from "@/app/profil-risiko/analisis-evaluasi/setting";
 import { SortNumber } from "@/app/profil-risiko/perlakuan/partials/mrt-complete";
+import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 
 const CustomChip = ({ title, value }: { title: string; value: string }) => {
   return (
@@ -136,6 +137,8 @@ function convertDaysToMonthsAndDays(days: any) {
 }
 
 export default function PagePemantauan({}) {
+  usePermissionChecker("pemantauanMrpn.pemantauan");
+
   const [modalOpenView, setModalOpenView] = React.useState(false);
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalOpenEdit, setModalOpenEdit] = React.useState(false);

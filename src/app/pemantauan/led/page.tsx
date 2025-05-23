@@ -19,8 +19,11 @@ import { IconFA } from "@/app/components/icons/icon-fa";
 import Image from "next/image";
 import AddButton from "@/app/components/buttonAdd";
 import { SortNumber } from "@/app/profil-risiko/perlakuan/partials/mrt-complete";
+import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 
 export default function PagePemantauan({}) {
+  usePermissionChecker("pemantauanMrpn.lostEventDatabase");
+
   const [modalOpenView, setModalOpenView] = React.useState(false);
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalOpenEdit, setModalOpenEdit] = React.useState(false);
