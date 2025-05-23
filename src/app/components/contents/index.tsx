@@ -645,7 +645,8 @@ export default function ContentPage({
         {tabStep && tabStep}
         {withCard ? (
           <Paper
-            elevation={2}
+            elevation={0}
+            variant="outlined"
             sx={{
               borderRadius: "1.25rem",
               p: noPadding ? 0 : "1.5rem",

@@ -788,7 +788,7 @@ export default function PageLoginView() {
             [theme.breakpoints.down("md")]: { flexDirection: "column" },
           }}
         >
-          {isLoading && <LoadingPage gyro />}
+          {isLoading && <LoadingPage name="clones" />}
           {leftBlock}
           <Collapse
             in={showLogin}
