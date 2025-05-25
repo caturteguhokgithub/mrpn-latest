@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, SetStateAction } from "react";
 import {
   Box,
   Button,
@@ -13,12 +13,13 @@ import {
 } from "@mui/material";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 import AddButton from "@/app/components/buttonAdd";
-import TextareaComponent from "@/app/components/textarea";
+import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
 import { IconFA } from "@/app/components/icons/icon-fa";
 import { red } from "@mui/material/colors";
 import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
 import Iconify from "@/app/components/icons/iconify";
 import DialogComponent from "@/app/components/dialog";
+import { ReqAddMatDamKomite, ReqAddMatDamUpr } from "./hooks/model";
 
 const ItemDampak = ({
   children,
@@ -50,9 +51,20 @@ const ItemDampak = ({
   );
 };
 
-export default function FormDampak({ mode }: { mode?: string }) {
-  const [items, setItem] = React.useState([{ id: 1 }]);
-
+export default function FormDampak({
+  mode,
+  stateKom,
+  setStateKom,
+  stateUpr,
+  setStateUpr,
+}: {
+  mode?: string
+  stateKom?: ReqAddMatDamKomite;
+  setStateKom?: (value: SetStateAction<ReqAddMatDamKomite>) => void;
+  stateUpr?: ReqAddMatDamUpr;
+  setStateUpr?: (value: SetStateAction<ReqAddMatDamUpr>) => void;
+}) {
+  const [items, setItem] = React.useState([{ id: 0 }]);
   const add = () => {
     let arr = [...items];
     if (arr.length >= 10) {
@@ -62,6 +74,13 @@ export default function FormDampak({ mode }: { mode?: string }) {
     }
     const newItem = arr;
     setItem(newItem);
+
+    if (setStateUpr) {
+      setStateUpr((prev) => ({
+        ...prev,
+        lists: [...(prev?.lists || []), { id: 0, value: "", area: [] }],
+      }));
+    }
   };
 
   const minus = (nowId: any) => {
@@ -83,13 +102,63 @@ export default function FormDampak({ mode }: { mode?: string }) {
     "Capaian Kinerja",
   ];
 
-  const [value, setValue] = React.useState(null);
+  const handleSubChange = (
+    index: number,
+    value: string
+  ) => {
+    if (setStateUpr) {
+      setStateUpr((prevState) => {
+        const updatedLists = [...prevState.lists];
+        updatedLists[index] = {
+          ...updatedLists[index],
+          value, // hanya ubah value dampak
+        };
+        return {
+          ...prevState,
+          lists: updatedLists,
+        };
+      });
+    }
+  };
+
+  const handleAreaChange = (
+    listIndex: number,
+    level: number,
+    value: string
+  ) => {
+    if (setStateUpr) {
+      setStateUpr((prevState) => {
+        const updatedLists = [...prevState.lists];
+        const list = updatedLists[listIndex] || {};
+        const updatedArea = [...(list.area || [])];
+
+        const existingAreaIndex = updatedArea.findIndex(
+          (a) => a.level == level
+        );
+
+        if (existingAreaIndex !== -1) {
+          updatedArea[existingAreaIndex] = {
+            ...updatedArea[existingAreaIndex],
+            value,
+          };
+        } else {
+          updatedArea.push({ id: 0, level, value });
+        }
+
+        updatedLists[listIndex] = {
+          ...list,
+          area: updatedArea,
+        };
+
+        return {
+          ...prevState,
+          lists: updatedLists,
+        };
+      });
+    }
+  };
 
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
-
-  const handleChangeSelect = (newValue: any) => {
-    setValue(newValue);
-  };
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -107,7 +176,7 @@ export default function FormDampak({ mode }: { mode?: string }) {
           <FormControl fullWidth>
             <FieldLabelInfo title="Area Dampak" titleField />
             {mode == "edit" ? (
-              <Typography>Keuangan Negara</Typography>
+              <Typography>{stateKom?.dampak ?? "-"}</Typography>
             ) : (
               <Fragment>
                 {mode == "edit-area" ? (
@@ -123,24 +192,35 @@ export default function FormDampak({ mode }: { mode?: string }) {
                   />
                 ) : (
                   <AutocompleteSelectSingle
-                    value={value}
+                    value={listAreaDampak.find(
+                      (dampak) => dampak === stateKom?.dampak
+                    )}
+                    // value={value}
                     options={listAreaDampak.map((option) => option)}
                     getOptionLabel={(option) => `${option}`}
-                    handleChange={(newValue: any) =>
-                      handleChangeSelect(newValue)
+                    handleChange={(newValue: string) =>
+                      setStateKom
+                        ? setStateKom((prevState) => ({
+                          ...prevState,
+                          dampak: newValue,
+                        }))
+                        : ""
                     }
-                    placeHolder={"Pilih area dampak"}
-                    // actionButton={
-                    //   <Button
-                    //     fullWidth
-                    //     variant="outlined"
-                    //     color="primary"
-                    //     startIcon={<Iconify name="mdi:plus-circle" />}
-                    //     onMouseDown={() => setModalOpenAdd(true)}
-                    //   >
-                    //     Tambah Area Dampak
-                    //   </Button>
+                    // handleChange={(newValue: any) =>
+                    //   handleChangeSelect(newValue)
                     // }
+                    placeHolder={"Pilih area dampak"}
+                  // actionButton={
+                  //   <Button
+                  //     fullWidth
+                  //     variant="outlined"
+                  //     color="primary"
+                  //     startIcon={<Iconify name="mdi:plus-circle" />}
+                  //     onMouseDown={() => setModalOpenAdd(true)}
+                  //   >
+                  //     Tambah Area Dampak
+                  //   </Button>
+                  // }
                   />
                 )}
               </Fragment>
@@ -198,87 +278,109 @@ export default function FormDampak({ mode }: { mode?: string }) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormControl fullWidth>
-                          <TextareaComponent
-                            row={2}
-                            label="Dampak"
+                          <TextareaStyled
+                            minRows={2}
+                            aria-label="Dampak"
                             placeholder="Dampak"
-                            value={
-                              mode == "edit"
-                                ? "Jumlah keluhan atau prosentase berita negatif dari total berita tentang Obyek MRPN LS"
-                                : undefined
+                            value={stateUpr?.lists[key]?.value || ""}
+                            onChange={(e) =>
+                              handleSubChange(key, e.target.value)
                             }
                           />
                         </FormControl>
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <ItemDampak number={1}>
-                          <TextareaComponent
-                            row={2}
-                            label="Tidak Signifikan"
+                          <TextareaStyled
+                            minRows={2}
+                            aria-label="Tidak Signifikan"
                             placeholder="Level Dampak (Tidak Signifikan)"
                             value={
-                              mode == "edit"
-                                ? "Jumlah Keluhan x ≤ 10"
-                                : undefined
+                              stateUpr?.lists[key]?.area?.find((a) => a.level == 1)?.value || ""
                             }
+                            onChange={(e) => handleAreaChange(key, 1, e.target.value)}
                           />
                         </ItemDampak>
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <ItemDampak number={2}>
-                          <TextareaComponent
-                            row={2}
-                            label="Kurang Signifikan"
+                          <TextareaStyled
+                            minRows={2}
+                            aria-label="Kurang Signifikan"
                             placeholder="Level Dampak (Kurang Signifikan)"
                             value={
-                              mode == "edit"
-                                ? "Prosentase pemberitaan negatif 10% < x ≤ 20%"
-                                : undefined
+                              stateUpr?.lists[key]?.area?.find((a) => a.level == 2)?.value || ""
                             }
+                            onChange={(e) =>
+                              handleAreaChange(key, 2, e.target.value)
+                            }
+                          // value={
+                          //   mode == "edit"
+                          //     ? "Prosentase pemberitaan negatif 10% < x ≤ 20%"
+                          //     : undefined
+                          // }
                           />
                         </ItemDampak>
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <ItemDampak number={3}>
-                          <TextareaComponent
-                            row={2}
-                            label="Cukup Signifikan"
+                          <TextareaStyled
+                            minRows={2}
+                            aria-label="Cukup Signifikan"
                             placeholder="Level Dampak (Cukup Signifikan)"
                             value={
-                              mode == "edit"
-                                ? "Prosentase pemberitaan negatif 20% < x ≤ 30%"
-                                : undefined
+                              stateUpr?.lists[key]?.area?.find((a) => a.level == 3)?.value || ""
                             }
+                            onChange={(e) =>
+                              handleAreaChange(key, 3, e.target.value)
+                            }
+                          // value={
+                          //   mode == "edit"
+                          //     ? "Prosentase pemberitaan negatif 20% < x ≤ 30%"
+                          //     : undefined
+                          // }
                           />
                         </ItemDampak>
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <ItemDampak number={4}>
-                          <TextareaComponent
-                            width="100%"
-                            row={2}
-                            label="Signifikan"
+                          <TextareaStyled
+                            minRows={2}
+                            aria-label="Signifikan"
                             placeholder="Level Dampak (Signifikan)"
                             value={
-                              mode == "edit"
-                                ? "Prosentase pemberitaan negatif 30% < x ≤ 40%"
-                                : undefined
+                              stateUpr?.lists[key]?.area?.find((a) => a.level == 4)?.value || ""
                             }
+                            onChange={(e) =>
+                              handleAreaChange(key, 4, e.target.value)
+                            }
+                          // value={
+                          //   mode == "edit"
+                          //   ? "Prosentase pemberitaan negatif 30% < x ≤ 40%"
+                          //   : undefined
+                          // }
+                          // width="100%"
                           />
                         </ItemDampak>
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <ItemDampak number={5}>
-                          <TextareaComponent
-                            width="100%"
-                            row={2}
-                            label="Sangat Signifikan"
+                          <TextareaStyled
+                            minRows={2}
+                            aria-label="Sangat Signifikan"
                             placeholder="Level Dampak (Sangat Signifikan)"
                             value={
-                              mode == "edit"
-                                ? "Prosentase pemberitaan negatif > 40%"
-                                : undefined
+                              stateUpr?.lists[key]?.area?.find((a) => a.level == 5)?.value || ""
                             }
+                            onChange={(e) =>
+                              handleAreaChange(key, 5, e.target.value)
+                            }
+                          // value={
+                          //   mode == "edit"
+                          //   ? "Prosentase pemberitaan negatif > 40%"
+                          //   : undefined
+                          // }
+                          // width="100%"
                           />
                         </ItemDampak>
                       </Grid>

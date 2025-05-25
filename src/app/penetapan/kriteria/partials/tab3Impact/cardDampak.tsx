@@ -11,13 +11,48 @@ import AddButton from "@/app/components/buttonAdd";
 import Iconify from "@/app/components/icons/iconify";
 import EmptyDevelopingState from "@/app/components/empty/developing";
 import { isDeveloping } from "@/app/components/layouts/layout";
+import useKriteriaDampakVM from "./hooks/vm";
+import useAuthorizationVM from "@/app/authorizationVM";
+import { initReqAddMatDamUpr, ValuesShowMatDamKomite } from "./hooks/model";
 
 export default function CardDampak() {
-  const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalOpenEdit, setModalOpenEdit] = React.useState(false);
   const [modalOpenEditArea, setModalOpenEditArea] = React.useState(false);
-  const [modalOpenDelete, setModalDelete] = React.useState(false);
   const [modalOpenRef, setModalOpenRef] = React.useState(false);
+
+  const { user } = useAuthorizationVM();
+
+  const {
+    // loading,
+    dataMatDamKomite,
+    modalOpenAdd,
+    setModalOpenAdd,
+    modalOpenDelete,
+    setModalDelete,
+    requestMatDamKomite,
+    setRequestMatDamKomite,
+    requestMatDamUpr,
+    setRequestMatDamUpr,
+    createMatDamKomite,
+    createMatDamUpr,
+    deleteMatDamUpr,
+  } = useKriteriaDampakVM();
+
+  const handleCreate = async () => {
+    if (user?.type == "KL") {
+      createMatDamUpr(requestMatDamUpr)
+    } else {
+      createMatDamKomite(requestMatDamKomite);
+    }
+  };
+
+  const handleUpdate = async () => {
+    createMatDamUpr(requestMatDamUpr)
+  };
+
+  const handleDelete = async () => {
+    deleteMatDamUpr(requestMatDamUpr)
+  };
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -30,7 +65,24 @@ export default function CardDampak() {
       >
         Batal
       </Button>
-      <Button variant="contained" type="submit">
+      <Button variant="contained" onClick={handleCreate}>
+        Simpan
+      </Button>
+    </DialogActions>
+  );
+
+  const dialogActionFooterEdit = (
+    <DialogActions sx={{ p: 2, px: 3 }}>
+      <Button
+        onClick={() => {
+          setModalOpenAdd(false),
+            setModalOpenEdit(false),
+            setModalOpenEditArea(false);
+        }}
+      >
+        Batal
+      </Button>
+      <Button variant="contained" onClick={handleUpdate}>
         Simpan
       </Button>
     </DialogActions>
@@ -63,6 +115,9 @@ export default function CardDampak() {
         ) : (
           <Fragment>
             <CollapsibleImpactTable
+              data={dataMatDamKomite}
+              setRequestMatDamKomite={setRequestMatDamKomite}
+              setRequestMatDamUpr={setRequestMatDamUpr}
               handleEdit={() => setModalOpenEdit(true)}
               handleEditArea={() => setModalOpenEditArea(true)}
               handleDelete={() => setModalDelete(true)}
@@ -77,16 +132,28 @@ export default function CardDampak() {
         title="Tambah Kriteria Dampak"
         dialogFooter={dialogActionFooter}
       >
-        <FormDampak mode="add" />
+        <FormDampak
+          mode="add"
+          stateKom={requestMatDamKomite}
+          setStateKom={setRequestMatDamKomite}
+          stateUpr={requestMatDamUpr}
+          setStateUpr={setRequestMatDamUpr}
+        />
       </DialogComponent>
       <DialogComponent
         width={1200}
         dialogOpen={modalOpenEdit}
         dialogClose={() => setModalOpenEdit(false)}
         title="Ubah Kriteria Dampak"
-        dialogFooter={dialogActionFooter}
+        dialogFooter={dialogActionFooterEdit}
       >
-        <FormDampak mode="edit" />
+        <FormDampak
+          mode="edit"
+          stateKom={requestMatDamKomite}
+          setStateKom={setRequestMatDamKomite}
+          stateUpr={requestMatDamUpr}
+          setStateUpr={setRequestMatDamUpr}
+        />
       </DialogComponent>
       <DialogComponent
         width={500}
@@ -101,7 +168,7 @@ export default function CardDampak() {
         title="Hapus Data"
         handleOpenModal={modalOpenDelete}
         handleCloseModal={() => setModalDelete(false)}
-        handleDelete={() => {}}
+        handleDelete={() => handleDelete()}
       />
       <DialogComponent
         tableMode

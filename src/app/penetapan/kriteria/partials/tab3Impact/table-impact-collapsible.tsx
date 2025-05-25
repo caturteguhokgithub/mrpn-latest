@@ -15,54 +15,114 @@ import { bgColorTh } from "@/app/utils/color";
 import { blue, grey, red } from "@mui/material/colors";
 import { Stack } from "@mui/material";
 import Iconify from "@/app/components/icons/iconify";
+import AddButton from "@/app/components/buttonAdd";
+import { AreasShowMatDamKomite, ReqAddMatDamKomite, ReqAddMatDamUpr, ResShowMatDamKomite, ValuesShowMatDamKomite } from "./hooks/model";
 
-function createData(areaDampak: string) {
-  return {
-    areaDampak,
-    results: [
-      {
-        dampak: "Tingkat kepercayaan stakeholder",
-        levels: [
-          "Sangat baik atau x > 8 dari skala 10",
-          "Baik atau 7 < x ≤ 8 dari skala 10",
-          "Sedang atau 6 < x ≤ 7 dari skala 10",
-          "Rendah atau 4 < x ≤ 6 dari skala 10",
-          "Sangat rendah atau x < 4 dari skala 10",
-        ],
-      },
-      {
-        dampak:
-          "Jumlah keluhan atau prosentase berita negatif dari total berita tentang Obyek MRPN LS",
-        levels: [
-          "Jumlah Keluhan x ≤ 10",
-          "Prosentase pemberitaan negatif 10% < x ≤ 20%",
-          "Prosentase pemberitaan negatif 20% < x ≤ 30%",
-          "Prosentase pemberitaan negatif 30% < x ≤ 40%",
-          "Prosentase pemberitaan negatif > 40%",
-        ],
-      },
-      {
-        dampak: "Tingkat kepuasan pengguna layanan/wisatawan/investor",
-        levels: [
-          "nilai kepuasan 4,5 < x ≤ 5, skala 5",
-          "nilai kepuasan 4 < x ≤ 4,5, skala 5",
-          "nilai kepuasan 3,5 < x ≤ 4, skala 5",
-          "nilai kepuasan 3 < x ≤ 3,5, skala 5",
-          "nilai kepuasan x < 3, skala 5",
-        ],
-      },
-    ],
-  };
-}
+// function createData(areaDampak: string) {
+//   return {
+//     areaDampak,
+//     results: [
+//       {
+//         dampak: "Tingkat kepercayaan stakeholder",
+//         levels: [
+//           "Sangat baik atau x > 8 dari skala 10",
+//           "Baik atau 7 < x ≤ 8 dari skala 10",
+//           "Sedang atau 6 < x ≤ 7 dari skala 10",
+//           "Rendah atau 4 < x ≤ 6 dari skala 10",
+//           "Sangat rendah atau x < 4 dari skala 10",
+//         ],
+//       },
+//       {
+//         dampak:
+//           "Jumlah keluhan atau prosentase berita negatif dari total berita tentang Obyek MRPN LS",
+//         levels: [
+//           "Jumlah Keluhan x ≤ 10",
+//           "Prosentase pemberitaan negatif 10% < x ≤ 20%",
+//           "Prosentase pemberitaan negatif 20% < x ≤ 30%",
+//           "Prosentase pemberitaan negatif 30% < x ≤ 40%",
+//           "Prosentase pemberitaan negatif > 40%",
+//         ],
+//       },
+//       {
+//         dampak: "Tingkat kepuasan pengguna layanan/wisatawan/investor",
+//         levels: [
+//           "nilai kepuasan 4,5 < x ≤ 5, skala 5",
+//           "nilai kepuasan 4 < x ≤ 4,5, skala 5",
+//           "nilai kepuasan 3,5 < x ≤ 4, skala 5",
+//           "nilai kepuasan 3 < x ≤ 3,5, skala 5",
+//           "nilai kepuasan x < 3, skala 5",
+//         ],
+//       },
+//     ],
+//   };
+// }
 
 function Row(props: {
-  row: ReturnType<typeof createData>;
+  row: ValuesShowMatDamKomite;
+  setRequestMatDamKomite?: (value: React.SetStateAction<ReqAddMatDamKomite>) => void;
+  setRequestMatDamUpr?: (value: React.SetStateAction<ReqAddMatDamUpr>) => void;
   handleEdit: any;
   handleEditArea: any;
   handleDelete?: any;
 }) {
-  const { row, handleEdit, handleEditArea, handleDelete } = props;
+  const { row, handleEdit, handleEditArea, handleDelete, setRequestMatDamUpr, setRequestMatDamKomite } = props;
   const [open, setOpen] = React.useState(true);
+
+  const prosesBtnEdit = (komite: ValuesShowMatDamKomite, upr: AreasShowMatDamKomite) => {
+    if (setRequestMatDamUpr) {
+      setRequestMatDamUpr((prevState) => ({
+        ...prevState,
+        id: upr.id,
+        matrix_id: upr.id,
+        lists: [
+          {
+            id: upr.id,
+            value: upr.value,
+            area: upr.area_levels
+          }
+        ]
+      }));
+    }
+
+    if (setRequestMatDamKomite) {
+      setRequestMatDamKomite((prevState) => ({
+        ...prevState,
+        dampak: komite.dampak,
+      }));
+    }
+
+    handleEdit()
+  };
+
+  const prosesBtnAdd = (value: ValuesShowMatDamKomite) => {
+    if (setRequestMatDamUpr) {
+      setRequestMatDamUpr((prevState) => ({
+        ...prevState,
+        matrix_id: value.id
+      }));
+    }
+
+    if (setRequestMatDamKomite) {
+      setRequestMatDamKomite((prevState) => ({
+        ...prevState,
+        dampak: value.dampak
+      }));
+    }
+
+    handleEdit()
+  };
+
+  const prosesBtnDelete = (upr: AreasShowMatDamKomite) => {
+    if (setRequestMatDamUpr) {
+      setRequestMatDamUpr((prevState) => ({
+        ...prevState,
+        id: upr.id,
+        matrix_id: upr.id,
+      }));
+    }
+
+    handleDelete()
+  };
 
   return (
     <React.Fragment>
@@ -77,7 +137,16 @@ function Row(props: {
           </IconButton>
         </TableCell>
         <TableCell colSpan={7} sx={{ fontWeight: 600, bgcolor: blue[100] }}>
-          {row.areaDampak}
+          <Stack direction="row" alignItems="center" justifyContent="space-between">
+            <span>{row.dampak}</span>
+            <AddButton
+              noMargin
+              filled
+              startIcon={<Iconify name="mdi:plus-circle" />}
+              title="Tambah Dampak"
+              onclick={() => prosesBtnAdd(row)}
+            />
+          </Stack>
         </TableCell>
         {/* <TableCell>
           <Stack direction="row">
@@ -176,34 +245,33 @@ function Row(props: {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.results.map((resultRow) => (
-                    <TableRow key={resultRow.dampak}>
+                  {row.areas.map((resultRow) => (
+                    <TableRow key={resultRow.value}>
                       <TableCell
                         sx={{
                           bgcolor: grey[50],
                         }}
                       >
-                        {resultRow.dampak}
+                        {resultRow.value}
                       </TableCell>
-                      {resultRow.levels.map((item) => (
-                        <TableCell
-                          sx={{
-                            bgcolor: grey[50],
-                          }}
-                        >
-                          {item}
-                        </TableCell>
-                      ))}
+                      {[1, 2, 3, 4, 5].map((level) => {
+                        const item = resultRow.area_levels.find((lvl) => lvl.level == level);
+                        return (
+                          <TableCell key={level} sx={{ bgcolor: grey[50] }}>
+                            {item ? item.value : "-"}
+                          </TableCell>
+                        );
+                      })}
                       <TableCell
                         sx={{
                           bgcolor: grey[50],
                         }}
                       >
                         <Stack direction="row">
-                          <IconButton onClick={handleEdit}>
+                          <IconButton onClick={() => prosesBtnEdit(row, resultRow)}>
                             <Iconify name="mdi:pencil" color={blue[500]} />
                           </IconButton>
-                          <IconButton onClick={handleDelete}>
+                          <IconButton onClick={() => prosesBtnDelete(resultRow)}>
                             <Iconify name="mdi:trash" color={red[500]} />
                           </IconButton>
                         </Stack>
@@ -220,18 +288,24 @@ function Row(props: {
   );
 }
 
-const rows = [
-  createData("Keuangan Negara"),
-  createData("Reputasi"),
-  createData("Layanan Publik"),
-  createData("Capaian Kinerja"),
-];
+// const rows = [
+//   createData("Keuangan Negara"),
+//   createData("Reputasi"),
+//   createData("Layanan Publik"),
+//   createData("Capaian Kinerja"),
+// ];
 
 export default function CollapsibleImpactTable({
+  data,
+  setRequestMatDamKomite,
+  setRequestMatDamUpr,
   handleEdit,
   handleEditArea,
   handleDelete,
 }: {
+  data: ValuesShowMatDamKomite[]
+  setRequestMatDamKomite?: (value: React.SetStateAction<ReqAddMatDamKomite>) => void;
+  setRequestMatDamUpr?: (value: React.SetStateAction<ReqAddMatDamUpr>) => void;
   handleEdit?: any;
   handleEditArea?: any;
   handleDelete?: any;
@@ -280,10 +354,12 @@ export default function CollapsibleImpactTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {data.map((row) => (
             <Row
-              key={row.areaDampak}
+              key={row.dampak}
               row={row}
+              setRequestMatDamKomite={setRequestMatDamKomite}
+              setRequestMatDamUpr={setRequestMatDamUpr}
               handleEdit={handleEdit}
               handleEditArea={handleEditArea}
               handleDelete={handleDelete}
