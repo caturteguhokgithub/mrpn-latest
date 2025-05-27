@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { doCreateInformation, doDeleteListInformation, doGetInformation, doUpdateInformation } from "./informationService";
+import {
+  doCreateInformation,
+  doDeleteListInformation,
+  doGetInformation,
+  doUpdateInformation,
+} from "./informationService";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import {
   useExsumContext,
@@ -33,6 +38,8 @@ const useInformationList = () => {
   const [modalViewImage, setModalViewImage] = useState(false);
   const [modalOpenDelete, setModalDelete] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
+  const [toastDelete, setToastDelete] = useState<boolean>(false);
+  const [toastSave, setToastSave] = useState<boolean>(false);
 
   const [request, setRequest] = useState<doReqInformasiLainnya>({
     ...initAddInformasiLainnyaDto,
@@ -81,6 +88,7 @@ const useInformationList = () => {
         getData();
         setRequest(initAddInformasiLainnyaDto);
         setModal(false);
+        // setToastSave(true);
       }
     }
   }
@@ -123,7 +131,11 @@ const useInformationList = () => {
     modalEdit,
     setModalEdit,
     createOrUpdateData,
-    deleteListData
+    deleteListData,
+    toastDelete,
+    setToastDelete,
+    toastSave,
+    setToastSave,
   };
 };
 

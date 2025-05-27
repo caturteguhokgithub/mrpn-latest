@@ -9,6 +9,7 @@ import { useGlobalModalContext, useLoading } from "@/lib/core/hooks/useHooks";
 import {
   ResultPossibility,
   doRequestPossibilityDto,
+  doValues,
   initPossibility,
 } from "./possibilityModel";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
@@ -32,19 +33,27 @@ const usePossibilityList = () => {
   // const searchParams = useSearchParams();
 
   // const search = searchParams.get("search");
-  // const kpPenetapan = localStorage.getItem("kpPenetapan");
-  // const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
+  const kpPenetapan = localStorage.getItem("kpPenetapan");
+  const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
 
   // const isEmptyPenetapanObject =
   //   !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
+
+  const defaultDropdownList = [
+    "Hampir tidak terjadi (1)",
+    "Jarang terjadi (2)",
+    "Kadang terjadi (3)",
+    "Sering terjadi (4)",
+    "Hampir pasti terjadi (5)",
+  ];
 
   async function getData() {
     setLoading(true);
     const response = await doGetPossibility({
       body: {
         // uraian_penetapan_objek_id: 78,
-        uraian_penetapan_object_id: objectState?.id,
-        // uraian_penetapan_objek_id: kpPenetapanObj?.id,
+        // uraian_penetapan_object_id: objectState?.id,
+        uraian_penetapan_objek_id: kpPenetapanObj?.id,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -76,11 +85,18 @@ const usePossibilityList = () => {
     }
   }
 
-  async function updatePossibility(param: doRequestPossibilityDto) {
+  async function updatePossibility() {
+    const values: doValues[] = payloadValues.map((item) => ({
+      level_kemungkinan: item.level_kemungkinan,
+      probabilitas: item.probabilitas,
+      jumlah_frekuensi: item.jumlah_frekuensi,
+      low_frekuensi: item.low_frekuensi,
+    }));
+
     const req: doRequestPossibilityDto = {
-      ...param,
-      uraian_penetapan_objek_id: objectState?.id ?? 0,
-      // uraian_penetapan_objek_id: kpPenetapanObj?.id ?? 0,
+      values: values,
+      // uraian_penetapan_objek_id: objectState?.id ?? 0,
+      uraian_penetapan_objek_id: kpPenetapanObj?.id ?? 0,
     };
 
     const params = {
@@ -139,14 +155,6 @@ const usePossibilityList = () => {
     // }
   }, [objectState?.id]);
 
-  const defaultDropdownList = [
-    "Hampir tidak terjadi (1)",
-    "Jarang terjadi (2)",
-    "Kadang terjadi (3)",
-    "Sering terjadi (4)",
-    "Hampir pasti terjadi (5)",
-  ];
-
   const { listDropDown, listSorterPossibility } = useMemo(() => {
     // const listDropDown = cloneDeep(defaultDropdownList);
     let filtered: any = [];
@@ -174,6 +182,42 @@ const usePossibilityList = () => {
     };
   }, [dataPossibility]);
 
+  // ini buat handle payload yg multiple
+
+  const defaultValuesStatetemp = defaultDropdownList.map((item) => ({
+    level_kemungkinan: item,
+    probabilitas: "",
+    jumlah_frekuensi: "",
+    low_frekuensi: "",
+  }));
+
+  const [payloadValues, setPayloadValues] = useState(defaultValuesStatetemp);
+
+  const handleChangePayload = (index: number, field: string, value: any) => {
+    setPayloadValues((prevValues) => {
+      const updatedValues = [...prevValues];
+      updatedValues[index] = {
+        ...updatedValues[index],
+        [field]: value,
+      };
+      console.log({ updatedValues });
+
+      return updatedValues;
+    });
+  };
+
+  const isDisabledAddButton = useMemo(() => {
+    const isDisabled = payloadValues.some((item) => {
+      return (
+        item.probabilitas === "" ||
+        item.jumlah_frekuensi === "" ||
+        item.low_frekuensi === ""
+      );
+    });
+
+    return isDisabled;
+  }, [payloadValues]);
+
   return {
     modalOpenAdd,
     setModalOpenAdd,
@@ -187,6 +231,9 @@ const usePossibilityList = () => {
     isDisabledAdd: dataPossibility?.length === 5,
     defaultDropdownList: listDropDown,
     handleDeleteTables,
+    handleChangePayload,
+    payloadValues,
+    isDisabledAddButton,
   };
 };
 

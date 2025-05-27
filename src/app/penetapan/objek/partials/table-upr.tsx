@@ -23,6 +23,7 @@ import { grey } from "@mui/material/colors";
 import { bgColorTh } from "@/app/utils/color";
 import { listUpr, listObject } from "../data"; // Import listObject and listUpr
 import Iconify from "@/app/components/icons/iconify";
+import usePenetapanObjectVM from "../pageVM";
 
 function createData(name: string) {
   return {
@@ -158,10 +159,24 @@ function Row(props: {
   );
 }
 
-export default function CollapsibleTableUpr() {
+export default function CollapsibleTableUpr({
+  showSave,
+  setShowSave,
+}: {
+  showSave?: boolean;
+  setShowSave?: any;
+}) {
   return (
     <Fragment>
-      <TableContainer component={Paper} elevation={0} variant="outlined">
+      <TableContainer
+        component={Paper}
+        elevation={0}
+        variant="outlined"
+        sx={{
+          pointerEvents: showSave ? "none" : "auto",
+          opacity: showSave ? 0.7 : 1,
+        }}
+      >
         <Table>
           <TableBody>
             {listObject.map((object) => {
@@ -179,17 +194,22 @@ export default function CollapsibleTableUpr() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Stack direction="row" justifyContent="flex-end">
-        <Box mt={2}>
-          <Button
-            variant="contained"
-            sx={{ borderRadius: 24, px: 4 }}
-            // onClick={() => updateOrCreateEntity()}
-          >
-            Simpan
-          </Button>
-        </Box>
-      </Stack>
+      {!showSave && (
+        <Stack direction="row" justifyContent="flex-end">
+          <Box mt={2}>
+            <Button
+              variant="contained"
+              sx={{ borderRadius: 24, px: 4 }}
+              onClick={setShowSave}
+              // onClick={() => {
+              //   updateOrCreateEntity();
+              // }}
+            >
+              Simpan
+            </Button>
+          </Box>
+        </Stack>
+      )}
     </Fragment>
   );
 }
