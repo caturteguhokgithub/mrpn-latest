@@ -70,6 +70,7 @@ export default function FormCategory({
   listMasterCategory,
   stateSubCat,
   setStateSubCat,
+  setModalOpenAddMasterCategory
 }: {
   mode?: string;
   handleOpenCategory?: any;
@@ -80,6 +81,7 @@ export default function FormCategory({
   stateCategory?: doMasterKategori;
   stateSubCat?: SubKategoriRisiko;
   setStateSubCat?: (value: SetStateAction<SubKategoriRisiko>) => void;
+  setModalOpenAddMasterCategory?: any
 }) {
   const [items, setItem] = React.useState([{ id: 1 }]);
 
@@ -119,24 +121,6 @@ export default function FormCategory({
       });
     }
   };
-
-  const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
-
-  const ReactQuill = dynamic(
-    async () => {
-      const { default: RQ } = await import("react-quill");
-
-      function QuillJS({ forwardedRef, ...props }: IWrappedComponent) {
-        return <RQ ref={forwardedRef} {...props} />;
-      }
-
-      return QuillJS;
-    },
-    {
-      ssr: false,
-    }
-  );
-  const quillRef = React.useRef<ReactQuill>(null);
 
   return (
     <Fragment>
@@ -187,9 +171,9 @@ export default function FormCategory({
                 handleChange={(newValue: doMasterKategori) =>
                   setState
                     ? setState((prevState) => ({
-                        ...prevState,
-                        src_kategori_id: newValue.id,
-                      }))
+                      ...prevState,
+                      src_kategori_id: newValue.id,
+                    }))
                     : ""
                 }
                 placeHolder={"Pilih kategori"}
@@ -199,7 +183,7 @@ export default function FormCategory({
                     variant="outlined"
                     color="primary"
                     startIcon={<Iconify name="mdi:plus-circle" />}
-                    onMouseDown={() => setModalOpenAdd(true)}
+                    onMouseDown={() => setModalOpenAddMasterCategory(true)}
                   >
                     Tambah Kategori
                   </Button>
@@ -337,44 +321,6 @@ export default function FormCategory({
           //   </Grid>
         )}
       </Grid>
-      <DialogComponent
-        width={500}
-        dialogOpen={modalOpenAdd}
-        dialogClose={() => setModalOpenAdd(false)}
-        title="Tambah Kategori"
-        dialogFooter={
-          <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button onClick={() => setModalOpenAdd(false)}>Batal</Button>
-            <Button variant="contained" type="submit">
-              Simpan
-            </Button>
-          </DialogActions>
-        }
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <FieldLabelInfo title="Kategori Risiko" />
-            <TextField
-              fullWidth
-              variant="outlined"
-              size="small"
-              placeholder="Kategori Risiko"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FieldLabelInfo title="Uraian Kategori Risiko" />
-            <ReactQuill
-              key={"request?.value"}
-              theme="snow"
-              // defaultValue={'request?.value'}
-              forwardedRef={quillRef}
-            />
-          </Grid>
-        </Grid>
-      </DialogComponent>
     </Fragment>
   );
 }

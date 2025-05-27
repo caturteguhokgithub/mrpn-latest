@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import {
   doCreateCategory,
+  doCreateMasterCategory,
   doDeleteSubCategory,
   doGetCategory,
   doGetMasterCategory,
+  doUpdateMasterCategory,
   doUpdateSubCategory,
 } from "./categoryService";
 import { API_CODE } from "@/lib/core/api/apiModel";
@@ -14,6 +16,7 @@ import {
   doMasterKategori,
   doRequestCategoryDto,
   initCategory,
+  initMasterCategory,
   initSubCategory,
 } from "./categoryModel";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
@@ -24,19 +27,18 @@ const useCategoryList = () => {
   const [loading, setLoading] = useState(false);
   const [dataCategory, setDataCategory] = useState<ResultCategory[]>([]);
   const [masterCategory, setMasterCategory] = useState<doMasterKategori[]>([]);
+  const [requestMasterCategory, setRequestMasterCategory] = useState<doMasterKategori>({ ...initMasterCategory });
   const { objectState } = usePenetapanGlobalVM();
   const [modalOpenAdd, setModalOpenAdd] = useState(false);
   const [modalOpenCategory, setModalOpenCategory] = useState(false);
   const [modalOpenDelete, setModalDelete] = useState(false);
+  const [modalOpenAddMasterCategory, setModalOpenAddMasterCategory] = useState(false);
 
   const [requestCategory, setRequestCategory] = useState<doRequestCategoryDto>({
     ...initCategory,
   });
 
-  const [requestSubCategory, setRequestSubCategory] =
-    useState<SubKategoriRisiko>({
-      ...initSubCategory,
-    });
+  const [requestSubCategory, setRequestSubCategory] = useState<SubKategoriRisiko>({ ...initSubCategory });
 
   // const searchParams = useSearchParams();
 
@@ -110,6 +112,25 @@ const useCategoryList = () => {
     }
   }
 
+  async function createMasterCategory(param: doMasterKategori) {
+    var isNew = param.id == 0 ? true : false;
+
+    const params = {
+      body: param,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    };
+
+    const response = isNew ?
+      await doCreateMasterCategory(params) :
+      await doUpdateMasterCategory(params);
+
+    if (response?.code == API_CODE.success) {
+      getData();
+      setModalOpenAddMasterCategory(false);
+    }
+  }
+
   async function updateSubCategory(param: SubKategoriRisiko) {
     const req: SubKategoriRisiko = {
       ...param,
@@ -156,7 +177,10 @@ const useCategoryList = () => {
   return {
     listDataCategory: dataCategory,
     loading,
+    requestMasterCategory,
+    setRequestMasterCategory,
     createCategory,
+    createMasterCategory,
     requestCategory,
     setRequestCategory,
     modalOpenAdd,
@@ -171,6 +195,8 @@ const useCategoryList = () => {
     setModalDelete,
     deleteSubCategory,
     setDataCategory,
+    modalOpenAddMasterCategory,
+    setModalOpenAddMasterCategory,
   };
 };
 

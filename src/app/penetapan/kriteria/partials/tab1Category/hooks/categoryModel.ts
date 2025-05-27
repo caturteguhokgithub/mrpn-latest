@@ -98,6 +98,10 @@ export const initSubCategory: SubKategoriRisiko = {
 //   ]
 // }
 
+export type CreateOrUpdateMasterCategoryServiceModel = BaseAPIServiceParam & {
+  body: doMasterKategori;
+};
+
 export type CreateCategoryServiceModel = BaseAPIServiceParam & {
   body: doRequestCategoryDto;
 };

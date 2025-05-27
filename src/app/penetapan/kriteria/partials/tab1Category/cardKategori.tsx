@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Button, DialogActions, Stack } from "@mui/material";
+import { Button, DialogActions, FormControl, Grid, Stack, TextField } from "@mui/material";
 import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
 import CollapsibleTable from "./table-kategori-collapsible";
@@ -13,6 +13,8 @@ import { isDeveloping } from "@/app/components/layouts/layout";
 import useCategoryList from "./hooks/useCategory";
 import { ResultCategory } from "./hooks/categoryModel";
 import useAuthorizationVM from "@/app/authorizationVM";
+import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import { TextareaStyled } from "@/app/components/textarea";
 
 export default function CardKategori() {
   const [modalOpenRef, setModalOpenRef] = React.useState(false);
@@ -20,6 +22,8 @@ export default function CardKategori() {
 
   const {
     createCategory,
+    requestMasterCategory,
+    setRequestMasterCategory,
     requestCategory,
     setRequestCategory,
     modalOpenAdd,
@@ -35,6 +39,9 @@ export default function CardKategori() {
     deleteSubCategory,
     setDataCategory,
     listDataCategory,
+    createMasterCategory,
+    modalOpenAddMasterCategory,
+    setModalOpenAddMasterCategory,
   } = useCategoryList();
 
   const handleCreate = async () => {
@@ -47,6 +54,12 @@ export default function CardKategori() {
 
   const handleDeleteSubCategory = async () => {
     deleteSubCategory(requestSubCategory);
+  };
+
+  const handleUpdateOrCreateMasterCategory = async () => {
+    // console.log(requestMasterCategory);
+
+    createMasterCategory(requestMasterCategory);
   };
 
   const handleEdit = (item: any) => {
@@ -154,6 +167,7 @@ export default function CardKategori() {
           mode="add"
           state={requestCategory}
           setState={setRequestCategory}
+          setModalOpenAddMasterCategory={setModalOpenAddMasterCategory}
           listMasterCategory={masterCategory}
         />
       </DialogComponent>
@@ -189,6 +203,67 @@ export default function CardKategori() {
         closeButton
       >
         <TableRerefence />
+      </DialogComponent>
+
+      <DialogComponent
+        width={500}
+        dialogOpen={modalOpenAddMasterCategory}
+        dialogClose={() => setModalOpenAddMasterCategory(false)}
+        title="Tambah Kategori"
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button onClick={() => setModalOpenAddMasterCategory(false)}>Batal</Button>
+            <Button variant="contained" type="submit" onClick={handleUpdateOrCreateMasterCategory}>
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <FieldLabelInfo title="Kategori Risiko" />
+            <TextField
+              fullWidth
+              variant="outlined"
+              size="small"
+              placeholder="Kategori Risiko"
+              value={requestMasterCategory?.value ?? ""}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              onChange={(e) => {
+                setRequestMasterCategory((prev) => ({
+                  ...prev,
+                  value: e.target.value
+                }));
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FieldLabelInfo title="Uraian Kategori Risiko" />
+            <FormControl fullWidth>
+              <TextareaStyled
+                // width="100%"
+                minRows={2}
+                aria-label=""
+                placeholder="Sub Kategori"
+                onChange={(e) => {
+                  setRequestMasterCategory((prev) => ({
+                    ...prev,
+                    uraian: e.target.value
+                  }));
+                }}
+              />
+            </FormControl>
+            {/* <ReactQuill
+              value={requestMasterCategory.uraian}
+              key={requestMasterCategory.uraian}
+              theme="snow"
+              defaultValue={requestMasterCategory.uraian}
+              forwardedRef={quillRef}
+            /> */}
+          </Grid>
+        </Grid>
       </DialogComponent>
     </Fragment>
   );
