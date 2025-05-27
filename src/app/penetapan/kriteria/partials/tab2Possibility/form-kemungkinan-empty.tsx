@@ -16,10 +16,14 @@ export default function FormKemungkinanEmpty({
   mode,
   state,
   setState,
+  handleChangePayload,
+  payloadValues,
 }: {
   mode?: string;
   state: doRequestPossibilityDto;
   setState: (value: SetStateAction<doRequestPossibilityDto>) => void;
+  handleChangePayload: any;
+  payloadValues: any;
 }) {
   const dataKemungkinan = [
     "Hampir tidak terjadi (1)",
@@ -29,26 +33,28 @@ export default function FormKemungkinanEmpty({
     "Hampir pasti terjadi (5)",
   ];
 
-  const handleChange = (
-    index: number,
-    field: keyof doValues,
-    level_kemungkinan: string,
-    value: string
-  ) => {
-    setState((prev) => {
-      const updatedValues = [...prev.values];
-      updatedValues[index] = {
-        ...updatedValues[index],
-        ["level_kemungkinan"]: level_kemungkinan,
-        [field]: value,
-      };
+  // const handleChange = (
+  //   index: number,
+  //   field: keyof doValues,
+  //   level_kemungkinan: string,
+  //   value: string
+  // ) => {
+  //   setState((prev) => {
+  //     const updatedValues = [...prev.values];
+  //     updatedValues[index] = {
+  //       ...updatedValues[index],
+  //       ["level_kemungkinan"]: level_kemungkinan,
+  //       [field]: value,
+  //     };
 
-      return {
-        ...prev,
-        values: updatedValues,
-      };
-    });
-  };
+  //     return {
+  //       ...prev,
+  //       values: updatedValues,
+  //     };
+  //   });
+  // };
+
+  console.log({ payloadValues });
 
   return (
     <TableContainer
@@ -96,9 +102,10 @@ export default function FormKemungkinanEmpty({
                   <TextareaStyled
                     placeholder="Persentase"
                     minRows={2}
-                    value={detail?.probabilitas}
+                    value={payloadValues[index]?.probabilitas}
                     onChange={(e) =>
-                      handleChange(index, "probabilitas", item, e.target.value)
+                      // handleChange(index, "probabilitas", item, e.target.value)
+                      handleChangePayload(index, "probabilitas", e.target.value)
                     }
                   />
                 </TableCell>
@@ -106,12 +113,11 @@ export default function FormKemungkinanEmpty({
                   <TextareaStyled
                     placeholder="Frekuensi"
                     minRows={2}
-                    value={detail?.jumlah_frekuensi}
+                    value={payloadValues[index]?.jumlah_frekuensi}
                     onChange={(e) =>
-                      handleChange(
+                      handleChangePayload(
                         index,
                         "jumlah_frekuensi",
-                        item,
                         e.target.value
                       )
                     }

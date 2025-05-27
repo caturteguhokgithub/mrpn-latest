@@ -29,13 +29,18 @@ export default function CardKemungkinan() {
     isDisabledAdd,
     defaultDropdownList,
     handleDeleteTables,
+    handleChangePayload,
+    payloadValues,
+    isDisabledAddButton,
   } = usePossibilityList();
 
   const handleCreate = async () => {
     setModalOpenAdd(false);
     setModalOpenEdit(false);
-    updatePossibility(requestPossibility);
+    updatePossibility();
   };
+
+  console.log({ isDisabledAddButton });
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -106,13 +111,15 @@ export default function CardKemungkinan() {
         width={1000}
         dialogOpen={modalOpenAdd}
         dialogClose={() => setModalOpenAdd(false)}
-        title="Tambah Kriteria Kemungkinan"
+        title="Tambah Kriteria Kemungkinan d"
         dialogFooter={dialogActionFooter}
       >
         <FormKemungkinanEmpty
           state={requestPossibility}
           setState={setRequestPossibility}
           mode="add"
+          handleChangePayload={handleChangePayload}
+          payloadValues={payloadValues}
         />
         {/* <FormPossibility
           mode="add"
@@ -137,6 +144,8 @@ export default function CardKemungkinan() {
             state={requestPossibility}
             setState={setRequestPossibility}
             mode="edit"
+            payloadValues={payloadValues}
+            handleChangePayload={handleChangePayload}
           />
           {/* <FormPossibility
             mode="edit"

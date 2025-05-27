@@ -82,7 +82,9 @@ const usePenetapanObjectVM = () => {
   const [modalAdd, setModalAdd] = useState<boolean>(false);
   const [modalLog, setModalLog] = useState<boolean>(false);
   const [modalUpr, setModalUpr] = useState<boolean>(false);
-  const [showSave, setShowSave] = useState<boolean>(true);
+  const [showSave, setShowSave] = useState<boolean>(false);
+  const [toastDelete, setToastDelete] = useState<boolean>(false);
+  const [toastSave, setToastSave] = useState<boolean>(false);
 
   const generateOptionPN = () => {
     let opt: ProjectDefaultDto[] = [];
@@ -511,6 +513,10 @@ const usePenetapanObjectVM = () => {
     setModalUpr,
     showSave,
     setShowSave,
+    toastDelete,
+    setToastDelete,
+    toastSave,
+    setToastSave,
   };
 };
 

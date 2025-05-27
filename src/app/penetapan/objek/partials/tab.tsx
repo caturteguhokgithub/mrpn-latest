@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Stack, Tab, Tabs } from "@mui/material";
 import theme from "@/theme";
 import { IconFA } from "@/components/icons/icon-fa";
 import { styleTab } from "@/app/executive-summary/style";
@@ -81,7 +81,8 @@ export default function TabObject({
 }) {
   const { nota } = usePenetapanTopicContext((store) => store);
 
-  const { updateOrCreateLongList } = usePenetapanObjectVM();
+  const { updateOrCreateLongList, setShowSave, showSave } =
+    usePenetapanObjectVM();
 
   const [value, setValue] = React.useState(0);
 
@@ -190,12 +191,21 @@ export default function TabObject({
         <CardItem
           title="Usulan UPR LS"
           addButton={
-            <AddButton
-              title="Tambah UPR"
-              filled
-              noMargin
-              onclick={() => setModalUpr(true)}
-            />
+            <Stack direction="row" gap={1}>
+              {showSave && (
+                <AddButton
+                  title="Edit UPR"
+                  noMargin
+                  onclick={() => setShowSave(false)}
+                />
+              )}
+              <AddButton
+                title="Tambah UPR"
+                filled
+                noMargin
+                onclick={() => setModalUpr(true)}
+              />
+            </Stack>
           }
         >
           {isEmpty ? (
@@ -207,7 +217,14 @@ export default function TabObject({
             />
           ) : (
             <Fragment>
-              {isDeveloping ? <TableProposal /> : <CollapsibleTableUpr />}
+              {isDeveloping ? (
+                <TableProposal />
+              ) : (
+                <CollapsibleTableUpr
+                  setShowSave={setShowSave}
+                  showSave={showSave}
+                />
+              )}
             </Fragment>
           )}
         </CardItem>
