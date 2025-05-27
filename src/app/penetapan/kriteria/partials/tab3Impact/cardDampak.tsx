@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Button, DialogActions, Stack, TextField } from "@mui/material";
+import { Button, DialogActions, Grid, Stack, TextField } from "@mui/material";
 import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
 import FormDampak from "./form-dampak";
@@ -13,7 +13,8 @@ import EmptyDevelopingState from "@/app/components/empty/developing";
 import { isDeveloping } from "@/app/components/layouts/layout";
 import useKriteriaDampakVM from "./hooks/vm";
 import useAuthorizationVM from "@/app/authorizationVM";
-import { initReqAddMatDamUpr, ValuesShowMatDamKomite } from "./hooks/model";
+import { initReqAddMatDamUpr, ReqAddMatDamKomite, ValuesShowMatDamKomite } from "./hooks/model";
+import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 
 export default function CardDampak() {
   const [modalOpenEdit, setModalOpenEdit] = React.useState(false);
@@ -27,6 +28,8 @@ export default function CardDampak() {
     dataMatDamKomite,
     modalOpenAdd,
     setModalOpenAdd,
+    modalOpenAddKomite,
+    setModalOpenAddKomite,
     modalOpenDelete,
     setModalDelete,
     requestMatDamKomite,
@@ -39,11 +42,7 @@ export default function CardDampak() {
   } = useKriteriaDampakVM();
 
   const handleCreate = async () => {
-    if (user?.type == "KL") {
-      createMatDamUpr(requestMatDamUpr)
-    } else {
-      createMatDamKomite(requestMatDamKomite);
-    }
+    createMatDamUpr(requestMatDamUpr)
   };
 
   const handleUpdate = async () => {
@@ -53,6 +52,12 @@ export default function CardDampak() {
   const handleDelete = async () => {
     deleteMatDamUpr(requestMatDamUpr)
   };
+
+  const handleAddKomite = async () => {
+    // console.log(requestMatDamKomite);
+
+    createMatDamKomite(requestMatDamKomite)
+  }
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -134,6 +139,8 @@ export default function CardDampak() {
       >
         <FormDampak
           mode="add"
+          optionAD={dataMatDamKomite}
+          setModalOpenAddKomite={setModalOpenAddKomite}
           stateKom={requestMatDamKomite}
           setStateKom={setRequestMatDamKomite}
           stateUpr={requestMatDamUpr}
@@ -179,6 +186,61 @@ export default function CardDampak() {
         closeButton
       >
         <TableDampak mode="view" />
+      </DialogComponent>
+
+      <DialogComponent
+        width={500}
+        dialogOpen={modalOpenAddKomite}
+        dialogClose={() => setModalOpenAddKomite(false)}
+        title="Tambah Area Dampak"
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button onClick={() => setModalOpenAddKomite(false)}>Batal</Button>
+            <Button variant="contained" type="submit" onClick={handleAddKomite}>
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <FieldLabelInfo title="Area Dampak" />
+            <TextField
+              fullWidth
+              variant="outlined"
+              size="small"
+              placeholder="Area Dampak"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              onChange={(e) => {
+                setRequestMatDamKomite && setRequestMatDamKomite((prevState) => ({
+                  ...prevState,
+                  dampak: e.target.value,
+                }))
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FieldLabelInfo title="Nomor Urut Prioritas" />
+            <TextField
+              type="number"
+              fullWidth
+              variant="outlined"
+              size="small"
+              placeholder="Nomor Urut Prioritas"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              onChange={(e) => {
+                setRequestMatDamKomite && setRequestMatDamKomite((prevState) => ({
+                  ...prevState,
+                  prioritas: Number(e.target.value),
+                }))
+              }}
+            />
+          </Grid>
+        </Grid>
       </DialogComponent>
     </Fragment>
   );

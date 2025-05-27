@@ -137,16 +137,7 @@ function Row(props: {
           </IconButton>
         </TableCell>
         <TableCell colSpan={7} sx={{ fontWeight: 600, bgcolor: blue[100] }}>
-          <Stack direction="row" alignItems="center" justifyContent="space-between">
-            <span>{row.dampak}</span>
-            <AddButton
-              noMargin
-              filled
-              startIcon={<Iconify name="mdi:plus-circle" />}
-              title="Tambah Dampak"
-              onclick={() => prosesBtnAdd(row)}
-            />
-          </Stack>
+          {row.dampak}
         </TableCell>
         {/* <TableCell>
           <Stack direction="row">

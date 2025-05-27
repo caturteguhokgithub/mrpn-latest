@@ -20,6 +20,7 @@ const useKriteriaDampakVM = () => {
     const { objectState } = usePenetapanGlobalVM();
     const [modalOpenAdd, setModalOpenAdd] = useState(false);
     const [modalOpenDelete, setModalDelete] = useState(false);
+    const [modalOpenAddKomite, setModalOpenAddKomite] = useState(false);
     const [dataMatDamKomite, setDataMatDamKomite] = useState<ValuesShowMatDamKomite[]>([]);
     const [requestMatDamKomite, setRequestMatDamKomite] = useState<ReqAddMatDamKomite>({ ...initReqAddMatDamKomite });
     const [requestMatDamUpr, setRequestMatDamUpr] = useState<ReqAddMatDamUpr>({ ...initReqAddMatDamUpr });
@@ -45,10 +46,6 @@ const useKriteriaDampakVM = () => {
             uraian_penetapan_object_id: objectState?.id ?? 0,
         };
 
-        // console.log(requestMatDamKomite);
-        // console.log(requestMatDamUpr);
-
-
         const params = {
             body: req,
             loadingContext: loadingContext,
@@ -57,18 +54,8 @@ const useKriteriaDampakVM = () => {
 
         const response = await doCreateMatDamKomite(params);
         if (response?.code == API_CODE.success) {
-            const newMatrixId = response.result.id;
-
-            if (requestMatDamUpr.lists[0].value != "") {
-                const newRequestUpr = {
-                    ...requestMatDamUpr,
-                    matrix_id: newMatrixId,
-                };
-
-                const show = await createMatDamUpr(newRequestUpr);
-            }
-
-            setModalOpenAdd(false);
+            showMatDamKomite()
+            setModalOpenAddKomite(false);
         }
     }
 
@@ -123,6 +110,8 @@ const useKriteriaDampakVM = () => {
         loading,
         modalOpenAdd,
         setModalOpenAdd,
+        modalOpenAddKomite,
+        setModalOpenAddKomite,
         modalOpenDelete,
         setModalDelete,
         requestMatDamKomite,

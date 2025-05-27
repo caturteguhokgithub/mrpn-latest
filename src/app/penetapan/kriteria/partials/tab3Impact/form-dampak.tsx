@@ -19,7 +19,7 @@ import { red } from "@mui/material/colors";
 import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
 import Iconify from "@/app/components/icons/iconify";
 import DialogComponent from "@/app/components/dialog";
-import { ReqAddMatDamKomite, ReqAddMatDamUpr } from "./hooks/model";
+import { ReqAddMatDamKomite, ReqAddMatDamUpr, ValuesShowMatDamKomite } from "./hooks/model";
 
 const ItemDampak = ({
   children,
@@ -53,12 +53,16 @@ const ItemDampak = ({
 
 export default function FormDampak({
   mode,
+  optionAD,
+  setModalOpenAddKomite,
   stateKom,
   setStateKom,
   stateUpr,
   setStateUpr,
 }: {
   mode?: string;
+  optionAD?: ValuesShowMatDamKomite[],
+  setModalOpenAddKomite?: any
   stateKom?: ReqAddMatDamKomite;
   setStateKom?: (value: SetStateAction<ReqAddMatDamKomite>) => void;
   stateUpr?: ReqAddMatDamUpr;
@@ -101,6 +105,14 @@ export default function FormDampak({
     "Layanan Publik",
     "Capaian Kinerja",
   ];
+
+  const handleChangeAD = async (id: number) => {
+    // console.log(id);
+    setStateUpr && setStateUpr((prevState) => ({
+      ...prevState,
+      matrix_id: id
+    }))
+  }
 
   const handleSubChange = (index: number, value: string) => {
     if (setStateUpr) {
@@ -155,8 +167,6 @@ export default function FormDampak({
     }
   };
 
-  const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
-
   return (
     <Fragment>
       <Grid container spacing={2}>
@@ -180,19 +190,20 @@ export default function FormDampak({
                   />
                 ) : (
                   <AutocompleteSelectSingle
-                    value={listAreaDampak.find(
-                      (dampak) => dampak === stateKom?.dampak
+                    value={optionAD?.find(
+                      (option) => option.id === stateUpr?.matrix_id
                     )}
                     // value={value}
-                    options={listAreaDampak.map((option) => option)}
-                    getOptionLabel={(option) => `${option}`}
-                    handleChange={(newValue: string) =>
-                      setStateKom
-                        ? setStateKom((prevState) => ({
-                            ...prevState,
-                            dampak: newValue,
-                          }))
-                        : ""
+                    options={optionAD ?? []}
+                    getOptionLabel={(option) => `${option.dampak}`}
+                    handleChange={(newValue: ValuesShowMatDamKomite) =>
+                      handleChangeAD(newValue.id)
+                      // setStateKom
+                      //   ? setStateKom((prevState) => ({
+                      //     ...prevState,
+                      //     dampak: newValue,
+                      //   }))
+                      //   : ""
                     }
                     // handleChange={(newValue: any) =>
                     //   handleChangeSelect(newValue)
@@ -204,7 +215,7 @@ export default function FormDampak({
                         variant="outlined"
                         color="primary"
                         startIcon={<Iconify name="mdi:plus-circle" />}
-                        onMouseDown={() => setModalOpenAdd(true)}
+                        onMouseDown={() => setModalOpenAddKomite(true)}
                       >
                         Tambah Area Dampak
                       </Button>
@@ -308,11 +319,11 @@ export default function FormDampak({
                             onChange={(e) =>
                               handleAreaChange(key, 2, e.target.value)
                             }
-                            // value={
-                            //   mode == "edit"
-                            //     ? "Prosentase pemberitaan negatif 10% < x ≤ 20%"
-                            //     : undefined
-                            // }
+                          // value={
+                          //   mode == "edit"
+                          //     ? "Prosentase pemberitaan negatif 10% < x ≤ 20%"
+                          //     : undefined
+                          // }
                           />
                         </ItemDampak>
                       </Grid>
@@ -330,11 +341,11 @@ export default function FormDampak({
                             onChange={(e) =>
                               handleAreaChange(key, 3, e.target.value)
                             }
-                            // value={
-                            //   mode == "edit"
-                            //     ? "Prosentase pemberitaan negatif 20% < x ≤ 30%"
-                            //     : undefined
-                            // }
+                          // value={
+                          //   mode == "edit"
+                          //     ? "Prosentase pemberitaan negatif 20% < x ≤ 30%"
+                          //     : undefined
+                          // }
                           />
                         </ItemDampak>
                       </Grid>
@@ -352,12 +363,12 @@ export default function FormDampak({
                             onChange={(e) =>
                               handleAreaChange(key, 4, e.target.value)
                             }
-                            // value={
-                            //   mode == "edit"
-                            //   ? "Prosentase pemberitaan negatif 30% < x ≤ 40%"
-                            //   : undefined
-                            // }
-                            // width="100%"
+                          // value={
+                          //   mode == "edit"
+                          //   ? "Prosentase pemberitaan negatif 30% < x ≤ 40%"
+                          //   : undefined
+                          // }
+                          // width="100%"
                           />
                         </ItemDampak>
                       </Grid>
@@ -375,12 +386,12 @@ export default function FormDampak({
                             onChange={(e) =>
                               handleAreaChange(key, 5, e.target.value)
                             }
-                            // value={
-                            //   mode == "edit"
-                            //   ? "Prosentase pemberitaan negatif > 40%"
-                            //   : undefined
-                            // }
-                            // width="100%"
+                          // value={
+                          //   mode == "edit"
+                          //   ? "Prosentase pemberitaan negatif > 40%"
+                          //   : undefined
+                          // }
+                          // width="100%"
                           />
                         </ItemDampak>
                       </Grid>
@@ -392,48 +403,6 @@ export default function FormDampak({
           </Fragment>
         )}
       </Grid>
-      <DialogComponent
-        width={500}
-        dialogOpen={modalOpenAdd}
-        dialogClose={() => setModalOpenAdd(false)}
-        title="Tambah Area Dampak"
-        dialogFooter={
-          <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button onClick={() => setModalOpenAdd(false)}>Batal</Button>
-            <Button variant="contained" type="submit">
-              Simpan
-            </Button>
-          </DialogActions>
-        }
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <FieldLabelInfo title="Area Dampak" />
-            <TextField
-              fullWidth
-              variant="outlined"
-              size="small"
-              placeholder="Area Dampak"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FieldLabelInfo title="Nomor Urut Prioritas" />
-            <TextField
-              type="number"
-              fullWidth
-              variant="outlined"
-              size="small"
-              placeholder="Nomor Urut Prioritas"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
-        </Grid>
-      </DialogComponent>
     </Fragment>
   );
 }
