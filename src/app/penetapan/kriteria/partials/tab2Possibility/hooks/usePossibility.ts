@@ -13,6 +13,7 @@ import {
   initPossibility,
 } from "./possibilityModel";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
+import { id } from "date-fns/locale";
 // import { cloneDeep } from "lodash";
 
 const usePossibilityList = () => {
@@ -61,15 +62,20 @@ const usePossibilityList = () => {
 
     if (response?.code == API_CODE.success) {
       let result: ResultPossibility[] = response.result;
-      // console.log({ result });
+      console.log({ result });
       if (result) {
         setDataPossibility(result);
-        // const mappedValues = result.map((item) => ({
-        //   level_kemungkinan: item.level_kemungkinan,
-        //   probabilitas: item.probabilitas,
-        //   jumlah_frekuensi: item.jumlah_frekuensi,
-        //   low_frekuensi: item.low_frekuensi,
-        // }));
+
+        const mappedValues = result.map((item) => ({
+          id: item.id,
+          uraian_penetapan_objek_id: item.uraian_penetapan_objek_id,
+          level_kemungkinan: item.level_kemungkinan,
+          probabilitas: item.probabilitas,
+          jumlah_frekuensi: item.jumlah_frekuensi,
+          low_frekuensi: item.low_frekuensi,
+        }));
+
+        setPayloadValues(mappedValues);
 
         // setRequestPossibility({
         //   uraian_penetapan_objek_id: result[0]?.uraian_penetapan_objek_id ?? 0,
