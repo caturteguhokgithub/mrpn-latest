@@ -19,11 +19,10 @@ import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import { UnitPengelolaRisikoEntity } from "@/app/penetapan/objek/pageModel";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
-import { grey } from "@mui/material/colors";
+import { blue, grey } from "@mui/material/colors";
 import { bgColorTh } from "@/app/utils/color";
 import { listUpr, listObject } from "../data"; // Import listObject and listUpr
 import Iconify from "@/app/components/icons/iconify";
-import usePenetapanObjectVM from "../pageVM";
 
 function createData(name: string) {
   return {
@@ -56,12 +55,29 @@ function Row(props: {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          <Typography component="span" color={grey[600]}>
-            Objek Shortlist:
-          </Typography>{" "}
-          <Typography component="span" fontWeight={500}>
-            {row.name}
-          </Typography>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            gap={1}
+          >
+            <Stack direction="row" alignItems="center" gap={1}>
+              <Typography component="span" color={grey[600]}>
+                Objek Shortlist:
+              </Typography>{" "}
+              <Typography component="span" fontWeight={500}>
+                {row.name}
+              </Typography>
+            </Stack>
+            <Button
+              color="primary"
+              size="small"
+              variant="outlined"
+              sx={{ gap: 0.5, borderRadius: 24 }}
+            >
+              <Iconify name="mdi:edit" size={16} /> Ubah Objek
+            </Button>
+          </Stack>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -137,12 +153,21 @@ function Row(props: {
                           <TableCell>{entity.value}</TableCell>
                           {UnitPengelolaRisikoEntity.map((uprItem) => (
                             <TableCell align="center" key={uprItem.id}>
-                              <Radio
+                              {/* <Radio
                                 name={`radio-${i}`}
                                 value={uprItem.id}
                                 checked={entity.upr === uprItem.id}
                                 onChange={() => {}}
-                              />
+                              /> */}
+                              <Stack direction="row" justifyContent="center">
+                                {entity.upr === uprItem.id ? (
+                                  <Iconify
+                                    name="mdi:check-circle-outline"
+                                    size={20}
+                                    color={blue[600]}
+                                  />
+                                ) : null}
+                              </Stack>
                             </TableCell>
                           ))}
                         </TableRow>
@@ -194,7 +219,7 @@ export default function CollapsibleTableUpr({
           </TableBody>
         </Table>
       </TableContainer>
-      {!showSave && (
+      {/* {!showSave && (
         <Stack direction="row" justifyContent="flex-end">
           <Box mt={2}>
             <Button
@@ -209,7 +234,7 @@ export default function CollapsibleTableUpr({
             </Button>
           </Box>
         </Stack>
-      )}
+      )} */}
     </Fragment>
   );
 }

@@ -1,47 +1,38 @@
+"use client";
+
 import { Alert, Snackbar } from "@mui/material";
 import { Slide, SlideProps } from "@mui/material";
 import React from "react";
 import Iconify from "../icons/iconify";
+import { useToast } from "@/lib/core/context/toastContext";
 
 function SlideTransition(props: SlideProps) {
   return <Slide {...props} direction="down" />;
 }
 
-export default function Toast({
-  label,
-  open,
-  handleClose,
-  color,
-}: {
-  label: string;
-  open: boolean;
-  handleClose?: any;
-  color?: string;
-}) {
+export default function Toast() {
+  const { toast, hideToast } = useToast();
+
   return (
     <Snackbar
-      open={open}
+      open={toast.isOpen}
       autoHideDuration={3000}
-      onClose={handleClose}
+      onClose={hideToast}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
       TransitionComponent={SlideTransition}
     >
       <Alert
-        onClose={handleClose}
-        severity={
-          color === "success"
-            ? "success"
-            : color === "warning"
-            ? "warning"
-            : color === "error"
-            ? "error"
-            : "info"
-        }
+        onClose={hideToast}
+        severity={toast.type}
         variant="filled"
-        icon={color === "error" ? <Iconify name="mdi:trash" /> : undefined}
+        icon={
+          toast.type === "error" ? (
+            <Iconify name="mdi:delete-forever-outline" size={22} />
+          ) : undefined
+        }
         sx={{ width: "100%" }}
       >
-        {label}
+        {toast.message}
       </Alert>
     </Snackbar>
   );

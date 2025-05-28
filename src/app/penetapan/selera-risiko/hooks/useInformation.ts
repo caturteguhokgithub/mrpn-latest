@@ -38,8 +38,6 @@ const useInformationList = () => {
   const [modalViewImage, setModalViewImage] = useState(false);
   const [modalOpenDelete, setModalDelete] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
-  const [toastDelete, setToastDelete] = useState<boolean>(false);
-  const [toastSave, setToastSave] = useState<boolean>(false);
 
   const [request, setRequest] = useState<doReqInformasiLainnya>({
     ...initAddInformasiLainnyaDto,
@@ -88,7 +86,6 @@ const useInformationList = () => {
         getData();
         setRequest(initAddInformasiLainnyaDto);
         setModal(false);
-        // setToastSave(true);
       }
     }
   }
@@ -132,10 +129,6 @@ const useInformationList = () => {
     setModalEdit,
     createOrUpdateData,
     deleteListData,
-    toastDelete,
-    setToastDelete,
-    toastSave,
-    setToastSave,
   };
 };
 

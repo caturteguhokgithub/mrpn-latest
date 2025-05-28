@@ -35,7 +35,7 @@ import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import DialogDelete from "@/app/components/dialogDelete";
-import Toast from "@/app/components/snackbar/snackbar";
+import { useToast } from "@/lib/core/context/toastContext";
 
 type Row = {
   object: string;
@@ -64,16 +64,11 @@ export default function TableNotaDinasViewOnly({
   const { rpjmn, year } = useRKPContext((state) => state);
 
   const { objectState } = usePenetapanObjectVM();
-  const {
-    stateShorList,
-    getPenetapanObjectShortList,
-    toastDelete,
-    setToastDelete,
-    toastSave,
-    setToastSave,
-  } = usePenetapanObjectVM();
+  const { stateShorList, getPenetapanObjectShortList } = usePenetapanObjectVM();
   const { gambar, uploadImage, modalDelete, setModalDelete, deleteNodin } =
     useNotaDinasVM();
+
+  const { showToast } = useToast();
 
   const handleDeleteListData = async () => {
     deleteNodin(deleteID);
@@ -204,7 +199,7 @@ export default function TableNotaDinasViewOnly({
         console.error("Error: ", error);
       };
 
-      setToastSave(true);
+      showToast("Data berhasil disimpan", "success");
     }
   };
 
@@ -1199,20 +1194,8 @@ export default function TableNotaDinasViewOnly({
         handleCloseModal={() => setModalDelete(false)}
         handleDelete={() => {
           handleDeleteListData();
-          setToastDelete(true);
+          showToast("Data berhasil dihapus", "error");
         }}
-      />
-      <Toast
-        color="error"
-        label="Data berhasil dihapus"
-        open={toastDelete}
-        handleClose={() => setToastDelete(false)}
-      />
-      <Toast
-        color="success"
-        label="Data berhasil disimpan"
-        open={toastSave}
-        handleClose={() => setToastSave(false)}
       />
     </Fragment>
   );

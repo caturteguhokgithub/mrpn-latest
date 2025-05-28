@@ -37,6 +37,7 @@ import DialogDelete from "@/app/components/dialogDelete";
 import { listsDao } from "../hooks/informationModel";
 import Toast from "@/app/components/snackbar/snackbar";
 import usePenetapanObjectVM from "../../objek/pageVM";
+import { useToast } from "@/lib/core/context/toastContext";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -61,11 +62,9 @@ export default function CardInformation({
     setModalDelete,
     createOrUpdateData,
     deleteListData,
-    toastDelete,
-    setToastDelete,
-    toastSave,
-    setToastSave,
   } = useInformationList();
+
+  const { showToast } = useToast();
 
   const [lihatBD, setLihatBD] = useState("");
   const [deleteID, setDeleteID] = useState(0);
@@ -92,7 +91,6 @@ export default function CardInformation({
       ...request,
     };
     createOrUpdateData(req);
-    // setToastSave(true);
   };
 
   const handleDeleteListData = async () => {
@@ -385,20 +383,8 @@ export default function CardInformation({
         handleCloseModal={() => setModalDelete(false)}
         handleDelete={() => {
           handleDeleteListData();
-          setToastDelete(true);
+          showToast("Data berhasil dihapus", "error");
         }}
-      />
-      <Toast
-        color="error"
-        label="Data berhasil dihapus"
-        open={toastDelete}
-        handleClose={() => setToastDelete(false)}
-      />
-      <Toast
-        color="success"
-        label="Data berhasil disimpan"
-        open={toastSave}
-        handleClose={() => setToastSave(false)}
       />
     </Fragment>
   );

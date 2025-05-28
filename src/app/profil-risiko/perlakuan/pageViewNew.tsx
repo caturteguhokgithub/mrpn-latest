@@ -463,7 +463,7 @@ yang telah ditetapkan"
           year == 0 ? (
             ""
           ) : (
-            <FormControl size="small" sx={{ width: "20vw" }}>
+            <FormControl size="small">
               <AutocompleteSelectSingle
                 rounded
                 value={objectState}

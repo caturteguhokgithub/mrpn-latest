@@ -16,7 +16,13 @@ import { blue, grey, red } from "@mui/material/colors";
 import { Stack } from "@mui/material";
 import Iconify from "@/app/components/icons/iconify";
 import AddButton from "@/app/components/buttonAdd";
-import { AreasShowMatDamKomite, ReqAddMatDamKomite, ReqAddMatDamUpr, ResShowMatDamKomite, ValuesShowMatDamKomite } from "./hooks/model";
+import {
+  AreasShowMatDamKomite,
+  ReqAddMatDamKomite,
+  ReqAddMatDamUpr,
+  ResShowMatDamKomite,
+  ValuesShowMatDamKomite,
+} from "./hooks/model";
 
 // function createData(areaDampak: string) {
 //   return {
@@ -59,16 +65,28 @@ import { AreasShowMatDamKomite, ReqAddMatDamKomite, ReqAddMatDamUpr, ResShowMatD
 
 function Row(props: {
   row: ValuesShowMatDamKomite;
-  setRequestMatDamKomite?: (value: React.SetStateAction<ReqAddMatDamKomite>) => void;
+  setRequestMatDamKomite?: (
+    value: React.SetStateAction<ReqAddMatDamKomite>
+  ) => void;
   setRequestMatDamUpr?: (value: React.SetStateAction<ReqAddMatDamUpr>) => void;
   handleEdit: any;
   handleEditArea: any;
   handleDelete?: any;
 }) {
-  const { row, handleEdit, handleEditArea, handleDelete, setRequestMatDamUpr, setRequestMatDamKomite } = props;
+  const {
+    row,
+    handleEdit,
+    handleEditArea,
+    handleDelete,
+    setRequestMatDamUpr,
+    setRequestMatDamKomite,
+  } = props;
   const [open, setOpen] = React.useState(true);
 
-  const prosesBtnEdit = (komite: ValuesShowMatDamKomite, upr: AreasShowMatDamKomite) => {
+  const prosesBtnEdit = (
+    komite: ValuesShowMatDamKomite,
+    upr: AreasShowMatDamKomite
+  ) => {
     if (setRequestMatDamUpr) {
       setRequestMatDamUpr((prevState) => ({
         ...prevState,
@@ -78,9 +96,9 @@ function Row(props: {
           {
             id: upr.id,
             value: upr.value,
-            area: upr.area_levels
-          }
-        ]
+            area: upr.area_levels,
+          },
+        ],
       }));
     }
 
@@ -91,25 +109,25 @@ function Row(props: {
       }));
     }
 
-    handleEdit()
+    handleEdit();
   };
 
   const prosesBtnAdd = (value: ValuesShowMatDamKomite) => {
     if (setRequestMatDamUpr) {
       setRequestMatDamUpr((prevState) => ({
         ...prevState,
-        matrix_id: value.id
+        matrix_id: value.id,
       }));
     }
 
     if (setRequestMatDamKomite) {
       setRequestMatDamKomite((prevState) => ({
         ...prevState,
-        dampak: value.dampak
+        dampak: value.dampak,
       }));
     }
 
-    handleEdit()
+    handleEdit();
   };
 
   const prosesBtnDelete = (upr: AreasShowMatDamKomite) => {
@@ -121,7 +139,7 @@ function Row(props: {
       }));
     }
 
-    handleDelete()
+    handleDelete();
   };
 
   return (
@@ -136,19 +154,19 @@ function Row(props: {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell colSpan={7} sx={{ fontWeight: 600, bgcolor: blue[100] }}>
+        <TableCell colSpan={8} sx={{ fontWeight: 600, bgcolor: blue[100] }}>
           {row.dampak}
         </TableCell>
-        {/* <TableCell>
+        <TableCell>
           <Stack direction="row">
-            <IconButton onClick={handleEditArea}>
+            {/* <IconButton onClick={handleEditArea}>
               <Iconify name="mdi:pencil" color={blue[500]} />
-            </IconButton>
+            </IconButton> */}
             <IconButton onClick={handleDelete}>
               <Iconify name="mdi:trash" color={red[500]} />
             </IconButton>
           </Stack>
-        </TableCell> */}
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell colSpan={9} sx={{ bgcolor: grey[200], p: 0 }}>
@@ -246,7 +264,9 @@ function Row(props: {
                         {resultRow.value}
                       </TableCell>
                       {[1, 2, 3, 4, 5].map((level) => {
-                        const item = resultRow.area_levels.find((lvl) => lvl.level == level);
+                        const item = resultRow.area_levels.find(
+                          (lvl) => lvl.level == level
+                        );
                         return (
                           <TableCell key={level} sx={{ bgcolor: grey[50] }}>
                             {item ? item.value : "-"}
@@ -259,10 +279,14 @@ function Row(props: {
                         }}
                       >
                         <Stack direction="row">
-                          <IconButton onClick={() => prosesBtnEdit(row, resultRow)}>
+                          <IconButton
+                            onClick={() => prosesBtnEdit(row, resultRow)}
+                          >
                             <Iconify name="mdi:pencil" color={blue[500]} />
                           </IconButton>
-                          <IconButton onClick={() => prosesBtnDelete(resultRow)}>
+                          <IconButton
+                            onClick={() => prosesBtnDelete(resultRow)}
+                          >
                             <Iconify name="mdi:trash" color={red[500]} />
                           </IconButton>
                         </Stack>
@@ -294,8 +318,10 @@ export default function CollapsibleImpactTable({
   handleEditArea,
   handleDelete,
 }: {
-  data: ValuesShowMatDamKomite[]
-  setRequestMatDamKomite?: (value: React.SetStateAction<ReqAddMatDamKomite>) => void;
+  data: ValuesShowMatDamKomite[];
+  setRequestMatDamKomite?: (
+    value: React.SetStateAction<ReqAddMatDamKomite>
+  ) => void;
   setRequestMatDamUpr?: (value: React.SetStateAction<ReqAddMatDamUpr>) => void;
   handleEdit?: any;
   handleEditArea?: any;
@@ -336,7 +362,7 @@ export default function CollapsibleImpactTable({
               width={50}
               sx={{ bgcolor: bgColorTh }}
             ></TableCell>
-            <TableCell colSpan={7} align="center" sx={{ bgcolor: bgColorTh }}>
+            <TableCell colSpan={8} align="center" sx={{ bgcolor: bgColorTh }}>
               Area Dampak
             </TableCell>
             {/* <TableCell width={110} align="center" sx={{ bgcolor: bgColorTh }}>

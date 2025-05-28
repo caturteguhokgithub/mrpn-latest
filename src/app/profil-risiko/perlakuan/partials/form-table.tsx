@@ -211,7 +211,10 @@ const TablePerlakuanMultiCheck = ({
                     onChange={(e) => handleChecked(e.target.checked, row)}
                   />
                 </TableCell>
-                <TableCell>{highlightText(row.value, search)}</TableCell>
+                <TableCell>
+                  {"[No_RO]"} - {"[Kode_PKKR]"} -{" "}
+                  {highlightText(row.value, search)}
+                </TableCell>
                 {/*{multiyear.map((y, iY) => (*/}
                 {/*  <>*/}
                 {/*    <TableCell>*/}
@@ -479,7 +482,31 @@ export default function FormTable({
         <Grid item xs={12}>
           <DividerSection title="Perlakuan Risiko" />
         </Grid>
-
+        <Grid item xs={12}>
+          <FormControl fullWidth>
+            <FieldLabelInfo title="Keputusan" />
+            {mode !== "read" ? (
+              <AutocompleteSelectSingle
+                bgWhite
+                key={state.keputusan ? state.keputusan : "keputusan"}
+                value={state.keputusan}
+                options={optionsRiskDecision}
+                getOptionLabel={(opt) => opt}
+                handleChange={(e: string) =>
+                  setState((prevState) => {
+                    return {
+                      ...prevState,
+                      keputusan: e,
+                    };
+                  })
+                }
+                placeHolder={"Pilih keputusan"}
+              />
+            ) : (
+              <Typography fontWeight={600}>{state.keputusan}</Typography>
+            )}
+          </FormControl>
+        </Grid>
         <Grid item xs={12}>
           <Stack
             direction="row"
@@ -501,7 +528,6 @@ export default function FormTable({
               onclick={perlakuanAdd}
             />
           </Stack>
-
           <Stack direction="column" gap={2}>
             {items.map((tags: any) => (
               <Paper
@@ -529,33 +555,7 @@ export default function FormTable({
                       )}
                     </Stack>
                   </Grid>
-                  <Grid item xs={12}>
-                    <FormControl fullWidth>
-                      <FieldLabelInfo title="Keputusan" />
-                      {mode !== "read" ? (
-                        <AutocompleteSelectSingle
-                          bgWhite
-                          key={state.keputusan ? state.keputusan : "keputusan"}
-                          value={state.keputusan}
-                          options={optionsRiskDecision}
-                          getOptionLabel={(opt) => opt}
-                          handleChange={(e: string) =>
-                            setState((prevState) => {
-                              return {
-                                ...prevState,
-                                keputusan: e,
-                              };
-                            })
-                          }
-                          placeHolder={"Pilih keputusan"}
-                        />
-                      ) : (
-                        <Typography fontWeight={600}>
-                          {state.keputusan}
-                        </Typography>
-                      )}
-                    </FormControl>
-                  </Grid>
+
                   <Grid item xs={12}>
                     <FormControl fullWidth>
                       <FieldLabelInfo
