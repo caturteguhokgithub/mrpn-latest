@@ -127,6 +127,7 @@ const useCategoryList = () => {
 
     if (response?.code == API_CODE.success) {
       getData();
+      setRequestMasterCategory({ ...initMasterCategory })
       setModalOpenAddMasterCategory(false);
     }
   }
