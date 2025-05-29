@@ -1,8 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment, SetStateAction } from "react";
 import {
   Box,
   Button,
   Collapse,
+  DialogActions,
+  FormControl,
+  Grid,
   IconButton,
   Paper,
   Radio,
@@ -13,6 +16,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Typography,
 } from "@mui/material";
 import EmptyState from "@/app/components/empty";
@@ -23,6 +27,9 @@ import { blue, grey } from "@mui/material/colors";
 import { bgColorTh } from "@/app/utils/color";
 import { listUpr, listObject } from "../data"; // Import listObject and listUpr
 import Iconify from "@/app/components/icons/iconify";
+import DialogComponent from "@/app/components/dialog";
+import usePenetapanObjectVM from "../pageVM";
+import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 
 function createData(name: string) {
   return {
@@ -34,8 +41,9 @@ function Row(props: {
   row: ReturnType<typeof createData>;
   mode?: string;
   uprData: any[];
+  setModalObjek?: any;
 }) {
-  const { row, mode, uprData } = props;
+  const { row, mode, uprData, setModalObjek } = props;
   const [open, setOpen] = React.useState(true);
 
   return (
@@ -73,6 +81,7 @@ function Row(props: {
               color="primary"
               size="small"
               variant="outlined"
+              onClick={() => setModalObjek(true)}
               sx={{ gap: 0.5, borderRadius: 24 }}
             >
               <Iconify name="mdi:edit" size={16} /> Ubah Objek
@@ -153,12 +162,6 @@ function Row(props: {
                           <TableCell>{entity.value}</TableCell>
                           {UnitPengelolaRisikoEntity.map((uprItem) => (
                             <TableCell align="center" key={uprItem.id}>
-                              {/* <Radio
-                                name={`radio-${i}`}
-                                value={uprItem.id}
-                                checked={entity.upr === uprItem.id}
-                                onChange={() => {}}
-                              /> */}
                               <Stack direction="row" justifyContent="center">
                                 {entity.upr === uprItem.id ? (
                                   <Iconify
@@ -191,6 +194,8 @@ export default function CollapsibleTableUpr({
   showSave?: boolean;
   setShowSave?: any;
 }) {
+  const { modalObjek, setModalObjek } = usePenetapanObjectVM();
+
   return (
     <Fragment>
       <TableContainer
@@ -213,6 +218,7 @@ export default function CollapsibleTableUpr({
                   key={object.id}
                   row={createData(object.value)}
                   uprData={uprData}
+                  setModalObjek={setModalObjek}
                 />
               );
             })}
@@ -235,6 +241,42 @@ export default function CollapsibleTableUpr({
           </Box>
         </Stack>
       )} */}
+      <DialogComponent
+        title="Tambah Objek Shortlist"
+        width={600}
+        dialogOpen={modalObjek}
+        dialogClose={() => setModalObjek(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button onClick={() => setModalObjek(false)}>Batal</Button>
+            <Button
+              variant="contained"
+              // onClick={() => updateOrCreateTopic()}
+              sx={{
+                color: "white !important",
+              }}
+            >
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <FieldLabelInfo title="Objek Shortlist" />
+              <TextField
+                variant="outlined"
+                size="small"
+                placeholder="Objek shortlist"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </FormControl>
+          </Grid>
+        </Grid>
+      </DialogComponent>
     </Fragment>
   );
 }

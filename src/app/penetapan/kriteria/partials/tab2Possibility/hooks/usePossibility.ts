@@ -13,7 +13,6 @@ import {
   initPossibility,
 } from "./possibilityModel";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
-import { id } from "date-fns/locale";
 // import { cloneDeep } from "lodash";
 
 const usePossibilityList = () => {
@@ -48,12 +47,20 @@ const usePossibilityList = () => {
     "Hampir pasti terjadi (5)",
   ];
 
+  const sorterList = (dataPossibility:any) => {
+    const listSorterPossibility = dataPossibility.sort((a:any, b:any) => {
+      const getNumber = (str: any) => parseInt(str.match(/\((\d+)\)/)?.[1]);
+      return getNumber(a.level_kemungkinan) - getNumber(b.level_kemungkinan);
+    });
+
+    return listSorterPossibility;
+  };
+
+
   async function getData() {
     setLoading(true);
     const response = await doGetPossibility({
       body: {
-        // uraian_penetapan_objek_id: 78,
-        // uraian_penetapan_object_id: objectState?.id,
         uraian_penetapan_objek_id: kpPenetapanObj?.id,
       },
       loadingContext: loadingContext,
@@ -65,35 +72,24 @@ const usePossibilityList = () => {
       console.log({ result });
       if (result) {
         setDataPossibility(result);
-
-        const mappedValues = result.map((item) => ({
-          id: item.id,
-          uraian_penetapan_objek_id: item.uraian_penetapan_objek_id,
-          level_kemungkinan: item.level_kemungkinan,
-          probabilitas: item.probabilitas,
-          jumlah_frekuensi: item.jumlah_frekuensi,
-          low_frekuensi: item.low_frekuensi,
-        }));
-
+        const mappedValues = sorterList(result);
         setPayloadValues(mappedValues);
-
-        // setRequestPossibility({
-        //   uraian_penetapan_objek_id: result[0]?.uraian_penetapan_objek_id ?? 0,
-        //   values: mappedValues,
-        // });
 
         setLoading(false);
       } else {
         setRequestPossibility(initPossibility);
         setDataPossibility([]);
+        setPayloadValues([])
         setLoading(false);
       }
     }
   }
 
   async function updatePossibility() {
-    const values: doValues[] = payloadValues.map((item) => ({
-      level_kemungkinan: item.level_kemungkinan,
+    console.log({payloadValues});
+
+    const values: doValues[] = payloadValues.map((item, idx:number) => ({
+      level_kemungkinan: defaultDropdownList[idx],
       probabilitas: item.probabilitas,
       jumlah_frekuensi: item.jumlah_frekuensi,
       low_frekuensi: item.low_frekuensi,
@@ -117,6 +113,7 @@ const usePossibilityList = () => {
       getData();
     }
   }
+
 
   // "uraian_penetapan_objek_id": 302,
   const handleDeleteTables = async () => {
@@ -197,7 +194,7 @@ const usePossibilityList = () => {
     low_frekuensi: "",
   }));
 
-  const [payloadValues, setPayloadValues] = useState(defaultValuesStatetemp);
+  const [payloadValues, setPayloadValues] = useState([] as ResultPossibility[]);
 
   const handleChangePayload = (index: number, field: string, value: any) => {
     setPayloadValues((prevValues) => {
@@ -206,7 +203,7 @@ const usePossibilityList = () => {
         ...updatedValues[index],
         [field]: value,
       };
-      console.log({ updatedValues });
+      
 
       return updatedValues;
     });
@@ -230,7 +227,7 @@ const usePossibilityList = () => {
     updatePossibility,
     requestPossibility,
     setRequestPossibility,
-    listDataPossibility: listSorterPossibility,
+    listDataPossibility: payloadValues,
     loading,
     modalOpenDelete,
     setModalDelete,

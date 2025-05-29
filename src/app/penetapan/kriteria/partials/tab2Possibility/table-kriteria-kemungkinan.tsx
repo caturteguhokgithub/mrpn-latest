@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useMemo } from "react";
 import {
   IconButton,
   Paper,
@@ -29,11 +29,62 @@ export default function TableKemungkinan({
   handleModalEdit?: () => void;
   handleModalDelete?: () => void;
 }) {
-  const { listDataPossibility, loading, isDisabledAdd } = usePossibilityList();
+  const { payloadValues, loading, isDisabledAdd } = usePossibilityList();
 
   if (loading) {
     return <div>loading...</div>;
   }
+
+  const renderTableRows = () => {
+    switch (mode) {
+      case "reference":
+        return (
+          <>
+            {referencePossibility.map((item) => (
+              <TableRow
+                key={item.id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell>{item.level}</TableCell>
+                <TableCell>{item.persentase}</TableCell>
+                <TableCell>
+                  {item.jumlah} atau {item.lfe}
+                </TableCell>
+              </TableRow>
+            ))}
+          </>
+        );
+      default:
+        return (
+          <TableRow>
+            <TableCell colSpan={4}>
+              <EmptyState
+                icon={<IconEmptyData />}
+                title="Data Kosong"
+                description="Silahkan isi konten tabel ini"
+              />
+            </TableCell>
+          </TableRow>
+        );
+    }
+  };
+
+  const renderTablesNotEmpty = () => {
+    return (
+      <Fragment>
+        {payloadValues.map((row: ResultPossibility) => (
+          <TableRow
+            key={row.id}
+            sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+          >
+            <TableCell>{row.level_kemungkinan}</TableCell>
+            <TableCell>{row.probabilitas}</TableCell>
+            <TableCell>{row.jumlah_frekuensi}</TableCell>
+          </TableRow>
+        ))}
+      </Fragment>
+    );
+  };
 
   return (
     <TableContainer component={Paper} elevation={0} variant="outlined">
@@ -61,99 +112,18 @@ export default function TableKemungkinan({
             <TableCell colSpan={2} align="center" sx={{ bgcolor: bgColorTh }}>
               Kemungkinan Terjadi
             </TableCell>
-            {/* <TableCell rowSpan={2} align="center" sx={{ bgcolor: bgColorTh }}>
-              Aksi
-            </TableCell> */}
           </TableRow>
           <TableRow>
             <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
-              {/* Non low frequency event dalam 1 periode analisis */}
               Persentase
             </TableCell>
             <TableCell sx={{ bgcolor: bgColorTh }} align="center">
-              {/* Low Frequency Event */}
               Frekuensi
             </TableCell>
           </TableRow>
-          {/* <TableRow>
-            <TableCell sx={{ bgcolor: bgColorTh }} align="center">
-              Probabilitas
-            </TableCell>
-            <TableCell sx={{ bgcolor: bgColorTh }} align="center">
-              Jumlah Frekuensi
-            </TableCell>
-          </TableRow> */}
         </TableHead>
         <TableBody>
-          {mode === "add" ? (
-            <TableRow>
-              <TableCell colSpan={4}>
-                <EmptyState
-                  icon={<IconEmptyData />}
-                  title="Data Kosong"
-                  description="Silahkan isi konten tabel ini"
-                />
-              </TableCell>
-            </TableRow>
-          ) : mode === "reference" ? (
-            <>
-              {referencePossibility.map((item) => (
-                <TableRow
-                  key={item.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell>{item.level}</TableCell>
-                  <TableCell>{item.persentase}</TableCell>
-                  <TableCell>
-                    {item.jumlah} atau {item.lfe}
-                  </TableCell>
-                  {/* <TableCell>{item.lfe}</TableCell> */}
-                </TableRow>
-              ))}
-            </>
-          ) : (
-            <>
-              {listDataPossibility.map((row: ResultPossibility) => (
-                <TableRow
-                  key={row.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell>{row.level_kemungkinan}</TableCell>
-                  <TableCell>{row.probabilitas}</TableCell>
-                  <TableCell>
-                    {/* {row.jumlah_frekuensi} atau {row.low_frekuensi} */}
-                    {row.jumlah_frekuensi}
-                  </TableCell>
-                  {/* <TableCell>
-                    <Stack direction="row">
-                      <IconButton
-                        onClick={handleModalEdit}
-                        sx={{
-                          py: 0,
-                          "&:hover": {
-                            bgcolor: "transparent",
-                          },
-                        }}
-                      >
-                        <Iconify name="mdi:pencil" color={blue[500]} />
-                      </IconButton>
-                      <IconButton
-                        onClick={handleModalDelete}
-                        sx={{
-                          py: 0,
-                          "&:hover": {
-                            bgcolor: "transparent",
-                          },
-                        }}
-                      >
-                        <Iconify name="mdi:trash" color={red[500]} />
-                      </IconButton>
-                    </Stack>
-                  </TableCell> */}
-                </TableRow>
-              ))}
-            </>
-          )}
+          {payloadValues?.length ? renderTablesNotEmpty() : renderTableRows()}
         </TableBody>
       </Table>
     </TableContainer>
