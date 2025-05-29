@@ -105,31 +105,27 @@ export default function CardKemungkinan() {
           </Fragment>
         )}
       </CardItem>
-      <DialogComponent
-        tableMode
-        // width={400}
-        width={1000}
-        dialogOpen={modalOpenAdd}
-        dialogClose={() => setModalOpenAdd(false)}
-        title="Tambah Kriteria Kemungkinan d"
-        dialogFooter={dialogActionFooter}
-      >
-        <FormKemungkinanEmpty
-          state={requestPossibility}
-          setState={setRequestPossibility}
-          mode="add"
-          handleChangePayload={handleChangePayload}
-          payloadValues={payloadValues}
-        />
-        {/* <FormPossibility
-          mode="add"
-          dropDownOptions={defaultDropdownList}
-          state={requestPossibility.values[0]} // Pass the first value for the form
-          setState={(value) =>
-            setRequestPossibility({ ...requestPossibility, values: [value] })
-          }
-        /> */}
-      </DialogComponent>
+
+      {modalOpenAdd && (
+        <DialogComponent
+          tableMode
+          // width={400}
+          width={1000}
+          dialogOpen={modalOpenAdd}
+          dialogClose={() => setModalOpenAdd(false)}
+          title="Tambah Kriteria Kemungkinan"
+          dialogFooter={dialogActionFooter}
+        >
+          <FormKemungkinanEmpty
+            state={requestPossibility}
+            setState={setRequestPossibility}
+            mode="add"
+            handleChangePayload={handleChangePayload}
+            payloadValues={payloadValues}
+          />
+        </DialogComponent>
+      )}
+
       {modalOpenEdit && (
         <DialogComponent
           tableMode
@@ -147,26 +143,22 @@ export default function CardKemungkinan() {
             payloadValues={payloadValues}
             handleChangePayload={handleChangePayload}
           />
-          {/* <FormPossibility
-            mode="edit"
-            dropDownOptions={defaultDropdownList}
-            state={requestPossibility.values[0]} // Pass the first value for the form
-            setState={(value) =>
-              setRequestPossibility({ ...requestPossibility, values: [value] })
-            }
-          /> */}
         </DialogComponent>
       )}
-      <DialogComponent
-        tableMode
-        closeButton
-        width={1200}
-        dialogOpen={modalOpenRef}
-        dialogClose={() => setModalOpenRef(false)}
-        title="Referensi Kriteria Kemungkinan"
-      >
-        <TableKemungkinan mode="reference" />
-      </DialogComponent>
+
+      {modalOpenRef && (
+        <DialogComponent
+          tableMode
+          closeButton
+          width={1200}
+          dialogOpen={modalOpenRef}
+          dialogClose={() => setModalOpenRef(false)}
+          title="Referensi Kriteria Kemungkinan"
+        >
+          <TableKemungkinan mode="reference" />
+        </DialogComponent>
+      )}
+
       <DialogDelete
         title="Hapus Data"
         handleOpenModal={modalOpenDelete}

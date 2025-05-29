@@ -83,6 +83,7 @@ const usePenetapanObjectVM = () => {
   const [modalLog, setModalLog] = useState<boolean>(false);
   const [modalUpr, setModalUpr] = useState<boolean>(false);
   const [showSave, setShowSave] = useState<boolean>(false);
+  const [modalObjek, setModalObjek] = useState<boolean>(false);
 
   const generateOptionPN = () => {
     let opt: ProjectDefaultDto[] = [];
@@ -511,6 +512,8 @@ const usePenetapanObjectVM = () => {
     setModalUpr,
     showSave,
     setShowSave,
+    modalObjek,
+    setModalObjek,
   };
 };
 

@@ -16,15 +16,15 @@ export interface ResultPossibility {
 }
 
 export interface doValues {
-  level_kemungkinan: string
-  probabilitas: string
-  jumlah_frekuensi: string
-  low_frekuensi: string
+  level_kemungkinan: string;
+  probabilitas: string;
+  jumlah_frekuensi: string;
+  low_frekuensi: string;
 }
 
 export interface doRequestPossibilityDto {
-  uraian_penetapan_objek_id: number
-  values: doValues[]
+  uraian_penetapan_objek_id: number;
+  values: doValues[];
 }
 
 export const initPossibility: doRequestPossibilityDto = {
@@ -34,10 +34,10 @@ export const initPossibility: doRequestPossibilityDto = {
       level_kemungkinan: "",
       probabilitas: "",
       jumlah_frekuensi: "",
-      low_frekuensi: ""
-    }
-  ]
-}
+      low_frekuensi: "",
+    },
+  ],
+};
 
 export type UpdatePossibilityServiceModel = BaseAPIServiceParam & {
   body: doRequestPossibilityDto;

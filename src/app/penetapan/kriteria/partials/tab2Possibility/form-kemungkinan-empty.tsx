@@ -54,6 +54,8 @@ export default function FormKemungkinanEmpty({
   //   });
   // };
 
+  console.log({ payloadValues });
+
   return (
     <TableContainer
       component={Paper}
@@ -88,16 +90,11 @@ export default function FormKemungkinanEmpty({
         </TableHead>
         <TableBody>
           {dataKemungkinan.map((item, index) => {
-            // let detail = null;
+            let detail = null;
 
-            // if (state !== undefined) {
-            //   detail = state.values.find((d) => d.level_kemungkinan === item);
-            // }
-
-            const detail = payloadValues[index] || {
-              probabilitas: "",
-              jumlah_frekuensi: "",
-            };
+            if (state !== undefined) {
+              detail = state.values.find((d) => d.level_kemungkinan === item);
+            }
             return (
               <TableRow key={index}>
                 <TableCell>{item}</TableCell>
@@ -105,7 +102,7 @@ export default function FormKemungkinanEmpty({
                   <TextareaStyled
                     placeholder="Persentase"
                     minRows={2}
-                    value={detail.probabilitas}
+                    value={payloadValues[index]?.probabilitas}
                     onChange={(e) =>
                       // handleChange(index, "probabilitas", item, e.target.value)
                       handleChangePayload(index, "probabilitas", e.target.value)
@@ -116,7 +113,7 @@ export default function FormKemungkinanEmpty({
                   <TextareaStyled
                     placeholder="Frekuensi"
                     minRows={2}
-                    value={detail.jumlah_frekuensi}
+                    value={payloadValues[index]?.jumlah_frekuensi}
                     onChange={(e) =>
                       handleChangePayload(
                         index,
