@@ -1,6 +1,6 @@
-import {IdentificationRiskResDto} from "@/app/profil-risiko/identifikasi/pageModel";
-import {BaseAPIServiceParam} from "@/lib/core/api/apiModel";
-import {RoDto} from "@/app/misc/rkp/rkpServiceModel";
+import { IdentificationRiskResDto } from "@/app/profil-risiko/identifikasi/pageModel";
+import { BaseAPIServiceParam } from "@/lib/core/api/apiModel";
+import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
 
 export interface RiskOverviewData {
   id: number
@@ -18,11 +18,19 @@ export interface RiskOverviewData {
   perlakuan_level: string
   keputusan: string
   keterangan_risiko: string
+  target_triwulan_1: string
+  target_triwulan_2: string
+  target_triwulan_3: string
+  target_triwulan_4: string
+  satuan_triwulan_1: string
+  satuan_triwulan_2: string
+  satuan_triwulan_3: string
+  satuan_triwulan_4: string
   keterangan: string[]
   waktu: string
   penanggung_jawab: string
   prioritas: number
-  rincian_output:RoDto[]
+  rincian_output: RoDto[]
 }
 
 export type RiskOverview = {

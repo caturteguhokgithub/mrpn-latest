@@ -22,6 +22,7 @@ import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import theme from "@/theme";
 import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
 import { getDetailRO } from "@/lib/utils/roDetail";
+import { RiskOverviewData } from "../../overview/pageModel";
 
 function createData(
   id: number,
@@ -70,7 +71,7 @@ function createData(
   };
 }
 
-function Row(props: { row: ReturnType<typeof createData>; index?: number }) {
+function Row(props: { row: RiskOverviewData; index?: number }) {
   const { row, index } = props;
   const [open, setOpen] = React.useState(false);
 
@@ -109,14 +110,14 @@ function Row(props: { row: ReturnType<typeof createData>; index?: number }) {
         {/* <TableCell width={300} sx={{ verticalAlign: "top" }}>
           {row.keputusan}
         </TableCell> */}
-        <TableCell sx={{ verticalAlign: "top" }}>{row.keterangan}</TableCell>
+        <TableCell sx={{ verticalAlign: "top" }}>{row.keterangan_risiko}</TableCell>
         <TableCell sx={{ verticalAlign: "top" }} width={200}>
           <Stack direction={"row"} gap={1} alignItems="center">
             <Typography width={52} fontSize={14}>
               TW I :
             </Typography>
             <Typography fontWeight={600} fontSize={14}>
-              -
+              {row.target_triwulan_1 ?? "-"}
             </Typography>
           </Stack>
           <Stack direction={"row"} gap={1} alignItems="center">
@@ -124,7 +125,7 @@ function Row(props: { row: ReturnType<typeof createData>; index?: number }) {
               TW II :
             </Typography>
             <Typography fontWeight={600} fontSize={14}>
-              -
+              {row.target_triwulan_2 ?? "-"}
             </Typography>
           </Stack>
           <Stack direction={"row"} gap={1} alignItems="center">
@@ -132,7 +133,7 @@ function Row(props: { row: ReturnType<typeof createData>; index?: number }) {
               TW III :
             </Typography>
             <Typography fontWeight={600} fontSize={14}>
-              -
+              {row.target_triwulan_3 ?? "-"}
             </Typography>
           </Stack>
           <Stack direction={"row"} gap={1} alignItems="center">
@@ -140,7 +141,7 @@ function Row(props: { row: ReturnType<typeof createData>; index?: number }) {
               TW IV :
             </Typography>
             <Typography fontWeight={600} fontSize={14}>
-              -
+              {row.target_triwulan_4 ?? "-"}
             </Typography>
           </Stack>
         </TableCell>
@@ -148,7 +149,7 @@ function Row(props: { row: ReturnType<typeof createData>; index?: number }) {
           {row.waktu}
         </TableCell>
         <TableCell sx={{ verticalAlign: "top" }} width={300}>
-          {row.penanggungjawab}
+          {row.penanggung_jawab}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -234,7 +235,7 @@ function Row(props: { row: ReturnType<typeof createData>; index?: number }) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {row.pembiayaan.map((rowItem) => (
+                    {row.rincian_output.map((rowItem) => (
                       <TableRow key={rowItem.id}>
                         <TableCell align="center">{rowItem.id}</TableCell>
                         <TableCell>
@@ -243,15 +244,15 @@ function Row(props: { row: ReturnType<typeof createData>; index?: number }) {
                             fontSize={14}
                             color={grey[600]}
                           >
-                            02.10.01
+                            {rowItem.code}
                           </Typography>{" "}
-                          - {rowItem.ro}{" "}
+                          - {rowItem.value}{" "}
                           <Typography
                             component="span"
                             fontSize={14}
                             color={orange[600]}
                           >
-                            (NON RO)
+                            ({rowItem.type})
                           </Typography>
                         </TableCell>
                         <TableCell align="right">{rowItem.target}</TableCell>
@@ -271,43 +272,46 @@ function Row(props: { row: ReturnType<typeof createData>; index?: number }) {
   );
 }
 
-const rows = [
-  createData(
-    1,
-    "Mengurangi kemungkinan terjadinya risiko",
-    "Perbaikan struktur dan mekanisme manajemen produksi pangan dengan memaksimalkan peran petani dan keluarga petani sebagai tulang punggung produsen di lahan KSPP",
-    "",
-    "Oct 2024 sd Oct 2024",
-    "KEMENTERIAN PEKERJAAN UMUM"
-  ),
-  createData(
-    2,
-    "Mengurangi kemungkinan terjadinya risiko",
-    "Perbaikan struktur dan mekanisme manajemen produksi pangan dengan memaksimalkan peran petani dan keluarga petani sebagai tulang punggung produsen di lahan KSPP",
-    "",
-    "Oct 2024 sd Oct 2024",
-    "PEMERINTAH PROVINSI KALIMANTAN TENGAH"
-  ),
-  createData(
-    3,
-    "Mengurangi dampak risiko",
-    "Pelibatan aspirasi masyarakat dalam perencanaan pengembangan food estate Relokasi Area of Interest (AOI)",
-    "",
-    "Oct 2024 sd Oct 2024",
-    "KEMENTERIAN PERTANIAN"
-  ),
-  createData(
-    4,
-    "Mengurangi dampak risiko",
-    "Praktik pertanian presisi sesuai dengan kebutuhan lahan",
-    "",
-    "Oct 2024 sd Oct 2024",
-    "KEMENTERIAN PERTANIAN"
-  ),
-];
+// const rows = [
+//   createData(
+//     1,
+//     "Mengurangi kemungkinan terjadinya risiko",
+//     "Perbaikan struktur dan mekanisme manajemen produksi pangan dengan memaksimalkan peran petani dan keluarga petani sebagai tulang punggung produsen di lahan KSPP",
+//     "",
+//     "Oct 2024 sd Oct 2024",
+//     "KEMENTERIAN PEKERJAAN UMUM"
+//   ),
+//   createData(
+//     2,
+//     "Mengurangi kemungkinan terjadinya risiko",
+//     "Perbaikan struktur dan mekanisme manajemen produksi pangan dengan memaksimalkan peran petani dan keluarga petani sebagai tulang punggung produsen di lahan KSPP",
+//     "",
+//     "Oct 2024 sd Oct 2024",
+//     "PEMERINTAH PROVINSI KALIMANTAN TENGAH"
+//   ),
+//   createData(
+//     3,
+//     "Mengurangi dampak risiko",
+//     "Pelibatan aspirasi masyarakat dalam perencanaan pengembangan food estate Relokasi Area of Interest (AOI)",
+//     "",
+//     "Oct 2024 sd Oct 2024",
+//     "KEMENTERIAN PERTANIAN"
+//   ),
+//   createData(
+//     4,
+//     "Mengurangi dampak risiko",
+//     "Praktik pertanian presisi sesuai dengan kebutuhan lahan",
+//     "",
+//     "Oct 2024 sd Oct 2024",
+//     "KEMENTERIAN PERTANIAN"
+//   ),
+// ];
 
-export default function CollapsibleTable({}: {}) {
+export default function CollapsibleTable({ rowData }: { rowData: RiskOverviewData }) {
+  // console.log(rowData)
+
   return (
+
     <Box sx={{ width: "calc(100% + 32px)", bgcolor: grey[50], m: -2, p: 1 }}>
       <TableContainer
         component={Paper}
@@ -363,9 +367,9 @@ export default function CollapsibleTable({}: {}) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <Row key={row.id} row={row} />
-            ))}
+            {/* {rows.map((row) => ( */}
+            <Row key={rowData.id} row={rowData} />
+            {/* ))} */}
           </TableBody>
         </Table>
       </TableContainer>

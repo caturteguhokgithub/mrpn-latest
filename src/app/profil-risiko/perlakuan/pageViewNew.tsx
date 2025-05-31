@@ -63,10 +63,10 @@ function ChipLevelRisiko(props: { level: any }) {
             props.level === "Sangat Tinggi (5)"
               ? "error"
               : props.level === "Tinggi (4)"
-              ? "warning"
-              : props.level === "Rendah (2)"
-              ? "success"
-              : undefined
+                ? "warning"
+                : props.level === "Rendah (2)"
+                  ? "success"
+                  : undefined
           }
           sx={{
             minWidth: 80,
@@ -112,7 +112,7 @@ function ChipLevelRisiko(props: { level: any }) {
   );
 }
 
-export default function PagePerlakuanViewNew({}) {
+export default function PagePerlakuanViewNew({ }) {
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
   pathname =
@@ -327,8 +327,8 @@ export default function PagePerlakuanViewNew({}) {
   const renderTopToolbar: ColumnsType = {
     renderTopToolbarCustomActions: () =>
       hasPrivilege(permission, pathname, "add") &&
-      dataTreatmentRisk != undefined &&
-      dataTreatmentRisk.optionProfilRisiko.length > 0 ? (
+        dataTreatmentRisk != undefined &&
+        dataTreatmentRisk.optionProfilRisiko.length > 0 ? (
         <AddButton
           onclick={() => actionModal(true, "create")}
           title="Tambah Perlakuan"
@@ -445,17 +445,18 @@ export default function PagePerlakuanViewNew({}) {
     // ...actionRight,
     filterFromLeafRows: true,
     enableExpanding: true,
-    renderDetailPanel: () => <CollapsibleTable />,
+    renderDetailPanel: ({ row }) => (
+      <CollapsibleTable rowData={row.original} />
+    ),
   });
 
   return (
     <Fragment>
       <ContentPage
-        title={`Perlakuan Risiko ${
-          year == 0
+        title={`Perlakuan Risiko ${year == 0
             ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
             : "Tahun " + year
-        }`}
+          }`}
         infoToolTip="Proses untuk menurunkan keterpaparan risiko yang dikaitkan dengan toleransi dan selera risiko
 yang telah ditetapkan"
         withCard={objectState === undefined}
@@ -509,13 +510,12 @@ yang telah ditetapkan"
         width={"60%"}
         dialogOpen={modal.isOpen && modal.action != "delete"}
         dialogClose={() => actionModal(false, "create")}
-        title={`${
-          modal.action == "read"
+        title={`${modal.action == "read"
             ? "Detail"
             : modal.action == "update"
-            ? "Ubah"
-            : "Tambah"
-        } Perlakuan Risiko`}
+              ? "Ubah"
+              : "Tambah"
+          } Perlakuan Risiko`}
         dialogFooter={dialogActionFooter}
         sx={{
           ".MuiDialogContent-root": {
