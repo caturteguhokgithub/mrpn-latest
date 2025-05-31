@@ -11,6 +11,7 @@ import {
   dtoUraian,
   initLogActivity,
   initPenetapanObjectState,
+  initReqUpr,
   LogActivityDto,
   NotaDinasReqDto,
   PenetapanObjectEntityCheckedDto,
@@ -86,6 +87,20 @@ const usePenetapanObjectVM = () => {
   const [modalUpr, setModalUpr] = useState<boolean>(false);
   const [showSave, setShowSave] = useState<boolean>(false);
   const [modalObjek, setModalObjek] = useState<boolean>(false);
+
+  const [stateCreateUpr, setStateCreateUpr] = useState<PenetapanObjectEntityReqDto>({ ...initReqUpr })
+  const initShorlist: dtoUraian = {
+    id: 0,
+    penetapan_object_rkp_id: 0,
+    level: "",
+    ref_id: 0,
+    objek: true,
+    approve_profil_risiko: 0,
+    rkp: "",
+    usulan_upr_linsek: []
+  };
+
+  const [stateUprSingle, setStateUprSingle] = useState<dtoUraian>({ ...initShorlist });
 
   const generateOptionPN = () => {
     let opt: ProjectDefaultDto[] = [];
@@ -534,7 +549,11 @@ const usePenetapanObjectVM = () => {
     setShowSave,
     modalObjek,
     setModalObjek,
-    stateUpr
+    stateUpr,
+    stateCreateUpr,
+    setStateCreateUpr,
+    stateUprSingle,
+    setStateUprSingle,
   };
 };
 

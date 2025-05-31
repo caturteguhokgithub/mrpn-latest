@@ -1,9 +1,11 @@
-import React from "react";
-import { FormControl, Grid, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Button, FormControl, Grid, Typography } from "@mui/material";
 import { TextareaStyled } from "@/app/components/textarea";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 
-export default function FormPeristiwa({}: {}) {
+export default function FormPeristiwa({ onSave }: { onSave: (newValue: string) => void }) {
+  const [newPeristiwa, setNewPeristiwa] = useState("");
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -24,8 +26,18 @@ export default function FormPeristiwa({}: {}) {
             title="Peristiwa Risiko Strategis MRPN LS"
             titleField
           />
-          <TextareaStyled minRows={4} placeholder="Peristiwa Risiko" />
+          <TextareaStyled
+            minRows={4}
+            placeholder="Peristiwa Risiko"
+            value={newPeristiwa}
+            onChange={(e) => setNewPeristiwa(e.target.value)}
+          />
         </FormControl>
+      </Grid>
+      <Grid item xs={12} sx={{ textAlign: "right" }}>
+        <Button variant="contained" onClick={() => onSave(newPeristiwa)}>
+          Simpan
+        </Button>
       </Grid>
     </Grid>
   );

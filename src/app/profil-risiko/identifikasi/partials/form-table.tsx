@@ -31,6 +31,7 @@ export default function FormTable({
   data,
   request,
   setRequest,
+  optionPeristiwaRisiko,
   optionRiskType,
   optionImpactArea,
   setModalPeristiwa,
@@ -39,6 +40,7 @@ export default function FormTable({
   data: IdentificationRiskResDto | undefined;
   request: IdentificationRiskAddReqDto;
   setRequest: (value: SetStateAction<IdentificationRiskAddReqDto>) => void;
+  optionPeristiwaRisiko: string[],
   optionRiskType: string[];
   optionImpactArea: string[];
   setModalPeristiwa: (value: boolean) => void;
@@ -195,7 +197,7 @@ export default function FormTable({
                 /> */}
                 <AutocompleteSelectSingle
                   value={request.peristiwa_risiko}
-                  options={optionRiskType}
+                  options={optionPeristiwaRisiko}
                   getOptionLabel={(opt) => opt}
                   handleChange={(e: string) =>
                     setRequest((prevState) => {

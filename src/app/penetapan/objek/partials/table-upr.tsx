@@ -1,4 +1,4 @@
-import React, { Fragment, SetStateAction } from "react";
+import React, { Fragment, SetStateAction, useState } from "react";
 import {
   Box,
   Button,
@@ -77,7 +77,7 @@ function Row(props: {
                 {row.rkp}
               </Typography>
             </Stack>
-            <Button
+            {/* <Button
               color="primary"
               size="small"
               variant="outlined"
@@ -85,7 +85,7 @@ function Row(props: {
               sx={{ gap: 0.5, borderRadius: 24 }}
             >
               <Iconify name="mdi:edit" size={16} /> Ubah Objek
-            </Button>
+            </Button> */}
           </Stack>
         </TableCell>
       </TableRow>
@@ -217,6 +217,7 @@ export default function CollapsibleTableUpr({
                   key={item.id}
                   row={item}
                   uprData={item.usulan_upr_linsek}
+                  setModalObjek={setModalObjek}
                 />
               );
             })}

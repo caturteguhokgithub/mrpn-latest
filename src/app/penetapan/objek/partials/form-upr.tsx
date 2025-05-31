@@ -14,38 +14,168 @@ import {
 } from "@mui/material";
 import SearchResult from "./search-result";
 import TreeView from "./tree-view";
-import { Fragment, useState } from "react";
-import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
+import { Fragment, SetStateAction, useEffect, useState } from "react";
+import { AutocompleteSelectSingle, AutoCompleteSingleProp } from "@/app/components/autocomplete";
 import usePenetapanObjectVM from "../pageVM";
 import AddButton from "@/app/components/buttonAdd";
+import { dtoUraian, PenetapanObjectEntityReqDto, PenetapanObjectEntityValueReqDto } from "../pageModel";
+import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
 
-export default function FormUPR({}: {}) {
-  const { setStateTopic } = usePenetapanObjectVM();
+export default function FormUPR({
+  optionSL,
+  state,
+  setState,
+  listStakeholder,
+  stateUprSingle,
+  setStateUprSingle,
+}: {
+  optionSL: dtoUraian[],
+  state: PenetapanObjectEntityReqDto,
+  setState: (value: (SetStateAction<PenetapanObjectEntityReqDto>)) => void,
+  listStakeholder: MiscMasterListStakeholderRes[];
+  stateUprSingle: dtoUraian,
+  setStateUprSingle: (value: (SetStateAction<dtoUraian>)) => void,
+}) {
 
-  const [items, setItem] = useState([{ id: 1 }]);
+  const initReqStakeholder: MiscMasterListStakeholderRes = {
+    id: 0,
+    short: "",
+    code: "",
+    value: "",
+    icon: "",
+    type: "",
+  };
+
+  useEffect(() => {
+    if (state.values && state.values.length > 0 && listStakeholder.length > 0) {
+      const loadedItems = state.values.map((val, index) => {
+        const matchedStakeholder = listStakeholder.find((s) => s.id === val.entitas) || {
+          id: val.entitas,
+          short: "",
+          code: "",
+          value: "",
+          icon: "",
+          type: "",
+        };
+
+        return {
+          id: index + 1,
+          stakeholder: matchedStakeholder,
+          type: val.type,
+        };
+      });
+
+      setItems(loadedItems);
+    }
+  }, [state.values, listStakeholder]);
+
+  // const { setStateTopic } = usePenetapanObjectVM();
+
+  // const [items, setItem] = useState([{ id: 1 }]);
+  const [items, setItems] = useState<
+    { id: number; stakeholder: MiscMasterListStakeholderRes; type: string }[]
+  >([{ id: 1, stakeholder: initReqStakeholder, type: "" }]);
 
   const add = () => {
-    let arr = [...items];
-    if (arr.length >= 10) {
-      return;
-    } else {
-      arr.push({ id: Math.floor(Math.random() * 1000) });
-    }
-    const newItem = arr;
-    setItem(newItem);
+    if (items.length >= 10) return;
+
+    const newItem = {
+      id: Math.floor(Math.random() * 1000),
+      stakeholder: initReqStakeholder,
+      type: ""
+    };
+
+    const newItems = [...items, newItem];
+    setItems(newItems);
+
+    // Sinkron ke state utama
+    setState((prev) => ({
+      ...prev,
+      values: newItems.map((item) => ({
+        entitas: item.stakeholder.id,
+        type: item.type
+      }))
+    }));
   };
 
-  const minus = (nowId: any) => {
-    let arr = [...items];
-    let newArr = arr.filter((val) => {
-      if (nowId === val.id) {
-        return false;
-      } else {
-        return true;
-      }
-    });
-    setItem(newArr);
+  const minus = (nowId: number) => {
+    const newItems = items.filter((item) => item.id !== nowId);
+    setItems(newItems);
+
+    setState((prev) => ({
+      ...prev,
+      values: newItems.map((item) => ({
+        entitas: item.stakeholder.id,
+        type: item.type
+      }))
+    }));
   };
+
+  const handleSubChange = (
+    id: number,
+    field: "stakeholder" | "type",
+    value: MiscMasterListStakeholderRes | string
+  ) => {
+    const updatedItems = items.map((item) =>
+      item.id === id
+        ? {
+          ...item,
+          [field]: value,
+        }
+        : item
+    );
+    setItems(updatedItems);
+
+    // Sinkron ke state utama
+    setState((prev) => ({
+      ...prev,
+      values: updatedItems.map((item) => ({
+        entitas: item.stakeholder.id,
+        type: item.type
+      }))
+    }));
+  };
+
+  const changeObjectShortlist = async (params: dtoUraian) => {
+    setStateUprSingle(params)
+
+    // Set id_objek
+    setState((prevState) => ({
+      ...prevState,
+      id_objek: params.id
+    }));
+
+    // Jika `params.values` tersedia, maka isi `items` dan `state.values`
+    if (params.usulan_upr_linsek && params.usulan_upr_linsek.length > 0 && listStakeholder.length > 0) {
+      const mappedItems = params.usulan_upr_linsek.map((val, idx) => {
+        const stakeholder = listStakeholder.find((s) => s.id === val.entitas_id) || {
+          id: val.entitas_id,
+          short: "",
+          code: "",
+          value: "",
+          icon: "",
+          type: "",
+        };
+
+        return {
+          id: idx + 1,
+          stakeholder,
+          type: val.type
+        };
+      });
+
+      setItems(mappedItems);
+
+      setState((prevState) => ({
+        ...prevState,
+        values: mappedItems.map((item) => ({
+          entitas: item.stakeholder.id,
+          type: item.type
+        }))
+      }));
+    }
+  };
+
 
   return (
     <Grid container spacing={2}>
@@ -53,17 +183,11 @@ export default function FormUPR({}: {}) {
         <FormControl fullWidth>
           <Typography gutterBottom>Objek Shortlist</Typography>
           <AutocompleteSelectSingle
-            value={""}
-            options={[
-              "Percepatan Pembangunan Destinasi Pariwisata Prioritas Danau Toba",
-              "Eliminasi Penyakit Kusta & Schistosomiasis",
-            ]}
-            getOptionLabel={(option) => option}
-            handleChange={(newValue: string) =>
-              setStateTopic((prev) => ({
-                ...prev,
-                level_kemungkinan: newValue,
-              }))
+            value={stateUprSingle}
+            options={optionSL}
+            getOptionLabel={(opt) => opt.rkp}
+            handleChange={(newValue: dtoUraian) =>
+              changeObjectShortlist(newValue)
             }
             placeHolder={"Pilih objek shortlist"}
           />
@@ -83,7 +207,7 @@ export default function FormUPR({}: {}) {
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={2}>
-          {items.map((tags: any, key: any) => (
+          {items.map((tags, key) => (
             <Grid item xs={12} key={`${tags.id}`}>
               <Paper
                 variant="outlined"
@@ -106,26 +230,12 @@ export default function FormUPR({}: {}) {
                         )}
                       </Stack>
                       <AutocompleteSelectSingle
-                        value={""}
-                        options={[
-                          "Badan Pengawas Tenaga Nuklir (BAPETEN)",
-                          "Pemerintah Kabupaten Kepulauan Mentawai",
-                          "Kementerian Lingkungan Hidup dan Kehutanan (KLHK)",
-                          "Kementerian Kelautan dan Sumber Daya Manusia (Kemenkes)",
-                          "Mahkamah Agung (MA)",
-                          "Kementerian Perhubungan (Kemenhub)",
-                          "Kementerian Dalam Negeri (Kemendagri)",
-                          "Kementerian Keuangan (Kemenkeu)",
-                          "Kementerian Energi dan Sumber Daya Mineral (ESDM)",
-                          "Kementerian Perindustrian (Kemenperin)",
-                          "Kementerian Perdagangan (Kemendag)",
-                        ]}
-                        getOptionLabel={(option) => option}
-                        handleChange={(newValue: string) =>
-                          setStateTopic((prev) => ({
-                            ...prev,
-                            level_kemungkinan: newValue,
-                          }))
+                        // value={stateStakeholder}
+                        value={tags.stakeholder}
+                        options={listStakeholder}
+                        getOptionLabel={(option) => option.value}
+                        handleChange={(newValue: MiscMasterListStakeholderRes) =>
+                          handleSubChange(tags.id, "stakeholder", newValue)
                         }
                         placeHolder={"Pilih entitas MRPN"}
                       />
@@ -137,20 +247,22 @@ export default function FormUPR({}: {}) {
                       <Stack>
                         <RadioGroup
                           row
+                          value={tags.type}
+                          onChange={(e) => handleSubChange(tags.id, "type", e.target.value)}
                           sx={{ justifyContent: "space-between" }}
                         >
                           <FormControlLabel
-                            value="koordinator"
+                            value="Koordinator"
                             control={<Radio />}
                             label="Koordinator"
                           />
                           <FormControlLabel
-                            value="utama"
+                            value="Utama"
                             control={<Radio />}
                             label="Utama"
                           />
                           <FormControlLabel
-                            value="pendukung"
+                            value="Pendukung"
                             control={<Radio />}
                             label="Pendukung"
                           />

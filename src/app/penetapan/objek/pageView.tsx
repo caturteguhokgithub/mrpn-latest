@@ -41,14 +41,16 @@ import {
 } from "@/lib/core/context/penetapanTopicContext";
 import useRkpVM from "@/components/dropdown/rkpVM";
 import DialogDelete from "@/app/components/dialogDelete";
-import { PenetapanObjectVMState } from "@/app/penetapan/objek/pageModel";
+import { dtoUraian, PenetapanObjectEntityReqDto, PenetapanObjectVMState } from "@/app/penetapan/objek/pageModel";
 import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
 import { forEach } from "lodash";
 import Iconify from "@/app/components/icons/iconify";
 import TableLog from "./partials/table-log";
-import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
+import { AutocompleteSelectSingle, AutoCompleteSingleProp } from "@/app/components/autocomplete";
 import FormUPR from "./partials/form-upr";
 import Toast from "@/app/components/snackbar/snackbar";
+import useCardIndicationVM from "@/app/executive-summary/partials/tab9Indication/cardIndicationVM";
+import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
 
 const styleToggleButton = [
   {
@@ -114,7 +116,7 @@ const styleToggleButton = [
   },
 ];
 
-export default function PageTemaView({}) {
+export default function PageTemaView({ }) {
   const [modalDeleteTopic, setModalDeleteTopic] = useState(false);
 
   const { permission } = useAuthContext((state) => state);
@@ -143,15 +145,45 @@ export default function PageTemaView({}) {
     getStateLogActivity,
     modalUpr,
     setModalUpr,
+    stateUpr,
+    stateCreateUpr,
+    setStateCreateUpr,
+    updateOrCreateEntity,
+    stateUprSingle,
+    setStateUprSingle,
   } = usePenetapanObjectVM();
 
-  useEffect(useEffectGenerateOption, [year]);
+  const { optionStakeholder } = useCardIndicationVM();
 
+  useEffect(useEffectGenerateOption, [year]);
   useEffect(useEffectObjectState, [year, objectState]);
 
   useEffect(() => {
     generateOptionPN();
   }, [rkp]);
+
+  // const selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes> =
+  // {
+  //   value: state.non_rincian_output.kementrian,
+  //   options: listStakeholder,
+  //   getOptionLabel: (opt) => opt.value,
+  //   handleChange: (value: MiscMasterListStakeholderRes) =>
+  //     setState((prev) => {
+  //       const nonRO = state.non_rincian_output;
+  //       nonRO.kementrian = value;
+  //       return {
+  //         ...prev,
+  //         non_rincian_output: nonRO,
+  //       };
+  //     }),
+  //   placeHolder: "Pilih Penanggungjawab",
+  // };
+
+  const handleCreateUpr = async () => {
+    // console.log(stateCreateUpr);
+
+    updateOrCreateEntity(stateCreateUpr);
+  };
 
   const handleEditTopic = (x: PenetapanObjectDto) => {
     let optState: ProjectDefaultDto[] = [];
@@ -213,11 +245,10 @@ export default function PageTemaView({}) {
   return (
     <>
       <ContentPage
-        title={`Objek MRPN & UPR LS ${
-          year == 0
-            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-            : "Tahun " + year
-        }`}
+        title={`Objek MRPN & UPR LS ${year == 0
+          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+          : "Tahun " + year
+          }`}
         infoToolTip={
           <Stack spacing={2}>
             <div>
@@ -431,7 +462,7 @@ export default function PageTemaView({}) {
             <Button onClick={() => setModalUpr(false)}>Batal</Button>
             <Button
               variant="contained"
-              // onClick={() => updateOrCreateTopic()}
+              onClick={() => handleCreateUpr()}
               sx={{
                 color: "white !important",
               }}
@@ -441,7 +472,14 @@ export default function PageTemaView({}) {
           </DialogActions>
         }
       >
-        <FormUPR />
+        <FormUPR
+          optionSL={stateUpr}
+          state={stateCreateUpr}
+          setState={setStateCreateUpr}
+          listStakeholder={optionStakeholder}
+          stateUprSingle={stateUprSingle}
+          setStateUprSingle={setStateUprSingle}
+        />
       </DialogComponent>
 
       {/*<DialogComponent*/}

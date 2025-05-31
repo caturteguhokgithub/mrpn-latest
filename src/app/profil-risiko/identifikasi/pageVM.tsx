@@ -19,6 +19,9 @@ import { GetSysParamsServiceResModel } from "@/app/misc/sysparams/sysParamServic
 const useIdentificationRiskVM = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
+  const [optionRiskType, setOptionRiskType] = useState<string[]>([]);
+  const [optionImpactArea, setOptionImpactArea] = useState<string[]>([]);
+  const [optionPeristiwaRisiko, setOptionPeristiwaRisiko] = useState<string[]>([]);
 
   const { objectState } = usePenetapanGlobalVM();
 
@@ -43,11 +46,13 @@ const useIdentificationRiskVM = () => {
     if (response?.code === API_CODE.success) {
       const result: IdentificationRiskResDto = response.result;
       setDataIdentificationRisk(result);
+
+      if (result?.indikasi_risiko?.length) {
+        const opsi = result.indikasi_risiko.map(item => item.indikasi_risiko);
+        setOptionPeristiwaRisiko(opsi);
+      }
     }
   };
-
-  const [optionRiskType, setOptionRiskType] = useState<string[]>([]);
-  const [optionImpactArea, setOptionImpactArea] = useState<string[]>([]);
 
   async function getOptionRiskType() {
     const response = await doGetSystemParamByModuleAndName({
@@ -170,6 +175,8 @@ const useIdentificationRiskVM = () => {
     getOptionImpactArea,
     modalPeristiwa,
     setModalPeristiwa,
+    setOptionPeristiwaRisiko,
+    optionPeristiwaRisiko,
   };
 };
 

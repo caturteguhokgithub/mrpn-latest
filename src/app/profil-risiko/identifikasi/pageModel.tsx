@@ -16,10 +16,20 @@ export interface ProfileRiskDto {
   }
 }
 
+export interface IndikasiRisiko {
+  exsum_id: number
+  id: number
+  indikasi_perlakuan_risiko: string
+  indikasi_risiko: string
+  kategori_risiko: string
+  swot_id: number
+}
+
 export interface IdentificationRiskResDto {
   objek_mrpn: string
   topik: string
   sasaran: string[]
+  indikasi_risiko: IndikasiRisiko[]
   indikator: IndikatorDto[]
   profile_risiko: ProfileRiskDto[]
   periode: string

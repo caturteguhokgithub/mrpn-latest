@@ -317,3 +317,13 @@ export interface dtoEntitas {
   value: string,
   type: string
 }
+
+export const initReqUpr: PenetapanObjectEntityReqDto = {
+  id_objek: 0,
+  values: [
+    {
+      entitas: 0,
+      type: ""
+    }
+  ]
+};
