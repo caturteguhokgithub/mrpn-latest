@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
-import { UnitPengelolaRisikoEntity } from "@/app/penetapan/objek/pageModel";
+import { dtoResUprLs, dtoUraian, dtoUsulanUprLs, UnitPengelolaRisikoEntity } from "@/app/penetapan/objek/pageModel";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import { blue, grey } from "@mui/material/colors";
 import { bgColorTh } from "@/app/utils/color";
@@ -38,9 +38,9 @@ function createData(name: string) {
 }
 
 function Row(props: {
-  row: ReturnType<typeof createData>;
+  row: dtoUraian;
   mode?: string;
-  uprData: any[];
+  uprData: dtoUsulanUprLs[];
   setModalObjek?: any;
 }) {
   const { row, mode, uprData, setModalObjek } = props;
@@ -74,7 +74,7 @@ function Row(props: {
                 Objek Shortlist:
               </Typography>{" "}
               <Typography component="span" fontWeight={500}>
-                {row.name}
+                {row.rkp}
               </Typography>
             </Stack>
             <Button
@@ -159,11 +159,11 @@ function Row(props: {
                       uprData.map((entity, i) => (
                         <TableRow key={entity.id}>
                           <TableCell align="center">{i + 1}</TableCell>
-                          <TableCell>{entity.value}</TableCell>
+                          <TableCell>{entity.entitas.value}</TableCell>
                           {UnitPengelolaRisikoEntity.map((uprItem) => (
                             <TableCell align="center" key={uprItem.id}>
                               <Stack direction="row" justifyContent="center">
-                                {entity.upr === uprItem.id ? (
+                                {entity.type === uprItem.value ? (
                                   <Iconify
                                     name="mdi:check-circle-outline"
                                     size={20}
@@ -188,9 +188,11 @@ function Row(props: {
 }
 
 export default function CollapsibleTableUpr({
+  data,
   showSave,
   setShowSave,
 }: {
+  data: dtoUraian[]
   showSave?: boolean;
   setShowSave?: any;
 }) {
@@ -209,7 +211,16 @@ export default function CollapsibleTableUpr({
       >
         <Table>
           <TableBody>
-            {listObject.map((object) => {
+            {data && data.map((item) => {
+              return (
+                <Row
+                  key={item.id}
+                  row={item}
+                  uprData={item.usulan_upr_linsek}
+                />
+              );
+            })}
+            {/* {listObject.map((object) => {
               const uprData = listUpr.filter(
                 (upr) => upr.object_id === object.id
               );
@@ -221,7 +232,7 @@ export default function CollapsibleTableUpr({
                   setModalObjek={setModalObjek}
                 />
               );
-            })}
+            })} */}
           </TableBody>
         </Table>
       </TableContainer>
@@ -232,9 +243,9 @@ export default function CollapsibleTableUpr({
               variant="contained"
               sx={{ borderRadius: 24, px: 4 }}
               onClick={setShowSave}
-              // onClick={() => {
-              //   updateOrCreateEntity();
-              // }}
+            // onClick={() => {
+            //   updateOrCreateEntity();
+            // }}
             >
               Simpan
             </Button>

@@ -7,70 +7,70 @@ export const DasarPemilihan: {
   id: number;
   value: string;
 }[] = [
-  {
-    id: 1,
-    value: "Merupakan Fokus & Perhatian Presiden",
-  },
-  {
-    id: 2,
-    value:
-      "Mempunyai Nilai Strategis dalam Pencapaian Sasaran Prioritas Nasional/Agenda Pembangunan",
-  },
-  {
-    id: 3,
-    value:
-      "Memiliki Faktor Risiko yang Tinggi (Diantaranya Anggaran, Ruang Lingkup, Kinerja, & Rekam Jejak Akuntabilitas)",
-  },
-  {
-    id: 4,
-    value: "Pertimbangan Lain yang Relevan",
-  },
-];
+    {
+      id: 1,
+      value: "Merupakan Fokus & Perhatian Presiden",
+    },
+    {
+      id: 2,
+      value:
+        "Mempunyai Nilai Strategis dalam Pencapaian Sasaran Prioritas Nasional/Agenda Pembangunan",
+    },
+    {
+      id: 3,
+      value:
+        "Memiliki Faktor Risiko yang Tinggi (Diantaranya Anggaran, Ruang Lingkup, Kinerja, & Rekam Jejak Akuntabilitas)",
+    },
+    {
+      id: 4,
+      value: "Pertimbangan Lain yang Relevan",
+    },
+  ];
 
 export const KriteriaPemilihanEntity: {
   id: number;
   value: string;
 }[] = [
-  {
-    id: 1,
-    value: "Kesesuaian dengan Arahan (Direktif) Presiden",
-  },
-  {
-    id: 2,
-    value: "Memiliki Amanat dalam Peraturan Perundang-undangan",
-  },
-  {
-    id: 3,
-    value: "Tercantum dalam Dokumen RKP & RPJMN",
-  },
-  {
-    id: 4,
-    value: "Memiliki Tuga & Fungsi yang Relevan",
-  },
-  {
-    id: 5,
-    value:
-      "Memiliki Kontribusi Intervensi yang Signifikan Sesuai dengan Kerangka Kerja Logis (Diantaranya Anggaran, Kelembagaan, & Regulasi)",
-  },
-];
+    {
+      id: 1,
+      value: "Kesesuaian dengan Arahan (Direktif) Presiden",
+    },
+    {
+      id: 2,
+      value: "Memiliki Amanat dalam Peraturan Perundang-undangan",
+    },
+    {
+      id: 3,
+      value: "Tercantum dalam Dokumen RKP & RPJMN",
+    },
+    {
+      id: 4,
+      value: "Memiliki Tuga & Fungsi yang Relevan",
+    },
+    {
+      id: 5,
+      value:
+        "Memiliki Kontribusi Intervensi yang Signifikan Sesuai dengan Kerangka Kerja Logis (Diantaranya Anggaran, Kelembagaan, & Regulasi)",
+    },
+  ];
 
 export const UnitPengelolaRisikoEntity: {
   id: number;
   value: string;
 }[] = [
-  {
-    id: 1,
-    value: "UPR Koordinator",
-  },
-  {
-    id: 2,
-    value: "UPR Utama",
-  },
-  {
-    id: 3,
-    value: "UPR Pendukung",
-  },
-];
+    {
+      id: 1,
+      value: "Koordinator",
+    },
+    {
+      id: 2,
+      value: "Utama",
+    },
+    {
+      id: 3,
+      value: "Pendukung",
+    },
+  ];
 
 export interface PenetapanObjectVMState {
   id: number;
@@ -215,7 +215,7 @@ export type GetPenetapanObjectEntityUsulanServiceModel = BaseAPIServiceParam & {
 
 export interface PenetapanObjectEntityValueReqDto {
   entitas: number;
-  kriteria: string[];
+  type: string;
 }
 
 export interface PenetapanObjectEntityReqDto {
@@ -282,3 +282,38 @@ export type RKPCascadingDto = {
 export type LogActivityServiceModel = BaseAPIServiceParam & {
   body: {};
 };
+
+// Upr LS
+export interface dtoResUprLs {
+  id: number,
+  penetapan_object_id: number,
+  level: string,
+  ref_id: number,
+  uraian: dtoUraian[]
+}
+
+export interface dtoUraian {
+  id: number,
+  penetapan_object_rkp_id: number,
+  level: string,
+  ref_id: number,
+  objek: boolean,
+  approve_profil_risiko: number,
+  rkp: string,
+  usulan_upr_linsek: dtoUsulanUprLs[]
+}
+
+export interface dtoUsulanUprLs {
+  id: number,
+  value: string,
+  entitas_id: number,
+  uraian_penetapan_object_id: number,
+  type: string,
+  entitas: dtoEntitas
+}
+
+export interface dtoEntitas {
+  id: number,
+  value: string,
+  type: string
+}
