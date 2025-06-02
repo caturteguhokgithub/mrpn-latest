@@ -36,7 +36,7 @@ const useKriteriaDampakVM = () => {
 
         const response = await doShowMatDamKomite(params);
         if (response?.code == API_CODE.success) {
-            setDataMatDamKomite(response.result.values);
+            setDataMatDamKomite(response.result?.values ?? []);
         }
     }
 
