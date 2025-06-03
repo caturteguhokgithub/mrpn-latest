@@ -300,7 +300,8 @@ export interface dtoUraian {
   objek: boolean,
   approve_profil_risiko: number,
   rkp: string,
-  usulan_upr_linsek: dtoUsulanUprLs[]
+  usulan_upr_linsek: dtoUsulanUprLs[],
+  ranking: number
 }
 
 export interface dtoUsulanUprLs {
@@ -318,6 +319,13 @@ export interface dtoEntitas {
   type: string
 }
 
+export interface ResRankingItem {
+  uraian_id: number;
+  prioritas: string[];
+  'ranking-prioritas': string | number;
+}
+
+
 export const initReqUpr: PenetapanObjectEntityReqDto = {
   id_objek: 0,
   values: [
@@ -326,4 +334,16 @@ export const initReqUpr: PenetapanObjectEntityReqDto = {
       type: ""
     }
   ]
+};
+
+export const initShorlist: dtoUraian = {
+  id: 0,
+  penetapan_object_rkp_id: 0,
+  level: "",
+  ref_id: 0,
+  objek: true,
+  approve_profil_risiko: 0,
+  rkp: "",
+  usulan_upr_linsek: [],
+  ranking: 0
 };

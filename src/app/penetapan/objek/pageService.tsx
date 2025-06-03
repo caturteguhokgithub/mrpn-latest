@@ -121,3 +121,11 @@ export async function doLogActivity(param: LogActivityServiceModel) {
   });
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
+
+export async function doGetRanking(param: UpdateOrCreatePenetapanObjectLongListServiceModel) {
+  const resp = await post({
+    ...param,
+    url: "penetapan/object/longlist/ranking",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}

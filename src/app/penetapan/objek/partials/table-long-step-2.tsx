@@ -26,6 +26,9 @@ export default function TableLonglistStepTwo({ mode }: { mode?: string }) {
     (state) => state
   );
 
+  console.log(uraianState);
+
+
   function handleChecked(checked: boolean, i: number) {
     const curUraian: PenetapanObjectUraianDto[] = uraianState;
     curUraian[i].objek = checked;
@@ -69,24 +72,25 @@ export default function TableLonglistStepTwo({ mode }: { mode?: string }) {
             </TableRow>
           ) : (
             <>
-              {uraianState.map(
-                (row, i) =>
-                  row.prioritas.length > 0 && (
-                    <TableRow key={i}>
-                      <TableCell>{i + 1}</TableCell>
-                      <TableCell>{row.rkp.value}</TableCell>
-                      <TableCell align="center">
-                        {row.priotitas_order}
-                      </TableCell>
-                      <TableCell align="center">
-                        <Checkbox
-                          checked={row.objek}
-                          onChange={(e) => handleChecked(e.target.checked, i)}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  )
-              )}
+              {uraianState
+                .slice() // buat salinan agar tidak merusak state
+                .sort((a, b) => a.ranking - b.ranking) // ascending sort
+                .map(
+                  (row, i) =>
+                    row.prioritas.length > 0 && (
+                      <TableRow key={i}>
+                        <TableCell>{i + 1}</TableCell>
+                        <TableCell>{row.rkp.value}</TableCell>
+                        <TableCell align="center">{row.ranking == 0 ? "-" : row.ranking}</TableCell>
+                        <TableCell align="center">
+                          <Checkbox
+                            checked={row.objek}
+                            onChange={(e) => handleChecked(e.target.checked, i)}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    )
+                )}
             </>
           )}
         </TableBody>

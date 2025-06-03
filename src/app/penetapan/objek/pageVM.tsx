@@ -12,6 +12,7 @@ import {
   initLogActivity,
   initPenetapanObjectState,
   initReqUpr,
+  initShorlist,
   LogActivityDto,
   NotaDinasReqDto,
   PenetapanObjectEntityCheckedDto,
@@ -25,6 +26,7 @@ import {
   PenetapanObjectShortListDto,
   PenetapanObjectStateEntityDto,
   PenetapanObjectVMState,
+  ResRankingItem,
   RKPCascadingDto,
 } from "@/app/penetapan/objek/pageModel";
 import {
@@ -38,6 +40,7 @@ import {
   doGetPenetapanObjectEntityUsulan,
   doGetPenetapanObjectNotaDinas,
   doGetPenetapanObjectShortList,
+  doGetRanking,
   doLogActivity,
   doUpdateOrCreateGetPenetapanObjectNotaDinas,
   doUpdateOrCreatePenetapanObjectEntityUsulan,
@@ -89,17 +92,6 @@ const usePenetapanObjectVM = () => {
   const [modalObjek, setModalObjek] = useState<boolean>(false);
 
   const [stateCreateUpr, setStateCreateUpr] = useState<PenetapanObjectEntityReqDto>({ ...initReqUpr })
-  const initShorlist: dtoUraian = {
-    id: 0,
-    penetapan_object_rkp_id: 0,
-    level: "",
-    ref_id: 0,
-    objek: true,
-    approve_profil_risiko: 0,
-    rkp: "",
-    usulan_upr_linsek: []
-  };
-
   const [stateUprSingle, setStateUprSingle] = useState<dtoUraian>({ ...initShorlist });
 
   const generateOptionPN = () => {
@@ -375,6 +367,44 @@ const usePenetapanObjectVM = () => {
     // }
   }
 
+  async function getRanking() {
+    let reqLongList: PenetapanObjectLongListReqDto = { values: [] };
+
+    uraianState.forEach((u) => {
+      const values: PenetapanObjectLongListReqValueDto = {
+        uraian_id: u.id,
+        prioritas: u.prioritas
+          .filter((p) => p.value)
+          .map((p) => p.value as string), // pastikan tipe
+      };
+
+      reqLongList.values.push(values);
+    });
+
+    const response = await doGetRanking({
+      body: reqLongList,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+
+    if (response?.code === API_CODE.success) {
+      const rankingData = response.result as ResRankingItem[];
+
+      const updated = uraianState.map((item) => {
+        const match = rankingData.find((r) => r.uraian_id === item.id);
+        return {
+          ...item,
+          ranking:
+            match && match["ranking-prioritas"] !== "-"
+              ? Number(match["ranking-prioritas"])
+              : 0,
+        };
+      });
+
+      setUraianState(updated);
+    }
+  }
+
   async function getPenetapanObjectNotaDinas() {
     if (objectState !== undefined) {
       const response = await doGetPenetapanObjectNotaDinas({
@@ -554,6 +584,7 @@ const usePenetapanObjectVM = () => {
     setStateCreateUpr,
     stateUprSingle,
     setStateUprSingle,
+    getRanking,
   };
 };
 

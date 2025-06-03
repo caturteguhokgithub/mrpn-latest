@@ -92,6 +92,7 @@ export default function TabObject({
     setShowSave,
     showSave,
     stateUpr,
+    getRanking,
   } = usePenetapanObjectVM();
 
   useEffect(useEffectObjectState, [year, objectState]);
@@ -101,6 +102,11 @@ export default function TabObject({
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  const handleRanking = async () => {
+    getRanking()
+  };
+
 
   const handleOpenShortlist = async () => {
     const updateData = await updateOrCreateLongList();
@@ -167,7 +173,10 @@ export default function TabObject({
               description="Silahkan isi konten halaman ini"
             />
           ) : (
-            <TableLonglistStepper handleOpenShortlist={handleOpenShortlist} />
+            <TableLonglistStepper
+              handleOpenShortlist={handleOpenShortlist}
+              handleRanking={() => handleRanking()}
+            />
           )}
         </CardItem>
       </CustomTabPanel>

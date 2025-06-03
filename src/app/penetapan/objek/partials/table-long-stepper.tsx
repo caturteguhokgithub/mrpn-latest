@@ -23,8 +23,10 @@ const steps = [
 
 export default function TableLonglistStepper({
   handleOpenShortlist,
+  handleRanking,
 }: {
   handleOpenShortlist?: () => void;
+  handleRanking?: any;
 }) {
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
@@ -46,7 +48,7 @@ export default function TableLonglistStepper({
     return skipped.has(step);
   };
 
-  const handleNext = async () => {
+  const handleNext = () => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -58,6 +60,7 @@ export default function TableLonglistStepper({
     setUraianState(updateStateUraian);
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    handleRanking()
     setSkipped(newSkipped);
   };
 
@@ -152,8 +155,8 @@ export default function TableLonglistStepper({
        </Button>
       )} */}
             {hasPrivilege(permission, pathname, "add") ||
-            hasPrivilege(permission, pathname, "update") ||
-            hasPrivilege(permission, pathname, "delete") ? (
+              hasPrivilege(permission, pathname, "update") ||
+              hasPrivilege(permission, pathname, "delete") ? (
               <Button
                 onClick={
                   activeStep === steps.length - 1

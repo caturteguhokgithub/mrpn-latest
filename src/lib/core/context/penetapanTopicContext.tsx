@@ -1,13 +1,13 @@
-import {ProjectDefaultDto} from "@/lib/core/context/rkpContext";
-import {createStore} from "zustand/vanilla";
-import {createContext} from "react";
-import type {StoreApi} from "zustand";
+import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
+import { createStore } from "zustand/vanilla";
+import { createContext } from "react";
+import type { StoreApi } from "zustand";
 
 export interface PenetapanObjectDto {
-  id:number
-  code:string
-  topik:string
-  tahun:number
+  id: number
+  code: string
+  topik: string
+  tahun: number
   penetapan_object_list: PenetapanObjectListDto[]
 }
 
@@ -26,20 +26,21 @@ export interface PenetapanObjectUraianDto {
   ref_id: number
   objek: boolean
   approve_profil_risiko: boolean
-  rkp : ProjectDefaultDto
-  prioritas : PenetapanObjectPrioritas[]
-  priotitas_count : number
-  priotitas_order : number
+  rkp: ProjectDefaultDto
+  prioritas: PenetapanObjectPrioritas[]
+  priotitas_count: number
+  priotitas_order: number
+  ranking: number;
 }
 
 export interface PenetapanObjectPrioritas {
-  id:number
+  id: number
   uraian_penetapan_objek_id: number
   value: string
 }
 
 export interface PenetapanObjectNotaDto {
-  id:number
+  id: number
   topik: string
   periode: number
   usulan_objek_ls: string[]
@@ -69,17 +70,17 @@ export interface PenetapanObjectNotaDto {
   alasan_ttd_penyetuju: string
 }
 
-export type PenetapanObjectState =  {
+export type PenetapanObjectState = {
   objects: PenetapanObjectDto[]
-  objectState : PenetapanObjectDto | undefined
-  uraianState : PenetapanObjectUraianDto[]
+  objectState: PenetapanObjectDto | undefined
+  uraianState: PenetapanObjectUraianDto[]
   nota: PenetapanObjectNotaDto | undefined
 }
 
 export type PenetapanObjectActions = {
   setObjects: (value: PenetapanObjectDto[]) => void
-  setObjectState: (value: PenetapanObjectDto|undefined ) => void
-  setUraianState: (value: PenetapanObjectUraianDto[] ) => void
+  setObjectState: (value: PenetapanObjectDto | undefined) => void
+  setUraianState: (value: PenetapanObjectUraianDto[]) => void
   setNota: (value: PenetapanObjectNotaDto) => void
 }
 
@@ -97,10 +98,10 @@ export const createPenetapanObjectStore = (
 ) => {
   return createStore<PenetapanObjectStore>()((set) => ({
     ...initState,
-    setObjects: (params:PenetapanObjectDto[]) => set((state) => state = {...state, objects:params}),
-    setObjectState: (params:PenetapanObjectDto|undefined) => set((state) => state = {...state, objectState:params}),
-    setUraianState: (params:PenetapanObjectUraianDto[]) => set((state) => state = {...state, uraianState:params}),
-    setNota: (params:PenetapanObjectNotaDto) => set((state) => state = {...state, nota:params}),
+    setObjects: (params: PenetapanObjectDto[]) => set((state) => state = { ...state, objects: params }),
+    setObjectState: (params: PenetapanObjectDto | undefined) => set((state) => state = { ...state, objectState: params }),
+    setUraianState: (params: PenetapanObjectUraianDto[]) => set((state) => state = { ...state, uraianState: params }),
+    setNota: (params: PenetapanObjectNotaDto) => set((state) => state = { ...state, nota: params }),
   }))
 }
 
