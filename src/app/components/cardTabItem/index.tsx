@@ -152,7 +152,7 @@ export default function CardItem({
             </MenuItem>
 
             <MenuItem onClick={settingEditOutputClick}>
-              <ListItemDropdownMenu label="Tambah Exepcted Output" />
+              <ListItemDropdownMenu label="Tambah Expected Output" />
             </MenuItem>
           </>
         ) : settingAddOnclick ? (
