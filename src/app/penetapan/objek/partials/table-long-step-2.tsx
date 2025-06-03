@@ -73,15 +73,22 @@ export default function TableLonglistStepTwo({ mode }: { mode?: string }) {
           ) : (
             <>
               {uraianState
-                .slice() // buat salinan agar tidak merusak state
-                .sort((a, b) => a.ranking - b.ranking) // ascending sort
+                .slice()
+                .sort((a, b) => {
+                  // Jika ranking = 0, dianggap paling besar
+                  const rankA = a.ranking === 0 ? Infinity : a.ranking;
+                  const rankB = b.ranking === 0 ? Infinity : b.ranking;
+                  return rankA - rankB;
+                })
                 .map(
                   (row, i) =>
                     row.prioritas.length > 0 && (
                       <TableRow key={i}>
                         <TableCell>{i + 1}</TableCell>
                         <TableCell>{row.rkp.value}</TableCell>
-                        <TableCell align="center">{row.ranking == 0 ? "-" : row.ranking}</TableCell>
+                        <TableCell align="center">
+                          {row.ranking === 0 ? "-" : row.ranking}
+                        </TableCell>
                         <TableCell align="center">
                           <Checkbox
                             checked={row.objek}
