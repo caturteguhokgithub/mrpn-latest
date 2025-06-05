@@ -76,16 +76,16 @@ export default function CardSelera() {
           </Fragment>
         }
       >
-        {isDeveloping ? (
+        {/* {isDeveloping ? (
           <EmptyDevelopingState />
-        ) : (
+        ) : ( */}
           <RiskContent
             handleSaveButton={handleModalOpenSave}
             state={requestSelera}
             setState={setRequestSelera}
             isEmptyRisk={isEmptyRisk}
           />
-        )}
+        {/* )} */}
       </CardItem>
       <DialogComponent
         width={1200}

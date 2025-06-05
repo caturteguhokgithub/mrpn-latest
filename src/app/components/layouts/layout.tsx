@@ -29,7 +29,7 @@ import { MiscMasterRPJMNRes } from "@/app/misc/master/masterServiceModel";
 
 const Aside = dynamic(() => import("./aside"), { ssr: false });
 
-export const isDeveloping = false;
+export const isDeveloping = true;
 
 export default function DashboardLayout(props: {
   children: React.ReactNode;
@@ -133,8 +133,8 @@ export default function DashboardLayout(props: {
         maxWidth: checked
           ? "calc(100vw - 364px)"
           : onlySmallScreen
-            ? "100%"
-            : "calc(100vw - 132px)",
+          ? "100%"
+          : "calc(100vw - 132px)",
         thead: {
           tr: {
             "&:not(:last-of-type)": {
@@ -188,8 +188,8 @@ export default function DashboardLayout(props: {
     gridTemplateColumns: checked
       ? "280px 1fr"
       : flagPathnameTheme && !checked
-        ? "0 1fr"
-        : "64px 1fr",
+      ? "0 1fr"
+      : "64px 1fr",
     gridTemplateRows: "auto 1fr auto",
     gridTemplateAreas: `'aside header' 'aside main' 'aside footer'`,
     height: "100vh",
@@ -353,7 +353,7 @@ export default function DashboardLayout(props: {
         position="relative"
         className={checked ? "" : "collapse-active"}
         sx={sxMain}
-      // onMouseOver={handleChange}
+        // onMouseOver={handleChange}
       >
         <Stack
           borderRadius="50%"

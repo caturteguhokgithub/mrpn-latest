@@ -34,6 +34,7 @@ export default function TableProposal({ mode }: { mode?: string }) {
     updateOrCreateEntity,
     showSave,
     setShowSave,
+    stateCreateUpr,
   } = usePenetapanObjectVM();
 
   const { objectState } = usePenetapanTopicContext((state) => state);
@@ -178,7 +179,7 @@ lainnya"
               sx={{ borderRadius: 24, px: 4 }}
               onClick={() => {
                 setShowSave(true);
-                updateOrCreateEntity();
+                updateOrCreateEntity(stateCreateUpr);
               }}
             >
               Simpan

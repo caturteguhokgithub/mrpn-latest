@@ -115,9 +115,9 @@ export default function CardDampak() {
           </Stack>
         }
       >
-        {isDeveloping ? (
+        {/* {isDeveloping ? (
           <EmptyDevelopingState />
-        ) : (
+        ) : ( */}
           <Fragment>
             <CollapsibleImpactTable
               data={dataMatDamKomite}
@@ -128,7 +128,7 @@ export default function CardDampak() {
               handleDelete={() => setModalDelete(true)}
             />
           </Fragment>
-        )}
+        {/* )} */}
       </CardItem>
       <DialogComponent
         width={1200}

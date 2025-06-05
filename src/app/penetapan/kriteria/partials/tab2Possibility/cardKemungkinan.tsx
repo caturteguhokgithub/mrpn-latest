@@ -93,17 +93,17 @@ export default function CardKemungkinan() {
           </Stack>
         }
       >
-        {isDeveloping ? (
+        {/* {isDeveloping ? (
           <EmptyDevelopingState />
-        ) : (
-          <Fragment>
-            <TableKemungkinan
-              mode="view"
-              handleModalEdit={() => setModalOpenEdit(true)}
-              handleModalDelete={() => setModalDelete(true)}
-            />
-          </Fragment>
-        )}
+        ) : ( */}
+        <Fragment>
+          <TableKemungkinan
+            mode="view"
+            handleModalEdit={() => setModalOpenEdit(true)}
+            handleModalDelete={() => setModalDelete(true)}
+          />
+        </Fragment>
+        {/* )} */}
       </CardItem>
 
       {modalOpenAdd && (
