@@ -22,7 +22,7 @@ import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import theme from "@/theme";
 import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
 import { getDetailRO } from "@/lib/utils/roDetail";
-import { RiskOverviewData } from "../../overview/pageModel";
+import { PerlakuanData, RiskOverviewData } from "../../overview/pageModel";
 
 function createData(
   id: number,
@@ -71,7 +71,7 @@ function createData(
   };
 }
 
-function Row(props: { row: RiskOverviewData; index?: number }) {
+function Row(props: { row: PerlakuanData; index?: number }) {
   const { row, index } = props;
   const [open, setOpen] = React.useState(false);
 
@@ -175,6 +175,7 @@ function Row(props: { row: RiskOverviewData; index?: number }) {
                   },
                 }}
               >
+
                 <Table stickyHeader size="small">
                   <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
                     <TableRow>
@@ -235,7 +236,7 @@ function Row(props: { row: RiskOverviewData; index?: number }) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {row.rincian_output.map((rowItem) => (
+                    {row?.rincian_output ? row.rincian_output.map((rowItem) => (
                       <TableRow key={rowItem.id}>
                         <TableCell align="center">{rowItem.id}</TableCell>
                         <TableCell>
@@ -260,7 +261,7 @@ function Row(props: { row: RiskOverviewData; index?: number }) {
                         <TableCell align="right">{rowItem.anggaran}</TableCell>
                         <TableCell>{rowItem.sumber_anggaran}</TableCell>
                       </TableRow>
-                    ))}
+                    )) : ""}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -307,7 +308,7 @@ function Row(props: { row: RiskOverviewData; index?: number }) {
 //   ),
 // ];
 
-export default function CollapsibleTable({ rowData }: { rowData: RiskOverviewData }) {
+export default function CollapsibleTable({ rowData }: { rowData: PerlakuanData[] }) {
   // console.log(rowData)
 
   return (
@@ -367,9 +368,9 @@ export default function CollapsibleTable({ rowData }: { rowData: RiskOverviewDat
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {rows.map((row) => ( */}
-            <Row key={rowData.id} row={rowData} />
-            {/* ))} */}
+            {rowData.map((row) => (
+              <Row key={row.id} row={row} />
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

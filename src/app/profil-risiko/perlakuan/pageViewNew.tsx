@@ -446,7 +446,7 @@ export default function PagePerlakuanViewNew({ }) {
     filterFromLeafRows: true,
     enableExpanding: true,
     renderDetailPanel: ({ row }) => (
-      <CollapsibleTable rowData={row.original} />
+      <CollapsibleTable rowData={row.original.perlakuan_data} />
     ),
   });
 
@@ -454,8 +454,8 @@ export default function PagePerlakuanViewNew({ }) {
     <Fragment>
       <ContentPage
         title={`Perlakuan Risiko ${year == 0
-            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-            : "Tahun " + year
+          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+          : "Tahun " + year
           }`}
         infoToolTip="Proses untuk menurunkan keterpaparan risiko yang dikaitkan dengan toleransi dan selera risiko
 yang telah ditetapkan"
@@ -511,10 +511,10 @@ yang telah ditetapkan"
         dialogOpen={modal.isOpen && modal.action != "delete"}
         dialogClose={() => actionModal(false, "create")}
         title={`${modal.action == "read"
-            ? "Detail"
-            : modal.action == "update"
-              ? "Ubah"
-              : "Tambah"
+          ? "Detail"
+          : modal.action == "update"
+            ? "Ubah"
+            : "Tambah"
           } Perlakuan Risiko`}
         dialogFooter={dialogActionFooter}
         sx={{
