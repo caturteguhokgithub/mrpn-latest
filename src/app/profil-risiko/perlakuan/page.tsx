@@ -9,7 +9,8 @@ export default function PagePerlakuan({}) {
   usePermissionChecker("profilRisiko.perlakuanRisiko");
   return (
     <DashboardLayout>
-      {isDeveloping ? <PagePerlakuanView /> : <PagePerlakuanViewNew />}
+      {/* {isDeveloping ? <PagePerlakuanView /> : <PagePerlakuanViewNew />} */}
+      <PagePerlakuanViewNew />
     </DashboardLayout>
   );
 }

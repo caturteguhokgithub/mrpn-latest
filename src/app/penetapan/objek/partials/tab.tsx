@@ -16,7 +16,10 @@ import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import CascadingPenetapanObjectOrgChart from "@/app/penetapan/objek/partials/org-chart";
 import AddButton from "@/components/buttonAdd";
 import TableNotaDinasViewOnly from "@/app/approval/nota-dinas/partials/table-nota-dinas-view-only";
-import { usePenetapanTopicContext, useRKPContext } from "@/lib/core/hooks/useHooks";
+import {
+  usePenetapanTopicContext,
+  useRKPContext,
+} from "@/lib/core/hooks/useHooks";
 import { isDeveloping } from "@/app/components/layouts/layout";
 import EmptyDevelopingState from "@/app/components/empty/developing";
 import TableUPR from "./table-upr";
@@ -238,15 +241,15 @@ export default function TabObject({
             />
           ) : (
             <Fragment>
-              {isDeveloping ? (
+              {/* {isDeveloping ? (
                 <TableProposal />
-              ) : (
-                <CollapsibleTableUpr
-                  data={stateUpr}
-                  setShowSave={setShowSave}
-                  showSave={showSave}
-                />
-              )}
+              ) : ( */}
+              <CollapsibleTableUpr
+                data={stateUpr}
+                setShowSave={setShowSave}
+                showSave={showSave}
+              />
+              {/* )} */}
             </Fragment>
           )}
         </CardItem>
@@ -255,16 +258,16 @@ export default function TabObject({
         <CardItem
           // title="Nota Dinas Objek MRPN & UPR LS"
           title="Pengesahan Objek & UPR LS"
-        // addButton={
-        //   !editNotaDinas && (
-        //     <AddButton
-        //       title={`Ubah`}
-        //       filled
-        //       startIcon={<IconFA size={14} name="pencil" />}
-        //       onclick={() => setEditNotaDinas(true)}
-        //     />
-        //   )
-        // }
+          // addButton={
+          //   !editNotaDinas && (
+          //     <AddButton
+          //       title={`Ubah`}
+          //       filled
+          //       startIcon={<IconFA size={14} name="pencil" />}
+          //       onclick={() => setEditNotaDinas(true)}
+          //     />
+          //   )
+          // }
         >
           {/* {isDeveloping ? (
             <EmptyDevelopingState />
