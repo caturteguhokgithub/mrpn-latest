@@ -212,7 +212,7 @@ const TablePerlakuanMultiCheck = ({
                   />
                 </TableCell>
                 <TableCell>
-                  {"[No_RO]"} - {"[Kode_PKKR]"} -{" "}
+                  [{row.code}] - [{row.pkkr}] -{" "}
                   {highlightText(row.value, search)}
                 </TableCell>
                 {/*{multiyear.map((y, iY) => (*/}

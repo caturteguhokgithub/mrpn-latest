@@ -142,11 +142,11 @@ export default function FormUPR({
     // Set id_objek
     setState((prevState) => ({
       ...prevState,
-      id_objek: params.id
+      id_objek: params?.id ?? 0
     }));
 
     // Jika `params.values` tersedia, maka isi `items` dan `state.values`
-    if (params.usulan_upr_linsek && params.usulan_upr_linsek.length > 0 && listStakeholder.length > 0) {
+    if (params?.usulan_upr_linsek && params?.usulan_upr_linsek.length > 0 && listStakeholder.length > 0) {
       const mappedItems = params.usulan_upr_linsek.map((val, idx) => {
         const stakeholder = listStakeholder.find((s) => s.id === val.entitas_id) || {
           id: val.entitas_id,
@@ -172,6 +172,12 @@ export default function FormUPR({
           entitas: item.stakeholder.id,
           type: item.type
         }))
+      }));
+    } else {
+      setItems([{ id: 1, stakeholder: initReqStakeholder, type: "" }]);
+      setState((prevState) => ({
+        ...prevState,
+        values: []
       }));
     }
   };

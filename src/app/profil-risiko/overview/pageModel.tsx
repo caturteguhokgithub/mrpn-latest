@@ -45,6 +45,10 @@ export interface PerlakuanData {
   satuan_triwulan_2: string
   satuan_triwulan_3: string
   satuan_triwulan_4: string
+  target_satuan_tw_1: string
+  target_satuan_tw_2: string
+  target_satuan_tw_3: string
+  target_satuan_tw_4: string
   waktu: string
   src_stakeholder_id: number
   penanggung_jawab: string

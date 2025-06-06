@@ -24,53 +24,6 @@ import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
 import { getDetailRO } from "@/lib/utils/roDetail";
 import { PerlakuanData, RiskOverviewData } from "../../overview/pageModel";
 
-function createData(
-  id: number,
-  keputusan: string,
-  keterangan: string,
-  target: string,
-  waktu: string,
-  penanggungjawab: string
-) {
-  return {
-    id,
-    keputusan,
-    keterangan,
-    target,
-    waktu,
-    penanggungjawab,
-    pembiayaan: [
-      {
-        id: 1,
-        ro: "Jaringan Irigasi Tersier Yang Direhabilitasi (QW) - Provinsi Kalimantan Tengah",
-        tahun: 2025,
-        target: 100,
-        satuan: "unit",
-        anggaran: "Rp200.000.000",
-        sumber_anggaran: "APBN",
-      },
-      {
-        id: 2,
-        ro: "Pelatihan Pertanian bagi Non Aparatur (KSPP) - Kab. Tapin",
-        tahun: 2025,
-        target: 100,
-        satuan: "unit",
-        anggaran: "Rp200.000.000",
-        sumber_anggaran: "APBN",
-      },
-      {
-        id: 3,
-        ro: "SID Cetak Sawah (QW) - Provinsi Kalimantan Tengah",
-        tahun: 2025,
-        target: 100,
-        satuan: "unit",
-        anggaran: "Rp200.000.000",
-        sumber_anggaran: "APBN",
-      },
-    ],
-  };
-}
-
 function Row(props: { row: PerlakuanData; index?: number }) {
   const { row, index } = props;
   const [open, setOpen] = React.useState(false);
@@ -117,7 +70,7 @@ function Row(props: { row: PerlakuanData; index?: number }) {
               TW I :
             </Typography>
             <Typography fontWeight={600} fontSize={14}>
-              {row.target_triwulan_1 ?? "-"}
+              {row.target_satuan_tw_1 ?? "-"}
             </Typography>
           </Stack>
           <Stack direction={"row"} gap={1} alignItems="center">
@@ -125,7 +78,7 @@ function Row(props: { row: PerlakuanData; index?: number }) {
               TW II :
             </Typography>
             <Typography fontWeight={600} fontSize={14}>
-              {row.target_triwulan_2 ?? "-"}
+              {row.target_satuan_tw_2 ?? "-"}
             </Typography>
           </Stack>
           <Stack direction={"row"} gap={1} alignItems="center">
@@ -133,7 +86,7 @@ function Row(props: { row: PerlakuanData; index?: number }) {
               TW III :
             </Typography>
             <Typography fontWeight={600} fontSize={14}>
-              {row.target_triwulan_3 ?? "-"}
+              {row.target_satuan_tw_3 ?? "-"}
             </Typography>
           </Stack>
           <Stack direction={"row"} gap={1} alignItems="center">
@@ -141,7 +94,7 @@ function Row(props: { row: PerlakuanData; index?: number }) {
               TW IV :
             </Typography>
             <Typography fontWeight={600} fontSize={14}>
-              {row.target_triwulan_4 ?? "-"}
+              {row.target_satuan_tw_4 ?? "-"}
             </Typography>
           </Stack>
         </TableCell>

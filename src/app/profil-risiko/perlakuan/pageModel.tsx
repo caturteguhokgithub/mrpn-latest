@@ -43,17 +43,38 @@ export type GetRiskTreatmentServiceModel = BaseAPIServiceParam & {
   }
 }
 
+// export interface RiskTreatmentReqDto {
+//   id: number
+//   profil_risiko_id: number
+//   keputusan: string
+//   ro: number[]
+//   keterangan_risiko: string
+//   start_date: string
+//   end_date: string
+//   src_stakeholder_id: number
+//   src_matriks_risiko_id: number
+//   triwulan: number
+//   target_triwulan_1: string
+//   satuan_triwulan_1: string
+//   target_triwulan_2: string
+//   satuan_triwulan_2: string
+//   target_triwulan_3: string
+//   satuan_triwulan_3: string
+//   target_triwulan_4: string
+//   satuan_triwulan_4: string
+// }
+
 export interface RiskTreatmentReqDto {
   id: number
   profil_risiko_id: number
-  keputusan: string
-  ro: number[]
-  keterangan_risiko: string
-  start_date: string
-  end_date: string
-  src_stakeholder_id: number
   src_matriks_risiko_id: number
-  triwulan: number
+  keputusan: string
+  perlakuan: Perlakuan[]
+}
+
+export interface Perlakuan {
+  id: number
+  keterangan_risiko: string
   target_triwulan_1: string
   satuan_triwulan_1: string
   target_triwulan_2: string
@@ -62,7 +83,37 @@ export interface RiskTreatmentReqDto {
   satuan_triwulan_3: string
   target_triwulan_4: string
   satuan_triwulan_4: string
+  ro: number[],
+  start_date: string
+  end_date: string
+  src_stakeholder_id: number
 }
+
+export const initPerlakuanStateReq: Perlakuan = {
+  id: 0,
+  keterangan_risiko: "",
+  target_triwulan_1: "",
+  satuan_triwulan_1: "",
+  target_triwulan_2: "",
+  satuan_triwulan_2: "",
+  target_triwulan_3: "",
+  satuan_triwulan_3: "",
+  target_triwulan_4: "",
+  satuan_triwulan_4: "",
+  ro: [],
+  start_date: "",
+  end_date: "",
+  src_stakeholder_id: 0
+}
+
+export const initRiskTreatmentStateReq: RiskTreatmentReqDto = {
+  id: 0,
+  profil_risiko_id: 0,
+  src_matriks_risiko_id: 0,
+  keputusan: "",
+  perlakuan: [{ ...initPerlakuanStateReq }]
+}
+
 
 export type UpdateOrCreateRiskTreatmentServiceModel = BaseAPIServiceParam & {
   body: RiskTreatmentReqDto
@@ -71,6 +122,7 @@ export type UpdateOrCreateRiskTreatmentServiceModel = BaseAPIServiceParam & {
 export interface RiskTreatmentState {
   id: number
   profil_risiko: RiskAnalysisDto | undefined
+  src_matriks_risiko: MasterRiskMatrixRes | undefined
   keputusan: string
   target: string
   keterangan_risiko: string
@@ -78,7 +130,6 @@ export interface RiskTreatmentState {
   start_date: string
   end_date: string
   src_stakeholder: MiscMasterListStakeholderRes | undefined
-  src_matriks_risiko: MasterRiskMatrixRes | undefined
   triwulan: number
   target_triwulan_1: string
   satuan_triwulan_1: string
