@@ -9,7 +9,7 @@ import { InfoTooltip } from "../../InfoTooltip";
 export const SubmenuItem = ({ label, url, urlLv2, isOpen }: IMenu) => {
   const pathname = usePathname();
 
-  const kpPenetapan = localStorage.getItem("kpPenetapan");
+  const kpPenetapan = localStorage.getItem("selectedRKP");
   const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
 
   const isEmptyPenetapanObject =
@@ -29,8 +29,13 @@ export const SubmenuItem = ({ label, url, urlLv2, isOpen }: IMenu) => {
         "&:hover": { bgcolor: "transparent" },
       }}
     >
-      {/* <Link href={disabledMenu ? "#" : `/${urlLv2}`} passHref> */}
-      <Link href={`/${urlLv2}`} passHref>
+      <Link
+        href={disabledMenu ? "#" : `/${urlLv2}`}
+        passHref
+        style={{
+          pointerEvents: disabledMenu ? "none" : "auto",
+        }}
+      >
         <Stack direction="row" alignItems="center" py="5px">
           <Typography
             ml="20px"
@@ -52,7 +57,6 @@ export const SubmenuItem = ({ label, url, urlLv2, isOpen }: IMenu) => {
               gap: "4px",
               color: disabledMenu ? grey[500] : grey[700],
               cursor: disabledMenu ? "not-allowed" : "pointer",
-              // cursor: "pointer",
               "&.link-active": {
                 "& > span": {
                   fontWeight: 700,
@@ -70,7 +74,6 @@ export const SubmenuItem = ({ label, url, urlLv2, isOpen }: IMenu) => {
                 content: "''",
                 width: "7px",
                 height: "7px",
-                // backgroundColor: grey[700],
                 backgroundColor: isOpen ? grey[500] : grey[300],
                 display: "block",
                 borderRadius: "50%",
@@ -82,7 +85,6 @@ export const SubmenuItem = ({ label, url, urlLv2, isOpen }: IMenu) => {
               },
               "&:hover": {
                 fontWeight: disabledMenu ? 400 : 600,
-                // fontWeight: 600,
                 "&:before": {
                   backgroundColor: theme.palette.primary.main,
                   outline: "3px solid",
@@ -96,8 +98,6 @@ export const SubmenuItem = ({ label, url, urlLv2, isOpen }: IMenu) => {
               sx={{
                 pointerEvents: disabledMenu ? "none" : "auto",
                 userSelect: disabledMenu ? "none" : "auto",
-                // pointerEvents: "auto",
-                // userSelect: "auto",
                 color: isOpen ? grey[700] : grey[300],
               }}
             >

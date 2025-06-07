@@ -20,6 +20,7 @@ import {
   initSubCategory,
 } from "./categoryModel";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
+import { cloneDeep } from "lodash";
 
 const useCategoryList = () => {
   const loadingContext = useLoading();
@@ -43,24 +44,19 @@ const useCategoryList = () => {
   const [requestSubCategory, setRequestSubCategory] =
     useState<SubKategoriRisiko>({ ...initSubCategory });
 
-  // const searchParams = useSearchParams();
-
-  // const search = searchParams.get("search");
-
   // ini data yang didapat dari local storage
-  // const kpPenetapan = localStorage.getItem("kpPenetapan");
-  // const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
+  const kpPenetapan = localStorage.getItem("kpPenetapan");
+  const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
 
-  // const isEmptyPenetapanObject =
-  //   !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
+  const isEmptyPenetapanObject =
+    !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
 
   async function getData() {
     setLoading(true);
     const response = await doGetCategory({
       body: {
-        uraian_penetapan_object_id: objectState?.id,
-
-        // uraian_penetapan_object_id: kpPenetapanObj?.id,
+        // uraian_penetapan_object_id: objectState?.id,
+        uraian_penetapan_object_id: kpPenetapanObj?.id,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -68,7 +64,6 @@ const useCategoryList = () => {
 
     if (response?.code == API_CODE.success) {
       let result: ResultCategory[] = response.result;
-      // console.log({ result });
       if (result) {
         setDataCategory(result);
         setLoading(false);
@@ -104,7 +99,6 @@ const useCategoryList = () => {
 
     if (response?.code == API_CODE.success) {
       let result: doMasterKategori[] = response.result;
-      // console.log({ result });
       if (result) {
         setMasterCategory(result);
         setLoading(false);
@@ -173,14 +167,14 @@ const useCategoryList = () => {
 
   // Fungsi digunakan untuk trigger modal & open form add
   const handleAdd = () => {
-    setRequestCategory({ ...initCategory });
+    setRequestCategory(cloneDeep({ ...initCategory }));
     setModalOpenAdd(true);
   };
 
   useEffect(() => {
-    // if (!isEmptyPenetapanObject) {
-    getData();
-    // }
+    if (!isEmptyPenetapanObject) {
+      getData();
+    }
     getMasterCategory();
   }, [objectState?.id]);
 
