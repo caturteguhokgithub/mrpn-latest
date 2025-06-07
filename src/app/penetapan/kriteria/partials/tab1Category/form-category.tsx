@@ -70,7 +70,7 @@ export default function FormCategory({
   listMasterCategory,
   stateSubCat,
   setStateSubCat,
-  setModalOpenAddMasterCategory
+  setModalOpenAddMasterCategory,
 }: {
   mode?: string;
   handleOpenCategory?: any;
@@ -81,7 +81,7 @@ export default function FormCategory({
   stateCategory?: doMasterKategori;
   stateSubCat?: SubKategoriRisiko;
   setStateSubCat?: (value: SetStateAction<SubKategoriRisiko>) => void;
-  setModalOpenAddMasterCategory?: any
+  setModalOpenAddMasterCategory?: any;
 }) {
   const [items, setItem] = React.useState([{ id: 1 }]);
 
@@ -121,6 +121,8 @@ export default function FormCategory({
       });
     }
   };
+
+  console.log({ state });
 
   return (
     <Fragment>
@@ -171,9 +173,9 @@ export default function FormCategory({
                 handleChange={(newValue: doMasterKategori) =>
                   setState
                     ? setState((prevState) => ({
-                      ...prevState,
-                      src_kategori_id: newValue.id,
-                    }))
+                        ...prevState,
+                        src_kategori_id: newValue.id,
+                      }))
                     : ""
                 }
                 placeHolder={"Pilih kategori"}
@@ -270,6 +272,7 @@ export default function FormCategory({
                         </Grid>
                         <Grid item xs={12}>
                           <FormControl fullWidth>
+                            {/* {mode==='add'? } */}
                             <TextareaStyled
                               // width="100%"
                               minRows={2}

@@ -27,18 +27,21 @@ const useCategoryList = () => {
   const [loading, setLoading] = useState(false);
   const [dataCategory, setDataCategory] = useState<ResultCategory[]>([]);
   const [masterCategory, setMasterCategory] = useState<doMasterKategori[]>([]);
-  const [requestMasterCategory, setRequestMasterCategory] = useState<doMasterKategori>({ ...initMasterCategory });
+  const [requestMasterCategory, setRequestMasterCategory] =
+    useState<doMasterKategori>({ ...initMasterCategory });
   const { objectState } = usePenetapanGlobalVM();
   const [modalOpenAdd, setModalOpenAdd] = useState(false);
   const [modalOpenCategory, setModalOpenCategory] = useState(false);
   const [modalOpenDelete, setModalDelete] = useState(false);
-  const [modalOpenAddMasterCategory, setModalOpenAddMasterCategory] = useState(false);
+  const [modalOpenAddMasterCategory, setModalOpenAddMasterCategory] =
+    useState(false);
 
   const [requestCategory, setRequestCategory] = useState<doRequestCategoryDto>({
     ...initCategory,
   });
 
-  const [requestSubCategory, setRequestSubCategory] = useState<SubKategoriRisiko>({ ...initSubCategory });
+  const [requestSubCategory, setRequestSubCategory] =
+    useState<SubKategoriRisiko>({ ...initSubCategory });
 
   // const searchParams = useSearchParams();
 
@@ -121,13 +124,13 @@ const useCategoryList = () => {
       errorModalContext: errorModalContext,
     };
 
-    const response = isNew ?
-      await doCreateMasterCategory(params) :
-      await doUpdateMasterCategory(params);
+    const response = isNew
+      ? await doCreateMasterCategory(params)
+      : await doUpdateMasterCategory(params);
 
     if (response?.code == API_CODE.success) {
       getData();
-      setRequestMasterCategory({ ...initMasterCategory })
+      setRequestMasterCategory({ ...initMasterCategory });
       setModalOpenAddMasterCategory(false);
     }
   }
@@ -168,12 +171,20 @@ const useCategoryList = () => {
     }
   }
 
+  // Fungsi digunakan untuk trigger modal & open form add
+  const handleAdd = () => {
+    setRequestCategory({ ...initCategory });
+    setModalOpenAdd(true);
+  };
+
   useEffect(() => {
     // if (!isEmptyPenetapanObject) {
     getData();
     // }
     getMasterCategory();
   }, [objectState?.id]);
+
+  console.log({ requestCategory });
 
   return {
     listDataCategory: dataCategory,
@@ -198,6 +209,7 @@ const useCategoryList = () => {
     setDataCategory,
     modalOpenAddMasterCategory,
     setModalOpenAddMasterCategory,
+    handleAdd,
   };
 };
 
