@@ -1,5 +1,12 @@
 import React, { Fragment, useState } from "react";
-import { Button, DialogActions, FormControl, Grid, Stack, TextField } from "@mui/material";
+import {
+  Button,
+  DialogActions,
+  FormControl,
+  Grid,
+  Stack,
+  TextField,
+} from "@mui/material";
 import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
 import CollapsibleTable from "./table-kategori-collapsible";
@@ -42,6 +49,7 @@ export default function CardKategori() {
     createMasterCategory,
     modalOpenAddMasterCategory,
     setModalOpenAddMasterCategory,
+    handleAdd,
   } = useCategoryList();
 
   const handleCreate = async () => {
@@ -72,7 +80,7 @@ export default function CardKategori() {
       value: item.sub_kategori_risiko.value,
     };
     setRequestSubCategory(tempItem);
-    setDataValueCategory(item.value)
+    setDataValueCategory(item.value);
   };
 
   const dialogActionFooter = (
@@ -140,7 +148,7 @@ export default function CardKategori() {
               filled
               startIcon={<Iconify name="mdi:plus-circle" />}
               title="Tambah Kategori Risiko"
-              onclick={() => setModalOpenAdd(true)}
+              onclick={handleAdd}
             />
           </Stack>
         }
@@ -153,6 +161,7 @@ export default function CardKategori() {
             handleEdit={(row: any) => handleEdit(row)}
             handleDelete={() => setModalDelete(true)}
             setRequestEdit={setRequestSubCategory}
+            listDataCategory={listDataCategory}
           />
         </Fragment>
         {/* )} */}
@@ -212,8 +221,14 @@ export default function CardKategori() {
         title="Tambah Kategori"
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button onClick={() => setModalOpenAddMasterCategory(false)}>Batal</Button>
-            <Button variant="contained" type="submit" onClick={handleUpdateOrCreateMasterCategory}>
+            <Button onClick={() => setModalOpenAddMasterCategory(false)}>
+              Batal
+            </Button>
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={handleUpdateOrCreateMasterCategory}
+            >
               Simpan
             </Button>
           </DialogActions>
@@ -234,7 +249,7 @@ export default function CardKategori() {
               onChange={(e) => {
                 setRequestMasterCategory((prev) => ({
                   ...prev,
-                  value: e.target.value
+                  value: e.target.value,
                 }));
               }}
             />
@@ -250,7 +265,7 @@ export default function CardKategori() {
                 onChange={(e) => {
                   setRequestMasterCategory((prev) => ({
                     ...prev,
-                    uraian: e.target.value
+                    uraian: e.target.value,
                   }));
                 }}
               />

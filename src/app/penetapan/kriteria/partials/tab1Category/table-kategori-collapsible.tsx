@@ -44,8 +44,8 @@ function Row(props: {
     if (proses == "edit") {
       const dataEdit = {
         value: row.src_kategori_risiko.value,
-        sub_kategori_risiko: updated
-      }
+        sub_kategori_risiko: updated,
+      };
 
       handleEdit(dataEdit);
     }
@@ -223,13 +223,13 @@ export default function CollapsibleTable({
   handleEdit,
   handleDelete,
   setRequestEdit,
+  listDataCategory,
 }: {
   handleEdit?: any;
   handleDelete?: any;
   setRequestEdit?: (value: React.SetStateAction<SubKategoriRisiko>) => void;
+  listDataCategory: any;
 }) {
-  const { listDataCategory } = useCategoryList();
-
   return (
     <TableContainer
       component={Paper}
@@ -270,7 +270,7 @@ export default function CollapsibleTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {listDataCategory.map((row: ResultCategory, rowIndex) => (
+          {listDataCategory.map((row: ResultCategory, rowIndex: number) => (
             <Row
               key={row.id}
               row={row}
