@@ -9,8 +9,8 @@ import {
   TableRow,
 } from "@mui/material";
 import theme from "@/theme";
-import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
-import { doRequestPossibilityDto, doValues } from "./hooks/possibilityModel";
+import { TextareaStyled } from "@/app/components/textarea";
+import { doRequestPossibilityDto } from "./hooks/possibilityModel";
 
 export default function FormKemungkinanEmpty({
   mode,
@@ -32,29 +32,6 @@ export default function FormKemungkinanEmpty({
     "Sering terjadi (4)",
     "Hampir pasti terjadi (5)",
   ];
-
-  // const handleChange = (
-  //   index: number,
-  //   field: keyof doValues,
-  //   level_kemungkinan: string,
-  //   value: string
-  // ) => {
-  //   setState((prev) => {
-  //     const updatedValues = [...prev.values];
-  //     updatedValues[index] = {
-  //       ...updatedValues[index],
-  //       ["level_kemungkinan"]: level_kemungkinan,
-  //       [field]: value,
-  //     };
-
-  //     return {
-  //       ...prev,
-  //       values: updatedValues,
-  //     };
-  //   });
-  // };
-
-  console.log({ payloadValues });
 
   return (
     <TableContainer
@@ -104,7 +81,6 @@ export default function FormKemungkinanEmpty({
                     minRows={2}
                     value={payloadValues[index]?.probabilitas}
                     onChange={(e) =>
-                      // handleChange(index, "probabilitas", item, e.target.value)
                       handleChangePayload(index, "probabilitas", e.target.value)
                     }
                   />

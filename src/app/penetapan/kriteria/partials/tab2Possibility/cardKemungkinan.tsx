@@ -25,13 +25,12 @@ export default function CardKemungkinan() {
     updatePossibility,
     modalOpenDelete,
     setModalDelete,
-
     isDisabledAdd,
-    defaultDropdownList,
     handleDeleteTables,
     handleChangePayload,
     payloadValues,
     isDisabledAddButton,
+    loading,
   } = usePossibilityList();
 
   const handleCreate = async () => {
@@ -39,8 +38,6 @@ export default function CardKemungkinan() {
     setModalOpenEdit(false);
     updatePossibility();
   };
-
-  console.log({ isDisabledAddButton });
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -51,7 +48,6 @@ export default function CardKemungkinan() {
       >
         Batal
       </Button>
-      {/* <Button variant="contained" type="submit"> */}
       <Button variant="contained" onClick={handleCreate}>
         Simpan
       </Button>
@@ -93,23 +89,14 @@ export default function CardKemungkinan() {
           </Stack>
         }
       >
-        {/* {isDeveloping ? (
-          <EmptyDevelopingState />
-        ) : ( */}
         <Fragment>
-          <TableKemungkinan
-            mode="view"
-            handleModalEdit={() => setModalOpenEdit(true)}
-            handleModalDelete={() => setModalDelete(true)}
-          />
+          <TableKemungkinan mode="view" payloadValues={payloadValues} />
         </Fragment>
-        {/* )} */}
       </CardItem>
 
       {modalOpenAdd && (
         <DialogComponent
           tableMode
-          // width={400}
           width={1000}
           dialogOpen={modalOpenAdd}
           dialogClose={() => setModalOpenAdd(false)}
@@ -129,7 +116,6 @@ export default function CardKemungkinan() {
       {modalOpenEdit && (
         <DialogComponent
           tableMode
-          // width={400}
           width={1000}
           dialogOpen={modalOpenEdit}
           dialogClose={() => setModalOpenEdit(false)}
@@ -165,7 +151,6 @@ export default function CardKemungkinan() {
         handleCloseModal={() => setModalDelete(false)}
         handleDelete={() => {
           handleDeleteTables();
-          // handleDeleteSubCategory();
         }}
       />
     </Fragment>
