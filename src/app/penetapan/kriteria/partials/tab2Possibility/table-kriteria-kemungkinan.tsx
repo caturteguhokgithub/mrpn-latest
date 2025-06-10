@@ -22,19 +22,11 @@ import Iconify from "@/app/components/icons/iconify";
 
 export default function TableKemungkinan({
   mode,
-  handleModalEdit,
-  handleModalDelete,
+  payloadValues,
 }: {
   mode?: string;
-  handleModalEdit?: () => void;
-  handleModalDelete?: () => void;
+  payloadValues?: any;
 }) {
-  const { payloadValues, loading, isDisabledAdd } = usePossibilityList();
-
-  if (loading) {
-    return <div>loading...</div>;
-  }
-
   const renderTableRows = () => {
     switch (mode) {
       case "reference":

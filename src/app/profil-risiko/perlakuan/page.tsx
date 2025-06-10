@@ -1,7 +1,7 @@
 "use client";
 
 import DashboardLayout, { isDeveloping } from "@/app/components/layouts/layout";
-import PagePerlakuanView from "@/app/profil-risiko/perlakuan/pageView";
+// import PagePerlakuanView from "@/app/profil-risiko/perlakuan/pageView";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 import PagePerlakuanViewNew from "./pageViewNew";
 

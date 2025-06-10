@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Box,
@@ -15,7 +17,6 @@ import theme from "@/theme";
 import SelectCustomTheme from "../select";
 import DropdownRkp from "@/components/dropdown/dropdownRkp";
 import { grey } from "@mui/material/colors";
-// import { listSelectKp } from "@/app/executive-summary/data";
 import { listTriwulan } from "@/app/utils/data";
 import DateRangePicker from "@/components/dateRange";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
@@ -39,7 +40,6 @@ export default function ContentPage({
   overflowHidden,
   addButton,
   project,
-  // handleChangeProject,
   dowloadAttachmentFile,
   triWulan,
   hasAlert,
@@ -74,7 +74,6 @@ export default function ContentPage({
   overflowHidden?: boolean;
   addButton?: React.ReactNode;
   project?: any;
-  // handleChangeProject?: any;
   dowloadAttachmentFile?: React.ReactNode;
   triWulan?: boolean;
   hasAlert?: React.ReactNode;
@@ -131,11 +130,13 @@ export default function ContentPage({
 
   const labelChipRo = "Peningkatan ketersediaan pangan keluarga 1000 HPK";
 
-  // const nameOfKp = listSelectKp[2].name;
-
-  // get local storage selectedRKP
-  // const items = JSON.parse(localStorage?.getItem("selectedRKP"));
-  // console.log({ items });
+  const items: any =
+    typeof window !== "undefined"
+      ? (() => {
+          const selectedRKP = window?.localStorage?.getItem("selectedRKP");
+          return selectedRKP ? JSON.parse(selectedRKP) : null;
+        })()
+      : null;
 
   const currentDate = new Date();
 
@@ -241,42 +242,6 @@ export default function ContentPage({
                           KP
                         </Typography>
                       </Stack>
-                      {/* <Box
-                        sx={{
-                          [theme.breakpoints.up("sm")]: {
-                            display: "none",
-                          },
-                          [theme.breakpoints.down("sm")]: {
-                            display: "block",
-                          },
-                        }}
-                      >
-                        {nameOfKp.length >= 35 ? (
-                          <Tooltip
-                            title={nameOfKp}
-                            followCursor
-                            TransitionComponent={Grow}
-                          >
-                            <Typography
-                              aria-owns={
-                                open ? "mouse-over-popover" : undefined
-                              }
-                              aria-haspopup="true"
-                              onMouseEnter={handlePopoverOpen}
-                              onMouseLeave={handlePopoverClose}
-                              px={1.5}
-                              fontSize={13}
-                              fontWeight={600}
-                            >
-                              {nameOfKp.substring(0, 35) + "..."}
-                            </Typography>
-                          </Tooltip>
-                        ) : (
-                          <Typography px={1.5} fontSize={13} fontWeight={600}>
-                            {nameOfKp}
-                          </Typography>
-                        )}
-                      </Box> */}
                       <Box
                         sx={{
                           [theme.breakpoints.up("sm")]: {
@@ -287,10 +252,11 @@ export default function ContentPage({
                           },
                         }}
                       >
-                        {objectState &&
+                        {/* {objectState &&
                         objectState.rkp &&
                         objectState.rkp.value &&
-                        objectState.rkp.value.length >= 35 ? (
+                        objectState.rkp.value.length >= 35 ? ( */}
+                        {items && items.value.length >= 35 ? (
                           <Tooltip
                             title={objectState?.rkp.value}
                             followCursor
@@ -307,20 +273,22 @@ export default function ContentPage({
                               fontSize={13}
                               fontWeight={600}
                             >
-                              {objectState?.rkp.code +
+                              {/* {objectState?.rkp.code +
                                 " - " +
                                 objectState?.rkp.value.substring(0, 35) +
+                                "..."} */}
+                              {items?.code +
+                                " - " +
+                                items?.value.substring(0, 35) +
                                 "..."}
                             </Typography>
                           </Tooltip>
                         ) : (
                           <Typography px={1.5} fontSize={13} fontWeight={600}>
-                            {`${objectState?.rkp.code} - ${objectState?.rkp.value}`}
+                            {/* {`${objectState?.rkp.code} - ${objectState?.rkp.value}`} */}
+                            {`${items?.code} - ${items?.value}`}
                           </Typography>
                         )}
-                        {/* <Typography px={1.5} fontSize={13} fontWeight={600}>
-                          {`${objectState?.rkp.code} - ${objectState?.rkp.value}`}
-                        </Typography> */}
                       </Box>
                     </Stack>
                   </>
@@ -456,65 +424,6 @@ export default function ContentPage({
               }}
             />
           )}
-          {/* {chipKp && (
-      <Chip
-       color="primary"
-       variant="outlined"
-       label={
-        <>
-         <Stack direction="row" alignItems="center">
-          <Stack
-           direction="row"
-           bgcolor={theme.palette.primary.main}
-           px={2}
-           alignItems="center"
-           height="34px"
-           sx={{
-            borderTopLeftRadius: 24,
-            borderBottomLeftRadius: 24,
-           }}
-          >
-           <Typography
-            fontSize={13}
-            color="white"
-            fontWeight={600}
-            lineHeight={1}
-           >
-            KP
-           </Typography>
-          </Stack>
-          <Tooltip title={nameOfKp} followCursor TransitionComponent={Grow}>
-           <Typography
-            aria-owns={open ? "mouse-over-popover" : undefined}
-            aria-haspopup="true"
-            onMouseEnter={handlePopoverOpen}
-            onMouseLeave={handlePopoverClose}
-            px={1.5}
-            fontSize={12}
-            fontWeight={600}
-           >
-            {nameOfKp.length >= 40
-             ? nameOfKp.substring(0, 40) + "..."
-             : nameOfKp}
-            {nameOfKp}
-           </Typography>
-          </Tooltip>
-         </Stack>
-        </>
-       }
-       sx={{
-        height: "34px",
-        bgcolor: "white",
-        fontWeight: 600,
-        lineHeight: 1,
-        cursor: "default",
-
-        ".MuiChip-label": {
-         px: 0,
-        },
-       }}
-      />
-     )} */}
           {chooseKonteks && (
             <FormControl size="small">
               <SelectCustomTheme

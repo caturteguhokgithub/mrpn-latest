@@ -602,7 +602,7 @@ export default function PagePerlakuanView({}) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {row.row.original.rincian_output.map(
+                {/* {row.row.original.rincian_output.map(
                   (r: RoDto, index: number) => (
                     <TableRow key={r.id}>
                       <TableCell sx={{ bgcolor: "white" }}>
@@ -627,7 +627,7 @@ export default function PagePerlakuanView({}) {
                       ))}
                     </TableRow>
                   )
-                )}
+                )} */}
               </TableBody>
             </Table>
           </TableContainer>

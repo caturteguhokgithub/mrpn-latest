@@ -2,7 +2,6 @@ import React, { Fragment, SetStateAction } from "react";
 import {
   Box,
   Button,
-  DialogActions,
   FormControl,
   Grid,
   Paper,
@@ -12,53 +11,16 @@ import {
 } from "@mui/material";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 import AddButton from "@/app/components/buttonAdd";
-import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
+import { TextareaStyled } from "@/app/components/textarea";
 import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
 import Iconify from "@/app/components/icons/iconify";
-import DialogComponent from "@/app/components/dialog";
-import useCategoryList from "./hooks/useCategory";
 import {
-  ResultCategory,
   SubKategoriRisiko,
   doMasterKategori,
   doRequestCategoryDto,
   doSubCategory,
 } from "./hooks/categoryModel";
 import type ReactQuill from "react-quill";
-import dynamic from "next/dynamic";
-interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
-  forwardedRef: React.LegacyRef<ReactQuill>;
-}
-
-// const ItemDampak = ({
-//   children,
-//   number,
-// }: {
-//   children: React.ReactNode;
-//   number: number;
-// }) => {
-//   return (
-//     <FormControl fullWidth sx={{ position: "relative" }}>
-//       {children}
-//       <Box
-//         position="absolute"
-//         top="8px"
-//         right="8px"
-//         bgcolor="black"
-//         color="white"
-//         borderRadius="50%"
-//         width="20px"
-//         height="20px"
-//         display="inline-flex"
-//         alignItems="center"
-//         justifyContent="center"
-//         fontSize={12}
-//       >
-//         {number}
-//       </Box>
-//     </FormControl>
-//   );
-// };
 
 export default function FormCategory({
   mode,
@@ -70,7 +32,7 @@ export default function FormCategory({
   listMasterCategory,
   stateSubCat,
   setStateSubCat,
-  setModalOpenAddMasterCategory
+  setModalOpenAddMasterCategory,
 }: {
   mode?: string;
   handleOpenCategory?: any;
@@ -81,7 +43,7 @@ export default function FormCategory({
   stateCategory?: doMasterKategori;
   stateSubCat?: SubKategoriRisiko;
   setStateSubCat?: (value: SetStateAction<SubKategoriRisiko>) => void;
-  setModalOpenAddMasterCategory?: any
+  setModalOpenAddMasterCategory?: any;
 }) {
   const [items, setItem] = React.useState([{ id: 1 }]);
 
@@ -122,6 +84,8 @@ export default function FormCategory({
     }
   };
 
+  console.log({ state });
+
   return (
     <Fragment>
       <Grid container spacing={2}>
@@ -159,21 +123,17 @@ export default function FormCategory({
               />
             ) : (
               <AutocompleteSelectSingle<doMasterKategori>
-                // value={state.src_kategori_id}
                 value={listMasterCategory.find(
                   (category) => category.id === state?.src_kategori_id
                 )}
                 options={listMasterCategory}
                 getOptionLabel={(option) => option.value}
-                // handleChange={(newValue: any) => {
-                //   console.log(newValue);
-                // }}
                 handleChange={(newValue: doMasterKategori) =>
                   setState
                     ? setState((prevState) => ({
-                      ...prevState,
-                      src_kategori_id: newValue.id,
-                    }))
+                        ...prevState,
+                        src_kategori_id: newValue.id,
+                      }))
                     : ""
                 }
                 placeHolder={"Pilih kategori"}
@@ -192,30 +152,6 @@ export default function FormCategory({
             )}
           </FormControl>
         </Grid>
-        {/* <Grid item xs={12}>
-          <FormControl fullWidth>
-            <FieldLabelInfo title="Uraian" titleField />
-            <TextareaStyled
-              minRows={2}
-              aria-label="Uraian"
-              placeholder="Uraian"
-              value={state.desc}
-              onChange={(e) =>
-                setState((prevState) => {
-                  return {
-                    ...prevState,
-                    desc: e.target.value,
-                  };
-                })
-              }
-              // value={
-              //   mode == "edit"
-              //     ? "Risiko yang berasal dari ancaman ekonomi makro, pasar keuangan, rantai nilai ekonomi global, industri, atau kebijakan spesifik dapat menyebabkan kinerja pemerintah yang kurang. Contoh: resesi ekonomi, inflasi, fluktuasi harga komoditas, suku bunga, krisis hutang negara, dan asset bubble bursts."
-              //     : ""
-              // }
-            />
-          </FormControl>
-        </Grid> */}
 
         {mode !== "edit" && (
           <Fragment>
@@ -271,7 +207,6 @@ export default function FormCategory({
                         <Grid item xs={12}>
                           <FormControl fullWidth>
                             <TextareaStyled
-                              // width="100%"
                               minRows={2}
                               aria-label=""
                               placeholder="Sub Kategori"
@@ -281,17 +216,6 @@ export default function FormCategory({
                             />
                           </FormControl>
                         </Grid>
-                        {/* <Grid item xs={12} md={6}>
-                        <TextareaStyled
-                          // width="100%"
-                          minRows={2}
-                          aria-label=""
-                          placeholder="Uraian"
-                          onChange={(e) =>
-                            handleSubChange(key, "desc", e.target.value)
-                          }
-                        />
-                      </Grid> */}
                       </Grid>
                     </Paper>
                   </Grid>
@@ -299,26 +223,6 @@ export default function FormCategory({
               </Grid>
             </Grid>
           </Fragment>
-          // ) : (
-          //   <Grid item xs={12}>
-          //     <FormControl fullWidth>
-          //       <FieldLabelInfo title="Uraian" titleField />
-          //       <TextareaStyled
-          //         minRows={2}
-          //         aria-label=""
-          //         placeholder="Sub Kategori"
-          //         value={stateSubCat?.desc}
-          //         onChange={(e) =>
-          //           setStateSubCat &&
-          //           setStateSubCat((prevState) => ({
-          //             ...prevState,
-          //             desc: e.target.value,
-          //           }))
-          //         }
-          //         // onChange={(e) => handleSubChange(key, "value", e.target.value)}
-          //       />
-          //     </FormControl>
-          //   </Grid>
         )}
       </Grid>
     </Fragment>

@@ -18,6 +18,8 @@ import { Stack } from "@mui/material";
 import Iconify from "@/app/components/icons/iconify";
 import useCategoryList from "./hooks/useCategory";
 import { ResultCategory, SubKategoriRisiko } from "./hooks/categoryModel";
+import EmptyState from "@/app/components/empty";
+import { IconEmptyData } from "@/app/components/icons";
 
 function Row(props: {
   rowIndex: number;
@@ -44,8 +46,8 @@ function Row(props: {
     if (proses == "edit") {
       const dataEdit = {
         value: row.src_kategori_risiko.value,
-        sub_kategori_risiko: updated
-      }
+        sub_kategori_risiko: updated,
+      };
 
       handleEdit(dataEdit);
     }
@@ -223,13 +225,13 @@ export default function CollapsibleTable({
   handleEdit,
   handleDelete,
   setRequestEdit,
+  listDataCategory,
 }: {
   handleEdit?: any;
   handleDelete?: any;
   setRequestEdit?: (value: React.SetStateAction<SubKategoriRisiko>) => void;
+  listDataCategory: any;
 }) {
-  const { listDataCategory } = useCategoryList();
-
   return (
     <TableContainer
       component={Paper}
@@ -270,16 +272,28 @@ export default function CollapsibleTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {listDataCategory.map((row: ResultCategory, rowIndex) => (
-            <Row
-              key={row.id}
-              row={row}
-              rowIndex={rowIndex}
-              handleEdit={handleEdit}
-              handleDelete={handleDelete}
-              setRequestEdit={setRequestEdit}
-            />
-          ))}
+          {listDataCategory.length ? (
+            <React.Fragment>
+              {listDataCategory.map((row: ResultCategory, rowIndex: number) => (
+                <Row
+                  key={row.id}
+                  row={row}
+                  rowIndex={rowIndex}
+                  handleEdit={handleEdit}
+                  handleDelete={handleDelete}
+                  setRequestEdit={setRequestEdit}
+                />
+              ))}
+            </React.Fragment>
+          ) : (
+            <TableCell colSpan={4}>
+              <EmptyState
+                icon={<IconEmptyData />}
+                title="Data Kosong"
+                description="Silahkan isi konten tabel ini"
+              />
+            </TableCell>
+          )}
         </TableBody>
       </Table>
     </TableContainer>
