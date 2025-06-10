@@ -213,7 +213,6 @@ export default function CardKategori() {
       >
         <TableRerefence />
       </DialogComponent>
-
       <DialogComponent
         width={500}
         dialogOpen={modalOpenAddMasterCategory}

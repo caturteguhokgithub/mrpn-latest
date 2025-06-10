@@ -3,7 +3,6 @@ import { Button, DialogActions, Grid, Stack, TextField } from "@mui/material";
 import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
 import FormDampak from "./form-dampak";
-import { AddCircle } from "@mui/icons-material";
 import CollapsibleImpactTable from "./table-impact-collapsible";
 import DialogDelete from "@/app/components/dialogDelete";
 import TableDampak from "./table-kriteria-dampak";
@@ -13,14 +12,9 @@ import EmptyDevelopingState from "@/app/components/empty/developing";
 import { isDeveloping } from "@/app/components/layouts/layout";
 import useKriteriaDampakVM from "./hooks/vm";
 import useAuthorizationVM from "@/app/authorizationVM";
-import { initReqAddMatDamUpr, ReqAddMatDamKomite, ValuesShowMatDamKomite } from "./hooks/model";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 
 export default function CardDampak() {
-  const [modalOpenEdit, setModalOpenEdit] = React.useState(false);
-  const [modalOpenEditArea, setModalOpenEditArea] = React.useState(false);
-  const [modalOpenRef, setModalOpenRef] = React.useState(false);
-
   const { user } = useAuthorizationVM();
 
   const {
@@ -39,33 +33,36 @@ export default function CardDampak() {
     createMatDamKomite,
     createMatDamUpr,
     deleteMatDamUpr,
+    modalOpenEdit,
+    setModalOpenEdit,
+    modalOpenRef,
+    setModalOpenRef,
+    showMatDamKomite,
+    objectState,
   } = useKriteriaDampakVM();
 
   const handleCreate = async () => {
-    createMatDamUpr(requestMatDamUpr)
+    createMatDamUpr(requestMatDamUpr);
   };
 
   const handleUpdate = async () => {
-    createMatDamUpr(requestMatDamUpr)
+    createMatDamUpr(requestMatDamUpr);
+    setModalOpenEdit(false);
   };
 
   const handleDelete = async () => {
-    deleteMatDamUpr(requestMatDamUpr)
+    deleteMatDamUpr(requestMatDamUpr);
   };
 
   const handleAddKomite = async () => {
-    // console.log(requestMatDamKomite);
-
-    createMatDamKomite(requestMatDamKomite)
-  }
+    createMatDamKomite(requestMatDamKomite);
+  };
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
       <Button
         onClick={() => {
-          setModalOpenAdd(false),
-            setModalOpenEdit(false),
-            setModalOpenEditArea(false);
+          setModalOpenAdd(false), setModalOpenEdit(false);
         }}
       >
         Batal
@@ -80,9 +77,7 @@ export default function CardDampak() {
     <DialogActions sx={{ p: 2, px: 3 }}>
       <Button
         onClick={() => {
-          setModalOpenAdd(false),
-            setModalOpenEdit(false),
-            setModalOpenEditArea(false);
+          setModalOpenAdd(false), setModalOpenEdit(false);
         }}
       >
         Batal
@@ -92,6 +87,10 @@ export default function CardDampak() {
       </Button>
     </DialogActions>
   );
+
+  React.useEffect(() => {
+    showMatDamKomite();
+  }, [objectState?.id]);
 
   return (
     <Fragment>
@@ -118,16 +117,15 @@ export default function CardDampak() {
         {/* {isDeveloping ? (
           <EmptyDevelopingState />
         ) : ( */}
-          <Fragment>
-            <CollapsibleImpactTable
-              data={dataMatDamKomite}
-              setRequestMatDamKomite={setRequestMatDamKomite}
-              setRequestMatDamUpr={setRequestMatDamUpr}
-              handleEdit={() => setModalOpenEdit(true)}
-              handleEditArea={() => setModalOpenEditArea(true)}
-              handleDelete={() => setModalDelete(true)}
-            />
-          </Fragment>
+        <Fragment>
+          <CollapsibleImpactTable
+            data={dataMatDamKomite}
+            setRequestMatDamKomite={setRequestMatDamKomite}
+            setRequestMatDamUpr={setRequestMatDamUpr}
+            handleEdit={() => setModalOpenEdit(true)}
+            handleDelete={() => setModalDelete(true)}
+          />
+        </Fragment>
         {/* )} */}
       </CardItem>
       <DialogComponent
@@ -161,15 +159,6 @@ export default function CardDampak() {
           stateUpr={requestMatDamUpr}
           setStateUpr={setRequestMatDamUpr}
         />
-      </DialogComponent>
-      <DialogComponent
-        width={500}
-        dialogOpen={modalOpenEditArea}
-        dialogClose={() => setModalOpenEditArea(false)}
-        title="Ubah Area Dampak"
-        dialogFooter={dialogActionFooter}
-      >
-        <FormDampak mode="edit-area" />
       </DialogComponent>
       <DialogDelete
         title="Hapus Data"
@@ -214,10 +203,11 @@ export default function CardDampak() {
                 shrink: true,
               }}
               onChange={(e) => {
-                setRequestMatDamKomite && setRequestMatDamKomite((prevState) => ({
-                  ...prevState,
-                  dampak: e.target.value,
-                }))
+                setRequestMatDamKomite &&
+                  setRequestMatDamKomite((prevState) => ({
+                    ...prevState,
+                    dampak: e.target.value,
+                  }));
               }}
             />
           </Grid>
@@ -233,10 +223,11 @@ export default function CardDampak() {
                 shrink: true,
               }}
               onChange={(e) => {
-                setRequestMatDamKomite && setRequestMatDamKomite((prevState) => ({
-                  ...prevState,
-                  prioritas: Number(e.target.value),
-                }))
+                setRequestMatDamKomite &&
+                  setRequestMatDamKomite((prevState) => ({
+                    ...prevState,
+                    prioritas: Number(e.target.value),
+                  }));
               }}
             />
           </Grid>
