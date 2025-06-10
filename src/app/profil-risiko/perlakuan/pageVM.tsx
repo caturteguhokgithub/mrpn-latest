@@ -11,6 +11,7 @@ import {
 } from "@/app/profil-risiko/perlakuan/pageService";
 import {
   initRiskTreatmentState,
+  initRiskTreatmentStateReq,
   RiskTreatmentReqDto,
   RiskTreatmentResDto, RiskTreatmentState
 } from "@/app/profil-risiko/perlakuan/pageModel";
@@ -102,6 +103,8 @@ const useTreatmentRiskVM = () => {
   const initState: RiskTreatmentState = JSON.parse(JSON.stringify(initRiskTreatmentState))
   const [state, setState] = useState<RiskTreatmentState>(initState)
 
+  const [reqState, setReqState] = useState<RiskTreatmentReqDto>({ ...initRiskTreatmentStateReq })
+
   const actionModal = (isOpen: boolean, action: string, id?: number) => {
     let initState: RiskTreatmentState = JSON.parse(JSON.stringify(initRiskTreatmentState))
 
@@ -152,28 +155,28 @@ const useTreatmentRiskVM = () => {
       []
     )
 
-    const req: RiskTreatmentReqDto = {
-      id: state.id,
-      profil_risiko_id: state.profil_risiko?.id ?? 0,
-      keputusan: state.keputusan,
-      keterangan_risiko: state.keterangan_risiko,
-      ro: roData,
-      start_date: state.start_date,
-      end_date: state.end_date,
-      src_stakeholder_id: state.src_stakeholder?.id ?? 0,
-      src_matriks_risiko_id: state.src_matriks_risiko?.id ?? 0,
-      triwulan: quarter,
-      target_triwulan_1: state.target_triwulan_1,
-      satuan_triwulan_1: state.satuan_triwulan_1,
-      target_triwulan_2: state.target_triwulan_2,
-      satuan_triwulan_2: state.satuan_triwulan_2,
-      target_triwulan_3: state.target_triwulan_3,
-      satuan_triwulan_3: state.satuan_triwulan_3,
-      target_triwulan_4: state.target_triwulan_4,
-      satuan_triwulan_4: state.satuan_triwulan_4
-    }
+    // const req: RiskTreatmentReqDto = {
+    //   id: state.id,
+    //   profil_risiko_id: state.profil_risiko?.id ?? 0,
+    //   keputusan: state.keputusan,
+    //   keterangan_risiko: state.keterangan_risiko,
+    //   ro: roData,
+    //   start_date: state.start_date,
+    //   end_date: state.end_date,
+    //   src_stakeholder_id: state.src_stakeholder?.id ?? 0,
+    //   src_matriks_risiko_id: state.src_matriks_risiko?.id ?? 0,
+    //   triwulan: quarter,
+    //   target_triwulan_1: state.target_triwulan_1,
+    //   satuan_triwulan_1: state.satuan_triwulan_1,
+    //   target_triwulan_2: state.target_triwulan_2,
+    //   satuan_triwulan_2: state.satuan_triwulan_2,
+    //   target_triwulan_3: state.target_triwulan_3,
+    //   satuan_triwulan_3: state.satuan_triwulan_3,
+    //   target_triwulan_4: state.target_triwulan_4,
+    //   satuan_triwulan_4: state.satuan_triwulan_4
+    // }
 
-    console.log(req);
+    // console.log(req);
 
 
     // let valid = true;
@@ -245,7 +248,9 @@ const useTreatmentRiskVM = () => {
     actionModal,
     optionStakeholder,
     setOptionStakeholder,
-    getOptionStakeholder
+    getOptionStakeholder,
+    reqState,
+    setReqState,
   }
 
 }

@@ -147,6 +147,8 @@ export default function PagePerlakuanViewNew({ }) {
     actionModal,
     optionStakeholder,
     getOptionStakeholder,
+    reqState,
+    setReqState,
   } = useTreatmentRiskVM();
 
   const { optionsRiskMatrix, getMasterRiskMatrix } = useRiskAnalysisVM();
@@ -337,13 +339,6 @@ export default function PagePerlakuanViewNew({ }) {
         <Box display="none" />
       ),
   };
-
-  // const actionRight = {
-  //   initialState: {
-  //     columnPinning: { right: ["mrt-row-actions"] },
-  //     showGlobalFilter: true,
-  //   },
-  // };
 
   const data = dataTable;
   const table = useMaterialReactTable({
