@@ -24,45 +24,6 @@ import {
   ValuesShowMatDamKomite,
 } from "./hooks/model";
 
-// function createData(areaDampak: string) {
-//   return {
-//     areaDampak,
-//     results: [
-//       {
-//         dampak: "Tingkat kepercayaan stakeholder",
-//         levels: [
-//           "Sangat baik atau x > 8 dari skala 10",
-//           "Baik atau 7 < x ≤ 8 dari skala 10",
-//           "Sedang atau 6 < x ≤ 7 dari skala 10",
-//           "Rendah atau 4 < x ≤ 6 dari skala 10",
-//           "Sangat rendah atau x < 4 dari skala 10",
-//         ],
-//       },
-//       {
-//         dampak:
-//           "Jumlah keluhan atau prosentase berita negatif dari total berita tentang Obyek MRPN LS",
-//         levels: [
-//           "Jumlah Keluhan x ≤ 10",
-//           "Prosentase pemberitaan negatif 10% < x ≤ 20%",
-//           "Prosentase pemberitaan negatif 20% < x ≤ 30%",
-//           "Prosentase pemberitaan negatif 30% < x ≤ 40%",
-//           "Prosentase pemberitaan negatif > 40%",
-//         ],
-//       },
-//       {
-//         dampak: "Tingkat kepuasan pengguna layanan/wisatawan/investor",
-//         levels: [
-//           "nilai kepuasan 4,5 < x ≤ 5, skala 5",
-//           "nilai kepuasan 4 < x ≤ 4,5, skala 5",
-//           "nilai kepuasan 3,5 < x ≤ 4, skala 5",
-//           "nilai kepuasan 3 < x ≤ 3,5, skala 5",
-//           "nilai kepuasan x < 3, skala 5",
-//         ],
-//       },
-//     ],
-//   };
-// }
-
 function Row(props: {
   row: ValuesShowMatDamKomite;
   setRequestMatDamKomite?: (
@@ -70,13 +31,11 @@ function Row(props: {
   ) => void;
   setRequestMatDamUpr?: (value: React.SetStateAction<ReqAddMatDamUpr>) => void;
   handleEdit: any;
-  handleEditArea: any;
   handleDelete?: any;
 }) {
   const {
     row,
     handleEdit,
-    handleEditArea,
     handleDelete,
     setRequestMatDamUpr,
     setRequestMatDamKomite,
@@ -157,8 +116,8 @@ function Row(props: {
         <TableCell colSpan={8} sx={{ fontWeight: 600, bgcolor: blue[100] }}>
           {row.dampak}
         </TableCell>
-        <TableCell>
-          <Stack direction="row">
+        <TableCell align="center">
+          <Stack direction="row" justifyContent="center">
             {/* <IconButton onClick={handleEditArea}>
               <Iconify name="mdi:pencil" color={blue[500]} />
             </IconButton> */}
@@ -169,7 +128,7 @@ function Row(props: {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell colSpan={9} sx={{ bgcolor: grey[200], p: 0 }}>
+        <TableCell colSpan={10} sx={{ bgcolor: grey[200], p: 0 }}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box m={1} ml={8}>
               <Table size="small" aria-label="purchases">
@@ -302,20 +261,11 @@ function Row(props: {
     </React.Fragment>
   );
 }
-
-// const rows = [
-//   createData("Keuangan Negara"),
-//   createData("Reputasi"),
-//   createData("Layanan Publik"),
-//   createData("Capaian Kinerja"),
-// ];
-
 export default function CollapsibleImpactTable({
   data,
   setRequestMatDamKomite,
   setRequestMatDamUpr,
   handleEdit,
-  handleEditArea,
   handleDelete,
 }: {
   data: ValuesShowMatDamKomite[];
@@ -324,7 +274,6 @@ export default function CollapsibleImpactTable({
   ) => void;
   setRequestMatDamUpr?: (value: React.SetStateAction<ReqAddMatDamUpr>) => void;
   handleEdit?: any;
-  handleEditArea?: any;
   handleDelete?: any;
 }) {
   return (
@@ -365,9 +314,9 @@ export default function CollapsibleImpactTable({
             <TableCell colSpan={8} align="center" sx={{ bgcolor: bgColorTh }}>
               Area Dampak
             </TableCell>
-            {/* <TableCell width={110} align="center" sx={{ bgcolor: bgColorTh }}>
+            <TableCell width={80} align="center" sx={{ bgcolor: bgColorTh }}>
               Aksi
-            </TableCell> */}
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -378,7 +327,6 @@ export default function CollapsibleImpactTable({
               setRequestMatDamKomite={setRequestMatDamKomite}
               setRequestMatDamUpr={setRequestMatDamUpr}
               handleEdit={handleEdit}
-              handleEditArea={handleEditArea}
               handleDelete={handleDelete}
             />
           ))}

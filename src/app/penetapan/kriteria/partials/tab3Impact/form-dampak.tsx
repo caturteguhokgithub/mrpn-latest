@@ -2,10 +2,8 @@ import React, { Fragment, SetStateAction } from "react";
 import {
   Box,
   Button,
-  DialogActions,
   FormControl,
   Grid,
-  IconButton,
   Paper,
   Stack,
   TextField,
@@ -13,13 +11,14 @@ import {
 } from "@mui/material";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 import AddButton from "@/app/components/buttonAdd";
-import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
-import { IconFA } from "@/app/components/icons/icon-fa";
-import { red } from "@mui/material/colors";
+import { TextareaStyled } from "@/app/components/textarea";
 import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
 import Iconify from "@/app/components/icons/iconify";
-import DialogComponent from "@/app/components/dialog";
-import { ReqAddMatDamKomite, ReqAddMatDamUpr, ValuesShowMatDamKomite } from "./hooks/model";
+import {
+  ReqAddMatDamKomite,
+  ReqAddMatDamUpr,
+  ValuesShowMatDamKomite,
+} from "./hooks/model";
 
 const ItemDampak = ({
   children,
@@ -61,8 +60,8 @@ export default function FormDampak({
   setStateUpr,
 }: {
   mode?: string;
-  optionAD?: ValuesShowMatDamKomite[],
-  setModalOpenAddKomite?: any
+  optionAD?: ValuesShowMatDamKomite[];
+  setModalOpenAddKomite?: any;
   stateKom?: ReqAddMatDamKomite;
   setStateKom?: (value: SetStateAction<ReqAddMatDamKomite>) => void;
   stateUpr?: ReqAddMatDamUpr;
@@ -99,20 +98,14 @@ export default function FormDampak({
     setItem(newArr);
   };
 
-  const listAreaDampak = [
-    "Keuangan Negara",
-    "Reputasi",
-    "Layanan Publik",
-    "Capaian Kinerja",
-  ];
-
   const handleChangeAD = async (id: number) => {
     // console.log(id);
-    setStateUpr && setStateUpr((prevState) => ({
-      ...prevState,
-      matrix_id: id
-    }))
-  }
+    setStateUpr &&
+      setStateUpr((prevState) => ({
+        ...prevState,
+        matrix_id: id,
+      }));
+  };
 
   const handleSubChange = (index: number, value: string) => {
     if (setStateUpr) {
@@ -196,8 +189,9 @@ export default function FormDampak({
                     // value={value}
                     options={optionAD ?? []}
                     getOptionLabel={(option) => `${option.dampak}`}
-                    handleChange={(newValue: ValuesShowMatDamKomite) =>
-                      handleChangeAD(newValue.id)
+                    handleChange={
+                      (newValue: ValuesShowMatDamKomite) =>
+                        handleChangeAD(newValue.id)
                       // setStateKom
                       //   ? setStateKom((prevState) => ({
                       //     ...prevState,
@@ -319,11 +313,11 @@ export default function FormDampak({
                             onChange={(e) =>
                               handleAreaChange(key, 2, e.target.value)
                             }
-                          // value={
-                          //   mode == "edit"
-                          //     ? "Prosentase pemberitaan negatif 10% < x ≤ 20%"
-                          //     : undefined
-                          // }
+                            // value={
+                            //   mode == "edit"
+                            //     ? "Prosentase pemberitaan negatif 10% < x ≤ 20%"
+                            //     : undefined
+                            // }
                           />
                         </ItemDampak>
                       </Grid>
@@ -341,11 +335,11 @@ export default function FormDampak({
                             onChange={(e) =>
                               handleAreaChange(key, 3, e.target.value)
                             }
-                          // value={
-                          //   mode == "edit"
-                          //     ? "Prosentase pemberitaan negatif 20% < x ≤ 30%"
-                          //     : undefined
-                          // }
+                            // value={
+                            //   mode == "edit"
+                            //     ? "Prosentase pemberitaan negatif 20% < x ≤ 30%"
+                            //     : undefined
+                            // }
                           />
                         </ItemDampak>
                       </Grid>
@@ -363,12 +357,12 @@ export default function FormDampak({
                             onChange={(e) =>
                               handleAreaChange(key, 4, e.target.value)
                             }
-                          // value={
-                          //   mode == "edit"
-                          //   ? "Prosentase pemberitaan negatif 30% < x ≤ 40%"
-                          //   : undefined
-                          // }
-                          // width="100%"
+                            // value={
+                            //   mode == "edit"
+                            //   ? "Prosentase pemberitaan negatif 30% < x ≤ 40%"
+                            //   : undefined
+                            // }
+                            // width="100%"
                           />
                         </ItemDampak>
                       </Grid>
@@ -386,12 +380,12 @@ export default function FormDampak({
                             onChange={(e) =>
                               handleAreaChange(key, 5, e.target.value)
                             }
-                          // value={
-                          //   mode == "edit"
-                          //   ? "Prosentase pemberitaan negatif > 40%"
-                          //   : undefined
-                          // }
-                          // width="100%"
+                            // value={
+                            //   mode == "edit"
+                            //   ? "Prosentase pemberitaan negatif > 40%"
+                            //   : undefined
+                            // }
+                            // width="100%"
                           />
                         </ItemDampak>
                       </Grid>
