@@ -14,6 +14,7 @@ import useKriteriaDampakVM from "./hooks/vm";
 import useAuthorizationVM from "@/app/authorizationVM";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 import FormAreaDampak from "./form-area-dampak";
+import { initReqAddMatDamKomite } from "./hooks/model";
 
 export default function CardDampak() {
   const { user } = useAuthorizationVM();
@@ -42,6 +43,9 @@ export default function CardDampak() {
     objectState,
     modalOpenEditKomite,
     setModalOpenEditKomite,
+    deleteMatDamKomite,
+    modalOpenDeleteArea,
+    setModalDeleteArea,
   } = useKriteriaDampakVM();
 
   const handleCreate = async () => {
@@ -59,6 +63,10 @@ export default function CardDampak() {
 
   const handleAddKomite = async () => {
     createMatDamKomite(requestMatDamKomite);
+  };
+
+  const handleDeleteKomite = async () => {
+    deleteMatDamKomite(requestMatDamKomite);
   };
 
   const dialogActionFooter = (
@@ -95,6 +103,12 @@ export default function CardDampak() {
     showMatDamKomite();
   }, [objectState?.id]);
 
+  React.useEffect(() => {
+    if (!modalOpenAddKomite && !modalOpenEditKomite) {
+      setRequestMatDamKomite({ ...initReqAddMatDamKomite });
+    }
+  }, [modalOpenAddKomite, modalOpenEditKomite]);
+
   return (
     <Fragment>
       <CardItem
@@ -127,6 +141,7 @@ export default function CardDampak() {
             setRequestMatDamUpr={setRequestMatDamUpr}
             handleEdit={() => setModalOpenEdit(true)}
             handleDelete={() => setModalDelete(true)}
+            handleDeleteArea={() => setModalDeleteArea(true)}
             handleEditArea={() => setModalOpenEditKomite(true)}
           />
         </Fragment>
@@ -170,6 +185,12 @@ export default function CardDampak() {
         handleCloseModal={() => setModalDelete(false)}
         handleDelete={() => handleDelete()}
       />
+      <DialogDelete
+        title="Hapus Data Area"
+        handleOpenModal={modalOpenDeleteArea}
+        handleCloseModal={() => setModalDeleteArea(false)}
+        handleDelete={() => handleDeleteKomite()}
+      />
       <DialogComponent
         tableMode
         width={1560}
@@ -197,6 +218,7 @@ export default function CardDampak() {
       >
         <FormAreaDampak
           mode="add"
+          requestMatDamKomite={requestMatDamKomite}
           setRequestMatDamKomite={setRequestMatDamKomite}
         />
       </DialogComponent>
@@ -217,6 +239,7 @@ export default function CardDampak() {
       >
         <FormAreaDampak
           mode="edit"
+          requestMatDamKomite={requestMatDamKomite}
           setRequestMatDamKomite={setRequestMatDamKomite}
         />
       </DialogComponent>

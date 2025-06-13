@@ -32,12 +32,14 @@ function Row(props: {
   setRequestMatDamUpr?: (value: React.SetStateAction<ReqAddMatDamUpr>) => void;
   handleEdit: any;
   handleDelete?: any;
+  handleDeleteArea?: any;
   handleEditArea?: any;
 }) {
   const {
     row,
     handleEdit,
     handleDelete,
+    handleDeleteArea,
     setRequestMatDamUpr,
     setRequestMatDamKomite,
     handleEditArea,
@@ -74,24 +76,6 @@ function Row(props: {
     handleEdit();
   };
 
-  const prosesBtnAdd = (value: ValuesShowMatDamKomite) => {
-    if (setRequestMatDamUpr) {
-      setRequestMatDamUpr((prevState) => ({
-        ...prevState,
-        matrix_id: value.id,
-      }));
-    }
-
-    if (setRequestMatDamKomite) {
-      setRequestMatDamKomite((prevState) => ({
-        ...prevState,
-        dampak: value.dampak,
-      }));
-    }
-
-    handleEdit();
-  };
-
   const prosesBtnDelete = (upr: AreasShowMatDamKomite) => {
     if (setRequestMatDamUpr) {
       setRequestMatDamUpr((prevState) => ({
@@ -102,6 +86,26 @@ function Row(props: {
     }
 
     handleDelete();
+  };
+
+  const prosesBtnEditArea = (
+    komite: ValuesShowMatDamKomite,
+    act: string
+  ) => {
+    if (setRequestMatDamKomite) {
+      setRequestMatDamKomite((prevState) => ({
+        ...prevState,
+        id: komite.id,
+        dampak: komite.dampak,
+        prioritas: Number(komite.prioritas),
+      }));
+    }
+
+    if (act === "edit") {
+      handleEditArea();
+    } else {
+      handleDeleteArea();
+    }
   };
 
   return (
@@ -121,10 +125,10 @@ function Row(props: {
         </TableCell>
         <TableCell align="center">
           <Stack direction="row" justifyContent="center">
-            <IconButton onClick={handleEditArea}>
+            <IconButton onClick={() => prosesBtnEditArea(row, "edit")}>
               <Iconify name="mdi:pencil" color={blue[500]} />
             </IconButton>
-            <IconButton onClick={handleDelete}>
+            <IconButton onClick={() => prosesBtnEditArea(row, "delete")}>
               <Iconify name="mdi:trash" color={red[500]} />
             </IconButton>
           </Stack>
@@ -270,6 +274,7 @@ export default function CollapsibleImpactTable({
   setRequestMatDamUpr,
   handleEdit,
   handleDelete,
+  handleDeleteArea,
   handleEditArea,
 }: {
   data: ValuesShowMatDamKomite[];
@@ -279,9 +284,9 @@ export default function CollapsibleImpactTable({
   setRequestMatDamUpr?: (value: React.SetStateAction<ReqAddMatDamUpr>) => void;
   handleEdit?: any;
   handleDelete?: any;
+  handleDeleteArea?: any;
   handleEditArea?: any;
 }) {
-  console.log({ data });
 
   return (
     <TableContainer
@@ -335,6 +340,7 @@ export default function CollapsibleImpactTable({
               setRequestMatDamUpr={setRequestMatDamUpr}
               handleEdit={handleEdit}
               handleDelete={handleDelete}
+              handleDeleteArea={handleDeleteArea}
               handleEditArea={handleEditArea}
             />
           ))}

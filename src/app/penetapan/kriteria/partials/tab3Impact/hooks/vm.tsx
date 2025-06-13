@@ -14,8 +14,10 @@ import {
 import {
   doCreateMatDamKomite,
   doCreateMatDamUpr,
+  doDeleteMatDamKomite,
   doDeleteMatDamUpr,
   doShowMatDamKomite,
+  doUpdateMatDamKomite,
   doUpdateMatDamUpr,
 } from "./service";
 
@@ -26,14 +28,14 @@ const useKriteriaDampakVM = () => {
   const { objectState } = usePenetapanGlobalVM();
   const [modalOpenAdd, setModalOpenAdd] = useState(false);
   const [modalOpenDelete, setModalDelete] = useState(false);
+  const [modalOpenDeleteArea, setModalDeleteArea] = useState(false);
   const [modalOpenAddKomite, setModalOpenAddKomite] = useState(false);
   const [modalOpenEditKomite, setModalOpenEditKomite] = useState(false);
 
   const [dataMatDamKomite, setDataMatDamKomite] = useState<
     ValuesShowMatDamKomite[]
   >([]);
-  const [requestMatDamKomite, setRequestMatDamKomite] =
-    useState<ReqAddMatDamKomite>({ ...initReqAddMatDamKomite });
+  const [requestMatDamKomite, setRequestMatDamKomite] = useState<ReqAddMatDamKomite>({ ...initReqAddMatDamKomite });
   const [requestMatDamUpr, setRequestMatDamUpr] = useState<ReqAddMatDamUpr>({
     ...initReqAddMatDamUpr,
   });
@@ -67,10 +69,27 @@ const useKriteriaDampakVM = () => {
       errorModalContext: errorModalContext,
     };
 
-    const response = await doCreateMatDamKomite(params);
+    const response = param.id == 0 ? await doCreateMatDamKomite(params) : await doUpdateMatDamKomite(params);
     if (response?.code == API_CODE.success) {
       showMatDamKomite();
       setModalOpenAddKomite(false);
+      setModalOpenEditKomite(false);
+      setRequestMatDamKomite({ ...initReqAddMatDamKomite })
+    }
+  }
+
+  async function deleteMatDamKomite(param: ReqAddMatDamKomite) {
+    const params = {
+      body: param,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    };
+
+    const response = await doDeleteMatDamKomite(params);
+    if (response?.code == API_CODE.success) {
+      showMatDamKomite();
+      setModalDeleteArea(false);
+      setRequestMatDamKomite({ ...initReqAddMatDamKomite })
     }
   }
 
@@ -140,6 +159,9 @@ const useKriteriaDampakVM = () => {
     objectState,
     modalOpenEditKomite,
     setModalOpenEditKomite,
+    deleteMatDamKomite,
+    modalOpenDeleteArea,
+    setModalDeleteArea,
   };
 };
 

@@ -4,12 +4,12 @@ import FieldLabelInfo from "@/app/components/fieldLabelInfo";
 import { ReqAddMatDamKomite } from "./hooks/model";
 
 export default function FormAreaDampak({
+  requestMatDamKomite,
   setRequestMatDamKomite,
   mode,
 }: {
-  setRequestMatDamKomite: React.Dispatch<
-    React.SetStateAction<ReqAddMatDamKomite>
-  >;
+  requestMatDamKomite: ReqAddMatDamKomite
+  setRequestMatDamKomite: React.Dispatch<React.SetStateAction<ReqAddMatDamKomite>>;
   mode?: string;
 }) {
   return (
@@ -17,7 +17,7 @@ export default function FormAreaDampak({
       <Grid item xs={12}>
         <FieldLabelInfo title="Area Dampak" />
         <TextField
-          value={mode === "add" ? "" : ""}
+          value={requestMatDamKomite.dampak}
           fullWidth
           variant="outlined"
           size="small"
@@ -37,7 +37,7 @@ export default function FormAreaDampak({
       <Grid item xs={12}>
         <FieldLabelInfo title="Nomor Urut Prioritas" />
         <TextField
-          value={mode === "add" ? "" : ""}
+          value={requestMatDamKomite.prioritas}
           type="number"
           fullWidth
           variant="outlined"
