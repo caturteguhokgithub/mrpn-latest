@@ -768,7 +768,10 @@ export default function FormCritical({
                                   </Typography>
                                   <AddButton
                                     small
-                                    title={`Tambah Aktivitas ${item}`}
+                                    title={`Tambah Aktivitas ${item.substring(
+                                      0,
+                                      3
+                                    )}`}
                                     noMargin
                                     onclick={() => addMenuTarget(index)}
                                   />
