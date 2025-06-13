@@ -113,6 +113,10 @@ export interface AutoCompleteSingleProp<T> {
   bgWhite?: boolean | any;
   rounded?: boolean;
   actionButton?: any;
+  renderOption?: (
+    props: React.HTMLAttributes<HTMLLIElement>,
+    option: T
+  ) => React.ReactNode;
 }
 
 export function AutocompleteSelectSingle<T>({
@@ -124,6 +128,7 @@ export function AutocompleteSelectSingle<T>({
   bgWhite,
   rounded,
   actionButton,
+  renderOption,
 }: AutoCompleteSingleProp<T>) {
   return (
     <Autocomplete
@@ -136,6 +141,11 @@ export function AutocompleteSelectSingle<T>({
       onChange={(_e, value) => {
         handleChange(value);
       }}
+      renderOption={renderOption || ((props, option) => ( 
+        <li {...props}>
+          {getOptionLabel(option)}
+        </li>
+      ))}
       renderInput={(params) => (
         <TextField
           {...params}

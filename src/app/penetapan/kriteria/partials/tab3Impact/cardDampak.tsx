@@ -13,6 +13,7 @@ import { isDeveloping } from "@/app/components/layouts/layout";
 import useKriteriaDampakVM from "./hooks/vm";
 import useAuthorizationVM from "@/app/authorizationVM";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import FormAreaDampak from "./form-area-dampak";
 
 export default function CardDampak() {
   const { user } = useAuthorizationVM();
@@ -39,6 +40,8 @@ export default function CardDampak() {
     setModalOpenRef,
     showMatDamKomite,
     objectState,
+    modalOpenEditKomite,
+    setModalOpenEditKomite,
   } = useKriteriaDampakVM();
 
   const handleCreate = async () => {
@@ -124,6 +127,7 @@ export default function CardDampak() {
             setRequestMatDamUpr={setRequestMatDamUpr}
             handleEdit={() => setModalOpenEdit(true)}
             handleDelete={() => setModalDelete(true)}
+            handleEditArea={() => setModalOpenEditKomite(true)}
           />
         </Fragment>
         {/* )} */}
@@ -191,47 +195,30 @@ export default function CardDampak() {
           </DialogActions>
         }
       >
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <FieldLabelInfo title="Area Dampak" />
-            <TextField
-              fullWidth
-              variant="outlined"
-              size="small"
-              placeholder="Area Dampak"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              onChange={(e) => {
-                setRequestMatDamKomite &&
-                  setRequestMatDamKomite((prevState) => ({
-                    ...prevState,
-                    dampak: e.target.value,
-                  }));
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FieldLabelInfo title="Nomor Urut Prioritas" />
-            <TextField
-              type="number"
-              fullWidth
-              variant="outlined"
-              size="small"
-              placeholder="Nomor Urut Prioritas"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              onChange={(e) => {
-                setRequestMatDamKomite &&
-                  setRequestMatDamKomite((prevState) => ({
-                    ...prevState,
-                    prioritas: Number(e.target.value),
-                  }));
-              }}
-            />
-          </Grid>
-        </Grid>
+        <FormAreaDampak
+          mode="add"
+          setRequestMatDamKomite={setRequestMatDamKomite}
+        />
+      </DialogComponent>
+
+      <DialogComponent
+        width={500}
+        dialogOpen={modalOpenEditKomite}
+        dialogClose={() => setModalOpenEditKomite(false)}
+        title="Ubah Area Dampak"
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button onClick={() => setModalOpenEditKomite(false)}>Batal</Button>
+            <Button variant="contained" type="submit" onClick={handleAddKomite}>
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <FormAreaDampak
+          mode="edit"
+          setRequestMatDamKomite={setRequestMatDamKomite}
+        />
       </DialogComponent>
     </Fragment>
   );

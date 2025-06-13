@@ -122,7 +122,8 @@ export default function CardCritical({
             </p>
           </div>
         }
-        setting={year > 0 ? false : true}
+        // setting={year > 0 ? false : true}
+        setting={true}
         settingAddOnclick={handleModalAdd}
         settingEditOnclick={handleModalOpen}
       >
@@ -159,15 +160,6 @@ export default function CardCritical({
               />
             ) : (
               <Stack gap={3} maxWidth="calc(100vw - 200px)">
-                {/* <Stack direction="row" gap={1}> */}
-                {/*{groupProjectCategory().map((d, index) => (*/}
-                {/*  <ProjectType*/}
-                {/*    key={index}*/}
-                {/*    color={GetColor(d.id)}*/}
-                {/*    label={d.name}*/}
-                {/*  />*/}
-                {/*))}*/}
-                {/* </Stack> */}
                 {year == 0 && (
                   <GanttChart key={ganChart.length} tasks={ganChart} />
                 )}
