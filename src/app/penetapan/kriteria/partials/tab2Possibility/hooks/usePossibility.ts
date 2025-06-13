@@ -32,12 +32,18 @@ const usePossibilityList = () => {
 
   // const searchParams = useSearchParams();
 
-  // const search = searchParams.get("search");
-  const kpPenetapan = localStorage.getItem("kpPenetapan");
-  const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
+  let kpPenetapan: any = null;
+  let kpPenetapanObj: any = null;
 
-  // const isEmptyPenetapanObject =
-  //   !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
+  if (typeof window !== "undefined") {
+    kpPenetapan = localStorage.getItem("kpPenetapan");
+    kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
+  }
+
+  // const search = searchParams.get("search");
+
+  const isEmptyPenetapanObject =
+    !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
 
   const defaultDropdownList = [
     "Hampir tidak terjadi (1)",
@@ -47,15 +53,14 @@ const usePossibilityList = () => {
     "Hampir pasti terjadi (5)",
   ];
 
-  const sorterList = (dataPossibility:any) => {
-    const listSorterPossibility = dataPossibility.sort((a:any, b:any) => {
+  const sorterList = (dataPossibility: any) => {
+    const listSorterPossibility = dataPossibility.sort((a: any, b: any) => {
       const getNumber = (str: any) => parseInt(str.match(/\((\d+)\)/)?.[1]);
       return getNumber(a.level_kemungkinan) - getNumber(b.level_kemungkinan);
     });
 
     return listSorterPossibility;
   };
-
 
   async function getData() {
     setLoading(true);
@@ -79,16 +84,16 @@ const usePossibilityList = () => {
       } else {
         setRequestPossibility(initPossibility);
         setDataPossibility([]);
-        setPayloadValues([])
+        setPayloadValues([]);
         setLoading(false);
       }
     }
   }
 
   async function updatePossibility() {
-    console.log({payloadValues});
+    console.log({ payloadValues });
 
-    const values: doValues[] = payloadValues.map((item, idx:number) => ({
+    const values: doValues[] = payloadValues.map((item, idx: number) => ({
       level_kemungkinan: defaultDropdownList[idx],
       probabilitas: item.probabilitas,
       jumlah_frekuensi: item.jumlah_frekuensi,
@@ -113,7 +118,6 @@ const usePossibilityList = () => {
       getData();
     }
   }
-
 
   // "uraian_penetapan_objek_id": 302,
   const handleDeleteTables = async () => {
@@ -153,9 +157,9 @@ const usePossibilityList = () => {
   };
 
   useEffect(() => {
-    // if (!isEmptyPenetapanObject) {
-    getData();
-    // }
+    if (!isEmptyPenetapanObject) {
+      getData();
+    }
   }, [objectState?.id]);
 
   const { listDropDown, listSorterPossibility } = useMemo(() => {
@@ -203,7 +207,6 @@ const usePossibilityList = () => {
         ...updatedValues[index],
         [field]: value,
       };
-      
 
       return updatedValues;
     });

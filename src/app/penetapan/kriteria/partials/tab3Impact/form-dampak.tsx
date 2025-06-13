@@ -19,6 +19,7 @@ import {
   ReqAddMatDamUpr,
   ValuesShowMatDamKomite,
 } from "./hooks/model";
+import { grey } from "@mui/material/colors";
 
 const ItemDampak = ({
   children,
@@ -186,22 +187,13 @@ export default function FormDampak({
                     value={optionAD?.find(
                       (option) => option.id === stateUpr?.matrix_id
                     )}
-                    // value={value}
                     options={optionAD ?? []}
-                    getOptionLabel={(option) => `${option.dampak}`}
-                    handleChange={
-                      (newValue: ValuesShowMatDamKomite) =>
-                        handleChangeAD(newValue.id)
-                      // setStateKom
-                      //   ? setStateKom((prevState) => ({
-                      //     ...prevState,
-                      //     dampak: newValue,
-                      //   }))
-                      //   : ""
+                    getOptionLabel={(option) =>
+                      `${option.prioritas} - ${option.dampak}`
                     }
-                    // handleChange={(newValue: any) =>
-                    //   handleChangeSelect(newValue)
-                    // }
+                    handleChange={(newValue: ValuesShowMatDamKomite) =>
+                      handleChangeAD(newValue.id)
+                    }
                     placeHolder={"Pilih area dampak"}
                     actionButton={
                       <Button
@@ -214,6 +206,31 @@ export default function FormDampak({
                         Tambah Area Dampak
                       </Button>
                     }
+                    renderOption={(props, option) => (
+                      <Stack
+                        display="inline-flex"
+                        direction="row"
+                        alignItems="center"
+                        component="li"
+                        gap={1}
+                        {...props}
+                      >
+                        <Stack
+                          width={20}
+                          height={20}
+                          bgcolor={grey[700]}
+                          color="white"
+                          borderRadius="50%"
+                          style={{ fontWeight: "bold" }}
+                          justifyContent="center"
+                          alignItems="center"
+                          fontSize={10}
+                        >
+                          {option.prioritas}
+                        </Stack>
+                        <span>{option.dampak}</span>
+                      </Stack>
+                    )}
                   />
                 )}
               </Fragment>

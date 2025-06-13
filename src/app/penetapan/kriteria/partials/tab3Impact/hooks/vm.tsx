@@ -27,6 +27,8 @@ const useKriteriaDampakVM = () => {
   const [modalOpenAdd, setModalOpenAdd] = useState(false);
   const [modalOpenDelete, setModalDelete] = useState(false);
   const [modalOpenAddKomite, setModalOpenAddKomite] = useState(false);
+  const [modalOpenEditKomite, setModalOpenEditKomite] = useState(false);
+
   const [dataMatDamKomite, setDataMatDamKomite] = useState<
     ValuesShowMatDamKomite[]
   >([]);
@@ -136,6 +138,8 @@ const useKriteriaDampakVM = () => {
     setModalOpenRef,
     showMatDamKomite,
     objectState,
+    modalOpenEditKomite,
+    setModalOpenEditKomite,
   };
 };
 

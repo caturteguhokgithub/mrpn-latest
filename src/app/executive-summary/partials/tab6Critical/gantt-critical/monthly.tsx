@@ -282,6 +282,20 @@ export default function GanttChartMonthly({
     setTasksState(tasks.map((t) => (t.id === task.id ? task : t)));
   };
 
+  const shortenSvgMonthNames = () => {
+    document.querySelectorAll("._CZjuD > svg > g > text").forEach((el) => {
+      const fullText = el.textContent || "";
+      if (fullText.length > 3) {
+        el.textContent = fullText.slice(0, 3);
+      }
+    });
+  };
+
+  useEffect(() => {
+    const timer = setInterval(shortenSvgMonthNames, 100);
+    return () => clearInterval(timer);
+  }, [tasks]);
+
   return (
     <Box
       sx={{
@@ -325,6 +339,12 @@ export default function GanttChartMonthly({
         "._1eT-t, ._2B2zv": {
           height: "calc(100vh - 620px) !important",
         },
+        ".gantt-container .gantt-header div[style*='width: 64px;'] span": {
+          display: "inline-block",
+          width: "30px",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        },
       }}
     >
       <Gantt
@@ -344,7 +364,9 @@ export default function GanttChartMonthly({
         TaskListTable={(props) => <CustomTaskListTable {...props} />}
         // onExpanderClick={handleExpanderClick}
         ganttHeight={300}
-        locale="id"
+        locale={"id"}
+        // startDate={startDate}
+        // endDate={endDate}
       />
     </Box>
   );

@@ -32,6 +32,7 @@ function Row(props: {
   setRequestMatDamUpr?: (value: React.SetStateAction<ReqAddMatDamUpr>) => void;
   handleEdit: any;
   handleDelete?: any;
+  handleEditArea?: any;
 }) {
   const {
     row,
@@ -39,7 +40,9 @@ function Row(props: {
     handleDelete,
     setRequestMatDamUpr,
     setRequestMatDamKomite,
+    handleEditArea,
   } = props;
+
   const [open, setOpen] = React.useState(true);
 
   const prosesBtnEdit = (
@@ -118,9 +121,9 @@ function Row(props: {
         </TableCell>
         <TableCell align="center">
           <Stack direction="row" justifyContent="center">
-            {/* <IconButton onClick={handleEditArea}>
+            <IconButton onClick={handleEditArea}>
               <Iconify name="mdi:pencil" color={blue[500]} />
-            </IconButton> */}
+            </IconButton>
             <IconButton onClick={handleDelete}>
               <Iconify name="mdi:trash" color={red[500]} />
             </IconButton>
@@ -267,6 +270,7 @@ export default function CollapsibleImpactTable({
   setRequestMatDamUpr,
   handleEdit,
   handleDelete,
+  handleEditArea,
 }: {
   data: ValuesShowMatDamKomite[];
   setRequestMatDamKomite?: (
@@ -275,7 +279,10 @@ export default function CollapsibleImpactTable({
   setRequestMatDamUpr?: (value: React.SetStateAction<ReqAddMatDamUpr>) => void;
   handleEdit?: any;
   handleDelete?: any;
+  handleEditArea?: any;
 }) {
+  console.log({ data });
+
   return (
     <TableContainer
       component={Paper}
@@ -328,6 +335,7 @@ export default function CollapsibleImpactTable({
               setRequestMatDamUpr={setRequestMatDamUpr}
               handleEdit={handleEdit}
               handleDelete={handleDelete}
+              handleEditArea={handleEditArea}
             />
           ))}
         </TableBody>

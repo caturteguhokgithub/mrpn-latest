@@ -45,8 +45,15 @@ const useCategoryList = () => {
     useState<SubKategoriRisiko>({ ...initSubCategory });
 
   // ini data yang didapat dari local storage
-  const kpPenetapan = localStorage.getItem("kpPenetapan");
-  const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
+  let kpPenetapan: any = null;
+  let kpPenetapanObj: any = null;
+
+  if (typeof window !== "undefined") {
+    kpPenetapan = localStorage.getItem("kpPenetapan");
+    kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
+  }
+
+  // const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
 
   const isEmptyPenetapanObject =
     !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
