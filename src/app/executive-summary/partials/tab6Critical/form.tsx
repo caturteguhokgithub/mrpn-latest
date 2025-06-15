@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import { blue, green, orange, red } from "@mui/material/colors";
+import { blue, green, grey, orange, red } from "@mui/material/colors";
 import theme from "@/theme";
 import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
 import {
@@ -65,6 +65,8 @@ export default function FormCritical({
   optionProjectCategory,
   state,
   setState,
+  selectMonth,
+  handleChangeMonth,
 }: {
   dataExisting: ExsumCriticalData[];
   optionsRO: RoDto[];
@@ -72,6 +74,8 @@ export default function FormCritical({
   optionProjectCategory: MiscMasterListKategoriProyekRes[];
   state: ExsumCriticalState;
   setState: (value: SetStateAction<ExsumCriticalState>) => void;
+  selectMonth?: any;
+  handleChangeMonth?: any;
 }) {
   const { year, rpjmn } = useRKPContext((store) => store);
 
@@ -236,7 +240,7 @@ export default function FormCritical({
         </>
       )}
 
-      {year > 0 && (
+      {/* {year > 0 && (
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Status" />
@@ -291,7 +295,7 @@ export default function FormCritical({
             </ToggleButtonGroup>
           </FormControl>
         </Grid>
-      )}
+      )} */}
 
       <Grid item xs={12}>
         <FormControl fullWidth>
@@ -358,7 +362,45 @@ export default function FormCritical({
       <Grid item xs={12} md={6}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Waktu Mulai Pengerjaan" />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Stack direction="row" gap={1} alignItems="center">
+            <SelectCustomTheme
+              small
+              anchorRight
+              value={selectMonth}
+              onChange={handleChangeMonth}
+              sx={{
+                flex: 1,
+                "&.MuiInputBase-root": {
+                  bgcolor: "white",
+                },
+              }}
+            >
+              <MenuItem value="" disabled>
+                <Typography
+                  fontSize={14}
+                  fontStyle="italic"
+                  color={grey[600]}
+                  fontWeight={600}
+                >
+                  Pilih bulan mulai
+                </Typography>
+              </MenuItem>
+              {monthData.map((month, index) => (
+                <MenuItem key={index} value={month}>
+                  {month}
+                </MenuItem>
+              ))}
+            </SelectCustomTheme>
+            <TextField
+              variant="outlined"
+              size="small"
+              placeholder="Tahun Mulai"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Stack>
+          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               sx={{
                 ".MuiInputBase-root": {
@@ -396,13 +438,51 @@ export default function FormCritical({
                 })
               }
             />
-          </LocalizationProvider>
+          </LocalizationProvider> */}
         </FormControl>
       </Grid>
       <Grid item xs={12} md={6}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Waktu Selesai Pengerjaan" />{" "}
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <FieldLabelInfo title="Waktu Selesai Pengerjaan" />
+          <Stack direction="row" gap={1} alignItems="center">
+            <SelectCustomTheme
+              small
+              anchorRight
+              value={selectMonth}
+              onChange={handleChangeMonth}
+              sx={{
+                flex: 1,
+                "&.MuiInputBase-root": {
+                  bgcolor: "white",
+                },
+              }}
+            >
+              <MenuItem value="" disabled>
+                <Typography
+                  fontSize={14}
+                  fontStyle="italic"
+                  color={grey[600]}
+                  fontWeight={600}
+                >
+                  Pilih bulan selesai
+                </Typography>
+              </MenuItem>
+              {monthData.map((month, index) => (
+                <MenuItem key={index} value={month}>
+                  {month}
+                </MenuItem>
+              ))}
+            </SelectCustomTheme>
+            <TextField
+              variant="outlined"
+              size="small"
+              placeholder="Tahun Selesai"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Stack>
+          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               sx={{
                 ".MuiInputBase-root": {
@@ -435,7 +515,7 @@ export default function FormCritical({
                 })
               }
             />
-          </LocalizationProvider>
+          </LocalizationProvider> */}
         </FormControl>
       </Grid>
       <Grid item xs={12}>
@@ -565,10 +645,13 @@ export default function FormCritical({
                   alignItems="center"
                   justifyContent="space-between"
                 >
-                  <Typography fontWeight={500}>Sub RO/Project Kunci</Typography>
+                  <Typography fontWeight={500}>
+                    {/* Sub RO/Project Kunci */}
+                    Kegiatan
+                  </Typography>
                   <AddButton
                     small
-                    title="Tambah Sub RO/Project Kunci"
+                    title="Tambah Kegiatan"
                     noMargin
                     onclick={() => addMenu()}
                   />
@@ -590,7 +673,8 @@ export default function FormCritical({
                         justifyContent="space-between"
                       >
                         <Typography>
-                          Sub RO/Project Kunci #{index + 1}
+                          {/* Sub RO/Project Kunci #{index + 1} */}
+                          Kegiatan #{index + 1}
                         </Typography>
                         <AddButton
                           small
@@ -606,7 +690,8 @@ export default function FormCritical({
                         <TextField
                           variant="outlined"
                           size="small"
-                          placeholder="RO/Project Kunci"
+                          // placeholder="RO/Project Kunci"
+                          placeholder="Kegiatan"
                           InputLabelProps={{
                             shrink: true,
                           }}

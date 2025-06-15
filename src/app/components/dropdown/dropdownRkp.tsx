@@ -184,7 +184,8 @@ export default function DropdownRkp({
                 inputProps={{
                   shrink: true,
                 }}
-                placeholder="Cari kegiatan pembangunan"
+                // placeholder="Cari kegiatan pembangunan"
+                placeholder="Cari kegiatan prioritas"
                 value={searchKeyword}
                 onChange={handleSearchChange}
                 endAdornment={
@@ -202,7 +203,8 @@ export default function DropdownRkp({
                 }
               />
               <Typography color={grey[600]}>
-                Silahkan pilih kegiatan pembangunan di bawah ini
+                {/* Silahkan pilih kegiatan pembangunan di bawah ini */}
+                Silahkan pilih kegiatan prioritas di bawah ini
               </Typography>
             </Stack>
             <Box maxHeight="calc(100vh - 460px)" overflow="auto">
