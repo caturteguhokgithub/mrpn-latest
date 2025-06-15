@@ -22,15 +22,18 @@ import {
 } from "@/app/misc/master/masterServiceModel";
 import { doGetMasterListlistKategoriProyek } from "@/app/misc/master/masterService";
 import {
-  doCreateCriticalPath, doCreateCriticalRKPPath,
+  doCreateCriticalPath,
+  doCreateCriticalRKPPath,
   doDeleteCriticalPath,
   doGetCriticalPath,
-  doUpdateCriticalPath, doUpdateCriticalRKPPath,
+  doUpdateCriticalPath,
+  doUpdateCriticalRKPPath,
 } from "@/app/executive-summary/partials/tab6Critical/cardCriticalService";
 import { Task } from "gantt-task-react";
 import dayjs from "dayjs";
-import {GetColor, GetColorCriticalPathIndex} from "@/utils/color";
+import { GetColor, GetColorCriticalPathIndex } from "@/utils/color";
 import useCardRoadmapVM from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapVM";
+import { SelectChangeEvent } from "@mui/material";
 
 const useCardCriticalVM = () => {
   const loadingContext = useLoading();
@@ -57,13 +60,18 @@ const useCardCriticalVM = () => {
   const [ganChart, setGanChart] = useState<Task[]>([]);
 
   const [tasksRKP, setTaskRKP] = React.useState<Task[]>([]);
+  const [selectMonth, setSelectMonth] = React.useState("");
+
+  const handleChangeMonth = (event: SelectChangeEvent) => {
+    setSelectMonth(event.target.value);
+  };
 
   async function getListRO() {
     const response = await doGetRO({
       body: {
         by: exsum.level,
         id: [exsum.ref_id],
-        tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year,
+        tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -71,7 +79,7 @@ const useCardCriticalVM = () => {
 
     if (response?.code == API_CODE.success) {
       let result: RoDto[] = response.result;
-      let finalResult:RoDto[] = result.filter(x => x.intervention)
+      let finalResult: RoDto[] = result.filter((x) => x.intervention);
       setOptionRO(finalResult);
     }
   }
@@ -117,12 +125,12 @@ const useCardCriticalVM = () => {
           sumber_anggaran: res.ro?.sumber_anggaran ?? "",
           keterangan_kegiatan: res.keterangan_kegiatan,
           category: res.kategori_proyek.name,
-          target:[]
+          target: [],
         };
 
         const t: Task = {
           id: res.id.toString(),
-          type: year == 0 ? 'task' : 'project',
+          type: year == 0 ? "task" : "project",
           name: res.ro?.value ?? "",
           start: startDay.toDate(),
           end: endDay.toDate(),
@@ -137,10 +145,8 @@ const useCardCriticalVM = () => {
 
         tasks.push(t);
 
-        if (res.kegiatan.length > 0){
-
-          res.kegiatan.map(kgt => {
-
+        if (res.kegiatan.length > 0) {
+          res.kegiatan.map((kgt) => {
             let startDay = dayjs(kgt.start_date);
             let endDay = dayjs(kgt.end_date);
 
@@ -148,8 +154,8 @@ const useCardCriticalVM = () => {
               endDay = startDay.add(1, "hour");
             }
 
-            taskAdditionalData.target = kgt.target
-            taskAdditionalData.tooltip_type = "child"
+            taskAdditionalData.target = kgt.target;
+            taskAdditionalData.tooltip_type = "child";
 
             const t: Task = {
               id: kgt.id.toString(),
@@ -166,27 +172,25 @@ const useCardCriticalVM = () => {
             };
 
             tasks.push(t);
-          })
-
+          });
         }
-
       });
 
       // console.log(tasks)
 
       setGanChart(tasks);
-      setTaskRKP(tasks)
+      setTaskRKP(tasks);
     }
   }
 
   const handleSubmit = async () => {
     if (
-      state.ro == undefined
-      || state.start_date == ""
-      || state.end_date == ""
-      || state.kategori_proyek_id == 0
-      || state.strategy.length == 0
-      || (state.keterangan_kegiatan == "" && year > 0)
+      state.ro == undefined ||
+      state.start_date == "" ||
+      state.end_date == "" ||
+      state.kategori_proyek_id == 0 ||
+      state.strategy.length == 0 ||
+      (state.keterangan_kegiatan == "" && year > 0)
     ) {
       return;
     }
@@ -198,12 +202,16 @@ const useCardCriticalVM = () => {
       });
     });
 
-    state.kegiatan.map((kgt,iKgt) => {
-      let startDate = kgt.target[0].bulan
-      let endDate = kgt.target[kgt.target.length-1].bulan
-      state.kegiatan[iKgt].start_date = dayjs(year+"-"+(startDate < 10 ? "0"+startDate : startDate)+"-01").format("YYYY-MM-DD")
-      state.kegiatan[iKgt].end_date = dayjs(year+"-"+(endDate < 10 ? "0"+endDate : endDate)+"-28").format("YYYY-MM-DD")
-    })
+    state.kegiatan.map((kgt, iKgt) => {
+      let startDate = kgt.target[0].bulan;
+      let endDate = kgt.target[kgt.target.length - 1].bulan;
+      state.kegiatan[iKgt].start_date = dayjs(
+        year + "-" + (startDate < 10 ? "0" + startDate : startDate) + "-01"
+      ).format("YYYY-MM-DD");
+      state.kegiatan[iKgt].end_date = dayjs(
+        year + "-" + (endDate < 10 ? "0" + endDate : endDate) + "-28"
+      ).format("YYYY-MM-DD");
+    });
 
     const request: ExsumCriticalReqDto = {
       id: state.id,
@@ -214,20 +222,20 @@ const useCardCriticalVM = () => {
       kategori_proyek_id: state.kategori_proyek_id,
       keterangan_kegiatan: state.keterangan_kegiatan,
       values: value,
-      depedencies:state.dependency?.id ?? 0,
-      kegiatan:state.kegiatan,
-      color:state.color ?? ""
+      depedencies: state.dependency?.id ?? 0,
+      kegiatan: state.kegiatan,
+      color: state.color ?? "",
     };
 
     let response;
     if (request.id == 0) {
-      if (year == 0){
+      if (year == 0) {
         response = await doCreateCriticalPath({
           body: request,
           loadingContext: loadingContext,
           errorModalContext: errorModalContext,
         });
-      }else{
+      } else {
         response = await doCreateCriticalRKPPath({
           body: request,
           loadingContext: loadingContext,
@@ -235,13 +243,13 @@ const useCardCriticalVM = () => {
         });
       }
     } else {
-      if (year == 0){
+      if (year == 0) {
         response = await doUpdateCriticalPath({
           body: request,
           loadingContext: loadingContext,
           errorModalContext: errorModalContext,
         });
-      }else{
+      } else {
         response = await doUpdateCriticalRKPPath({
           body: request,
           loadingContext: loadingContext,
@@ -259,7 +267,6 @@ const useCardCriticalVM = () => {
       setModalOpen(false);
       setModalAdd(false);
     }
-
   };
 
   const handleDelete = async () => {
@@ -272,9 +279,9 @@ const useCardCriticalVM = () => {
       kategori_proyek_id: 0,
       keterangan_kegiatan: "",
       values: [],
-      depedencies:0,
-      kegiatan:[],
-      color:state.color ?? ""
+      depedencies: 0,
+      kegiatan: [],
+      color: state.color ?? "",
     };
 
     const response = await doDeleteCriticalPath({
@@ -299,10 +306,10 @@ const useCardCriticalVM = () => {
     const initState: ExsumCriticalState = JSON.parse(
       JSON.stringify(initExsumCriticalReqDto)
     );
-    if (data.length == 0 && year > 0){
-      initState.keterangan_kegiatan = "Finish to Start"
+    if (data.length == 0 && year > 0) {
+      initState.keterangan_kegiatan = "Finish to Start";
     }
-    setState(initState)
+    setState(initState);
     setModalAdd(true);
   };
 
@@ -314,12 +321,12 @@ const useCardCriticalVM = () => {
       selectedStrategy.push(t.value);
     });
 
-    let dep = undefined
-    data.map(x => {
-      if (x.id == curData.dependency?.id){
-        dep = x
+    let dep = undefined;
+    data.map((x) => {
+      if (x.id == curData.dependency?.id) {
+        dep = x;
       }
-    })
+    });
 
     const state: ExsumCriticalState = {
       id: curData.id,
@@ -330,9 +337,9 @@ const useCardCriticalVM = () => {
       kategori_proyek_id: curData.kategori_proyek_id,
       strategy: selectedStrategy,
       keterangan_kegiatan: curData.keterangan_kegiatan,
-      dependency:dep,
-      kegiatan:curData.kegiatan,
-      color:curData.color
+      dependency: dep,
+      kegiatan: curData.kegiatan,
+      color: curData.color,
     };
 
     setState(state);
@@ -344,7 +351,7 @@ const useCardCriticalVM = () => {
     if (data != undefined) {
       let options: string[] = [];
       data.map((t) => {
-        if (options.findIndex(x => x == t.output) == -1){
+        if (options.findIndex((x) => x == t.output) == -1) {
           options.push(t.output);
         }
       });
@@ -380,6 +387,8 @@ const useCardCriticalVM = () => {
     setModalAdd,
     modalDelete,
     setModalDelete,
+    handleChangeMonth,
+    selectMonth,
   };
 };
 

@@ -63,6 +63,8 @@ export default function CardCritical({
     setModalAdd,
     modalDelete,
     setModalDelete,
+    handleChangeMonth,
+    selectMonth,
   } = useCardCriticalVM();
 
   const { year } = useRKPContext((store) => store);
@@ -230,6 +232,8 @@ export default function CardCritical({
           optionProjectCategory={optionProjectCategory}
           state={state}
           setState={setState}
+          selectMonth={selectMonth}
+          handleChangeMonth={handleChangeMonth}
         />
       </DialogComponent>
       <DialogDelete
