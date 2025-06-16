@@ -10,7 +10,7 @@ import FormRelated from "./form-related";
 import useCardRelatedVM from "@/app/executive-summary/partials/tab2Profile/cardRelated/cardRelatedVM";
 import {
   ExsumRelatedInitState,
-  exsumRelatedInitStateData
+  exsumRelatedInitStateData,
 } from "@/app/executive-summary/partials/tab2Profile/cardRelated/cardRelatedModel";
 import { MiscMasterListKebijakanRes } from "@/app/misc/master/masterServiceModel";
 import DialogDelete from "@/components/dialogDelete";
@@ -27,65 +27,67 @@ export default function CardRelated({ project }: { project: string }) {
     updateData,
     deleteData,
     modalDelete,
-    setModalDelete
+    setModalDelete,
   } = useCardRelatedVM();
 
   const { year } = useRKPContext((state) => state);
-  // console.log(year);
 
   const handleUpdateOrDelete = (index: number, action: string) => {
     if (index == -1) {
       const initState = JSON.parse(JSON.stringify(exsumRelatedInitStateData));
-      setState(initState)
+      setState(initState);
     } else {
-      const selectedData = data[index]
-      let opt: MiscMasterListKebijakanRes[] = []
+      const selectedData = data[index];
+      let opt: MiscMasterListKebijakanRes[] = [];
 
-      selectedData.kebijakan.map(k => {
-        options.map(o => {
+      selectedData.kebijakan.map((k) => {
+        options.map((o) => {
           if (o.id == k.src_kebijakan_id) {
-            const newListKebijakan: MiscMasterListKebijakanRes = JSON.parse(JSON.stringify(o))
-            k.list.map(l => {
+            const newListKebijakan: MiscMasterListKebijakanRes = JSON.parse(
+              JSON.stringify(o)
+            );
+            k.list.map((l) => {
               newListKebijakan.list.map((n, i) => {
                 if (l.src_kebijakan_list_id == n.id) {
-                  newListKebijakan.list[i].isCheck = true
+                  newListKebijakan.list[i].isCheck = true;
                 }
-              })
-            })
+              });
+            });
 
-            opt.push(newListKebijakan)
+            opt.push(newListKebijakan);
           }
-        })
-      })
+        });
+      });
 
       const curState: ExsumRelatedInitState = {
         id: selectedData.id,
         value: selectedData.value,
-        options: opt
-      }
-      setState(curState)
+        options: opt,
+      };
+      setState(curState);
     }
 
     if (action == "update") {
-      setModal(true)
+      setModal(true);
     } else {
-      setModalDelete(true)
+      setModalDelete(true);
     }
-
-  }
+  };
 
   return (
     <CardItem
       title={`Keterkaitan Kegiatan Prioritas`}
       addButton={
-        year <= 0 ?
+        year <= 0 ? (
           <AddButton
             filled
             small
             title="Tambah Kebijakan"
             onclick={() => handleUpdateOrDelete(-1, "update")}
-          /> :
+          />
+        ) : (
           ""
+        )
       }
     >
       {data.length == 0 ? (
@@ -96,7 +98,11 @@ export default function CardRelated({ project }: { project: string }) {
           description="Silahkan isi konten halaman ini"
         />
       ) : (
-        <TableTagging project={project} data={data} handleUpdateOrDelete={handleUpdateOrDelete} />
+        <TableTagging
+          project={project}
+          data={data}
+          handleUpdateOrDelete={handleUpdateOrDelete}
+        />
       )}
       <DialogComponent
         width={"80%"}
@@ -132,7 +138,6 @@ export default function CardRelated({ project }: { project: string }) {
         handleDelete={deleteData}
         handleCloseModal={() => setModalDelete(false)}
       />
-
     </CardItem>
   );
 }
