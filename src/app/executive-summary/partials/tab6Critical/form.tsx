@@ -193,7 +193,7 @@ export default function FormCritical({
     <Grid container spacing={2}>
       {year > 0 && dataExisting.length > 0 && (
         <>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <FormControl fullWidth>
               <FieldLabelInfo title="Pilih RO/project yang berkaitan (kosongkan jika tidak ada)" />
               <AutocompleteSelectSingle
@@ -212,7 +212,7 @@ export default function FormCritical({
                 placeHolder={"Pilih rincian output/project"}
               />
             </FormControl>
-          </Grid>
+          </Grid> */}
 
           {state.dependency && (
             <>
@@ -234,9 +234,9 @@ export default function FormCritical({
               </Grid>
             </>
           )}
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Divider />
-          </Grid>
+          </Grid> */}
         </>
       )}
 
@@ -359,7 +359,7 @@ export default function FormCritical({
         </FormControl>
       </Grid>
 
-      <Grid item xs={12} md={6}>
+      {/* <Grid item xs={12} md={6}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Waktu Mulai Pengerjaan" />
           <Stack direction="row" gap={1} alignItems="center">
@@ -399,8 +399,8 @@ export default function FormCritical({
                 shrink: true,
               }}
             />
-          </Stack>
-          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+          </Stack> */}
+      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               sx={{
                 ".MuiInputBase-root": {
@@ -439,9 +439,9 @@ export default function FormCritical({
               }
             />
           </LocalizationProvider> */}
-        </FormControl>
-      </Grid>
-      <Grid item xs={12} md={6}>
+      {/* </FormControl>
+      </Grid> */}
+      {/* <Grid item xs={12} md={6}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Waktu Selesai Pengerjaan" />
           <Stack direction="row" gap={1} alignItems="center">
@@ -481,8 +481,8 @@ export default function FormCritical({
                 shrink: true,
               }}
             />
-          </Stack>
-          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+          </Stack> */}
+      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               sx={{
                 ".MuiInputBase-root": {
@@ -516,8 +516,8 @@ export default function FormCritical({
               }
             />
           </LocalizationProvider> */}
-        </FormControl>
-      </Grid>
+      {/* </FormControl>
+      </Grid> */}
       <Grid item xs={12}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Kategori Proyek" />
@@ -557,83 +557,85 @@ export default function FormCritical({
           </ToggleButtonGroup>
         </FormControl>
       </Grid>
-      <Grid item xs={12}>
-        <FormControl fullWidth>
-          <FieldLabelInfo title="Kelompok Warna" />
-          <ToggleButtonGroup
-            exclusive
-            value={
-              state?.color
-                ? GetColorCriticalPathIndex(state?.color ?? "")
-                : null
-            }
-            onChange={(e, value) => {
-              if (value != null) {
-                setState((prevState) => {
-                  return {
-                    ...prevState,
-                    color: GetColorCriticalPath(value),
-                  };
-                });
+      {year === 0 && (
+        <Grid item xs={12}>
+          <FormControl fullWidth>
+            <FieldLabelInfo title="Kelompok Warna" />
+            <ToggleButtonGroup
+              exclusive
+              value={
+                state?.color
+                  ? GetColorCriticalPathIndex(state?.color ?? "")
+                  : null
               }
-            }}
-            aria-label="Grup Color"
-          >
-            {ColorCriticalPath.map(
-              (color, i) =>
-                i < 5 && (
-                  <ToggleButton
-                    key={i}
-                    value={i}
-                    aria-label="color"
-                    sx={{
-                      bgcolor: alpha(color, 0.3),
-                      width: "20%",
-                      p: 0,
-                      minHeight: 50,
-                      "& > div": {
-                        "& > div": {
-                          opacity: 0.4,
-                        },
-                      },
-                      "&.Mui-selected": {
-                        bgcolor: color,
+              onChange={(e, value) => {
+                if (value != null) {
+                  setState((prevState) => {
+                    return {
+                      ...prevState,
+                      color: GetColorCriticalPath(value),
+                    };
+                  });
+                }
+              }}
+              aria-label="Grup Color"
+            >
+              {ColorCriticalPath.map(
+                (color, i) =>
+                  i < 5 && (
+                    <ToggleButton
+                      key={i}
+                      value={i}
+                      aria-label="color"
+                      sx={{
+                        bgcolor: alpha(color, 0.3),
+                        width: "20%",
+                        p: 0,
+                        minHeight: 50,
                         "& > div": {
                           "& > div": {
-                            opacity: 1,
+                            opacity: 0.4,
                           },
                         },
-                      },
-                    }}
-                  >
-                    <Box
-                      width="100%"
-                      height="100%"
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
+                        "&.Mui-selected": {
+                          bgcolor: color,
+                          "& > div": {
+                            "& > div": {
+                              opacity: 1,
+                            },
+                          },
+                        },
+                      }}
                     >
                       <Box
-                        bgcolor="black"
-                        color="white"
-                        borderRadius="50%"
-                        width={16}
-                        height={16}
+                        width="100%"
+                        height="100%"
                         display="flex"
-                        justifyContent="center"
                         alignItems="center"
-                        fontSize={10}
-                        lineHeight={1}
+                        justifyContent="center"
                       >
-                        {i + 1}
+                        <Box
+                          bgcolor="black"
+                          color="white"
+                          borderRadius="50%"
+                          width={16}
+                          height={16}
+                          display="flex"
+                          justifyContent="center"
+                          alignItems="center"
+                          fontSize={10}
+                          lineHeight={1}
+                        >
+                          {i + 1}
+                        </Box>
                       </Box>
-                    </Box>
-                  </ToggleButton>
-                )
-            )}
-          </ToggleButtonGroup>
-        </FormControl>
-      </Grid>
+                    </ToggleButton>
+                  )
+              )}
+            </ToggleButtonGroup>
+          </FormControl>
+        </Grid>
+      )}
 
       {year > 0 && (
         <>
@@ -672,7 +674,7 @@ export default function FormCritical({
                         alignItems="center"
                         justifyContent="space-between"
                       >
-                        <Typography>
+                        <Typography fontWeight={600} fontSize={14}>
                           {/* Sub RO/Project Kunci #{index + 1} */}
                           Kegiatan #{index + 1}
                         </Typography>
@@ -709,8 +711,89 @@ export default function FormCritical({
                         />
                       </FormControl>
                     </Grid>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <FieldLabelInfo
+                          title={`"Kelompok Warna Kegiatan #${index + 1}`}
+                        />
+                        <ToggleButtonGroup
+                          exclusive
+                          value={
+                            state?.color
+                              ? GetColorCriticalPathIndex(state?.color ?? "")
+                              : null
+                          }
+                          onChange={(e, value) => {
+                            if (value != null) {
+                              setState((prevState) => {
+                                return {
+                                  ...prevState,
+                                  color: GetColorCriticalPath(value),
+                                };
+                              });
+                            }
+                          }}
+                          aria-label="Grup Color"
+                        >
+                          {ColorCriticalPath.map(
+                            (color, i) =>
+                              i < 5 && (
+                                <ToggleButton
+                                  key={i}
+                                  value={i}
+                                  aria-label="color"
+                                  sx={{
+                                    bgcolor: alpha(color, 0.3),
+                                    width: "20%",
+                                    p: 0,
+                                    minHeight: 50,
+                                    "& > div": {
+                                      "& > div": {
+                                        opacity: 0.4,
+                                      },
+                                    },
+                                    "&.Mui-selected": {
+                                      bgcolor: color,
+                                      "& > div": {
+                                        "& > div": {
+                                          opacity: 1,
+                                        },
+                                      },
+                                    },
+                                  }}
+                                >
+                                  <Box
+                                    width="100%"
+                                    height="100%"
+                                    display="flex"
+                                    alignItems="center"
+                                    justifyContent="center"
+                                  >
+                                    <Box
+                                      bgcolor="black"
+                                      color="white"
+                                      borderRadius="50%"
+                                      width={16}
+                                      height={16}
+                                      display="flex"
+                                      justifyContent="center"
+                                      alignItems="center"
+                                      fontSize={10}
+                                      lineHeight={1}
+                                    >
+                                      {i + 1}
+                                    </Box>
+                                  </Box>
+                                </ToggleButton>
+                              )
+                          )}
+                        </ToggleButtonGroup>
+                      </FormControl>
+                    </Grid>
                     <Grid marginTop={1} item xs={12}>
-                      <Typography>Aktivitas</Typography>
+                      <Typography fontWeight={600} fontSize={14}>
+                        Aktivitas RKP 2025
+                      </Typography>
                     </Grid>
                   </Grid>
 
@@ -851,7 +934,7 @@ export default function FormCritical({
                                   <Typography fontWeight={500}>
                                     {item}
                                   </Typography>
-                                  <AddButton
+                                  {/* <AddButton
                                     small
                                     title={`Tambah Aktivitas ${item.substring(
                                       0,
@@ -859,7 +942,7 @@ export default function FormCritical({
                                     )}`}
                                     noMargin
                                     onclick={() => addMenuTarget(index)}
-                                  />
+                                  /> */}
                                 </Stack>
                               </Grid>
                             </Grid>

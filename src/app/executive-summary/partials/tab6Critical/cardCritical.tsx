@@ -17,7 +17,7 @@ import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import AddButton from "@/app/components/buttonAdd";
 import EmptyDevelopingState from "@/app/components/empty/developing";
 import { isDeveloping } from "@/app/components/layouts/layout";
-import TableCriticalCustom from "./tableCritical";
+import TableCriticalCustom from "./partials/tableCritical";
 
 const ProjectType = ({ label, color }: { label: string; color: string }) => {
   return (
@@ -173,9 +173,9 @@ export default function CardCritical({
                     setTasks={setTaskRKP}
                   />
                 )}
-                {/* <TableCriticalCustom /> */}
               </Stack>
             )}
+            <TableCriticalCustom />
           </Fragment>
         )}
       </CardItem>
