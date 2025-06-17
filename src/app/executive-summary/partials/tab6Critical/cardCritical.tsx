@@ -175,7 +175,7 @@ export default function CardCritical({
                 )}
               </Stack>
             )}
-            <TableCriticalCustom />
+            <TableCriticalCustom year={year} />
           </Fragment>
         )}
       </CardItem>

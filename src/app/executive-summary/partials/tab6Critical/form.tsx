@@ -1,11 +1,9 @@
-import React, { Fragment, SetStateAction, useState } from "react";
+import React, { Fragment, SetStateAction } from "react";
 import {
   alpha,
   Box,
-  Divider,
   FormControl,
   Grid,
-  InputAdornment,
   MenuItem,
   Paper,
   Stack,
@@ -15,8 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import { blue, green, grey, orange, red } from "@mui/material/colors";
-import theme from "@/theme";
+import { blue, grey } from "@mui/material/colors";
 import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
 import {
   AutocompleteSelectMultiple,
@@ -28,9 +25,6 @@ import {
   KegiatanDto,
   TargetDto,
 } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { MiscMasterListKategoriProyekRes } from "@/app/misc/master/masterServiceModel";
 import AddButton from "@/app/components/buttonAdd";
@@ -42,21 +36,6 @@ import {
   GetColorCriticalPathIndex,
   ColorCriticalPath,
 } from "@/utils/color";
-
-const monthList = [
-  "Januari",
-  "Februari",
-  "Maret",
-  "April",
-  "Mei",
-  "Juni",
-  "Juli",
-  "Agustus",
-  "September",
-  "Oktober",
-  "November",
-  "Desember",
-];
 
 export default function FormCritical({
   dataExisting,
@@ -116,33 +95,6 @@ export default function FormCritical({
     });
   };
 
-  const addMenuTarget = (iKegiatan: number) => {
-    setState((prevState) => {
-      const kegiatan = prevState.kegiatan;
-      const target = kegiatan[iKegiatan].target;
-
-      let curBulan = 0;
-      monthList.map((m, index) => {
-        target.map((t) => {
-          if (index + 1 == t.bulan) {
-            curBulan = t.bulan;
-          }
-        });
-      });
-
-      let newData: TargetDto = {
-        target: "",
-        bulan: curBulan + 1,
-      };
-      kegiatan[iKegiatan].target.push(newData);
-
-      return {
-        ...prevState,
-        kegiatan: kegiatan,
-      };
-    });
-  };
-
   const minusMenuTarget = (iKegiatan: number, iTarget: number) => {
     setState((prevState) => {
       const kegiatan = prevState.kegiatan;
@@ -153,25 +105,6 @@ export default function FormCritical({
         kegiatan: kegiatan,
       };
     });
-  };
-
-  const checkOptions = (
-    target: TargetDto[],
-    iTarget: number,
-    value: number
-  ) => {
-    if (target[iTarget].bulan == value) {
-      return false;
-    }
-
-    let existBulan = false;
-    target.map((x) => {
-      if (value == x.bulan) {
-        existBulan = true;
-      }
-    });
-
-    return existBulan;
   };
 
   const monthData = [
@@ -193,27 +126,6 @@ export default function FormCritical({
     <Grid container spacing={2}>
       {year > 0 && dataExisting.length > 0 && (
         <>
-          {/* <Grid item xs={12}>
-            <FormControl fullWidth>
-              <FieldLabelInfo title="Pilih RO/project yang berkaitan (kosongkan jika tidak ada)" />
-              <AutocompleteSelectSingle
-                key={state.dependency?.ro?.value ?? "dependencies-ro"}
-                value={state.dependency}
-                options={dataExisting}
-                getOptionLabel={(option) => option.ro?.value ?? ""}
-                handleChange={(val: ExsumCriticalData) =>
-                  setState((prev) => {
-                    return {
-                      ...prev,
-                      dependency: val,
-                    };
-                  })
-                }
-                placeHolder={"Pilih rincian output/project"}
-              />
-            </FormControl>
-          </Grid> */}
-
           {state.dependency && (
             <>
               <Grid item xs={12} md={6}>
@@ -234,68 +146,8 @@ export default function FormCritical({
               </Grid>
             </>
           )}
-          {/* <Grid item xs={12}>
-            <Divider />
-          </Grid> */}
         </>
       )}
-
-      {/* {year > 0 && (
-        <Grid item xs={12}>
-          <FormControl fullWidth>
-            <FieldLabelInfo title="Status" />
-            <ToggleButtonGroup
-              color="primary"
-              value={state.keterangan_kegiatan}
-              exclusive
-              onChange={(
-                event: React.MouseEvent<HTMLElement>,
-                newAlignment: string
-              ) => {
-                setState((prevState) => {
-                  return {
-                    ...prevState,
-                    keterangan_kegiatan: newAlignment,
-                  };
-                });
-              }}
-            >
-              <ToggleButton
-                value="Start to Start"
-                sx={{
-                  width: "50%",
-                  lineHeight: 1,
-                  color: blue[600],
-                  borderColor: blue[600],
-                  "&.Mui-selected": {
-                    bgcolor: theme.palette.primary.main,
-                    color: "white",
-                  },
-                }}
-                disabled={dataExisting.length == 0}
-              >
-                Start to Start
-              </ToggleButton>
-              <ToggleButton
-                value="Finish to Start"
-                sx={{
-                  width: "50%",
-                  lineHeight: 1,
-                  color: blue[600],
-                  borderColor: blue[600],
-                  "&.Mui-selected": {
-                    bgcolor: red[700],
-                    color: "white",
-                  },
-                }}
-                disabled={dataExisting.length == 0}
-              >
-                Finish to Start
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </FormControl>
-        </Grid>
-      )} */}
 
       <Grid item xs={12}>
         <FormControl fullWidth>
@@ -358,166 +210,96 @@ export default function FormCritical({
           </Typography>
         </FormControl>
       </Grid>
-
-      {/* <Grid item xs={12} md={6}>
-        <FormControl fullWidth>
-          <FieldLabelInfo title="Waktu Mulai Pengerjaan" />
-          <Stack direction="row" gap={1} alignItems="center">
-            <SelectCustomTheme
-              small
-              anchorRight
-              value={selectMonth}
-              onChange={handleChangeMonth}
-              sx={{
-                flex: 1,
-                "&.MuiInputBase-root": {
-                  bgcolor: "white",
-                },
-              }}
-            >
-              <MenuItem value="" disabled>
-                <Typography
-                  fontSize={14}
-                  fontStyle="italic"
-                  color={grey[600]}
-                  fontWeight={600}
+      {year == 0 && (
+        <Fragment>
+          <Grid item xs={12} md={6}>
+            <FormControl fullWidth>
+              <FieldLabelInfo title="Waktu Mulai Pengerjaan" />
+              <Stack direction="row" gap={1} alignItems="center">
+                <SelectCustomTheme
+                  small
+                  anchorRight
+                  value={selectMonth}
+                  onChange={handleChangeMonth}
+                  sx={{
+                    flex: 1,
+                    "&.MuiInputBase-root": {
+                      bgcolor: "white",
+                    },
+                  }}
                 >
-                  Pilih bulan mulai
-                </Typography>
-              </MenuItem>
-              {monthData.map((month, index) => (
-                <MenuItem key={index} value={month}>
-                  {month}
-                </MenuItem>
-              ))}
-            </SelectCustomTheme>
-            <TextField
-              variant="outlined"
-              size="small"
-              placeholder="Tahun Mulai"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Stack> */}
-      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              sx={{
-                ".MuiInputBase-root": {
-                  height: 40,
-                },
-              }}
-              views={year == 0 ? ["year"] : undefined}
-              format={year == 0 ? "YYYY" : "D MMM YYYY"}
-              minDate={
-                year > 0
-                  ? dayjs(`${year}-01-01`)
-                  : rpjmn
-                  ? dayjs(`${rpjmn.start}-01-01`)
-                  : undefined
-              }
-              maxDate={
-                year > 0
-                  ? dayjs(`${year}-12-31`)
-                  : rpjmn
-                  ? dayjs(`${rpjmn.end}-12-31`)
-                  : undefined
-              }
-              value={dayjs(state.start_date)}
-              onChange={(e: any) =>
-                setState((prev) => {
-                  const selectedYear = dayjs(e).year();
-                  let startDate = dayjs(e).format("YYYY-MM-DD");
-                  if (year == 0) {
-                    startDate = `${selectedYear}-01-01`;
-                  }
-                  return {
-                    ...prev,
-                    start_date: startDate,
-                  };
-                })
-              }
-            />
-          </LocalizationProvider> */}
-      {/* </FormControl>
-      </Grid> */}
-      {/* <Grid item xs={12} md={6}>
-        <FormControl fullWidth>
-          <FieldLabelInfo title="Waktu Selesai Pengerjaan" />
-          <Stack direction="row" gap={1} alignItems="center">
-            <SelectCustomTheme
-              small
-              anchorRight
-              value={selectMonth}
-              onChange={handleChangeMonth}
-              sx={{
-                flex: 1,
-                "&.MuiInputBase-root": {
-                  bgcolor: "white",
-                },
-              }}
-            >
-              <MenuItem value="" disabled>
-                <Typography
-                  fontSize={14}
-                  fontStyle="italic"
-                  color={grey[600]}
-                  fontWeight={600}
+                  <MenuItem value="" disabled>
+                    <Typography
+                      fontSize={14}
+                      fontStyle="italic"
+                      color={grey[600]}
+                      fontWeight={600}
+                    >
+                      Pilih bulan mulai
+                    </Typography>
+                  </MenuItem>
+                  {monthData.map((month, index) => (
+                    <MenuItem key={index} value={month}>
+                      {month}
+                    </MenuItem>
+                  ))}
+                </SelectCustomTheme>
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  placeholder="Tahun Mulai"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Stack>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <FormControl fullWidth>
+              <FieldLabelInfo title="Waktu Selesai Pengerjaan" />
+              <Stack direction="row" gap={1} alignItems="center">
+                <SelectCustomTheme
+                  small
+                  anchorRight
+                  value={selectMonth}
+                  onChange={handleChangeMonth}
+                  sx={{
+                    flex: 1,
+                    "&.MuiInputBase-root": {
+                      bgcolor: "white",
+                    },
+                  }}
                 >
-                  Pilih bulan selesai
-                </Typography>
-              </MenuItem>
-              {monthData.map((month, index) => (
-                <MenuItem key={index} value={month}>
-                  {month}
-                </MenuItem>
-              ))}
-            </SelectCustomTheme>
-            <TextField
-              variant="outlined"
-              size="small"
-              placeholder="Tahun Selesai"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Stack> */}
-      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              sx={{
-                ".MuiInputBase-root": {
-                  height: 40,
-                },
-              }}
-              disabled={state.start_date == ""}
-              views={year == 0 ? ["year"] : undefined}
-              format={year == 0 ? "YYYY" : "D MMM YYYY"}
-              minDate={dayjs(state.start_date)}
-              maxDate={
-                year > 0
-                  ? dayjs(`${year}-12-31`)
-                  : rpjmn
-                  ? dayjs(`${rpjmn.end}-12-31`)
-                  : undefined
-              }
-              value={dayjs(state.end_date)}
-              onChange={(e: any) =>
-                setState((prev) => {
-                  const selectedYear = dayjs(e).year();
-                  let endDate = dayjs(e).format("YYYY-MM-DD");
-                  if (year == 0) {
-                    endDate = `${selectedYear}-12-31`;
-                  }
-                  return {
-                    ...prev,
-                    end_date: endDate,
-                  };
-                })
-              }
-            />
-          </LocalizationProvider> */}
-      {/* </FormControl>
-      </Grid> */}
+                  <MenuItem value="" disabled>
+                    <Typography
+                      fontSize={14}
+                      fontStyle="italic"
+                      color={grey[600]}
+                      fontWeight={600}
+                    >
+                      Pilih bulan selesai
+                    </Typography>
+                  </MenuItem>
+                  {monthData.map((month, index) => (
+                    <MenuItem key={index} value={month}>
+                      {month}
+                    </MenuItem>
+                  ))}
+                </SelectCustomTheme>
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  placeholder="Tahun Selesai"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Stack>
+            </FormControl>
+          </Grid>
+        </Fragment>
+      )}
       <Grid item xs={12}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Kategori Proyek" />
@@ -557,7 +339,7 @@ export default function FormCritical({
           </ToggleButtonGroup>
         </FormControl>
       </Grid>
-      {year === 0 && (
+      {year == 0 && (
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Kelompok Warna" />
@@ -647,10 +429,7 @@ export default function FormCritical({
                   alignItems="center"
                   justifyContent="space-between"
                 >
-                  <Typography fontWeight={500}>
-                    {/* Sub RO/Project Kunci */}
-                    Kegiatan
-                  </Typography>
+                  <Typography fontWeight={500}>Kegiatan</Typography>
                   <AddButton
                     small
                     title="Tambah Kegiatan"
@@ -675,7 +454,6 @@ export default function FormCritical({
                         justifyContent="space-between"
                       >
                         <Typography fontWeight={600} fontSize={14}>
-                          {/* Sub RO/Project Kunci #{index + 1} */}
                           Kegiatan #{index + 1}
                         </Typography>
                         <AddButton
@@ -692,7 +470,6 @@ export default function FormCritical({
                         <TextField
                           variant="outlined"
                           size="small"
-                          // placeholder="RO/Project Kunci"
                           placeholder="Kegiatan"
                           InputLabelProps={{
                             shrink: true,
@@ -803,124 +580,6 @@ export default function FormCritical({
                       variant="outlined"
                       sx={{ mt: 1, p: 2, minWidth: "0 !important" }}
                     >
-                      {/* <Grid marginBottom={1} container spacing={3}>
-                        <Grid item xs={12}>
-                          <Stack
-                            direction="row"
-                            alignItems="center"
-                            justifyContent="space-between"
-                          >
-                            <Typography fontWeight={500}>Aktivitas</Typography>
-                            <AddButton
-                              small
-                              title="Tambah Aktivitas"
-                              noMargin
-                              onclick={() => addMenuTarget(index)}
-                            />
-                          </Stack>
-                        </Grid>
-                      </Grid> */}
-
-                      {/* {tags.target.map((target: TargetDto, iTarget: number) => (
-                        <Grid container spacing={1} key={`target-${iTarget}`}>
-                          <Grid marginY={0.5} item xs={12} md={6}>
-                            <FormControl fullWidth>
-                              <SelectCustomTheme
-                                small
-                                defaultStyle
-                                value={target.bulan}
-                                onChange={(e: any) =>
-                                  setState((prev) => {
-                                    const kegiatan = prev.kegiatan;
-                                    kegiatan[index].target[iTarget].bulan =
-                                      e.target.value;
-                                    kegiatan[index].target.sort(
-                                      (a, b) => a.bulan - b.bulan
-                                    );
-                                    return { ...prev, kegiatan: kegiatan };
-                                  })
-                                }
-                              >
-                                <MenuItem value="" disabled>
-                                  <Typography fontSize={14} fontStyle="italic">
-                                    Pilih Bulan
-                                  </Typography>
-                                </MenuItem>
-                                {monthList.map((monthItem, index) => (
-                                  <MenuItem
-                                    key={index}
-                                    value={index + 1}
-                                    disabled={checkOptions(
-                                      tags.target,
-                                      iTarget,
-                                      index + 1
-                                    )}
-                                  >
-                                    <Typography fontSize={14}>
-                                      {monthItem}
-                                    </Typography>
-                                  </MenuItem>
-                                ))}
-                              </SelectCustomTheme>
-                            </FormControl>
-                          </Grid>
-
-                          <Grid
-                            marginY={0.5}
-                            item
-                            xs={12}
-                            md={iTarget > 0 ? 4 : 6}
-                          >
-                            <FormControl fullWidth>
-                              <TextField
-                                variant="outlined"
-                                size="small"
-                                placeholder="Target"
-                                InputLabelProps={{
-                                  shrink: true,
-                                }}
-                                InputProps={{
-                                  endAdornment: (
-                                    <InputAdornment position="end">
-                                      %
-                                    </InputAdornment>
-                                  ),
-                                }}
-                                value={target.target}
-                                onChange={(e) =>
-                                  setState((prev) => {
-                                    const kegiatan = prev.kegiatan;
-                                    kegiatan[index].target[iTarget].target =
-                                      e.target.value;
-                                    return { ...prev, kegiatan: kegiatan };
-                                  })
-                                }
-                              />
-                            </FormControl>
-                          </Grid>
-
-                          {iTarget > 0 && (
-                            <Grid marginY={1} item xs={12} md={2}>
-                              <Stack
-                                direction="row"
-                                alignItems="center"
-                                justifyContent="space-between"
-                                minHeight={"100%"}
-                              >
-                                <AddButton
-                                  small
-                                  errorColor
-                                  noMargin
-                                  onclick={() =>
-                                    minusMenuTarget(index, iTarget)
-                                  }
-                                  title={""}
-                                />
-                              </Stack>
-                            </Grid>
-                          )}
-                        </Grid>
-                      ))} */}
                       <Stack gap={2}>
                         {monthData.map((item, index) => (
                           <Stack gap={1} key={index}>
@@ -934,15 +593,6 @@ export default function FormCritical({
                                   <Typography fontWeight={500}>
                                     {item}
                                   </Typography>
-                                  {/* <AddButton
-                                    small
-                                    title={`Tambah Aktivitas ${item.substring(
-                                      0,
-                                      3
-                                    )}`}
-                                    noMargin
-                                    onclick={() => addMenuTarget(index)}
-                                  /> */}
                                 </Stack>
                               </Grid>
                             </Grid>
@@ -1009,22 +659,6 @@ export default function FormCritical({
                                         InputLabelProps={{
                                           shrink: true,
                                         }}
-                                        // InputProps={{
-                                        //   endAdornment: (
-                                        //     <InputAdornment position="end">
-                                        //       %
-                                        //     </InputAdornment>
-                                        //   ),
-                                        // }}
-                                        // value={target.target}
-                                        // onChange={(e) =>
-                                        //   setState((prev) => {
-                                        //     const kegiatan = prev.kegiatan;
-                                        //     kegiatan[index].target[iTarget].target =
-                                        //       e.target.value;
-                                        //     return { ...prev, kegiatan: kegiatan };
-                                        //   })
-                                        // }
                                       />
                                     </FormControl>
                                   </Grid>
@@ -1060,9 +694,6 @@ export default function FormCritical({
               ))}
             </Stack>
           </Grid>
-          {/* <Grid item xs={12}>
-            <Divider />
-          </Grid> */}
         </>
       )}
     </Grid>

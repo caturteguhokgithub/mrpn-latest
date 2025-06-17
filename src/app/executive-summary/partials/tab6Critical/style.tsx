@@ -16,7 +16,7 @@ export const StyledTable = styled(Table)({
   borderCollapse: "separate",
 });
 
-export const BlockCell = styled(TableCell)(({ theme, color }) => ({
+export const BlockCell = styled(TableCell)(({ color }) => ({
   textAlign: "center",
   padding: "2px",
   "&:first-of-type": {
@@ -38,10 +38,10 @@ export const BlockCell = styled(TableCell)(({ theme, color }) => ({
   },
 }));
 
-export const ParentRow = styled(TableRow)({
+export const ParentRow = styled(TableRow)(({ color }) => ({
   fontWeight: "bold",
-  backgroundColor: "#f5f5f5",
-});
+  backgroundColor: color,
+}));
 
 export const ChildRow = styled(TableRow)({
   "&:hover": {
@@ -49,17 +49,17 @@ export const ChildRow = styled(TableRow)({
   },
 });
 
-export const ParentBlock = styled(Box)({
+export const ParentBlock = styled(Box)(({ color }) => ({
   // backgroundColor: "#e5e5f7",
   // opacity: 0.8,
   // backgroundSize: "5px 5px",
   // backgroundImage:
   //   "repeating-linear-gradient(to right, #444cf7, #444cf7 1px, #e5e5f7 1px, #e5e5f7)",
-  backgroundColor: "black",
+  backgroundColor: `${color}`,
   opacity: 0.8,
   backgroundSize: "10px 10px",
-  backgroundImage: `repeating-linear-gradient(65deg, ${grey[800]} 0, ${grey[800]} 1px, black 0, black 50%)`,
-});
+  backgroundImage: `repeating-linear-gradient(65deg, ${grey[800]} 0, ${grey[800]} 1px, ${color} 0, ${color} 50%)`,
+}));
 
 export const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />

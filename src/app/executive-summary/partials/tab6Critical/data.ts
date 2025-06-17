@@ -13,7 +13,7 @@ export const months = [
   "Dec",
 ];
 
-export const dataCPrkp = [
+export const dataCP = [
   {
     id: "1",
     ro: "Menjaga Persatuan dan Kesatuan NKRI bagi Aparatur",
@@ -21,6 +21,9 @@ export const dataCPrkp = [
     category: "Proyek BUMN",
     responsible: "Kementerian Koordinator Bidang Politik, Hukum, dan Keamanan",
     fundSource: "APBN",
+    startYear: "2025",
+    endYear: "2029",
+    color: "red",
     children: [
       {
         id: 1,
@@ -159,6 +162,9 @@ export const dataCPrkp = [
     category: "Proyek Belanja K/L",
     responsible: "Kementerian Dalam Negeri",
     fundSource: "Pemerintah Pusat",
+    startYear: "2025",
+    endYear: "2029",
+    color: "blue",
     children: [
       {
         id: 1,

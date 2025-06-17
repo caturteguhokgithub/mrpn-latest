@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
@@ -25,6 +25,8 @@ interface ParentData {
   category: string;
   responsible: string;
   fundSource: string;
+  startYear: string;
+  endYear: string;
   children: ChildData[];
 }
 
@@ -36,6 +38,7 @@ interface ChildTooltipData {
 interface TooltipCPProps {
   isParent?: boolean;
   data?: ParentData | ChildTooltipData;
+  year?: number;
 }
 
 const LabelTooltip = ({ label }: { label: string }) => (
@@ -44,7 +47,7 @@ const LabelTooltip = ({ label }: { label: string }) => (
   </Typography>
 );
 
-const TooltipCP = ({ isParent, data }: TooltipCPProps) => {
+const TooltipCP = ({ isParent, data, year }: TooltipCPProps) => {
   if (isParent) {
     const parentData = data as ParentData;
     return (
@@ -100,6 +103,22 @@ const TooltipCP = ({ isParent, data }: TooltipCPProps) => {
               {parentData.fundSource}
             </Typography>
           </Stack>
+          {year === 0 && (
+            <React.Fragment>
+              <Stack direction="row" alignItems="center" gap={0.5}>
+                <LabelTooltip label="Waktu Mulai" />
+                <Typography component="strong" fontWeight={600}>
+                  {parentData.startYear}
+                </Typography>
+              </Stack>
+              <Stack direction="row" alignItems="center" gap={0.5}>
+                <LabelTooltip label="Waktu Selesai" />
+                <Typography component="strong" fontWeight={600}>
+                  {parentData.endYear}
+                </Typography>
+              </Stack>
+            </React.Fragment>
+          )}
         </Stack>
       </Box>
     );
