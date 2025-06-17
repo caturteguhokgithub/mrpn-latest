@@ -17,7 +17,7 @@ import {
   StyledPaper,
   StyledTable,
 } from "../style";
-import { dataCPrkp, months } from "../data";
+import { dataCP, months } from "../data";
 
 // Helper function to group consecutive months
 const groupConsecutiveMonths = (months: any) => {
@@ -46,7 +46,7 @@ const groupConsecutiveMonths = (months: any) => {
   return groups;
 };
 
-export default function ProjectTable() {
+export default function ProjectTable({ year }: { year: number }) {
   const renderMonthCells = (
     monthsData: (MonthData | null)[],
     color: string,
@@ -120,6 +120,49 @@ export default function ProjectTable() {
     return cells;
   };
 
+  const renderYearCells = (
+    monthsData: (MonthData | null)[],
+    color: string,
+    childData: ChildData
+  ) => {
+    // For year view, we'll show 5 columns (2025-2029)
+    // We need to determine which years have data
+    const years = [2025, 2026, 2027, 2028, 2029];
+    const cells: any = [];
+
+    years.forEach((year, index) => {
+      // Check if there's any data for this year
+      const hasData = monthsData.some(
+        (month: any) => month && month.year === year
+      );
+
+      if (hasData) {
+        // Get all months for this year
+        const yearMonths = monthsData.filter(
+          (month: any): month is MonthData =>
+            month !== null && month.year === year
+        );
+
+        cells.push(
+          <BlockCell key={`year-${index}`} color={color} colSpan={1}>
+            <HtmlTooltip
+              title={<TooltipCP data={{ months: yearMonths, childData }} />}
+              followCursor
+              TransitionComponent={Grow}
+              placement="bottom-start"
+            >
+              <Box component="div" />
+            </HtmlTooltip>
+          </BlockCell>
+        );
+      } else {
+        cells.push(<TableCell key={`empty-${index}`} colSpan={1} />);
+      }
+    });
+
+    return cells;
+  };
+
   return (
     <StyledPaper>
       <StyledTable>
@@ -132,28 +175,42 @@ export default function ProjectTable() {
             >
               RO/Project Kunci
             </TableCell>
-            {months.map((month) => (
-              <TableCell
-                key={month}
-                align="center"
-                sx={{
-                  bgcolor: bgColorTh,
-                }}
-              >
-                {month}
-              </TableCell>
-            ))}
+            {year === 0
+              ? [2025, 2026, 2027, 2028, 2029].map((year) => (
+                  <TableCell
+                    key={year}
+                    align="center"
+                    sx={{
+                      bgcolor: bgColorTh,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {year}
+                  </TableCell>
+                ))
+              : months.map((month) => (
+                  <TableCell
+                    key={month}
+                    align="center"
+                    sx={{
+                      bgcolor: bgColorTh,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {month}
+                  </TableCell>
+                ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {dataCPrkp.map((parent) => (
+          {dataCP.map((parent) => (
             <React.Fragment key={parent.id}>
               {/* Parent Row */}
-              <ParentRow>
+              <ParentRow color={year > 0 ? "#f5f5f5" : "transparent"}>
                 <TableCell
                   component="th"
                   scope="row"
-                  width="40%"
+                  width={year > 0 ? "40%" : "50%"}
                   sx={{ py: 1, fontWeight: 700 }}
                 >
                   <Stack
@@ -163,9 +220,11 @@ export default function ProjectTable() {
                     gap={2}
                   >
                     <Stack direction="row" alignItems="center" gap={1}>
-                      <Box width={40} flex={0} lineHeight={1}>
-                        <Iconify name="mdi:send" size={16} />
-                      </Box>
+                      {year > 0 && (
+                        <Box width={40} flex={0} lineHeight={1}>
+                          <Iconify name="mdi:send" size={16} />
+                        </Box>
+                      )}
                       {parent.ro}
                     </Stack>
                     <Chip
@@ -173,6 +232,8 @@ export default function ProjectTable() {
                       size="small"
                       color="primary"
                       sx={{
+                        fontWeight: 500,
+                        fontSize: 12,
                         px: 0.5,
                         lineHeight: 1.2,
                         textTransform: "uppercase",
@@ -180,70 +241,81 @@ export default function ProjectTable() {
                     />
                   </Stack>
                 </TableCell>
-                <BlockCell color="black" colSpan={12}>
+                <BlockCell colSpan={year === 0 ? 5 : 12}>
                   <HtmlTooltip
-                    title={<TooltipCP isParent data={parent} />}
+                    title={<TooltipCP isParent data={parent} year={year} />}
                     followCursor
                     TransitionComponent={Grow}
                     placement="bottom-start"
                   >
-                    <ParentBlock />
+                    <ParentBlock color={year > 0 ? "black" : parent.color} />
                   </HtmlTooltip>
                 </BlockCell>
               </ParentRow>
 
-              {/* Child Rows */}
-              {parent.children.map((child) => (
-                <ChildRow key={`${parent.id}-${child.id}`}>
-                  <TableCell sx={{ py: 1 }}>
-                    <Stack
-                      direction="row"
-                      justifyContent="space-between"
-                      alignItems="center"
-                    >
-                      <Stack direction="row" alignItems="center" gap={1} ml={2}>
-                        <Box width={40} flex={0} lineHeight={1}>
-                          <Iconify
-                            name="mdi:brightness-1"
-                            size={8}
-                            color={grey[500]}
-                          />
-                        </Box>
-                        <Box component="p" maxWidth="80%">
-                          {child.kegiatan}
-                        </Box>
-                      </Stack>
-                      <Chip
-                        label={
+              {year > 0 && (
+                <React.Fragment>
+                  {/* Child Rows */}
+                  {parent.children.map((child) => (
+                    <ChildRow key={`${parent.id}-${child.id}`}>
+                      <TableCell sx={{ py: 1 }}>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="center"
+                        >
                           <Stack
-                            display="inline-flex"
                             direction="row"
                             alignItems="center"
-                            gap={0.5}
+                            gap={1}
+                            ml={2}
                           >
-                            Target
-                            <Typography
-                              component="span"
-                              fontWeight={600}
-                              fontSize={12}
-                            >
-                              {child.target} {child.satuan}
-                            </Typography>
+                            <Box width={40} flex={0} lineHeight={1}>
+                              <Iconify
+                                name="mdi:brightness-1"
+                                size={8}
+                                color={grey[500]}
+                              />
+                            </Box>
+                            <Box component="p" maxWidth="80%">
+                              {child.kegiatan}
+                            </Box>
                           </Stack>
-                        }
-                        size="small"
-                        variant="outlined"
-                        sx={{
-                          px: 0.2,
-                          bgcolor: `${grey[200]} !important`,
-                          lineHeight: 1.2,
-                        }}
-                      />
-                    </Stack>
-                  </TableCell>
-                  {renderMonthCells(child.months, child.color, child)}
-                </ChildRow>
-              ))}
+                          <Chip
+                            label={
+                              <Stack
+                                display="inline-flex"
+                                direction="row"
+                                alignItems="center"
+                                gap={0.5}
+                              >
+                                Target
+                                <Typography
+                                  component="span"
+                                  fontWeight={600}
+                                  fontSize={12}
+                                >
+                                  {child.target} {child.satuan}
+                                </Typography>
+                              </Stack>
+                            }
+                            size="small"
+                            variant="outlined"
+                            sx={{
+                              px: 0.2,
+                              bgcolor: `${grey[200]} !important`,
+                              lineHeight: 1.2,
+                            }}
+                          />
+                        </Stack>
+                      </TableCell>
+                      {year === 0
+                        ? renderYearCells(child.months, child.color, child)
+                        : renderMonthCells(child.months, child.color, child)}
+                    </ChildRow>
+                  ))}
+                </React.Fragment>
+              )}
             </React.Fragment>
           ))}
         </TableBody>
