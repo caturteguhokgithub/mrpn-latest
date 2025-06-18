@@ -17,7 +17,8 @@ import {
   StyledPaper,
   StyledTable,
 } from "../style";
-import { dataCP, months } from "../data";
+import { months } from "../data";
+import { DataCPType } from "../cardCriticalModel";
 
 // Helper function to group consecutive months
 const groupConsecutiveMonths = (months: any) => {
@@ -46,7 +47,13 @@ const groupConsecutiveMonths = (months: any) => {
   return groups;
 };
 
-export default function ProjectTable({ year }: { year: number }) {
+export default function ProjectTable({
+  year,
+  dataCP
+}: {
+  year: number,
+  dataCP: DataCPType[]
+}) {
   const renderMonthCells = (
     monthsData: (MonthData | null)[],
     color: string,
@@ -177,29 +184,29 @@ export default function ProjectTable({ year }: { year: number }) {
             </TableCell>
             {year === 0
               ? [2025, 2026, 2027, 2028, 2029].map((year) => (
-                  <TableCell
-                    key={year}
-                    align="center"
-                    sx={{
-                      bgcolor: bgColorTh,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {year}
-                  </TableCell>
-                ))
+                <TableCell
+                  key={year}
+                  align="center"
+                  sx={{
+                    bgcolor: bgColorTh,
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {year}
+                </TableCell>
+              ))
               : months.map((month) => (
-                  <TableCell
-                    key={month}
-                    align="center"
-                    sx={{
-                      bgcolor: bgColorTh,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {month}
-                  </TableCell>
-                ))}
+                <TableCell
+                  key={month}
+                  align="center"
+                  sx={{
+                    bgcolor: bgColorTh,
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {month}
+                </TableCell>
+              ))}
           </TableRow>
         </TableHead>
         <TableBody>

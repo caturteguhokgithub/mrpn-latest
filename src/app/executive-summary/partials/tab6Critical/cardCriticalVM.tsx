@@ -9,6 +9,7 @@ import { API_CODE } from "@/lib/core/api/apiModel";
 import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
 import React, { useEffect, useState } from "react";
 import {
+  DataCPType,
   ExsumCriticalData,
   ExsumCriticalReqDto,
   ExsumCriticalState,
@@ -57,6 +58,7 @@ const useCardCriticalVM = () => {
   const [state, setState] = useState<ExsumCriticalState>(initState);
   const [optionStrategy, setOptionStrategy] = useState<string[]>([]);
   const [data, setData] = useState<ExsumCriticalData[]>([]);
+  const [dataCP, setDataCP] = useState<DataCPType[]>([]);
   const [ganChart, setGanChart] = useState<Task[]>([]);
 
   const [tasksRKP, setTaskRKP] = React.useState<Task[]>([]);
@@ -79,8 +81,8 @@ const useCardCriticalVM = () => {
 
     if (response?.code == API_CODE.success) {
       let result: RoDto[] = response.result;
-      let finalResult: RoDto[] = result.filter((x) => x.intervention);
-      setOptionRO(finalResult);
+      // let finalResult: RoDto[] = result.filter((x) => x.intervention);
+      setOptionRO(result);
     }
   }
 
@@ -106,91 +108,54 @@ const useCardCriticalVM = () => {
 
     if (response?.code == API_CODE.success) {
       const result: ExsumCriticalData[] = response.result;
+      // console.log(result);
+
+      const mappedDataCP: DataCPType[] = result.map((item) => ({
+        id: item.id.toString(),
+        ro: item.ro?.value || "-",
+        tagging: item.tagging_list.map((tag) => tag.value),
+        category: item.kategori_proyek?.name || "-",
+        responsible: item.ro?.kementrian?.value || "-",
+        fundSource: "APBN",
+        startYear: new Date(item.start_date).getFullYear().toString(),
+        endYear: new Date(item.end_date).getFullYear().toString(),
+        color: item.color,
+        children: (item.kegiatan ?? []).map((keg) => ({
+          id: keg.id,
+          kegiatan: keg.kegiatan,
+          target: "",
+          satuan: "",
+          color: keg.color,
+          months: Array.from({ length: 12 }).map((_, index) => {
+            const monthNames = ["jan", "feb", "mar", "apr", "mei", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+            const monthData = keg.months?.find(
+              (m) => m?.name.toLowerCase() === monthNames[index]
+            );
+            return monthData
+              ? {
+                name: monthData.name,
+                aktivitas: monthData.aktivitas,
+                target: monthData.target,
+                satuan: monthData.satuan,
+              }
+              : null;
+          }),
+        })),
+      }));
+
       setData(result);
-
-      const tasks: Task[] = [];
-      result.map((res) => {
-        let startDay = dayjs(res.start_date);
-        let endDay = dayjs(res.end_date);
-
-        if (endDay.isBefore(startDay) || endDay.isSame(startDay)) {
-          endDay = startDay.add(1, "hour");
-        }
-
-        const taskAdditionalData: TaskAdditionalData = {
-          type: year == 0 ? "rpjmn" : "rkp",
-          tooltip_type: "parent",
-          strategy: res.tagging_list,
-          penanggungjawab: res.ro?.kementrian?.value ?? "",
-          sumber_anggaran: res.ro?.sumber_anggaran ?? "",
-          keterangan_kegiatan: res.keterangan_kegiatan,
-          category: res.kategori_proyek.name,
-          target: [],
-        };
-
-        const t: Task = {
-          id: res.id.toString(),
-          type: year == 0 ? "task" : "project",
-          name: res.ro?.value ?? "",
-          start: startDay.toDate(),
-          end: endDay.toDate(),
-          progress: 0,
-          styles: {
-            backgroundColor: res.color,
-          },
-          dependencies: [(res.dependency?.id ?? 0).toString()],
-          hideChildren: false,
-          project: JSON.stringify(taskAdditionalData),
-        };
-
-        tasks.push(t);
-
-        if (res.kegiatan.length > 0) {
-          res.kegiatan.map((kgt) => {
-            let startDay = dayjs(kgt.start_date);
-            let endDay = dayjs(kgt.end_date);
-
-            if (endDay.isBefore(startDay) || endDay.isSame(startDay)) {
-              endDay = startDay.add(1, "hour");
-            }
-
-            taskAdditionalData.target = kgt.target;
-            taskAdditionalData.tooltip_type = "child";
-
-            const t: Task = {
-              id: kgt.id.toString(),
-              type: "task",
-              name: kgt.value,
-              start: startDay.toDate(),
-              end: endDay.toDate(),
-              progress: 0,
-              styles: {
-                backgroundColor: res.color,
-              },
-              dependencies: [],
-              project: JSON.stringify(taskAdditionalData),
-            };
-
-            tasks.push(t);
-          });
-        }
-      });
-
-      // console.log(tasks)
-
-      setGanChart(tasks);
-      setTaskRKP(tasks);
+      setDataCP(mappedDataCP);
     }
   }
 
   const handleSubmit = async () => {
     if (
-      state.ro == undefined ||
-      state.start_date == "" ||
-      state.end_date == "" ||
-      state.kategori_proyek_id == 0 ||
-      state.strategy.length == 0 ||
-      (state.keterangan_kegiatan == "" && year > 0)
+      state.ro == undefined
+      // state.start_date == "" ||
+      // state.end_date == "" ||
+      // state.kategori_proyek_id == 0 ||
+      // state.strategy.length == 0 ||
+      // (state.keterangan_kegiatan == "" && year > 0)
     ) {
       return;
     }
@@ -202,23 +167,23 @@ const useCardCriticalVM = () => {
       });
     });
 
-    state.kegiatan.map((kgt, iKgt) => {
-      let startDate = kgt.target[0].bulan;
-      let endDate = kgt.target[kgt.target.length - 1].bulan;
-      state.kegiatan[iKgt].start_date = dayjs(
-        year + "-" + (startDate < 10 ? "0" + startDate : startDate) + "-01"
-      ).format("YYYY-MM-DD");
-      state.kegiatan[iKgt].end_date = dayjs(
-        year + "-" + (endDate < 10 ? "0" + endDate : endDate) + "-28"
-      ).format("YYYY-MM-DD");
-    });
+    // state.kegiatan.map((kgt, iKgt) => {
+    //   let startDate = kgt.target[0].bulan;
+    //   let endDate = kgt.target[kgt.target.length - 1].bulan;
+    //   state.kegiatan[iKgt].start_date = dayjs(
+    //     year + "-" + (startDate < 10 ? "0" + startDate : startDate) + "-01"
+    //   ).format("YYYY-MM-DD");
+    //   state.kegiatan[iKgt].end_date = dayjs(
+    //     year + "-" + (endDate < 10 ? "0" + endDate : endDate) + "-28"
+    //   ).format("YYYY-MM-DD");
+    // });
 
     const request: ExsumCriticalReqDto = {
       id: state.id,
       exsum_id: exsum.id,
       ro_id: state.ro.id,
-      start_date: state.start_date,
-      end_date: state.end_date,
+      start_date: year > 0 ? `${year}-01-01` : state.start_date,
+      end_date: year > 0 ? `${year}-12-30` : state.end_date,
       kategori_proyek_id: state.kategori_proyek_id,
       keterangan_kegiatan: state.keterangan_kegiatan,
       values: value,
@@ -226,6 +191,9 @@ const useCardCriticalVM = () => {
       kegiatan: state.kegiatan,
       color: state.color ?? "",
     };
+
+    // console.log(request);
+
 
     let response;
     if (request.id == 0) {
@@ -389,6 +357,7 @@ const useCardCriticalVM = () => {
     setModalDelete,
     handleChangeMonth,
     selectMonth,
+    dataCP,
   };
 };
 

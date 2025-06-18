@@ -65,6 +65,7 @@ export default function CardCritical({
     setModalDelete,
     handleChangeMonth,
     selectMonth,
+    dataCP,
   } = useCardCriticalVM();
 
   const { year } = useRKPContext((store) => store);
@@ -175,7 +176,7 @@ export default function CardCritical({
                 )}
               </Stack>
             )} */}
-            <TableCriticalCustom year={year} />
+            <TableCriticalCustom year={year} dataCP={dataCP} />
           </Fragment>
         )}
       </CardItem>

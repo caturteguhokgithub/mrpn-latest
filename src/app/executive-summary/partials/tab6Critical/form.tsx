@@ -23,6 +23,8 @@ import {
   ExsumCriticalData,
   ExsumCriticalState,
   KegiatanDto,
+  KegiatanDtoNew,
+  MonthsDto,
   TargetDto,
 } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
 import dayjs from "dayjs";
@@ -36,6 +38,8 @@ import {
   GetColorCriticalPathIndex,
   ColorCriticalPath,
 } from "@/utils/color";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 export default function FormCritical({
   dataExisting,
@@ -58,19 +62,36 @@ export default function FormCritical({
 }) {
   const { year, rpjmn } = useRKPContext((store) => store);
 
+  const monthData = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+  ];
+
   const addMenu = () => {
     setState((prevState) => {
-      const newKegiatan: KegiatanDto = {
+      const newKegiatan: KegiatanDtoNew = {
         id: 0,
-        value: "",
-        start_date: year + "-01-01",
-        end_date: year + "-01-31",
-        target: [
-          {
-            target: "",
-            bulan: 1,
-          },
-        ],
+        exsum_critical_path_id: 0,
+        color: "",
+        kegiatan: "",
+        months: monthData.map((item) => ({
+          id: 0,
+          exsum_critical_path_kegiatan_id: 0,
+          name: item.slice(0, 3).toLowerCase(),
+          aktivitas: "",
+          target: "",
+          satuan: "",
+        })),
       };
 
       let kegiatan = prevState.kegiatan;
@@ -95,32 +116,17 @@ export default function FormCritical({
     });
   };
 
-  const minusMenuTarget = (iKegiatan: number, iTarget: number) => {
-    setState((prevState) => {
-      const kegiatan = prevState.kegiatan;
-      kegiatan[iKegiatan].target.splice(iTarget, 1);
+  // const minusMenuTarget = (iKegiatan: number, iTarget: number) => {
+  //   setState((prevState) => {
+  //     const kegiatan = prevState.kegiatan;
+  //     kegiatan[iKegiatan].target.splice(iTarget, 1);
 
-      return {
-        ...prevState,
-        kegiatan: kegiatan,
-      };
-    });
-  };
-
-  const monthData = [
-    "Januari",
-    "Februari",
-    "Maret",
-    "April",
-    "Mei",
-    "Juni",
-    "Juli",
-    "Agustus",
-    "September",
-    "Oktober",
-    "November",
-    "Desember",
-  ];
+  //     return {
+  //       ...prevState,
+  //       kegiatan: kegiatan,
+  //     };
+  //   });
+  // };
 
   return (
     <Grid container spacing={2}>
@@ -156,7 +162,7 @@ export default function FormCritical({
             key={state.ro?.id ?? 0}
             value={state.ro}
             options={optionsRO}
-            getOptionLabel={(option) => option.value}
+            getOptionLabel={(option) => option.value + ` (${option.intervention})`}
             handleChange={(val: RoDto) =>
               setState((prev) => {
                 return {
@@ -215,87 +221,84 @@ export default function FormCritical({
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <FieldLabelInfo title="Waktu Mulai Pengerjaan" />
-              <Stack direction="row" gap={1} alignItems="center">
-                <SelectCustomTheme
-                  small
-                  anchorRight
-                  value={selectMonth}
-                  onChange={handleChangeMonth}
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
                   sx={{
-                    flex: 1,
-                    "&.MuiInputBase-root": {
-                      bgcolor: "white",
+                    ".MuiInputBase-root": {
+                      height: 40,
                     },
                   }}
-                >
-                  <MenuItem value="" disabled>
-                    <Typography
-                      fontSize={14}
-                      fontStyle="italic"
-                      color={grey[600]}
-                      fontWeight={600}
-                    >
-                      Pilih bulan mulai
-                    </Typography>
-                  </MenuItem>
-                  {monthData.map((month, index) => (
-                    <MenuItem key={index} value={month}>
-                      {month}
-                    </MenuItem>
-                  ))}
-                </SelectCustomTheme>
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  placeholder="Tahun Mulai"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  views={year == 0 ? ["year"] : undefined}
+                  format={year == 0 ? "YYYY" : "D MMM YYYY"}
+                  minDate={
+                    year > 0
+                      ? dayjs(`${year}-01-01`)
+                      : rpjmn
+                        ? dayjs(`${rpjmn.start}-01-01`)
+                        : undefined
+                  }
+                  maxDate={
+                    year > 0
+                      ? dayjs(`${year}-12-31`)
+                      : rpjmn
+                        ? dayjs(`${rpjmn.end}-12-31`)
+                        : undefined
+                  }
+                  value={dayjs(state.start_date)}
+                  onChange={(e: any) =>
+                    setState((prev) => {
+                      const selectedYear = dayjs(e).year();
+                      let startDate = dayjs(e).format("YYYY-MM-DD");
+                      if (year == 0) {
+                        startDate = `${selectedYear}-01-01`;
+                      }
+                      return {
+                        ...prev,
+                        start_date: startDate,
+                      };
+                    })
+                  }
                 />
-              </Stack>
+              </LocalizationProvider>
             </FormControl>
           </Grid>
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <FieldLabelInfo title="Waktu Selesai Pengerjaan" />
-              <Stack direction="row" gap={1} alignItems="center">
-                <SelectCustomTheme
-                  small
-                  anchorRight
-                  value={selectMonth}
-                  onChange={handleChangeMonth}
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
                   sx={{
-                    flex: 1,
-                    "&.MuiInputBase-root": {
-                      bgcolor: "white",
+                    ".MuiInputBase-root": {
+                      height: 40,
                     },
                   }}
-                >
-                  <MenuItem value="" disabled>
-                    <Typography
-                      fontSize={14}
-                      fontStyle="italic"
-                      color={grey[600]}
-                      fontWeight={600}
-                    >
-                      Pilih bulan selesai
-                    </Typography>
-                  </MenuItem>
-                  {monthData.map((month, index) => (
-                    <MenuItem key={index} value={month}>
-                      {month}
-                    </MenuItem>
-                  ))}
-                </SelectCustomTheme>
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  placeholder="Tahun Selesai"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  disabled={state.start_date == ""}
+                  views={year == 0 ? ["year"] : undefined}
+                  format={year == 0 ? "YYYY" : "D MMM YYYY"}
+                  minDate={dayjs(state.start_date)}
+                  maxDate={
+                    year > 0
+                      ? dayjs(`${year}-12-31`)
+                      : rpjmn
+                        ? dayjs(`${rpjmn.end}-12-31`)
+                        : undefined
+                  }
+                  value={dayjs(state.end_date)}
+                  onChange={(e: any) =>
+                    setState((prev) => {
+                      const selectedYear = dayjs(e).year();
+                      let endDate = dayjs(e).format("YYYY-MM-DD");
+                      if (year == 0) {
+                        endDate = `${selectedYear}-12-31`;
+                      }
+                      return {
+                        ...prev,
+                        end_date: endDate,
+                      };
+                    })
+                  }
                 />
-              </Stack>
+              </LocalizationProvider>
             </FormControl>
           </Grid>
         </Fragment>
@@ -440,7 +443,7 @@ export default function FormCritical({
               </Grid>
             </Grid>
             <Stack>
-              {state.kegiatan.map((tags: any, index) => (
+              {state.kegiatan && state.kegiatan.map((tags: KegiatanDtoNew, index) => (
                 <Paper
                   key={`kegiatan-${tags.id}`}
                   variant="outlined"
@@ -474,11 +477,11 @@ export default function FormCritical({
                           InputLabelProps={{
                             shrink: true,
                           }}
-                          value={tags.value}
+                          value={tags.kegiatan}
                           onChange={(e) =>
                             setState((prevState) => {
                               const kegiatan = prevState.kegiatan;
-                              kegiatan[index].value = e.target.value;
+                              kegiatan[index].kegiatan = e.target.value;
                               return {
                                 ...prevState,
                                 kegiatan: kegiatan,
@@ -496,18 +499,31 @@ export default function FormCritical({
                         <ToggleButtonGroup
                           exclusive
                           value={
-                            state?.color
-                              ? GetColorCriticalPathIndex(state?.color ?? "")
+                            tags?.color
+                              ? GetColorCriticalPathIndex(tags.color ?? "")
                               : null
                           }
                           onChange={(e, value) => {
                             if (value != null) {
                               setState((prevState) => {
+                                const kegiatan = [...prevState.kegiatan];
+                                kegiatan[index] = {
+                                  ...kegiatan[index],
+                                  color: value,
+                                };
+
                                 return {
                                   ...prevState,
-                                  color: GetColorCriticalPath(value),
+                                  kegiatan,
                                 };
-                              });
+                              })
+
+                              // setState((prevState) => {
+                              //   return {
+                              //     ...prevState,
+                              //     color: GetColorCriticalPath(value),
+                              //   };
+                              // });
                             }
                           }}
                           aria-label="Grup Color"
@@ -581,8 +597,8 @@ export default function FormCritical({
                       sx={{ mt: 1, p: 2, minWidth: "0 !important" }}
                     >
                       <Stack gap={2}>
-                        {monthData.map((item, index) => (
-                          <Stack gap={1} key={index}>
+                        {monthData.map((item, indexMonth) => (
+                          <Stack gap={1} key={indexMonth}>
                             <Grid container spacing={3}>
                               <Grid item xs={12}>
                                 <Stack
@@ -596,8 +612,154 @@ export default function FormCritical({
                                 </Stack>
                               </Grid>
                             </Grid>
-                            {tags.target.map(
-                              (target: TargetDto, iTarget: number) => (
+
+                            <Grid
+                              container
+                              spacing={1}
+                              key={`target-${indexMonth}`}
+                            >
+                              <Grid marginY={0.5} item xs={12} md={6}>
+                                <FormControl fullWidth>
+                                  <TextField
+                                    variant="outlined"
+                                    size="small"
+                                    placeholder={`Aktivitas ${item}`}
+                                    InputLabelProps={{
+                                      shrink: true,
+                                    }}
+                                    value={tags.months[indexMonth].aktivitas}
+                                    onChange={(e) =>
+                                      setState((prev) => {
+                                        const kegiatan = [...prev.kegiatan]; // shallow copy array
+
+                                        const currentMonths = kegiatan[index].months;
+                                        if (!currentMonths) return prev; // jika null, jangan ubah state
+
+                                        // pastikan indexMonth aman
+                                        if (!currentMonths[indexMonth]) return prev;
+
+                                        currentMonths[indexMonth] = {
+                                          ...currentMonths[indexMonth]!,
+                                          aktivitas: e.target.value,
+                                        };
+
+                                        kegiatan[index].months = currentMonths;
+
+                                        return {
+                                          ...prev,
+                                          kegiatan,
+                                        };
+                                      })
+                                    }
+                                  />
+                                </FormControl>
+                              </Grid>
+                              <Grid
+                                marginY={0.5}
+                                item
+                                xs={12}
+                                md={indexMonth > 0 ? 3 : 3}
+                              >
+                                <FormControl fullWidth>
+                                  <TextField
+                                    variant="outlined"
+                                    size="small"
+                                    placeholder="Target"
+                                    InputLabelProps={{
+                                      shrink: true,
+                                    }}
+                                    value={tags.months[indexMonth].target}
+                                    onChange={(e) =>
+                                      setState((prev) => {
+                                        const kegiatan = [...prev.kegiatan]; // shallow copy array
+
+                                        const currentMonths = kegiatan[index].months;
+                                        if (!currentMonths) return prev; // jika null, jangan ubah state
+
+                                        // pastikan indexMonth aman
+                                        if (!currentMonths[indexMonth]) return prev;
+
+                                        currentMonths[indexMonth] = {
+                                          ...currentMonths[indexMonth]!,
+                                          target: e.target.value,
+                                        };
+
+                                        kegiatan[index].months = currentMonths;
+
+                                        return {
+                                          ...prev,
+                                          kegiatan,
+                                        };
+                                      })
+                                    }
+                                  />
+                                </FormControl>
+                              </Grid>
+                              <Grid
+                                marginY={0.5}
+                                item
+                                xs={12}
+                                md={indexMonth > 0 ? 3 : 3}
+                              >
+                                <FormControl fullWidth>
+                                  <TextField
+                                    variant="outlined"
+                                    size="small"
+                                    placeholder="Satuan"
+                                    InputLabelProps={{
+                                      shrink: true,
+                                    }}
+                                    value={tags.months[indexMonth].satuan}
+                                    onChange={(e) =>
+                                      setState((prev) => {
+                                        const kegiatan = [...prev.kegiatan]; // shallow copy array
+
+                                        const currentMonths = kegiatan[index].months;
+                                        if (!currentMonths) return prev; // jika null, jangan ubah state
+
+                                        // pastikan indexMonth aman
+                                        if (!currentMonths[indexMonth]) return prev;
+
+                                        currentMonths[indexMonth] = {
+                                          ...currentMonths[indexMonth]!,
+                                          satuan: e.target.value,
+                                        };
+
+                                        kegiatan[index].months = currentMonths;
+
+                                        return {
+                                          ...prev,
+                                          kegiatan,
+                                        };
+                                      })
+                                    }
+                                  />
+                                </FormControl>
+                              </Grid>
+                              {/* {index > 0 && (
+                                <Grid marginY={1} item xs={12} md="auto">
+                                  <Stack
+                                    direction="row"
+                                    alignItems="center"
+                                    justifyContent="space-between"
+                                    minHeight={"100%"}
+                                  >
+                                    <AddButton
+                                      small
+                                      errorColor
+                                      noMargin
+                                      onclick={() => { }
+                                        // minusMenuTarget(index, iTarget)
+                                      }
+                                      title={""}
+                                    />
+                                  </Stack>
+                                </Grid>
+                              )} */}
+                            </Grid>
+
+                            {/* {tags?.months.map(
+                              (target: MonthsDto, iTarget: number) => (
                                 <Grid
                                   container
                                   spacing={1}
@@ -632,13 +794,24 @@ export default function FormCritical({
                                         value={target.target}
                                         onChange={(e) =>
                                           setState((prev) => {
-                                            const kegiatan = prev.kegiatan;
-                                            kegiatan[index].target[
-                                              iTarget
-                                            ].target = e.target.value;
+                                            const kegiatan = [...prev.kegiatan]; // shallow copy array
+
+                                            const currentMonths = kegiatan[index].months;
+                                            if (!currentMonths) return prev; // jika null, jangan ubah state
+
+                                            // pastikan index aman
+                                            if (!currentMonths[iTarget]) return prev;
+
+                                            currentMonths[iTarget] = {
+                                              ...currentMonths[iTarget]!,
+                                              target: e.target.value,
+                                            };
+
+                                            kegiatan[index].months = currentMonths;
+
                                             return {
                                               ...prev,
-                                              kegiatan: kegiatan,
+                                              kegiatan,
                                             };
                                           })
                                         }
@@ -659,6 +832,30 @@ export default function FormCritical({
                                         InputLabelProps={{
                                           shrink: true,
                                         }}
+                                        value={target.satuan}
+                                        onChange={(e) =>
+                                          setState((prev) => {
+                                            const kegiatan = [...prev.kegiatan]; // shallow copy array
+
+                                            const currentMonths = kegiatan[index].months;
+                                            if (!currentMonths) return prev; // jika null, jangan ubah state
+
+                                            // pastikan index aman
+                                            if (!currentMonths[iTarget]) return prev;
+
+                                            currentMonths[iTarget] = {
+                                              ...currentMonths[iTarget]!,
+                                              satuan: e.target.value,
+                                            };
+
+                                            kegiatan[index].months = currentMonths;
+
+                                            return {
+                                              ...prev,
+                                              kegiatan,
+                                            };
+                                          })
+                                        }
                                       />
                                     </FormControl>
                                   </Grid>
@@ -674,8 +871,8 @@ export default function FormCritical({
                                           small
                                           errorColor
                                           noMargin
-                                          onclick={() =>
-                                            minusMenuTarget(index, iTarget)
+                                          onclick={() => { }
+                                            // minusMenuTarget(index, iTarget)
                                           }
                                           title={""}
                                         />
@@ -684,7 +881,7 @@ export default function FormCritical({
                                   )}
                                 </Grid>
                               )
-                            )}
+                            )} */}
                           </Stack>
                         ))}
                       </Stack>
