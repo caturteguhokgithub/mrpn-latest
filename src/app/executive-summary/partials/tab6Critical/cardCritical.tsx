@@ -154,7 +154,7 @@ export default function CardCritical({
           </>
         ) : (
           <Fragment>
-            {data.length == 0 || ganChart.length == 0 ? (
+            {/* {data.length == 0 || ganChart.length == 0 ? (
               <EmptyState
                 dense
                 icon={<IconEmptyData width={100} />}
@@ -174,7 +174,7 @@ export default function CardCritical({
                   />
                 )}
               </Stack>
-            )}
+            )} */}
             <TableCriticalCustom year={year} />
           </Fragment>
         )}
