@@ -82,9 +82,9 @@ export default function ProjectTable({
     // Process each group
     monthGroups.forEach((group: any, groupIndex: any) => {
       // Get the months data for this group
-      // const groupMonths = monthsData
-      //   .slice(group.start, group.start + group.count)
-      //   .filter((month): month is MonthData => month !== null);
+      const groupMonths = monthsData
+        .slice(group.start, group.start + group.count)
+        .filter((month): month is MonthData => month !== null);
 
       // Add the block cell
       cells.push(
@@ -94,8 +94,8 @@ export default function ProjectTable({
           colSpan={group.count}
         >
           <HtmlTooltip
-            // title={<TooltipCP data={{ months: groupMonths, childData }} />}
-            title={<TooltipCP data={{ months: allMonths, childData }} />}
+            title={<TooltipCP data={{ months: groupMonths, childData }} />}
+            // title={<TooltipCP data={{ months: allMonths, childData }} />}
             followCursor
             TransitionComponent={Grow}
             placement="bottom-start"
@@ -128,44 +128,51 @@ export default function ProjectTable({
   };
 
   const renderYearCells = (
-    monthsData: (MonthData | null)[],
-    color: string,
-    childData: ChildData
+    parentData: any // Use parent data instead of child months
   ) => {
-    // For year view, we'll show 5 columns (2025-2029)
-    // We need to determine which years have data
     const years = [2025, 2026, 2027, 2028, 2029];
     const cells: any = [];
 
-    years.forEach((year, index) => {
-      // Check if there's any data for this year
-      const hasData = monthsData.some(
-        (month: any) => month && month.year === year
+    // Convert startYear and endYear to numbers
+    const startYear = parseInt(parentData.startYear);
+    const endYear = parseInt(parentData.endYear);
+
+    // Calculate the duration in years (inclusive of both start and end year)
+    const duration = endYear - startYear + 1;
+
+    // Find the index of the start year in our years array
+    const startIndex = years.indexOf(startYear);
+
+    // Add empty cells for years before the start year
+    for (let i = 0; i < startIndex; i++) {
+      cells.push(<TableCell key={`empty-before-${i}`} colSpan={1} />);
+    }
+
+    // Add the main block cell spanning the duration
+    if (startIndex >= 0 && duration > 0) {
+      cells.push(
+        <BlockCell
+          key={`year-block`}
+          color={parentData.color} // Use parent color
+          colSpan={duration}
+        >
+          <HtmlTooltip
+            title={<TooltipCP isParent data={parentData} year={0} />}
+            followCursor
+            TransitionComponent={Grow}
+            placement="bottom-start"
+          >
+            <ParentBlock color={parentData.color} />
+          </HtmlTooltip>
+        </BlockCell>
       );
+    }
 
-      if (hasData) {
-        // Get all months for this year
-        const yearMonths = monthsData.filter(
-          (month: any): month is MonthData =>
-            month !== null && month.year === year
-        );
-
-        cells.push(
-          <BlockCell key={`year-${index}`} color={color} colSpan={1}>
-            <HtmlTooltip
-              title={<TooltipCP data={{ months: yearMonths, childData }} />}
-              followCursor
-              TransitionComponent={Grow}
-              placement="bottom-start"
-            >
-              <Box component="div" />
-            </HtmlTooltip>
-          </BlockCell>
-        );
-      } else {
-        cells.push(<TableCell key={`empty-${index}`} colSpan={1} />);
-      }
-    });
+    // Add empty cells for years after the end year
+    const remainingCells = 5 - (startIndex + duration);
+    for (let i = 0; i < remainingCells; i++) {
+      cells.push(<TableCell key={`empty-after-${i}`} colSpan={1} />);
+    }
 
     return cells;
   };
@@ -248,16 +255,20 @@ export default function ProjectTable({
                     />
                   </Stack>
                 </TableCell>
-                <BlockCell colSpan={year === 0 ? 5 : 12}>
-                  <HtmlTooltip
-                    title={<TooltipCP isParent data={parent} year={year} />}
-                    followCursor
-                    TransitionComponent={Grow}
-                    placement="bottom-start"
-                  >
-                    <ParentBlock color={year > 0 ? "black" : parent.color} />
-                  </HtmlTooltip>
-                </BlockCell>
+                {year === 0 ? (
+                  renderYearCells(parent) // Pass parent data for year view
+                ) : (
+                  <BlockCell colSpan={12}>
+                    <HtmlTooltip
+                      title={<TooltipCP isParent data={parent} year={year} />}
+                      followCursor
+                      TransitionComponent={Grow}
+                      placement="bottom-start"
+                    >
+                      <ParentBlock color={year > 0 ? "black" : parent.color} />
+                    </HtmlTooltip>
+                  </BlockCell>
+                )}
               </ParentRow>
 
               {year > 0 && (
@@ -316,9 +327,7 @@ export default function ProjectTable({
                           />
                         </Stack>
                       </TableCell>
-                      {year === 0
-                        ? renderYearCells(child.months, child.color, child)
-                        : renderMonthCells(child.months, child.color, child)}
+                      {renderMonthCells(child.months, child.color, child)}
                     </ChildRow>
                   ))}
                 </React.Fragment>

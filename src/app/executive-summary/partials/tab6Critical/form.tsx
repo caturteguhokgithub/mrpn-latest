@@ -162,7 +162,9 @@ export default function FormCritical({
             key={state.ro?.id ?? 0}
             value={state.ro}
             options={optionsRO}
-            getOptionLabel={(option) => option.value + ` (${option.intervention})`}
+            getOptionLabel={(option) =>
+              option.value + ` (${option.intervention})`
+            }
             handleChange={(val: RoDto) =>
               setState((prev) => {
                 return {
@@ -234,15 +236,15 @@ export default function FormCritical({
                     year > 0
                       ? dayjs(`${year}-01-01`)
                       : rpjmn
-                        ? dayjs(`${rpjmn.start}-01-01`)
-                        : undefined
+                      ? dayjs(`${rpjmn.start}-01-01`)
+                      : undefined
                   }
                   maxDate={
                     year > 0
                       ? dayjs(`${year}-12-31`)
                       : rpjmn
-                        ? dayjs(`${rpjmn.end}-12-31`)
-                        : undefined
+                      ? dayjs(`${rpjmn.end}-12-31`)
+                      : undefined
                   }
                   value={dayjs(state.start_date)}
                   onChange={(e: any) =>
@@ -280,8 +282,8 @@ export default function FormCritical({
                     year > 0
                       ? dayjs(`${year}-12-31`)
                       : rpjmn
-                        ? dayjs(`${rpjmn.end}-12-31`)
-                        : undefined
+                      ? dayjs(`${rpjmn.end}-12-31`)
+                      : undefined
                   }
                   value={dayjs(state.end_date)}
                   onChange={(e: any) =>
@@ -443,300 +445,306 @@ export default function FormCritical({
               </Grid>
             </Grid>
             <Stack>
-              {state.kegiatan && state.kegiatan.map((tags: KegiatanDtoNew, index) => (
-                <Paper
-                  key={`kegiatan-${tags.id}`}
-                  variant="outlined"
-                  sx={{ mt: 1, p: 2, minWidth: "0 !important" }}
-                >
-                  <Grid container spacing={1}>
-                    <Grid item xs={12}>
-                      <Stack
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="space-between"
-                      >
-                        <Typography fontWeight={600} fontSize={14}>
-                          Kegiatan #{index + 1}
-                        </Typography>
-                        <AddButton
-                          small
-                          errorColor
-                          noMargin
-                          onclick={() => minusMenu(index)}
-                          title={""}
-                        />
-                      </Stack>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormControl fullWidth>
-                        <TextField
-                          variant="outlined"
-                          size="small"
-                          placeholder="Kegiatan"
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          value={tags.kegiatan}
-                          onChange={(e) =>
-                            setState((prevState) => {
-                              const kegiatan = prevState.kegiatan;
-                              kegiatan[index].kegiatan = e.target.value;
-                              return {
-                                ...prevState,
-                                kegiatan: kegiatan,
-                              };
-                            })
-                          }
-                        />
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormControl fullWidth>
-                        <FieldLabelInfo
-                          title={`"Kelompok Warna Kegiatan #${index + 1}`}
-                        />
-                        <ToggleButtonGroup
-                          exclusive
-                          value={
-                            tags.color
-                          }
-                          onChange={(e, value) => {
-                            if (value != null) {
-
+              {state.kegiatan &&
+                state.kegiatan.map((tags: KegiatanDtoNew, index) => (
+                  <Paper
+                    key={`kegiatan-${tags.id}`}
+                    variant="outlined"
+                    sx={{ mt: 1, p: 2, minWidth: "0 !important" }}
+                  >
+                    <Grid container spacing={1}>
+                      <Grid item xs={12}>
+                        <Stack
+                          direction="row"
+                          alignItems="center"
+                          justifyContent="space-between"
+                        >
+                          <Typography fontWeight={600} fontSize={14}>
+                            Kegiatan #{index + 1}
+                          </Typography>
+                          <AddButton
+                            small
+                            errorColor
+                            noMargin
+                            onclick={() => minusMenu(index)}
+                            title={""}
+                          />
+                        </Stack>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControl fullWidth>
+                          <TextField
+                            variant="outlined"
+                            size="small"
+                            placeholder="Kegiatan"
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            value={tags.kegiatan}
+                            onChange={(e) =>
                               setState((prevState) => {
-                                const kegiatan = [...prevState.kegiatan];
-                                kegiatan[index] = {
-                                  ...kegiatan[index],
-                                  color: value,
-                                };
-
+                                const kegiatan = prevState.kegiatan;
+                                kegiatan[index].kegiatan = e.target.value;
                                 return {
                                   ...prevState,
-                                  kegiatan,
+                                  kegiatan: kegiatan,
                                 };
                               })
-
-
-                              // setState((prevState) => {
-                              //   return {
-                              //     ...prevState,
-                              //     color: GetColorCriticalPath(value),
-                              //   };
-                              // });
                             }
-                          }}
-                          aria-label="Grup Color"
-                        >
-                          {ColorCriticalPath.map(
-                            (color, i) =>
-                              i < 5 && (
-                                <ToggleButton
-                                  key={i}
-                                  value={color}
-                                  aria-label="color"
-                                  sx={{
-                                    bgcolor: alpha(color, 0.3),
-                                    width: "20%",
-                                    p: 0,
-                                    minHeight: 50,
-                                    "& > div": {
-                                      "& > div": {
-                                        opacity: 0.4,
-                                      },
-                                    },
-                                    "&.Mui-selected": {
-                                      bgcolor: color,
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControl fullWidth>
+                          <FieldLabelInfo
+                            title={`Kelompok Warna Kegiatan #${index + 1}`}
+                          />
+                          <ToggleButtonGroup
+                            exclusive
+                            value={tags.color}
+                            onChange={(e, value) => {
+                              if (value != null) {
+                                setState((prevState) => {
+                                  const kegiatan = [...prevState.kegiatan];
+                                  kegiatan[index] = {
+                                    ...kegiatan[index],
+                                    color: value,
+                                  };
+
+                                  return {
+                                    ...prevState,
+                                    kegiatan,
+                                  };
+                                });
+
+                                // setState((prevState) => {
+                                //   return {
+                                //     ...prevState,
+                                //     color: GetColorCriticalPath(value),
+                                //   };
+                                // });
+                              }
+                            }}
+                            aria-label="Grup Color"
+                          >
+                            {ColorCriticalPath.map(
+                              (color, i) =>
+                                i < 5 && (
+                                  <ToggleButton
+                                    key={i}
+                                    value={color}
+                                    aria-label="color"
+                                    sx={{
+                                      bgcolor: alpha(color, 0.3),
+                                      width: "20%",
+                                      p: 0,
+                                      minHeight: 50,
                                       "& > div": {
                                         "& > div": {
-                                          opacity: 1,
+                                          opacity: 0.4,
                                         },
                                       },
-                                    },
-                                  }}
-                                >
-                                  <Box
-                                    width="100%"
-                                    height="100%"
-                                    display="flex"
-                                    alignItems="center"
-                                    justifyContent="center"
+                                      "&.Mui-selected": {
+                                        bgcolor: color,
+                                        "& > div": {
+                                          "& > div": {
+                                            opacity: 1,
+                                          },
+                                        },
+                                      },
+                                    }}
                                   >
                                     <Box
-                                      bgcolor="black"
-                                      color="white"
-                                      borderRadius="50%"
-                                      width={16}
-                                      height={16}
+                                      width="100%"
+                                      height="100%"
                                       display="flex"
-                                      justifyContent="center"
                                       alignItems="center"
-                                      fontSize={10}
-                                      lineHeight={1}
+                                      justifyContent="center"
                                     >
-                                      {i + 1}
+                                      <Box
+                                        bgcolor="black"
+                                        color="white"
+                                        borderRadius="50%"
+                                        width={16}
+                                        height={16}
+                                        display="flex"
+                                        justifyContent="center"
+                                        alignItems="center"
+                                        fontSize={10}
+                                        lineHeight={1}
+                                      >
+                                        {i + 1}
+                                      </Box>
                                     </Box>
-                                  </Box>
-                                </ToggleButton>
-                              )
-                          )}
-                        </ToggleButtonGroup>
-                      </FormControl>
+                                  </ToggleButton>
+                                )
+                            )}
+                          </ToggleButtonGroup>
+                        </FormControl>
+                      </Grid>
+                      <Grid marginTop={1} item xs={12}>
+                        <Typography fontWeight={600} fontSize={14}>
+                          Aktivitas RKP 2025
+                        </Typography>
+                      </Grid>
                     </Grid>
-                    <Grid marginTop={1} item xs={12}>
-                      <Typography fontWeight={600} fontSize={14}>
-                        Aktivitas RKP 2025
-                      </Typography>
-                    </Grid>
-                  </Grid>
 
-                  <Stack>
-                    <Paper
-                      key={`${tags.id}`}
-                      variant="outlined"
-                      sx={{ mt: 1, p: 2, minWidth: "0 !important" }}
-                    >
-                      <Stack gap={2}>
-                        {monthData.map((item, indexMonth) => (
-                          <Stack gap={1} key={indexMonth}>
-                            <Grid container spacing={3}>
-                              <Grid item xs={12}>
-                                <Stack
-                                  direction="row"
-                                  alignItems="center"
-                                  justifyContent="space-between"
+                    <Stack>
+                      <Paper
+                        key={`${tags.id}`}
+                        variant="outlined"
+                        sx={{ mt: 1, p: 2, minWidth: "0 !important" }}
+                      >
+                        <Stack gap={2}>
+                          {monthData.map((item, indexMonth) => (
+                            <Stack gap={1} key={indexMonth}>
+                              <Grid container spacing={3}>
+                                <Grid item xs={12}>
+                                  <Stack
+                                    direction="row"
+                                    alignItems="center"
+                                    justifyContent="space-between"
+                                  >
+                                    <Typography fontWeight={500}>
+                                      {item}
+                                    </Typography>
+                                  </Stack>
+                                </Grid>
+                              </Grid>
+
+                              <Grid
+                                container
+                                spacing={1}
+                                key={`target-${indexMonth}`}
+                              >
+                                <Grid marginY={0.5} item xs={12} md={6}>
+                                  <FormControl fullWidth>
+                                    <TextField
+                                      variant="outlined"
+                                      size="small"
+                                      placeholder={`Aktivitas ${item}`}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                      }}
+                                      value={tags.months[indexMonth].aktivitas}
+                                      onChange={(e) =>
+                                        setState((prev) => {
+                                          const kegiatan = [...prev.kegiatan]; // shallow copy array
+
+                                          const currentMonths =
+                                            kegiatan[index].months;
+                                          if (!currentMonths) return prev; // jika null, jangan ubah state
+
+                                          // pastikan indexMonth aman
+                                          if (!currentMonths[indexMonth])
+                                            return prev;
+
+                                          currentMonths[indexMonth] = {
+                                            ...currentMonths[indexMonth]!,
+                                            aktivitas: e.target.value,
+                                          };
+
+                                          kegiatan[index].months =
+                                            currentMonths;
+
+                                          return {
+                                            ...prev,
+                                            kegiatan,
+                                          };
+                                        })
+                                      }
+                                    />
+                                  </FormControl>
+                                </Grid>
+                                <Grid
+                                  marginY={0.5}
+                                  item
+                                  xs={12}
+                                  md={indexMonth > 0 ? 3 : 3}
                                 >
-                                  <Typography fontWeight={500}>
-                                    {item}
-                                  </Typography>
-                                </Stack>
-                              </Grid>
-                            </Grid>
+                                  <FormControl fullWidth>
+                                    <TextField
+                                      variant="outlined"
+                                      size="small"
+                                      placeholder="Target"
+                                      InputLabelProps={{
+                                        shrink: true,
+                                      }}
+                                      value={tags.months[indexMonth].target}
+                                      onChange={(e) =>
+                                        setState((prev) => {
+                                          const kegiatan = [...prev.kegiatan]; // shallow copy array
 
-                            <Grid
-                              container
-                              spacing={1}
-                              key={`target-${indexMonth}`}
-                            >
-                              <Grid marginY={0.5} item xs={12} md={6}>
-                                <FormControl fullWidth>
-                                  <TextField
-                                    variant="outlined"
-                                    size="small"
-                                    placeholder={`Aktivitas ${item}`}
-                                    InputLabelProps={{
-                                      shrink: true,
-                                    }}
-                                    value={tags.months[indexMonth].aktivitas}
-                                    onChange={(e) =>
-                                      setState((prev) => {
-                                        const kegiatan = [...prev.kegiatan]; // shallow copy array
+                                          const currentMonths =
+                                            kegiatan[index].months;
+                                          if (!currentMonths) return prev; // jika null, jangan ubah state
 
-                                        const currentMonths = kegiatan[index].months;
-                                        if (!currentMonths) return prev; // jika null, jangan ubah state
+                                          // pastikan indexMonth aman
+                                          if (!currentMonths[indexMonth])
+                                            return prev;
 
-                                        // pastikan indexMonth aman
-                                        if (!currentMonths[indexMonth]) return prev;
+                                          currentMonths[indexMonth] = {
+                                            ...currentMonths[indexMonth]!,
+                                            target: e.target.value,
+                                          };
 
-                                        currentMonths[indexMonth] = {
-                                          ...currentMonths[indexMonth]!,
-                                          aktivitas: e.target.value,
-                                        };
+                                          kegiatan[index].months =
+                                            currentMonths;
 
-                                        kegiatan[index].months = currentMonths;
+                                          return {
+                                            ...prev,
+                                            kegiatan,
+                                          };
+                                        })
+                                      }
+                                    />
+                                  </FormControl>
+                                </Grid>
+                                <Grid
+                                  marginY={0.5}
+                                  item
+                                  xs={12}
+                                  md={indexMonth > 0 ? 3 : 3}
+                                >
+                                  <FormControl fullWidth>
+                                    <TextField
+                                      variant="outlined"
+                                      size="small"
+                                      placeholder="Satuan"
+                                      InputLabelProps={{
+                                        shrink: true,
+                                      }}
+                                      value={tags.months[indexMonth].satuan}
+                                      onChange={(e) =>
+                                        setState((prev) => {
+                                          const kegiatan = [...prev.kegiatan]; // shallow copy array
 
-                                        return {
-                                          ...prev,
-                                          kegiatan,
-                                        };
-                                      })
-                                    }
-                                  />
-                                </FormControl>
-                              </Grid>
-                              <Grid
-                                marginY={0.5}
-                                item
-                                xs={12}
-                                md={indexMonth > 0 ? 3 : 3}
-                              >
-                                <FormControl fullWidth>
-                                  <TextField
-                                    variant="outlined"
-                                    size="small"
-                                    placeholder="Target"
-                                    InputLabelProps={{
-                                      shrink: true,
-                                    }}
-                                    value={tags.months[indexMonth].target}
-                                    onChange={(e) =>
-                                      setState((prev) => {
-                                        const kegiatan = [...prev.kegiatan]; // shallow copy array
+                                          const currentMonths =
+                                            kegiatan[index].months;
+                                          if (!currentMonths) return prev; // jika null, jangan ubah state
 
-                                        const currentMonths = kegiatan[index].months;
-                                        if (!currentMonths) return prev; // jika null, jangan ubah state
+                                          // pastikan indexMonth aman
+                                          if (!currentMonths[indexMonth])
+                                            return prev;
 
-                                        // pastikan indexMonth aman
-                                        if (!currentMonths[indexMonth]) return prev;
+                                          currentMonths[indexMonth] = {
+                                            ...currentMonths[indexMonth]!,
+                                            satuan: e.target.value,
+                                          };
 
-                                        currentMonths[indexMonth] = {
-                                          ...currentMonths[indexMonth]!,
-                                          target: e.target.value,
-                                        };
+                                          kegiatan[index].months =
+                                            currentMonths;
 
-                                        kegiatan[index].months = currentMonths;
-
-                                        return {
-                                          ...prev,
-                                          kegiatan,
-                                        };
-                                      })
-                                    }
-                                  />
-                                </FormControl>
-                              </Grid>
-                              <Grid
-                                marginY={0.5}
-                                item
-                                xs={12}
-                                md={indexMonth > 0 ? 3 : 3}
-                              >
-                                <FormControl fullWidth>
-                                  <TextField
-                                    variant="outlined"
-                                    size="small"
-                                    placeholder="Satuan"
-                                    InputLabelProps={{
-                                      shrink: true,
-                                    }}
-                                    value={tags.months[indexMonth].satuan}
-                                    onChange={(e) =>
-                                      setState((prev) => {
-                                        const kegiatan = [...prev.kegiatan]; // shallow copy array
-
-                                        const currentMonths = kegiatan[index].months;
-                                        if (!currentMonths) return prev; // jika null, jangan ubah state
-
-                                        // pastikan indexMonth aman
-                                        if (!currentMonths[indexMonth]) return prev;
-
-                                        currentMonths[indexMonth] = {
-                                          ...currentMonths[indexMonth]!,
-                                          satuan: e.target.value,
-                                        };
-
-                                        kegiatan[index].months = currentMonths;
-
-                                        return {
-                                          ...prev,
-                                          kegiatan,
-                                        };
-                                      })
-                                    }
-                                  />
-                                </FormControl>
-                              </Grid>
-                              {/* {index > 0 && (
+                                          return {
+                                            ...prev,
+                                            kegiatan,
+                                          };
+                                        })
+                                      }
+                                    />
+                                  </FormControl>
+                                </Grid>
+                                {/* {index > 0 && (
                                 <Grid marginY={1} item xs={12} md="auto">
                                   <Stack
                                     direction="row"
@@ -756,9 +764,9 @@ export default function FormCritical({
                                   </Stack>
                                 </Grid>
                               )} */}
-                            </Grid>
+                              </Grid>
 
-                            {/* {tags?.months.map(
+                              {/* {tags?.months.map(
                               (target: MonthsDto, iTarget: number) => (
                                 <Grid
                                   container
@@ -882,13 +890,13 @@ export default function FormCritical({
                                 </Grid>
                               )
                             )} */}
-                          </Stack>
-                        ))}
-                      </Stack>
-                    </Paper>
-                  </Stack>
-                </Paper>
-              ))}
+                            </Stack>
+                          ))}
+                        </Stack>
+                      </Paper>
+                    </Stack>
+                  </Paper>
+                ))}
             </Stack>
           </Grid>
         </>

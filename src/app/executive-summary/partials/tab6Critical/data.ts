@@ -22,7 +22,7 @@ export const dataCP = [
     responsible: "Kementerian Koordinator Bidang Politik, Hukum, dan Keamanan",
     fundSource: "APBN",
     startYear: "2025",
-    endYear: "2029",
+    endYear: "2027",
     color: "red",
     children: [
       {
@@ -162,8 +162,8 @@ export const dataCP = [
     category: "Proyek Belanja K/L",
     responsible: "Kementerian Dalam Negeri",
     fundSource: "Pemerintah Pusat",
-    startYear: "2025",
-    endYear: "2029",
+    startYear: "2027",
+    endYear: "2028",
     color: "blue",
     children: [
       {
