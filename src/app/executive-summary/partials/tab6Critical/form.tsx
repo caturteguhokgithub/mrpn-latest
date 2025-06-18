@@ -499,12 +499,11 @@ export default function FormCritical({
                         <ToggleButtonGroup
                           exclusive
                           value={
-                            tags?.color
-                              ? GetColorCriticalPathIndex(tags.color ?? "")
-                              : null
+                            tags.color
                           }
                           onChange={(e, value) => {
                             if (value != null) {
+
                               setState((prevState) => {
                                 const kegiatan = [...prevState.kegiatan];
                                 kegiatan[index] = {
@@ -517,6 +516,7 @@ export default function FormCritical({
                                   kegiatan,
                                 };
                               })
+
 
                               // setState((prevState) => {
                               //   return {
@@ -533,7 +533,7 @@ export default function FormCritical({
                               i < 5 && (
                                 <ToggleButton
                                   key={i}
-                                  value={i}
+                                  value={color}
                                   aria-label="color"
                                   sx={{
                                     bgcolor: alpha(color, 0.3),
