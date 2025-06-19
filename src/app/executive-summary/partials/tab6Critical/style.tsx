@@ -8,7 +8,11 @@ import { grey } from "@mui/material/colors";
 
 export const StyledPaper = styled(Paper)({
   width: "100%",
-  overflowX: "auto",
+  overflow: "auto",
+  maxHeight: "44vh",
+  "&::-webkit-scrollbar": {
+    width: "3px",
+  },
 });
 
 export const StyledTable = styled(Table)({

@@ -3,7 +3,7 @@ export const months = [
   "Feb",
   "Mar",
   "Apr",
-  "Mei",
+  "May",
   "Jun",
   "Jul",
   "Aug",
@@ -22,7 +22,7 @@ export const dataCP = [
     responsible: "Kementerian Koordinator Bidang Politik, Hukum, dan Keamanan",
     fundSource: "APBN",
     startYear: "2025",
-    endYear: "2029",
+    endYear: "2027",
     color: "red",
     children: [
       {
@@ -34,24 +34,28 @@ export const dataCP = [
         color: "blue",
         months: [
           {
+            id: 1,
             name: "jan",
             aktivitas: "Fasilitasi revitalisasi",
             target: "30",
             satuan: "%",
           },
           {
+            id: 2,
             name: "feb",
             aktivitas: "Aktualisasi nilai",
             target: "55",
             satuan: "%",
           },
           {
+            id: 3,
             name: "mar",
             aktivitas: "Modernisasi sistem",
             target: "11",
             satuan: "%",
           },
           {
+            id: 4,
             name: "apr",
             aktivitas: "Akar budaya",
             target: "11",
@@ -60,12 +64,14 @@ export const dataCP = [
           null,
           null,
           {
+            id: 7,
             name: "jul",
             aktivitas: "Fasilitasi revitalisasi",
             target: "30",
             satuan: "%",
           },
           {
+            id: 8,
             name: "aug",
             aktivitas: "Aktualisasi nilai",
             target: "55",
@@ -89,18 +95,21 @@ export const dataCP = [
           null,
           null,
           {
-            name: "mei",
+            id: 5,
+            name: "may",
             aktivitas: "Aktualisasi nilai",
             target: "55",
             satuan: "%",
           },
           {
+            id: 6,
             name: "jun",
             aktivitas: "Modernisasi sistem",
             target: "11",
             satuan: "%",
           },
           {
+            id: 7,
             name: "jul",
             aktivitas: "Akar budaya",
             target: "55",
@@ -125,12 +134,14 @@ export const dataCP = [
           null,
           null,
           {
+            id: 6,
             name: "jun",
             aktivitas: "Fasilitasi revitalisasi",
             target: "30",
             satuan: "%",
           },
           {
+            id: 7,
             name: "jul",
             aktivitas: "Aktualisasi nilai",
             target: "55",
@@ -140,12 +151,14 @@ export const dataCP = [
           null,
           null,
           {
+            id: 11,
             name: "nov",
             aktivitas: "Fasilitasi revitalisasi",
             target: "30",
             satuan: "%",
           },
           {
+            id: 12,
             name: "dec",
             aktivitas: "Aktualisasi nilai",
             target: "55",
@@ -162,8 +175,8 @@ export const dataCP = [
     category: "Proyek Belanja K/L",
     responsible: "Kementerian Dalam Negeri",
     fundSource: "Pemerintah Pusat",
-    startYear: "2025",
-    endYear: "2029",
+    startYear: "2027",
+    endYear: "2028",
     color: "blue",
     children: [
       {

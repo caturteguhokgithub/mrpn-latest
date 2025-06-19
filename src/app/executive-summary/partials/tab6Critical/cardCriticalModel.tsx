@@ -3,17 +3,17 @@ import { BaseAPIServiceParam } from "@/lib/core/api/apiModel";
 import { MiscMasterListKategoriProyekRes } from "@/app/misc/master/masterServiceModel";
 
 export interface ExsumCriticalState {
-  id: number
-  exsum_id: number
-  ro: RoDto | undefined
-  start_date: string
-  end_date: string
-  kategori_proyek_id: number
-  strategy: string[]
-  keterangan_kegiatan: string
-  dependency: ExsumCriticalData | undefined
-  kegiatan: KegiatanDtoNew[]
-  color?: string
+  id: number;
+  exsum_id: number;
+  ro: RoDto | undefined;
+  start_date: string;
+  end_date: string;
+  kategori_proyek_id: number;
+  strategy: string[];
+  keterangan_kegiatan: string;
+  dependency: ExsumCriticalData | undefined;
+  kegiatan: KegiatanDtoNew[];
+  color?: string;
 }
 
 export const initExsumCriticalReqDto: ExsumCriticalState = {
@@ -26,93 +26,94 @@ export const initExsumCriticalReqDto: ExsumCriticalState = {
   strategy: [],
   keterangan_kegiatan: "",
   dependency: undefined,
-  kegiatan: []
-}
+  kegiatan: [],
+};
 
 export interface ExsumCriticalReqDto {
-  id: number
-  exsum_id: number
-  ro_id: number
-  start_date: string
-  end_date: string
-  kategori_proyek_id: number
-  keterangan_kegiatan: string
+  id: number;
+  exsum_id: number;
+  ro_id: number;
+  start_date: string;
+  end_date: string;
+  kategori_proyek_id: number;
+  keterangan_kegiatan: string;
   values: {
-    tagging: string
-  }[]
-  depedencies: number
-  kegiatan: KegiatanDtoNew[]
-  color: string
+    tagging: string;
+  }[];
+  depedencies: number;
+  kegiatan: KegiatanDtoNew[];
+  color: string;
 }
 
 export interface TargetDto {
-  target: string
-  bulan: number
+  target: string;
+  bulan: number;
 }
 export interface KegiatanDto {
-  id: number
-  value: string
-  start_date: string
-  end_date: string
-  target: TargetDto[]
+  id: number;
+  value: string;
+  start_date: string;
+  end_date: string;
+  target: TargetDto[];
 }
 
 export interface TaskAdditionalData {
-  type: string
-  tooltip_type: string
-  penanggungjawab: string
-  sumber_anggaran: string
-  keterangan_kegiatan: string
-  category: string
-  target: TargetDto[]
+  type: string;
+  tooltip_type: string;
+  penanggungjawab: string;
+  sumber_anggaran: string;
+  keterangan_kegiatan: string;
+  category: string;
+  target: TargetDto[];
   strategy: {
-    id: number
-    value: string
-  }[]
+    id: number;
+    value: string;
+  }[];
 }
 
 export interface MonthsDto {
-  id: number
-  exsum_critical_path_kegiatan_id: number
-  name: string
-  aktivitas: string
-  target: string
-  satuan: string
+  id: number;
+  exsum_critical_path_kegiatan_id: number;
+  name: string;
+  aktivitas: string;
+  target: string;
+  satuan: string;
 }
 
 export interface KegiatanDtoNew {
-  id: number
-  exsum_critical_path_id: number,
-  color: string,
-  kegiatan: string,
-  months: MonthsDto[]
+  id: number;
+  exsum_critical_path_id: number;
+  color: string;
+  kegiatan: string;
+  months: MonthsDto[];
 }
 
 export interface TaggingList {
-  id: number
-  exsum_critical_path_id: number
-  value: string
+  id: number;
+  exsum_critical_path_id: number;
+  value: string;
 }
 
 export interface ExsumCriticalData {
-  id: number
-  exsum_id: number
-  kategori_proyek_id: number
-  start_date: string
-  end_date: string
-  ro_id: number
-  keterangan_kegiatan: string
-  depedencies: string
-  color: string
-  kegiatan: KegiatanDtoNew[]
-  isEdit: boolean
-  ro: RoDto
-  tagging_list: TaggingList[]
-  kategori_proyek: MiscMasterListKategoriProyekRes,
-  dependency: ExsumCriticalData | undefined
+  id: number;
+  exsum_id: number;
+  kategori_proyek_id: number;
+  start_date: string;
+  end_date: string;
+  ro_id: number;
+  keterangan_kegiatan: string;
+  depedencies: string;
+  color: string;
+  kegiatan: KegiatanDtoNew[];
+  isEdit: boolean;
+  ro: RoDto;
+  tagging_list: TaggingList[];
+  kategori_proyek: MiscMasterListKategoriProyekRes;
+  dependency: ExsumCriticalData | undefined;
 }
 
 export interface MonthData {
+  id: string | number;
   name: string;
   aktivitas: string;
   target: string;
@@ -141,7 +142,6 @@ export interface DataCPType {
   children: ChildData[];
 }
 
-
 // export interface ExsumCriticalData {
 //   id:number
 //   kategori_proyek_id:number
@@ -160,7 +160,7 @@ export interface DataCPType {
 // }
 
 export interface GetByExsumId {
-  exsum_id: number
+  exsum_id: number;
 }
 
 export type GetCriticalPathByExsumIdServiceModel = BaseAPIServiceParam & {

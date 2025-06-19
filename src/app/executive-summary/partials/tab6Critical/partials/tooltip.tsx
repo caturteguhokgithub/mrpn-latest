@@ -1,22 +1,7 @@
 import React from "react";
 import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
-
-export interface MonthData {
-  name: string;
-  aktivitas: string;
-  target: string;
-  satuan: string;
-}
-
-export interface ChildData {
-  id: number;
-  kegiatan: string;
-  target: string;
-  satuan: string;
-  color: string;
-  months: (MonthData | null)[];
-}
+import { ChildData, MonthData } from "../cardCriticalModel";
 
 interface ParentData {
   id: string;
@@ -145,7 +130,7 @@ const TooltipCP = ({ isParent, data, year }: TooltipCPProps) => {
             <Stack gap={0.5}>
               <LabelTooltip label="Kegiatan" />
               <Typography component="strong" fontWeight={600}>
-                {childData?.kegiatan || "No main activity"}
+                {childData?.kegiatan || "-"}
               </Typography>
             </Stack>
             <Divider />
