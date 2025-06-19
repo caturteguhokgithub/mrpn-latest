@@ -302,7 +302,7 @@ export default function ProjectTable({
                               {child.kegiatan}
                             </Box>
                           </Stack>
-                          <Chip
+                          {/* <Chip
                             label={
                               <Stack
                                 display="inline-flex"
@@ -327,7 +327,7 @@ export default function ProjectTable({
                               bgcolor: `${grey[200]} !important`,
                               lineHeight: 1.2,
                             }}
-                          />
+                          /> */}
                         </Stack>
                       </TableCell>
                       {renderMonthCells(child.months, child.color, child)}

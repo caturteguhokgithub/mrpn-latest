@@ -199,7 +199,9 @@ export default function CardCritical({
         width={"50%"}
         dialogOpen={modalAdd}
         dialogClose={handleModalCloseAdd}
-        title="Tambah Critical Path"
+        title={`Tambah Critical Path ${year > 0 ? "RKP" : "RPJMN"} ${
+          year > 0 ? year : ""
+        }`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button variant="outlined" onClick={handleModalCloseAdd}>
