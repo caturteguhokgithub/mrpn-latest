@@ -5,7 +5,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Box, Chip, Grow, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import TooltipCP, { ChildData, MonthData } from "./tooltip";
+import TooltipCP from "./tooltip";
 import Iconify from "@/app/components/icons/iconify";
 import { bgColorTh } from "@/app/utils/color";
 import {
@@ -18,7 +18,7 @@ import {
   StyledTable,
 } from "../style";
 import { months } from "../data";
-import { DataCPType } from "../cardCriticalModel";
+import { ChildData, DataCPType, MonthData } from "../cardCriticalModel";
 
 // Helper function to group consecutive months
 const groupConsecutiveMonths = (months: any) => {
@@ -26,7 +26,10 @@ const groupConsecutiveMonths = (months: any) => {
   let currentGroup: any = null;
 
   months.forEach((value: any, index: any) => {
-    if (value && value.name) {
+    // Check if month has data (id is not empty string)
+    const hasData = value && value.id !== "";
+
+    if (hasData) {
       if (currentGroup === null) {
         currentGroup = { start: index, count: 1 };
       } else {
@@ -49,10 +52,10 @@ const groupConsecutiveMonths = (months: any) => {
 
 export default function ProjectTable({
   year,
-  dataCP
+  dataCP,
 }: {
-  year: number,
-  dataCP: DataCPType[]
+  year: number;
+  dataCP: DataCPType[];
 }) {
   const renderMonthCells = (
     monthsData: (MonthData | null)[],
@@ -65,8 +68,8 @@ export default function ProjectTable({
 
     // Get all non-null months for this child
     const allMonths = monthsData.filter(
-      (month): month is MonthData => month !== null
-    );
+      (month) => month && month.id !== ""
+    ) as MonthData[];
 
     // Handle empty months before first group
     if (monthGroups.length > 0 && monthGroups[0].start > 0) {
@@ -84,7 +87,7 @@ export default function ProjectTable({
       // Get the months data for this group
       const groupMonths = monthsData
         .slice(group.start, group.start + group.count)
-        .filter((month): month is MonthData => month !== null);
+        .filter((month) => month && month.id !== "") as MonthData[];
 
       // Add the block cell
       cells.push(
@@ -179,7 +182,7 @@ export default function ProjectTable({
 
   return (
     <StyledPaper>
-      <StyledTable>
+      <StyledTable stickyHeader>
         <TableHead>
           <TableRow>
             <TableCell
@@ -191,29 +194,29 @@ export default function ProjectTable({
             </TableCell>
             {year === 0
               ? [2025, 2026, 2027, 2028, 2029].map((year) => (
-                <TableCell
-                  key={year}
-                  align="center"
-                  sx={{
-                    bgcolor: bgColorTh,
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {year}
-                </TableCell>
-              ))
+                  <TableCell
+                    key={year}
+                    align="center"
+                    sx={{
+                      bgcolor: bgColorTh,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {year}
+                  </TableCell>
+                ))
               : months.map((month) => (
-                <TableCell
-                  key={month}
-                  align="center"
-                  sx={{
-                    bgcolor: bgColorTh,
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {month}
-                </TableCell>
-              ))}
+                  <TableCell
+                    key={month}
+                    align="center"
+                    sx={{
+                      bgcolor: bgColorTh,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {month}
+                  </TableCell>
+                ))}
           </TableRow>
         </TableHead>
         <TableBody>

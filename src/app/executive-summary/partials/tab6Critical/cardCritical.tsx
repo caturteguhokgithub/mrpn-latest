@@ -155,7 +155,7 @@ export default function CardCritical({
           </>
         ) : (
           <Fragment>
-            {/* {data.length == 0 || ganChart.length == 0 ? (
+            {dataCP.length == 0 ? (
               <EmptyState
                 dense
                 icon={<IconEmptyData width={100} />}
@@ -163,24 +163,13 @@ export default function CardCritical({
                 description="Silahkan isi konten halaman ini"
               />
             ) : (
-              <Stack gap={3} maxWidth="calc(100vw - 200px)">
-                {year == 0 && (
-                  <GanttChart key={ganChart.length} tasks={ganChart} />
-                )}
-                {year > 0 && (
-                  <GanttChartMonthly
-                    key={ganChart.length}
-                    tasks={tasksRKP}
-                    setTasks={setTaskRKP}
-                  />
-                )}
-              </Stack>
-            )} */}
-            <TableCriticalCustom year={year} dataCP={dataCP} />
+              <TableCriticalCustom year={year} dataCP={dataCP} />
+            )}
           </Fragment>
         )}
       </CardItem>
       <DialogComponent
+        tableMode
         width={"80%"}
         dialogOpen={modalOpen}
         dialogClose={handleModalClose}

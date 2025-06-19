@@ -127,17 +127,31 @@ const useCardCriticalVM = () => {
           satuan: "",
           color: keg.color,
           months: Array.from({ length: 12 }).map((_, index) => {
-            const monthNames = ["jan", "feb", "mar", "apr", "mei", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+            const monthNames = [
+              "jan",
+              "feb",
+              "mar",
+              "apr",
+              "may",
+              "jun",
+              "jul",
+              "aug",
+              "sep",
+              "oct",
+              "nov",
+              "dec",
+            ];
             const monthData = keg.months?.find(
               (m) => m?.name.toLowerCase() === monthNames[index]
             );
             return monthData
               ? {
-                name: monthData.name,
-                aktivitas: monthData.aktivitas,
-                target: monthData.target,
-                satuan: monthData.satuan,
-              }
+                  id: monthData.id,
+                  name: monthData.name,
+                  aktivitas: monthData.aktivitas,
+                  target: monthData.target,
+                  satuan: monthData.satuan,
+                }
               : null;
           }),
         })),
@@ -193,7 +207,6 @@ const useCardCriticalVM = () => {
     };
 
     // console.log(request);
-
 
     let response;
     if (request.id == 0) {

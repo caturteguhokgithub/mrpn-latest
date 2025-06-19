@@ -2,6 +2,7 @@ import React, { Fragment, SetStateAction } from "react";
 import {
   alpha,
   Box,
+  Chip,
   FormControl,
   Grid,
   MenuItem,
@@ -10,10 +11,11 @@ import {
   TextField,
   ToggleButton,
   ToggleButtonGroup,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import { blue, grey } from "@mui/material/colors";
+import { blue, grey, orange } from "@mui/material/colors";
 import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
 import {
   AutocompleteSelectMultiple,
@@ -40,6 +42,7 @@ import {
 } from "@/utils/color";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import Iconify from "@/app/components/icons/iconify";
 
 export default function FormCritical({
   dataExisting,
@@ -67,7 +70,7 @@ export default function FormCritical({
     "Februari",
     "Maret",
     "April",
-    "Mei",
+    "May",
     "Juni",
     "Juli",
     "Agustus",
@@ -162,9 +165,32 @@ export default function FormCritical({
             key={state.ro?.id ?? 0}
             value={state.ro}
             options={optionsRO}
-            getOptionLabel={(option) =>
-              option.value + ` (${option.intervention})`
-            }
+            getOptionLabel={(option) => option.value}
+            renderOption={(props, option) => (
+              <li {...props}>
+                <Stack direction="row" alignItems="center" gap={1}>
+                  <Tooltip
+                    title={option.intervention ? "Intervensi Kunci" : null}
+                    followCursor
+                    sx={{ cursor: "default" }}
+                  >
+                    <Typography
+                      component="span"
+                      color={option.intervention ? orange[700] : "inherit"}
+                    >
+                      {option.intervention && (
+                        <Iconify
+                          name="mdi:key-variant"
+                          size={14}
+                          sx={{ position: "relative", top: 2 }}
+                        />
+                      )}{" "}
+                      {option.value}
+                    </Typography>
+                  </Tooltip>
+                </Stack>
+              </li>
+            )}
             handleChange={(val: RoDto) =>
               setState((prev) => {
                 return {

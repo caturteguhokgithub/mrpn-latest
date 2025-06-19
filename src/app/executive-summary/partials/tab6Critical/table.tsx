@@ -53,20 +53,27 @@ export default function TableCritical({
         }}
         size="small"
       >
-        <TableHead sx={{ bgcolor: bgColorTh }}>
+        <TableHead
+          sx={{
+            bgcolor: bgColorTh,
+            th: {
+              py: 1.5,
+            },
+          }}
+        >
           <TableRow>
             <TableCell>
               <Typography variant="body2" fontWeight={600}>
                 RO/Project Kunci
               </Typography>
             </TableCell>
-            {year > 0 && (
+            {/* {year > 0 && (
               <TableCell>
                 <Typography variant="body2" fontWeight={600}>
                   Status
                 </Typography>
               </TableCell>
-            )}
+            )} */}
             <TableCell>
               <Typography variant="body2" fontWeight={600}>
                 Penanggungjawab
@@ -96,7 +103,7 @@ export default function TableCritical({
               <TableCell sx={{ verticalAlign: "top" }}>
                 <Typography variant="body2">{item.ro?.value}</Typography>
               </TableCell>
-              {year > 0 && (
+              {/* {year > 0 && (
                 <TableCell sx={{ verticalAlign: "top" }}>
                   <Chip
                     label={item.keterangan_kegiatan}
@@ -110,7 +117,7 @@ export default function TableCritical({
                     }}
                   />
                 </TableCell>
-              )}
+              )} */}
               <TableCell sx={{ verticalAlign: "top" }}>
                 <Typography variant="body2">
                   {item.ro?.kementrian?.value ?? "-"}
