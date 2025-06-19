@@ -125,7 +125,7 @@ export default function TableCritical({
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
                 <Typography variant="body2">
-                  {item.ro?.sumber_anggaran}
+                  {item.ro?.sumber_anggaran || "-"}
                 </Typography>
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
@@ -144,7 +144,7 @@ export default function TableCritical({
               </TableCell>
               <TableCell sx={{ verticalAlign: "top" }}>
                 <ActionColumn
-                  viewClick={year > 0 ? () => setModalOpen(true) : undefined}
+                  // viewClick={year > 0 ? () => setModalOpen(true) : undefined}
                   editClick={() => handleEdit(index)}
                   deleteClick={() => handleDelete(index)}
                 />
