@@ -38,7 +38,7 @@ import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import AddButton from "../components/buttonAdd";
 import Iconify from "../components/icons/iconify";
 
-export default function PageExecutiveSummary({}) {
+export default function PageExecutiveSummary({ }) {
   const { permission, user } = useAuthContext((state) => state);
   const pathname = usePathname();
 
@@ -59,6 +59,7 @@ export default function PageExecutiveSummary({}) {
   const [toogleShowTab, setToogleShowTab] = React.useState(true);
   const [btnShowTab, setBtnShowTab] = React.useState(false);
   const [rpjmnState, setRpjmnState] = React.useState<number[]>([]);
+  const LOCAL_STORAGE_KEY = "selectedRKP";
 
   useEffect(() => {
     if (rpjmn != undefined) {
@@ -76,6 +77,7 @@ export default function PageExecutiveSummary({}) {
 
   const handleChangeTab = (event: any, newValue: any) => {
     setRkpState(undefined);
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
     setYear(newValue);
   };
 
@@ -159,15 +161,15 @@ export default function PageExecutiveSummary({}) {
     let label: string = "Draft";
     let color:
       | OverridableStringUnion<
-          | "default"
-          | "primary"
-          | "secondary"
-          | "error"
-          | "info"
-          | "success"
-          | "warning",
-          ChipPropsColorOverrides
-        >
+        | "default"
+        | "primary"
+        | "secondary"
+        | "error"
+        | "info"
+        | "success"
+        | "warning",
+        ChipPropsColorOverrides
+      >
       | undefined = "default";
     let sx: any = { bgcolor: grey[600], color: "white", px: 1 };
 
