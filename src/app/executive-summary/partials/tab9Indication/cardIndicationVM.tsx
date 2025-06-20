@@ -267,22 +267,24 @@ const useCardIndicationVM = () => {
       let result: ExsumIndicationResDto[] =
         response.result == null ? [] : response.result;
 
-      result.map((res, index) => {
-        res.perlakuan.map((prl, indexPrl) => {
-          let stData: StakeholderResGroupDto = {};
-          prl.stakeholder.map((st) => {
-            if (stData.hasOwnProperty(st.group.type)) {
-              stData[st.group.type].push(st);
-            } else {
-              stData[st.group.type] = [st];
-            }
+      if (result.length > 0) {
+        result.map((res, index) => {
+          res.perlakuan.map((prl, indexPrl) => {
+            let stData: StakeholderResGroupDto = {};
+            prl.stakeholder.map((st) => {
+              if (stData.hasOwnProperty(st.group.type)) {
+                stData[st.group.type].push(st);
+              } else {
+                stData[st.group.type] = [st];
+              }
+            });
+            result[index].perlakuan[indexPrl].groupStakeholder = stData;
           });
-          result[index].perlakuan[indexPrl].groupStakeholder = stData;
         });
-      });
 
-      setData(result);
-      setEdited(result[0].isEdit ?? true);
+        setData(result);
+        setEdited(result[0]?.isEdit ?? false);
+      }
     }
   }
 
@@ -452,9 +454,9 @@ const useCardIndicationVM = () => {
               : undefined,
           perpres: Array.isArray(rg.perpres)
             ? rg.perpres.reduce<{ id: number }[]>(
-                (a, b) => [...a, { id: b.id }],
-                []
-              )
+              (a, b) => [...a, { id: b.id }],
+              []
+            )
             : [],
           stakeholder: rg.entitas,
           stakeholder_id: rg.entitas.reduce<number[]>((a, b) => {
