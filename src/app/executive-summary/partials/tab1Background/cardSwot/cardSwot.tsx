@@ -83,10 +83,11 @@ export default function CardSwot({
             </p>
           </div>
         }
-        setting={activeSetting}
+        // setting={activeSetting}
         // settingDeleteOnclick={() => deleteData()}
         settingDeleteOnclick={handleModalDelete}
         settingEditOnclick={() => setModal(true)}
+        setting={activeSetting}
       >
         {penetapan ? (
           <Stack direction="column" gap={2}>

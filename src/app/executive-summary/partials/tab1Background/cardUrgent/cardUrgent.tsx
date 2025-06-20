@@ -112,9 +112,10 @@ export default function CardUrgent({
   return (
     <CardItem
       title="Urgensi Proyek"
-      setting={year <= 0 || activeSetting}
+      // setting={year <= 0 || activeSetting}
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
+      setting
     >
       {penetapan ? (
         <Fragment>
