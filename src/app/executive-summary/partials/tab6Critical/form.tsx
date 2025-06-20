@@ -43,6 +43,7 @@ import {
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Iconify from "@/app/components/icons/iconify";
+import { FormatCurrency } from "@/lib/utils/currency";
 
 export default function FormCritical({
   dataExisting,
@@ -610,7 +611,7 @@ export default function FormCritical({
                       </Grid>
                       <Grid marginTop={1} item xs={12}>
                         <Typography fontWeight={600} fontSize={14}>
-                          Aktivitas RKP 2025
+                          Aktivitas
                         </Typography>
                       </Grid>
                     </Grid>
@@ -696,7 +697,9 @@ export default function FormCritical({
                                       InputLabelProps={{
                                         shrink: true,
                                       }}
-                                      value={tags.months[indexMonth].target}
+                                      value={FormatCurrency(
+                                        tags.months[indexMonth].target
+                                      )}
                                       onChange={(e) =>
                                         setState((prev) => {
                                           const kegiatan = [...prev.kegiatan]; // shallow copy array

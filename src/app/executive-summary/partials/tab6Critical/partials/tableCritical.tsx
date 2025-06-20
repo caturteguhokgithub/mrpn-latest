@@ -228,7 +228,7 @@ export default function ProjectTable({
                   component="th"
                   scope="row"
                   width={year > 0 ? "40%" : "50%"}
-                  sx={{ py: 1, fontWeight: 700 }}
+                  sx={{ py: 1 }}
                 >
                   <Stack
                     direction="row"
@@ -242,18 +242,109 @@ export default function ProjectTable({
                           <Iconify name="mdi:send" size={16} />
                         </Box>
                       )}
-                      {parent.ro}
+                      <Stack gap={0.5}>
+                        <Stack direction="row" alignItems="center" gap={1}>
+                          <Box>
+                            <Chip
+                              size="small"
+                              color="default"
+                              label={
+                                <>
+                                  <Typography
+                                    component="span"
+                                    color={grey[500]}
+                                    fontSize={14}
+                                  >
+                                    RO{" "}
+                                  </Typography>
+                                  <Typography
+                                    component="span"
+                                    fontSize={14}
+                                    color={grey[700]}
+                                  >
+                                    {parent.code_ro}
+                                  </Typography>
+                                </>
+                              }
+                              sx={{
+                                px: 0.5,
+                              }}
+                            />
+                          </Box>
+                          <Box>
+                            <Chip
+                              size="small"
+                              color="default"
+                              label={
+                                <>
+                                  <Typography
+                                    component="span"
+                                    color={grey[500]}
+                                    fontSize={14}
+                                  >
+                                    PKKR{" "}
+                                  </Typography>
+                                  <Typography
+                                    component="span"
+                                    fontSize={14}
+                                    color={grey[700]}
+                                  >
+                                    {parent.code_pkkr}
+                                  </Typography>
+                                </>
+                              }
+                              sx={{
+                                px: 0.5,
+                              }}
+                            />
+                          </Box>
+                        </Stack>
+                        {/* <Typography>
+                          <Typography
+                            component="span"
+                            color={grey[500]}
+                            fontSize={14}
+                          >
+                            RO{" "}
+                          </Typography>
+                          <Typography component="span" fontSize={14}>
+                            {parent.code_ro}
+                          </Typography>{" "}
+                          -{" "}
+                          <Typography
+                            component="span"
+                            color={grey[500]}
+                            fontSize={14}
+                          >
+                            PKKR{" "}
+                          </Typography>
+                          <Typography component="span" fontSize={14}>
+                            {parent.code_pkkr}
+                          </Typography>
+                        </Typography> */}
+                        <Typography fontWeight={700}>{parent.ro}</Typography>
+                      </Stack>
                     </Stack>
                     <Chip
                       label={parent.category}
                       size="small"
-                      color="primary"
                       sx={{
                         fontWeight: 500,
                         fontSize: 12,
                         px: 0.5,
                         lineHeight: 1.2,
                         textTransform: "uppercase",
+                        color: "white",
+                        bgcolor:
+                          parent.kategori_proyek_id === 1
+                            ? "#C63C51"
+                            : parent.kategori_proyek_id === 2
+                            ? "#8C3061"
+                            : parent.kategori_proyek_id === 3
+                            ? "#FFD35A"
+                            : parent.kategori_proyek_id === 3
+                            ? "#FFA823"
+                            : "#DC0083",
                       }}
                     />
                   </Stack>
@@ -298,11 +389,9 @@ export default function ProjectTable({
                                 color={grey[500]}
                               />
                             </Box>
-                            <Box component="p" maxWidth="80%">
-                              {child.kegiatan}
-                            </Box>
+                            <Box component="p">{child.kegiatan}</Box>
                           </Stack>
-                          <Chip
+                          {/* <Chip
                             label={
                               <Stack
                                 display="inline-flex"
@@ -327,7 +416,7 @@ export default function ProjectTable({
                               bgcolor: `${grey[200]} !important`,
                               lineHeight: 1.2,
                             }}
-                          />
+                          /> */}
                         </Stack>
                       </TableCell>
                       {renderMonthCells(child.months, child.color, child)}

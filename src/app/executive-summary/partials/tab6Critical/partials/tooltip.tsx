@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { ChildData, MonthData } from "../cardCriticalModel";
+import { FormatCurrency } from "@/lib/utils/currency";
 
 interface ParentData {
   id: string;
@@ -159,7 +160,8 @@ const TooltipCP = ({ isParent, data, year }: TooltipCPProps) => {
                         />
                       </Box>
                       <Typography component="strong" fontWeight={600}>
-                        {month.aktivitas} ({month.target} {month.satuan})
+                        {month.aktivitas} ({FormatCurrency(month.target)}{" "}
+                        {month.satuan})
                       </Typography>
                     </Stack>
                   ))}

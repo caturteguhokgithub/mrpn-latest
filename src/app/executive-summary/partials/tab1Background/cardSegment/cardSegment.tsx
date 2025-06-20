@@ -93,9 +93,10 @@ export default function CardSegment({
   return (
     <CardItem
       title="Segmen Penerima Manfaat"
-      setting={year <= 0 || activeSetting}
+      // setting={year <= 0 || activeSetting}
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
+      setting
     >
       {penetapan ? (
         <Fragment>
