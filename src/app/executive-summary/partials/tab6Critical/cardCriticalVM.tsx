@@ -113,8 +113,11 @@ const useCardCriticalVM = () => {
       const mappedDataCP: DataCPType[] = result.map((item) => ({
         id: item.id.toString(),
         ro: item.ro?.value || "-",
+        code_ro: item.ro.code || "-",
+        code_pkkr: item.ro?.pkkr || "-",
         tagging: item.tagging_list.map((tag) => tag.value),
         category: item.kategori_proyek?.name || "-",
+        kategori_proyek_id: item.kategori_proyek_id,
         responsible: item.ro?.kementrian?.value || "-",
         fundSource: "APBN",
         startYear: new Date(item.start_date).getFullYear().toString(),

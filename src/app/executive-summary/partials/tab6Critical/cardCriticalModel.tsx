@@ -132,8 +132,11 @@ export interface ChildData {
 export interface DataCPType {
   id: string;
   ro: string;
+  code_ro: string;
+  code_pkkr: string;
   tagging: string[];
   category: string;
+  kategori_proyek_id: number;
   responsible: string;
   fundSource: string;
   startYear: string;

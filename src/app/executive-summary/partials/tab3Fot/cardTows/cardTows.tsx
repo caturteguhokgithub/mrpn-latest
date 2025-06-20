@@ -26,6 +26,8 @@ import {
 import AddButton from "@/components/buttonAdd";
 import { AutocompleteSelectMultiple } from "@/components/autocomplete";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
+import Iconify from "@/app/components/icons/iconify";
+import { blue } from "@mui/material/colors";
 
 export default function CardTows({ project }: { project: string }) {
   const useCardSWOT = useCardSWOTVM();
@@ -57,6 +59,16 @@ export default function CardTows({ project }: { project: string }) {
         title="Matriks TOWS"
         setting={useCardSWOT.data.id == 0 ? undefined : true}
         settingEditOnclick={handleModalOpen}
+        addButton={
+          <AddButton
+            noMargin
+            filled
+            title="Ubah"
+            color="primary"
+            startIcon={<Iconify name="mdi:pencil" size={14} />}
+            onclick={handleModalOpen}
+          />
+        }
       >
         {data == undefined || data.tows.length == 0 ? (
           <EmptyState
