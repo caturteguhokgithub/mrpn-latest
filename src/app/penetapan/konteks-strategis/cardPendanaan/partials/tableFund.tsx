@@ -123,7 +123,7 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
 
                 {multiyear.map((y, iY) => (
                   <TableCell
-                    colSpan={4}
+                    colSpan={3}
                     align={"center"}
                     sx={{ bgcolor: bgColorTh }}
                   >
@@ -174,7 +174,7 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
                     >
                       Pembiayaan (Juta)
                     </TableCell>
-                    <TableCell
+                    {/* <TableCell
                       sx={{
                         bgcolor: bgColorTh,
                         textAlign: "center",
@@ -182,7 +182,7 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
                       }}
                     >
                       Sumber Pembiayaan
-                    </TableCell>
+                    </TableCell> */}
                   </>
                 ))}
               </TableRow>
@@ -197,7 +197,7 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
                   },
                 }}
               >
-                {[...new Array(23)].map((_, i) => (
+                {[...new Array(18)].map((_, i) => (
                   <TableCell
                     sx={{
                       bgcolor: grey[100],
@@ -278,9 +278,9 @@ const TableFundPPKP = (props: { row?: RODataTable[]; project: string }) => {
                       <TableCell align={"right"}>
                         {FormatIDR(getRowData(`anggaran_${iY}`, fundRow))}
                       </TableCell>
-                      <TableCell>
+                      {/* <TableCell>
                         {getRowData(`sumber_anggaran_${iY}`, fundRow) ?? "-"}
-                      </TableCell>
+                      </TableCell> */}
                     </>
                   ))}
 

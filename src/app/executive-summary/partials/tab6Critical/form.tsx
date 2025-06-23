@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import { blue, grey, orange } from "@mui/material/colors";
+import { blue, green, grey, orange } from "@mui/material/colors";
 import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
 import {
   AutocompleteSelectMultiple,
@@ -39,6 +39,7 @@ import {
   GetColorCriticalPath,
   GetColorCriticalPathIndex,
   ColorCriticalPath,
+  ColorCriticalPathTwoColor,
 } from "@/utils/color";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -88,6 +89,8 @@ export default function FormCritical({
         exsum_critical_path_id: 0,
         color: "",
         kegiatan: "",
+        satuan: "",
+        total_kegiatan: 0,
         months: monthData.map((item) => ({
           id: 0,
           exsum_critical_path_kegiatan_id: 0,
@@ -461,10 +464,10 @@ export default function FormCritical({
                   alignItems="center"
                   justifyContent="space-between"
                 >
-                  <Typography fontWeight={500}>Kegiatan</Typography>
+                  <Typography fontWeight={500}>Aktivitas Turunan RO</Typography>
                   <AddButton
                     small
-                    title="Tambah Kegiatan"
+                    title="Tambah Aktivitas"
                     noMargin
                     onclick={() => addMenu()}
                   />
@@ -487,7 +490,7 @@ export default function FormCritical({
                           justifyContent="space-between"
                         >
                           <Typography fontWeight={600} fontSize={14}>
-                            Kegiatan #{index + 1}
+                            Aktivitas Turunan RO #{index + 1}
                           </Typography>
                           <AddButton
                             small
@@ -521,7 +524,7 @@ export default function FormCritical({
                           />
                         </FormControl>
                       </Grid>
-                      <Grid item xs={12}>
+                      <Grid item md={6} xs={12}>
                         <FormControl fullWidth>
                           <FieldLabelInfo
                             title={`Kelompok Warna Kegiatan #${index + 1}`}
@@ -553,23 +556,30 @@ export default function FormCritical({
                               }
                             }}
                             aria-label="Grup Color"
+                            sx={{
+                              width: "100%",
+                            }}
                           >
-                            {ColorCriticalPath.map(
+                            {ColorCriticalPathTwoColor.map(
                               (color, i) =>
                                 i < 5 && (
                                   <ToggleButton
                                     key={i}
                                     value={color}
                                     aria-label="color"
+                                    fullWidth
                                     sx={{
-                                      bgcolor: alpha(color, 0.3),
-                                      width: "20%",
+                                      bgcolor: alpha(color, 1),
+                                      // width: "20%",
                                       p: 0,
-                                      minHeight: 50,
+                                      minHeight: 40,
                                       "& > div": {
                                         "& > div": {
                                           opacity: 0.4,
                                         },
+                                      },
+                                      svg: {
+                                        opacity: 0,
                                       },
                                       "&.Mui-selected": {
                                         bgcolor: color,
@@ -577,6 +587,9 @@ export default function FormCritical({
                                           "& > div": {
                                             opacity: 1,
                                           },
+                                        },
+                                        svg: {
+                                          opacity: 1,
                                         },
                                       },
                                     }}
@@ -588,7 +601,7 @@ export default function FormCritical({
                                       alignItems="center"
                                       justifyContent="center"
                                     >
-                                      <Box
+                                      {/* <Box
                                         bgcolor="black"
                                         color="white"
                                         borderRadius="50%"
@@ -601,7 +614,12 @@ export default function FormCritical({
                                         lineHeight={1}
                                       >
                                         {i + 1}
-                                      </Box>
+                                      </Box> */}
+                                      <Iconify
+                                        name="mdi:check-circle"
+                                        color={green[700]}
+                                        size={24}
+                                      />
                                     </Box>
                                   </ToggleButton>
                                 )
@@ -609,9 +627,56 @@ export default function FormCritical({
                           </ToggleButtonGroup>
                         </FormControl>
                       </Grid>
+                      <Grid item md={6} xs={12}>
+                        <FormControl fullWidth>
+                          <FieldLabelInfo title="Satuan" />
+                          <TextField
+                            variant="outlined"
+                            size="small"
+                            placeholder="Satuan"
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            value={tags.satuan}
+                            onChange={(e) =>
+                              setState((prevState) => {
+                                const kegiatan = prevState.kegiatan;
+                                kegiatan[index].satuan = e.target.value;
+                                return {
+                                  ...prevState,
+                                  satuan: kegiatan,
+                                };
+                              })
+                            }
+                            // onChange={(e) =>
+                            //   setState((prev) => {
+                            //     const kegiatan = [...prev.kegiatan]; // shallow copy array
+
+                            //     const currentMonths = kegiatan[index].months;
+                            //     if (!currentMonths) return prev; // jika null, jangan ubah state
+
+                            //     // pastikan indexMonth aman
+                            //     if (!currentMonths[indexMonth]) return prev;
+
+                            //     currentMonths[indexMonth] = {
+                            //       ...currentMonths[indexMonth]!,
+                            //       satuan: e.target.value,
+                            //     };
+
+                            //     kegiatan[index].months = currentMonths;
+
+                            //     return {
+                            //       ...prev,
+                            //       kegiatan,
+                            //     };
+                            //   })
+                            // }
+                          />
+                        </FormControl>
+                      </Grid>
                       <Grid marginTop={1} item xs={12}>
                         <Typography fontWeight={600} fontSize={14}>
-                          Aktivitas
+                          Target
                         </Typography>
                       </Grid>
                     </Grid>
@@ -622,29 +687,29 @@ export default function FormCritical({
                         variant="outlined"
                         sx={{ mt: 1, p: 2, minWidth: "0 !important" }}
                       >
-                        <Stack gap={2}>
+                        {/* <Stack gap={2}> */}
+                        <Grid container spacing={2}>
                           {monthData.map((item, indexMonth) => (
-                            <Stack gap={1} key={indexMonth}>
-                              <Grid container spacing={3}>
-                                <Grid item xs={12}>
-                                  <Stack
-                                    direction="row"
-                                    alignItems="center"
-                                    justifyContent="space-between"
-                                  >
-                                    <Typography fontWeight={500}>
-                                      {item}
-                                    </Typography>
-                                  </Stack>
+                            <Grid item md={3}>
+                              <Stack key={indexMonth}>
+                                <Grid container spacing={3}>
+                                  <Grid item xs={12}>
+                                    <Stack
+                                      direction="row"
+                                      alignItems="center"
+                                      justifyContent="space-between"
+                                    >
+                                      <FieldLabelInfo title={item} />
+                                    </Stack>
+                                  </Grid>
                                 </Grid>
-                              </Grid>
 
-                              <Grid
-                                container
-                                spacing={1}
-                                key={`target-${indexMonth}`}
-                              >
-                                <Grid marginY={0.5} item xs={12} md={6}>
+                                <Grid
+                                  container
+                                  // spacing={1}
+                                  key={`target-${indexMonth}`}
+                                >
+                                  {/* <Grid marginY={0.5} item xs={12} md={6}>
                                   <FormControl fullWidth>
                                     <TextField
                                       variant="outlined"
@@ -682,54 +747,54 @@ export default function FormCritical({
                                       }
                                     />
                                   </FormControl>
-                                </Grid>
-                                <Grid
-                                  marginY={0.5}
-                                  item
-                                  xs={12}
-                                  md={indexMonth > 0 ? 3 : 3}
-                                >
-                                  <FormControl fullWidth>
-                                    <TextField
-                                      variant="outlined"
-                                      size="small"
-                                      placeholder="Target"
-                                      InputLabelProps={{
-                                        shrink: true,
-                                      }}
-                                      value={FormatCurrency(
-                                        tags.months[indexMonth].target
-                                      )}
-                                      onChange={(e) =>
-                                        setState((prev) => {
-                                          const kegiatan = [...prev.kegiatan]; // shallow copy array
+                                </Grid> */}
+                                  <Grid
+                                    // marginY={0.5}
+                                    item
+                                    xs={12}
+                                    // md={indexMonth > 0 ? 3 : 3}
+                                  >
+                                    <FormControl fullWidth>
+                                      <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        placeholder="Target"
+                                        InputLabelProps={{
+                                          shrink: true,
+                                        }}
+                                        value={FormatCurrency(
+                                          tags.months[indexMonth].target
+                                        )}
+                                        onChange={(e) =>
+                                          setState((prev) => {
+                                            const kegiatan = [...prev.kegiatan]; // shallow copy array
 
-                                          const currentMonths =
-                                            kegiatan[index].months;
-                                          if (!currentMonths) return prev; // jika null, jangan ubah state
+                                            const currentMonths =
+                                              kegiatan[index].months;
+                                            if (!currentMonths) return prev; // jika null, jangan ubah state
 
-                                          // pastikan indexMonth aman
-                                          if (!currentMonths[indexMonth])
-                                            return prev;
+                                            // pastikan indexMonth aman
+                                            if (!currentMonths[indexMonth])
+                                              return prev;
 
-                                          currentMonths[indexMonth] = {
-                                            ...currentMonths[indexMonth]!,
-                                            target: e.target.value,
-                                          };
+                                            currentMonths[indexMonth] = {
+                                              ...currentMonths[indexMonth]!,
+                                              target: e.target.value,
+                                            };
 
-                                          kegiatan[index].months =
-                                            currentMonths;
+                                            kegiatan[index].months =
+                                              currentMonths;
 
-                                          return {
-                                            ...prev,
-                                            kegiatan,
-                                          };
-                                        })
-                                      }
-                                    />
-                                  </FormControl>
-                                </Grid>
-                                <Grid
+                                            return {
+                                              ...prev,
+                                              kegiatan,
+                                            };
+                                          })
+                                        }
+                                      />
+                                    </FormControl>
+                                  </Grid>
+                                  {/* <Grid
                                   marginY={0.5}
                                   item
                                   xs={12}
@@ -772,8 +837,8 @@ export default function FormCritical({
                                       }
                                     />
                                   </FormControl>
-                                </Grid>
-                                {/* {index > 0 && (
+                                </Grid> */}
+                                  {/* {index > 0 && (
                                 <Grid marginY={1} item xs={12} md="auto">
                                   <Stack
                                     direction="row"
@@ -793,9 +858,9 @@ export default function FormCritical({
                                   </Stack>
                                 </Grid>
                               )} */}
-                              </Grid>
+                                </Grid>
 
-                              {/* {tags?.months.map(
+                                {/* {tags?.months.map(
                               (target: MonthsDto, iTarget: number) => (
                                 <Grid
                                   container
@@ -919,9 +984,11 @@ export default function FormCritical({
                                 </Grid>
                               )
                             )} */}
-                            </Stack>
+                              </Stack>
+                            </Grid>
                           ))}
-                        </Stack>
+                        </Grid>
+                        {/* </Stack> */}
                       </Paper>
                     </Stack>
                   </Paper>

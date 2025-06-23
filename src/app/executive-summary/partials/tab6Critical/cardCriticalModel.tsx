@@ -85,6 +85,8 @@ export interface KegiatanDtoNew {
   exsum_critical_path_id: number;
   color: string;
   kegiatan: string;
+  satuan: string;
+  total_kegiatan: number;
   months: MonthsDto[];
 }
 
@@ -126,6 +128,7 @@ export interface ChildData {
   target: string;
   satuan: string;
   color: string;
+  total_kegiatan: number;
   months: (MonthData | null)[];
 }
 

@@ -29,7 +29,7 @@ interface TooltipCPProps {
 
 const LabelTooltip = ({ label }: { label: string }) => (
   <Typography component="span" variant="body2" color={grey[600]}>
-    {label}:
+    {label}
   </Typography>
 );
 
@@ -136,7 +136,9 @@ const TooltipCP = ({ isParent, data, year }: TooltipCPProps) => {
             </Stack>
             <Divider />
             <Stack gap={0.5}>
-              <LabelTooltip label="Target" />
+              <LabelTooltip
+                label={`Target (dalam satuan ${childData.satuan})`}
+              />
               <Stack gap={0.5}>
                 {months
                   .filter((month: any): month is MonthData => month !== null)
@@ -160,8 +162,9 @@ const TooltipCP = ({ isParent, data, year }: TooltipCPProps) => {
                         />
                       </Box>
                       <Typography component="strong" fontWeight={600}>
-                        {month.aktivitas} ({FormatCurrency(month.target)}{" "}
-                        {month.satuan})
+                        {/* {month.aktivitas} ({FormatCurrency(month.target)}{" "}
+                        {month.satuan}) */}
+                        {FormatCurrency(month.target)}
                       </Typography>
                     </Stack>
                   ))}

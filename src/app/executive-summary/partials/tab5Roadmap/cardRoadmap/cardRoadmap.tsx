@@ -90,7 +90,7 @@ export default function CardRoadmap() {
   return (
     <CardItem
       title="Project Roadmap"
-      setting
+      // setting
       multiEdit
       settingEditOutputClick={() => handleOpenModal(true, "OUTPUT")}
       settingEditBisnisClick={() => handleOpenModal(true, "BISNIS")}
@@ -441,16 +441,16 @@ const OutputTable = ({
                       index === 0
                         ? alpha(theme.palette.primary.main, 1)
                         : index === 1
-                          ? alpha(theme.palette.primary.main, 0.9)
-                          : index === 2
-                            ? alpha(theme.palette.primary.main, 0.8)
-                            : index === 3
-                              ? alpha(theme.palette.primary.main, 0.7)
-                              : index === 4
-                                ? alpha(theme.palette.primary.main, 0.6)
-                                : index === 5
-                                  ? alpha(theme.palette.primary.main, 0.5)
-                                  : alpha(theme.palette.primary.main, 0.4),
+                        ? alpha(theme.palette.primary.main, 0.9)
+                        : index === 2
+                        ? alpha(theme.palette.primary.main, 0.8)
+                        : index === 3
+                        ? alpha(theme.palette.primary.main, 0.7)
+                        : index === 4
+                        ? alpha(theme.palette.primary.main, 0.6)
+                        : index === 5
+                        ? alpha(theme.palette.primary.main, 0.5)
+                        : alpha(theme.palette.primary.main, 0.4),
                     color: "white",
                     borderRadius: "10px 10px 0 0",
                     py: 1,

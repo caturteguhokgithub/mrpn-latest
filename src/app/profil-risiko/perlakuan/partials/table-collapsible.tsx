@@ -51,7 +51,7 @@ function Row(props: { row: PerlakuanData; index?: number }) {
           // bgcolor: isOddRow ? grey[100] : "transparent",
         }}
       >
-        <TableCell>
+        <TableCell width={100}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -63,7 +63,9 @@ function Row(props: { row: PerlakuanData; index?: number }) {
         {/* <TableCell width={300} sx={{ verticalAlign: "top" }}>
           {row.keputusan}
         </TableCell> */}
-        <TableCell sx={{ verticalAlign: "top" }}>{row.keterangan_risiko}</TableCell>
+        <TableCell sx={{ verticalAlign: "top" }}>
+          {row.keterangan_risiko}
+        </TableCell>
         <TableCell sx={{ verticalAlign: "top" }} width={200}>
           <Stack direction={"row"} gap={1} alignItems="center">
             <Typography width={52} fontSize={14}>
@@ -128,7 +130,6 @@ function Row(props: { row: PerlakuanData; index?: number }) {
                   },
                 }}
               >
-
                 <Table stickyHeader size="small">
                   <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
                     <TableRow>
@@ -148,7 +149,7 @@ function Row(props: { row: PerlakuanData; index?: number }) {
                       </TableCell>
                       {multiyear.map((y, iY) => (
                         <TableCell
-                          colSpan={4}
+                          colSpan={3}
                           align={"center"}
                           sx={{ bgcolor: green[50] }}
                         >
@@ -178,43 +179,49 @@ function Row(props: { row: PerlakuanData; index?: number }) {
                       >
                         Pembiayaan (Juta)
                       </TableCell>
-                      <TableCell
+                      {/* <TableCell
                         width={150}
                         align="center"
                         style={{ top: "37px" }}
                         sx={{ bgcolor: green[50] }}
                       >
                         Sumber Pembiayaan
-                      </TableCell>
+                      </TableCell> */}
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {row?.rincian_output ? row.rincian_output.map((rowItem) => (
-                      <TableRow key={rowItem.id}>
-                        <TableCell align="center">{rowItem.id}</TableCell>
-                        <TableCell>
-                          <Typography
-                            component="span"
-                            fontSize={14}
-                            color={grey[600]}
-                          >
-                            {rowItem.code}
-                          </Typography>{" "}
-                          - {rowItem.value}{" "}
-                          <Typography
-                            component="span"
-                            fontSize={14}
-                            color={orange[600]}
-                          >
-                            ({rowItem.type})
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="right">{rowItem.target}</TableCell>
-                        <TableCell>{rowItem.satuan}</TableCell>
-                        <TableCell align="right">{rowItem.anggaran}</TableCell>
-                        <TableCell>{rowItem.sumber_anggaran}</TableCell>
-                      </TableRow>
-                    )) : ""}
+                    {row?.rincian_output
+                      ? row.rincian_output.map((rowItem) => (
+                          <TableRow key={rowItem.id}>
+                            <TableCell align="center">{rowItem.id}</TableCell>
+                            <TableCell>
+                              <Typography
+                                component="span"
+                                fontSize={14}
+                                color={grey[600]}
+                              >
+                                {rowItem.code}
+                              </Typography>{" "}
+                              - {rowItem.value}{" "}
+                              <Typography
+                                component="span"
+                                fontSize={14}
+                                color={orange[600]}
+                              >
+                                ({rowItem.type})
+                              </Typography>
+                            </TableCell>
+                            <TableCell align="right">
+                              {rowItem.target}
+                            </TableCell>
+                            <TableCell>{rowItem.satuan}</TableCell>
+                            <TableCell align="right">
+                              {rowItem.anggaran}
+                            </TableCell>
+                            {/* <TableCell>{rowItem.sumber_anggaran}</TableCell> */}
+                          </TableRow>
+                        ))
+                      : ""}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -261,11 +268,14 @@ function Row(props: { row: PerlakuanData; index?: number }) {
 //   ),
 // ];
 
-export default function CollapsibleTable({ rowData }: { rowData: PerlakuanData[] }) {
+export default function CollapsibleTable({
+  rowData,
+}: {
+  rowData: PerlakuanData[];
+}) {
   // console.log(rowData)
 
   return (
-
     <Box sx={{ width: "calc(100% + 32px)", bgcolor: grey[50], m: -2, p: 1 }}>
       <TableContainer
         component={Paper}
