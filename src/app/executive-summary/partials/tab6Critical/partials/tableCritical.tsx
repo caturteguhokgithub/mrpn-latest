@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
@@ -19,6 +19,7 @@ import {
 } from "../style";
 import { months } from "../data";
 import { ChildData, DataCPType, MonthData } from "../cardCriticalModel";
+import { FormatCurrency } from "@/lib/utils/currency";
 
 // Helper function to group consecutive months
 const groupConsecutiveMonths = (months: any) => {
@@ -181,217 +182,234 @@ export default function ProjectTable({
   };
 
   return (
-    <StyledPaper>
-      <StyledTable stickyHeader>
-        <TableHead>
-          <TableRow>
-            <TableCell
-              sx={{
-                bgcolor: bgColorTh,
-              }}
-            >
-              RO/Project Kunci
-            </TableCell>
-            {year === 0
-              ? [2025, 2026, 2027, 2028, 2029].map((year) => (
-                  <TableCell
-                    key={year}
-                    align="center"
-                    sx={{
-                      bgcolor: bgColorTh,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {year}
-                  </TableCell>
-                ))
-              : months.map((month) => (
-                  <TableCell
-                    key={month}
-                    align="center"
-                    sx={{
-                      bgcolor: bgColorTh,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {month}
-                  </TableCell>
-                ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {dataCP.map((parent) => (
-            <React.Fragment key={parent.id}>
-              {/* Parent Row */}
-              <ParentRow color={year > 0 ? "#f5f5f5" : "transparent"}>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  width={year > 0 ? "40%" : "50%"}
-                  sx={{ py: 1 }}
-                >
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    gap={2}
-                  >
-                    <Stack direction="row" alignItems="center" gap={1}>
-                      {year > 0 && (
-                        <Box width={40} flex={0} lineHeight={1}>
-                          <Iconify name="mdi:send" size={16} />
-                        </Box>
-                      )}
-                      <Stack gap={0.5}>
-                        <Stack direction="row" alignItems="center" gap={1}>
-                          <Box>
-                            <Chip
-                              size="small"
-                              color="default"
-                              label={
-                                <>
-                                  <Typography
-                                    component="span"
-                                    color={grey[500]}
-                                    fontSize={14}
-                                  >
-                                    RO{" "}
-                                  </Typography>
-                                  <Typography
-                                    component="span"
-                                    fontSize={14}
-                                    color={grey[700]}
-                                  >
-                                    {parent.code_ro}
-                                  </Typography>
-                                </>
-                              }
-                              sx={{
-                                px: 0.5,
-                              }}
-                            />
-                          </Box>
-                          <Box>
-                            <Chip
-                              size="small"
-                              color="default"
-                              label={
-                                <>
-                                  <Typography
-                                    component="span"
-                                    color={grey[500]}
-                                    fontSize={14}
-                                  >
-                                    PKKR{" "}
-                                  </Typography>
-                                  <Typography
-                                    component="span"
-                                    fontSize={14}
-                                    color={grey[700]}
-                                  >
-                                    {parent.code_pkkr}
-                                  </Typography>
-                                </>
-                              }
-                              sx={{
-                                px: 0.5,
-                              }}
-                            />
-                          </Box>
-                        </Stack>
-                        {/* <Typography>
-                          <Typography
-                            component="span"
-                            color={grey[500]}
-                            fontSize={14}
-                          >
-                            RO{" "}
-                          </Typography>
-                          <Typography component="span" fontSize={14}>
-                            {parent.code_ro}
-                          </Typography>{" "}
-                          -{" "}
-                          <Typography
-                            component="span"
-                            color={grey[500]}
-                            fontSize={14}
-                          >
-                            PKKR{" "}
-                          </Typography>
-                          <Typography component="span" fontSize={14}>
-                            {parent.code_pkkr}
-                          </Typography>
-                        </Typography> */}
-                        <Typography fontWeight={700}>{parent.ro}</Typography>
-                      </Stack>
-                    </Stack>
-                    <Chip
-                      label={parent.category}
-                      size="small"
+    <Fragment>
+      <StyledPaper>
+        <StyledTable stickyHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell
+                sx={{
+                  bgcolor: bgColorTh,
+                }}
+              >
+                RO/Project Kunci
+              </TableCell>
+              {year === 0
+                ? [2025, 2026, 2027, 2028, 2029].map((year) => (
+                    <TableCell
+                      key={year}
+                      align="center"
                       sx={{
-                        fontWeight: 500,
-                        fontSize: 12,
-                        px: 0.5,
-                        lineHeight: 1.2,
+                        bgcolor: bgColorTh,
                         textTransform: "uppercase",
-                        color: "white",
-                        bgcolor:
-                          parent.kategori_proyek_id === 1
-                            ? "#C63C51"
-                            : parent.kategori_proyek_id === 2
-                            ? "#8C3061"
-                            : parent.kategori_proyek_id === 3
-                            ? "#FFD35A"
-                            : parent.kategori_proyek_id === 3
-                            ? "#FFA823"
-                            : "#DC0083",
                       }}
-                    />
-                  </Stack>
-                </TableCell>
-                {year === 0 ? (
-                  renderYearCells(parent) // Pass parent data for year view
-                ) : (
-                  <BlockCell colSpan={12}>
-                    <HtmlTooltip
-                      title={<TooltipCP isParent data={parent} year={year} />}
-                      followCursor
-                      TransitionComponent={Grow}
-                      placement="bottom-start"
                     >
-                      <ParentBlock color={year > 0 ? "black" : parent.color} />
-                    </HtmlTooltip>
-                  </BlockCell>
-                )}
-              </ParentRow>
-
+                      {year}
+                    </TableCell>
+                  ))
+                : months.map((month) => (
+                    <TableCell
+                      key={month}
+                      align="center"
+                      sx={{
+                        bgcolor: bgColorTh,
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {month}
+                    </TableCell>
+                  ))}
               {year > 0 && (
-                <React.Fragment>
-                  {/* Child Rows */}
-                  {parent.children.map((child) => (
-                    <ChildRow key={`${parent.id}-${child.id}`}>
-                      <TableCell sx={{ py: 1 }}>
-                        <Stack
-                          direction="row"
-                          justifyContent="space-between"
-                          alignItems="center"
-                        >
-                          <Stack
-                            direction="row"
-                            alignItems="center"
-                            gap={1}
-                            ml={2}
-                          >
-                            <Box width={40} flex={0} lineHeight={1}>
-                              <Iconify
-                                name="mdi:brightness-1"
-                                size={8}
-                                color={grey[500]}
+                <TableCell
+                  sx={{
+                    bgcolor: bgColorTh,
+                  }}
+                >
+                  Total Target
+                </TableCell>
+              )}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {dataCP.map((parent) => (
+              <React.Fragment key={parent.id}>
+                {/* Parent Row */}
+                <ParentRow color={year > 0 ? "#f5f5f5" : "transparent"}>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    width={year > 0 ? "40%" : "50%"}
+                    sx={{ py: 1 }}
+                  >
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                      gap={2}
+                    >
+                      <Stack direction="row" alignItems="center" gap={1}>
+                        {year > 0 && (
+                          <Box width={40} flex={0} lineHeight={1}>
+                            <Iconify name="mdi:send" size={16} />
+                          </Box>
+                        )}
+                        <Stack gap={0.5}>
+                          <Stack direction="row" alignItems="center" gap={1}>
+                            <Box>
+                              <Chip
+                                size="small"
+                                color="default"
+                                label={
+                                  <>
+                                    <Typography
+                                      component="span"
+                                      color={grey[500]}
+                                      fontSize={14}
+                                    >
+                                      RO{" "}
+                                    </Typography>
+                                    <Typography
+                                      component="span"
+                                      fontSize={14}
+                                      color={grey[700]}
+                                    >
+                                      {parent.code_ro}
+                                    </Typography>
+                                  </>
+                                }
+                                sx={{
+                                  px: 0.5,
+                                }}
                               />
                             </Box>
-                            <Box component="p">{child.kegiatan}</Box>
+                            <Box>
+                              <Chip
+                                size="small"
+                                color="default"
+                                label={
+                                  <>
+                                    <Typography
+                                      component="span"
+                                      color={grey[500]}
+                                      fontSize={14}
+                                    >
+                                      PKKR{" "}
+                                    </Typography>
+                                    <Typography
+                                      component="span"
+                                      fontSize={14}
+                                      color={grey[700]}
+                                    >
+                                      {parent.code_pkkr}
+                                    </Typography>
+                                  </>
+                                }
+                                sx={{
+                                  px: 0.5,
+                                }}
+                              />
+                            </Box>
                           </Stack>
-                          {/* <Chip
+                          <HtmlTooltip
+                            title={
+                              <TooltipCP isParent data={parent} year={year} />
+                            }
+                            followCursor
+                            TransitionComponent={Grow}
+                            placement="bottom-start"
+                          >
+                            <Typography
+                              fontWeight={700}
+                              sx={{
+                                cursor: "pointer",
+                              }}
+                            >
+                              {parent.ro}
+                            </Typography>
+                          </HtmlTooltip>
+                        </Stack>
+                      </Stack>
+                      <Chip
+                        label={parent.category}
+                        size="small"
+                        sx={{
+                          fontWeight: 500,
+                          fontSize: 12,
+                          px: 0.5,
+                          lineHeight: 1.2,
+                          textTransform: "uppercase",
+                          color: "white",
+                          bgcolor:
+                            parent.kategori_proyek_id === 1
+                              ? "#C63C51"
+                              : parent.kategori_proyek_id === 2
+                              ? "#8C3061"
+                              : parent.kategori_proyek_id === 3
+                              ? "#FFD35A"
+                              : parent.kategori_proyek_id === 3
+                              ? "#FFA823"
+                              : "#DC0083",
+                        }}
+                      />
+                    </Stack>
+                  </TableCell>
+                  {year === 0 ? (
+                    renderYearCells(parent)
+                  ) : (
+                    <BlockCell colSpan={13}>
+                      <HtmlTooltip
+                        title={<TooltipCP isParent data={parent} year={year} />}
+                        followCursor
+                        TransitionComponent={Grow}
+                        placement="bottom-start"
+                      >
+                        <Box color={year > 0 ? "transparent" : parent.color} />
+                      </HtmlTooltip>
+                    </BlockCell>
+                  )}
+                </ParentRow>
+
+                {year > 0 && (
+                  <React.Fragment>
+                    {/* Child Rows */}
+                    {/* {parent.children.map((child) => ( */}
+                    {[...parent.children]
+                      .sort((a, b) => {
+                        // Find first month index for child a
+                        const aFirstMonth = a.months.findIndex(
+                          (month) => month && month.id !== ""
+                        );
+                        // Find first month index for child b
+                        const bFirstMonth = b.months.findIndex(
+                          (month) => month && month.id !== ""
+                        );
+                        // Compare the first month indices
+                        return aFirstMonth - bFirstMonth;
+                      })
+                      .map((child) => (
+                        <ChildRow key={`${parent.id}-${child.id}`}>
+                          <TableCell sx={{ py: 1 }}>
+                            <Stack
+                              direction="row"
+                              justifyContent="space-between"
+                              alignItems="center"
+                            >
+                              <Stack
+                                direction="row"
+                                alignItems="center"
+                                gap={1}
+                                ml={2}
+                              >
+                                <Box width={40} flex={0} lineHeight={1}>
+                                  <Iconify
+                                    name="mdi:brightness-1"
+                                    size={8}
+                                    color={grey[500]}
+                                  />
+                                </Box>
+                                <Box component="p">{child.kegiatan}</Box>
+                              </Stack>
+                              {/* <Chip
                             label={
                               <Stack
                                 display="inline-flex"
@@ -417,17 +435,51 @@ export default function ProjectTable({
                               lineHeight: 1.2,
                             }}
                           /> */}
-                        </Stack>
-                      </TableCell>
-                      {renderMonthCells(child.months, child.color, child)}
-                    </ChildRow>
-                  ))}
-                </React.Fragment>
-              )}
-            </React.Fragment>
-          ))}
-        </TableBody>
-      </StyledTable>
-    </StyledPaper>
+                            </Stack>
+                          </TableCell>
+                          {renderMonthCells(child.months, child.color, child)}
+                          {year > 0 && (
+                            <TableCell sx={{ py: 1 }}>
+                              {FormatCurrency(child.total_kegiatan.toString())}{" "}
+                              {child.satuan}
+                            </TableCell>
+                          )}
+                        </ChildRow>
+                      ))}
+                  </React.Fragment>
+                )}
+              </React.Fragment>
+            ))}
+          </TableBody>
+        </StyledTable>
+      </StyledPaper>
+      {year > 0 && (
+        <Stack direction="row" alignItems="center" gap={1} mt={2}>
+          <Typography color={grey[700]}>Keterangan warna</Typography>
+          <Box
+            px={4}
+            py={1}
+            bgcolor={"#d7e3f3"}
+            fontSize={14}
+            color={grey[700]}
+            borderRadius={2}
+            border="2px solid #d1d6ea"
+          >
+            Aktivitas tidak saling berkaitan
+          </Box>
+          <Box
+            px={4}
+            py={1}
+            bgcolor={"#fef0cd"}
+            fontSize={14}
+            color={grey[700]}
+            borderRadius={2}
+            border="2px solid #f4e5a8"
+          >
+            Aktivitas saling berkaitan
+          </Box>
+        </Stack>
+      )}
+    </Fragment>
   );
 }

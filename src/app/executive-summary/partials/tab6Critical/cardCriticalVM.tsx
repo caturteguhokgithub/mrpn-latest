@@ -127,7 +127,8 @@ const useCardCriticalVM = () => {
           id: keg.id,
           kegiatan: keg.kegiatan,
           target: "",
-          satuan: "",
+          satuan: keg.satuan,
+          total_kegiatan: keg.total_kegiatan,
           color: keg.color,
           months: Array.from({ length: 12 }).map((_, index) => {
             const monthNames = [
@@ -178,6 +179,7 @@ const useCardCriticalVM = () => {
     }
 
     let value: { tagging: string }[] = [];
+    // let value: { tagging: string }[] = [{ tagging: "EKO" }];
     state.strategy.map((x) => {
       value.push({
         tagging: x,

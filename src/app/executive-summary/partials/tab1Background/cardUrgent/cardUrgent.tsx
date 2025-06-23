@@ -116,7 +116,7 @@ export default function CardUrgent({
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
       setting
-    >
+      >
       {penetapan ? (
         <Fragment>
           <Box sx={{ opacity: 0.6 }}>
