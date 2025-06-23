@@ -76,10 +76,26 @@ const useCardRoadmapVM = () => {
         });
         break;
       }
+      case "OUTPUT-EDIT": {
+        setModal({
+          open: action,
+          title: "Ubah Expected Output",
+          field: "Output",
+        });
+        break;
+      }
       case "BISNIS": {
         setModal({
           open: action,
           title: "Tambah Proses Bisnis",
+          field: "Proses Bisnis",
+        });
+        break;
+      }
+      case "BISNIS-EDIT": {
+        setModal({
+          open: action,
+          title: "Ubah Proses Bisnis",
           field: "Proses Bisnis",
         });
         break;
@@ -166,7 +182,8 @@ const useCardRoadmapVM = () => {
     setEdited(true);
   };
 
-  const conditionEditing = year > 0 && !edited ? `${grey[600]} !important` : "inherit";
+  const conditionEditing =
+    year > 0 && !edited ? `${grey[600]} !important` : "inherit";
 
   return {
     rpjmn,
