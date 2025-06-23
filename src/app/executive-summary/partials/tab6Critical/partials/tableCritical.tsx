@@ -4,7 +4,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Box, Chip, Grow, Stack, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { green, grey } from "@mui/material/colors";
 import TooltipCP from "./tooltip";
 import Iconify from "@/app/components/icons/iconify";
 import { bgColorTh } from "@/app/utils/color";
@@ -190,9 +190,85 @@ export default function ProjectTable({
               <TableCell
                 sx={{
                   bgcolor: bgColorTh,
+                  borderRight: `1px solid ${grey[300]}`,
                 }}
               >
-                RO/Project Kunci
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  RO/Project Kunci
+                  <HtmlTooltip
+                    title={
+                      <Box
+                        bgcolor="white"
+                        color={grey[800]}
+                        p={"10px 16px"}
+                        width={520}
+                        boxShadow="rgba(0, 0, 0, 0.2) 0px 3px 3px -2px, rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;"
+                        sx={{
+                          "strong, span": {
+                            fontSize: 13,
+                            lineHeight: 1.2,
+                          },
+                        }}
+                      >
+                        <Typography>RO Kunci</Typography>
+                        <Box component="ul" pl={3}>
+                          {dataCP.map((parent) => (
+                            <Box component="li" lineHeight={1.3} my={1}>
+                              <Typography
+                                key={parent.id}
+                                fontSize={14}
+                                component="span"
+                              >
+                                {parent.ro}
+                              </Typography>
+                              <Iconify
+                                size={16}
+                                name="mdi:check-bold"
+                                color={green[300]}
+                                sx={{
+                                  position: "relative",
+                                  top: 3,
+                                  marginLeft: 4,
+                                }}
+                              />
+                            </Box>
+                          ))}
+                        </Box>
+                      </Box>
+                    }
+                    followCursor
+                    TransitionComponent={Grow}
+                    placement="bottom-start"
+                  >
+                    <Chip
+                      size="small"
+                      variant="filled"
+                      color="default"
+                      label={
+                        <Stack
+                          direction="row"
+                          alignItems="center"
+                          gap={1}
+                          fontSize={12}
+                        >
+                          <Iconify name="mdi:key-variant" size={14} />
+                          <Typography fontWeight={600} component="span">
+                            4
+                          </Typography>{" "}
+                          /{" "}
+                          <Typography component="span" fontSize={13}>
+                            5
+                          </Typography>
+                        </Stack>
+                      }
+                      sx={{ px: 1, cursor: "default" }}
+                    />
+                  </HtmlTooltip>
+                </Stack>
               </TableCell>
               {year === 0
                 ? [2025, 2026, 2027, 2028, 2029].map((year) => (
@@ -223,6 +299,7 @@ export default function ProjectTable({
                 <TableCell
                   sx={{
                     bgcolor: bgColorTh,
+                    borderLeft: `1px solid ${grey[300]}`,
                   }}
                 >
                   Total Target
@@ -388,7 +465,12 @@ export default function ProjectTable({
                       })
                       .map((child) => (
                         <ChildRow key={`${parent.id}-${child.id}`}>
-                          <TableCell sx={{ py: 1 }}>
+                          <TableCell
+                            sx={{
+                              py: 1,
+                              borderRight: `1px solid ${grey[300]}`,
+                            }}
+                          >
                             <Stack
                               direction="row"
                               justifyContent="space-between"
@@ -439,7 +521,14 @@ export default function ProjectTable({
                           </TableCell>
                           {renderMonthCells(child.months, child.color, child)}
                           {year > 0 && (
-                            <TableCell sx={{ py: 1 }}>
+                            <TableCell
+                              sx={{
+                                borderLeft: `1px solid ${grey[300]}`,
+                                py: 1,
+                                // bgcolor: grey[200],
+                                fontWeight: 600,
+                              }}
+                            >
                               {FormatCurrency(child.total_kegiatan.toString())}{" "}
                               {child.satuan}
                             </TableCell>
@@ -454,30 +543,34 @@ export default function ProjectTable({
         </StyledTable>
       </StyledPaper>
       {year > 0 && (
-        <Stack direction="row" alignItems="center" gap={1} mt={2}>
-          <Typography color={grey[700]}>Keterangan warna</Typography>
-          <Box
-            px={4}
-            py={1}
-            bgcolor={"#d7e3f3"}
-            fontSize={14}
-            color={grey[700]}
-            borderRadius={2}
-            border="2px solid #d1d6ea"
-          >
-            Aktivitas tidak saling berkaitan
-          </Box>
-          <Box
-            px={4}
-            py={1}
-            bgcolor={"#fef0cd"}
-            fontSize={14}
-            color={grey[700]}
-            borderRadius={2}
-            border="2px solid #f4e5a8"
-          >
-            Aktivitas saling berkaitan
-          </Box>
+        <Stack gap={1} mt={2}>
+          <Typography color={grey[700]} fontSize={14}>
+            Keterangan warna
+          </Typography>
+          <Stack direction="row" alignItems="center" gap={1}>
+            <Box
+              px={4}
+              py={1}
+              bgcolor={"#d7e3f3"}
+              fontSize={12}
+              color={grey[700]}
+              borderRadius={2}
+              border="2px solid #d1d6ea"
+            >
+              Aktivitas tidak saling berkaitan
+            </Box>
+            <Box
+              px={4}
+              py={1}
+              bgcolor={"#fef0cd"}
+              fontSize={12}
+              color={grey[700]}
+              borderRadius={2}
+              border="2px solid #f4e5a8"
+            >
+              Aktivitas saling berkaitan
+            </Box>
+          </Stack>
         </Stack>
       )}
     </Fragment>

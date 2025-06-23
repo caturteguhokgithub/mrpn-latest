@@ -15,12 +15,14 @@ import {
   TableBody,
   TableRow,
   TableContainer,
+  Divider,
+  Chip,
 } from "@mui/material";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
 import DialogComponent from "@/components/dialog";
-import { grey, orange, red } from "@mui/material/colors";
+import { blue, grey, orange, red } from "@mui/material/colors";
 import theme from "@/theme";
 import FormRoadmap from "./form-roadmap";
 import useCardRoadmapVM from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapVM";
@@ -90,14 +92,22 @@ export default function CardRoadmap() {
   return (
     <CardItem
       title="Project Roadmap"
-      // setting
+      setting
       multiEdit
       settingEditOutputClick={() => handleOpenModal(true, "OUTPUT")}
       settingEditBisnisClick={() => handleOpenModal(true, "BISNIS")}
     >
       <Box width="100%" textAlign="center">
-        <BusinessTable data={dataBusiness} setModalDelete={setModalDelete} />
-        <OutputTable data={dataOutput} setModalDelete={setModalDelete} />
+        <BusinessTable
+          data={dataBusiness}
+          setModalDelete={setModalDelete}
+          handleModalEdit={() => handleOpenModal(true, "BISNIS-EDIT")}
+        />
+        <OutputTable
+          data={dataOutput}
+          setModalDelete={setModalDelete}
+          handleModalEdit={() => handleOpenModal(true, "OUTPUT-EDIT")}
+        />
       </Box>
 
       {rpjmn && (
@@ -145,9 +155,11 @@ export default function CardRoadmap() {
 const BusinessTable = ({
   data,
   setModalDelete,
+  handleModalEdit,
 }: {
   data: ExsumRoadmapResDto[];
   setModalDelete: any;
+  handleModalEdit?: () => void;
 }) => {
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
@@ -323,32 +335,73 @@ const BusinessTable = ({
                             }}
                           >
                             {row.year === parseInt(year) ? (
-                              <>
-                                {canDelete && (
-                                  <IconButton
-                                    onClick={() =>
-                                      setModalDelete({
-                                        isOpen: true,
-                                        id: row.ids,
-                                      })
-                                    }
+                              <Stack
+                                direction="row"
+                                alignItems="center"
+                                gap={1}
+                                width="100%"
+                              >
+                                <Stack gap={1}>
+                                  {canDelete && (
+                                    <IconButton
+                                      onClick={() =>
+                                        setModalDelete({
+                                          isOpen: true,
+                                          id: row.ids,
+                                        })
+                                      }
+                                      sx={{
+                                        color: "white",
+                                        bgcolor: red[600],
+                                        width: 20,
+                                        height: 20,
+                                        transition: "all 500ms",
+                                        "&:hover": {
+                                          bgcolor: red[900],
+                                        },
+                                      }}
+                                    >
+                                      <IconFA name="trash-alt" size={10} />
+                                    </IconButton>
+                                  )}
+                                  {/* <IconButton
+                                    onClick={handleModalEdit}
                                     sx={{
                                       color: "white",
-                                      bgcolor: red[600],
+                                      bgcolor: blue[600],
                                       width: 20,
                                       height: 20,
                                       transition: "all 500ms",
                                       "&:hover": {
-                                        bgcolor: red[900],
+                                        bgcolor: blue[900],
                                       },
-                                      marginRight: "15px",
                                     }}
                                   >
-                                    <IconFA name="trash-alt" size={10} />
-                                  </IconButton>
-                                )}
-                                <Typography>{row.value}</Typography>
-                              </>
+                                    <IconFA name="pencil" size={10} />
+                                  </IconButton> */}
+                                </Stack>
+                                <Stack gap={1} width="100%">
+                                  <Box width="100%">
+                                    <Typography
+                                      fontSize={15}
+                                      component="span"
+                                      mr={1}
+                                      color={grey[700]}
+                                    >
+                                      {row.value}
+                                    </Typography>
+                                    <Chip
+                                      label="RPJMN"
+                                      size="small"
+                                      sx={{ fontSize: 12 }}
+                                    />
+                                  </Box>
+                                  {/* <Divider />
+                                  <Typography fontSize={15} component="span">
+                                    {"row.value proses bisnis"}
+                                  </Typography> */}
+                                </Stack>
+                              </Stack>
                             ) : (
                               ""
                             )}
@@ -370,9 +423,11 @@ const BusinessTable = ({
 const OutputTable = ({
   data,
   setModalDelete,
+  handleModalEdit,
 }: {
   data: ExsumRoadmapResDto[];
   setModalDelete: any;
+  handleModalEdit?: () => void;
 }) => {
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
@@ -467,32 +522,57 @@ const OutputTable = ({
                   >
                     {itemOutput.year}
                   </Typography>
-                  {canDelete && (
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    gap={0.5}
+                    sx={{
+                      position: "absolute",
+                      right: 8,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                    }}
+                  >
+                    {canDelete && (
+                      <IconButton
+                        onClick={() =>
+                          setModalDelete({ isOpen: true, id: [itemOutput.id] })
+                        }
+                        sx={{
+                          color: "white",
+                          bgcolor: red[600],
+
+                          width: 20,
+                          height: 20,
+                          transition: "all 500ms",
+                          "&:hover": {
+                            bgcolor: red[900],
+                          },
+                        }}
+                      >
+                        <IconFA name="trash-alt" size={10} />
+                      </IconButton>
+                    )}
                     <IconButton
-                      onClick={() =>
-                        setModalDelete({ isOpen: true, id: [itemOutput.id] })
-                      }
+                      onClick={handleModalEdit}
                       sx={{
                         color: "white",
-                        bgcolor: red[600],
-                        position: "absolute",
-                        right: 8,
-                        top: "50%",
-                        transform: "translateY(-50%)",
+                        bgcolor: blue[800],
                         width: 20,
                         height: 20,
                         transition: "all 500ms",
                         "&:hover": {
-                          bgcolor: red[900],
+                          bgcolor: blue[700],
                         },
                       }}
                     >
-                      <IconFA name="trash-alt" size={10} />
+                      <IconFA name="pencil" size={10} />
                     </IconButton>
-                  )}
+                  </Stack>
                 </CardContent>
                 <CardContent>
                   <Box
+                    fontSize={15}
                     textAlign={"left"}
                     dangerouslySetInnerHTML={{ __html: itemOutput.output }}
                   />
