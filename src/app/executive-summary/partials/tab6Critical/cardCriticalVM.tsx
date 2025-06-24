@@ -10,9 +10,11 @@ import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
 import React, { useEffect, useState } from "react";
 import {
   DataCPType,
+  DataRoKunci,
   ExsumCriticalData,
   ExsumCriticalReqDto,
   ExsumCriticalState,
+  initDataRoKunci,
   initExsumCriticalReqDto,
   TaskAdditionalData,
 } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
@@ -27,6 +29,7 @@ import {
   doCreateCriticalRKPPath,
   doDeleteCriticalPath,
   doGetCriticalPath,
+  doGetCriticalPathRO,
   doUpdateCriticalPath,
   doUpdateCriticalRKPPath,
 } from "@/app/executive-summary/partials/tab6Critical/cardCriticalService";
@@ -58,6 +61,7 @@ const useCardCriticalVM = () => {
   const [state, setState] = useState<ExsumCriticalState>(initState);
   const [optionStrategy, setOptionStrategy] = useState<string[]>([]);
   const [data, setData] = useState<ExsumCriticalData[]>([]);
+  const [dataROKunci, setDataROKunci] = useState<DataRoKunci>({ ...initDataRoKunci });
   const [dataCP, setDataCP] = useState<DataCPType[]>([]);
   const [ganChart, setGanChart] = useState<Task[]>([]);
 
@@ -96,6 +100,20 @@ const useCardCriticalVM = () => {
     if (response?.code == API_CODE.success) {
       let result: MiscMasterListKategoriProyekRes[] = response.result;
       setOptionProjectCategory(result);
+    }
+  }
+
+  async function getDataROKunci() {
+    const response = await doGetCriticalPathRO({
+      body: { exsum_id: exsum.id },
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+
+    if (response?.code == API_CODE.success) {
+      const result: DataRoKunci = response.result;
+
+      setDataROKunci(result);
     }
   }
 
@@ -150,12 +168,12 @@ const useCardCriticalVM = () => {
             );
             return monthData
               ? {
-                  id: monthData.id,
-                  name: monthData.name,
-                  aktivitas: monthData.aktivitas,
-                  target: monthData.target,
-                  satuan: monthData.satuan,
-                }
+                id: monthData.id,
+                name: monthData.name,
+                aktivitas: monthData.aktivitas,
+                target: monthData.target,
+                satuan: monthData.satuan,
+              }
               : null;
           }),
         })),
@@ -349,6 +367,7 @@ const useCardCriticalVM = () => {
     if (exsum.id > 0) {
       getListRO();
       getData();
+      getDataROKunci();
     }
     if (optionProjectCategory.length == 0) getListProjectCategory();
   }, [exsum]);
@@ -376,6 +395,7 @@ const useCardCriticalVM = () => {
     handleChangeMonth,
     selectMonth,
     dataCP,
+    dataROKunci,
   };
 };
 

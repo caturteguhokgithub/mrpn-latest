@@ -148,6 +148,24 @@ export interface DataCPType {
   children: ChildData[];
 }
 
+export interface Summary {
+  is_selected: number;
+  total: number;
+}
+
+export interface DataRoKunci {
+  roKunci: RoDto[];
+  summary: Summary;
+}
+
+export const initDataRoKunci: DataRoKunci = {
+  roKunci: [],
+  summary: {
+    is_selected: 0,
+    total: 0
+  }
+};
+
 // export interface ExsumCriticalData {
 //   id:number
 //   kategori_proyek_id:number

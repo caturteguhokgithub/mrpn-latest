@@ -1,5 +1,5 @@
-import {post} from "@/lib/core/api/apiBase";
-import {ResponseBaseDto} from "@/lib/core/api/apiModel";
+import { post } from "@/lib/core/api/apiBase";
+import { ResponseBaseDto } from "@/lib/core/api/apiModel";
 import {
   GetCriticalPathByExsumIdServiceModel,
   UpdateCriticalPathByExsumIdServiceModel
@@ -9,6 +9,14 @@ export async function doGetCriticalPath(param: GetCriticalPathByExsumIdServiceMo
   const resp = await post({
     ...param,
     url: "exsum/criticalPath/show",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+export async function doGetCriticalPathRO(param: GetCriticalPathByExsumIdServiceModel) {
+  const resp = await post({
+    ...param,
+    url: "exsum/criticalPath/showLogRoKunci",
   });
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }

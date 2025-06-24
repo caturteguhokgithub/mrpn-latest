@@ -18,7 +18,7 @@ import {
   StyledTable,
 } from "../style";
 import { months } from "../data";
-import { ChildData, DataCPType, MonthData } from "../cardCriticalModel";
+import { ChildData, DataCPType, DataRoKunci, MonthData } from "../cardCriticalModel";
 import { FormatCurrency } from "@/lib/utils/currency";
 
 // Helper function to group consecutive months
@@ -54,9 +54,11 @@ const groupConsecutiveMonths = (months: any) => {
 export default function ProjectTable({
   year,
   dataCP,
+  dataROKunci,
 }: {
   year: number;
   dataCP: DataCPType[];
+  dataROKunci: DataRoKunci;
 }) {
   const renderMonthCells = (
     monthsData: (MonthData | null)[],
@@ -216,25 +218,27 @@ export default function ProjectTable({
                       >
                         <Typography>RO Kunci</Typography>
                         <Box component="ul" pl={3}>
-                          {dataCP.map((parent) => (
+                          {dataROKunci.roKunci.map((parent) => (
                             <Box component="li" lineHeight={1.3} my={1}>
                               <Typography
                                 key={parent.id}
                                 fontSize={14}
                                 component="span"
                               >
-                                {parent.ro}
+                                {parent.code} - {parent.value}
                               </Typography>
-                              <Iconify
-                                size={16}
-                                name="mdi:check-bold"
-                                color={green[300]}
-                                sx={{
-                                  position: "relative",
-                                  top: 3,
-                                  marginLeft: 4,
-                                }}
-                              />
+                              {parent.is_selected ?
+                                <Iconify
+                                  size={16}
+                                  name="mdi:check-bold"
+                                  color={green[300]}
+                                  sx={{
+                                    position: "relative",
+                                    top: 3,
+                                    marginLeft: 4,
+                                  }}
+                                />
+                                : ""}
                             </Box>
                           ))}
                         </Box>
@@ -257,11 +261,11 @@ export default function ProjectTable({
                         >
                           <Iconify name="mdi:key-variant" size={14} />
                           <Typography fontWeight={600} component="span">
-                            4
+                            {dataROKunci.summary.is_selected}
                           </Typography>{" "}
                           /{" "}
                           <Typography component="span" fontSize={13}>
-                            5
+                            {dataROKunci.summary.total}
                           </Typography>
                         </Stack>
                       }
@@ -272,29 +276,29 @@ export default function ProjectTable({
               </TableCell>
               {year === 0
                 ? [2025, 2026, 2027, 2028, 2029].map((year) => (
-                    <TableCell
-                      key={year}
-                      align="center"
-                      sx={{
-                        bgcolor: bgColorTh,
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      {year}
-                    </TableCell>
-                  ))
+                  <TableCell
+                    key={year}
+                    align="center"
+                    sx={{
+                      bgcolor: bgColorTh,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {year}
+                  </TableCell>
+                ))
                 : months.map((month) => (
-                    <TableCell
-                      key={month}
-                      align="center"
-                      sx={{
-                        bgcolor: bgColorTh,
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      {month}
-                    </TableCell>
-                  ))}
+                  <TableCell
+                    key={month}
+                    align="center"
+                    sx={{
+                      bgcolor: bgColorTh,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {month}
+                  </TableCell>
+                ))}
               {year > 0 && (
                 <TableCell
                   sx={{
@@ -420,12 +424,12 @@ export default function ProjectTable({
                             parent.kategori_proyek_id === 1
                               ? "#C63C51"
                               : parent.kategori_proyek_id === 2
-                              ? "#8C3061"
-                              : parent.kategori_proyek_id === 3
-                              ? "#FFD35A"
-                              : parent.kategori_proyek_id === 3
-                              ? "#FFA823"
-                              : "#DC0083",
+                                ? "#8C3061"
+                                : parent.kategori_proyek_id === 3
+                                  ? "#FFD35A"
+                                  : parent.kategori_proyek_id === 3
+                                    ? "#FFA823"
+                                    : "#DC0083",
                         }}
                       />
                     </Stack>
