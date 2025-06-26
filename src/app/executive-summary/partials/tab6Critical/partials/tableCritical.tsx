@@ -4,7 +4,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Box, Chip, Grow, Stack, Typography } from "@mui/material";
-import { green, grey } from "@mui/material/colors";
+import { green, grey, orange } from "@mui/material/colors";
 import TooltipCP from "./tooltip";
 import Iconify from "@/app/components/icons/iconify";
 import { bgColorTh } from "@/app/utils/color";
@@ -411,13 +411,17 @@ export default function ProjectTable({
                             placement="bottom-start"
                           >
                             <Typography
-                              fontWeight={700}
+                              fontWeight={600}
                               sx={{
                                 cursor: "pointer",
+                                color: parent.intervention
+                                  ? orange[600]
+                                  : "inherit",
                               }}
                             >
-                              {parent.ro} {parent.intervention ? "(Key)" : ""}
-                              <Iconify name="mdi:key-variant" size={14} />{" "}
+                              {parent.intervention && (
+                                <Iconify name="mdi:key-variant" size={14} />
+                              )}{" "}
                               {parent.ro}
                             </Typography>
                           </HtmlTooltip>
