@@ -69,7 +69,7 @@ export const ColorCriticalPathDarken: string[] = [
 
 export const GetColorCriticalPath = (i: number) => {
   // return ColorCriticalPath[i];
-  return ColorCriticalPath[i];
+  return ColorCriticalPathTwoColor[i];
 };
 export const GetColorCriticalPathIndex = (i: string) => {
   // const index = ColorCriticalPath.findIndex((x) => x == i);

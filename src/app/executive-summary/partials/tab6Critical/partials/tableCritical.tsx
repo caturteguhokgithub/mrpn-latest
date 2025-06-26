@@ -18,7 +18,12 @@ import {
   StyledTable,
 } from "../style";
 import { months } from "../data";
-import { ChildData, DataCPType, DataRoKunci, MonthData } from "../cardCriticalModel";
+import {
+  ChildData,
+  DataCPType,
+  DataRoKunci,
+  MonthData,
+} from "../cardCriticalModel";
 import { FormatCurrency } from "@/lib/utils/currency";
 
 // Helper function to group consecutive months
@@ -224,10 +229,14 @@ export default function ProjectTable({
                                 key={parent.id}
                                 fontSize={14}
                                 component="span"
+                                color={
+                                  parent.is_selected ? grey[800] : grey[600]
+                                }
+                                fontWeight={parent.is_selected ? 500 : 400}
                               >
                                 {parent.code} - {parent.value}
                               </Typography>
-                              {parent.is_selected ?
+                              {parent.is_selected ? (
                                 <Iconify
                                   size={16}
                                   name="mdi:check-bold"
@@ -238,7 +247,9 @@ export default function ProjectTable({
                                     marginLeft: 4,
                                   }}
                                 />
-                                : ""}
+                              ) : (
+                                ""
+                              )}
                             </Box>
                           ))}
                         </Box>
@@ -276,29 +287,29 @@ export default function ProjectTable({
               </TableCell>
               {year === 0
                 ? [2025, 2026, 2027, 2028, 2029].map((year) => (
-                  <TableCell
-                    key={year}
-                    align="center"
-                    sx={{
-                      bgcolor: bgColorTh,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {year}
-                  </TableCell>
-                ))
+                    <TableCell
+                      key={year}
+                      align="center"
+                      sx={{
+                        bgcolor: bgColorTh,
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {year}
+                    </TableCell>
+                  ))
                 : months.map((month) => (
-                  <TableCell
-                    key={month}
-                    align="center"
-                    sx={{
-                      bgcolor: bgColorTh,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {month}
-                  </TableCell>
-                ))}
+                    <TableCell
+                      key={month}
+                      align="center"
+                      sx={{
+                        bgcolor: bgColorTh,
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {month}
+                    </TableCell>
+                  ))}
               {year > 0 && (
                 <TableCell
                   sx={{
@@ -406,6 +417,8 @@ export default function ProjectTable({
                               }}
                             >
                               {parent.ro} {parent.intervention ? "(Key)" : ""}
+                              <Iconify name="mdi:key-variant" size={14} />{" "}
+                              {parent.ro}
                             </Typography>
                           </HtmlTooltip>
                         </Stack>
@@ -424,12 +437,12 @@ export default function ProjectTable({
                             parent.kategori_proyek_id === 1
                               ? "#C63C51"
                               : parent.kategori_proyek_id === 2
-                                ? "#8C3061"
-                                : parent.kategori_proyek_id === 3
-                                  ? "#FFD35A"
-                                  : parent.kategori_proyek_id === 3
-                                    ? "#FFA823"
-                                    : "#DC0083",
+                              ? "#8C3061"
+                              : parent.kategori_proyek_id === 3
+                              ? "#FFD35A"
+                              : parent.kategori_proyek_id === 3
+                              ? "#FFA823"
+                              : "#DC0083",
                         }}
                       />
                     </Stack>

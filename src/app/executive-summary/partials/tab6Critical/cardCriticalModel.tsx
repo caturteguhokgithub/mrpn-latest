@@ -163,8 +163,8 @@ export const initDataRoKunci: DataRoKunci = {
   roKunci: [],
   summary: {
     is_selected: 0,
-    total: 0
-  }
+    total: 0,
+  },
 };
 
 // export interface ExsumCriticalData {
