@@ -135,7 +135,7 @@ export interface ChildData {
 export interface DataCPType {
   id: string;
   ro: string;
-  intervention: boolean
+  intervention: boolean;
   code_ro: string;
   code_pkkr: string;
   tagging: string[];

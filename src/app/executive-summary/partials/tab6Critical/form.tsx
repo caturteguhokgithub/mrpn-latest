@@ -580,6 +580,7 @@ export default function FormCritical({
                                       },
                                       svg: {
                                         opacity: 0,
+                                        display: "none",
                                       },
                                       "&.Mui-selected": {
                                         bgcolor: color,
@@ -590,16 +591,19 @@ export default function FormCritical({
                                         },
                                         svg: {
                                           opacity: 1,
+                                          display: "inline",
                                         },
                                       },
                                     }}
                                   >
-                                    <Box
+                                    <Stack
                                       width="100%"
                                       height="100%"
-                                      display="flex"
+                                      direction="row"
                                       alignItems="center"
                                       justifyContent="center"
+                                      position="relative"
+                                      gap={0.5}
                                     >
                                       {/* <Box
                                         bgcolor="black"
@@ -618,9 +622,13 @@ export default function FormCritical({
                                       <Iconify
                                         name="mdi:check-circle"
                                         color={green[700]}
-                                        size={24}
+                                        size={16}
                                       />
-                                    </Box>
+                                      <Typography fontSize={10}>
+                                        {i === 0 && "Tidak saling berkaitan"}
+                                        {i === 1 && "Saling berkaitan"}
+                                      </Typography>
+                                    </Stack>
                                   </ToggleButton>
                                 )
                             )}
