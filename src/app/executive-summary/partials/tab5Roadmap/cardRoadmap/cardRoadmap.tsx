@@ -26,7 +26,7 @@ import { blue, grey, orange, red } from "@mui/material/colors";
 import theme from "@/theme";
 import FormRoadmap from "./form-roadmap";
 import useCardRoadmapVM from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapVM";
-import { ExsumRoadmapResDto } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
+import { ExsumRoadmapDto, ExsumRoadmapResDto } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
 import { IconFA } from "@/app/components/icons/icon-fa";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
@@ -66,12 +66,14 @@ const dataBisnis = {
 interface RowData {
   ids: number[];
   year: number;
+  is_inheritance: boolean;
   value: string;
   colspan?: number;
 }
 
 export default function CardRoadmap() {
   const {
+    year,
     dataBusiness,
     dataOutput,
     rpjmn,
@@ -87,13 +89,17 @@ export default function CardRoadmap() {
     // conditionEditing,
   } = useCardRoadmapVM();
 
+  console.log(year);
+
   // const { handleEdited, conditionEditing } = useCardLocationVM();
 
   return (
     <CardItem
       title="Project Roadmap"
       setting
+      // setting={year > 0 ? false : true}
       multiEdit
+      year={year}
       settingEditOutputClick={() => handleOpenModal(true, "OUTPUT")}
       settingEditBisnisClick={() => handleOpenModal(true, "BISNIS")}
     >
@@ -105,6 +111,7 @@ export default function CardRoadmap() {
         />
         <OutputTable
           data={dataOutput}
+          setRequest={setRequest}
           setModalDelete={setModalDelete}
           handleModalEdit={() => handleOpenModal(true, "OUTPUT-EDIT")}
         />
@@ -171,6 +178,7 @@ const BusinessTable = ({
     data.forEach((d) => {
       const row: RowData = {
         ids: [d.id],
+        is_inheritance: d.is_inheritance,
         year: d.year,
         value: d.output,
       };
@@ -342,7 +350,7 @@ const BusinessTable = ({
                                 width="100%"
                               >
                                 <Stack gap={1}>
-                                  {canDelete && (
+                                  {canDelete && (row.is_inheritance == false || row.is_inheritance == undefined) && (
                                     <IconButton
                                       onClick={() =>
                                         setModalDelete({
@@ -390,11 +398,13 @@ const BusinessTable = ({
                                     >
                                       {row.value}
                                     </Typography>
-                                    <Chip
-                                      label="RPJMN"
-                                      size="small"
-                                      sx={{ fontSize: 12 }}
-                                    />
+                                    {row.is_inheritance && (
+                                      <Chip
+                                        label="RPJMN"
+                                        size="small"
+                                        sx={{ fontSize: 12 }}
+                                      />
+                                    )}
                                   </Box>
                                   {/* <Divider />
                                   <Typography fontSize={15} component="span">
@@ -423,10 +433,12 @@ const BusinessTable = ({
 const OutputTable = ({
   data,
   setModalDelete,
+  setRequest,
   handleModalEdit,
 }: {
   data: ExsumRoadmapResDto[];
   setModalDelete: any;
+  setRequest: React.Dispatch<React.SetStateAction<ExsumRoadmapDto>>;
   handleModalEdit?: () => void;
 }) => {
   const { permission } = useAuthContext((state) => state);
@@ -496,16 +508,16 @@ const OutputTable = ({
                       index === 0
                         ? alpha(theme.palette.primary.main, 1)
                         : index === 1
-                        ? alpha(theme.palette.primary.main, 0.9)
-                        : index === 2
-                        ? alpha(theme.palette.primary.main, 0.8)
-                        : index === 3
-                        ? alpha(theme.palette.primary.main, 0.7)
-                        : index === 4
-                        ? alpha(theme.palette.primary.main, 0.6)
-                        : index === 5
-                        ? alpha(theme.palette.primary.main, 0.5)
-                        : alpha(theme.palette.primary.main, 0.4),
+                          ? alpha(theme.palette.primary.main, 0.9)
+                          : index === 2
+                            ? alpha(theme.palette.primary.main, 0.8)
+                            : index === 3
+                              ? alpha(theme.palette.primary.main, 0.7)
+                              : index === 4
+                                ? alpha(theme.palette.primary.main, 0.6)
+                                : index === 5
+                                  ? alpha(theme.palette.primary.main, 0.5)
+                                  : alpha(theme.palette.primary.main, 0.4),
                     color: "white",
                     borderRadius: "10px 10px 0 0",
                     py: 1,
@@ -554,7 +566,22 @@ const OutputTable = ({
                       </IconButton>
                     )}
                     <IconButton
-                      onClick={handleModalEdit}
+                      onClick={() => {
+                        setRequest((prev) => {
+                          return {
+                            ...prev,
+                            id: itemOutput.id,
+                            exsum_id: itemOutput.exsum_id,
+                            year: [itemOutput.year],
+                            output: itemOutput.output
+                          };
+                        });
+
+                        if (handleModalEdit) {
+                          handleModalEdit();
+                        }
+                      }}
+                      // onClick={handleModalEdit}
                       sx={{
                         color: "white",
                         bgcolor: blue[800],
@@ -576,11 +603,6 @@ const OutputTable = ({
                     textAlign={"left"}
                     dangerouslySetInnerHTML={{ __html: itemOutput.output }}
                   />
-                  {/*<>*/}
-                  {/*  <Typography component="p" textAlign="left">*/}
-                  {/*    {itemOutput.output}*/}
-                  {/*  </Typography>*/}
-                  {/*</>*/}
                 </CardContent>
               </Card>
             ))

@@ -86,7 +86,8 @@ const useCardCriticalVM = () => {
     if (response?.code == API_CODE.success) {
       let result: RoDto[] = response.result;
       // let finalResult: RoDto[] = result.filter((x) => x.intervention);
-      setOptionRO(result);
+      let finalResult: RoDto[] = result.filter((x) => x.type == "RO");
+      setOptionRO(finalResult);
     }
   }
 
@@ -131,6 +132,7 @@ const useCardCriticalVM = () => {
       const mappedDataCP: DataCPType[] = result.map((item) => ({
         id: item.id.toString(),
         ro: item.ro?.value || "-",
+        intervention: item.ro.intervention || false,
         code_ro: item.ro.code || "-",
         code_pkkr: item.ro?.pkkr || "-",
         tagging: item.tagging_list.map((tag) => tag.value),

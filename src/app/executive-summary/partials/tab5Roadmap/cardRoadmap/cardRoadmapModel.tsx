@@ -4,6 +4,7 @@ export interface ExsumRoadmapResDto {
   id: number
   exsum_id: number
   type: string
+  is_inheritance: boolean
   year: number
   output: string,
   isEdit: boolean

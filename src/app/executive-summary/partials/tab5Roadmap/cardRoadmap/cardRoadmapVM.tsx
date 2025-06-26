@@ -15,6 +15,7 @@ import { doGetMasterListRpjmn } from "@/app/misc/master/masterService";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import {
   doCreate,
+  doUpdate,
   doDelete,
   doGet,
 } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapService";
@@ -29,23 +30,9 @@ const useCardRoadmapVM = () => {
 
   const [dataOutput, setDataOutput] = useState<ExsumRoadmapResDto[]>([]);
   const [dataBusiness, setDataBusiness] = useState<ExsumRoadmapResDto[]>([]);
-  const [request, setRequest] = useState<ExsumRoadmapDto>({
-    ...initExsumRoadmapReq,
-  });
-  const [modal, setModal] = useState<{
-    open: boolean;
-    title: string;
-    field: string;
-  }>({
-    open: false,
-    title: "",
-    field: "",
-  });
-  const [modalDelete, setModalDelete] = useState<{
-    isOpen: boolean;
-    id: number[];
-  }>({ isOpen: false, id: [] });
-
+  const [request, setRequest] = useState<ExsumRoadmapDto>({ ...initExsumRoadmapReq });
+  const [modal, setModal] = useState<{ open: boolean; title: string; field: string; }>({ open: false, title: "", field: "" });
+  const [modalDelete, setModalDelete] = useState<{ isOpen: boolean; id: number[]; }>({ isOpen: false, id: [] });
   const [edited, setEdited] = useState(false);
 
   async function getRpjmn() {
@@ -64,7 +51,7 @@ const useCardRoadmapVM = () => {
     setRequest((prev) => {
       return {
         ...prev,
-        type: type,
+        type: type.split("-")[0],
       };
     });
     switch (type) {
@@ -136,16 +123,23 @@ const useCardRoadmapVM = () => {
   }
 
   async function updateData(param: ExsumRoadmapDto) {
+    var isNew = param.id == 0 ? true : false;
+
     const req: ExsumRoadmapDto = {
       ...param,
       exsum_id: exsum.id,
     };
+
     const params = {
       body: req,
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
     };
-    const response = await doCreate(params);
+
+    const response = isNew
+      ? await doCreate(params)
+      : await doUpdate(params);
+
     if (response?.code == API_CODE.success) {
       getData().then((r) => {
         setRequest({ ...initExsumRoadmapReq });
@@ -187,6 +181,7 @@ const useCardRoadmapVM = () => {
 
   return {
     rpjmn,
+    year,
     dataOutput,
     dataBusiness,
     request,

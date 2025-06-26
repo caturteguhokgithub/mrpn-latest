@@ -24,6 +24,7 @@ import { grey } from "@mui/material/colors";
 import { AutocompleteSelectMultiple } from "@/components/autocomplete";
 import ReactQuill from "react-quill";
 import DialogComponent from "@/components/dialog";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
 
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
@@ -58,10 +59,12 @@ export default function FormRoadmap({
   request: ExsumRoadmapDto;
   setRequest: any;
   fieldTitle: string;
-  modal:any;
-  handleOpenModal:any;
-  updateData:any;
+  modal: any;
+  handleOpenModal: any;
+  updateData: any;
 }) {
+
+  const { year } = useRKPContext((state) => state);
 
   const listYearRPjmn = () => {
     let listYear = [];
@@ -76,7 +79,7 @@ export default function FormRoadmap({
   const handleChangeQuill = async () => {
     const text = quillRef.current?.value;
     if (text) {
-      setRequest((prevState:ExsumRoadmapDto) => {
+      setRequest((prevState: ExsumRoadmapDto) => {
         return {
           ...prevState,
           output: text.toString()
@@ -86,12 +89,12 @@ export default function FormRoadmap({
   };
 
   const handleUpdateData = async () => {
-    const finalReq = {...request}
-    if (fieldTitle == "Output"){
+    const finalReq = { ...request }
+    if (fieldTitle == "Output") {
       const text = quillRef.current?.value;
       if (text) {
         finalReq.output = text.toString()
-      }else{
+      } else {
         finalReq.output = ""
       }
     }
@@ -128,7 +131,7 @@ export default function FormRoadmap({
             <FieldLabelInfo title="Tahun" />
             <AutocompleteSelectMultiple
               value={request.year}
-              options={listYearRPjmn()}
+              options={year > 0 ? [year] : listYearRPjmn()}
               getOptionLabel={(option) => option.toString()}
               handleChange={(newVal: number[]) =>
                 handleChangeQuill().then(r => {
@@ -159,22 +162,22 @@ export default function FormRoadmap({
                   value={request.output}
                   forwardedRef={quillRef}
                   onBlur={() => handleChangeQuill()}
-              />
+                />
                 :
-              <TextareaStyled
-                aria-label={fieldTitle}
-                placeholder={fieldTitle}
-                minRows={3}
-                value={request.output}
-                onChange={(e) =>
-                  setRequest((prev: ExsumRoadmapDto) => {
-                    return {
-                      ...prev,
-                      output: e.target.value,
-                    };
-                  })
-                }
-              />
+                <TextareaStyled
+                  aria-label={fieldTitle}
+                  placeholder={fieldTitle}
+                  minRows={3}
+                  value={request.output}
+                  onChange={(e) =>
+                    setRequest((prev: ExsumRoadmapDto) => {
+                      return {
+                        ...prev,
+                        output: e.target.value,
+                      };
+                    })
+                  }
+                />
             }
 
           </FormControl>

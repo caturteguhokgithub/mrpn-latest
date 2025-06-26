@@ -46,6 +46,7 @@ export default function CardItem({
   downloadButton,
   setting,
   multiEdit,
+  year,
   contentNoPadding,
   settingAddOnclick,
   settingDeleteOnclick,
@@ -61,6 +62,7 @@ export default function CardItem({
   downloadButton?: React.ReactNode;
   setting?: React.ReactNode;
   multiEdit?: boolean;
+  year?: number;
   contentNoPadding?: boolean;
   settingAddOnclick?: () => void;
   settingDeleteOnclick?: () => void;
@@ -144,16 +146,19 @@ export default function CardItem({
         anchorOrigin={{ horizontal: "right", vertical: "top" }}
       >
         {multiEdit &&
-        (hasPrivilege(permission, pathname, "add") ||
-          hasPrivilege(permission, pathname, "update")) ? (
+          (hasPrivilege(permission, pathname, "add") ||
+            hasPrivilege(permission, pathname, "update")) ? (
           <>
             <MenuItem onClick={settingEditBisnisClick}>
               <ListItemDropdownMenu label="Tambah Proses Bisnis" />
             </MenuItem>
 
-            <MenuItem onClick={settingEditOutputClick}>
-              <ListItemDropdownMenu label="Tambah Expected Output" />
-            </MenuItem>
+            {year && year > 0 ? "" :
+              <MenuItem onClick={settingEditOutputClick}>
+                <ListItemDropdownMenu label="Tambah Expected Output" />
+              </MenuItem>
+            }
+
           </>
         ) : settingAddOnclick ? (
           <>

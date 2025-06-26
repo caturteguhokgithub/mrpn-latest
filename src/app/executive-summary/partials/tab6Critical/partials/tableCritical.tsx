@@ -405,7 +405,7 @@ export default function ProjectTable({
                                 cursor: "pointer",
                               }}
                             >
-                              {parent.ro}
+                              {parent.ro} {parent.intervention ? "(Key)" : ""}
                             </Typography>
                           </HtmlTooltip>
                         </Stack>
