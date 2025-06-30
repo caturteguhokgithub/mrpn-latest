@@ -48,12 +48,19 @@ const useCardRoadmapVM = () => {
   }
 
   const handleOpenModal = (action: boolean, type: string) => {
-    setRequest((prev) => {
-      return {
+
+    if (type === "BISNIS-EDIT" || type === "OUTPUT-EDIT") {
+      setRequest((prev) => ({
         ...prev,
         type: type.split("-")[0],
-      };
-    });
+      }));
+    } else {
+      setRequest({
+        ...initExsumRoadmapReq,
+        type: type.split("-")[0],
+      });
+    }
+
     switch (type) {
       case "OUTPUT": {
         setModal({

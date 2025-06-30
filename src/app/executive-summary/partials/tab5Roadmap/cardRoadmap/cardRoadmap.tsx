@@ -89,8 +89,6 @@ export default function CardRoadmap() {
     // conditionEditing,
   } = useCardRoadmapVM();
 
-  console.log(year);
-
   // const { handleEdited, conditionEditing } = useCardLocationVM();
 
   return (
