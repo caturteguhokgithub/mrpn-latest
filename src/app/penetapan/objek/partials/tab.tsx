@@ -246,8 +246,8 @@ export default function TabObject({
               ) : ( */}
               <CollapsibleTableUpr
                 data={stateUpr}
-                setShowSave={setShowSave}
-                showSave={showSave}
+              // setShowSave={setShowSave}
+              // showSave={showSave}
               />
               {/* )} */}
             </Fragment>
@@ -258,16 +258,16 @@ export default function TabObject({
         <CardItem
           // title="Nota Dinas Objek MRPN & UPR LS"
           title="Pengesahan Objek & UPR LS"
-          // addButton={
-          //   !editNotaDinas && (
-          //     <AddButton
-          //       title={`Ubah`}
-          //       filled
-          //       startIcon={<IconFA size={14} name="pencil" />}
-          //       onclick={() => setEditNotaDinas(true)}
-          //     />
-          //   )
-          // }
+        // addButton={
+        //   !editNotaDinas && (
+        //     <AddButton
+        //       title={`Ubah`}
+        //       filled
+        //       startIcon={<IconFA size={14} name="pencil" />}
+        //       onclick={() => setEditNotaDinas(true)}
+        //     />
+        //   )
+        // }
         >
           {/* {isDeveloping ? (
             <EmptyDevelopingState />

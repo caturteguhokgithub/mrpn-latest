@@ -1,4 +1,4 @@
-import React, { Fragment, SetStateAction, useState } from "react";
+import React, { Fragment, SetStateAction, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -30,6 +30,7 @@ import Iconify from "@/app/components/icons/iconify";
 import DialogComponent from "@/app/components/dialog";
 import usePenetapanObjectVM from "../pageVM";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import { usePenetapanTopicContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 
 function createData(name: string) {
   return {
@@ -189,14 +190,21 @@ function Row(props: {
 
 export default function CollapsibleTableUpr({
   data,
-  showSave,
-  setShowSave,
 }: {
   data: dtoUraian[]
-  showSave?: boolean;
-  setShowSave?: any;
 }) {
   const { modalObjek, setModalObjek } = usePenetapanObjectVM();
+  const { year } = useRKPContext((state) => state);
+  const { objectState } = usePenetapanTopicContext((state) => state);
+
+  const {
+    useEffectObjectState,
+    setShowSave,
+    showSave,
+    stateUpr,
+  } = usePenetapanObjectVM();
+
+  useEffect(useEffectObjectState, [year, objectState]);
 
   return (
     <Fragment>
@@ -211,7 +219,7 @@ export default function CollapsibleTableUpr({
       >
         <Table>
           <TableBody>
-            {data && data.map((item) => {
+            {stateUpr && stateUpr.map((item) => {
               return (
                 <Row
                   key={item.id}
