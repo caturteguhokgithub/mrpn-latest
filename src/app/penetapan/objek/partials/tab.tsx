@@ -96,6 +96,7 @@ export default function TabObject({
     showSave,
     stateUpr,
     getRanking,
+    stateApproval
   } = usePenetapanObjectVM();
 
   useEffect(useEffectObjectState, [year, objectState]);
@@ -283,7 +284,7 @@ export default function TabObject({
             ) : editNotaDinas ? (
               <TableNotaDinas edit={editNotaDinas} setEdit={setEditNotaDinas} />
             ) : nota ? (
-              <TableNotaDinasViewOnly notaDinas={nota} />
+              <TableNotaDinasViewOnly notaDinas={nota} stateApproval={stateApproval} />
             ) : (
               <EmptyState
                 dense

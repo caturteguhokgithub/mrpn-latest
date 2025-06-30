@@ -7,6 +7,7 @@ import {
 import { useState } from "react";
 import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
 import {
+  dtoGetApproval,
   dtoResUprLs,
   dtoUraian,
   initLogActivity,
@@ -34,6 +35,7 @@ import {
   doCratePenetapanObjectLongListAssignObject,
   doCreatePenetapanObjectTopic,
   doDeletePenetapanObjectTopic,
+  doGetApproval,
   doGetPenetapanObject,
   doGetPenetapanObjectCascading,
   doGetPenetapanObjectEntity,
@@ -72,18 +74,13 @@ const usePenetapanObjectVM = () => {
   } = usePenetapanTopicContext((state) => state);
 
   const initState = JSON.parse(JSON.stringify(initPenetapanObjectState));
-  const [stateTopic, setStateTopic] =
-    useState<PenetapanObjectVMState>(initState);
-  const [stateShorList, setStateShortList] = useState<
-    PenetapanObjectShortListDto[]
-  >([]);
+  const [stateTopic, setStateTopic] = useState<PenetapanObjectVMState>(initState);
+  const [stateShorList, setStateShortList] = useState<PenetapanObjectShortListDto[]>([]);
   const [stateCascading, setStateCascading] = useState<RKPCascadingDto[]>([]);
   const [stateEntity, setStateEntity] = useState<PenetapanObjectStateEntityDto[]>([]);
   const [stateUpr, setStateUpr] = useState<dtoUraian[]>([]);
 
-  const [getStateLogActivity, setLogActivity] = useState<LogActivityDto[]>([
-    initLogActivity,
-  ]);
+  const [getStateLogActivity, setLogActivity] = useState<LogActivityDto[]>([initLogActivity]);
   const [optionPN, setOptionPN] = useState<ProjectDefaultDto[]>([]);
   const [modalAdd, setModalAdd] = useState<boolean>(false);
   const [modalLog, setModalLog] = useState<boolean>(false);
@@ -93,6 +90,8 @@ const usePenetapanObjectVM = () => {
 
   const [stateCreateUpr, setStateCreateUpr] = useState<PenetapanObjectEntityReqDto>({ ...initReqUpr })
   const [stateUprSingle, setStateUprSingle] = useState<dtoUraian>({ ...initShorlist });
+
+  const [stateApproval, setStateApproval] = useState<dtoGetApproval>();
 
   const generateOptionPN = () => {
     let opt: ProjectDefaultDto[] = [];
@@ -452,6 +451,27 @@ const usePenetapanObjectVM = () => {
     return false;
   }
 
+  async function getApproval() {
+    if (objectState !== undefined) {
+      setLoading(true);
+      const response = await doGetApproval({
+        body: { id: objectState.id },
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      });
+
+      if (response?.code == API_CODE.success) {
+        let result: dtoGetApproval[] = response.result;
+        if (result) {
+          setStateApproval(result[0])
+          setLoading(false);
+        } else {
+          setLoading(true);
+        }
+      }
+    }
+  }
+
   async function getLogActivity() {
     const response = await doLogActivity({
       body: {
@@ -534,8 +554,8 @@ const usePenetapanObjectVM = () => {
       setUraianState(finalData);
 
       getPenetapanObjectEntity();
-
       getPenetapanObjectNotaDinas();
+      getApproval();
     }
   };
 
@@ -585,6 +605,7 @@ const usePenetapanObjectVM = () => {
     stateUprSingle,
     setStateUprSingle,
     getRanking,
+    stateApproval
   };
 };
 

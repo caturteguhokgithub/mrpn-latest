@@ -325,6 +325,15 @@ export interface ResRankingItem {
   'ranking-prioritas': string | number;
 }
 
+export interface dtoGetApproval {
+  id: number,
+  user_id: number,
+  status: string,
+  message: string,
+  approvalable_id: number,
+  approvalable_type: string,
+}
+
 
 export const initReqUpr: PenetapanObjectEntityReqDto = {
   id_objek: 0,

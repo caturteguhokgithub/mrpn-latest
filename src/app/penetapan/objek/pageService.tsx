@@ -129,3 +129,11 @@ export async function doGetRanking(param: UpdateOrCreatePenetapanObjectLongListS
   });
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
+
+export async function doGetApproval(param: GetPenetapanObjectEntityUsulanServiceModel) {
+  const resp = await post({
+    ...param,
+    url: "penetapan/object/getApproval",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}

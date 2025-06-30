@@ -36,6 +36,7 @@ import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import DialogDelete from "@/app/components/dialogDelete";
 import { useToast } from "@/lib/core/context/toastContext";
+import { dtoGetApproval } from "@/app/penetapan/objek/pageModel";
 
 type Row = {
   object: string;
@@ -51,11 +52,15 @@ export default function TableNotaDinasViewOnly({
   notaDinas,
   actionApprove,
   pageApproval,
+  stateApproval,
 }: {
   notaDinas: PenetapanObjectNotaDto;
   actionApprove?: React.ReactNode;
   pageApproval?: boolean;
+  stateApproval?: dtoGetApproval;
 }) {
+  console.log(stateApproval);
+
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalViewImage, setModalViewImage] = React.useState(false);
   const [thisGambar, setThisGambar] = React.useState("");
@@ -247,7 +252,8 @@ export default function TableNotaDinasViewOnly({
                   </TableCell>
                   <TableCell>
                     {isProduction ? (
-                      "-"
+                      stateApproval?.status ?? "-"
+                      // "-"
                     ) : (
                       <Stack direction="row" alignItems="center" gap={1}>
                         {pageApproval ? (
@@ -260,7 +266,7 @@ export default function TableNotaDinasViewOnly({
                               startIcon={
                                 <Iconify name="mdi:close-circle" size={16} />
                               }
-                              onclick={() => {}}
+                              onclick={() => { }}
                             />
                             <AddButton
                               color="success"
@@ -270,7 +276,7 @@ export default function TableNotaDinasViewOnly({
                               startIcon={
                                 <Iconify name="mdi:check-circle" size={16} />
                               }
-                              onclick={() => {}}
+                              onclick={() => { }}
                             />
                           </Stack>
                         ) : (
@@ -297,7 +303,7 @@ export default function TableNotaDinasViewOnly({
                                       size={16}
                                     />
                                   }
-                                  onclick={() => {}}
+                                  onclick={() => { }}
                                 />
                               </Fragment>
                             ) : statusObject == "plan" ? (
@@ -834,14 +840,14 @@ export default function TableNotaDinasViewOnly({
                   <Fragment>
                     {(statusObject == "reject" ||
                       statusObject == "approved") && (
-                      <AddButton
-                        title="Tambah Catatan"
-                        filled
-                        noMargin
-                        startIcon={<Iconify name="mdi:plus-circle" size={16} />}
-                        onclick={() => setModalOpenAdd(true)}
-                      />
-                    )}
+                        <AddButton
+                          title="Tambah Catatan"
+                          filled
+                          noMargin
+                          startIcon={<Iconify name="mdi:plus-circle" size={16} />}
+                          onclick={() => setModalOpenAdd(true)}
+                        />
+                      )}
                   </Fragment>
                 )}
               </Stack>
