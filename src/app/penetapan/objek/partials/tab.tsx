@@ -24,6 +24,7 @@ import { isDeveloping } from "@/app/components/layouts/layout";
 import EmptyDevelopingState from "@/app/components/empty/developing";
 import TableUPR from "./table-upr";
 import CollapsibleTableUpr from "./table-upr";
+import { dtoUraian } from "../pageModel";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -79,8 +80,20 @@ function CustomTabPanel(props: TabPanelProps) {
 
 export default function TabObject({
   setModalUpr,
+  useEffectObjectState,
+  getRanking,
+  updateOrCreateLongList,
+  showSave,
+  setShowSave,
+  stateUpr,
 }: {
   setModalUpr: (value: boolean) => void;
+  useEffectObjectState: () => void;
+  getRanking: () => Promise<void>;
+  updateOrCreateLongList: any;
+  showSave: boolean;
+  setShowSave: (value: boolean) => void;
+  stateUpr: dtoUraian[];
 }) {
   const { nota } = usePenetapanTopicContext((store) => store);
   const { rkp, year, rpjmn } = useRKPContext((state) => state);
@@ -89,14 +102,14 @@ export default function TabObject({
     (state) => state
   );
 
-  const {
-    useEffectObjectState,
-    updateOrCreateLongList,
-    setShowSave,
-    showSave,
-    stateUpr,
-    getRanking,
-  } = usePenetapanObjectVM();
+  // const {
+  //   useEffectObjectState,
+  //   updateOrCreateLongList,
+  //   setShowSave,
+  //   showSave,
+  //   stateUpr,
+  //   getRanking,
+  // } = usePenetapanObjectVM();
 
   useEffect(useEffectObjectState, [year, objectState]);
 
@@ -107,9 +120,8 @@ export default function TabObject({
   };
 
   const handleRanking = async () => {
-    getRanking()
+    getRanking();
   };
-
 
   const handleOpenShortlist = async () => {
     const updateData = await updateOrCreateLongList();
@@ -129,7 +141,8 @@ export default function TabObject({
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={value} onChange={handleChange} sx={styleTab(sxParams)}>
           <Tab
-            label="Longlist"
+            // label="Longlist"
+            label="Shortlist"
             {...a11yProps(0)}
             iconPosition="start"
             icon={
@@ -141,7 +154,8 @@ export default function TabObject({
             }
           />
           <Tab
-            label="Shortlist"
+            // label="Shortlist"
+            label="Objek MRPN LS"
             {...a11yProps(1)}
             iconPosition="start"
             icon={<IconFA size={16} name="arrow-down-wide-short" />}
@@ -153,13 +167,15 @@ export default function TabObject({
             icon={<IconFA size={16} name="list-check" />}
           /> */}
           <Tab
-            label="Usulan UPR LS"
+            // label="Usulan UPR LS"
+            label="UPR LS"
             {...a11yProps(2)}
             iconPosition="start"
             icon={<IconFA size={16} name="scroll" />}
           />
           <Tab
-            label="Pengesahan"
+            // label="Pengesahan"
+            label="Penetapan"
             {...a11yProps(3)}
             iconPosition="start"
             icon={<IconFA size={16} name="newspaper" sx={{ width: "auto" }} />}
@@ -167,7 +183,10 @@ export default function TabObject({
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <CardItem title="Longlist">
+        <CardItem
+          // title="Longlist"
+          title="Shortlist"
+        >
           {isEmpty ? (
             <EmptyState
               dense
@@ -184,7 +203,10 @@ export default function TabObject({
         </CardItem>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <CardItem title="Shortlist">
+        <CardItem
+          // title="Shortlist"
+          title="Objek MRPN LS"
+        >
           {isEmpty ? (
             <EmptyState
               dense
@@ -213,7 +235,8 @@ export default function TabObject({
       </CustomTabPanel> */}
       <CustomTabPanel value={value} index={2}>
         <CardItem
-          title="Usulan UPR LS"
+          // title="Usulan UPR LS"
+          title="UPR LS"
           addButton={
             <Stack direction="row" gap={1}>
               {showSave && (
@@ -257,7 +280,8 @@ export default function TabObject({
       <CustomTabPanel value={value} index={3}>
         <CardItem
           // title="Nota Dinas Objek MRPN & UPR LS"
-          title="Pengesahan Objek & UPR LS"
+          // title="Pengesahan Objek & UPR LS"
+          title="Penetapan"
           // addButton={
           //   !editNotaDinas && (
           //     <AddButton

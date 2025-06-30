@@ -47,7 +47,8 @@ export default function PageApprovalNotaDinasView({}) {
 
   return (
     <ContentPage
-      title="Pengesahan Objek MRPN & UPR LS"
+      // title="Pengesahan Objek MRPN LS & UPR LS"
+      title="Penetapan"
       infoToolTip={
         <Stack spacing={2}>
           <div>

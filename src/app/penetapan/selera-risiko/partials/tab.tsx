@@ -94,20 +94,27 @@ export default function TabInternalEksternal({}) {
             icon={<IconFA size={16} name="pen-to-square" />}
           />
           <Tab
-            label="Regulasi & Stakeholder"
+            label="Regulasi"
             {...a11yProps(1)}
             iconPosition="start"
             icon={<IconFA size={16} name="gavel" />}
           />
-          {/* <Tab
-            label="Perencanaan Lintasan Kritis"
+          <Tab
+            label="Stakeholder"
             {...a11yProps(2)}
             iconPosition="start"
+            icon={<IconFA size={16} name="gavel" />}
+          />
+          <Tab
+            // label="Perencanaan Lintasan Kritis"
+            label="Critical Path"
+            {...a11yProps(3)}
+            iconPosition="start"
             icon={<IconFA size={16} name="exclamation-triangle" />}
-          /> */}
+          />
           <Tab
             label="Informasi Lain"
-            {...a11yProps(2)}
+            {...a11yProps(4)}
             iconPosition="start"
             icon={<IconFA size={16} name="ellipsis" />}
           />
@@ -125,7 +132,7 @@ export default function TabInternalEksternal({}) {
           <Stack gap={1}>
             <CardUrgent activeSetting penetapan />
             <CardSegment activeSetting penetapan />
-            <CardSwot activeSetting penetapan />
+            {/* <CardSwot activeSetting penetapan /> */}
           </Stack>
         )}
       </CustomTabPanel>
@@ -138,13 +145,10 @@ export default function TabInternalEksternal({}) {
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <Stack gap={1}>
-            <CardRegulation penetapan />
-            <CardStakeholder title="Stakeholder Mapping" isIntExtPage />
-          </Stack>
+          <CardRegulation penetapan />
         )}
       </CustomTabPanel>
-      {/* <CustomTabPanel value={value} index={2}>
+      <CustomTabPanel value={value} index={2}>
         {isEmpty ? (
           <EmptyState
             dense
@@ -153,10 +157,22 @@ export default function TabInternalEksternal({}) {
             description="Silahkan isi konten halaman ini"
           />
         ) : (
-          <CardCritical title="Perencanaan Lintasan Kritis" isIntExtPage />
+          <CardStakeholder title="Stakeholder Mapping" isIntExtPage />
         )}
-      </CustomTabPanel> */}
-      <CustomTabPanel value={value} index={2}>
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        {isEmpty ? (
+          <EmptyState
+            dense
+            icon={<IconEmptyData width={100} />}
+            title="Data Kosong"
+            description="Silahkan isi konten halaman ini"
+          />
+        ) : (
+          <CardCritical title="Critical Path" isIntExtPage />
+        )}
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={4}>
         {isEmpty ? (
           <EmptyState
             dense

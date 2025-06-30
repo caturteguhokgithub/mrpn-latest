@@ -402,13 +402,14 @@ export default function TableNotaDinasViewOnly({
         </Paper>
         {/* OBJEK UPR */}
         <Stack gap={1}>
-          <Typography fontWeight={600}>Objek & UPR LS</Typography>
+          {/* <Typography fontWeight={600}>Objek & UPR LS</Typography> */}
+          <Typography fontWeight={600}>Objek MRPN LS</Typography>
           {generateRows().length == 0 ? (
             <Paper elevation={0} variant="outlined">
               <EmptyState
                 dense
                 icon={<IconEmptyData width={100} />}
-                title="Objek & UPR LS Kosong"
+                title="Objek MRPN LS Kosong"
               />
             </Paper>
           ) : (
@@ -444,7 +445,7 @@ export default function TableNotaDinasViewOnly({
                       Objek MRPN LS
                     </TableCell>
                     <TableCell colSpan={3} align="center">
-                      Unit Pengelola Risiko
+                      Unit Pemilik Risiko Lintas Sektor
                     </TableCell>
                   </TableRow>
                   <TableRow>

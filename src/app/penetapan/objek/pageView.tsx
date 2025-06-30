@@ -41,12 +41,19 @@ import {
 } from "@/lib/core/context/penetapanTopicContext";
 import useRkpVM from "@/components/dropdown/rkpVM";
 import DialogDelete from "@/app/components/dialogDelete";
-import { dtoUraian, PenetapanObjectEntityReqDto, PenetapanObjectVMState } from "@/app/penetapan/objek/pageModel";
+import {
+  dtoUraian,
+  PenetapanObjectEntityReqDto,
+  PenetapanObjectVMState,
+} from "@/app/penetapan/objek/pageModel";
 import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
 import { forEach } from "lodash";
 import Iconify from "@/app/components/icons/iconify";
 import TableLog from "./partials/table-log";
-import { AutocompleteSelectSingle, AutoCompleteSingleProp } from "@/app/components/autocomplete";
+import {
+  AutocompleteSelectSingle,
+  AutoCompleteSingleProp,
+} from "@/app/components/autocomplete";
 import FormUPR from "./partials/form-upr";
 import Toast from "@/app/components/snackbar/snackbar";
 import useCardIndicationVM from "@/app/executive-summary/partials/tab9Indication/cardIndicationVM";
@@ -116,7 +123,7 @@ const styleToggleButton = [
   },
 ];
 
-export default function PageTemaView({ }) {
+export default function PageTemaView({}) {
   const [modalDeleteTopic, setModalDeleteTopic] = useState(false);
 
   const { permission } = useAuthContext((state) => state);
@@ -151,6 +158,10 @@ export default function PageTemaView({ }) {
     updateOrCreateEntity,
     stateUprSingle,
     setStateUprSingle,
+    updateOrCreateLongList,
+    setShowSave,
+    showSave,
+    getRanking,
   } = usePenetapanObjectVM();
 
   const { optionStakeholder } = useCardIndicationVM();
@@ -245,10 +256,11 @@ export default function PageTemaView({ }) {
   return (
     <>
       <ContentPage
-        title={`Objek MRPN & UPR LS ${year == 0
-          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-          : "Tahun " + year
-          }`}
+        title={`Objek MRPN LS & UPR LS ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip={
           <Stack spacing={2}>
             <div>
@@ -410,7 +422,15 @@ export default function PageTemaView({ }) {
               </Fragment>
             )}
             <Collapse in={objectState !== undefined}>
-              <TabObject setModalUpr={setModalUpr} />
+              <TabObject
+                setModalUpr={setModalUpr}
+                useEffectObjectState={useEffectObjectState}
+                getRanking={getRanking}
+                updateOrCreateLongList={updateOrCreateLongList}
+                showSave={showSave}
+                setShowSave={setShowSave}
+                stateUpr={stateUpr}
+              />
             </Collapse>
           </Fragment>
         )}
@@ -462,7 +482,10 @@ export default function PageTemaView({ }) {
             <Button onClick={() => setModalUpr(false)}>Batal</Button>
             <Button
               variant="contained"
-              onClick={() => handleCreateUpr()}
+              onClick={() => {
+                handleCreateUpr();
+                setModalUpr(false);
+              }}
               sx={{
                 color: "white !important",
               }}

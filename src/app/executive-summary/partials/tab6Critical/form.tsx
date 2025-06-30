@@ -527,7 +527,7 @@ export default function FormCritical({
                       <Grid item md={6} xs={12}>
                         <FormControl fullWidth>
                           <FieldLabelInfo
-                            title={`Kelompok Warna Kegiatan #${index + 1}`}
+                            title={`Kelompok Warna Aktivitas #${index + 1}`}
                           />
                           <ToggleButtonGroup
                             exclusive

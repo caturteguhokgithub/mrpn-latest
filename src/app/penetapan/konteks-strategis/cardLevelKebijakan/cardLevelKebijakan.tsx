@@ -60,113 +60,113 @@ export default function CardLevelKebijakan() {
 
   return (
     <CardItem title="Level Kebijakan Objek MRPN LS pada Struktur Prioritas Pembangunan">
-      {isDeveloping ? (
+      {/* {isDeveloping ? (
         <EmptyDevelopingState />
-      ) : (
-        <Fragment>
-          {isEmpty ? (
-            <EmptyState
-              dense
-              icon={<IconEmptyData width={100} />}
-              title="Data Kosong"
-              description="Silahkan isi konten halaman ini"
-            />
-          ) : (
-            <TableContainer component={Paper} elevation={0} variant="outlined">
-              <Table
-                size="small"
-                sx={{
-                  "tbody, thead": {
-                    "td, th": {
-                      borderRight: `1px solid ${grey[300]} !important`,
-                      "&:last-of-type": {
-                        borderRight: `0 !important`,
-                      },
+      ) : ( */}
+      <Fragment>
+        {isEmpty ? (
+          <EmptyState
+            dense
+            icon={<IconEmptyData width={100} />}
+            title="Data Kosong"
+            description="Silahkan isi konten halaman ini"
+          />
+        ) : (
+          <TableContainer component={Paper} elevation={0} variant="outlined">
+            <Table
+              size="small"
+              sx={{
+                "tbody, thead": {
+                  "td, th": {
+                    borderRight: `1px solid ${grey[300]} !important`,
+                    "&:last-of-type": {
+                      borderRight: `0 !important`,
                     },
                   },
-                }}
-              >
-                <TableHead sx={{ bgcolor: bgColorTh }}>
-                  <TableRow>
-                    <TableCell align="center">Level</TableCell>
-                    <TableCell align="center">Nama</TableCell>
-                    <TableCell align="center">Sasaran</TableCell>
-                    <TableCell align="center">Indikator</TableCell>
-                    <TableCell align="center">Target</TableCell>
-                    <TableCell align="center" width={160}>
-                      Satuan
-                    </TableCell>
-                  </TableRow>
-                  {[...new Array(6)].map((_, i) => (
-                    <TableCell sx={{ bgcolor: grey[100] }}>
-                      <Typography
-                        color={`${grey[500]} !important`}
-                        fontSize={12}
-                        textAlign="center"
+                },
+              }}
+            >
+              <TableHead sx={{ bgcolor: bgColorTh }}>
+                <TableRow>
+                  <TableCell align="center">Level</TableCell>
+                  <TableCell align="center">Nama</TableCell>
+                  <TableCell align="center">Sasaran</TableCell>
+                  <TableCell align="center">Indikator</TableCell>
+                  <TableCell align="center">Target</TableCell>
+                  <TableCell align="center" width={160}>
+                    Satuan
+                  </TableCell>
+                </TableRow>
+                {[...new Array(6)].map((_, i) => (
+                  <TableCell sx={{ bgcolor: grey[100] }}>
+                    <Typography
+                      color={`${grey[500]} !important`}
+                      fontSize={12}
+                      textAlign="center"
+                    >
+                      {i + 1}
+                    </Typography>
+                  </TableCell>
+                ))}
+              </TableHead>
+              <TableBody>
+                {rows.map((row, rowIndex) => (
+                  <Fragment>
+                    <TableRow key={rowIndex}>
+                      <TableCell
+                        sx={{ verticalAlign: "top" }}
+                        rowSpan={row.indikator.length}
                       >
-                        {i + 1}
-                      </Typography>
-                    </TableCell>
-                  ))}
-                </TableHead>
-                <TableBody>
-                  {rows.map((row, rowIndex) => (
-                    <Fragment>
-                      <TableRow key={rowIndex}>
-                        <TableCell
-                          sx={{ verticalAlign: "top" }}
-                          rowSpan={row.indikator.length}
-                        >
-                          {row.level}
-                        </TableCell>
-                        <TableCell
-                          sx={{ verticalAlign: "top" }}
-                          rowSpan={row.indikator.length}
-                        >
-                          {row.nama}
-                        </TableCell>
-                        <TableCell
-                          sx={{ verticalAlign: "top" }}
-                          rowSpan={row.indikator.length}
-                        >
-                          {row.sasaran}
-                        </TableCell>
-                        <TableCell sx={{ verticalAlign: "top" }}>
-                          {row.indikator[0]}
-                        </TableCell>
-                        <TableCell align="right" sx={{ verticalAlign: "top" }}>
-                          {row.target[0]}
-                        </TableCell>
-                        <TableCell sx={{ verticalAlign: "top" }}>
-                          {row.satuan[0]}
-                        </TableCell>
-                      </TableRow>
-                      {row.indikator
-                        .slice(1)
-                        .map((indikator: any, indikatorIndex: any) => (
-                          <TableRow key={`${rowIndex}-${indikatorIndex}`}>
-                            <TableCell sx={{ verticalAlign: "top" }}>
-                              {indikator}
-                            </TableCell>
-                            <TableCell
-                              align="right"
-                              sx={{ verticalAlign: "top" }}
-                            >
-                              {row.target[indikatorIndex + 1]}
-                            </TableCell>
-                            <TableCell sx={{ verticalAlign: "top" }}>
-                              {row.satuan[indikatorIndex + 1]}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                    </Fragment>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          )}
-        </Fragment>
-      )}
+                        {row.level}
+                      </TableCell>
+                      <TableCell
+                        sx={{ verticalAlign: "top" }}
+                        rowSpan={row.indikator.length}
+                      >
+                        {row.nama}
+                      </TableCell>
+                      <TableCell
+                        sx={{ verticalAlign: "top" }}
+                        rowSpan={row.indikator.length}
+                      >
+                        {row.sasaran}
+                      </TableCell>
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        {row.indikator[0]}
+                      </TableCell>
+                      <TableCell align="right" sx={{ verticalAlign: "top" }}>
+                        {row.target[0]}
+                      </TableCell>
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        {row.satuan[0]}
+                      </TableCell>
+                    </TableRow>
+                    {row.indikator
+                      .slice(1)
+                      .map((indikator: any, indikatorIndex: any) => (
+                        <TableRow key={`${rowIndex}-${indikatorIndex}`}>
+                          <TableCell sx={{ verticalAlign: "top" }}>
+                            {indikator}
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            sx={{ verticalAlign: "top" }}
+                          >
+                            {row.target[indikatorIndex + 1]}
+                          </TableCell>
+                          <TableCell sx={{ verticalAlign: "top" }}>
+                            {row.satuan[indikatorIndex + 1]}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                  </Fragment>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+      </Fragment>
+      {/* )} */}
     </CardItem>
   );
 }

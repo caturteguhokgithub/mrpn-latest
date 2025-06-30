@@ -127,9 +127,9 @@ export default function PageApprovalSelera() {
                 borderRadius={3}
               >
                 <Typography component="p">
-                  Selera risiko adalah jenis/jumlah (nilai absolut) dari risiko
-                  yang siap diambil dalam proses pencapaian sasaran PKPPR,
-                  dengan pilihan sebagai berikut.
+                  Selera Risiko merupakan bagian dari manajemen risiko
+                  terintegrasi yang menghubungkan strategi, tujuan bisnis, dan
+                  kinerja
                 </Typography>
               </Box>
               <ToggleButtonGroup

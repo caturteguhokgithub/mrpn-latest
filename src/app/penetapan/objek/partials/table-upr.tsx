@@ -21,7 +21,12 @@ import {
 } from "@mui/material";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
-import { dtoResUprLs, dtoUraian, dtoUsulanUprLs, UnitPengelolaRisikoEntity } from "@/app/penetapan/objek/pageModel";
+import {
+  dtoResUprLs,
+  dtoUraian,
+  dtoUsulanUprLs,
+  UnitPengelolaRisikoEntity,
+} from "@/app/penetapan/objek/pageModel";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import { blue, grey } from "@mui/material/colors";
 import { bgColorTh } from "@/app/utils/color";
@@ -128,6 +133,9 @@ function Row(props: {
                           <InfoTooltip title="Kementerian negara, lembaga, pemerintah daerah, pemerintah desa, badan usaha, dan badan lainnya" />
                         </Stack>
                       </TableCell>
+                      <TableCell rowSpan={2} align="center">
+                        Ruang Lingkup
+                      </TableCell>
                       <TableCell colSpan={5} align="center">
                         Unit Pengelola Risiko
                       </TableCell>
@@ -160,6 +168,7 @@ function Row(props: {
                         <TableRow key={entity.id}>
                           <TableCell align="center">{i + 1}</TableCell>
                           <TableCell>{entity.entitas.value}</TableCell>
+                          <TableCell>{"entity.entitas.ruangLingkup"}</TableCell>
                           {UnitPengelolaRisikoEntity.map((uprItem) => (
                             <TableCell align="center" key={uprItem.id}>
                               <Stack direction="row" justifyContent="center">
@@ -192,7 +201,7 @@ export default function CollapsibleTableUpr({
   showSave,
   setShowSave,
 }: {
-  data: dtoUraian[]
+  data: dtoUraian[];
   showSave?: boolean;
   setShowSave?: any;
 }) {
@@ -211,16 +220,17 @@ export default function CollapsibleTableUpr({
       >
         <Table>
           <TableBody>
-            {data && data.map((item) => {
-              return (
-                <Row
-                  key={item.id}
-                  row={item}
-                  uprData={item.usulan_upr_linsek}
-                  setModalObjek={setModalObjek}
-                />
-              );
-            })}
+            {data &&
+              data.map((item) => {
+                return (
+                  <Row
+                    key={item.id}
+                    row={item}
+                    uprData={item.usulan_upr_linsek}
+                    setModalObjek={setModalObjek}
+                  />
+                );
+              })}
             {/* {listObject.map((object) => {
               const uprData = listUpr.filter(
                 (upr) => upr.object_id === object.id
@@ -253,42 +263,6 @@ export default function CollapsibleTableUpr({
           </Box>
         </Stack>
       )} */}
-      <DialogComponent
-        title="Tambah Objek Shortlist"
-        width={600}
-        dialogOpen={modalObjek}
-        dialogClose={() => setModalObjek(false)}
-        dialogFooter={
-          <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button onClick={() => setModalObjek(false)}>Batal</Button>
-            <Button
-              variant="contained"
-              // onClick={() => updateOrCreateTopic()}
-              sx={{
-                color: "white !important",
-              }}
-            >
-              Simpan
-            </Button>
-          </DialogActions>
-        }
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <FieldLabelInfo title="Objek Shortlist" />
-              <TextField
-                variant="outlined"
-                size="small"
-                placeholder="Objek shortlist"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
-      </DialogComponent>
     </Fragment>
   );
 }

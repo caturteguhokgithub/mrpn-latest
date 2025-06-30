@@ -15,11 +15,19 @@ import {
 import SearchResult from "./search-result";
 import TreeView from "./tree-view";
 import { Fragment, SetStateAction, useEffect, useState } from "react";
-import { AutocompleteSelectSingle, AutoCompleteSingleProp } from "@/app/components/autocomplete";
+import {
+  AutocompleteSelectSingle,
+  AutoCompleteSingleProp,
+} from "@/app/components/autocomplete";
 import usePenetapanObjectVM from "../pageVM";
 import AddButton from "@/app/components/buttonAdd";
-import { dtoUraian, PenetapanObjectEntityReqDto, PenetapanObjectEntityValueReqDto } from "../pageModel";
+import {
+  dtoUraian,
+  PenetapanObjectEntityReqDto,
+  PenetapanObjectEntityValueReqDto,
+} from "../pageModel";
 import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
+import TextareaComponent from "@/app/components/textarea";
 
 export default function FormUPR({
   optionSL,
@@ -29,14 +37,13 @@ export default function FormUPR({
   stateUprSingle,
   setStateUprSingle,
 }: {
-  optionSL: dtoUraian[],
-  state: PenetapanObjectEntityReqDto,
-  setState: (value: (SetStateAction<PenetapanObjectEntityReqDto>)) => void,
+  optionSL: dtoUraian[];
+  state: PenetapanObjectEntityReqDto;
+  setState: (value: SetStateAction<PenetapanObjectEntityReqDto>) => void;
   listStakeholder: MiscMasterListStakeholderRes[];
-  stateUprSingle: dtoUraian,
-  setStateUprSingle: (value: (SetStateAction<dtoUraian>)) => void,
+  stateUprSingle: dtoUraian;
+  setStateUprSingle: (value: SetStateAction<dtoUraian>) => void;
 }) {
-
   const initReqStakeholder: MiscMasterListStakeholderRes = {
     id: 0,
     short: "",
@@ -49,7 +56,9 @@ export default function FormUPR({
   useEffect(() => {
     if (state.values && state.values.length > 0 && listStakeholder.length > 0) {
       const loadedItems = state.values.map((val, index) => {
-        const matchedStakeholder = listStakeholder.find((s) => s.id === val.entitas) || {
+        const matchedStakeholder = listStakeholder.find(
+          (s) => s.id === val.entitas
+        ) || {
           id: val.entitas,
           short: "",
           code: "",
@@ -82,7 +91,7 @@ export default function FormUPR({
     const newItem = {
       id: Math.floor(Math.random() * 1000),
       stakeholder: initReqStakeholder,
-      type: ""
+      type: "",
     };
 
     const newItems = [...items, newItem];
@@ -93,8 +102,8 @@ export default function FormUPR({
       ...prev,
       values: newItems.map((item) => ({
         entitas: item.stakeholder.id,
-        type: item.type
-      }))
+        type: item.type,
+      })),
     }));
   };
 
@@ -106,8 +115,8 @@ export default function FormUPR({
       ...prev,
       values: newItems.map((item) => ({
         entitas: item.stakeholder.id,
-        type: item.type
-      }))
+        type: item.type,
+      })),
     }));
   };
 
@@ -119,9 +128,9 @@ export default function FormUPR({
     const updatedItems = items.map((item) =>
       item.id === id
         ? {
-          ...item,
-          [field]: value,
-        }
+            ...item,
+            [field]: value,
+          }
         : item
     );
     setItems(updatedItems);
@@ -131,24 +140,30 @@ export default function FormUPR({
       ...prev,
       values: updatedItems.map((item) => ({
         entitas: item.stakeholder.id,
-        type: item.type
-      }))
+        type: item.type,
+      })),
     }));
   };
 
   const changeObjectShortlist = async (params: dtoUraian) => {
-    setStateUprSingle(params)
+    setStateUprSingle(params);
 
     // Set id_objek
     setState((prevState) => ({
       ...prevState,
-      id_objek: params?.id ?? 0
+      id_objek: params?.id ?? 0,
     }));
 
     // Jika `params.values` tersedia, maka isi `items` dan `state.values`
-    if (params?.usulan_upr_linsek && params?.usulan_upr_linsek.length > 0 && listStakeholder.length > 0) {
+    if (
+      params?.usulan_upr_linsek &&
+      params?.usulan_upr_linsek.length > 0 &&
+      listStakeholder.length > 0
+    ) {
       const mappedItems = params.usulan_upr_linsek.map((val, idx) => {
-        const stakeholder = listStakeholder.find((s) => s.id === val.entitas_id) || {
+        const stakeholder = listStakeholder.find(
+          (s) => s.id === val.entitas_id
+        ) || {
           id: val.entitas_id,
           short: "",
           code: "",
@@ -160,7 +175,7 @@ export default function FormUPR({
         return {
           id: idx + 1,
           stakeholder,
-          type: val.type
+          type: val.type,
         };
       });
 
@@ -170,18 +185,17 @@ export default function FormUPR({
         ...prevState,
         values: mappedItems.map((item) => ({
           entitas: item.stakeholder.id,
-          type: item.type
-        }))
+          type: item.type,
+        })),
       }));
     } else {
       setItems([{ id: 1, stakeholder: initReqStakeholder, type: "" }]);
       setState((prevState) => ({
         ...prevState,
-        values: []
+        values: [],
       }));
     }
   };
-
 
   return (
     <Grid container spacing={2}>
@@ -200,6 +214,12 @@ export default function FormUPR({
         </FormControl>
       </Grid>
       <Grid item xs={12}>
+        <FormControl fullWidth>
+          <Typography gutterBottom>Ruang Lingkup</Typography>
+          <TextareaComponent placeholder="Ruang lingkup" row={3} />
+        </FormControl>
+      </Grid>
+      <Grid item xs={12}>
         <Stack
           direction="row"
           alignItems="center"
@@ -212,7 +232,7 @@ export default function FormUPR({
         </Stack>
       </Grid>
       <Grid item xs={12}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} maxHeight="40vh" overflow="auto">
           {items.map((tags, key) => (
             <Grid item xs={12} key={`${tags.id}`}>
               <Paper
@@ -223,7 +243,11 @@ export default function FormUPR({
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <FormControl fullWidth>
-                      <Stack justifyContent="space-between" direction="row" mb={1}>
+                      <Stack
+                        justifyContent="space-between"
+                        direction="row"
+                        mb={1}
+                      >
                         <Typography gutterBottom>Entitas MRPN</Typography>
                         {key > 0 && (
                           <AddButton
@@ -240,9 +264,9 @@ export default function FormUPR({
                         value={tags.stakeholder}
                         options={listStakeholder}
                         getOptionLabel={(option) => option.value}
-                        handleChange={(newValue: MiscMasterListStakeholderRes) =>
-                          handleSubChange(tags.id, "stakeholder", newValue)
-                        }
+                        handleChange={(
+                          newValue: MiscMasterListStakeholderRes
+                        ) => handleSubChange(tags.id, "stakeholder", newValue)}
                         placeHolder={"Pilih entitas MRPN"}
                       />
                     </FormControl>
@@ -254,7 +278,9 @@ export default function FormUPR({
                         <RadioGroup
                           row
                           value={tags.type}
-                          onChange={(e) => handleSubChange(tags.id, "type", e.target.value)}
+                          onChange={(e) =>
+                            handleSubChange(tags.id, "type", e.target.value)
+                          }
                           sx={{ justifyContent: "space-between" }}
                         >
                           <FormControlLabel
