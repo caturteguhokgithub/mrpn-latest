@@ -41,16 +41,24 @@ import {
 } from "@/lib/core/context/penetapanTopicContext";
 import useRkpVM from "@/components/dropdown/rkpVM";
 import DialogDelete from "@/app/components/dialogDelete";
-import { dtoUraian, PenetapanObjectEntityReqDto, PenetapanObjectVMState } from "@/app/penetapan/objek/pageModel";
+import {
+  dtoUraian,
+  PenetapanObjectEntityReqDto,
+  PenetapanObjectVMState,
+} from "@/app/penetapan/objek/pageModel";
 import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
 import { forEach } from "lodash";
 import Iconify from "@/app/components/icons/iconify";
 import TableLog from "./partials/table-log";
-import { AutocompleteSelectSingle, AutoCompleteSingleProp } from "@/app/components/autocomplete";
+import {
+  AutocompleteSelectSingle,
+  AutoCompleteSingleProp,
+} from "@/app/components/autocomplete";
 import FormUPR from "./partials/form-upr";
 import Toast from "@/app/components/snackbar/snackbar";
 import useCardIndicationVM from "@/app/executive-summary/partials/tab9Indication/cardIndicationVM";
 import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
+import FormBuktiDukung from "./partials/form-bukti-dukung";
 
 const styleToggleButton = [
   {
@@ -116,7 +124,7 @@ const styleToggleButton = [
   },
 ];
 
-export default function PageTemaView({ }) {
+export default function PageTemaView({}) {
   const [modalDeleteTopic, setModalDeleteTopic] = useState(false);
 
   const { permission } = useAuthContext((state) => state);
@@ -151,6 +159,14 @@ export default function PageTemaView({ }) {
     updateOrCreateEntity,
     stateUprSingle,
     setStateUprSingle,
+    updateOrCreateLongList,
+    setShowSave,
+    showSave,
+    getRanking,
+    modalBuktiDukung,
+    setModalBuktiDukung,
+    handleUnggahBuktiDukung,
+    stateApproval,
   } = usePenetapanObjectVM();
 
   const { optionStakeholder } = useCardIndicationVM();
@@ -245,10 +261,11 @@ export default function PageTemaView({ }) {
   return (
     <>
       <ContentPage
-        title={`Objek MRPN & UPR LS ${year == 0
-          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-          : "Tahun " + year
-          }`}
+        title={`Objek MRPN & UPR LS ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip={
           <Stack spacing={2}>
             <div>
@@ -410,7 +427,17 @@ export default function PageTemaView({ }) {
               </Fragment>
             )}
             <Collapse in={objectState !== undefined}>
-              <TabObject setModalUpr={setModalUpr} />
+              <TabObject
+                setModalUpr={setModalUpr}
+                useEffectObjectState={useEffectObjectState}
+                getRanking={getRanking}
+                updateOrCreateLongList={updateOrCreateLongList}
+                showSave={showSave}
+                setShowSave={setShowSave}
+                stateUpr={stateUpr}
+                handleUploadBuktiDukung={() => setModalBuktiDukung(true)}
+                stateApproval={stateApproval}
+              />
             </Collapse>
           </Fragment>
         )}
@@ -480,6 +507,32 @@ export default function PageTemaView({ }) {
           stateUprSingle={stateUprSingle}
           setStateUprSingle={setStateUprSingle}
         />
+      </DialogComponent>
+
+      <DialogComponent
+        title="Tambah UPR"
+        width={600}
+        dialogOpen={modalBuktiDukung}
+        dialogClose={() => setModalBuktiDukung(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button onClick={() => setModalBuktiDukung(false)}>Batal</Button>
+            <Button
+              variant="contained"
+              onClick={() => {
+                handleCreateUpr();
+                setModalBuktiDukung(false);
+              }}
+              sx={{
+                color: "white !important",
+              }}
+            >
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <FormBuktiDukung handleUnggahBuktiDukung={handleUnggahBuktiDukung} />
       </DialogComponent>
 
       {/*<DialogComponent*/}

@@ -4,7 +4,14 @@ import {
 } from "@/app/misc/master/masterServiceModel";
 import { ExsumRegulationDto } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
 import React, { SetStateAction } from "react";
-import { Box, Button, FormControl, Grid, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
 import {
   AutocompleteSelectMultiple,
@@ -40,7 +47,8 @@ export default function FormRegulation({
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Entitas" />
+          {/* <FieldLabelInfo title="Entitas" /> */}
+          <FieldLabelInfo title="Nomor Regulasi" />
           <AutocompleteSelectMultiple
             key={state.stakeholder_id.length}
             value={state.stakeholder}
@@ -61,14 +69,15 @@ export default function FormRegulation({
                 };
               })
             }
-            placeHolder={"Pilih entitas"}
-            labelSelectAll={"Pilih semua entitas"}
+            placeHolder={"Pilih nomor regulasi"}
+            labelSelectAll={"Pilih semua nomor regulasi"}
           />
         </FormControl>
       </Grid>
       <Grid item xs={12}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Peraturan Terkait" />
+          {/* <FieldLabelInfo title="Peraturan Terkait" /> */}
+          <FieldLabelInfo title="Tentang" />
           <TextField
             fullWidth
             value={state.perpres}
@@ -106,14 +115,15 @@ export default function FormRegulation({
       </Grid>
       <Grid item xs={12}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Amanat Peraturan yang Terkait" />
+          {/* <FieldLabelInfo title="Amanat Peraturan yang Terkait" /> */}
+          <FieldLabelInfo title="Keterangan" />
           <TextField
             fullWidth
             minRows={3}
             value={state.amanat}
             variant="outlined"
             size="small"
-            placeholder={"Amanat"}
+            placeholder={"Keterangan"}
             InputLabelProps={{
               shrink: true,
             }}

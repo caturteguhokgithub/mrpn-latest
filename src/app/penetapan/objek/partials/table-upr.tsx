@@ -1,4 +1,4 @@
-import React, { Fragment, SetStateAction, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 import {
   Box,
   Button,
@@ -8,7 +8,6 @@ import {
   Grid,
   IconButton,
   Paper,
-  Radio,
   Stack,
   Table,
   TableBody,
@@ -21,16 +20,22 @@ import {
 } from "@mui/material";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
-import { dtoResUprLs, dtoUraian, dtoUsulanUprLs, UnitPengelolaRisikoEntity } from "@/app/penetapan/objek/pageModel";
+import {
+  dtoUraian,
+  dtoUsulanUprLs,
+  UnitPengelolaRisikoEntity,
+} from "@/app/penetapan/objek/pageModel";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
 import { blue, grey } from "@mui/material/colors";
 import { bgColorTh } from "@/app/utils/color";
-import { listUpr, listObject } from "../data"; // Import listObject and listUpr
 import Iconify from "@/app/components/icons/iconify";
-import DialogComponent from "@/app/components/dialog";
 import usePenetapanObjectVM from "../pageVM";
 import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import { usePenetapanTopicContext, useRKPContext } from "@/lib/core/hooks/useHooks";
+import {
+  usePenetapanTopicContext,
+  useRKPContext,
+} from "@/lib/core/hooks/useHooks";
+import DialogComponent from "@/app/components/dialog";
 
 function createData(name: string) {
   return {
@@ -188,21 +193,13 @@ function Row(props: {
   );
 }
 
-export default function CollapsibleTableUpr({
-  data,
-}: {
-  data: dtoUraian[]
-}) {
+export default function CollapsibleTableUpr({ data }: { data: dtoUraian[] }) {
   const { modalObjek, setModalObjek } = usePenetapanObjectVM();
   const { year } = useRKPContext((state) => state);
   const { objectState } = usePenetapanTopicContext((state) => state);
 
-  const {
-    useEffectObjectState,
-    setShowSave,
-    showSave,
-    stateUpr,
-  } = usePenetapanObjectVM();
+  const { useEffectObjectState, setShowSave, showSave, stateUpr } =
+    usePenetapanObjectVM();
 
   useEffect(useEffectObjectState, [year, objectState]);
 
@@ -219,16 +216,17 @@ export default function CollapsibleTableUpr({
       >
         <Table>
           <TableBody>
-            {stateUpr && stateUpr.map((item) => {
-              return (
-                <Row
-                  key={item.id}
-                  row={item}
-                  uprData={item.usulan_upr_linsek}
-                  setModalObjek={setModalObjek}
-                />
-              );
-            })}
+            {stateUpr &&
+              stateUpr.map((item) => {
+                return (
+                  <Row
+                    key={item.id}
+                    row={item}
+                    uprData={item.usulan_upr_linsek}
+                    setModalObjek={setModalObjek}
+                  />
+                );
+              })}
             {/* {listObject.map((object) => {
               const uprData = listUpr.filter(
                 (upr) => upr.object_id === object.id

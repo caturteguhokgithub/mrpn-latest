@@ -25,9 +25,11 @@ import Image from "next/image";
 export default function TableNotaDinas({
   edit,
   setEdit,
+  handleUploadBuktiDukung,
 }: {
   edit: boolean;
   setEdit: (value: SetStateAction<boolean>) => void;
+  handleUploadBuktiDukung?: () => void;
 }) {
   const { nota, setNota } = usePenetapanTopicContext((store) => store);
 

@@ -24,6 +24,7 @@ import { isDeveloping } from "@/app/components/layouts/layout";
 import EmptyDevelopingState from "@/app/components/empty/developing";
 import TableUPR from "./table-upr";
 import CollapsibleTableUpr from "./table-upr";
+import { dtoUraian } from "../pageModel";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -79,8 +80,24 @@ function CustomTabPanel(props: TabPanelProps) {
 
 export default function TabObject({
   setModalUpr,
+  useEffectObjectState,
+  getRanking,
+  updateOrCreateLongList,
+  showSave,
+  setShowSave,
+  stateUpr,
+  handleUploadBuktiDukung,
+  stateApproval,
 }: {
   setModalUpr: (value: boolean) => void;
+  useEffectObjectState: () => void;
+  getRanking: () => Promise<void>;
+  updateOrCreateLongList: any;
+  showSave: boolean;
+  setShowSave: (value: boolean) => void;
+  stateUpr: dtoUraian[];
+  handleUploadBuktiDukung?: () => void;
+  stateApproval: any;
 }) {
   const { nota } = usePenetapanTopicContext((store) => store);
   const { rkp, year, rpjmn } = useRKPContext((state) => state);
@@ -89,15 +106,15 @@ export default function TabObject({
     (state) => state
   );
 
-  const {
-    useEffectObjectState,
-    updateOrCreateLongList,
-    setShowSave,
-    showSave,
-    stateUpr,
-    getRanking,
-    stateApproval
-  } = usePenetapanObjectVM();
+  // const {
+  //   useEffectObjectState,
+  //   updateOrCreateLongList,
+  //   setShowSave,
+  //   showSave,
+  //   stateUpr,
+  //   getRanking,
+  //   stateApproval
+  // } = usePenetapanObjectVM();
 
   useEffect(useEffectObjectState, [year, objectState]);
 
@@ -108,9 +125,8 @@ export default function TabObject({
   };
 
   const handleRanking = async () => {
-    getRanking()
+    getRanking();
   };
-
 
   const handleOpenShortlist = async () => {
     const updateData = await updateOrCreateLongList();
@@ -247,8 +263,8 @@ export default function TabObject({
               ) : ( */}
               <CollapsibleTableUpr
                 data={stateUpr}
-              // setShowSave={setShowSave}
-              // showSave={showSave}
+                // setShowSave={setShowSave}
+                // showSave={showSave}
               />
               {/* )} */}
             </Fragment>
@@ -259,16 +275,16 @@ export default function TabObject({
         <CardItem
           // title="Nota Dinas Objek MRPN & UPR LS"
           title="Pengesahan Objek & UPR LS"
-        // addButton={
-        //   !editNotaDinas && (
-        //     <AddButton
-        //       title={`Ubah`}
-        //       filled
-        //       startIcon={<IconFA size={14} name="pencil" />}
-        //       onclick={() => setEditNotaDinas(true)}
-        //     />
-        //   )
-        // }
+          // addButton={
+          //   !editNotaDinas && (
+          //     <AddButton
+          //       title={`Ubah`}
+          //       filled
+          //       startIcon={<IconFA size={14} name="pencil" />}
+          //       onclick={() => setEditNotaDinas(true)}
+          //     />
+          //   )
+          // }
         >
           {/* {isDeveloping ? (
             <EmptyDevelopingState />
@@ -284,7 +300,11 @@ export default function TabObject({
             ) : editNotaDinas ? (
               <TableNotaDinas edit={editNotaDinas} setEdit={setEditNotaDinas} />
             ) : nota ? (
-              <TableNotaDinasViewOnly notaDinas={nota} stateApproval={stateApproval} />
+              <TableNotaDinasViewOnly
+                notaDinas={nota}
+                stateApproval={stateApproval}
+                handleUploadBuktiDukung={handleUploadBuktiDukung}
+              />
             ) : (
               <EmptyState
                 dense

@@ -506,7 +506,7 @@ export default function FormCritical({
                           <TextField
                             variant="outlined"
                             size="small"
-                            placeholder="Kegiatan"
+                            placeholder="Aktivitas"
                             InputLabelProps={{
                               shrink: true,
                             }}

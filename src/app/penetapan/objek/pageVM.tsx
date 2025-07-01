@@ -8,7 +8,6 @@ import { useState } from "react";
 import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
 import {
   dtoGetApproval,
-  dtoResUprLs,
   dtoUraian,
   initLogActivity,
   initPenetapanObjectState,
@@ -16,10 +15,7 @@ import {
   initShorlist,
   LogActivityDto,
   NotaDinasReqDto,
-  PenetapanObjectEntityCheckedDto,
-  PenetapanObjectEntityDto,
   PenetapanObjectEntityReqDto,
-  PenetapanObjectEntityValueReqDto,
   PenetapanObjectLongListAssignObjectReqDto,
   PenetapanObjectLongListReqDto,
   PenetapanObjectLongListReqValueDto,
@@ -55,6 +51,8 @@ import {
   PenetapanObjectNotaDto,
   PenetapanObjectUraianDto,
 } from "@/lib/core/context/penetapanTopicContext";
+import useNotaDinasVM from "@/app/approval/nota-dinas/notaDinasVM";
+import { useToast } from "@/lib/core/context/toastContext";
 
 const usePenetapanObjectVM = () => {
   const loadingContext = useLoading();
@@ -72,24 +70,37 @@ const usePenetapanObjectVM = () => {
     nota,
     setNota,
   } = usePenetapanTopicContext((state) => state);
+  const { uploadImage } = useNotaDinasVM();
+  const { showToast } = useToast();
 
   const initState = JSON.parse(JSON.stringify(initPenetapanObjectState));
-  const [stateTopic, setStateTopic] = useState<PenetapanObjectVMState>(initState);
-  const [stateShorList, setStateShortList] = useState<PenetapanObjectShortListDto[]>([]);
+  const [stateTopic, setStateTopic] =
+    useState<PenetapanObjectVMState>(initState);
+  const [stateShorList, setStateShortList] = useState<
+    PenetapanObjectShortListDto[]
+  >([]);
   const [stateCascading, setStateCascading] = useState<RKPCascadingDto[]>([]);
-  const [stateEntity, setStateEntity] = useState<PenetapanObjectStateEntityDto[]>([]);
+  const [stateEntity, setStateEntity] = useState<
+    PenetapanObjectStateEntityDto[]
+  >([]);
   const [stateUpr, setStateUpr] = useState<dtoUraian[]>([]);
 
-  const [getStateLogActivity, setLogActivity] = useState<LogActivityDto[]>([initLogActivity]);
+  const [getStateLogActivity, setLogActivity] = useState<LogActivityDto[]>([
+    initLogActivity,
+  ]);
   const [optionPN, setOptionPN] = useState<ProjectDefaultDto[]>([]);
   const [modalAdd, setModalAdd] = useState<boolean>(false);
   const [modalLog, setModalLog] = useState<boolean>(false);
   const [modalUpr, setModalUpr] = useState<boolean>(false);
   const [showSave, setShowSave] = useState<boolean>(false);
   const [modalObjek, setModalObjek] = useState<boolean>(false);
+  const [modalBuktiDukung, setModalBuktiDukung] = useState<boolean>(false);
 
-  const [stateCreateUpr, setStateCreateUpr] = useState<PenetapanObjectEntityReqDto>({ ...initReqUpr })
-  const [stateUprSingle, setStateUprSingle] = useState<dtoUraian>({ ...initShorlist });
+  const [stateCreateUpr, setStateCreateUpr] =
+    useState<PenetapanObjectEntityReqDto>({ ...initReqUpr });
+  const [stateUprSingle, setStateUprSingle] = useState<dtoUraian>({
+    ...initShorlist,
+  });
 
   const [stateApproval, setStateApproval] = useState<dtoGetApproval>();
 
@@ -285,7 +296,7 @@ const usePenetapanObjectVM = () => {
 
       const response2 = await doGetPenetapanObjectEntityUsulan({
         body: {
-          id: objectState.id
+          id: objectState.id,
         },
         loadingContext: loadingContext,
         errorModalContext: errorModalContext,
@@ -294,7 +305,7 @@ const usePenetapanObjectVM = () => {
       if (response2?.code == API_CODE.success) {
         let result: dtoUraian[] = response2.result;
         if (result) {
-          setStateUpr(result)
+          setStateUpr(result);
           setLoading(false);
 
           // let allEntity: PenetapanObjectEntityDto[] = response.result;
@@ -463,7 +474,7 @@ const usePenetapanObjectVM = () => {
       if (response?.code == API_CODE.success) {
         let result: dtoGetApproval[] = response.result;
         if (result) {
-          setStateApproval(result[0])
+          setStateApproval(result[0]);
           setLoading(false);
         } else {
           setLoading(true);
@@ -563,6 +574,30 @@ const usePenetapanObjectVM = () => {
     getLogActivity();
   };
 
+  const handleUnggahBuktiDukung = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const files = e.target.files?.[0];
+
+    if (files) {
+      const fileName = files.name;
+      const reader = new FileReader();
+
+      reader.readAsDataURL(files);
+      reader.onload = () => {
+        const res = reader.result as string;
+
+        uploadImage(res, fileName);
+      };
+
+      reader.onerror = (error) => {
+        console.error("Error: ", error);
+      };
+
+      showToast("Data berhasil disimpan", "success");
+    }
+  };
+
   return {
     useEffectGenerateOption,
     useEffectObjectState,
@@ -605,7 +640,10 @@ const usePenetapanObjectVM = () => {
     stateUprSingle,
     setStateUprSingle,
     getRanking,
-    stateApproval
+    stateApproval,
+    modalBuktiDukung,
+    setModalBuktiDukung,
+    handleUnggahBuktiDukung,
   };
 };
 

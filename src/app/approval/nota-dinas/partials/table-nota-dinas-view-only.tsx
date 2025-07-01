@@ -53,11 +53,13 @@ export default function TableNotaDinasViewOnly({
   actionApprove,
   pageApproval,
   stateApproval,
+  handleUploadBuktiDukung,
 }: {
   notaDinas: PenetapanObjectNotaDto;
   actionApprove?: React.ReactNode;
   pageApproval?: boolean;
   stateApproval?: dtoGetApproval;
+  handleUploadBuktiDukung?: () => void;
 }) {
   console.log(stateApproval);
 
@@ -184,29 +186,29 @@ export default function TableNotaDinasViewOnly({
 
   const sxParamsFull: SxParams = { variant: "full" };
 
-  const handleUnggahBuktiDukung = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const files = e.target.files?.[0];
+  // const handleUnggahBuktiDukung = async (
+  //   e: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   const files = e.target.files?.[0];
 
-    if (files) {
-      const fileName = files.name;
-      const reader = new FileReader();
+  //   if (files) {
+  //     const fileName = files.name;
+  //     const reader = new FileReader();
 
-      reader.readAsDataURL(files);
-      reader.onload = () => {
-        const res = reader.result as string;
+  //     reader.readAsDataURL(files);
+  //     reader.onload = () => {
+  //       const res = reader.result as string;
 
-        uploadImage(res, fileName);
-      };
+  //       uploadImage(res, fileName);
+  //     };
 
-      reader.onerror = (error) => {
-        console.error("Error: ", error);
-      };
+  //     reader.onerror = (error) => {
+  //       console.error("Error: ", error);
+  //     };
 
-      showToast("Data berhasil disimpan", "success");
-    }
-  };
+  //     showToast("Data berhasil disimpan", "success");
+  //   }
+  // };
 
   // const statusObject: "" | "draft" | "plan" | "reject" | "approved" = "draft";
 
@@ -253,8 +255,8 @@ export default function TableNotaDinasViewOnly({
                   <TableCell>
                     {isProduction ? (
                       stateApproval?.status ?? "-"
-                      // "-"
                     ) : (
+                      // "-"
                       <Stack direction="row" alignItems="center" gap={1}>
                         {pageApproval ? (
                           <Stack direction="row" alignItems="center" gap={1}>
@@ -266,7 +268,7 @@ export default function TableNotaDinasViewOnly({
                               startIcon={
                                 <Iconify name="mdi:close-circle" size={16} />
                               }
-                              onclick={() => { }}
+                              onclick={() => {}}
                             />
                             <AddButton
                               color="success"
@@ -276,7 +278,7 @@ export default function TableNotaDinasViewOnly({
                               startIcon={
                                 <Iconify name="mdi:check-circle" size={16} />
                               }
-                              onclick={() => { }}
+                              onclick={() => {}}
                             />
                           </Stack>
                         ) : (
@@ -303,7 +305,7 @@ export default function TableNotaDinasViewOnly({
                                       size={16}
                                     />
                                   }
-                                  onclick={() => { }}
+                                  onclick={() => {}}
                                 />
                               </Fragment>
                             ) : statusObject == "plan" ? (
@@ -687,22 +689,23 @@ export default function TableNotaDinasViewOnly({
             {!pageApproval && (
               <Button
                 size="small"
-                component="label"
-                role={undefined}
+                // component="label"
+                // role={undefined}
                 variant="contained"
-                tabIndex={-1}
+                // tabIndex={-1}
                 startIcon={<Iconify name="mdi:upload" size={16} />}
                 sx={{
                   borderRadius: 50,
                   textTransform: "capitalize",
                 }}
+                onClick={handleUploadBuktiDukung}
               >
                 Unggah Bukti Dukung
-                <VisuallyHiddenInput
+                {/* <VisuallyHiddenInput
                   type="file"
                   onChange={(event: any) => handleUnggahBuktiDukung(event)}
                   multiple
-                />
+                /> */}
               </Button>
             )}
           </Stack>
@@ -840,14 +843,14 @@ export default function TableNotaDinasViewOnly({
                   <Fragment>
                     {(statusObject == "reject" ||
                       statusObject == "approved") && (
-                        <AddButton
-                          title="Tambah Catatan"
-                          filled
-                          noMargin
-                          startIcon={<Iconify name="mdi:plus-circle" size={16} />}
-                          onclick={() => setModalOpenAdd(true)}
-                        />
-                      )}
+                      <AddButton
+                        title="Tambah Catatan"
+                        filled
+                        noMargin
+                        startIcon={<Iconify name="mdi:plus-circle" size={16} />}
+                        onclick={() => setModalOpenAdd(true)}
+                      />
+                    )}
                   </Fragment>
                 )}
               </Stack>
