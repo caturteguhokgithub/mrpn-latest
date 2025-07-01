@@ -8,9 +8,11 @@ import { useState } from "react";
 import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
 import {
   dtoGetApproval,
+  dtoReqBuktiDukungPengesahan,
   dtoUraian,
   initLogActivity,
   initPenetapanObjectState,
+  initReqBuktiDukungPengesahan,
   initReqUpr,
   initShorlist,
   LogActivityDto,
@@ -95,6 +97,7 @@ const usePenetapanObjectVM = () => {
   const [showSave, setShowSave] = useState<boolean>(false);
   const [modalObjek, setModalObjek] = useState<boolean>(false);
   const [modalBuktiDukung, setModalBuktiDukung] = useState<boolean>(false);
+  const [reqBuktiDukungPengesahan, setReqBuktiDukungPengesahan] = useState<dtoReqBuktiDukungPengesahan>({ ...initReqBuktiDukungPengesahan });
 
   const [stateCreateUpr, setStateCreateUpr] =
     useState<PenetapanObjectEntityReqDto>({ ...initReqUpr });
@@ -574,29 +577,33 @@ const usePenetapanObjectVM = () => {
     getLogActivity();
   };
 
-  const handleUnggahBuktiDukung = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const files = e.target.files?.[0];
-
-    if (files) {
-      const fileName = files.name;
-      const reader = new FileReader();
-
-      reader.readAsDataURL(files);
-      reader.onload = () => {
-        const res = reader.result as string;
-
-        uploadImage(res, fileName);
-      };
-
-      reader.onerror = (error) => {
-        console.error("Error: ", error);
-      };
-
-      showToast("Data berhasil disimpan", "success");
-    }
+  async function handleUnggahBuktiDukung(param: dtoReqBuktiDukungPengesahan) {
+    uploadImage(param.file, param.filename);
   };
+
+  // const handleUnggahBuktiDukung = async (
+  //   e: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   const files = e.target.files?.[0];
+
+  //   if (files) {
+  //     const fileName = files.name;
+  //     const reader = new FileReader();
+
+  //     reader.readAsDataURL(files);
+  //     reader.onload = () => {
+  //       const res = reader.result as string;
+
+  //       uploadImage(res, fileName);
+  //     };
+
+  //     reader.onerror = (error) => {
+  //       console.error("Error: ", error);
+  //     };
+
+  //     showToast("Data berhasil disimpan", "success");
+  //   }
+  // };
 
   return {
     useEffectGenerateOption,
@@ -644,6 +651,8 @@ const usePenetapanObjectVM = () => {
     modalBuktiDukung,
     setModalBuktiDukung,
     handleUnggahBuktiDukung,
+    reqBuktiDukungPengesahan,
+    setReqBuktiDukungPengesahan
   };
 };
 

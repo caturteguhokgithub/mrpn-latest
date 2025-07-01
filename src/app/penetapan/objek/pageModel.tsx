@@ -334,6 +334,16 @@ export interface dtoGetApproval {
   approvalable_type: string,
 }
 
+export interface dtoReqBuktiDukungPengesahan {
+  file: string;
+  filename: string;
+}
+
+export const initReqBuktiDukungPengesahan: dtoReqBuktiDukungPengesahan = {
+  file: "",
+  filename: ""
+}
+
 
 export const initReqUpr: PenetapanObjectEntityReqDto = {
   id_objek: 0,

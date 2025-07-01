@@ -8,31 +8,38 @@ import {
 } from "@mui/material";
 import Iconify from "@/app/components/icons/iconify";
 import { VisuallyHiddenInput } from "@/app/utils/constant";
+import { SetStateAction } from "react";
+import { dtoReqBuktiDukungPengesahan } from "../pageModel";
 
 export default function FormBuktiDukung({
-  handleUnggahBuktiDukung,
+  // handleUnggahBuktiDukung,
+  reqBuktiDukungPengesahan,
+  setReqBuktiDukungPengesahan
 }: {
-  handleUnggahBuktiDukung: any;
+  // handleUnggahBuktiDukung: any;
+  reqBuktiDukungPengesahan: dtoReqBuktiDukungPengesahan;
+  setReqBuktiDukungPengesahan: (value: SetStateAction<dtoReqBuktiDukungPengesahan>) => void;
 }) {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <FormControl fullWidth>
-          <Typography gutterBottom>Nama File</Typography>
+          <Typography gutterBottom>Keterangan File</Typography>
           <TextField
             size="small"
             InputLabelProps={{
               shrink: true,
             }}
-            placeholder="Nama File"
+            placeholder="Keterangan File"
             // value={nota?.tanggal}
-            // onChange={(e) => {
-            //   if (nota !== undefined) {
-            //     const prev = { ...nota };
-            //     prev.tanggal = e.target.value;
-            //     setNota(prev);
-            //   }
-            // }}
+            onChange={(e) => {
+              setReqBuktiDukungPengesahan((prev) => {
+                return {
+                  ...prev,
+                  filename: e.target.value,
+                };
+              })
+            }}
           />
         </FormControl>
       </Grid>
@@ -55,7 +62,27 @@ export default function FormBuktiDukung({
               Unggah
               <VisuallyHiddenInput
                 type="file"
-                onChange={(event: any) => handleUnggahBuktiDukung(event)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  const file = e.target.files?.[0];
+
+                  if (file) {
+                    const reader = new FileReader();
+
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                      const result = reader.result as string;
+                      setReqBuktiDukungPengesahan((prev) => ({
+                        ...prev,
+                        file: result,
+                      }));
+                    };
+
+                    reader.onerror = (error) => {
+                      console.error("Error reading file:", error);
+                    };
+                  }
+                }}
+                // onChange={(event: any) => handleUnggahBuktiDukung(event)}
                 multiple
               />
             </Button>

@@ -124,7 +124,7 @@ const styleToggleButton = [
   },
 ];
 
-export default function PageTemaView({}) {
+export default function PageTemaView({ }) {
   const [modalDeleteTopic, setModalDeleteTopic] = useState(false);
 
   const { permission } = useAuthContext((state) => state);
@@ -167,6 +167,8 @@ export default function PageTemaView({}) {
     setModalBuktiDukung,
     handleUnggahBuktiDukung,
     stateApproval,
+    reqBuktiDukungPengesahan,
+    setReqBuktiDukungPengesahan,
   } = usePenetapanObjectVM();
 
   const { optionStakeholder } = useCardIndicationVM();
@@ -261,11 +263,10 @@ export default function PageTemaView({}) {
   return (
     <>
       <ContentPage
-        title={`Objek MRPN & UPR LS ${
-          year == 0
-            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-            : "Tahun " + year
-        }`}
+        title={`Objek MRPN & UPR LS ${year == 0
+          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+          : "Tahun " + year
+          }`}
         infoToolTip={
           <Stack spacing={2}>
             <div>
@@ -522,6 +523,7 @@ export default function PageTemaView({}) {
               onClick={() => {
                 handleCreateUpr();
                 setModalBuktiDukung(false);
+                handleUnggahBuktiDukung(reqBuktiDukungPengesahan);
               }}
               sx={{
                 color: "white !important",
@@ -532,7 +534,11 @@ export default function PageTemaView({}) {
           </DialogActions>
         }
       >
-        <FormBuktiDukung handleUnggahBuktiDukung={handleUnggahBuktiDukung} />
+        <FormBuktiDukung
+          // handleUnggahBuktiDukung={handleUnggahBuktiDukung}
+          reqBuktiDukungPengesahan={reqBuktiDukungPengesahan}
+          setReqBuktiDukungPengesahan={setReqBuktiDukungPengesahan}
+        />
       </DialogComponent>
 
       {/*<DialogComponent*/}
