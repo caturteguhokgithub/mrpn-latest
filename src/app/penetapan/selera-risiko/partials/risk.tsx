@@ -69,10 +69,11 @@ export default function RiskContent({
         break;
     }
 
-    setState && setState((prevState) => ({
-      ...prevState,
-      type_nilai: type_nilai,
-    }));
+    setState &&
+      setState((prevState) => ({
+        ...prevState,
+        type_nilai: type_nilai,
+      }));
   };
 
   const saveButton = (
@@ -94,9 +95,8 @@ export default function RiskContent({
     <Fragment>
       <Box mb={2} p={2} bgcolor={theme.palette.primary.light} borderRadius={3}>
         <Typography component="p">
-          Selera risiko adalah jenis/jumlah (nilai absolut) dari risiko yang
-          siap diambil dalam proses pencapaian sasaran PKPPR, dengan pilihan
-          sebagai berikut.
+          Selera Risiko merupakan bagian dari manajemen risiko terintegrasi yang
+          menghubungkan strategi, tujuan bisnis, dan kinerja.
         </Typography>
       </Box>
 
@@ -121,30 +121,32 @@ perencanaan pembangunan nasional"
               {valueTheme == "1"
                 ? "Rendah"
                 : valueTheme == "2"
-                  ? "Konservatif"
-                  : valueTheme == "3"
-                    ? "Moderat"
-                    : "Tinggi"}
+                ? "Konservatif"
+                : valueTheme == "3"
+                ? "Moderat"
+                : "Tinggi"}
             </Typography>
 
             <TextareaStyled
               aria-label="Deskripsi"
               minRows={3}
               onChange={(e) => {
-                setState && setState((prevState) => ({
-                  ...prevState,
-                  pernyataan: e.target.value,
-                }));
+                setState &&
+                  setState((prevState) => ({
+                    ...prevState,
+                    pernyataan: e.target.value,
+                  }));
               }}
-              placeholder={`Deskripsi ${valueTheme == "1"
-                ? "Rendah"
-                : valueTheme == "2"
+              placeholder={`Deskripsi ${
+                valueTheme == "1"
+                  ? "Rendah"
+                  : valueTheme == "2"
                   ? "Konservatif"
                   : valueTheme == "3"
-                    ? "Moderat"
-                    : "Tinggi"
-                }`}
-            // width="100%"
+                  ? "Moderat"
+                  : "Tinggi"
+              }`}
+              // width="100%"
             />
           </Stack>
         </Stack>

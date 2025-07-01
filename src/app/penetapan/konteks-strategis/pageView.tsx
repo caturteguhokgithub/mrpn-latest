@@ -80,7 +80,7 @@ export default function PageKonteksStrategisView({}) {
             <CardStakeholderInternal />
             <CardStakeholderEksternal /> 
             <CardProfileIntervensi /> */}
-            <CardInformation activeSetting />
+            {/* <CardInformation activeSetting /> */}
           </Stack>
         )}
       </ContentPage>

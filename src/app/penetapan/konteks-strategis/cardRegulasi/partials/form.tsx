@@ -83,7 +83,7 @@ export default function FormRegulation({
             value={state.perpres}
             variant="outlined"
             size="small"
-            placeholder={"Perpres"}
+            placeholder={"Tentang"}
             InputLabelProps={{
               shrink: true,
             }}

@@ -146,22 +146,26 @@ export default function TabObject({
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={value} onChange={handleChange} sx={styleTab(sxParams)}>
           <Tab
-            label="Longlist"
+            // label="Longlist"
+            label="Shortlist"
             {...a11yProps(0)}
             iconPosition="start"
-            icon={
-              <IconFA
-                size={16}
-                name="arrow-down-short-wide"
-                sx={{ width: "auto" }}
-              />
-            }
+            // icon={
+            //   <IconFA
+            //     size={16}
+            //     name="arrow-down-short-wide"
+            //     sx={{ width: "auto" }}
+            //   />
+            // }
+            icon={<IconFA size={16} name="arrow-down-wide-short" />}
           />
           <Tab
-            label="Shortlist"
+            // label="Shortlist"
+            label="Objek MRPN LS"
             {...a11yProps(1)}
             iconPosition="start"
-            icon={<IconFA size={16} name="arrow-down-wide-short" />}
+            // icon={<IconFA size={16} name="arrow-down-wide-short" />}
+            icon={<IconFA size={16} name="bullseye" />}
           />
           {/* <Tab
             label="Cascading Objek Terpilih"
@@ -170,13 +174,15 @@ export default function TabObject({
             icon={<IconFA size={16} name="list-check" />}
           /> */}
           <Tab
-            label="Usulan UPR LS"
+            // label="Usulan UPR LS"
+            label="UPR LS"
             {...a11yProps(2)}
             iconPosition="start"
             icon={<IconFA size={16} name="scroll" />}
           />
           <Tab
-            label="Pengesahan"
+            // label="Pengesahan"
+            label="Penetapan"
             {...a11yProps(3)}
             iconPosition="start"
             icon={<IconFA size={16} name="newspaper" sx={{ width: "auto" }} />}
@@ -184,7 +190,7 @@ export default function TabObject({
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <CardItem title="Longlist">
+        <CardItem title="Shortlist">
           {isEmpty ? (
             <EmptyState
               dense
@@ -201,7 +207,7 @@ export default function TabObject({
         </CardItem>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <CardItem title="Shortlist">
+        <CardItem title="Objek MRPN LS">
           {isEmpty ? (
             <EmptyState
               dense
@@ -230,7 +236,7 @@ export default function TabObject({
       </CustomTabPanel> */}
       <CustomTabPanel value={value} index={2}>
         <CardItem
-          title="Usulan UPR LS"
+          title="UPR LS"
           addButton={
             <Stack direction="row" gap={1}>
               {showSave && (
@@ -274,7 +280,7 @@ export default function TabObject({
       <CustomTabPanel value={value} index={3}>
         <CardItem
           // title="Nota Dinas Objek MRPN & UPR LS"
-          title="Pengesahan Objek & UPR LS"
+          title="Penetapan"
           // addButton={
           //   !editNotaDinas && (
           //     <AddButton

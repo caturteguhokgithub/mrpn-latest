@@ -253,117 +253,114 @@ export default function TableNotaDinasViewOnly({
                     :
                   </TableCell>
                   <TableCell>
-                    {isProduction ? (
+                    {/* {isProduction ? (
                       stateApproval?.status ?? "-"
-                    ) : (
-                      // "-"
-                      <Stack direction="row" alignItems="center" gap={1}>
-                        {pageApproval ? (
-                          <Stack direction="row" alignItems="center" gap={1}>
-                            <AddButton
-                              errorColor
-                              title="Tolak Pengesahan"
-                              filled
-                              noMargin
-                              startIcon={
-                                <Iconify name="mdi:close-circle" size={16} />
-                              }
-                              onclick={() => {}}
-                            />
-                            <AddButton
-                              color="success"
-                              title="Terima Pengesahan"
-                              filled
-                              noMargin
-                              startIcon={
-                                <Iconify name="mdi:check-circle" size={16} />
-                              }
-                              onclick={() => {}}
-                            />
-                          </Stack>
-                        ) : (
-                          <Fragment>
-                            {statusObject == "" || statusObject == "draft" ? (
-                              <Fragment>
-                                <Chip
-                                  color="default"
-                                  label="Draf"
-                                  variant="outlined"
-                                  sx={{
-                                    fontWeight: 600,
-                                    bgcolor: grey[100],
-                                    textTransform: "uppercase",
-                                  }}
-                                />
-                                <AddButton
-                                  title="Ajukan Pengesahan"
-                                  filled
-                                  noMargin
-                                  startIcon={
-                                    <Iconify
-                                      name="mdi:check-circle"
-                                      size={16}
-                                    />
-                                  }
-                                  onclick={() => {}}
-                                />
-                              </Fragment>
-                            ) : statusObject == "plan" ? (
-                              <Fragment>
-                                <Chip
-                                  color="primary"
-                                  label="Rancangan"
-                                  variant="outlined"
-                                  sx={{
-                                    fontWeight: 600,
-                                    bgcolor: blue[100],
-                                    textTransform: "uppercase",
-                                  }}
-                                />
-                              </Fragment>
-                            ) : statusObject == "reject" ? (
-                              <Fragment>
-                                <Chip
-                                  color="error"
-                                  label="Ditolak"
-                                  variant="outlined"
-                                  sx={{
-                                    fontWeight: 600,
-                                    bgcolor: red[100],
-                                    textTransform: "uppercase",
-                                  }}
-                                />
-                                {!pageApproval && (
-                                  <Typography color={grey[500]} fontSize={14}>
-                                    Ditolak tanggal{" "}
-                                    <strong>12 Februari 2025</strong>
-                                  </Typography>
-                                )}
-                              </Fragment>
-                            ) : statusObject == "approved" ? (
-                              <Fragment>
-                                <Chip
-                                  color="success"
-                                  label="Disetujui"
-                                  variant="outlined"
-                                  sx={{
-                                    fontWeight: 600,
-                                    bgcolor: green[100],
-                                    textTransform: "uppercase",
-                                  }}
-                                />
-                                {!pageApproval && (
-                                  <Typography color={grey[500]} fontSize={14}>
-                                    Disahkan tanggal{" "}
-                                    <strong>5 September 2025</strong>
-                                  </Typography>
-                                )}
-                              </Fragment>
-                            ) : null}
-                          </Fragment>
-                        )}
-                      </Stack>
-                    )}
+                    ) : ( */}
+                    <Stack direction="row" alignItems="center" gap={1}>
+                      {pageApproval ? (
+                        <Stack direction="row" alignItems="center" gap={1}>
+                          <AddButton
+                            errorColor
+                            title="Tolak Pengesahan"
+                            filled
+                            noMargin
+                            startIcon={
+                              <Iconify name="mdi:close-circle" size={16} />
+                            }
+                            onclick={() => {}}
+                          />
+                          <AddButton
+                            color="success"
+                            title="Terima Pengesahan"
+                            filled
+                            noMargin
+                            startIcon={
+                              <Iconify name="mdi:check-circle" size={16} />
+                            }
+                            onclick={() => {}}
+                          />
+                        </Stack>
+                      ) : (
+                        <Fragment>
+                          {stateApproval?.status == "" ||
+                          stateApproval?.status == "draft" ? (
+                            <Fragment>
+                              <Chip
+                                color="default"
+                                label="Draf"
+                                variant="outlined"
+                                sx={{
+                                  fontWeight: 600,
+                                  bgcolor: grey[100],
+                                  textTransform: "uppercase",
+                                }}
+                              />
+                              <AddButton
+                                title="Ajukan Pengesahan"
+                                filled
+                                noMargin
+                                startIcon={
+                                  <Iconify name="mdi:check-circle" size={16} />
+                                }
+                                onclick={() => {}}
+                              />
+                            </Fragment>
+                          ) : stateApproval?.status == "plan" ? (
+                            <Fragment>
+                              <Chip
+                                color="primary"
+                                label="Rancangan"
+                                variant="outlined"
+                                sx={{
+                                  fontWeight: 600,
+                                  bgcolor: blue[100],
+                                  textTransform: "uppercase",
+                                }}
+                              />
+                            </Fragment>
+                          ) : stateApproval?.status == "reject" ? (
+                            <Fragment>
+                              <Chip
+                                color="error"
+                                label="Ditolak"
+                                variant="outlined"
+                                sx={{
+                                  fontWeight: 600,
+                                  bgcolor: red[100],
+                                  textTransform: "uppercase",
+                                }}
+                              />
+                              {!pageApproval && (
+                                <Typography color={grey[500]} fontSize={14}>
+                                  Ditolak tanggal{" "}
+                                  <strong>12 Februari 2025</strong>
+                                </Typography>
+                              )}
+                            </Fragment>
+                          ) : stateApproval?.status == "approved" ? (
+                            <Fragment>
+                              <Chip
+                                color="success"
+                                label="Disetujui"
+                                variant="outlined"
+                                sx={{
+                                  fontWeight: 600,
+                                  bgcolor: green[100],
+                                  textTransform: "uppercase",
+                                }}
+                              />
+                              {!pageApproval && (
+                                <Typography color={grey[500]} fontSize={14}>
+                                  Disahkan tanggal{" "}
+                                  <strong>5 September 2025</strong>
+                                </Typography>
+                              )}
+                            </Fragment>
+                          ) : null}
+                        </Fragment>
+                      )}
+                    </Stack>
+                    {/* )} */}
                   </TableCell>
                 </TableRow>
                 {/* <TableRow>
@@ -410,7 +407,7 @@ export default function TableNotaDinasViewOnly({
         </Paper>
         {/* OBJEK UPR */}
         <Stack gap={1}>
-          <Typography fontWeight={600}>Objek & UPR LS</Typography>
+          <Typography fontWeight={600}>Objek MRPN LS</Typography>
           {generateRows().length == 0 ? (
             <Paper elevation={0} variant="outlined">
               <EmptyState
@@ -452,7 +449,8 @@ export default function TableNotaDinasViewOnly({
                       Objek MRPN LS
                     </TableCell>
                     <TableCell colSpan={3} align="center">
-                      Unit Pengelola Risiko
+                      {/* Unit Pengelola Risiko */}
+                      Unit Pemilik Risiko Lintas Sektor
                     </TableCell>
                   </TableRow>
                   <TableRow>
