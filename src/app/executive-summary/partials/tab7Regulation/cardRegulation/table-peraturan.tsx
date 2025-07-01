@@ -114,10 +114,17 @@ export default function TablePeraturan({
           <Table size="small">
             <TableHead sx={{ bgcolor: bgColorTh }}>
               <TableRow>
-                <TableCell width={500}>Entitas</TableCell>
-                <TableCell width={240}>Peraturan Terkait</TableCell>
-                <TableCell>Amanat Peraturan yang Terkait</TableCell>
-                {penetapan && <TableCell align="center">Aksi</TableCell>}
+                {/* <TableCell width={500}>Entitas</TableCell> */}
+                <TableCell width={500}>Nomor Regulasi</TableCell>
+                {/* <TableCell width={240}>Peraturan Terkait</TableCell> */}
+                <TableCell width={240}>Tentang</TableCell>
+                {/* <TableCell>Amanat Peraturan yang Terkait</TableCell> */}
+                <TableCell>Keterangan</TableCell>
+                {penetapan && (
+                  <TableCell align="center" width={120}>
+                    Aksi
+                  </TableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -242,6 +249,7 @@ export default function TablePeraturan({
                   </TableCell>
                   {penetapan && (
                     <TableCell
+                      align="center"
                       sx={{
                         bgcolor: grey[50],
                       }}
