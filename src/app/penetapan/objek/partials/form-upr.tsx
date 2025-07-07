@@ -27,7 +27,7 @@ import {
   PenetapanObjectEntityValueReqDto,
 } from "../pageModel";
 import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
-import TextareaComponent from "@/app/components/textarea";
+import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
 
 export default function FormUPR({
   optionSL,
@@ -70,6 +70,7 @@ export default function FormUPR({
         return {
           id: index + 1,
           stakeholder: matchedStakeholder,
+          ruang_lingkup: val.ruang_lingkup,
           type: val.type,
         };
       });
@@ -78,12 +79,21 @@ export default function FormUPR({
     }
   }, [state.values, listStakeholder]);
 
-  // const { setStateTopic } = usePenetapanObjectVM();
-
-  // const [items, setItem] = useState([{ id: 1 }]);
   const [items, setItems] = useState<
-    { id: number; stakeholder: MiscMasterListStakeholderRes; type: string }[]
-  >([{ id: 1, stakeholder: initReqStakeholder, type: "" }]);
+    {
+      id: number;
+      stakeholder: MiscMasterListStakeholderRes;
+      ruang_lingkup: string;
+      type: string
+    }[]
+  >([
+    {
+      id: 1,
+      stakeholder: initReqStakeholder,
+      ruang_lingkup: "",
+      type: ""
+    }
+  ]);
 
   const add = () => {
     if (items.length >= 10) return;
@@ -91,6 +101,7 @@ export default function FormUPR({
     const newItem = {
       id: Math.floor(Math.random() * 1000),
       stakeholder: initReqStakeholder,
+      ruang_lingkup: "",
       type: "",
     };
 
@@ -102,6 +113,7 @@ export default function FormUPR({
       ...prev,
       values: newItems.map((item) => ({
         entitas: item.stakeholder.id,
+        ruang_lingkup: item.ruang_lingkup,
         type: item.type,
       })),
     }));
@@ -115,6 +127,7 @@ export default function FormUPR({
       ...prev,
       values: newItems.map((item) => ({
         entitas: item.stakeholder.id,
+        ruang_lingkup: item.ruang_lingkup,
         type: item.type,
       })),
     }));
@@ -122,15 +135,15 @@ export default function FormUPR({
 
   const handleSubChange = (
     id: number,
-    field: "stakeholder" | "type",
+    field: "stakeholder" | "ruang_lingkup" | "type",
     value: MiscMasterListStakeholderRes | string
   ) => {
     const updatedItems = items.map((item) =>
       item.id === id
         ? {
-            ...item,
-            [field]: value,
-          }
+          ...item,
+          [field]: value,
+        }
         : item
     );
     setItems(updatedItems);
@@ -140,6 +153,7 @@ export default function FormUPR({
       ...prev,
       values: updatedItems.map((item) => ({
         entitas: item.stakeholder.id,
+        ruang_lingkup: item.ruang_lingkup,
         type: item.type,
       })),
     }));
@@ -175,6 +189,7 @@ export default function FormUPR({
         return {
           id: idx + 1,
           stakeholder,
+          ruang_lingkup: val.ruang_lingkup,
           type: val.type,
         };
       });
@@ -185,11 +200,12 @@ export default function FormUPR({
         ...prevState,
         values: mappedItems.map((item) => ({
           entitas: item.stakeholder.id,
+          ruang_lingkup: item.ruang_lingkup,
           type: item.type,
         })),
       }));
     } else {
-      setItems([{ id: 1, stakeholder: initReqStakeholder, type: "" }]);
+      setItems([{ id: 1, stakeholder: initReqStakeholder, ruang_lingkup: "", type: "" }]);
       setState((prevState) => ({
         ...prevState,
         values: [],
@@ -211,12 +227,6 @@ export default function FormUPR({
             }
             placeHolder={"Pilih objek shortlist"}
           />
-        </FormControl>
-      </Grid>
-      <Grid item xs={12}>
-        <FormControl fullWidth>
-          <Typography gutterBottom>Ruang Lingkup</Typography>
-          <TextareaComponent placeholder="Ruang Lingkup" row={2} />
         </FormControl>
       </Grid>
       <Grid item xs={12}>
@@ -268,6 +278,18 @@ export default function FormUPR({
                           newValue: MiscMasterListStakeholderRes
                         ) => handleSubChange(tags.id, "stakeholder", newValue)}
                         placeHolder={"Pilih entitas MRPN"}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth>
+                      <Typography gutterBottom>Ruang Lingkup</Typography>
+                      <TextareaStyled
+                        placeholder="Ruang Lingkup"
+                        minRows={3}
+                        onChange={(e) =>
+                          handleSubChange(tags.id, "ruang_lingkup", e.target.value)
+                        }
                       />
                     </FormControl>
                   </Grid>

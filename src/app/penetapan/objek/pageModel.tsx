@@ -215,6 +215,7 @@ export type GetPenetapanObjectEntityUsulanServiceModel = BaseAPIServiceParam & {
 
 export interface PenetapanObjectEntityValueReqDto {
   entitas: number;
+  ruang_lingkup: string;
   type: string;
 }
 
@@ -309,6 +310,7 @@ export interface dtoUsulanUprLs {
   value: string,
   entitas_id: number,
   uraian_penetapan_object_id: number,
+  ruang_lingkup: string,
   type: string,
   entitas: dtoEntitas
 }
@@ -350,6 +352,7 @@ export const initReqUpr: PenetapanObjectEntityReqDto = {
   values: [
     {
       entitas: 0,
+      ruang_lingkup: "",
       type: ""
     }
   ]

@@ -169,7 +169,7 @@ function Row(props: {
                         <TableRow key={entity.id}>
                           <TableCell align="center">{i + 1}</TableCell>
                           <TableCell>{entity.entitas.value}</TableCell>
-                          <TableCell>{"ruang-lingkup"}</TableCell>
+                          <TableCell>{entity.ruang_lingkup}</TableCell>
                           {UnitPengelolaRisikoEntity.map((uprItem) => (
                             <TableCell align="center" key={uprItem.id}>
                               <Stack direction="row" justifyContent="center">
