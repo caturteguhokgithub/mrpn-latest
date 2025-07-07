@@ -286,13 +286,15 @@ export default function CollapsibleTable({
               ))}
             </React.Fragment>
           ) : (
-            <TableCell colSpan={4}>
-              <EmptyState
-                icon={<IconEmptyData />}
-                title="Data Kosong"
-                description="Silahkan isi konten tabel ini"
-              />
-            </TableCell>
+            <TableRow>
+              <TableCell colSpan={4}>
+                <EmptyState
+                  icon={<IconEmptyData />}
+                  title="Data Kosong"
+                  description="Silahkan isi konten tabel ini"
+                />
+              </TableCell>
+            </TableRow>
           )}
         </TableBody>
       </Table>

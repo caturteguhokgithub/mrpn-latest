@@ -75,9 +75,6 @@ export default function TableOverview() {
         maxHeight: "48vh",
         tbody: {
           td: {
-            // "&.MuiTableCell-root": {
-            //   borderRight: "1px solid rgb(224, 224, 224)",
-            // },
             "&:last-of-type": {
               borderRight: "1px solid rgb(224, 224, 224) !important",
             },
