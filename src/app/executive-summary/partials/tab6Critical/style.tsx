@@ -21,6 +21,7 @@ export const StyledTable = styled(Table)({
 });
 
 export const BlockCell = styled(TableCell)(({ color }) => ({
+  position: "relative",
   textAlign: "center",
   padding: "2px",
   "&:first-of-type": {

@@ -3,7 +3,14 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Box, Chip, Grow, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Chip,
+  CircularProgress,
+  Grow,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { green, grey, orange } from "@mui/material/colors";
 import TooltipCP from "./tooltip";
 import Iconify from "@/app/components/icons/iconify";
@@ -24,7 +31,7 @@ import {
   DataRoKunci,
   MonthData,
 } from "../cardCriticalModel";
-import { FormatCurrency } from "@/lib/utils/currency";
+import { FormatCurrency, FormatCurrencyID } from "@/lib/utils/currency";
 
 // Helper function to group consecutive months
 const groupConsecutiveMonths = (months: any) => {
@@ -60,10 +67,12 @@ export default function ProjectTable({
   year,
   dataCP,
   dataROKunci,
+  isLoading,
 }: {
   year: number;
   dataCP: DataCPType[];
   dataROKunci: DataRoKunci;
+  isLoading?: boolean;
 }) {
   const renderMonthCells = (
     monthsData: (MonthData | null)[],
@@ -97,6 +106,26 @@ export default function ProjectTable({
         .slice(group.start, group.start + group.count)
         .filter((month) => month && month.id !== "") as MonthData[];
 
+      // const total = groupMonths.reduce((sum, month) => {
+      //   const target =
+      //     typeof month.target === "string"
+      //       ? parseFloat(month.target)
+      //       : month.target || 0;
+      //   return sum + target;
+      // }, 0);
+
+      const cleanNumber = (value: string | number): number => {
+        if (typeof value === "number") return value;
+        // Remove any non-numeric characters except decimal point
+        const cleaned = value.replace(/[^\d.-]/g, "");
+        return parseFloat(cleaned) || 0;
+      };
+
+      const total = groupMonths.reduce(
+        (sum, month) => sum + cleanNumber(month.target),
+        0
+      );
+
       // Add the block cell
       cells.push(
         <BlockCell
@@ -111,7 +140,19 @@ export default function ProjectTable({
             TransitionComponent={Grow}
             placement="bottom-start"
           >
-            <Box component="div" />
+            <Box component="div">
+              <Typography
+                fontSize={12}
+                color="black"
+                position="absolute"
+                top="50%"
+                left="50%"
+                sx={{ transform: "translate(-50%, -50%)" }}
+              >
+                {FormatCurrencyID(total)}
+                {/* {group.childData.target} */}
+              </Typography>
+            </Box>
           </HtmlTooltip>
         </BlockCell>
       );
@@ -270,14 +311,20 @@ export default function ProjectTable({
                           gap={1}
                           fontSize={12}
                         >
-                          <Iconify name="mdi:key-variant" size={14} />
-                          <Typography fontWeight={600} component="span">
-                            {dataROKunci.summary.is_selected}
-                          </Typography>{" "}
-                          /{" "}
-                          <Typography component="span" fontSize={13}>
-                            {dataROKunci.summary.total}
-                          </Typography>
+                          {isLoading ? (
+                            <CircularProgress size={14} color="inherit" />
+                          ) : (
+                            <>
+                              <Iconify name="mdi:key-variant" size={14} />
+                              <Typography fontWeight={600} component="span">
+                                {dataROKunci.summary.is_selected}
+                              </Typography>{" "}
+                              /{" "}
+                              <Typography component="span" fontSize={13}>
+                                {dataROKunci.summary.total}
+                              </Typography>
+                            </>
+                          )}
                         </Stack>
                       }
                       sx={{ px: 1, cursor: "default" }}
@@ -454,16 +501,32 @@ export default function ProjectTable({
                   {year === 0 ? (
                     renderYearCells(parent)
                   ) : (
-                    <BlockCell colSpan={13}>
-                      <HtmlTooltip
-                        title={<TooltipCP isParent data={parent} year={year} />}
-                        followCursor
-                        TransitionComponent={Grow}
-                        placement="bottom-start"
-                      >
-                        <Box color={year > 0 ? "transparent" : parent.color} />
-                      </HtmlTooltip>
-                    </BlockCell>
+                    <Fragment>
+                      <BlockCell colSpan={13} color={grey[700]}>
+                        {/* <HtmlTooltip
+                          title={
+                            <TooltipCP isParent data={parent} year={year} />
+                          }
+                          followCursor
+                          TransitionComponent={Grow}
+                          placement="bottom-start"
+                        >
+                          <Box
+                            color={year > 0 ? "transparent" : parent.color}
+                          />
+                        </HtmlTooltip>
+                        <Typography
+                          fontSize={14}
+                          color="white"
+                          position="absolute"
+                          top="50%"
+                          left="50%"
+                          sx={{ transform: "translate(-50%, -54%)" }}
+                        >
+                          Total Target: <strong>undefined</strong>
+                        </Typography> */}
+                      </BlockCell>
+                    </Fragment>
                   )}
                 </ParentRow>
 

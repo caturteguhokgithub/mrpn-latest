@@ -31,6 +31,7 @@ import CardItem from "@/app/components/cardTabItem";
 import { IconFA } from "@/app/components/icons/icon-fa";
 import { isDeveloping } from "@/app/components/layouts/layout";
 import EmptyDevelopingState from "@/app/components/empty/developing";
+import TableOverview from "./partials/table";
 
 interface SxParams {
   variant?: string;
@@ -171,42 +172,49 @@ export default function PageOverviewView() {
                     description="Silahkan isi konten halaman ini"
                   />
                 ) : (
-                  <Box className="table-sticky-horizontal">
-                    <MRTPerlakuanComplete
-                      dataTable={dataRiskOverview?.overviews}
-                      viewOnly
-                      renderCaption={
-                        <Stack direction="row" alignItems="center" gap={1}>
-                          <Typography fontWeight={600} fontSize={17} px={1}>
-                            Perlakuan Risiko (Indikasi Profil Risiko)
-                          </Typography>
-                          <AddButton
-                            fullWidth={onlySmallScreen}
-                            noMargin
-                            filled
-                            title="Download Excel"
-                            color="success"
-                            startIcon={<Iconify name="mdi:file-excel" />}
-                            // onclick={() => {
-                            //   const uri =
-                            //     process.env.NEXT_PUBLIC_BASE_URL_API +
-                            //     "export/exsum/indikasi/excel";
-                            //   const token = sessionStorage.getItem(
-                            //     API_CONSTANT.token
-                            //   );
-                            //   const exsum_id = exsum.id;
-                            //   const params =
-                            //     "token=" + token + "&exsum_id=" + exsum_id;
+                  <>
+                    <CardItem title="Perlakuan Risiko (Indikasi Profil Risiko)">
+                      <Box className="table-sticky-horizontal">
+                        <TableOverview />
+                      </Box>
+                    </CardItem>
+                    <Box className="table-sticky-horizontal">
+                      <MRTPerlakuanComplete
+                        dataTable={dataRiskOverview?.overviews}
+                        viewOnly
+                        renderCaption={
+                          <Stack direction="row" alignItems="center" gap={1}>
+                            <Typography fontWeight={600} fontSize={17} px={1}>
+                              Perlakuan Risiko (Indikasi Profil Risiko)
+                            </Typography>
+                            <AddButton
+                              fullWidth={onlySmallScreen}
+                              noMargin
+                              filled
+                              title="Download Excel"
+                              color="success"
+                              startIcon={<Iconify name="mdi:file-excel" />}
+                              // onclick={() => {
+                              //   const uri =
+                              //     process.env.NEXT_PUBLIC_BASE_URL_API +
+                              //     "export/exsum/indikasi/excel";
+                              //   const token = sessionStorage.getItem(
+                              //     API_CONSTANT.token
+                              //   );
+                              //   const exsum_id = exsum.id;
+                              //   const params =
+                              //     "token=" + token + "&exsum_id=" + exsum_id;
 
-                            //   window
-                            //     .open(uri + "?" + params, "_blank")
-                            //     ?.focus();
-                            // }}
-                          />
-                        </Stack>
-                      }
-                    />
-                  </Box>
+                              //   window
+                              //     .open(uri + "?" + params, "_blank")
+                              //     ?.focus();
+                              // }}
+                            />
+                          </Stack>
+                        }
+                      />
+                    </Box>
+                  </>
                 )}
               </CustomTabPanel>
               <CustomTabPanel value={valueOverview} index={1}>
@@ -225,7 +233,7 @@ export default function PageOverviewView() {
                       renderCaption={
                         <Stack direction="row" alignItems="center">
                           <Typography fontWeight={600} fontSize={17} px={1}>
-                            Perlakuan Risiko (Profil Risiko)
+                            Overview Profil Risiko
                           </Typography>
                         </Stack>
                       }
