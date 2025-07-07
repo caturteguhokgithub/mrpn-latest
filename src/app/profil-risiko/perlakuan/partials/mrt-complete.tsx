@@ -115,317 +115,301 @@ export default function MRTPerlakuanComplete({
 }) {
   const columns = useMemo<MRT_ColumnDef<RiskOverviewData>[]>(
     () => [
+      // {
+      //   id: "rincian_output",
+      //   header: "",
+      //   columns: [
+      //     {
+      //       id: "rincian_output",
+      //       header: "",
+      //       columns: [
+      //         {
+      //           accessorKey: "rincian_output",
+      //           header: "Rincian Output",
+      //           size: 250,
+      //           enableColumnActions: false,
+      //           Header: ({ column }) => (
+      //             <SortNumber
+      //               column={column}
+      //               numberSort={column.getIndex() + 1}
+      //             />
+      //           ),
+      //           Cell: ({ cell }: { cell: any }) => (
+      //             <Fragment>Rincian Output</Fragment>
+      //           ),
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // },
+
+      // {
+      //   id: "penilaian_risiko",
+      //   header: "Penilaian Risiko",
+      //   columns: [
       {
-        id: "rincian_output",
-        header: "",
+        id: "identifikasi_risiko",
+        header: "Identifikasi Risiko",
         columns: [
           {
-            id: "rincian_output",
-            header: "",
-            columns: [
-              {
-                accessorKey: "rincian_output",
-                header: "Rincian Output",
-                size: 250,
-                enableColumnActions: false,
-                Header: ({ column }) => (
-                  <SortNumber
-                    column={column}
-                    numberSort={column.getIndex() + 1}
-                  />
-                ),
-                Cell: ({ cell }: { cell: any }) => (
-                  <Fragment>Rincian Output</Fragment>
-                ),
-              },
-            ],
+            accessorKey: "peristiwa",
+            header: "Peristiwa Risiko",
+            size: 250,
+            enableColumnActions: false,
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
           },
+          {
+            accessorKey: "kategori",
+            header: "Kategori Risiko",
+            enableColumnActions: false,
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
+          },
+          {
+            accessorKey: "penyebab",
+            header: "Penyebab",
+            size: 250,
+            enableColumnActions: false,
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
+            Cell: ({ cell }: { cell: any }) => (
+              <Paper
+                elevation={0}
+                sx={{
+                  overflow: "auto",
+                  maxHeight: 160,
+                  backgroundColor: "transparent",
+                  "&::-webkit-scrollbar": {
+                    width: "3px",
+                  },
+                }}
+              >
+                <Stack gap={1}>
+                  {cell.getValue().map(
+                    (itemDesc: any, index: any) =>
+                      itemDesc && (
+                        <Chip
+                          key={index}
+                          sx={{
+                            height: "auto",
+                            py: 1,
+                            "& .MuiChip-label": {
+                              overflow: "unset",
+                              whiteSpace: "wrap",
+                            },
+                          }}
+                          label={itemDesc}
+                        />
+                      )
+                  )}
+                </Stack>
+              </Paper>
+            ),
+          },
+          {
+            accessorKey: "dampak",
+            header: "Dampak",
+            size: 300,
+            enableColumnActions: false,
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
+            Cell: ({ cell }: { cell: any }) => (
+              <Paper
+                elevation={0}
+                sx={{
+                  overflow: "auto",
+                  maxHeight: 160,
+                  backgroundColor: "transparent",
+                  "&::-webkit-scrollbar": {
+                    width: "3px",
+                  },
+                }}
+              >
+                <Stack gap={1}>
+                  {cell.getValue().map(
+                    (itemDesc: any, index: any) =>
+                      itemDesc && (
+                        <Chip
+                          key={index}
+                          sx={{
+                            height: "auto",
+                            py: 1,
+                            "& .MuiChip-label": {
+                              overflow: "unset",
+                              whiteSpace: "wrap",
+                            },
+                          }}
+                          label={itemDesc}
+                        />
+                      )
+                  )}
+                </Stack>
+              </Paper>
+            ),
+          },
+          // {
+          //   accessorKey: "area_dampak",
+          //   header: "Area Dampak",
+          //   size: 300,
+          //   enableColumnActions: false,
+          //   Header: ({ column }) => (
+          //     <SortNumber
+          //       column={column}
+          //       numberSort={column.getIndex() + 1}
+          //     />
+          //   ),
+          // },
         ],
       },
       {
-        id: "penilaian_risiko",
-        header: "Penilaian Risiko",
+        id: "analisis_evaluasi_risiko",
+        header: "Analisis & Evaluasi Risiko",
         columns: [
           {
-            id: "identifikasi_risiko",
-            header: "Identifikasi Risiko",
-            columns: [
-              {
-                accessorKey: "peristiwa",
-                header: "Peristiwa Risiko",
-                size: 250,
-                enableColumnActions: false,
-                Header: ({ column }) => (
-                  <SortNumber
-                    column={column}
-                    numberSort={column.getIndex() + 1}
-                  />
-                ),
-              },
-              {
-                accessorKey: "kategori",
-                header: "Kategori Risiko",
-                enableColumnActions: false,
-                Header: ({ column }) => (
-                  <SortNumber
-                    column={column}
-                    numberSort={column.getIndex() + 1}
-                  />
-                ),
-              },
-              {
-                accessorKey: "penyebab",
-                header: "Penyebab",
-                size: 250,
-                enableColumnActions: false,
-                Header: ({ column }) => (
-                  <SortNumber
-                    column={column}
-                    numberSort={column.getIndex() + 1}
-                  />
-                ),
-                Cell: ({ cell }: { cell: any }) => (
-                  <Paper
-                    elevation={0}
-                    sx={{
-                      overflow: "auto",
-                      maxHeight: 160,
-                      backgroundColor: "transparent",
-                      "&::-webkit-scrollbar": {
-                        width: "3px",
-                      },
-                    }}
+            header: "Nilai",
+            size: 240,
+            accessorFn: (row) => (
+              <Stack direction="column" gap={1}>
+                <Stack direction="row" alignItems="center" gap={0.5}>
+                  <Typography variant="body2">LK:</Typography>
+                  <Typography
+                    variant="body2"
+                    fontWeight={700}
+                    component="strong"
                   >
-                    <Stack gap={1}>
-                      {cell.getValue().map(
-                        (itemDesc: any, index: any) =>
-                          itemDesc && (
-                            <Chip
-                              key={index}
-                              sx={{
-                                height: "auto",
-                                py: 1,
-                                "& .MuiChip-label": {
-                                  overflow: "unset",
-                                  whiteSpace: "wrap",
-                                },
-                              }}
-                              label={itemDesc}
-                            />
-                          )
-                      )}
-                    </Stack>
-                  </Paper>
-                ),
-              },
-              {
-                accessorKey: "dampak",
-                header: "Dampak",
-                size: 300,
-                enableColumnActions: false,
-                Header: ({ column }) => (
-                  <SortNumber
-                    column={column}
-                    numberSort={column.getIndex() + 1}
-                  />
-                ),
-                Cell: ({ cell }: { cell: any }) => (
-                  <Paper
-                    elevation={0}
-                    sx={{
-                      overflow: "auto",
-                      maxHeight: 160,
-                      backgroundColor: "transparent",
-                      "&::-webkit-scrollbar": {
-                        width: "3px",
-                      },
-                    }}
+                    {row.analisis_lk}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" alignItems="center" gap={0.5}>
+                  <Typography variant="body2">LD:</Typography>
+                  <Typography
+                    variant="body2"
+                    fontWeight={700}
+                    component="strong"
                   >
-                    <Stack gap={1}>
-                      {cell.getValue().map(
-                        (itemDesc: any, index: any) =>
-                          itemDesc && (
-                            <Chip
-                              key={index}
-                              sx={{
-                                height: "auto",
-                                py: 1,
-                                "& .MuiChip-label": {
-                                  overflow: "unset",
-                                  whiteSpace: "wrap",
-                                },
-                              }}
-                              label={itemDesc}
-                            />
-                          )
-                      )}
-                    </Stack>
-                  </Paper>
-                ),
-              },
-              {
-                accessorKey: "area_dampak",
-                header: "Area Dampak",
-                size: 300,
-                enableColumnActions: false,
-                Header: ({ column }) => (
-                  <SortNumber
-                    column={column}
-                    numberSort={column.getIndex() + 1}
-                  />
-                ),
-              },
-            ],
+                    {row.analisis_ld}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" alignItems="center" gap={0.5}>
+                  <Typography variant="body2">BR:</Typography>
+                  <Typography
+                    variant="body2"
+                    fontWeight={700}
+                    component="strong"
+                  >
+                    {row.analisis_br}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" alignItems="center" gap={1}>
+                  <Typography variant="body2">LEVEL</Typography>
+                  <ChipLevelRisiko level={row.analisis_level} />
+                </Stack>
+              </Stack>
+            ),
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
           },
+          // {
+          //   accessorKey: "analisis_lk",
+          //   header: "LK",
+          //   enableColumnActions: false,
+          //   size: 120,
+          //   muiTableHeadCellProps: {
+          //     align: "center",
+          //   },
+          //   muiTableBodyCellProps: {
+          //     align: "center",
+          //   },
+          //   Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+          //     renderedCellValue == null ? "-" : renderedCellValue,
+          //   Header: ({ column }) => (
+          //     <SortNumber
+          //       column={column}
+          //       numberSort={column.getIndex() + 1}
+          //     />
+          //   ),
+          // },
+          // {
+          //   accessorKey: "analisis_ld",
+          //   header: "LD",
+          //   enableColumnActions: false,
+          //   size: 120,
+          //   muiTableHeadCellProps: {
+          //     align: "center",
+          //   },
+          //   muiTableBodyCellProps: {
+          //     align: "center",
+          //   },
+          //   Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+          //     renderedCellValue == null ? "-" : renderedCellValue,
+          //   Header: ({ column }) => (
+          //     <SortNumber
+          //       column={column}
+          //       numberSort={column.getIndex() + 1}
+          //     />
+          //   ),
+          // },
+          // {
+          //   id: "row-analisis_br",
+          //   accessorKey: "analisis_br",
+          //   header: "BR",
+          //   enableColumnActions: false,
+          //   size: 120,
+          //   muiTableHeadCellProps: {
+          //     align: "center",
+          //   },
+          //   muiTableBodyCellProps: {
+          //     align: "center",
+          //   },
+          //   Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+          //     renderedCellValue == null ? "-" : renderedCellValue,
+          //   Header: ({ column }) => (
+          //     <SortNumber
+          //       column={column}
+          //       numberSort={column.getIndex() + 1}
+          //     />
+          //   ),
+          // },
+          // {
+          //   accessorKey: "analisis_level",
+          //   header: "Level Risiko",
+          //   enableColumnActions: false,
+          //   Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
+          //     <ChipLevelRisiko level={renderedCellValue} />
+          //   ),
+          //   Header: ({ column }) => (
+          //     <SortNumber
+          //       column={column}
+          //       numberSort={column.getIndex() + 1}
+          //     />
+          //   ),
+          // },
           {
-            id: "analisis_evaluasi_risiko",
-            header: "Analisis & Evaluasi Risiko",
-            columns: [
-              {
-                header: "Nilai",
-                size: 240,
-                accessorFn: (row) => (
-                  <Stack direction="column" gap={1}>
-                    <Stack direction="row" alignItems="center" gap={0.5}>
-                      <Typography variant="body2">LK:</Typography>
-                      <Typography
-                        variant="body2"
-                        fontWeight={700}
-                        component="strong"
-                      >
-                        {row.analisis_lk}
-                      </Typography>
-                    </Stack>
-                    <Stack direction="row" alignItems="center" gap={0.5}>
-                      <Typography variant="body2">LD:</Typography>
-                      <Typography
-                        variant="body2"
-                        fontWeight={700}
-                        component="strong"
-                      >
-                        {row.analisis_ld}
-                      </Typography>
-                    </Stack>
-                    <Stack direction="row" alignItems="center" gap={0.5}>
-                      <Typography variant="body2">BR:</Typography>
-                      <Typography
-                        variant="body2"
-                        fontWeight={700}
-                        component="strong"
-                      >
-                        {row.analisis_br}
-                      </Typography>
-                    </Stack>
-                    <Stack direction="row" alignItems="center" gap={1}>
-                      <Typography variant="body2">LEVEL</Typography>
-                      <ChipLevelRisiko level={row.analisis_level} />
-                    </Stack>
-                  </Stack>
-                ),
-                Header: ({ column }) => (
-                  <SortNumber
-                    column={column}
-                    numberSort={column.getIndex() + 1}
-                  />
-                ),
-              },
-              // {
-              //   accessorKey: "analisis_lk",
-              //   header: "LK",
-              //   enableColumnActions: false,
-              //   size: 120,
-              //   muiTableHeadCellProps: {
-              //     align: "center",
-              //   },
-              //   muiTableBodyCellProps: {
-              //     align: "center",
-              //   },
-              //   Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
-              //     renderedCellValue == null ? "-" : renderedCellValue,
-              //   Header: ({ column }) => (
-              //     <SortNumber
-              //       column={column}
-              //       numberSort={column.getIndex() + 1}
-              //     />
-              //   ),
-              // },
-              // {
-              //   accessorKey: "analisis_ld",
-              //   header: "LD",
-              //   enableColumnActions: false,
-              //   size: 120,
-              //   muiTableHeadCellProps: {
-              //     align: "center",
-              //   },
-              //   muiTableBodyCellProps: {
-              //     align: "center",
-              //   },
-              //   Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
-              //     renderedCellValue == null ? "-" : renderedCellValue,
-              //   Header: ({ column }) => (
-              //     <SortNumber
-              //       column={column}
-              //       numberSort={column.getIndex() + 1}
-              //     />
-              //   ),
-              // },
-              // {
-              //   id: "row-analisis_br",
-              //   accessorKey: "analisis_br",
-              //   header: "BR",
-              //   enableColumnActions: false,
-              //   size: 120,
-              //   muiTableHeadCellProps: {
-              //     align: "center",
-              //   },
-              //   muiTableBodyCellProps: {
-              //     align: "center",
-              //   },
-              //   Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
-              //     renderedCellValue == null ? "-" : renderedCellValue,
-              //   Header: ({ column }) => (
-              //     <SortNumber
-              //       column={column}
-              //       numberSort={column.getIndex() + 1}
-              //     />
-              //   ),
-              // },
-              // {
-              //   accessorKey: "analisis_level",
-              //   header: "Level Risiko",
-              //   enableColumnActions: false,
-              //   Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
-              //     <ChipLevelRisiko level={renderedCellValue} />
-              //   ),
-              //   Header: ({ column }) => (
-              //     <SortNumber
-              //       column={column}
-              //       numberSort={column.getIndex() + 1}
-              //     />
-              //   ),
-              // },
-              {
-                id: "row-prioritas",
-                accessorKey: "prioritas",
-                header: "Prioritas Risiko",
-                enableColumnActions: false,
-                muiTableHeadCellProps: {
-                  align: "center",
-                },
-                muiTableBodyCellProps: {
-                  align: "center",
-                },
-                Header: ({ column }) => (
-                  <SortNumber
-                    column={column}
-                    numberSort={column.getIndex() + 1}
-                  />
-                ),
-              },
-            ],
+            id: "row-prioritas",
+            accessorKey: "prioritas",
+            header: "Prioritas Risiko",
+            enableColumnActions: false,
+            muiTableHeadCellProps: {
+              align: "center",
+            },
+            muiTableBodyCellProps: {
+              align: "center",
+            },
+            Header: ({ column }) => (
+              <SortNumber column={column} numberSort={column.getIndex() + 1} />
+            ),
           },
         ],
       },
+      //   ],
+      // },
+
       {
         id: "perlakuan_risiko",
         header: "Perlakuan Risiko",
@@ -472,123 +456,112 @@ export default function MRTPerlakuanComplete({
           },
         ],
       },
+      // {
+      //   id: "risiko_residual_harapan",
+      //   header: "Risiko Residual Harapan",
+      //   columns: [
       {
-        id: "risiko_residual_harapan",
+        accessorKey: "risiko_residual_harapan",
         header: "Risiko Residual Harapan",
-        columns: [
-          {
-            accessorKey: "risiko_residual_harapan",
-            header: "",
-            enableSorting: false,
-            size: 240,
-            accessorFn: (row) => (
-              <Stack direction="column" gap={1}>
-                <Stack direction="row" alignItems="center" gap={0.5}>
-                  <Typography variant="body2">LK:</Typography>
-                  <Typography
-                    variant="body2"
-                    fontWeight={700}
-                    component="strong"
-                  >
-                    {row.perlakuan_lk}
-                  </Typography>
-                </Stack>
-                <Stack direction="row" alignItems="center" gap={0.5}>
-                  <Typography variant="body2">LD:</Typography>
-                  <Typography
-                    variant="body2"
-                    fontWeight={700}
-                    component="strong"
-                  >
-                    {row.perlakuan_ld}
-                  </Typography>
-                </Stack>
-                <Stack direction="row" alignItems="center" gap={0.5}>
-                  <Typography variant="body2">BR:</Typography>
-                  <Typography
-                    variant="body2"
-                    fontWeight={700}
-                    component="strong"
-                  >
-                    {row.perlakuan_br}
-                  </Typography>
-                </Stack>
-                <Stack direction="row" alignItems="center" gap={1}>
-                  <Typography variant="body2">LEVEL</Typography>
-                  <ChipLevelRisiko level={row.perlakuan_level} />
-                </Stack>
-              </Stack>
-            ),
-            Header: ({ column }) => (
-              <SortNumber column={column} numberSort={column.getIndex() + 1} />
-            ),
-          },
-        ],
-        // columns: [
-        //   {
-        //     accessorKey: "perlakuan_lk",
-        //     header: "LK",
-        //     enableColumnActions: false,
-        //     size: 120,
-        //     muiTableHeadCellProps: {
-        //       align: "center",
-        //     },
-        //     muiTableBodyCellProps: {
-        //       align: "center",
-        //     },
-        //     Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
-        //       renderedCellValue == null ? "-" : renderedCellValue,
-        //     Header: ({ column }) => (
-        //       <SortNumber column={column} numberSort={column.getIndex() + 1} />
-        //     ),
-        //   },
-        //   {
-        //     accessorKey: "perlakuan_ld",
-        //     header: "LD",
-        //     enableColumnActions: false,
-        //     size: 120,
-        //     muiTableHeadCellProps: {
-        //       align: "center",
-        //     },
-        //     muiTableBodyCellProps: {
-        //       align: "center",
-        //     },
-        //     Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
-        //       renderedCellValue == null ? "-" : renderedCellValue,
-        //     Header: ({ column }) => (
-        //       <SortNumber column={column} numberSort={column.getIndex() + 1} />
-        //     ),
-        //   },
-        //   {
-        //     accessorKey: "perlakuan_br",
-        //     header: "BR",
-        //     enableColumnActions: false,
-        //     size: 120,
-        //     muiTableHeadCellProps: {
-        //       align: "center",
-        //     },
-        //     muiTableBodyCellProps: {
-        //       align: "center",
-        //     },
-        //     Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
-        //       renderedCellValue == null ? "-" : renderedCellValue,
-        //     Header: ({ column }) => (
-        //       <SortNumber column={column} numberSort={column.getIndex() + 1} />
-        //     ),
-        //   },
-        //   {
-        //     accessorKey: "perlakuan_level",
-        //     header: "Level Risiko",
-        //     enableColumnActions: false,
-        //     Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
-        //       <ChipLevelRisiko level={renderedCellValue} />
-        //     ),
-        //     Header: ({ column }) => (
-        //       <SortNumber column={column} numberSort={column.getIndex() + 1} />
-        //     ),
-        //   },
-        // ],
+        enableSorting: false,
+        size: 240,
+        accessorFn: (row) => (
+          <Stack direction="column" gap={1}>
+            <Stack direction="row" alignItems="center" gap={0.5}>
+              <Typography variant="body2">LK:</Typography>
+              <Typography variant="body2" fontWeight={700} component="strong">
+                {row.perlakuan_lk}
+              </Typography>
+            </Stack>
+            <Stack direction="row" alignItems="center" gap={0.5}>
+              <Typography variant="body2">LD:</Typography>
+              <Typography variant="body2" fontWeight={700} component="strong">
+                {row.perlakuan_ld}
+              </Typography>
+            </Stack>
+            <Stack direction="row" alignItems="center" gap={0.5}>
+              <Typography variant="body2">BR:</Typography>
+              <Typography variant="body2" fontWeight={700} component="strong">
+                {row.perlakuan_br}
+              </Typography>
+            </Stack>
+            <Stack direction="row" alignItems="center" gap={1}>
+              <Typography variant="body2">LEVEL</Typography>
+              <ChipLevelRisiko level={row.perlakuan_level} />
+            </Stack>
+          </Stack>
+        ),
+        Header: ({ column }) => (
+          <SortNumber column={column} numberSort={column.getIndex() + 1} />
+        ),
       },
+      // ],
+
+      // columns: [
+      //   {
+      //     accessorKey: "perlakuan_lk",
+      //     header: "LK",
+      //     enableColumnActions: false,
+      //     size: 120,
+      //     muiTableHeadCellProps: {
+      //       align: "center",
+      //     },
+      //     muiTableBodyCellProps: {
+      //       align: "center",
+      //     },
+      //     Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+      //       renderedCellValue == null ? "-" : renderedCellValue,
+      //     Header: ({ column }) => (
+      //       <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      //     ),
+      //   },
+      //   {
+      //     accessorKey: "perlakuan_ld",
+      //     header: "LD",
+      //     enableColumnActions: false,
+      //     size: 120,
+      //     muiTableHeadCellProps: {
+      //       align: "center",
+      //     },
+      //     muiTableBodyCellProps: {
+      //       align: "center",
+      //     },
+      //     Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+      //       renderedCellValue == null ? "-" : renderedCellValue,
+      //     Header: ({ column }) => (
+      //       <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      //     ),
+      //   },
+      //   {
+      //     accessorKey: "perlakuan_br",
+      //     header: "BR",
+      //     enableColumnActions: false,
+      //     size: 120,
+      //     muiTableHeadCellProps: {
+      //       align: "center",
+      //     },
+      //     muiTableBodyCellProps: {
+      //       align: "center",
+      //     },
+      //     Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+      //       renderedCellValue == null ? "-" : renderedCellValue,
+      //     Header: ({ column }) => (
+      //       <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      //     ),
+      //   },
+      //   {
+      //     accessorKey: "perlakuan_level",
+      //     header: "Level Risiko",
+      //     enableColumnActions: false,
+      //     Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
+      //       <ChipLevelRisiko level={renderedCellValue} />
+      //     ),
+      //     Header: ({ column }) => (
+      //       <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      //     ),
+      //   },
+      // ],
+      // },
     ],
     []
   );

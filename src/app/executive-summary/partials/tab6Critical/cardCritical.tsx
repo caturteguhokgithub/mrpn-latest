@@ -67,6 +67,7 @@ export default function CardCritical({
     selectMonth,
     dataCP,
     dataROKunci,
+    loadingRoKunci,
   } = useCardCriticalVM();
 
   const { year } = useRKPContext((store) => store);
@@ -164,7 +165,12 @@ export default function CardCritical({
                 description="Silahkan isi konten halaman ini"
               />
             ) : (
-              <TableCriticalCustom year={year} dataCP={dataCP} dataROKunci={dataROKunci} />
+              <TableCriticalCustom
+                year={year}
+                dataCP={dataCP}
+                dataROKunci={dataROKunci}
+                isLoading={loadingRoKunci}
+              />
             )}
           </Fragment>
         )}
@@ -200,8 +206,9 @@ export default function CardCritical({
         width={"50%"}
         dialogOpen={modalAdd}
         dialogClose={handleModalCloseAdd}
-        title={`Tambah Critical Path ${year > 0 ? "RKP" : "RPJMN"} ${year > 0 ? year : ""
-          }`}
+        title={`Tambah Critical Path ${year > 0 ? "RKP" : "RPJMN"} ${
+          year > 0 ? year : ""
+        }`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button variant="outlined" onClick={handleModalCloseAdd}>

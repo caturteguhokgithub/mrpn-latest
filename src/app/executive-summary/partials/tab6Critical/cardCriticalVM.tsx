@@ -61,12 +61,15 @@ const useCardCriticalVM = () => {
   const [state, setState] = useState<ExsumCriticalState>(initState);
   const [optionStrategy, setOptionStrategy] = useState<string[]>([]);
   const [data, setData] = useState<ExsumCriticalData[]>([]);
-  const [dataROKunci, setDataROKunci] = useState<DataRoKunci>({ ...initDataRoKunci });
+  const [dataROKunci, setDataROKunci] = useState<DataRoKunci>({
+    ...initDataRoKunci,
+  });
   const [dataCP, setDataCP] = useState<DataCPType[]>([]);
   const [ganChart, setGanChart] = useState<Task[]>([]);
 
   const [tasksRKP, setTaskRKP] = React.useState<Task[]>([]);
   const [selectMonth, setSelectMonth] = React.useState("");
+  const [loadingRoKunci, setLoadingRoKunci] = React.useState(false);
 
   const handleChangeMonth = (event: SelectChangeEvent) => {
     setSelectMonth(event.target.value);
@@ -170,12 +173,12 @@ const useCardCriticalVM = () => {
             );
             return monthData
               ? {
-                id: monthData.id,
-                name: monthData.name,
-                aktivitas: monthData.aktivitas,
-                target: monthData.target,
-                satuan: monthData.satuan,
-              }
+                  id: monthData.id,
+                  name: monthData.name,
+                  aktivitas: monthData.aktivitas,
+                  target: monthData.target,
+                  satuan: monthData.satuan,
+                }
               : null;
           }),
         })),
@@ -187,6 +190,7 @@ const useCardCriticalVM = () => {
   }
 
   const handleSubmit = async () => {
+    setLoadingRoKunci(true);
     if (
       state.ro == undefined
       // state.start_date == "" ||
@@ -272,6 +276,7 @@ const useCardCriticalVM = () => {
       setState(initState);
       setModalOpen(false);
       setModalAdd(false);
+      setLoadingRoKunci(false);
     }
   };
 
@@ -398,6 +403,7 @@ const useCardCriticalVM = () => {
     selectMonth,
     dataCP,
     dataROKunci,
+    loadingRoKunci,
   };
 };
 

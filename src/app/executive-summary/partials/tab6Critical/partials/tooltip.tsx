@@ -40,8 +40,10 @@ const TooltipCP = ({ isParent, data, year }: TooltipCPProps) => {
       <Box
         bgcolor="white"
         color={grey[800]}
-        p={"10px 16px"}
+        p="10px 16px"
         width={300}
+        maxHeight="50vh"
+        overflow="auto"
         boxShadow="rgba(0, 0, 0, 0.2) 0px 3px 3px -2px, rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;"
         sx={{
           "strong, span": {
