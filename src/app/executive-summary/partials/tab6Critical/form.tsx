@@ -773,7 +773,14 @@ export default function FormCritical({
                                         value={FormatCurrency(
                                           tags.months[indexMonth].target
                                         )}
-                                        onChange={(e) =>
+                                        onChange={(e) => {
+                                          const rawValue =
+                                            e.target.value.replace(/\D/g, "");
+                                          const numericValue =
+                                            rawValue === ""
+                                              ? 0
+                                              : parseInt(rawValue, 10);
+
                                           setState((prev) => {
                                             const kegiatan = [...prev.kegiatan]; // shallow copy array
 
@@ -787,7 +794,8 @@ export default function FormCritical({
 
                                             currentMonths[indexMonth] = {
                                               ...currentMonths[indexMonth]!,
-                                              target: e.target.value,
+                                              // target: e.target.value,
+                                              target: `${numericValue}`,
                                             };
 
                                             kegiatan[index].months =
@@ -797,8 +805,8 @@ export default function FormCritical({
                                               ...prev,
                                               kegiatan,
                                             };
-                                          })
-                                        }
+                                          });
+                                        }}
                                       />
                                     </FormControl>
                                   </Grid>

@@ -258,6 +258,7 @@ export default function DashboardLayout(props: {
         width: "calc(100vw - 188px)",
       },
       ".table-fund, .table-overflow-x-indication": {
+        // maxWidth: "calc(100vw - 192px)",
         maxWidth: "calc(100vw - 192px)",
       },
       ".wording-kp-ellipsis": {

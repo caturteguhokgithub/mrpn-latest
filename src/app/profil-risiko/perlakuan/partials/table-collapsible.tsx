@@ -110,7 +110,7 @@ function Row(props: { row: PerlakuanData; index?: number }) {
       <TableRow>
         <TableCell colSpan={6} sx={{ p: 0 }}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ p: 1, bgcolor: grey[200] }}>
+            <Box sx={{ p: 1, bgcolor: grey[200], pl: 10 }}>
               <TableContainer
                 component={Paper}
                 elevation={0}
@@ -276,7 +276,15 @@ export default function CollapsibleTable({
   // console.log(rowData)
 
   return (
-    <Box sx={{ width: "calc(100% + 32px)", bgcolor: grey[50], m: -2, p: 1 }}>
+    <Box
+      sx={{
+        width: "calc(100% + 32px)",
+        bgcolor: grey[50],
+        m: -2,
+        p: 1,
+        pl: 10,
+      }}
+    >
       <TableContainer
         component={Paper}
         elevation={0}
@@ -323,7 +331,7 @@ export default function CollapsibleTable({
               </TableCell>
               <TableCell
                 align="center"
-                width={200}
+                width={300}
                 sx={{ bgcolor: orange[50] }}
               >
                 Penanggung Jawab
