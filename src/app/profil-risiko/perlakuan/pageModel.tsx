@@ -5,7 +5,10 @@ import { RiskAnalysisDto } from "@/app/profil-risiko/analisis-evaluasi/pageModel
 import { RiskOverviewData } from "@/app/profil-risiko/overview/pageModel";
 
 export type RiskTreatmentDto = RiskAnalysisDto & {
-  perlakuan: RiskTreatmentValueDto
+  perlakuan: RiskTreatmentReqDto & {
+    perlakuan_data: Perlakuan[]
+    matriks: MasterRiskMatrixRes | undefined
+  }
 }
 
 export interface RiskTreatmentValueDto {
@@ -67,7 +70,9 @@ export type GetRiskTreatmentServiceModel = BaseAPIServiceParam & {
 export interface RiskTreatmentReqDto {
   id: number
   profil_risiko_id: number
+  profil_risiko: RiskAnalysisDto | undefined
   src_matriks_risiko_id: number
+  src_matriks_risiko: MasterRiskMatrixRes | undefined
   keputusan: string
   perlakuan: Perlakuan[]
 }
@@ -84,9 +89,11 @@ export interface Perlakuan {
   target_triwulan_4: string
   satuan_triwulan_4: string
   ro: number[],
+  rincian_output: RoDto[] | undefined,
   start_date: string
   end_date: string
   src_stakeholder_id: number
+  src_stakeholder: MiscMasterListStakeholderRes | undefined
 }
 
 export const initPerlakuanStateReq: Perlakuan = {
@@ -101,15 +108,19 @@ export const initPerlakuanStateReq: Perlakuan = {
   target_triwulan_4: "",
   satuan_triwulan_4: "",
   ro: [],
+  rincian_output: undefined,
   start_date: "",
   end_date: "",
-  src_stakeholder_id: 0
+  src_stakeholder_id: 0,
+  src_stakeholder: undefined
 }
 
 export const initRiskTreatmentStateReq: RiskTreatmentReqDto = {
   id: 0,
   profil_risiko_id: 0,
+  profil_risiko: undefined,
   src_matriks_risiko_id: 0,
+  src_matriks_risiko: undefined,
   keputusan: "",
   perlakuan: [{ ...initPerlakuanStateReq }]
 }

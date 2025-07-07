@@ -99,44 +99,49 @@ const useTreatmentRiskVM = () => {
     }
   }
 
-
-  const initState: RiskTreatmentState = JSON.parse(JSON.stringify(initRiskTreatmentState))
-  const [state, setState] = useState<RiskTreatmentState>(initState)
+  const [state, setState] = useState<RiskTreatmentReqDto>(initRiskTreatmentStateReq)
 
   const [reqState, setReqState] = useState<RiskTreatmentReqDto>({ ...initRiskTreatmentStateReq })
 
   const actionModal = (isOpen: boolean, action: string, id?: number) => {
-    let initState: RiskTreatmentState = JSON.parse(JSON.stringify(initRiskTreatmentState))
+    let initState: RiskTreatmentReqDto = JSON.parse(JSON.stringify(initRiskTreatmentStateReq))
 
     if (id != undefined && dataTreatmentRisk !== undefined) {
-      const getIndex = dataTreatmentRisk.profilRisiko.findIndex(x => x.perlakuan.id == id)
+      const getIndex = dataTreatmentRisk.profilRisiko.findIndex(x => x.id == id)
       if (getIndex > -1) {
         const reqData = dataTreatmentRisk.profilRisiko[getIndex]
+        // initState = reqData.perlakuan
         initState = {
-          id: reqData.perlakuan.id,
+          id: reqData.id,
           profil_risiko: reqData,
+          perlakuan: reqData.perlakuan.perlakuan_data,
           keputusan: reqData.perlakuan.keputusan,
-          start_date: reqData.perlakuan.start_date,
-          end_date: reqData.perlakuan.end_date,
-          keterangan_risiko: reqData.perlakuan.keterangan_risiko,
-          ro: reqData.perlakuan.rincian_output,
+          profil_risiko_id: reqData.perlakuan.profil_risiko_id,
           src_matriks_risiko: reqData.perlakuan.matriks,
-          src_stakeholder: reqData.perlakuan.penanggung_jawab,
-          target: "",
-          triwulan: reqData.perlakuan.triwulan,
-          target_triwulan_1: reqData.perlakuan.target_triwulan_1,
-          satuan_triwulan_1: reqData.perlakuan.satuan_triwulan_1,
-          target_triwulan_2: reqData.perlakuan.target_triwulan_2,
-          satuan_triwulan_2: reqData.perlakuan.satuan_triwulan_2,
-          target_triwulan_3: reqData.perlakuan.target_triwulan_3,
-          satuan_triwulan_3: reqData.perlakuan.satuan_triwulan_3,
-          target_triwulan_4: reqData.perlakuan.target_triwulan_4,
-          satuan_triwulan_4: reqData.perlakuan.satuan_triwulan_4,
+          src_matriks_risiko_id: reqData.perlakuan.src_matriks_risiko_id
+          // keputusan: reqData.perlakuan.keputusan,
+          // start_date: reqData.perlakuan.start_date,
+          // end_date: reqData.perlakuan.end_date,
+          // keterangan_risiko: reqData.perlakuan.keterangan_risiko,
+          // ro: reqData.perlakuan.rincian_output,
+          // src_matriks_risiko: reqData.perlakuan.matriks,
+          // src_stakeholder: reqData.perlakuan.penanggung_jawab,
+          // target: "",
+          // triwulan: reqData.perlakuan.triwulan,
+          // target_triwulan_1: reqData.perlakuan.target_triwulan_1,
+          // satuan_triwulan_1: reqData.perlakuan.satuan_triwulan_1,
+          // target_triwulan_2: reqData.perlakuan.target_triwulan_2,
+          // satuan_triwulan_2: reqData.perlakuan.satuan_triwulan_2,
+          // target_triwulan_3: reqData.perlakuan.target_triwulan_3,
+          // satuan_triwulan_3: reqData.perlakuan.satuan_triwulan_3,
+          // target_triwulan_4: reqData.perlakuan.target_triwulan_4,
+          // satuan_triwulan_4: reqData.perlakuan.satuan_triwulan_4,
         }
       }
     }
 
     setState(initState)
+    // console.log(state);
 
     setModal({
       isOpen: isOpen,
@@ -149,11 +154,6 @@ const useTreatmentRiskVM = () => {
 
     const today = new Date();
     const quarter = Math.floor((today.getMonth() + 3) / 3);
-
-    const roData = state.ro.reduce<number[]>(
-      (a, b) => [...a, b.id],
-      []
-    )
 
     // const req: RiskTreatmentReqDto = {
     //   id: state.id,
@@ -175,9 +175,6 @@ const useTreatmentRiskVM = () => {
     //   target_triwulan_4: state.target_triwulan_4,
     //   satuan_triwulan_4: state.satuan_triwulan_4
     // }
-
-    // console.log(req);
-
 
     // let valid = true;
     // let message = "";
@@ -201,35 +198,35 @@ const useTreatmentRiskVM = () => {
     //   return
     // }
 
-    // let response
-    // if (modal.action !== "delete") {
+    let response
+    if (modal.action !== "delete") {
 
-    //   if (req.id == 0) {
-    //     response = await doCreateRiskTreatment({
-    //       body: req,
-    //       loadingContext: loadingContext,
-    //       errorModalContext: errorModalContext
-    //     })
-    //   } else {
-    //     response = await doUpdateRiskTreatment({
-    //       body: req,
-    //       loadingContext: loadingContext,
-    //       errorModalContext: errorModalContext
-    //     })
-    //   }
+      if (state.id == 0) {
+        response = await doCreateRiskTreatment({
+          body: state,
+          loadingContext: loadingContext,
+          errorModalContext: errorModalContext
+        })
+      } else {
+        response = await doUpdateRiskTreatment({
+          body: state,
+          loadingContext: loadingContext,
+          errorModalContext: errorModalContext
+        })
+      }
 
-    // } else {
-    //   response = await doDeleteRiskTreatment({
-    //     body: req,
-    //     loadingContext: loadingContext,
-    //     errorModalContext: errorModalContext
-    //   })
-    // }
+    } else {
+      response = await doDeleteRiskTreatment({
+        body: state,
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext
+      })
+    }
 
-    // if (response?.code === API_CODE.success) {
-    //   getTreatmentRiskData()
-    //   setModal({ isOpen: false, action: "create" })
-    // }
+    if (response?.code === API_CODE.success) {
+      getTreatmentRiskData()
+      setModal({ isOpen: false, action: "create" })
+    }
 
   }
 
