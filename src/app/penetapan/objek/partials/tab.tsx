@@ -88,6 +88,7 @@ export default function TabObject({
   stateUpr,
   handleUploadBuktiDukung,
   stateApproval,
+  setModalObjek,
 }: {
   setModalUpr: (value: boolean) => void;
   useEffectObjectState: () => void;
@@ -98,6 +99,7 @@ export default function TabObject({
   stateUpr: dtoUraian[];
   handleUploadBuktiDukung?: () => void;
   stateApproval: any;
+  setModalObjek: (value: boolean) => void;
 }) {
   const { nota } = usePenetapanTopicContext((store) => store);
   const { rkp, year, rpjmn } = useRKPContext((state) => state);
@@ -264,15 +266,12 @@ export default function TabObject({
             />
           ) : (
             <Fragment>
-              {/* {isDeveloping ? (
-                <TableProposal />
-              ) : ( */}
               <CollapsibleTableUpr
-                data={stateUpr}
-                // setShowSave={setShowSave}
-                // showSave={showSave}
+                useEffectObjectState={useEffectObjectState}
+                showSave={showSave}
+                stateUpr={stateUpr}
+                setModalObjek={setModalObjek}
               />
-              {/* )} */}
             </Fragment>
           )}
         </CardItem>

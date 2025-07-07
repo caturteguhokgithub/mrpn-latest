@@ -124,7 +124,7 @@ const styleToggleButton = [
   },
 ];
 
-export default function PageTemaView({ }) {
+export default function PageTemaView() {
   const [modalDeleteTopic, setModalDeleteTopic] = useState(false);
 
   const { permission } = useAuthContext((state) => state);
@@ -169,6 +169,7 @@ export default function PageTemaView({ }) {
     stateApproval,
     reqBuktiDukungPengesahan,
     setReqBuktiDukungPengesahan,
+    setModalObjek,
   } = usePenetapanObjectVM();
 
   const { optionStakeholder } = useCardIndicationVM();
@@ -263,10 +264,11 @@ export default function PageTemaView({ }) {
   return (
     <>
       <ContentPage
-        title={`Objek MRPN & UPR LS ${year == 0
-          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-          : "Tahun " + year
-          }`}
+        title={`Objek MRPN & UPR LS ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip={
           <Stack spacing={2}>
             <div>
@@ -438,6 +440,7 @@ export default function PageTemaView({ }) {
                 stateUpr={stateUpr}
                 handleUploadBuktiDukung={() => setModalBuktiDukung(true)}
                 stateApproval={stateApproval}
+                setModalObjek={setModalObjek}
               />
             </Collapse>
           </Fragment>
@@ -490,7 +493,10 @@ export default function PageTemaView({ }) {
             <Button onClick={() => setModalUpr(false)}>Batal</Button>
             <Button
               variant="contained"
-              onClick={() => handleCreateUpr()}
+              onClick={() => {
+                handleCreateUpr();
+                setModalUpr(false);
+              }}
               sx={{
                 color: "white !important",
               }}

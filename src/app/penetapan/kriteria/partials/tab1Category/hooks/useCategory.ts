@@ -45,25 +45,25 @@ const useCategoryList = () => {
     useState<SubKategoriRisiko>({ ...initSubCategory });
 
   // ini data yang didapat dari local storage
-  let kpPenetapan: any = null;
-  let kpPenetapanObj: any = null;
+  // let kpPenetapan: any = null;
+  // let kpPenetapanObj: any = null;
 
-  if (typeof window !== "undefined") {
-    kpPenetapan = localStorage.getItem("kpPenetapan");
-    kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
-  }
+  // if (typeof window !== "undefined") {
+  //   kpPenetapan = localStorage.getItem("kpPenetapan");
+  //   kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
+  // }
 
   // const kpPenetapanObj = kpPenetapan ? JSON.parse(kpPenetapan) : null;
 
-  const isEmptyPenetapanObject =
-    !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
+  // const isEmptyPenetapanObject =
+  //   !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
 
   async function getData() {
     setLoading(true);
     const response = await doGetCategory({
       body: {
-        // uraian_penetapan_object_id: objectState?.id,
-        uraian_penetapan_object_id: kpPenetapanObj?.id,
+        uraian_penetapan_object_id: objectState?.id,
+        // uraian_penetapan_object_id: kpPenetapanObj?.id,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -179,9 +179,9 @@ const useCategoryList = () => {
   };
 
   useEffect(() => {
-    if (!isEmptyPenetapanObject) {
-      getData();
-    }
+    // if (!isEmptyPenetapanObject) {
+    getData();
+    // }
     getMasterCategory();
   }, [objectState?.id]);
 

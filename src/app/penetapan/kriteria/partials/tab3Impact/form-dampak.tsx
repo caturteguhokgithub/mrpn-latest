@@ -59,7 +59,13 @@ export default function FormDampak({
   setStateKom,
   stateUpr,
   setStateUpr,
-}: {
+}: // addDampak,
+// minusDampak,
+// handleChangeAD,
+// handleSubChange,
+// handleAreaChange,
+// itemsDampak,
+{
   mode?: string;
   optionAD?: ValuesShowMatDamKomite[];
   setModalOpenAddKomite?: any;
@@ -67,6 +73,16 @@ export default function FormDampak({
   setStateKom?: (value: SetStateAction<ReqAddMatDamKomite>) => void;
   stateUpr?: ReqAddMatDamUpr;
   setStateUpr?: (value: SetStateAction<ReqAddMatDamUpr>) => void;
+  // stateKom: any;
+  // setStateKom: any;
+  // stateUpr: any;
+  // setStateUpr: any;
+  // addDampak: any;
+  // minusDampak: any;
+  // handleChangeAD: any;
+  // handleSubChange: any;
+  // handleAreaChange: any;
+  // itemsDampak: any;
 }) {
   const [items, setItem] = React.useState([{ id: 0 }]);
   const add = () => {
@@ -253,6 +269,7 @@ export default function FormDampak({
                       small
                       noMargin
                       onclick={add}
+                      // onclick={addDampak}
                     />
                   </Box>
                 )}
@@ -280,6 +297,7 @@ export default function FormDampak({
                                 errorColor
                                 title="Hapus"
                                 noMargin
+                                // onclick={() => minusDampak(tags.id)}
                                 onclick={() => minus(tags.id)}
                               />
                             )}

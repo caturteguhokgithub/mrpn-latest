@@ -34,6 +34,9 @@ function Row(props: {
   handleDelete?: any;
   handleDeleteArea?: any;
   handleEditArea?: any;
+  // prosesBtnEdit: any;
+  // prosesBtnDelete: any;
+  // prosesBtnEditArea: any;
 }) {
   const {
     row,
@@ -43,9 +46,12 @@ function Row(props: {
     setRequestMatDamUpr,
     setRequestMatDamKomite,
     handleEditArea,
+    // prosesBtnEdit,
+    // prosesBtnDelete,
+    // prosesBtnEditArea,
   } = props;
 
-  const [open, setOpen] = React.useState(true);
+  const [openCollapse, setOpenCollapse] = React.useState(true);
 
   const prosesBtnEdit = (
     komite: ValuesShowMatDamKomite,
@@ -88,10 +94,7 @@ function Row(props: {
     handleDelete();
   };
 
-  const prosesBtnEditArea = (
-    komite: ValuesShowMatDamKomite,
-    act: string
-  ) => {
+  const prosesBtnEditArea = (komite: ValuesShowMatDamKomite, act: string) => {
     if (setRequestMatDamKomite) {
       setRequestMatDamKomite((prevState) => ({
         ...prevState,
@@ -115,9 +118,9 @@ function Row(props: {
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => setOpen(!open)}
+            onClick={() => setOpenCollapse(!openCollapse)}
           >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            {openCollapse ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
         <TableCell colSpan={8} sx={{ fontWeight: 600, bgcolor: blue[100] }}>
@@ -136,7 +139,7 @@ function Row(props: {
       </TableRow>
       <TableRow>
         <TableCell colSpan={10} sx={{ bgcolor: grey[200], p: 0 }}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={openCollapse} timeout="auto" unmountOnExit>
             <Box m={1} ml={8}>
               <Table size="small" aria-label="purchases">
                 <TableHead sx={{ bgcolor: bgColorTh }}>
@@ -268,6 +271,7 @@ function Row(props: {
     </React.Fragment>
   );
 }
+
 export default function CollapsibleImpactTable({
   data,
   setRequestMatDamKomite,
@@ -276,7 +280,10 @@ export default function CollapsibleImpactTable({
   handleDelete,
   handleDeleteArea,
   handleEditArea,
-}: {
+}: // prosesBtnEdit,
+// prosesBtnDelete,
+// prosesBtnEditArea,
+{
   data: ValuesShowMatDamKomite[];
   setRequestMatDamKomite?: (
     value: React.SetStateAction<ReqAddMatDamKomite>
@@ -286,8 +293,10 @@ export default function CollapsibleImpactTable({
   handleDelete?: any;
   handleDeleteArea?: any;
   handleEditArea?: any;
+  // prosesBtnEdit: any;
+  // prosesBtnDelete: any;
+  // prosesBtnEditArea: any;
 }) {
-
   return (
     <TableContainer
       component={Paper}
@@ -342,6 +351,9 @@ export default function CollapsibleImpactTable({
               handleDelete={handleDelete}
               handleDeleteArea={handleDeleteArea}
               handleEditArea={handleEditArea}
+              // prosesBtnEdit={prosesBtnEdit}
+              // prosesBtnDelete={prosesBtnDelete}
+              // prosesBtnEditArea={prosesBtnEditArea}
             />
           ))}
         </TableBody>

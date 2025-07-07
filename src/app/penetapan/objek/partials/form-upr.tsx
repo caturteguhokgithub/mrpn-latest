@@ -84,15 +84,15 @@ export default function FormUPR({
       id: number;
       stakeholder: MiscMasterListStakeholderRes;
       ruang_lingkup: string;
-      type: string
+      type: string;
     }[]
   >([
     {
       id: 1,
       stakeholder: initReqStakeholder,
       ruang_lingkup: "",
-      type: ""
-    }
+      type: "",
+    },
   ]);
 
   const add = () => {
@@ -141,9 +141,9 @@ export default function FormUPR({
     const updatedItems = items.map((item) =>
       item.id === id
         ? {
-          ...item,
-          [field]: value,
-        }
+            ...item,
+            [field]: value,
+          }
         : item
     );
     setItems(updatedItems);
@@ -205,7 +205,9 @@ export default function FormUPR({
         })),
       }));
     } else {
-      setItems([{ id: 1, stakeholder: initReqStakeholder, ruang_lingkup: "", type: "" }]);
+      setItems([
+        { id: 1, stakeholder: initReqStakeholder, ruang_lingkup: "", type: "" },
+      ]);
       setState((prevState) => ({
         ...prevState,
         values: [],
@@ -288,7 +290,11 @@ export default function FormUPR({
                         placeholder="Ruang Lingkup"
                         minRows={3}
                         onChange={(e) =>
-                          handleSubChange(tags.id, "ruang_lingkup", e.target.value)
+                          handleSubChange(
+                            tags.id,
+                            "ruang_lingkup",
+                            e.target.value
+                          )
                         }
                       />
                     </FormControl>

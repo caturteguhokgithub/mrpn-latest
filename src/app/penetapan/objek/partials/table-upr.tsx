@@ -197,13 +197,19 @@ function Row(props: {
   );
 }
 
-export default function CollapsibleTableUpr({ data }: { data: dtoUraian[] }) {
-  const { modalObjek, setModalObjek } = usePenetapanObjectVM();
+export default function CollapsibleTableUpr({
+  useEffectObjectState,
+  showSave,
+  stateUpr,
+  setModalObjek,
+}: {
+  useEffectObjectState?: any;
+  showSave?: boolean;
+  stateUpr?: dtoUraian[];
+  setModalObjek?: (value: boolean) => void;
+}) {
   const { year } = useRKPContext((state) => state);
   const { objectState } = usePenetapanTopicContext((state) => state);
-
-  const { useEffectObjectState, setShowSave, showSave, stateUpr } =
-    usePenetapanObjectVM();
 
   useEffect(useEffectObjectState, [year, objectState]);
 
