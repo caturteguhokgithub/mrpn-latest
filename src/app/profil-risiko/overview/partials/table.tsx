@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { bgColorTh } from "@/app/utils/color";
 import { grey } from "@mui/material/colors";
+import { Fragment } from "react";
 
 export default function TableOverview() {
   const tableData = [
@@ -72,12 +73,14 @@ export default function TableOverview() {
       sx={{
         overflowX: "auto",
         maxHeight: "48vh",
-        "td, th": {
-          "&.MuiTableCell-root": {
-            border: "1px solid rgb(224, 224, 224)",
-          },
-          "&:first-of-type": {
-            borderLeft: 0,
+        tbody: {
+          td: {
+            // "&.MuiTableCell-root": {
+            //   borderRight: "1px solid rgb(224, 224, 224)",
+            // },
+            "&:last-of-type": {
+              borderRight: "1px solid rgb(224, 224, 224) !important",
+            },
           },
         },
         "&::-webkit-scrollbar": {
@@ -153,6 +156,50 @@ export default function TableOverview() {
             </TableCell>
           </TableRow>
         </TableHead>
+        <TableBody>
+          {tableData.map((risk) =>
+            risk.perlakuanRisiko.map((perlakuan, index) => (
+              <TableRow key={`${risk.id}-${index}`}>
+                {index === 0 && (
+                  <>
+                    <TableCell rowSpan={risk.perlakuanRisiko.length}>
+                      {risk.peristiwaRisiko}
+                    </TableCell>
+                    <TableCell rowSpan={risk.perlakuanRisiko.length}>
+                      {risk.kategoriRisiko}
+                    </TableCell>
+                    <TableCell rowSpan={risk.perlakuanRisiko.length}>
+                      {risk.penyebab}
+                    </TableCell>
+                    <TableCell rowSpan={risk.perlakuanRisiko.length}>
+                      {risk.dampak}
+                    </TableCell>
+                    <TableCell rowSpan={risk.perlakuanRisiko.length}>
+                      {risk.nilai}
+                    </TableCell>
+                    <TableCell rowSpan={risk.perlakuanRisiko.length}>
+                      {risk.prioritasRisiko}
+                    </TableCell>
+                    <TableCell rowSpan={risk.perlakuanRisiko.length}>
+                      {risk.keputusanPerlakuan}
+                    </TableCell>
+                  </>
+                )}
+
+                <TableCell>{perlakuan.deskripsi}</TableCell>
+                <TableCell>{perlakuan.waktuRencana}</TableCell>
+                <TableCell>{perlakuan.output}</TableCell>
+                <TableCell>{perlakuan.penanggungJawab}</TableCell>
+
+                {index === 0 && (
+                  <TableCell rowSpan={risk.perlakuanRisiko.length}>
+                    {risk.risikoResidual}
+                  </TableCell>
+                )}
+              </TableRow>
+            ))
+          )}
+        </TableBody>
       </Table>
     </TableContainer>
   );
