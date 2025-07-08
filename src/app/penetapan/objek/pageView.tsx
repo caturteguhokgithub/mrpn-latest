@@ -59,6 +59,7 @@ import Toast from "@/app/components/snackbar/snackbar";
 import useCardIndicationVM from "@/app/executive-summary/partials/tab9Indication/cardIndicationVM";
 import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
 import FormBuktiDukung from "./partials/form-bukti-dukung";
+import { useToast } from "@/lib/core/context/toastContext";
 
 const styleToggleButton = [
   {
@@ -170,7 +171,15 @@ export default function PageTemaView() {
     reqBuktiDukungPengesahan,
     setReqBuktiDukungPengesahan,
     setModalObjek,
+    modalDeleteObject,
+    setModalDeleteObject,
+    modalEditEntitas,
+    setModalEditEntitas,
+    modalDeleteEntitas,
+    setModalDeleteEntitas,
   } = usePenetapanObjectVM();
+
+  const { showToast } = useToast();
 
   const { optionStakeholder } = useCardIndicationVM();
 
@@ -441,6 +450,9 @@ export default function PageTemaView() {
                 handleUploadBuktiDukung={() => setModalBuktiDukung(true)}
                 stateApproval={stateApproval}
                 setModalObjek={setModalObjek}
+                handleModalDeleteObject={() => setModalDeleteObject(true)}
+                handleModalEditEntitas={() => setModalEditEntitas(true)}
+                handleModalDeleteEntitas={() => setModalDeleteEntitas(true)}
               />
             </Collapse>
           </Fragment>
@@ -517,6 +529,40 @@ export default function PageTemaView() {
       </DialogComponent>
 
       <DialogComponent
+        title="Edit UPR"
+        width={600}
+        dialogOpen={modalEditEntitas}
+        dialogClose={() => setModalEditEntitas(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button onClick={() => setModalEditEntitas(false)}>Batal</Button>
+            <Button
+              variant="contained"
+              onClick={() => {
+                // handleCreateUpr();
+                setModalEditEntitas(false);
+              }}
+              sx={{
+                color: "white !important",
+              }}
+            >
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <FormUPR
+          mode="edit"
+          optionSL={stateUpr}
+          state={stateCreateUpr}
+          setState={setStateCreateUpr}
+          listStakeholder={optionStakeholder}
+          stateUprSingle={stateUprSingle}
+          setStateUprSingle={setStateUprSingle}
+        />
+      </DialogComponent>
+
+      <DialogComponent
         title="Tambah UPR"
         width={600}
         dialogOpen={modalBuktiDukung}
@@ -561,6 +607,24 @@ export default function PageTemaView() {
       {/*  searchTerm={searchTab}*/}
       {/* />*/}
       {/*</DialogComponent>*/}
+      <DialogDelete
+        title="Hapus Data Objek"
+        handleOpenModal={modalDeleteObject}
+        handleCloseModal={() => setModalDeleteObject(false)}
+        handleDelete={() => {
+          // handleDeleteListData();
+          showToast("Data berhasil dihapus", "error");
+        }}
+      />
+      <DialogDelete
+        title="Hapus Data Entitas"
+        handleOpenModal={modalDeleteEntitas}
+        handleCloseModal={() => setModalDeleteEntitas(false)}
+        handleDelete={() => {
+          // handleDeleteListData();
+          showToast("Data berhasil dihapus", "error");
+        }}
+      />
     </>
   );
 }

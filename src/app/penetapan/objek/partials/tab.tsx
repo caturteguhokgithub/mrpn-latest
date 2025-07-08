@@ -25,6 +25,7 @@ import EmptyDevelopingState from "@/app/components/empty/developing";
 import TableUPR from "./table-upr";
 import CollapsibleTableUpr from "./table-upr";
 import { dtoUraian } from "../pageModel";
+import Iconify from "@/app/components/icons/iconify";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -89,6 +90,9 @@ export default function TabObject({
   handleUploadBuktiDukung,
   stateApproval,
   setModalObjek,
+  handleModalDeleteObject,
+  handleModalEditEntitas,
+  handleModalDeleteEntitas,
 }: {
   setModalUpr: (value: boolean) => void;
   useEffectObjectState: () => void;
@@ -100,6 +104,9 @@ export default function TabObject({
   handleUploadBuktiDukung?: () => void;
   stateApproval: any;
   setModalObjek: (value: boolean) => void;
+  handleModalDeleteObject?: () => void;
+  handleModalEditEntitas?: () => void;
+  handleModalDeleteEntitas?: () => void;
 }) {
   const { nota } = usePenetapanTopicContext((store) => store);
   const { rkp, year, rpjmn } = useRKPContext((state) => state);
@@ -241,13 +248,14 @@ export default function TabObject({
           title="UPR LS"
           addButton={
             <Stack direction="row" gap={1}>
-              {showSave && (
-                <AddButton
-                  title="Edit UPR"
-                  noMargin
-                  onclick={() => setShowSave(false)}
-                />
-              )}
+              {/* {showSave && ( */}
+              {/* <AddButton
+                title="Edit UPR"
+                startIcon={<Iconify name="mdi:pencil" />}
+                noMargin
+                onclick={() => setShowSave(false)}
+              /> */}
+              {/* )} */}
               <AddButton
                 title="Tambah UPR"
                 filled
@@ -271,6 +279,9 @@ export default function TabObject({
                 showSave={showSave}
                 stateUpr={stateUpr}
                 setModalObjek={setModalObjek}
+                handleModalDeleteObject={handleModalDeleteObject}
+                handleModalEditEntitas={handleModalEditEntitas}
+                handleModalDeleteEntitas={handleModalDeleteEntitas}
               />
             </Fragment>
           )}
