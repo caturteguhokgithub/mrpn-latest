@@ -1,33 +1,20 @@
-import SearchField from "./search-bar";
 import {
   Box,
   FormControl,
   FormControlLabel,
-  FormGroup,
   Grid,
   Paper,
   Radio,
   RadioGroup,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
-import SearchResult from "./search-result";
-import TreeView from "./tree-view";
-import { Fragment, SetStateAction, useEffect, useState } from "react";
-import {
-  AutocompleteSelectSingle,
-  AutoCompleteSingleProp,
-} from "@/app/components/autocomplete";
-import usePenetapanObjectVM from "../pageVM";
+import { SetStateAction, useEffect, useState } from "react";
+import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
 import AddButton from "@/app/components/buttonAdd";
-import {
-  dtoUraian,
-  PenetapanObjectEntityReqDto,
-  PenetapanObjectEntityValueReqDto,
-} from "../pageModel";
+import { dtoUraian, PenetapanObjectEntityReqDto } from "../pageModel";
 import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
-import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
+import { TextareaStyled } from "@/app/components/textarea";
 
 export default function FormUPR({
   optionSL,
@@ -36,6 +23,7 @@ export default function FormUPR({
   listStakeholder,
   stateUprSingle,
   setStateUprSingle,
+  mode,
 }: {
   optionSL: dtoUraian[];
   state: PenetapanObjectEntityReqDto;
@@ -43,6 +31,7 @@ export default function FormUPR({
   listStakeholder: MiscMasterListStakeholderRes[];
   stateUprSingle: dtoUraian;
   setStateUprSingle: (value: SetStateAction<dtoUraian>) => void;
+  mode?: string;
 }) {
   const initReqStakeholder: MiscMasterListStakeholderRes = {
     id: 0,
@@ -220,15 +209,22 @@ export default function FormUPR({
       <Grid item xs={12}>
         <FormControl fullWidth>
           <Typography gutterBottom>Objek Shortlist</Typography>
-          <AutocompleteSelectSingle
-            value={stateUprSingle}
-            options={optionSL}
-            getOptionLabel={(opt) => opt.rkp}
-            handleChange={(newValue: dtoUraian) =>
-              changeObjectShortlist(newValue)
-            }
-            placeHolder={"Pilih objek shortlist"}
-          />
+          {mode === "edit" ? (
+            <Typography fontWeight={600}>
+              Pengembangan Kawasan Sentra Produksi Pangan (KSPP)/Lumbung Pangan
+              Kalimantan Tengah
+            </Typography>
+          ) : (
+            <AutocompleteSelectSingle
+              value={stateUprSingle}
+              options={optionSL}
+              getOptionLabel={(opt) => opt.rkp}
+              handleChange={(newValue: dtoUraian) =>
+                changeObjectShortlist(newValue)
+              }
+              placeHolder={"Pilih objek shortlist"}
+            />
+          )}
         </FormControl>
       </Grid>
       <Grid item xs={12}>
@@ -237,10 +233,12 @@ export default function FormUPR({
           alignItems="center"
           justifyContent="space-between"
         >
-          <Typography fontWeight={600}>Entitas MRPN</Typography>
-          <Box>
-            <AddButton title="Tambah Entitas" small noMargin onclick={add} />
-          </Box>
+          <Typography fontWeight={500}>Entitas MRPN</Typography>
+          {mode !== "edit" && (
+            <Box>
+              <AddButton title="Tambah Entitas" small noMargin onclick={add} />
+            </Box>
+          )}
         </Stack>
       </Grid>
       <Grid item xs={12}>

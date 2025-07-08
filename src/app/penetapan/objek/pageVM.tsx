@@ -97,7 +97,8 @@ const usePenetapanObjectVM = () => {
   const [showSave, setShowSave] = useState<boolean>(false);
   const [modalObjek, setModalObjek] = useState<boolean>(false);
   const [modalBuktiDukung, setModalBuktiDukung] = useState<boolean>(false);
-  const [reqBuktiDukungPengesahan, setReqBuktiDukungPengesahan] = useState<dtoReqBuktiDukungPengesahan>({ ...initReqBuktiDukungPengesahan });
+  const [reqBuktiDukungPengesahan, setReqBuktiDukungPengesahan] =
+    useState<dtoReqBuktiDukungPengesahan>({ ...initReqBuktiDukungPengesahan });
 
   const [stateCreateUpr, setStateCreateUpr] =
     useState<PenetapanObjectEntityReqDto>({ ...initReqUpr });
@@ -106,6 +107,10 @@ const usePenetapanObjectVM = () => {
   });
 
   const [stateApproval, setStateApproval] = useState<dtoGetApproval>();
+
+  const [modalDeleteObject, setModalDeleteObject] = useState<boolean>(false);
+  const [modalEditEntitas, setModalEditEntitas] = useState<boolean>(false);
+  const [modalDeleteEntitas, setModalDeleteEntitas] = useState<boolean>(false);
 
   const generateOptionPN = () => {
     let opt: ProjectDefaultDto[] = [];
@@ -579,7 +584,7 @@ const usePenetapanObjectVM = () => {
 
   async function handleUnggahBuktiDukung(param: dtoReqBuktiDukungPengesahan) {
     uploadImage(param.file, param.filename);
-  };
+  }
 
   // const handleUnggahBuktiDukung = async (
   //   e: React.ChangeEvent<HTMLInputElement>
@@ -652,7 +657,13 @@ const usePenetapanObjectVM = () => {
     setModalBuktiDukung,
     handleUnggahBuktiDukung,
     reqBuktiDukungPengesahan,
-    setReqBuktiDukungPengesahan
+    setReqBuktiDukungPengesahan,
+    modalDeleteObject,
+    setModalDeleteObject,
+    modalEditEntitas,
+    setModalEditEntitas,
+    modalDeleteEntitas,
+    setModalDeleteEntitas,
   };
 };
 

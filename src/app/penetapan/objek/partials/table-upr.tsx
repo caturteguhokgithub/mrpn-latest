@@ -26,7 +26,7 @@ import {
   UnitPengelolaRisikoEntity,
 } from "@/app/penetapan/objek/pageModel";
 import { InfoTooltip } from "@/app/components/InfoTooltip";
-import { blue, grey } from "@mui/material/colors";
+import { blue, grey, red } from "@mui/material/colors";
 import { bgColorTh } from "@/app/utils/color";
 import Iconify from "@/app/components/icons/iconify";
 import usePenetapanObjectVM from "../pageVM";
@@ -48,8 +48,19 @@ function Row(props: {
   mode?: string;
   uprData: dtoUsulanUprLs[];
   setModalObjek?: any;
+  handleModalDeleteObject: () => void;
+  handleModalEditEntitas: () => void;
+  handleModalDeleteEntitas: () => void;
 }) {
-  const { row, mode, uprData, setModalObjek } = props;
+  const {
+    row,
+    mode,
+    uprData,
+    setModalObjek,
+    handleModalDeleteObject,
+    handleModalEditEntitas,
+    handleModalDeleteEntitas,
+  } = props;
   const [open, setOpen] = React.useState(true);
 
   return (
@@ -83,15 +94,15 @@ function Row(props: {
                 {row.rkp}
               </Typography>
             </Stack>
-            {/* <Button
-              color="primary"
+            <Button
+              color="error"
               size="small"
               variant="outlined"
-              onClick={() => setModalObjek(true)}
-              sx={{ gap: 0.5, borderRadius: 24 }}
+              onClick={handleModalDeleteObject}
+              sx={{ borderRadius: 2, px: 2, minWidth: 0 }}
             >
-              <Iconify name="mdi:edit" size={16} /> Ubah Objek
-            </Button> */}
+              <Iconify name="mdi:trash" color={red[500]} />
+            </Button>
           </Stack>
         </TableCell>
       </TableRow>
@@ -111,7 +122,7 @@ function Row(props: {
                       "td, th": {
                         borderRight: `1px solid ${grey[300]} !important`,
                         "&:last-of-type": {
-                          borderRight: `0 !important`,
+                          borderRight: `1px solid ${grey[300]} !important`,
                         },
                       },
                     },
@@ -137,8 +148,16 @@ function Row(props: {
                       <TableCell rowSpan={2} align="center">
                         Ruang Lingkup
                       </TableCell>
-                      <TableCell colSpan={5} align="center">
+                      <TableCell colSpan={3} align="center">
                         Unit Pengelola Risiko
+                      </TableCell>
+                      <TableCell
+                        rowSpan={2}
+                        width={110}
+                        align="center"
+                        sx={{ bgcolor: bgColorTh }}
+                      >
+                        Aksi
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -156,7 +175,7 @@ function Row(props: {
                   <TableBody>
                     {uprData.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={7}>
+                        <TableCell colSpan={8}>
                           <EmptyState
                             icon={<IconEmptyData />}
                             title="Data Kosong"
@@ -183,6 +202,16 @@ function Row(props: {
                               </Stack>
                             </TableCell>
                           ))}
+                          <TableCell align="center">
+                            <Stack direction="row" justifyContent="center">
+                              <IconButton onClick={handleModalEditEntitas}>
+                                <Iconify name="mdi:pencil" color={blue[500]} />
+                              </IconButton>
+                              <IconButton onClick={handleModalDeleteEntitas}>
+                                <Iconify name="mdi:trash" color={red[500]} />
+                              </IconButton>
+                            </Stack>
+                          </TableCell>
                         </TableRow>
                       ))
                     )}
@@ -202,11 +231,17 @@ export default function CollapsibleTableUpr({
   showSave,
   stateUpr,
   setModalObjek,
+  handleModalDeleteObject,
+  handleModalEditEntitas,
+  handleModalDeleteEntitas,
 }: {
   useEffectObjectState?: any;
   showSave?: boolean;
   stateUpr?: dtoUraian[];
   setModalObjek?: (value: boolean) => void;
+  handleModalDeleteObject: any;
+  handleModalEditEntitas: any;
+  handleModalDeleteEntitas: any;
 }) {
   const { year } = useRKPContext((state) => state);
   const { objectState } = usePenetapanTopicContext((state) => state);
@@ -234,6 +269,9 @@ export default function CollapsibleTableUpr({
                     row={item}
                     uprData={item.usulan_upr_linsek}
                     setModalObjek={setModalObjek}
+                    handleModalDeleteObject={handleModalDeleteObject}
+                    handleModalEditEntitas={handleModalEditEntitas}
+                    handleModalDeleteEntitas={handleModalDeleteEntitas}
                   />
                 );
               })}
