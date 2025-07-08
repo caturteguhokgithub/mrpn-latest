@@ -58,6 +58,7 @@ export interface PerlakuanData {
 export type RiskOverview = {
   object: IdentificationRiskResDto
   overviews: RiskOverviewData[]
+  overviews_sekre: RiskOverviewData[]
 }
 
 export type GetRiskOverviewServiceModel = BaseAPIServiceParam & {

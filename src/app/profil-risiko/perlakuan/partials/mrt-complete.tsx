@@ -34,10 +34,10 @@ function ChipLevelRisiko(props: { level: any }) {
             props.level === "Sangat Tinggi (5)"
               ? "error"
               : props.level === "Tinggi (4)"
-              ? "warning"
-              : props.level === "Rendah (2)"
-              ? "success"
-              : undefined
+                ? "warning"
+                : props.level === "Rendah (2)"
+                  ? "success"
+                  : undefined
           }
           sx={{
             minWidth: 80,
@@ -429,6 +429,44 @@ export default function MRTPerlakuanComplete({
             header: "Deskripsi Perlakuan Risiko",
             enableColumnActions: false,
             size: 300,
+            Cell: ({ row }: { row: any }) => {
+              const perlakuanData = row.original.perlakuan_data;
+
+              return (
+                <Paper
+                  elevation={0}
+                  sx={{
+                    overflow: "auto",
+                    maxHeight: 160,
+                    backgroundColor: "transparent",
+                    "&::-webkit-scrollbar": {
+                      width: "3px",
+                    },
+                  }}
+                >
+                  <Stack gap={1}>
+                    {perlakuanData && perlakuanData.length > 0 ? (
+                      perlakuanData.map((item: any, index: number) => (
+                        <Chip
+                          key={index}
+                          sx={{
+                            height: "auto",
+                            py: 1,
+                            "& .MuiChip-label": {
+                              overflow: "unset",
+                              whiteSpace: "normal",
+                            },
+                          }}
+                          label={item.keterangan_risiko}
+                        />
+                      ))
+                    ) : (
+                      <Chip label="-" />
+                    )}
+                  </Stack>
+                </Paper>
+              );
+            },
             Header: ({ column }) => (
               <SortNumber column={column} numberSort={column.getIndex() + 1} />
             ),
@@ -437,8 +475,44 @@ export default function MRTPerlakuanComplete({
             accessorKey: "waktu",
             header: "Waktu Rencana Perlakuan Risiko",
             enableColumnActions: false,
-            Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
-              renderedCellValue == null ? "-" : renderedCellValue,
+            Cell: ({ row }: { row: any }) => {
+              const perlakuanData = row.original.perlakuan_data;
+
+              return (
+                <Paper
+                  elevation={0}
+                  sx={{
+                    overflow: "auto",
+                    maxHeight: 160,
+                    backgroundColor: "transparent",
+                    "&::-webkit-scrollbar": {
+                      width: "3px",
+                    },
+                  }}
+                >
+                  <Stack gap={1}>
+                    {perlakuanData && perlakuanData.length > 0 ? (
+                      perlakuanData.map((item: any, index: number) => (
+                        <Chip
+                          key={index}
+                          sx={{
+                            height: "auto",
+                            py: 1,
+                            "& .MuiChip-label": {
+                              overflow: "unset",
+                              whiteSpace: "normal",
+                            },
+                          }}
+                          label={item.waktu}
+                        />
+                      ))
+                    ) : (
+                      <Chip label="-" />
+                    )}
+                  </Stack>
+                </Paper>
+              );
+            },
             Header: ({ column }) => (
               <SortNumber column={column} numberSort={column.getIndex() + 1} />
             ),
@@ -448,8 +522,44 @@ export default function MRTPerlakuanComplete({
             header: "Penanggung Jawab",
             enableColumnActions: false,
             size: 220,
-            Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
-              renderedCellValue == null ? "-" : renderedCellValue,
+            Cell: ({ row }: { row: any }) => {
+              const perlakuanData = row.original.perlakuan_data;
+
+              return (
+                <Paper
+                  elevation={0}
+                  sx={{
+                    overflow: "auto",
+                    maxHeight: 160,
+                    backgroundColor: "transparent",
+                    "&::-webkit-scrollbar": {
+                      width: "3px",
+                    },
+                  }}
+                >
+                  <Stack gap={1}>
+                    {perlakuanData && perlakuanData.length > 0 ? (
+                      perlakuanData.map((item: any, index: number) => (
+                        <Chip
+                          key={index}
+                          sx={{
+                            height: "auto",
+                            py: 1,
+                            "& .MuiChip-label": {
+                              overflow: "unset",
+                              whiteSpace: "normal",
+                            },
+                          }}
+                          label={item.penanggung_jawab}
+                        />
+                      ))
+                    ) : (
+                      <Chip label="-" />
+                    )}
+                  </Stack>
+                </Paper>
+              );
+            },
             Header: ({ column }) => (
               <SortNumber column={column} numberSort={column.getIndex() + 1} />
             ),

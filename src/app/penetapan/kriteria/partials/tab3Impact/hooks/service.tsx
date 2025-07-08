@@ -29,7 +29,7 @@ export async function doShowMatDamKomite(param: any) {
 export async function doDeleteMatDamKomite(param: CreateReqAddMatDamKomite) {
     const resp = await post({
         ...param,
-        url: "penetapan/upr/matriksDampak/delete",
+        url: "penetapan/upr/matriksDampak/deleterow",
     });
     if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }

@@ -100,9 +100,8 @@ export default function PageOverviewView() {
 
   return (
     <ContentPage
-      title={`Overview Risiko ${
-        year == 0 ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end : "Tahun " + year
-      }`}
+      title={`Overview Risiko ${year == 0 ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end : "Tahun " + year
+        }`}
       withCard={objectState === undefined}
       chooseObject={
         year == 0 ? (
@@ -175,10 +174,10 @@ export default function PageOverviewView() {
                   <>
                     <CardItem title="Perlakuan Risiko (Indikasi Profil Risiko)">
                       <Box className="table-sticky-horizontal">
-                        <TableOverview />
+                        <TableOverview data={dataRiskOverview?.overviews_sekre ?? []} />
                       </Box>
                     </CardItem>
-                    <Box className="table-sticky-horizontal">
+                    {/* <Box className="table-sticky-horizontal">
                       <MRTPerlakuanComplete
                         dataTable={dataRiskOverview?.overviews}
                         viewOnly
@@ -213,7 +212,7 @@ export default function PageOverviewView() {
                           </Stack>
                         }
                       />
-                    </Box>
+                    </Box> */}
                   </>
                 )}
               </CustomTabPanel>
@@ -227,7 +226,8 @@ export default function PageOverviewView() {
                   />
                 ) : (
                   <Box className="table-sticky-horizontal">
-                    <MRTPerlakuanComplete
+                    <TableOverview data={dataRiskOverview?.overviews ?? []} />
+                    {/* <MRTPerlakuanComplete
                       dataTable={dataRiskOverview?.overviews}
                       viewOnly
                       renderCaption={
@@ -237,7 +237,7 @@ export default function PageOverviewView() {
                           </Typography>
                         </Stack>
                       }
-                    />
+                    /> */}
                   </Box>
                 )}
               </CustomTabPanel>

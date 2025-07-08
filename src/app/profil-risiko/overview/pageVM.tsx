@@ -16,9 +16,7 @@ const useRiskOverviewVM = () => {
 
   const { objectState } = usePenetapanGlobalVM();
 
-  const [dataRiskOverview, setDataRiskOverview] = useState<
-    RiskOverview | undefined
-  >(undefined);
+  const [dataRiskOverview, setDataRiskOverview] = useState<RiskOverview | undefined>(undefined);
   const [valueOverview, setValueOverview] = useState(0);
 
   const handleChangeOverview = (
@@ -46,32 +44,57 @@ const useRiskOverviewVM = () => {
     if (response?.code === API_CODE.success) {
       const result: RiskOverview = response.result;
 
-      const obj = Object.groupBy(result.overviews, (risk) =>
-        risk.analisis_br == null ? 0 : risk.analisis_br
-      );
-      const sorted = Object.keys(obj).sort((a, b) =>
-        parseInt(a) < parseInt(b) ? 1 : -1
-      );
+      if (result) {
+        const obj = Object.groupBy(result.overviews, (risk) =>
+          risk.analisis_br == null ? 0 : risk.analisis_br
+        );
+        const sorted = Object.keys(obj).sort((a, b) =>
+          parseInt(a) < parseInt(b) ? 1 : -1
+        );
 
-      const finalOverviewData = result.overviews.reduce<RiskOverviewData[]>(
-        (a, b) => {
-          let prior: number = 0;
-          const getIndex = sorted.findIndex(
-            (x) => parseInt(x) == b.analisis_br
-          );
-          if (getIndex > -1) {
-            prior = getIndex + 1;
-          }
-          b.prioritas = prior;
-          return [...a, b];
-        },
-        []
-      );
+        const finalOverviewData = result.overviews.reduce<RiskOverviewData[]>(
+          (a, b) => {
+            let prior: number = 0;
+            const getIndex = sorted.findIndex(
+              (x) => parseInt(x) == b.analisis_br
+            );
+            if (getIndex > -1) {
+              prior = getIndex + 1;
+            }
+            b.prioritas = prior;
+            return [...a, b];
+          },
+          []
+        );
 
-      setDataRiskOverview({
-        object: result.object,
-        overviews: finalOverviewData,
-      });
+        const objSekre = Object.groupBy(result.overviews_sekre, (risk) =>
+          risk.analisis_br == null ? 0 : risk.analisis_br
+        );
+        const sortedSekre = Object.keys(objSekre).sort((a, b) =>
+          parseInt(a) < parseInt(b) ? 1 : -1
+        );
+
+        const finalOverviewDataSekre = result.overviews_sekre.reduce<RiskOverviewData[]>(
+          (a, b) => {
+            let prior: number = 0;
+            const getIndex = sortedSekre.findIndex(
+              (x) => parseInt(x) == b.analisis_br
+            );
+            if (getIndex > -1) {
+              prior = getIndex + 1;
+            }
+            b.prioritas = prior;
+            return [...a, b];
+          },
+          []
+        );
+
+        setDataRiskOverview({
+          object: result.object,
+          overviews: finalOverviewData,
+          overviews_sekre: finalOverviewDataSekre,
+        });
+      }
     }
   };
 
