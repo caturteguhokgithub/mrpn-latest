@@ -100,8 +100,9 @@ export default function PageOverviewView() {
 
   return (
     <ContentPage
-      title={`Overview Risiko ${year == 0 ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end : "Tahun " + year
-        }`}
+      title={`Overview Risiko ${
+        year == 0 ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end : "Tahun " + year
+      }`}
       withCard={objectState === undefined}
       chooseObject={
         year == 0 ? (
@@ -172,9 +173,42 @@ export default function PageOverviewView() {
                   />
                 ) : (
                   <>
-                    <CardItem title="Perlakuan Risiko (Indikasi Profil Risiko)">
+                    <CardItem
+                      title={
+                        <Stack direction="row" alignItems="center" gap={2}>
+                          <Typography fontWeight={500}>
+                            Perlakuan Risiko (Indikasi Profil Risiko)
+                          </Typography>
+                          <AddButton
+                            fullWidth={onlySmallScreen}
+                            noMargin
+                            filled
+                            title="Download Excel"
+                            color="success"
+                            startIcon={<Iconify name="mdi:file-excel" />}
+                            // onclick={() => {
+                            //   const uri =
+                            //     process.env.NEXT_PUBLIC_BASE_URL_API +
+                            //     "export/exsum/indikasi/excel";
+                            //   const token = sessionStorage.getItem(
+                            //     API_CONSTANT.token
+                            //   );
+                            //   const exsum_id = exsum.id;
+                            //   const params =
+                            //     "token=" + token + "&exsum_id=" + exsum_id;
+
+                            //   window
+                            //     .open(uri + "?" + params, "_blank")
+                            //     ?.focus();
+                            // }}
+                          />
+                        </Stack>
+                      }
+                    >
                       <Box className="table-sticky-horizontal">
-                        <TableOverview data={dataRiskOverview?.overviews_sekre ?? []} />
+                        <TableOverview
+                          data={dataRiskOverview?.overviews_sekre ?? []}
+                        />
                       </Box>
                     </CardItem>
                     {/* <Box className="table-sticky-horizontal">
@@ -225,20 +259,28 @@ export default function PageOverviewView() {
                     description="Silahkan isi konten halaman ini"
                   />
                 ) : (
-                  <Box className="table-sticky-horizontal">
-                    <TableOverview data={dataRiskOverview?.overviews ?? []} />
-                    {/* <MRTPerlakuanComplete
-                      dataTable={dataRiskOverview?.overviews}
-                      viewOnly
-                      renderCaption={
-                        <Stack direction="row" alignItems="center">
-                          <Typography fontWeight={600} fontSize={17} px={1}>
-                            Overview Profil Risiko
-                          </Typography>
-                        </Stack>
-                      }
-                    /> */}
-                  </Box>
+                  <>
+                    <CardItem title="Overview Profil Risiko">
+                      <Box className="table-sticky-horizontal">
+                        <TableOverview
+                          data={dataRiskOverview?.overviews ?? []}
+                        />
+                      </Box>
+                    </CardItem>
+                    {/* <Box className="table-sticky-horizontal">
+                      <MRTPerlakuanComplete
+                        dataTable={dataRiskOverview?.overviews}
+                        viewOnly
+                        renderCaption={
+                          <Stack direction="row" alignItems="center">
+                            <Typography fontWeight={600} fontSize={17} px={1}>
+                              Overview Profil Risiko
+                            </Typography>
+                          </Stack>
+                        }
+                      />
+                    </Box> */}
+                  </>
                 )}
               </CustomTabPanel>
               <CustomTabPanel value={valueOverview} index={2}>

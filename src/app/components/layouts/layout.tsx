@@ -231,7 +231,8 @@ export default function DashboardLayout(props: {
       width: "calc(100vw - 404px)",
     },
     ".table-fund, .table-overflow-x-indication": {
-      maxWidth: "calc(100vw - 392px)",
+      // maxWidth: "calc(100vw - 392px)",
+      maxWidth: "calc(100vw - 371px)",
     },
     ".wording-kp-ellipsis": {
       span: {
@@ -259,7 +260,7 @@ export default function DashboardLayout(props: {
       },
       ".table-fund, .table-overflow-x-indication": {
         // maxWidth: "calc(100vw - 192px)",
-        maxWidth: "calc(100vw - 192px)",
+        maxWidth: "calc(100vw - 155px)",
       },
       ".wording-kp-ellipsis": {
         span: {

@@ -155,7 +155,8 @@ export default function PageLoginView() {
       >
         <Image
           alt="Batik Corner"
-          src={process.env.NEXT_PUBLIC_BASE_URL + "/mrpn/batik-corner-cmp.png"}
+          // src={process.env.NEXT_PUBLIC_BASE_URL + "/mrpn/batik-corner-cmp.png"}
+          src="https://res.cloudinary.com/caturteguh/image/upload/v1724852131/mrpn/batik-corner-cmp_u5q8cg.png"
           width={0}
           height={0}
           sizes="100vw"
@@ -708,7 +709,8 @@ export default function PageLoginView() {
     >
       <Image
         alt="Bg Batik"
-        src={process.env.NEXT_PUBLIC_BASE_URL + "/mrpn/batik-center-cmp.png"}
+        // src={process.env.NEXT_PUBLIC_BASE_URL + "/mrpn/batik-center-cmp.png"}
+        src="https://res.cloudinary.com/caturteguh/image/upload/v1724853315/mrpn/batik-center_dmibbn.png"
         width={0}
         height={0}
         sizes="100vw"
@@ -737,7 +739,8 @@ export default function PageLoginView() {
     >
       <Image
         alt="Bg Batik"
-        src={process.env.NEXT_PUBLIC_BASE_URL + "/mrpn/bg-utama-cmp.jpg"}
+        // src={process.env.NEXT_PUBLIC_BASE_URL + "/mrpn/bg-utama-cmp.jpg"}
+        src="https://res.cloudinary.com/caturteguh/image/upload/v1724914703/mrpn/bg-utama-cmp_ikxurp.jpg"
         width={0}
         height={0}
         sizes="100vw"
