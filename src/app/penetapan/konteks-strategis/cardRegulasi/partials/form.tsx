@@ -49,7 +49,7 @@ export default function FormRegulation({
         <FormControl fullWidth>
           {/* <FieldLabelInfo title="Entitas" /> */}
           <FieldLabelInfo title="Nomor Regulasi" />
-          <AutocompleteSelectMultiple
+          {/* <AutocompleteSelectMultiple
             key={state.stakeholder_id.length}
             value={state.stakeholder}
             options={optionStakeholder}
@@ -71,6 +71,15 @@ export default function FormRegulation({
             }
             placeHolder={"Pilih nomor regulasi"}
             labelSelectAll={"Pilih semua nomor regulasi"}
+          /> */}
+          <TextField
+            fullWidth
+            variant="outlined"
+            size="small"
+            placeholder={"Nomor Regulasi"}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
         </FormControl>
       </Grid>

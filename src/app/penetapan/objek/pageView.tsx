@@ -563,7 +563,7 @@ export default function PageTemaView() {
       </DialogComponent>
 
       <DialogComponent
-        title="Tambah UPR"
+        title="Tambah Bukti Dukung"
         width={600}
         dialogOpen={modalBuktiDukung}
         dialogClose={() => setModalBuktiDukung(false)}

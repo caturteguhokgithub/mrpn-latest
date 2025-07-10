@@ -131,10 +131,10 @@ function Row(props: {
                 >
                   <TableHead sx={{ bgcolor: bgColorTh }}>
                     <TableRow>
-                      <TableCell rowSpan={2} width={70} align="center">
+                      <TableCell width={70} align="center">
                         No.
                       </TableCell>
-                      <TableCell rowSpan={2}>
+                      <TableCell>
                         <Stack
                           direction="row"
                           alignItems="center"
@@ -145,14 +145,16 @@ function Row(props: {
                           <InfoTooltip title="Kementerian negara, lembaga, pemerintah daerah, pemerintah desa, badan usaha, dan badan lainnya" />
                         </Stack>
                       </TableCell>
-                      <TableCell rowSpan={2} align="center">
+                      <TableCell align="center" width="50%">
                         Ruang Lingkup
                       </TableCell>
-                      <TableCell colSpan={3} align="center">
+                      {/* <TableCell colSpan={3} align="center">
                         Unit Pengelola Risiko
+                      </TableCell> */}
+                      <TableCell align="center" width={200}>
+                        Keterangan
                       </TableCell>
                       <TableCell
-                        rowSpan={2}
                         width={110}
                         align="center"
                         sx={{ bgcolor: bgColorTh }}
@@ -160,7 +162,7 @@ function Row(props: {
                         Aksi
                       </TableCell>
                     </TableRow>
-                    <TableRow>
+                    {/* <TableRow>
                       {UnitPengelolaRisikoEntity.map((uprItem, indexUpr) => (
                         <TableCell
                           width="16%"
@@ -170,7 +172,7 @@ function Row(props: {
                           {uprItem.value}
                         </TableCell>
                       ))}
-                    </TableRow>
+                    </TableRow> */}
                   </TableHead>
                   <TableBody>
                     {uprData.length === 0 ? (
@@ -186,10 +188,19 @@ function Row(props: {
                     ) : (
                       uprData.map((entity, i) => (
                         <TableRow key={entity.id}>
-                          <TableCell align="center">{i + 1}</TableCell>
-                          <TableCell>{entity.entitas.value}</TableCell>
-                          <TableCell>{entity.ruang_lingkup}</TableCell>
-                          {UnitPengelolaRisikoEntity.map((uprItem) => (
+                          <TableCell
+                            align="center"
+                            sx={{ verticalAlign: "top" }}
+                          >
+                            {i + 1}
+                          </TableCell>
+                          <TableCell sx={{ verticalAlign: "top" }}>
+                            {entity.entitas.value}
+                          </TableCell>
+                          <TableCell sx={{ verticalAlign: "top" }}>
+                            {entity.ruang_lingkup}
+                          </TableCell>
+                          {/* {UnitPengelolaRisikoEntity.map((uprItem) => (
                             <TableCell align="center" key={uprItem.id}>
                               <Stack direction="row" justifyContent="center">
                                 {entity.type === uprItem.value ? (
@@ -201,8 +212,14 @@ function Row(props: {
                                 ) : null}
                               </Stack>
                             </TableCell>
-                          ))}
-                          <TableCell align="center">
+                          ))} */}
+                          <TableCell sx={{ verticalAlign: "top" }}>
+                            Entitas MRPN {entity.type}
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{ verticalAlign: "top" }}
+                          >
                             <Stack direction="row" justifyContent="center">
                               <IconButton onClick={handleModalEditEntitas}>
                                 <Iconify name="mdi:pencil" color={blue[500]} />
