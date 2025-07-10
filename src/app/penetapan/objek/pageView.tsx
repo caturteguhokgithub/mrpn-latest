@@ -273,11 +273,10 @@ export default function PageTemaView() {
   return (
     <>
       <ContentPage
-        title={`Objek MRPN & UPR LS ${
-          year == 0
+        title={`Objek MRPN & UPR LS ${year == 0
             ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
             : "Tahun " + year
-        }`}
+          }`}
         infoToolTip={
           <Stack spacing={2}>
             <div>
@@ -573,7 +572,7 @@ export default function PageTemaView() {
             <Button
               variant="contained"
               onClick={() => {
-                handleCreateUpr();
+                // handleCreateUpr();
                 setModalBuktiDukung(false);
                 handleUnggahBuktiDukung(reqBuktiDukungPengesahan);
               }}
