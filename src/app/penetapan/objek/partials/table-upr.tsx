@@ -48,9 +48,9 @@ function Row(props: {
   mode?: string;
   uprData: dtoUsulanUprLs[];
   setModalObjek?: any;
-  handleModalDeleteObject: () => void;
+  handleModalDeleteObject: (id: number) => void;
   handleModalEditEntitas: () => void;
-  handleModalDeleteEntitas: () => void;
+  handleModalDeleteEntitas: (id: number) => void;
 }) {
   const {
     row,
@@ -98,7 +98,7 @@ function Row(props: {
               color="error"
               size="small"
               variant="outlined"
-              onClick={handleModalDeleteObject}
+              onClick={() => handleModalDeleteObject(row.id)}
               sx={{ borderRadius: 2, px: 2, minWidth: 0 }}
             >
               <Iconify name="mdi:trash" color={red[500]} />
@@ -221,10 +221,10 @@ function Row(props: {
                             sx={{ verticalAlign: "top" }}
                           >
                             <Stack direction="row" justifyContent="center">
-                              <IconButton onClick={handleModalEditEntitas}>
+                              {/* <IconButton onClick={handleModalEditEntitas}>
                                 <Iconify name="mdi:pencil" color={blue[500]} />
-                              </IconButton>
-                              <IconButton onClick={handleModalDeleteEntitas}>
+                              </IconButton> */}
+                              <IconButton onClick={() => handleModalDeleteEntitas(entity.id)}>
                                 <Iconify name="mdi:trash" color={red[500]} />
                               </IconButton>
                             </Stack>
@@ -256,9 +256,9 @@ export default function CollapsibleTableUpr({
   showSave?: boolean;
   stateUpr?: dtoUraian[];
   setModalObjek?: (value: boolean) => void;
-  handleModalDeleteObject: any;
+  handleModalDeleteObject: (id: number) => void;
   handleModalEditEntitas: any;
-  handleModalDeleteEntitas: any;
+  handleModalDeleteEntitas: (id: number) => void;
 }) {
   const { year } = useRKPContext((state) => state);
   const { objectState } = usePenetapanTopicContext((state) => state);

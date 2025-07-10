@@ -137,6 +137,14 @@ export default function PageTemaView() {
     (state) => state
   );
 
+  const [stateDelete, setStateDelete] = useState<{
+    id: number,
+    module: string
+  }>({
+    id: 0,
+    module: ""
+  });
+
   const {
     useEffectGenerateOption,
     useEffectObjectState,
@@ -158,6 +166,7 @@ export default function PageTemaView() {
     stateCreateUpr,
     setStateCreateUpr,
     updateOrCreateEntity,
+    DeleteEntity,
     stateUprSingle,
     setStateUprSingle,
     updateOrCreateLongList,
@@ -212,6 +221,21 @@ export default function PageTemaView() {
 
     updateOrCreateEntity(stateCreateUpr);
   };
+
+  const handleDeleteObjectUpr = (id: number, module: string) => {
+    // DeleteEntity(id, module);
+    setStateDelete({ id: id, module: module })
+    if (module == "Object") {
+      setModalDeleteObject(true)
+    } else {
+      setModalDeleteEntitas(true)
+    }
+  }
+
+  const handleSimpanDeleteObjectUpr = async () => {
+    DeleteEntity(stateDelete.id, stateDelete.module);
+    setStateDelete({ id: 0, module: "" })
+  }
 
   const handleEditTopic = (x: PenetapanObjectDto) => {
     let optState: ProjectDefaultDto[] = [];
@@ -274,8 +298,8 @@ export default function PageTemaView() {
     <>
       <ContentPage
         title={`Objek MRPN & UPR LS ${year == 0
-            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-            : "Tahun " + year
+          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+          : "Tahun " + year
           }`}
         infoToolTip={
           <Stack spacing={2}>
@@ -449,9 +473,9 @@ export default function PageTemaView() {
                 handleUploadBuktiDukung={() => setModalBuktiDukung(true)}
                 stateApproval={stateApproval}
                 setModalObjek={setModalObjek}
-                handleModalDeleteObject={() => setModalDeleteObject(true)}
+                handleModalDeleteObject={(id: number) => { handleDeleteObjectUpr(id, "Object") }}
                 handleModalEditEntitas={() => setModalEditEntitas(true)}
-                handleModalDeleteEntitas={() => setModalDeleteEntitas(true)}
+                handleModalDeleteEntitas={(id: number) => { handleDeleteObjectUpr(id, "Entitas") }}
               />
             </Collapse>
           </Fragment>
@@ -611,7 +635,7 @@ export default function PageTemaView() {
         handleOpenModal={modalDeleteObject}
         handleCloseModal={() => setModalDeleteObject(false)}
         handleDelete={() => {
-          // handleDeleteListData();
+          handleSimpanDeleteObjectUpr();
           showToast("Data berhasil dihapus", "error");
         }}
       />
@@ -620,7 +644,7 @@ export default function PageTemaView() {
         handleOpenModal={modalDeleteEntitas}
         handleCloseModal={() => setModalDeleteEntitas(false)}
         handleDelete={() => {
-          // handleDeleteListData();
+          handleSimpanDeleteObjectUpr();
           showToast("Data berhasil dihapus", "error");
         }}
       />

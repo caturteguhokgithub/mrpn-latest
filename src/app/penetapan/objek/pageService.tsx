@@ -7,7 +7,7 @@ import {
   GetPenetapanObjectIdServiceModel, GetPenetapanObjectNotaDinasServiceModel,
   GetPenetapanObjectShortListServiceModel, UpdateOrCreatePenetapanObjectEntityServiceModel,
   UpdateOrCreatePenetapanObjectLongListAssignObjectServiceModel,
-  UpdateOrCreatePenetapanObjectLongListServiceModel, UpdateOrCreatePenetapanObjectNotaDinasServiceModel, LogActivityDto, LogActivityServiceModel
+  UpdateOrCreatePenetapanObjectLongListServiceModel, UpdateOrCreatePenetapanObjectNotaDinasServiceModel, LogActivityDto, LogActivityServiceModel,
 } from "@/app/penetapan/objek/pageModel";
 
 export async function doGetPenetapanObject(param: GetPenetapanObjectIdServiceModel) {
@@ -94,6 +94,22 @@ export async function doUpdateOrCreatePenetapanObjectEntityUsulan(param: UpdateO
   const resp = await post({
     ...param,
     url: "penetapan/object/usulanUprLinsek/add",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+export async function doDeletePenetapanObjectEntityUsulan(param: any) {
+  const resp = await post({
+    ...param,
+    url: "penetapan/object/usulanUprLinsek/deleteObjek",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+export async function doDeleteRowPenetapanObjectEntityUsulan(param: any) {
+  const resp = await post({
+    ...param,
+    url: "penetapan/object/usulanUprLinsek/delete",
   });
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }

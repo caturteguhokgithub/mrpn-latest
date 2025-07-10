@@ -32,7 +32,9 @@ import {
   doCratePenetapanObjectLongList,
   doCratePenetapanObjectLongListAssignObject,
   doCreatePenetapanObjectTopic,
+  doDeletePenetapanObjectEntityUsulan,
   doDeletePenetapanObjectTopic,
+  doDeleteRowPenetapanObjectEntityUsulan,
   doGetApproval,
   doGetPenetapanObject,
   doGetPenetapanObjectCascading,
@@ -358,31 +360,31 @@ const usePenetapanObjectVM = () => {
     if (response?.code == API_CODE.success) {
       getPenetapanObjectEntity();
     }
-    // if (objectState !== undefined) {
-    //   console.log(stateEntity)
-    //   let req: PenetapanObjectEntityReqDto = {
-    //     id_objek: objectState.id,
-    //     values: [],
-    //   };
-    //   stateEntity.map((st) => {
-    //     const val: PenetapanObjectEntityValueReqDto = {
-    //       entitas: st.id,
-    //       kriteria: [],
-    //     };
-    //     st.items.map((s) => {
-    //       val.kriteria.push(s.value);
-    //     });
-    //     req.values.push(val);
-    //   });
-    //   const response = await doUpdateOrCreatePenetapanObjectEntityUsulan({
-    //     body: req,
-    //     loadingContext: loadingContext,
-    //     errorModalContext: errorModalContext,
-    //   });
-    //   if (response?.code == API_CODE.success) {
-    //     getPenetapanObjectEntity();
-    //   }
-    // }
+  }
+
+  async function DeleteEntity(id: number, module: string) {
+    let response;
+
+    if (module === "Object") {
+      response = await doDeletePenetapanObjectEntityUsulan({
+        body: { id_objek: id },
+        loadingContext,
+        errorModalContext,
+      });
+    } else {
+      response = await doDeleteRowPenetapanObjectEntityUsulan({
+        body: { id },
+        loadingContext,
+        errorModalContext,
+      });
+    }
+
+    if (response?.code === API_CODE.success) {
+      getPenetapanObjectEntity();
+
+      setModalDeleteObject(false)
+      setModalDeleteEntitas(false)
+    }
   }
 
   async function getRanking() {
@@ -630,6 +632,7 @@ const usePenetapanObjectVM = () => {
     deleteTopic,
     updateOrCreateLongList,
     updateOrCreateEntity,
+    DeleteEntity,
     getPenetapanObjectShortList,
     getPenetapanObjectCascading,
     getPenetapanObjectEntity,

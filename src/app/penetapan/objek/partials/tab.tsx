@@ -104,9 +104,9 @@ export default function TabObject({
   handleUploadBuktiDukung?: () => void;
   stateApproval: any;
   setModalObjek: (value: boolean) => void;
-  handleModalDeleteObject?: () => void;
+  handleModalDeleteObject: (id: number) => void;
   handleModalEditEntitas?: () => void;
-  handleModalDeleteEntitas?: () => void;
+  handleModalDeleteEntitas: (id: number) => void;
 }) {
   const { nota } = usePenetapanTopicContext((store) => store);
   const { rkp, year, rpjmn } = useRKPContext((state) => state);
@@ -291,16 +291,16 @@ export default function TabObject({
         <CardItem
           // title="Nota Dinas Objek MRPN & UPR LS"
           title="Penetapan"
-          // addButton={
-          //   !editNotaDinas && (
-          //     <AddButton
-          //       title={`Ubah`}
-          //       filled
-          //       startIcon={<IconFA size={14} name="pencil" />}
-          //       onclick={() => setEditNotaDinas(true)}
-          //     />
-          //   )
-          // }
+        // addButton={
+        //   !editNotaDinas && (
+        //     <AddButton
+        //       title={`Ubah`}
+        //       filled
+        //       startIcon={<IconFA size={14} name="pencil" />}
+        //       onclick={() => setEditNotaDinas(true)}
+        //     />
+        //   )
+        // }
         >
           {/* {isDeveloping ? (
             <EmptyDevelopingState />
