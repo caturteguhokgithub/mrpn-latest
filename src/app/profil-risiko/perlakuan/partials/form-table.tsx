@@ -271,25 +271,35 @@ export default function FormTable({
 
   const handleSubChange = (
     id: number,
-    field: "keterangan_risiko" | "target_triwulan_1" | "satuan_triwulan_1" | "target_triwulan_2" | "satuan_triwulan_2" | "target_triwulan_3" | "satuan_triwulan_3" | "target_triwulan_4" | "satuan_triwulan_4" | "ro" | "start_date" | "end_date" | "src_stakeholder_id",
+    field: keyof Perlakuan,
     value: SubChangeValue
   ) => {
-    const updatedItems = items.map((item) =>
-      item.id === id
-        ? {
-          ...item,
-          [field]: value,
-        }
-        : item
-    );
-    setItems(updatedItems);
+    setItems((prevItems) => {
+      const updated = prevItems.map((item) =>
+        item.id === id
+          ? {
+            ...item,
+            [field]: value,
+          }
+          : item
+      );
 
-    // Sinkron ke state utama
-    setState((prev) => ({
-      ...prev,
-      perlakuan: updatedItems
-    }));
+      setState((prev) => ({
+        ...prev,
+        perlakuan: prev.perlakuan.map((item) =>
+          item.id === id
+            ? {
+              ...item,
+              [field]: value,
+            }
+            : item
+        ),
+      }));
+
+      return updated;
+    });
   };
+
 
   const [modal, setModal] = useState<boolean>(false);
 

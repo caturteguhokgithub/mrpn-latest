@@ -61,9 +61,7 @@ const useCardCriticalVM = () => {
   const [state, setState] = useState<ExsumCriticalState>(initState);
   const [optionStrategy, setOptionStrategy] = useState<string[]>([]);
   const [data, setData] = useState<ExsumCriticalData[]>([]);
-  const [dataROKunci, setDataROKunci] = useState<DataRoKunci>({
-    ...initDataRoKunci,
-  });
+  const [dataROKunci, setDataROKunci] = useState<DataRoKunci>({ ...initDataRoKunci });
   const [dataCP, setDataCP] = useState<DataCPType[]>([]);
   const [ganChart, setGanChart] = useState<Task[]>([]);
 
@@ -107,20 +105,6 @@ const useCardCriticalVM = () => {
     }
   }
 
-  async function getDataROKunci() {
-    const response = await doGetCriticalPathRO({
-      body: { exsum_id: exsum.id },
-      loadingContext: loadingContext,
-      errorModalContext: errorModalContext,
-    });
-
-    if (response?.code == API_CODE.success) {
-      const result: DataRoKunci = response.result;
-
-      setDataROKunci(result);
-    }
-  }
-
   async function getData() {
     const response = await doGetCriticalPath({
       body: { exsum_id: exsum.id },
@@ -129,6 +113,7 @@ const useCardCriticalVM = () => {
     });
 
     if (response?.code == API_CODE.success) {
+
       const result: ExsumCriticalData[] = response.result;
       // console.log(result);
 
@@ -173,12 +158,12 @@ const useCardCriticalVM = () => {
             );
             return monthData
               ? {
-                  id: monthData.id,
-                  name: monthData.name,
-                  aktivitas: monthData.aktivitas,
-                  target: monthData.target,
-                  satuan: monthData.satuan,
-                }
+                id: monthData.id,
+                name: monthData.name,
+                aktivitas: monthData.aktivitas,
+                target: monthData.target,
+                satuan: monthData.satuan,
+              }
               : null;
           }),
         })),
@@ -186,6 +171,21 @@ const useCardCriticalVM = () => {
 
       setData(result);
       setDataCP(mappedDataCP);
+    }
+  }
+
+  async function getDataROKunci() {
+    const response = await doGetCriticalPathRO({
+      body: { exsum_id: exsum.id },
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+
+    if (response?.code == API_CODE.success) {
+      const result: DataRoKunci = response.result;
+      console.log(result);
+
+      setDataROKunci(result);
     }
   }
 
@@ -268,6 +268,8 @@ const useCardCriticalVM = () => {
       }
     }
 
+    getDataROKunci();
+
     if (response?.code == API_CODE.success) {
       getData();
       const initState: ExsumCriticalState = JSON.parse(
@@ -300,6 +302,8 @@ const useCardCriticalVM = () => {
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
     });
+
+    getDataROKunci();
 
     if (response?.code == API_CODE.success) {
       getData();
@@ -370,15 +374,6 @@ const useCardCriticalVM = () => {
     }
   }, [useCardRoadmap.dataBusiness]);
 
-  useEffect(() => {
-    if (exsum.id > 0) {
-      getListRO();
-      getData();
-      getDataROKunci();
-    }
-    if (optionProjectCategory.length == 0) getListProjectCategory();
-  }, [exsum]);
-
   return {
     optionRO,
     optionStrategy,
@@ -404,6 +399,11 @@ const useCardCriticalVM = () => {
     dataCP,
     dataROKunci,
     loadingRoKunci,
+    exsum,
+    getListRO,
+    getListProjectCategory,
+    getData,
+    getDataROKunci
   };
 };
 
