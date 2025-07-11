@@ -16,8 +16,13 @@ const useRiskOverviewVM = () => {
 
   const { objectState } = usePenetapanGlobalVM();
 
-  const [dataRiskOverview, setDataRiskOverview] = useState<RiskOverview | undefined>(undefined);
+  const [dataRiskOverview, setDataRiskOverview] = useState<
+    RiskOverview | undefined
+  >(undefined);
   const [valueOverview, setValueOverview] = useState(0);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openModalConfirmApproval, setOpenModalConfirmApproval] =
+    useState<boolean>(false);
 
   const handleChangeOverview = (
     event: React.SyntheticEvent,
@@ -74,20 +79,19 @@ const useRiskOverviewVM = () => {
           parseInt(a) < parseInt(b) ? 1 : -1
         );
 
-        const finalOverviewDataSekre = result.overviews_sekre.reduce<RiskOverviewData[]>(
-          (a, b) => {
-            let prior: number = 0;
-            const getIndex = sortedSekre.findIndex(
-              (x) => parseInt(x) == b.analisis_br
-            );
-            if (getIndex > -1) {
-              prior = getIndex + 1;
-            }
-            b.prioritas = prior;
-            return [...a, b];
-          },
-          []
-        );
+        const finalOverviewDataSekre = result.overviews_sekre.reduce<
+          RiskOverviewData[]
+        >((a, b) => {
+          let prior: number = 0;
+          const getIndex = sortedSekre.findIndex(
+            (x) => parseInt(x) == b.analisis_br
+          );
+          if (getIndex > -1) {
+            prior = getIndex + 1;
+          }
+          b.prioritas = prior;
+          return [...a, b];
+        }, []);
 
         setDataRiskOverview({
           object: result.object,
@@ -104,6 +108,10 @@ const useRiskOverviewVM = () => {
     valueOverview,
     handleChangeOverview,
     a11yProps,
+    openModal,
+    setOpenModal,
+    openModalConfirmApproval,
+    setOpenModalConfirmApproval,
   };
 };
 

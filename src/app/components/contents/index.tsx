@@ -542,7 +542,8 @@ export default function ContentPage({
             : "calc(100vh - 240px)"
         }
         overflow={overflowHidden ? "hidden" : "auto"}
-        margin={noMinusMargin ? 0 : -1}
+        // margin={noMinusMargin ? 0 : -1}
+        my={noMinusMargin ? 0 : -1}
         sx={{
           overflowX: "hidden",
           "&::-webkit-scrollbar": {

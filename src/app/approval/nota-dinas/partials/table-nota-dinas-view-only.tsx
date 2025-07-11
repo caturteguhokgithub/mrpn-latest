@@ -214,8 +214,6 @@ export default function TableNotaDinasViewOnly({
 
   let statusObject = "reject";
 
-  const isProduction = true;
-
   return (
     <Fragment>
       <Stack gap={2}>
@@ -253,9 +251,7 @@ export default function TableNotaDinasViewOnly({
                     :
                   </TableCell>
                   <TableCell>
-                    {/* {isProduction ? (
-                      stateApproval?.status ?? "-"
-                    ) : ( */}
+                    {stateApproval?.status}
                     <Stack direction="row" alignItems="center" gap={1}>
                       {pageApproval ? (
                         <Stack direction="row" alignItems="center" gap={1}>
@@ -305,7 +301,7 @@ export default function TableNotaDinasViewOnly({
                                 onclick={() => {}}
                               />
                             </Fragment>
-                          ) : stateApproval?.status == "plan" ? (
+                          ) : stateApproval?.status === "review" ? (
                             <Fragment>
                               <Chip
                                 color="primary"
