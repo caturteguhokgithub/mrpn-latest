@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Button, DialogActions } from "@mui/material";
+import { Button, Chip, DialogActions, Stack, Typography } from "@mui/material";
 import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
 import FormDampak from "../tab3Impact/form-dampak";
@@ -11,6 +11,7 @@ import EmptyDevelopingState from "@/app/components/empty/developing";
 import { isDeveloping } from "@/app/components/layouts/layout";
 import useAuthorizationVM from "@/app/authorizationVM";
 import usePenetapanSelera from "./hooks/vm";
+import { red, green } from "@mui/material/colors";
 
 export default function CardSelera() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
@@ -19,8 +20,14 @@ export default function CardSelera() {
 
   const { user } = useAuthorizationVM();
 
-  const { loading, createSelera, requestSelera, setRequestSelera } =
-    usePenetapanSelera();
+  const {
+    loading,
+    createSelera,
+    requestSelera,
+    setRequestSelera,
+    openModalConfirmApproval,
+    setOpenModalConfirmApproval,
+  } = usePenetapanSelera();
 
   const handleModalClose = () => {
     setModalOpenAdd(false);
@@ -44,11 +51,84 @@ export default function CardSelera() {
   };
 
   const isEmptyRisk = true;
+  const isStatus = "reject";
 
   return (
     <Fragment>
       <CardItem
-        title="Selera Risiko"
+        title={
+          <Stack direction="row" gap={1} alignItems="center">
+            Selera Risiko
+            <Chip
+              color={
+                isStatus === "reject"
+                  ? "error"
+                  : isStatus === "draf"
+                  ? "default"
+                  : "warning"
+              }
+              variant="outlined"
+              label={
+                <Typography
+                  fontWeight={600}
+                  fontSize={13}
+                  textTransform="uppercase"
+                >
+                  {isStatus === "reject"
+                    ? "Reject"
+                    : isStatus === "draf"
+                    ? "Draf"
+                    : "Review"}
+                </Typography>
+              }
+              icon={
+                <Iconify
+                  name={
+                    isStatus === "reject"
+                      ? "mdi:close"
+                      : isStatus === "draf"
+                      ? "mdi:invoice-text-edit"
+                      : "mdi:magnify-expand"
+                  }
+                />
+              }
+              sx={{ px: 2 }}
+            />
+            {isStatus === "reject" ? (
+              <Typography fontSize={14} color={red[700]}>
+                Ditolak tanggal:{" "}
+                <Typography component="strong" fontWeight={600} fontSize={14}>
+                  28 Juni 2025
+                </Typography>
+              </Typography>
+            ) : isStatus === "approve" ? (
+              <Typography fontSize={14} color={green[700]}>
+                Disetujui tanggal:{" "}
+                <Typography component="strong" fontWeight={600} fontSize={14}>
+                  28 Juni 2025
+                </Typography>
+              </Typography>
+            ) : (
+              ""
+            )}
+            {isStatus === "reject" && (
+              <Button
+                size="small"
+                color="primary"
+                variant="contained"
+                startIcon={<Iconify name="mdi:pencil" />}
+                sx={{
+                  whiteSpace: "nowrap",
+                  borderRadius: 50,
+                  px: 2,
+                }}
+                // onClick={() => setOpenModal(true)}
+              >
+                Catatan
+              </Button>
+            )}
+          </Stack>
+        }
         addButton={
           <Fragment>
             {user?.role.name == "Komite MRPN LS" ||
@@ -79,12 +159,13 @@ export default function CardSelera() {
         {/* {isDeveloping ? (
           <EmptyDevelopingState />
         ) : ( */}
-          <RiskContent
-            handleSaveButton={handleModalOpenSave}
-            state={requestSelera}
-            setState={setRequestSelera}
-            isEmptyRisk={isEmptyRisk}
-          />
+        <RiskContent
+          handleSaveButton={handleModalOpenSave}
+          state={requestSelera}
+          setState={setRequestSelera}
+          isEmptyRisk={isEmptyRisk}
+          handleConfirm={() => setOpenModalConfirmApproval(true)}
+        />
         {/* )} */}
       </CardItem>
       <DialogComponent
@@ -104,6 +185,26 @@ export default function CardSelera() {
         title={`Matriks Referensi Selera Risiko Moderat`}
       >
         <SeleraMatriks levelId={1} levelDampak="rendah" />
+      </DialogComponent>
+      <DialogComponent
+        width={360}
+        dialogOpen={openModalConfirmApproval}
+        dialogClose={() => setOpenModalConfirmApproval(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button
+              color="error"
+              onClick={() => setOpenModalConfirmApproval(false)}
+            >
+              Tidak
+            </Button>
+            <Button variant="contained" type="submit">
+              Ya
+            </Button>
+          </DialogActions>
+        }
+      >
+        Apakah Anda yakin mengajukan approval?
       </DialogComponent>
     </Fragment>
   );

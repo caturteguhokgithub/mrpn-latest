@@ -250,8 +250,8 @@ export default function DashboardLayout(props: {
       },
       ".table-sticky-horizontal": {
         ".MuiTableContainer-root": {
-          // maxWidth: "calc(100vw - 148px)",
-          maxWidth: "calc(100vw - 131px)",
+          maxWidth: "calc(100vw - 148px)",
+          // maxWidth: "calc(100vw - 131px)",
         },
       },
       ".orgchart-container": {

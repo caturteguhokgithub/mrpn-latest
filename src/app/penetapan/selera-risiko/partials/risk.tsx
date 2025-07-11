@@ -13,7 +13,7 @@ import {
 import { grey } from "@mui/material/colors";
 import theme from "@/theme";
 import CustomToggleButton from "@/app/components/toggleButton";
-import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
+import { TextareaStyled } from "@/app/components/textarea";
 import FormatBP from "./formatBp";
 import FormatKL from "./formatKl";
 import { LabelRadio } from "@/app/components/labelRadio";
@@ -22,17 +22,20 @@ import { InfoTooltip } from "@/app/components/InfoTooltip";
 import SeleraMatriks from "../../kriteria/partials/tab4Selera/matriks";
 import TableRas from "./table-ras";
 import { doReqSeleraDto } from "../../kriteria/partials/tab4Selera/hooks/model";
+import Iconify from "@/app/components/icons/iconify";
 
 export default function RiskContent({
   handleSaveButton,
   state,
   setState,
   isEmptyRisk,
+  handleConfirm,
 }: {
   handleSaveButton?: () => void;
   state?: doReqSeleraDto;
   setState?: (value: SetStateAction<doReqSeleraDto>) => void;
   isEmptyRisk?: boolean;
+  handleConfirm?: () => void;
 }) {
   const { user } = useAuthContext((state) => state);
   const initialValue = isEmptyRisk ? "" : "1";
@@ -80,9 +83,9 @@ export default function RiskContent({
     <Button
       variant="contained"
       onClick={handleSaveButton}
+      startIcon={<Iconify name="mdi:content-save-all" />}
       sx={{
         minWidth: 160,
-        mt: 2,
         borderRadius: 50,
         color: "white !important",
       }}
@@ -510,7 +513,24 @@ perencanaan pembangunan nasional"
         </Box>
         {/* {saveButton} */}
       </Collapse>
-      {isEmptyRisk && saveButton}
+      <Stack
+        direction="row"
+        gap={1}
+        alignItems="center"
+        justifyContent="flex-end"
+        mt={2}
+      >
+        {isEmptyRisk && saveButton}
+        <Button
+          color="success"
+          variant="contained"
+          endIcon={<Iconify name="mdi:send" />}
+          sx={{ whiteSpace: "nowrap", borderRadius: 50, px: 3 }}
+          onClick={handleConfirm}
+        >
+          Ajukan Approval
+        </Button>
+      </Stack>
     </Fragment>
   );
 }
