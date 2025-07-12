@@ -59,7 +59,7 @@ export const SubmenuItem = ({ label, url, urlLv2, isOpen }: IMenu) => {
               cursor: disabledMenu ? "not-allowed" : "pointer",
               "&.link-active": {
                 "& > span": {
-                  fontWeight: 700,
+                  fontWeight: 500,
                   color: isOpen ? grey[700] : orange[300],
                 },
                 "&:before": {
