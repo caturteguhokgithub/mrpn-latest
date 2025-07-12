@@ -22,19 +22,14 @@ import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { TextareaStyled } from "@/app/components/textarea";
 import useCardRegulasi from "../vm";
+import { doRequestRegulasiDto } from "../model";
 
 export default function FormRegulation({
-  options,
-  optionStakeholder,
   state,
   setState,
-  setModalPeraturan,
 }: {
-  options: MiscMasterListPerpresRes[];
-  optionStakeholder: MiscMasterListStakeholderRes[];
-  state: ExsumRegulationDto;
-  setState: (value: SetStateAction<ExsumRegulationDto>) => void;
-  setModalPeraturan: any;
+  state: doRequestRegulasiDto;
+  setState: (value: SetStateAction<doRequestRegulasiDto>) => void;
 }) {
   const { year, rpjmn } = useRKPContext((store) => store);
 
@@ -77,9 +72,16 @@ export default function FormRegulation({
             variant="outlined"
             size="small"
             placeholder={"Nomor Regulasi"}
+            value={state.no_regulasi}
             InputLabelProps={{
               shrink: true,
             }}
+            onChange={(e) =>
+              setState((prevState) => ({
+                ...prevState,
+                no_regulasi: e.target.value,
+              }))
+            }
           />
         </FormControl>
       </Grid>
@@ -89,7 +91,7 @@ export default function FormRegulation({
           <FieldLabelInfo title="Tentang" />
           <TextField
             fullWidth
-            value={state.perpres}
+            value={state.tentang}
             variant="outlined"
             size="small"
             placeholder={"Tentang"}
@@ -99,7 +101,7 @@ export default function FormRegulation({
             onChange={(e) =>
               setState((prevState) => ({
                 ...prevState,
-                perpres: e.target.value,
+                tentang: e.target.value,
               }))
             }
           />
@@ -129,7 +131,7 @@ export default function FormRegulation({
           <TextField
             fullWidth
             minRows={3}
-            value={state.amanat}
+            value={state.keterangan}
             variant="outlined"
             size="small"
             placeholder={"Keterangan"}
@@ -139,7 +141,7 @@ export default function FormRegulation({
             onChange={(e) =>
               setState((prevState) => ({
                 ...prevState,
-                amanat: e.target.value,
+                keterangan: e.target.value,
               }))
             }
           />

@@ -334,6 +334,7 @@ export interface dtoGetApproval {
   message: string,
   approvalable_id: number,
   approvalable_type: string,
+  created_at: string
 }
 
 export interface dtoReqBuktiDukungPengesahan {

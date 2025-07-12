@@ -46,6 +46,8 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
     setModalEdit,
     uriRequestRegulasi,
     uriDeleteRegulasi,
+    requestRegulasi,
+    setRequestRegulasi,
   } = useCardRegulasi();
 
   const { data, deleteData } = useCardRegulationVM();
@@ -59,14 +61,10 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
 
   const handleSubmitRegulation = async (act: string) => {
     const dataRequest: doRequestRegulasiDto = {
-      id: stateRegulation.id,
-      amanat: stateRegulation.amanat,
-      entitas_id: stateRegulation.stakeholder_id,
-      perpres:
-        stateRegulation.perpres_state?.title ??
-        (typeof stateRegulation.perpres === "string"
-          ? stateRegulation.perpres
-          : ""),
+      id: requestRegulasi.id,
+      no_regulasi: requestRegulasi.no_regulasi,
+      tentang: requestRegulasi.tentang,
+      keterangan: requestRegulasi.keterangan,
       uraian_penetapan_object_id: 0,
     };
 
@@ -93,7 +91,7 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
           />
         }
       >
-        {data.length == 0 ? (
+        {dataRegulasi.length == 0 ? (
           <EmptyState
             dense
             icon={<IconEmptyData width={100} />}
@@ -103,7 +101,7 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
         ) : (
           <Fragment>
             <Box sx={{ opacity: 0.6 }}>
-              <TablePeraturan data={data} deleteData={deleteData} />
+              <TablePeraturan dataExsum={data} deleteData={deleteData} />
             </Box>
             <Box my={3}>
               <DividerIntExt />
@@ -115,7 +113,7 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
               setModal={() => setModalEdit(true)}
               setModalDelete={() => setModalDelete(true)}
               intExt={true}
-              setState={setStateRegulation}
+              setState={setRequestRegulasi}
             />
           </Fragment>
         )}
@@ -139,11 +137,8 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
         }
       >
         <FormRegulation
-          options={listPerpres}
-          optionStakeholder={optionStakeholder}
-          state={stateRegulation}
-          setState={setStateRegulation}
-          setModalPeraturan={() => {}}
+          state={requestRegulasi}
+          setState={setRequestRegulasi}
         />
       </DialogComponent>
       <DialogComponent
@@ -165,11 +160,8 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
         }
       >
         <FormRegulation
-          options={listPerpres}
-          optionStakeholder={optionStakeholder}
-          state={stateRegulation}
-          setState={setStateRegulation}
-          setModalPeraturan={() => {}}
+          state={requestRegulasi}
+          setState={setRequestRegulasi}
         />
       </DialogComponent>
       <DialogDelete

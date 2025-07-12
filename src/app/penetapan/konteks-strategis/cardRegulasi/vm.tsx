@@ -24,7 +24,7 @@ const useCardRegulasi = () => {
   const { objectState } = usePenetapanGlobalVM();
   const { year } = useRKPContext((state) => state);
 
-  const [dataRegulasi, setDataRegulasi] = useState<ExsumRegulationResDto[]>([]);
+  const [dataRegulasi, setDataRegulasi] = useState<doRequestRegulasiDto[]>([]);
   const [modal, setModal] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
@@ -43,7 +43,7 @@ const useCardRegulasi = () => {
     });
 
     if (response?.code == API_CODE.success) {
-      const result: ExsumRegulationResDto[] = response.result;
+      const result: doRequestRegulasiDto[] = response.result;
       if (result) {
         setDataRegulasi(result);
       }

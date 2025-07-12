@@ -49,17 +49,17 @@ export type CreateUpdateDeleteServiceModel = BaseAPIServiceParam & {
 export interface doRequestRegulasiDto {
   id: number;
   uraian_penetapan_object_id: number;
-  amanat: string
-  perpres: string;
-  entitas_id: number[]
+  no_regulasi: string
+  tentang: string;
+  keterangan: string;
 }
 
 export const initRegulasi: doRequestRegulasiDto = {
   id: 0,
   uraian_penetapan_object_id: 0,
-  amanat: "",
-  perpres: "",
-  entitas_id: [0],
+  no_regulasi: "",
+  tentang: "",
+  keterangan: "",
 };
 
 export type RequestRegulasiServiceModel = BaseAPIServiceParam & {

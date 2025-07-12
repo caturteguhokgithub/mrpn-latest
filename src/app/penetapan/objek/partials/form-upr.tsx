@@ -130,9 +130,9 @@ export default function FormUPR({
     const updatedItems = items.map((item) =>
       item.id === id
         ? {
-            ...item,
-            [field]: value,
-          }
+          ...item,
+          [field]: value,
+        }
         : item
     );
     setItems(updatedItems);
@@ -287,6 +287,7 @@ export default function FormUPR({
                       <TextareaStyled
                         placeholder="Ruang Lingkup"
                         minRows={3}
+                        value={tags.ruang_lingkup}
                         onChange={(e) =>
                           handleSubChange(
                             tags.id,

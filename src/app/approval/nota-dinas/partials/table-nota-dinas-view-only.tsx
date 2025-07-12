@@ -280,7 +280,13 @@ export default function TableNotaDinasViewOnly({
       />
       {!pageApproval && (
         <Typography color={red[800]} fontSize={14}>
-          Ditolak tanggal <strong>12 Februari 2025</strong>
+          Ditolak tanggal <strong>{
+            stateApproval ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            }) : "-"
+          }</strong>
         </Typography>
       )}
       <AddButton
@@ -309,7 +315,13 @@ export default function TableNotaDinasViewOnly({
       />
       {!pageApproval && (
         <Typography color={green[800]} fontSize={14}>
-          Disahkan tanggal <strong>5 September 2025</strong>
+          Disahkan tanggal <strong>{
+            stateApproval ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            }) : "-"
+          }</strong>
         </Typography>
       )}
     </Fragment>
@@ -349,10 +361,10 @@ export default function TableNotaDinasViewOnly({
   const statusReviewRejectApproval = isReview
     ? statusReviewM
     : isReject
-    ? statusRejectM
-    : isApproval
-    ? statusApprovalM
-    : statusPengesahan;
+      ? statusRejectM
+      : isApproval
+        ? statusApprovalM
+        : statusPengesahan;
 
   const conditionDraftReject =
     stateApproval?.status === "draft" || stateApproval?.status === "rejected";
@@ -881,14 +893,14 @@ export default function TableNotaDinasViewOnly({
                   <Fragment>
                     {(stateApproval?.status === "rejected" ||
                       stateApproval?.status == "approved") && (
-                      <AddButton
-                        title="Tambah Catatan"
-                        filled
-                        noMargin
-                        startIcon={<Iconify name="mdi:plus-circle" size={16} />}
-                        onclick={() => setModalOpenAdd(true)}
-                      />
-                    )}
+                        <AddButton
+                          title="Tambah Catatan"
+                          filled
+                          noMargin
+                          startIcon={<Iconify name="mdi:plus-circle" size={16} />}
+                          onclick={() => setModalOpenAdd(true)}
+                        />
+                      )}
                   </Fragment>
                 )}
               </Stack>
