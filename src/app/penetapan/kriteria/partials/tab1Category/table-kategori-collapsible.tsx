@@ -1,6 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,15 +7,11 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { bgColorTh } from "@/app/utils/color";
 import { blue, grey, red } from "@mui/material/colors";
 import { Stack } from "@mui/material";
 import Iconify from "@/app/components/icons/iconify";
-import useCategoryList from "./hooks/useCategory";
 import { ResultCategory, SubKategoriRisiko } from "./hooks/categoryModel";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
@@ -29,7 +24,6 @@ function Row(props: {
   setRequestEdit?: (value: React.SetStateAction<SubKategoriRisiko>) => void;
 }) {
   const { row, handleEdit, handleDelete, setRequestEdit, rowIndex } = props;
-  // const [open, setOpen] = React.useState(false);
 
   const prosesBtnEdit = (value: SubKategoriRisiko, proses: string) => {
     const updated = {
@@ -60,15 +54,7 @@ function Row(props: {
   return (
     <React.Fragment>
       {row.sub_kategori_risiko.map((subItem: any, subIndex) => (
-        <TableRow
-          key={`${rowIndex}-${subIndex}`}
-          sx={
-            {
-              // "& > *": { borderBottom: "unset" },
-              // backgroundColor: rowIndex % 2 === 0 ? grey[100] : "transparent",
-            }
-          }
-        >
+        <TableRow key={`${rowIndex}-${subIndex}`}>
           {subIndex === 0 && (
             <React.Fragment>
               <TableCell
@@ -128,95 +114,6 @@ function Row(props: {
           </TableCell>
         </TableRow>
       ))}
-      {/* <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell width={60}>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell>{row.src_kategori_risiko.value}</TableCell>
-        <TableCell>
-          <Box
-            component="ul"
-            sx={{
-              ml: 2,
-              display: "flex",
-              flexDirection: "column",
-              gap: 1,
-            }}
-          >
-            <div
-              dangerouslySetInnerHTML={{
-                __html: row.src_kategori_risiko.uraian,
-              }}
-            ></div>
-          </Box>
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell colSpan={4} sx={{ bgcolor: grey[200], p: 0 }}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box m={1} ml={8}>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell
-                      align="center"
-                      width={180}
-                      sx={{ bgcolor: bgColorTh }}
-                    >
-                      Sub Kategori
-                    </TableCell>
-                    <TableCell
-                      width={100}
-                      align="center"
-                      sx={{ bgcolor: bgColorTh }}
-                    >
-                      Aksi
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.sub_kategori_risiko.map((historyRow) => (
-                    <TableRow key={historyRow.id}>
-                      <TableCell
-                        sx={{
-                          whiteSpace: "nowrap",
-                          bgcolor: grey[50],
-                        }}
-                      >
-                        {historyRow.value}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          bgcolor: grey[50],
-                        }}
-                      >
-                        <Stack direction="row">
-                          <IconButton
-                            onClick={() => prosesBtnEdit(historyRow, "edit")}
-                          >
-                            <Iconify name="mdi:pencil" color={blue[500]} />
-                          </IconButton>
-                          <IconButton
-                            onClick={() => prosesBtnEdit(historyRow, "delete")}
-                          >
-                            <Iconify name="mdi:trash" color={red[500]} />
-                          </IconButton>
-                        </Stack>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow> */}
     </React.Fragment>
   );
 }
@@ -256,7 +153,6 @@ export default function CollapsibleTable({
       <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
         <TableHead>
           <TableRow>
-            {/* <TableCell sx={{ bgcolor: bgColorTh }} /> */}
             <TableCell align="center" width={180} sx={{ bgcolor: bgColorTh }}>
               Kategori Risiko
             </TableCell>

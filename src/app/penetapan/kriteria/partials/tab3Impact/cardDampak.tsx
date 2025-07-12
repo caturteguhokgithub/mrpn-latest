@@ -46,19 +46,6 @@ export default function CardDampak() {
     deleteMatDamKomite,
     modalOpenDeleteArea,
     setModalDeleteArea,
-    // prosesBtnEdit,
-    // prosesBtnDelete,
-    // prosesBtnEditArea,
-    // addDampak,
-    // minusDampak,
-    // handleChangeAD,
-    // handleSubChange,
-    // handleAreaChange,
-    // itemsDampak,
-    // stateUpr,
-    // setStateUpr,
-    // stateKom,
-    // setStateKom,
   } = useKriteriaDampakVM();
 
   const handleCreate = async () => {
@@ -144,9 +131,6 @@ export default function CardDampak() {
           </Stack>
         }
       >
-        {/* {isDeveloping ? (
-          <EmptyDevelopingState />
-        ) : ( */}
         <Fragment>
           <CollapsibleImpactTable
             data={dataMatDamKomite}
@@ -156,12 +140,8 @@ export default function CardDampak() {
             handleDelete={() => setModalDelete(true)}
             handleDeleteArea={() => setModalDeleteArea(true)}
             handleEditArea={() => setModalOpenEditKomite(true)}
-            // prosesBtnEdit={prosesBtnEdit}
-            // prosesBtnDelete={prosesBtnDelete}
-            // prosesBtnEditArea={prosesBtnEditArea}
           />
         </Fragment>
-        {/* )} */}
       </CardItem>
       <DialogComponent
         width={1200}
@@ -178,12 +158,6 @@ export default function CardDampak() {
           setStateKom={setRequestMatDamKomite}
           stateUpr={requestMatDamUpr}
           setStateUpr={setRequestMatDamUpr}
-          // addDampak={addDampak}
-          // minusDampak={minusDampak}
-          // handleChangeAD={handleChangeAD}
-          // handleSubChange={handleSubChange}
-          // handleAreaChange={handleAreaChange}
-          // itemsDampak={itemsDampak}
         />
       </DialogComponent>
       <DialogComponent
@@ -199,12 +173,6 @@ export default function CardDampak() {
           setStateKom={setRequestMatDamKomite}
           stateUpr={requestMatDamUpr}
           setStateUpr={setRequestMatDamUpr}
-          // addDampak={addDampak}
-          // minusDampak={minusDampak}
-          // handleChangeAD={handleChangeAD}
-          // handleSubChange={handleSubChange}
-          // handleAreaChange={handleAreaChange}
-          // itemsDampak={itemsDampak}
         />
       </DialogComponent>
       <DialogDelete

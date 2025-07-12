@@ -15,14 +15,14 @@ import { bgColorTh } from "@/app/utils/color";
 import { blue, grey, red } from "@mui/material/colors";
 import { Stack } from "@mui/material";
 import Iconify from "@/app/components/icons/iconify";
-import AddButton from "@/app/components/buttonAdd";
 import {
   AreasShowMatDamKomite,
   ReqAddMatDamKomite,
   ReqAddMatDamUpr,
-  ResShowMatDamKomite,
   ValuesShowMatDamKomite,
 } from "./hooks/model";
+import EmptyState from "@/app/components/empty";
+import { IconEmptyData } from "@/app/components/icons";
 
 function Row(props: {
   row: ValuesShowMatDamKomite;
@@ -34,9 +34,6 @@ function Row(props: {
   handleDelete?: any;
   handleDeleteArea?: any;
   handleEditArea?: any;
-  // prosesBtnEdit: any;
-  // prosesBtnDelete: any;
-  // prosesBtnEditArea: any;
 }) {
   const {
     row,
@@ -46,9 +43,6 @@ function Row(props: {
     setRequestMatDamUpr,
     setRequestMatDamKomite,
     handleEditArea,
-    // prosesBtnEdit,
-    // prosesBtnDelete,
-    // prosesBtnEditArea,
   } = props;
 
   const [openCollapse, setOpenCollapse] = React.useState(true);
@@ -280,10 +274,7 @@ export default function CollapsibleImpactTable({
   handleDelete,
   handleDeleteArea,
   handleEditArea,
-}: // prosesBtnEdit,
-// prosesBtnDelete,
-// prosesBtnEditArea,
-{
+}: {
   data: ValuesShowMatDamKomite[];
   setRequestMatDamKomite?: (
     value: React.SetStateAction<ReqAddMatDamKomite>
@@ -293,9 +284,6 @@ export default function CollapsibleImpactTable({
   handleDelete?: any;
   handleDeleteArea?: any;
   handleEditArea?: any;
-  // prosesBtnEdit: any;
-  // prosesBtnDelete: any;
-  // prosesBtnEditArea: any;
 }) {
   return (
     <TableContainer
@@ -341,21 +329,32 @@ export default function CollapsibleImpactTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => (
-            <Row
-              key={row.dampak}
-              row={row}
-              setRequestMatDamKomite={setRequestMatDamKomite}
-              setRequestMatDamUpr={setRequestMatDamUpr}
-              handleEdit={handleEdit}
-              handleDelete={handleDelete}
-              handleDeleteArea={handleDeleteArea}
-              handleEditArea={handleEditArea}
-              // prosesBtnEdit={prosesBtnEdit}
-              // prosesBtnDelete={prosesBtnDelete}
-              // prosesBtnEditArea={prosesBtnEditArea}
-            />
-          ))}
+          {data.length ? (
+            <React.Fragment>
+              {data.map((row) => (
+                <Row
+                  key={row.dampak}
+                  row={row}
+                  setRequestMatDamKomite={setRequestMatDamKomite}
+                  setRequestMatDamUpr={setRequestMatDamUpr}
+                  handleEdit={handleEdit}
+                  handleDelete={handleDelete}
+                  handleDeleteArea={handleDeleteArea}
+                  handleEditArea={handleEditArea}
+                />
+              ))}
+            </React.Fragment>
+          ) : (
+            <TableRow>
+              <TableCell colSpan={4}>
+                <EmptyState
+                  icon={<IconEmptyData />}
+                  title="Data Kosong"
+                  description="Silahkan isi konten tabel ini"
+                />
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </TableContainer>
