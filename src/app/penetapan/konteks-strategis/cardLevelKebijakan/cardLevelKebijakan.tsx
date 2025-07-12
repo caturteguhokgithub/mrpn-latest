@@ -22,55 +22,14 @@ import { sasaranDto } from "./model";
 export default function CardLevelKebijakan() {
   const isEmpty = false;
 
-  const {
-    objectState,
-    levelKebijakanData,
-    getDataLevelKebijakan,
-  } = useLevelKebijakanVM();
+  const { objectState, levelKebijakanData, getDataLevelKebijakan } =
+    useLevelKebijakanVM();
 
   useEffect(() => {
     if (objectState !== undefined) {
       getDataLevelKebijakan();
     }
   }, [objectState]);
-
-  // const rows = [
-  //   {
-  //     level: "PN",
-  //     nama: "Memantapkan Sistem Pertahanan Keamanan Negara dan Mendorong Kemandirian Bangsa melalui Swasembada Pangan, Energi, Air, Ekonomi Syariah, Ekonomi Digital, Ekonomi Hijau, dan Ekonomi Biru",
-  //     sasaran:
-  //       "Meningkatkan kemandirian bangsa dalam memenuhi kebutuhan pangan, energi, dan air secara berkelanjutan",
-  //     indikator: [
-  //       "Prevalensi Ketidakcukupan Konsumsi Pangan. 2024: 8,53; 2025: 7,21",
-  //     ],
-  //     target: ["7,21"],
-  //     satuan: ["-"],
-  //   },
-  //   {
-  //     level: "PP",
-  //     nama: "Swasembada Pangan",
-  //     sasaran:
-  //       "Mencetak dan meningkatkan produktivitas lahan pertanian dengan lumbung pangan desa, daerah, dan nasional",
-  //     indikator: [
-  //       "Peningkatan produksi beras. 2024: 0; 2025: 1,27- 2,10 juta ton",
-  //       "Peningkatan luas panen tanaman pangan. 2024: 0; 2025: 0,75 juta ha",
-  //     ],
-  //     target: ["1,27- 2,10", "0,75"],
-  //     satuan: ["juta ton", "juta ha"],
-  //   },
-  //   {
-  //     level: "KP",
-  //     nama: "Pengembangan Kawasan Sentra Produksi Pangan (KSPP) Kalimantan Tengah",
-  //     sasaran:
-  //       "Meningkatnya produksi dan produktivitas padi di KSPP Kalimantan Tengah",
-  //     indikator: [
-  //       "Peningkatan Produksi Padi KSPP Kalimantan Tengah (%). 2024: 3; 2025: 3",
-  //       "Peningkatan Produktivitas Padi KSPP Kalimantan Tengah (%). 2024: 3; 2025: 3",
-  //     ],
-  //     target: ["3", "3"],
-  //     satuan: ["-", "-"],
-  //   },
-  // ];
 
   return (
     <CardItem title="Level Kebijakan Objek MRPN LS pada Struktur Prioritas Pembangunan">
@@ -86,7 +45,18 @@ export default function CardLevelKebijakan() {
               description="Silahkan isi konten halaman ini"
             />
           ) : (
-            <TableContainer component={Paper} elevation={0} variant="outlined">
+            <TableContainer
+              component={Paper}
+              elevation={0}
+              variant="outlined"
+              sx={{
+                maxHeight: "50vh",
+                "&::-webkit-scrollbar": {
+                  width: "6px",
+                  cursor: "pointer",
+                },
+              }}
+            >
               <Table
                 size="small"
                 sx={{
@@ -133,42 +103,55 @@ export default function CardLevelKebijakan() {
                     let indikatorCounter = 0;
 
                     return row.sasaran.map((sasaran, sasaranIndex) => {
-                      return sasaran.indikator.map((indikator, indikatorIndex) => {
-                        const isFirstIndikator = indikatorCounter === 0;
-                        indikatorCounter++;
+                      return sasaran.indikator.map(
+                        (indikator, indikatorIndex) => {
+                          const isFirstIndikator = indikatorCounter === 0;
+                          indikatorCounter++;
 
-                        return (
-                          <TableRow key={`${rowIndex}-${sasaranIndex}-${indikatorIndex}`}>
-                            {isFirstIndikator && (
-                              <>
-                                <TableCell rowSpan={totalIndikator} sx={{ verticalAlign: "top" }}>
-                                  {row.level}
+                          return (
+                            <TableRow
+                              key={`${rowIndex}-${sasaranIndex}-${indikatorIndex}`}
+                            >
+                              {isFirstIndikator && (
+                                <>
+                                  <TableCell
+                                    rowSpan={totalIndikator}
+                                    sx={{ verticalAlign: "top" }}
+                                  >
+                                    {row.level}
+                                  </TableCell>
+                                  <TableCell
+                                    rowSpan={totalIndikator}
+                                    sx={{ verticalAlign: "top" }}
+                                  >
+                                    {row.nama}
+                                  </TableCell>
+                                </>
+                              )}
+                              {indikatorIndex === 0 && (
+                                <TableCell
+                                  rowSpan={sasaran.indikator.length}
+                                  sx={{ verticalAlign: "top" }}
+                                >
+                                  {sasaran.value}
                                 </TableCell>
-                                <TableCell rowSpan={totalIndikator} sx={{ verticalAlign: "top" }}>
-                                  {row.nama}
-                                </TableCell>
-                              </>
-                            )}
-                            {indikatorIndex === 0 && (
+                              )}
+                              <TableCell sx={{ verticalAlign: "top" }}>
+                                {indikator.value}
+                              </TableCell>
                               <TableCell
-                                rowSpan={sasaran.indikator.length}
+                                align="right"
                                 sx={{ verticalAlign: "top" }}
                               >
-                                {sasaran.value}
+                                {indikator.target}
                               </TableCell>
-                            )}
-                            <TableCell sx={{ verticalAlign: "top" }}>
-                              {indikator.value}
-                            </TableCell>
-                            <TableCell align="right" sx={{ verticalAlign: "top" }}>
-                              {indikator.target}
-                            </TableCell>
-                            <TableCell sx={{ verticalAlign: "top" }}>
-                              {indikator.satuan}
-                            </TableCell>
-                          </TableRow>
-                        );
-                      });
+                              <TableCell sx={{ verticalAlign: "top" }}>
+                                {indikator.satuan}
+                              </TableCell>
+                            </TableRow>
+                          );
+                        }
+                      );
                     });
                   })}
                 </TableBody>
