@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import {
   Paper,
   Table,
@@ -16,47 +16,61 @@ import { bgColorTh } from "@/app/utils/color";
 import { grey } from "@mui/material/colors";
 import { isDeveloping } from "@/app/components/layouts/layout";
 import EmptyDevelopingState from "@/app/components/empty/developing";
+import useLevelKebijakanVM from "./vm";
+import { sasaranDto } from "./model";
 
 export default function CardLevelKebijakan() {
   const isEmpty = false;
 
-  const rows = [
-    {
-      level: "PN",
-      nama: "Memantapkan Sistem Pertahanan Keamanan Negara dan Mendorong Kemandirian Bangsa melalui Swasembada Pangan, Energi, Air, Ekonomi Syariah, Ekonomi Digital, Ekonomi Hijau, dan Ekonomi Biru",
-      sasaran:
-        "Meningkatkan kemandirian bangsa dalam memenuhi kebutuhan pangan, energi, dan air secara berkelanjutan",
-      indikator: [
-        "Prevalensi Ketidakcukupan Konsumsi Pangan. 2024: 8,53; 2025: 7,21",
-      ],
-      target: ["7,21"],
-      satuan: ["-"],
-    },
-    {
-      level: "PP",
-      nama: "Swasembada Pangan",
-      sasaran:
-        "Mencetak dan meningkatkan produktivitas lahan pertanian dengan lumbung pangan desa, daerah, dan nasional",
-      indikator: [
-        "Peningkatan produksi beras. 2024: 0; 2025: 1,27- 2,10 juta ton",
-        "Peningkatan luas panen tanaman pangan. 2024: 0; 2025: 0,75 juta ha",
-      ],
-      target: ["1,27- 2,10", "0,75"],
-      satuan: ["juta ton", "juta ha"],
-    },
-    {
-      level: "KP",
-      nama: "Pengembangan Kawasan Sentra Produksi Pangan (KSPP) Kalimantan Tengah",
-      sasaran:
-        "Meningkatnya produksi dan produktivitas padi di KSPP Kalimantan Tengah",
-      indikator: [
-        "Peningkatan Produksi Padi KSPP Kalimantan Tengah (%). 2024: 3; 2025: 3",
-        "Peningkatan Produktivitas Padi KSPP Kalimantan Tengah (%). 2024: 3; 2025: 3",
-      ],
-      target: ["3", "3"],
-      satuan: ["-", "-"],
-    },
-  ];
+  const {
+    objectState,
+    levelKebijakanData,
+    getDataLevelKebijakan,
+  } = useLevelKebijakanVM();
+
+  useEffect(() => {
+    if (objectState !== undefined) {
+      getDataLevelKebijakan();
+    }
+  }, [objectState]);
+
+  // const rows = [
+  //   {
+  //     level: "PN",
+  //     nama: "Memantapkan Sistem Pertahanan Keamanan Negara dan Mendorong Kemandirian Bangsa melalui Swasembada Pangan, Energi, Air, Ekonomi Syariah, Ekonomi Digital, Ekonomi Hijau, dan Ekonomi Biru",
+  //     sasaran:
+  //       "Meningkatkan kemandirian bangsa dalam memenuhi kebutuhan pangan, energi, dan air secara berkelanjutan",
+  //     indikator: [
+  //       "Prevalensi Ketidakcukupan Konsumsi Pangan. 2024: 8,53; 2025: 7,21",
+  //     ],
+  //     target: ["7,21"],
+  //     satuan: ["-"],
+  //   },
+  //   {
+  //     level: "PP",
+  //     nama: "Swasembada Pangan",
+  //     sasaran:
+  //       "Mencetak dan meningkatkan produktivitas lahan pertanian dengan lumbung pangan desa, daerah, dan nasional",
+  //     indikator: [
+  //       "Peningkatan produksi beras. 2024: 0; 2025: 1,27- 2,10 juta ton",
+  //       "Peningkatan luas panen tanaman pangan. 2024: 0; 2025: 0,75 juta ha",
+  //     ],
+  //     target: ["1,27- 2,10", "0,75"],
+  //     satuan: ["juta ton", "juta ha"],
+  //   },
+  //   {
+  //     level: "KP",
+  //     nama: "Pengembangan Kawasan Sentra Produksi Pangan (KSPP) Kalimantan Tengah",
+  //     sasaran:
+  //       "Meningkatnya produksi dan produktivitas padi di KSPP Kalimantan Tengah",
+  //     indikator: [
+  //       "Peningkatan Produksi Padi KSPP Kalimantan Tengah (%). 2024: 3; 2025: 3",
+  //       "Peningkatan Produktivitas Padi KSPP Kalimantan Tengah (%). 2024: 3; 2025: 3",
+  //     ],
+  //     target: ["3", "3"],
+  //     satuan: ["-", "-"],
+  //   },
+  // ];
 
   return (
     <CardItem title="Level Kebijakan Objek MRPN LS pada Struktur Prioritas Pembangunan">
@@ -110,57 +124,53 @@ export default function CardLevelKebijakan() {
                   ))}
                 </TableHead>
                 <TableBody>
-                  {rows.map((row, rowIndex) => (
-                    <Fragment>
-                      <TableRow key={rowIndex}>
-                        <TableCell
-                          sx={{ verticalAlign: "top" }}
-                          rowSpan={row.indikator.length}
-                        >
-                          {row.level}
-                        </TableCell>
-                        <TableCell
-                          sx={{ verticalAlign: "top" }}
-                          rowSpan={row.indikator.length}
-                        >
-                          {row.nama}
-                        </TableCell>
-                        <TableCell
-                          sx={{ verticalAlign: "top" }}
-                          rowSpan={row.indikator.length}
-                        >
-                          {row.sasaran}
-                        </TableCell>
-                        <TableCell sx={{ verticalAlign: "top" }}>
-                          {row.indikator[0]}
-                        </TableCell>
-                        <TableCell align="right" sx={{ verticalAlign: "top" }}>
-                          {row.target[0]}
-                        </TableCell>
-                        <TableCell sx={{ verticalAlign: "top" }}>
-                          {row.satuan[0]}
-                        </TableCell>
-                      </TableRow>
-                      {row.indikator
-                        .slice(1)
-                        .map((indikator: any, indikatorIndex: any) => (
-                          <TableRow key={`${rowIndex}-${indikatorIndex}`}>
+                  {levelKebijakanData.map((row, rowIndex) => {
+                    const totalIndikator = row.sasaran.reduce(
+                      (sum, s) => sum + s.indikator.length,
+                      0
+                    );
+
+                    let indikatorCounter = 0;
+
+                    return row.sasaran.map((sasaran, sasaranIndex) => {
+                      return sasaran.indikator.map((indikator, indikatorIndex) => {
+                        const isFirstIndikator = indikatorCounter === 0;
+                        indikatorCounter++;
+
+                        return (
+                          <TableRow key={`${rowIndex}-${sasaranIndex}-${indikatorIndex}`}>
+                            {isFirstIndikator && (
+                              <>
+                                <TableCell rowSpan={totalIndikator} sx={{ verticalAlign: "top" }}>
+                                  {row.level}
+                                </TableCell>
+                                <TableCell rowSpan={totalIndikator} sx={{ verticalAlign: "top" }}>
+                                  {row.nama}
+                                </TableCell>
+                              </>
+                            )}
+                            {indikatorIndex === 0 && (
+                              <TableCell
+                                rowSpan={sasaran.indikator.length}
+                                sx={{ verticalAlign: "top" }}
+                              >
+                                {sasaran.value}
+                              </TableCell>
+                            )}
                             <TableCell sx={{ verticalAlign: "top" }}>
-                              {indikator}
+                              {indikator.value}
                             </TableCell>
-                            <TableCell
-                              align="right"
-                              sx={{ verticalAlign: "top" }}
-                            >
-                              {row.target[indikatorIndex + 1]}
+                            <TableCell align="right" sx={{ verticalAlign: "top" }}>
+                              {indikator.target}
                             </TableCell>
                             <TableCell sx={{ verticalAlign: "top" }}>
-                              {row.satuan[indikatorIndex + 1]}
+                              {indikator.satuan}
                             </TableCell>
                           </TableRow>
-                        ))}
-                    </Fragment>
-                  ))}
+                        );
+                      });
+                    });
+                  })}
                 </TableBody>
               </Table>
             </TableContainer>

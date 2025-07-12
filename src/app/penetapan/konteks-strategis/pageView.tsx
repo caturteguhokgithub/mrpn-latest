@@ -20,7 +20,7 @@ import CardLevelKebijakan from "./cardLevelKebijakan/cardLevelKebijakan";
 import CardPendanaan from "./cardPendanaan/cardPendanaan";
 import CardInformation from "./cardInformation/cardInformation";
 
-export default function PageKonteksStrategisView({}) {
+export default function PageKonteksStrategisView({ }) {
   const { year, rpjmn } = useRKPContext((state) => state);
 
   const { objects, objectState, setObjectState, getMasterListObject } =
