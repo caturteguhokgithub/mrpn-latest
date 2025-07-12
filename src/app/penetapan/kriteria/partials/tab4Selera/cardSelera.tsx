@@ -204,7 +204,7 @@ export default function CardSelera() {
           </DialogActions>
         }
       >
-        Apakah Anda yakin mengajukan approval?
+        Apakah Anda yakin ingin mengajukan approval?
       </DialogComponent>
     </Fragment>
   );

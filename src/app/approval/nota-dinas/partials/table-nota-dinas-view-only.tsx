@@ -15,7 +15,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { blue, green, grey, red } from "@mui/material/colors";
+import { blue, green, grey, orange, red } from "@mui/material/colors";
 import Image from "next/image";
 import { PenetapanObjectNotaDto } from "@/lib/core/context/penetapanTopicContext";
 import { bgColorTh } from "@/app/utils/color";
@@ -72,8 +72,25 @@ export default function TableNotaDinasViewOnly({
 
   const { objectState } = usePenetapanObjectVM();
   const { stateShorList, getPenetapanObjectShortList } = usePenetapanObjectVM();
-  const { gambar, uploadImage, modalDelete, setModalDelete, deleteNodin } =
-    useNotaDinasVM();
+  const {
+    gambar,
+    uploadImage,
+    modalDelete,
+    setModalDelete,
+    deleteNodin,
+    modalConfirm,
+    setModalConfirm,
+    isReview,
+    setIsReview,
+    modalReject,
+    setModalReject,
+    isReject,
+    setIsReject,
+    modalApproval,
+    setModalApproval,
+    isApproval,
+    setIsApproval,
+  } = useNotaDinasVM();
 
   const { showToast } = useToast();
 
@@ -210,9 +227,135 @@ export default function TableNotaDinasViewOnly({
   //   }
   // };
 
-  // const statusObject: "" | "draft" | "plan" | "reject" | "approved" = "draft";
+  const buttonStatusReview = (
+    <Fragment>
+      <AddButton
+        errorColor
+        title="Tolak Pengesahan"
+        filled
+        noMargin
+        startIcon={<Iconify name="mdi:close-circle" size={16} />}
+        onclick={() => setModalReject(true)}
+      />
+      <AddButton
+        color="success"
+        title="Terima Pengesahan"
+        filled
+        noMargin
+        startIcon={<Iconify name="mdi:check-circle" size={16} />}
+        onclick={() => setModalApproval(true)}
+      />
+    </Fragment>
+  );
 
-  let statusObject = "reject";
+  const statusReviewM = (
+    <Fragment>
+      <Chip
+        color="warning"
+        label="Review"
+        variant="outlined"
+        sx={{
+          px: 1,
+          fontWeight: 600,
+          bgcolor: orange[100],
+          textTransform: "uppercase",
+        }}
+      />
+      {buttonStatusReview}
+    </Fragment>
+  );
+
+  const statusRejectM = (
+    <Fragment>
+      <Chip
+        color="error"
+        label="Ditolak"
+        variant="outlined"
+        sx={{
+          px: 1,
+          fontWeight: 600,
+          bgcolor: red[100],
+          textTransform: "uppercase",
+        }}
+      />
+      {!pageApproval && (
+        <Typography color={red[800]} fontSize={14}>
+          Ditolak tanggal <strong>12 Februari 2025</strong>
+        </Typography>
+      )}
+      <AddButton
+        color="success"
+        title="Ajukan Pengesahan"
+        filled
+        noMargin
+        startIcon={<Iconify name="mdi:check-circle" size={16} />}
+        onclick={() => setModalConfirm(true)}
+      />
+    </Fragment>
+  );
+
+  const statusApprovalM = (
+    <Fragment>
+      <Chip
+        color="success"
+        label="Disetujui"
+        variant="outlined"
+        sx={{
+          px: 1,
+          fontWeight: 600,
+          bgcolor: green[100],
+          textTransform: "uppercase",
+        }}
+      />
+      {!pageApproval && (
+        <Typography color={green[800]} fontSize={14}>
+          Disahkan tanggal <strong>5 September 2025</strong>
+        </Typography>
+      )}
+    </Fragment>
+  );
+
+  const statusPengesahan =
+    stateApproval?.status == "" || stateApproval?.status == "draft" ? (
+      <Fragment>
+        <Chip
+          color="default"
+          label="Draf"
+          variant="outlined"
+          sx={{
+            px: 1,
+            fontWeight: 600,
+            bgcolor: grey[100],
+            textTransform: "uppercase",
+          }}
+        />
+        <AddButton
+          color="success"
+          title="Ajukan Pengesahan"
+          filled
+          noMargin
+          startIcon={<Iconify name="mdi:check-circle" size={16} />}
+          onclick={() => setModalConfirm(true)}
+        />
+      </Fragment>
+    ) : stateApproval?.status === "review" ? (
+      statusReviewM
+    ) : stateApproval?.status == "rejected" ? (
+      statusRejectM
+    ) : stateApproval?.status == "approved" ? (
+      statusApprovalM
+    ) : null;
+
+  const statusReviewRejectApproval = isReview
+    ? statusReviewM
+    : isReject
+    ? statusRejectM
+    : isApproval
+    ? statusApprovalM
+    : statusPengesahan;
+
+  const conditionDraftReject =
+    stateApproval?.status === "draft" || stateApproval?.status === "rejected";
 
   return (
     <Fragment>
@@ -251,110 +394,11 @@ export default function TableNotaDinasViewOnly({
                     :
                   </TableCell>
                   <TableCell>
-                    {stateApproval?.status}
+                    {/* {stateApproval?.status} */}
                     <Stack direction="row" alignItems="center" gap={1}>
-                      {pageApproval ? (
-                        <Stack direction="row" alignItems="center" gap={1}>
-                          <AddButton
-                            errorColor
-                            title="Tolak Pengesahan"
-                            filled
-                            noMargin
-                            startIcon={
-                              <Iconify name="mdi:close-circle" size={16} />
-                            }
-                            onclick={() => {}}
-                          />
-                          <AddButton
-                            color="success"
-                            title="Terima Pengesahan"
-                            filled
-                            noMargin
-                            startIcon={
-                              <Iconify name="mdi:check-circle" size={16} />
-                            }
-                            onclick={() => {}}
-                          />
-                        </Stack>
-                      ) : (
-                        <Fragment>
-                          {stateApproval?.status == "" ||
-                          stateApproval?.status == "draft" ? (
-                            <Fragment>
-                              <Chip
-                                color="default"
-                                label="Draf"
-                                variant="outlined"
-                                sx={{
-                                  fontWeight: 600,
-                                  bgcolor: grey[100],
-                                  textTransform: "uppercase",
-                                }}
-                              />
-                              <AddButton
-                                title="Ajukan Pengesahan"
-                                filled
-                                noMargin
-                                startIcon={
-                                  <Iconify name="mdi:check-circle" size={16} />
-                                }
-                                onclick={() => {}}
-                              />
-                            </Fragment>
-                          ) : stateApproval?.status === "review" ? (
-                            <Fragment>
-                              <Chip
-                                color="primary"
-                                label="Rancangan"
-                                variant="outlined"
-                                sx={{
-                                  fontWeight: 600,
-                                  bgcolor: blue[100],
-                                  textTransform: "uppercase",
-                                }}
-                              />
-                            </Fragment>
-                          ) : stateApproval?.status == "reject" ? (
-                            <Fragment>
-                              <Chip
-                                color="error"
-                                label="Ditolak"
-                                variant="outlined"
-                                sx={{
-                                  fontWeight: 600,
-                                  bgcolor: red[100],
-                                  textTransform: "uppercase",
-                                }}
-                              />
-                              {!pageApproval && (
-                                <Typography color={grey[500]} fontSize={14}>
-                                  Ditolak tanggal{" "}
-                                  <strong>12 Februari 2025</strong>
-                                </Typography>
-                              )}
-                            </Fragment>
-                          ) : stateApproval?.status == "approved" ? (
-                            <Fragment>
-                              <Chip
-                                color="success"
-                                label="Disetujui"
-                                variant="outlined"
-                                sx={{
-                                  fontWeight: 600,
-                                  bgcolor: green[100],
-                                  textTransform: "uppercase",
-                                }}
-                              />
-                              {!pageApproval && (
-                                <Typography color={grey[500]} fontSize={14}>
-                                  Disahkan tanggal{" "}
-                                  <strong>5 September 2025</strong>
-                                </Typography>
-                              )}
-                            </Fragment>
-                          ) : null}
-                        </Fragment>
-                      )}
+                      {pageApproval
+                        ? statusPengesahan
+                        : statusReviewRejectApproval}
                     </Stack>
                     {/* )} */}
                   </TableCell>
@@ -680,7 +724,7 @@ export default function TableNotaDinasViewOnly({
             justifyContent="space-between"
           >
             <Typography fontWeight={600}>Bukti Dukung</Typography>
-            {!pageApproval && (
+            {!pageApproval && conditionDraftReject && (
               <Button
                 size="small"
                 // component="label"
@@ -835,8 +879,8 @@ export default function TableNotaDinasViewOnly({
                 <Typography fontWeight={600}>Pengajuan Pengesahan</Typography>
                 {pageApproval && (
                   <Fragment>
-                    {(statusObject == "reject" ||
-                      statusObject == "approved") && (
+                    {(stateApproval?.status === "rejected" ||
+                      stateApproval?.status == "approved") && (
                       <AddButton
                         title="Tambah Catatan"
                         filled
@@ -1200,6 +1244,87 @@ export default function TableNotaDinasViewOnly({
           showToast("Data berhasil dihapus", "error");
         }}
       />
+      <DialogComponent
+        width={360}
+        dialogOpen={modalConfirm}
+        dialogClose={() => setModalConfirm(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button color="error" onClick={() => setModalConfirm(false)}>
+              Tidak
+            </Button>
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => {
+                setModalConfirm(false);
+                setIsReject(false);
+                setIsApproval(false);
+                setIsReview(true);
+                showToast("Berhasil mengajukan pengesahan", "success");
+              }}
+            >
+              Ya
+            </Button>
+          </DialogActions>
+        }
+      >
+        Apakah Anda yakin ingin <strong>MENGAJUKAN PENGESAHAN</strong>?
+      </DialogComponent>
+      <DialogComponent
+        width={360}
+        dialogOpen={modalReject}
+        dialogClose={() => setModalReject(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button color="error" onClick={() => setModalReject(false)}>
+              Tidak
+            </Button>
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => {
+                setModalReject(false);
+                setIsReview(false);
+                setIsApproval(false);
+                setIsReject(true);
+                showToast("Berhasil menolak pengesahan", "error");
+              }}
+            >
+              Ya
+            </Button>
+          </DialogActions>
+        }
+      >
+        Apakah Anda yakin ingin <strong>MENOLAK PENGESAHAN</strong>?
+      </DialogComponent>
+      <DialogComponent
+        width={360}
+        dialogOpen={modalApproval}
+        dialogClose={() => setModalApproval(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button color="error" onClick={() => setModalApproval(false)}>
+              Tidak
+            </Button>
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => {
+                setModalApproval(false);
+                setIsReview(false);
+                setIsReject(false);
+                setIsApproval(true);
+                showToast("Berhasil mengajukan approval", "success");
+              }}
+            >
+              Ya
+            </Button>
+          </DialogActions>
+        }
+      >
+        Apakah Anda yakin ingin <strong>MENERIMA PENGESAHAN</strong>?
+      </DialogComponent>
     </Fragment>
   );
 }

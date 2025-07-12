@@ -1,10 +1,7 @@
-import React, { SetStateAction, Fragment } from "react";
+import { SetStateAction, Fragment } from "react";
 import {
   Box,
-  Button,
   Chip,
-  DialogActions,
-  Icon,
   IconButton,
   Paper,
   Stack,
@@ -14,31 +11,20 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
-  Typography,
-  alpha,
 } from "@mui/material";
-import theme from "@/theme";
-import { AddCircle } from "@mui/icons-material";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
-import DialogComponent from "@/components/dialog";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
-import FormPeraturan from "./form-peraturan";
 import {
   ExsumRegulationDto,
   ExsumRegulationResDto,
 } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
-import DialogDelete from "@/app/components/dialogDelete";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
-import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import { bgColorTh } from "@/utils/color";
 import useCardRegulationVM from "./cardRegulationVM";
 import Iconify from "@/app/components/icons/iconify";
 import { blue, grey, red } from "@mui/material/colors";
-import useCardRegulasi from "@/app/penetapan/konteks-strategis/cardRegulasi/vm";
-import { doRequestRegulasiDto } from "@/app/penetapan/konteks-strategis/cardRegulasi/model";
 
 export default function TablePeraturan({
   data,
@@ -115,7 +101,9 @@ export default function TablePeraturan({
             <TableHead sx={{ bgcolor: bgColorTh }}>
               <TableRow>
                 {/* <TableCell width={500}>Entitas</TableCell> */}
-                <TableCell width={500}>Nomor Regulasi</TableCell>
+                <TableCell width={500}>
+                  {penetapan ? "Nomor Regulasi" : "Entitas"}
+                </TableCell>
                 {/* <TableCell width={240}>Peraturan Terkait</TableCell> */}
                 <TableCell width={240}>Tentang</TableCell>
                 {/* <TableCell>Amanat Peraturan yang Terkait</TableCell> */}
