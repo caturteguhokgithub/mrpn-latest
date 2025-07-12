@@ -222,8 +222,12 @@ export default function DashboardLayout(props: {
     },
     ".table-sticky-horizontal": {
       ".MuiTableContainer-root": {
-        // maxWidth: "calc(100vw - 368px)",
         maxWidth: "calc(100vw - 331px)",
+      },
+      "&.table-overview": {
+        ".MuiTableContainer-root": {
+          maxWidth: "calc(100vw - 368px)",
+        },
       },
     },
     ".orgchart-container": {
@@ -252,6 +256,16 @@ export default function DashboardLayout(props: {
         ".MuiTableContainer-root": {
           maxWidth: "calc(100vw - 148px)",
           // maxWidth: "calc(100vw - 131px)",
+        },
+        "&.table-overview": {
+          ".MuiTableContainer-root": {
+            maxWidth: "calc(100vw - 152px)",
+          },
+        },
+        "&.table-perlakuan-risiko": {
+          ".MuiTableContainer-root": {
+            maxWidth: "calc(100vw - 128px)",
+          },
         },
       },
       ".orgchart-container": {

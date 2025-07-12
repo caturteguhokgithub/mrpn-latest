@@ -77,6 +77,7 @@ function ChipLevelRisiko(props: { level: any }) {
 export default function TableOverview({ data }: { data: RiskOverviewData[] }) {
   return (
     <TableContainer
+      className="table-overview"
       component={Paper}
       elevation={0}
       variant="outlined"

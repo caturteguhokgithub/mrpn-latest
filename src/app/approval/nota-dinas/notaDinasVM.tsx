@@ -27,6 +27,12 @@ const useNotaDinasVM = () => {
     useState<BuktiDukungReqDto>(initUploadImage);
   const user = useAuthContext((state) => state);
   const [modalDelete, setModalDelete] = useState(false);
+  const [modalConfirm, setModalConfirm] = useState(false);
+  const [modalReject, setModalReject] = useState(false);
+  const [modalApproval, setModalApproval] = useState(false);
+  const [isReview, setIsReview] = useState(false);
+  const [isReject, setIsReject] = useState(false);
+  const [isApproval, setIsApproval] = useState(false);
 
   // const { year } = useRKPContext((state) => state);
 
@@ -97,6 +103,18 @@ const useNotaDinasVM = () => {
     modalDelete,
     setModalDelete,
     deleteNodin,
+    modalConfirm,
+    setModalConfirm,
+    isReview,
+    setIsReview,
+    modalReject,
+    setModalReject,
+    isReject,
+    setIsReject,
+    modalApproval,
+    setModalApproval,
+    isApproval,
+    setIsApproval,
   };
 };
 export default useNotaDinasVM;

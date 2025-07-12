@@ -7,26 +7,13 @@ import {
   usePenetapanTopicContext,
   useRKPContext,
 } from "@/lib/core/hooks/useHooks";
-import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
-import {
-  Box,
-  Button,
-  DialogActions,
-  FormControl,
-  Stack,
-  TableCell,
-  TableRow,
-} from "@mui/material";
+import { Button, FormControl, Stack } from "@mui/material";
 import { AutocompleteSelectSingle } from "@/components/autocomplete";
-import { MasterListObjectRes } from "@/app/misc/master/masterServiceModel";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import { PenetapanObjectDto } from "@/lib/core/context/penetapanTopicContext";
 import DialogComponent from "@/components/dialog";
-import FormReject from "@/app/approval/nota-dinas/partials/form-reject";
-import { IconFA } from "@/components/icons/icon-fa";
 import EmptyState from "@/components/empty";
 import { IconEmptyPage } from "@/components/icons";
-import AddButton from "@/app/components/buttonAdd";
 import Iconify from "@/app/components/icons/iconify";
 import TableStatus from "./partials/table-status";
 

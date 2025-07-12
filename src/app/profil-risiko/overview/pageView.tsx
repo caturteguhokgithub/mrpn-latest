@@ -230,7 +230,7 @@ export default function PageOverviewView() {
                           </Stack>
                         }
                       >
-                        <Box className="table-sticky-horizontal">
+                        <Box className="table-sticky-horizontal table-overview">
                           <TableOverview
                             data={dataRiskOverview?.overviews_sekre ?? []}
                           />
@@ -447,7 +447,7 @@ export default function PageOverviewView() {
           </DialogActions>
         }
       >
-        Apakah Anda yakin mengajukan approval?
+        Apakah Anda yakin ingin mengajukan approval?
       </DialogComponent>
     </Fragment>
   );
