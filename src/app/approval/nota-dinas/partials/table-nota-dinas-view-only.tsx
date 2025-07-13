@@ -197,7 +197,7 @@ export default function TableNotaDinasViewOnly({
     if (stateApproval) {
       const param: dtoGetApproval = {
         ...stateApproval,
-        id: stateApproval.approvalable_id,
+        id: objectState?.id ?? 0,
         status: "review"
       }
 
