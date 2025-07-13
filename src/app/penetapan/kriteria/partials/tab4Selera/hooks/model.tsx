@@ -17,3 +17,28 @@ export const initSelera: doReqSeleraDto = {
 export type CreateSeleraServiceModel = BaseAPIServiceParam & {
     body: doReqSeleraDto;
 };
+
+// Approval
+export interface doReqSeleraApprovalDto {
+    id: number,
+    user_id: number,
+    status: string,
+    message: string,
+    approvalable_id: number,
+    approvalable_type: string,
+    created_at: string
+}
+
+export const initApprovalSelera: doReqSeleraApprovalDto = {
+    id: 0,
+    user_id: 0,
+    status: "",
+    message: "",
+    approvalable_id: 0,
+    approvalable_type: "",
+    created_at: ""
+}
+
+export type ApprovalSeleraServiceModel = BaseAPIServiceParam & {
+    body: doReqSeleraApprovalDto;
+};

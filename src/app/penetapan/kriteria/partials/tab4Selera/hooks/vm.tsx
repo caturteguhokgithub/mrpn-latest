@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import { useGlobalModalContext, useLoading } from "@/lib/core/hooks/useHooks";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
-import { doReqSeleraDto, initSelera } from "./model";
+import { doReqSeleraApprovalDto, doReqSeleraDto, initApprovalSelera, initSelera } from "./model";
 import useAuthorizationVM from "@/app/authorizationVM";
-import { doCreateSelera } from "./service";
+import { doCreateSelera, doGetApprovalSelera } from "./service";
 
 const usePenetapanSelera = () => {
   const loadingContext = useLoading();
@@ -16,6 +16,11 @@ const usePenetapanSelera = () => {
   const [requestSelera, setRequestSelera] = useState<doReqSeleraDto>({
     ...initSelera,
   });
+
+  const [stateApproval, setStateApproval] = useState<doReqSeleraApprovalDto>({
+    ...initApprovalSelera,
+  });
+
   const [openModalConfirmApproval, setOpenModalConfirmApproval] =
     useState<boolean>(false);
 
@@ -39,12 +44,29 @@ const usePenetapanSelera = () => {
     }
   }
 
-  //   useEffect(() => {
-  //     if (!isEmptyPenetapanObject) {
-  //       getData();
-  //     }
-  //     getMasterSelera();
-  //   }, [objectState?.id]);
+  async function getApprovalSelera() {
+    if (objectState !== undefined) {
+      const req: doReqSeleraApprovalDto = {
+        ...initApprovalSelera,
+        id: objectState?.id ?? 0,
+      };
+
+      const params = {
+        body: req,
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      };
+
+      const response = await doGetApprovalSelera(params);
+
+      if (response?.code == API_CODE.success) {
+        let result: doReqSeleraApprovalDto[] = response.result;
+        if (result) {
+          setStateApproval(result[0]);
+        }
+      }
+    }
+  }
 
   return {
     loading,
@@ -53,6 +75,8 @@ const usePenetapanSelera = () => {
     setRequestSelera,
     openModalConfirmApproval,
     setOpenModalConfirmApproval,
+    getApprovalSelera,
+    stateApproval,
   };
 };
 

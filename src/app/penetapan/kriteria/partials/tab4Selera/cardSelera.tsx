@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Button, Chip, DialogActions, Stack, Typography } from "@mui/material";
 import CardItem from "@/app/components/cardTabItem";
 import DialogComponent from "@/app/components/dialog";
@@ -12,11 +12,13 @@ import { isDeveloping } from "@/app/components/layouts/layout";
 import useAuthorizationVM from "@/app/authorizationVM";
 import usePenetapanSelera from "./hooks/vm";
 import { red, green } from "@mui/material/colors";
+import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 
 export default function CardSelera() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalOpenRef, setModalOpenRef] = React.useState(false);
   const [emptyRisk, setEmptyRisk] = React.useState(false);
+  const { objectState } = usePenetapanGlobalVM();
 
   const { user } = useAuthorizationVM();
 
@@ -27,7 +29,14 @@ export default function CardSelera() {
     setRequestSelera,
     openModalConfirmApproval,
     setOpenModalConfirmApproval,
+    getApprovalSelera,
+    stateApproval,
   } = usePenetapanSelera();
+
+
+  useEffect(() => {
+    getApprovalSelera();
+  }, [objectState?.id]);
 
   const handleModalClose = () => {
     setModalOpenAdd(false);
@@ -51,7 +60,7 @@ export default function CardSelera() {
   };
 
   const isEmptyRisk = true;
-  const isStatus = "reject";
+  const isStatus = stateApproval.status;
 
   return (
     <Fragment>
@@ -64,8 +73,8 @@ export default function CardSelera() {
                 isStatus === "reject"
                   ? "error"
                   : isStatus === "draf"
-                  ? "default"
-                  : "warning"
+                    ? "default"
+                    : "warning"
               }
               variant="outlined"
               label={
@@ -77,8 +86,8 @@ export default function CardSelera() {
                   {isStatus === "reject"
                     ? "Reject"
                     : isStatus === "draf"
-                    ? "Draf"
-                    : "Review"}
+                      ? "Draf"
+                      : "Review"}
                 </Typography>
               }
               icon={
@@ -87,8 +96,8 @@ export default function CardSelera() {
                     isStatus === "reject"
                       ? "mdi:close"
                       : isStatus === "draf"
-                      ? "mdi:invoice-text-edit"
-                      : "mdi:magnify-expand"
+                        ? "mdi:invoice-text-edit"
+                        : "mdi:magnify-expand"
                   }
                 />
               }
@@ -98,14 +107,30 @@ export default function CardSelera() {
               <Typography fontSize={14} color={red[700]}>
                 Ditolak tanggal:{" "}
                 <Typography component="strong" fontWeight={600} fontSize={14}>
-                  28 Juni 2025
+                  {
+                    stateApproval?.created_at
+                      ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })
+                      : "-"
+                  }
                 </Typography>
               </Typography>
             ) : isStatus === "approve" ? (
               <Typography fontSize={14} color={green[700]}>
                 Disetujui tanggal:{" "}
                 <Typography component="strong" fontWeight={600} fontSize={14}>
-                  28 Juni 2025
+                  {
+                    stateApproval?.created_at
+                      ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })
+                      : "-"
+                  }
                 </Typography>
               </Typography>
             ) : (
@@ -122,7 +147,7 @@ export default function CardSelera() {
                   borderRadius: 50,
                   px: 2,
                 }}
-                // onClick={() => setOpenModal(true)}
+              // onClick={() => setOpenModal(true)}
               >
                 Catatan
               </Button>
@@ -132,7 +157,7 @@ export default function CardSelera() {
         addButton={
           <Fragment>
             {user?.role.name == "Komite MRPN LS" ||
-            user?.role.name == "Super Admin" ? (
+              user?.role.name == "Super Admin" ? (
               <AddButton
                 noMargin
                 startIcon={<Iconify name="mdi:chart-bar-stacked" />}
