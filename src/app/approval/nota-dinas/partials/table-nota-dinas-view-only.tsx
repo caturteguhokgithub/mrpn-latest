@@ -274,6 +274,22 @@ export default function TableNotaDinasViewOnly({
           textTransform: "uppercase",
         }}
       />
+    </Fragment>
+  );
+
+  const statusReviewMApproval = (
+    <Fragment>
+      <Chip
+        color="warning"
+        label="Review"
+        variant="outlined"
+        sx={{
+          px: 1,
+          fontWeight: 600,
+          bgcolor: orange[100],
+          textTransform: "uppercase",
+        }}
+      />
       {buttonStatusReview}
     </Fragment>
   );
@@ -346,6 +362,30 @@ export default function TableNotaDinasViewOnly({
     </Fragment>
   );
 
+  const statusDraftM = (
+    <Fragment>
+      <Chip
+        color="default"
+        label="Draf"
+        variant="outlined"
+        sx={{
+          px: 1,
+          fontWeight: 600,
+          bgcolor: grey[100],
+          textTransform: "uppercase",
+        }}
+      />
+      <AddButton
+        color="success"
+        title="Ajukan Pengesahan"
+        filled
+        noMargin
+        startIcon={<Iconify name="mdi:check-circle" size={16} />}
+        onclick={() => setModalConfirm(true)}
+      />
+    </Fragment>
+  );
+
   const statusPengesahan =
     stateApproval?.status == "" || stateApproval?.status == "draft" ? (
       <Fragment>
@@ -376,20 +416,21 @@ export default function TableNotaDinasViewOnly({
         }
       </Fragment>
     ) : stateApproval?.status === "review" ? (
-      statusReviewM
+      statusReviewMApproval
     ) : stateApproval?.status == "rejected" ? (
       statusRejectM
     ) : stateApproval?.status == "approved" ? (
       statusApprovalM
-    ) : null;
+    ) : statusReviewMApproval;
 
-  const statusReviewRejectApproval = isReview
-    ? statusReviewM
-    : isReject
-      ? statusRejectM
-      : isApproval
-        ? statusApprovalM
-        : statusPengesahan;
+  const statusReviewRejectApproval =
+    stateApproval?.status === "review" || isReview
+      ? statusReviewM
+      : stateApproval?.status == "rejected" || isReject
+        ? statusRejectM
+        : stateApproval?.status == "approved" || isApproval
+          ? statusApprovalM
+          : statusDraftM;
 
   const conditionDraftReject =
     stateApproval?.status === "draft" || stateApproval?.status === "rejected";
@@ -1319,6 +1360,7 @@ export default function TableNotaDinasViewOnly({
               Tidak
             </Button>
             <Button
+              color="error"
               variant="contained"
               type="submit"
               onClick={() => {
@@ -1329,7 +1371,7 @@ export default function TableNotaDinasViewOnly({
                 showToast("Berhasil menolak pengesahan", "error");
               }}
             >
-              Ya
+              Tolak
             </Button>
           </DialogActions>
         }
@@ -1346,6 +1388,7 @@ export default function TableNotaDinasViewOnly({
               Tidak
             </Button>
             <Button
+              color="success"
               variant="contained"
               type="submit"
               onClick={() => {
@@ -1356,7 +1399,7 @@ export default function TableNotaDinasViewOnly({
                 showToast("Berhasil mengajukan approval", "success");
               }}
             >
-              Ya
+              Terima
             </Button>
           </DialogActions>
         }
