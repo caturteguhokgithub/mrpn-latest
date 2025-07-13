@@ -337,6 +337,10 @@ export interface dtoGetApproval {
   created_at: string
 }
 
+export type ReqApprovalPengesahanServiceModel = BaseAPIServiceParam & {
+  body: dtoGetApproval;
+};
+
 export interface dtoReqBuktiDukungPengesahan {
   file: string;
   filename: string;

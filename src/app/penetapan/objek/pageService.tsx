@@ -8,6 +8,7 @@ import {
   GetPenetapanObjectShortListServiceModel, UpdateOrCreatePenetapanObjectEntityServiceModel,
   UpdateOrCreatePenetapanObjectLongListAssignObjectServiceModel,
   UpdateOrCreatePenetapanObjectLongListServiceModel, UpdateOrCreatePenetapanObjectNotaDinasServiceModel, LogActivityDto, LogActivityServiceModel,
+  ReqApprovalPengesahanServiceModel,
 } from "@/app/penetapan/objek/pageModel";
 
 export async function doGetPenetapanObject(param: GetPenetapanObjectIdServiceModel) {
@@ -150,6 +151,14 @@ export async function doGetApproval(param: GetPenetapanObjectEntityUsulanService
   const resp = await post({
     ...param,
     url: "penetapan/object/getApproval",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+export async function doUpdateApproval(param: ReqApprovalPengesahanServiceModel) {
+  const resp = await post({
+    ...param,
+    url: "penetapan/object/approve",
   });
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }

@@ -30,13 +30,14 @@ import DraggableScroll from "@/app/components/cardStakeholder/draggableScroll";
 import { styleOrgChart } from "@/app/executive-summary/style";
 import { SxParams } from "@/app/executive-summary/types";
 import useNotaDinasVM from "../notaDinasVM";
-import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyData } from "@/app/components/icons";
 import DialogDelete from "@/app/components/dialogDelete";
 import { useToast } from "@/lib/core/context/toastContext";
 import { dtoGetApproval } from "@/app/penetapan/objek/pageModel";
+import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 
 type Row = {
   object: string;
@@ -61,7 +62,6 @@ export default function TableNotaDinasViewOnly({
   stateApproval?: dtoGetApproval;
   handleUploadBuktiDukung?: () => void;
 }) {
-  console.log(stateApproval);
 
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalViewImage, setModalViewImage] = React.useState(false);
@@ -69,9 +69,10 @@ export default function TableNotaDinasViewOnly({
   const [deleteID, setDeleteID] = useState(0);
 
   const { rpjmn, year } = useRKPContext((state) => state);
+  const { permission } = useAuthContext((state) => state);
 
   const { objectState } = usePenetapanObjectVM();
-  const { stateShorList, getPenetapanObjectShortList } = usePenetapanObjectVM();
+  const { stateShorList, getPenetapanObjectShortList, updateApproval } = usePenetapanObjectVM();
   const {
     gambar,
     uploadImage,
@@ -192,6 +193,18 @@ export default function TableNotaDinasViewOnly({
     return rows;
   };
 
+  const handleUpdateStatus = async () => {
+    if (stateApproval) {
+      const param: dtoGetApproval = {
+        ...stateApproval,
+        id: stateApproval.approvalable_id,
+        status: "review"
+      }
+
+      updateApproval(param)
+    }
+  }
+
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
       <Button onClick={() => setModalOpenAdd(false)}>Batal</Button>
@@ -289,14 +302,20 @@ export default function TableNotaDinasViewOnly({
           }</strong>
         </Typography>
       )}
-      <AddButton
-        color="success"
-        title="Ajukan Pengesahan"
-        filled
-        noMargin
-        startIcon={<Iconify name="mdi:check-circle" size={16} />}
-        onclick={() => setModalConfirm(true)}
-      />
+      {
+        hasPrivilege(permission, "/penetapan/objectUpr", "approve") ? (
+          <>
+            <AddButton
+              color="success"
+              title="Ajukan Pengesahan"
+              filled
+              noMargin
+              startIcon={<Iconify name="mdi:check-circle" size={16} />}
+              onclick={() => setModalConfirm(true)}
+            />
+          </>
+        ) : ""
+      }
     </Fragment>
   );
 
@@ -341,14 +360,20 @@ export default function TableNotaDinasViewOnly({
             textTransform: "uppercase",
           }}
         />
-        <AddButton
-          color="success"
-          title="Ajukan Pengesahan"
-          filled
-          noMargin
-          startIcon={<Iconify name="mdi:check-circle" size={16} />}
-          onclick={() => setModalConfirm(true)}
-        />
+        {
+          hasPrivilege(permission, "/penetapan/objectUpr", "approve") ? (
+            <>
+              <AddButton
+                color="success"
+                title="Ajukan Pengesahan"
+                filled
+                noMargin
+                startIcon={<Iconify name="mdi:check-circle" size={16} />}
+                onclick={() => setModalConfirm(true)}
+              />
+            </>
+          ) : ""
+        }
       </Fragment>
     ) : stateApproval?.status === "review" ? (
       statusReviewM
@@ -1269,11 +1294,12 @@ export default function TableNotaDinasViewOnly({
               variant="contained"
               type="submit"
               onClick={() => {
+                handleUpdateStatus()
                 setModalConfirm(false);
-                setIsReject(false);
-                setIsApproval(false);
-                setIsReview(true);
-                showToast("Berhasil mengajukan pengesahan", "success");
+                // setIsReject(false);
+                // setIsApproval(false);
+                // setIsReview(true);
+                // showToast("Berhasil mengajukan pengesahan", "success");
               }}
             >
               Ya

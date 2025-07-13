@@ -44,6 +44,7 @@ import {
   doGetPenetapanObjectShortList,
   doGetRanking,
   doLogActivity,
+  doUpdateApproval,
   doUpdateOrCreateGetPenetapanObjectNotaDinas,
   doUpdateOrCreatePenetapanObjectEntityUsulan,
   doUpdatePenetapanObjectTopic,
@@ -493,6 +494,23 @@ const usePenetapanObjectVM = () => {
     }
   }
 
+  async function updateApproval(param: dtoGetApproval) {
+    if (objectState !== undefined) {
+      const response = await doUpdateApproval({
+        body: param,
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      });
+
+      if (response?.code == API_CODE.success) {
+        let result: dtoGetApproval[] = response.result;
+        if (result) {
+          getApproval();
+        }
+      }
+    }
+  }
+
   async function getLogActivity() {
     const response = await doLogActivity({
       body: {
@@ -667,6 +685,7 @@ const usePenetapanObjectVM = () => {
     setModalEditEntitas,
     modalDeleteEntitas,
     setModalDeleteEntitas,
+    updateApproval,
   };
 };
 
