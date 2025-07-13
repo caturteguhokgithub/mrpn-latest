@@ -63,7 +63,7 @@ export default function CardRegulation({ project }: { project: string }) {
         // description="Silahkan isi konten halaman ini"
         />
       ) : (
-        <TablePeraturan data={data} deleteData={deleteData} />
+        <TablePeraturan dataExsum={data} deleteData={deleteData} />
       )}
 
       <DialogComponent
