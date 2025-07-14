@@ -93,3 +93,20 @@ export async function doUnggahStakeholder(param: UploadStakeholderServiceModel) 
     });
     if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
+
+// CP
+export async function doGetCp(param: GetStakeholderServiceModel) {
+    const resp = await post({
+        ...param,
+        url: "penetapan/upr/criticalPath/showFile",
+    });
+    if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+export async function doUnggahCp(param: UploadStakeholderServiceModel) {
+    const resp = await post({
+        ...param,
+        url: "penetapan/upr/criticalPath/add",
+    });
+    if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}

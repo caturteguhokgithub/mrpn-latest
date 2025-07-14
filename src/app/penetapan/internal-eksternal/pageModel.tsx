@@ -158,3 +158,27 @@ export type GetStakeholderServiceModel = BaseAPIServiceParam & {
 };
 
 export type StakeholderResDto = StakeholderImageResDto;
+
+// CP
+export interface CpImageResDto {
+  id: number;
+  uraian_penetapan_objek_id: number;
+  file: string;
+}
+
+export const initCpShow: CpImageResDto = {
+  id: 0,
+  uraian_penetapan_objek_id: 0,
+  file: "",
+};
+
+export interface CpImageReqDto {
+  uraian_penetapan_objek_id: number;
+  file: string;
+}
+
+export type UploadCpServiceModel = BaseAPIServiceParam & {
+  body: CpImageReqDto;
+};
+
+export type CpResDto = CpImageResDto;

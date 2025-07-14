@@ -21,7 +21,7 @@ export default function CriticalPathIntEks({ title }: { title?: string }) {
     setModalViewImageIntExt,
   } = useCardStakeholderVM();
 
-  const { uploadStakeholder, stakeholderMapping } = useUrgensiVM();
+  const { uploadCp, cpMapping } = useUrgensiVM();
 
   const handleModalOpenStakeholder = () => {
     setModalOpenStakeholder(true);
@@ -38,7 +38,7 @@ export default function CriticalPathIntEks({ title }: { title?: string }) {
       reader.readAsDataURL(files);
       reader.onload = () => {
         const res = reader.result as string;
-        uploadStakeholder(res);
+        uploadCp(res);
       };
 
       reader.onerror = (error) => {
@@ -97,12 +97,12 @@ export default function CriticalPathIntEks({ title }: { title?: string }) {
       }
     >
       <Stack width="100%" direction="row" justifyContent="center">
-        {stakeholderMapping?.file != "" ? (
+        {cpMapping?.file != "" ? (
           <Box>
             <Image
               alt="MRPN"
               src={
-                process.env.NEXT_PUBLIC_BASE_URL_FILES + stakeholderMapping.file
+                process.env.NEXT_PUBLIC_BASE_URL_FILES + cpMapping.file
               }
               width={0}
               height={0}
@@ -171,7 +171,7 @@ export default function CriticalPathIntEks({ title }: { title?: string }) {
                   alt="Instansi Pelaksana"
                   src={
                     process.env.NEXT_PUBLIC_BASE_URL_FILES +
-                    stakeholderMapping.file
+                    cpMapping.file
                   }
                   width={0}
                   height={0}

@@ -12,10 +12,12 @@ import {
   doCreateSegmen,
   doCreateSwot,
   doCreateUrgensi,
+  doGetCp,
   doGetSegmen,
   doGetStakeholder,
   doGetSwot,
   doGetUrgensi,
+  doUnggahCp,
   doUnggahStakeholder,
   doUpdateSegmen,
   doUpdateSwot,
@@ -34,6 +36,10 @@ import {
   StakeholderImageReqDto,
   StakeholderResDto,
   initStakeholderShow,
+  CpImageResDto,
+  CpResDto,
+  initCpShow,
+  CpImageReqDto,
 } from "./pageModel";
 import useCardUrgentVM from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgentVM";
 import { doGetUrgent } from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgentService";
@@ -74,6 +80,9 @@ const useUrgensiVM = () => {
   // Stakeholder
   const [stakeholderMapping, setStakeholderMapping] =
     useState<StakeholderResDto>(initStakeholderShow);
+
+  // CP
+  const [cpMapping, setCpMapping] = useState<CpResDto>({ ...initCpShow });
 
   // Urgensi
   async function getDataUrgensi() {
@@ -267,11 +276,47 @@ const useUrgensiVM = () => {
     }
   }
 
+  // CP
+  async function getCp() {
+    const response = await doGetCp({
+      body: { uraian_penetapan_objek_id: objectState?.id ?? 0 },
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+    if (response?.code == API_CODE.success) {
+      const result: CpImageResDto = response.result;
+      if (result) {
+        setCpMapping(result);
+      } else {
+        setCpMapping(initStakeholderShow);
+      }
+    }
+  }
+
+  async function uploadCp(file: string) {
+    if (file == undefined) return;
+
+    const req: CpImageReqDto = {
+      uraian_penetapan_objek_id: objectState?.id ?? 0,
+      file: file ?? "",
+    };
+
+    const response = await doUnggahCp({
+      body: req,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+    if (response?.code == API_CODE.success) {
+      getCp();
+    }
+  }
+
   useEffect(() => {
     getDataUrgensi();
     getDataSegmen();
     getDataSwot();
     getStakeholder();
+    getCp();
   }, [objectState?.id]);
 
   return {
@@ -288,7 +333,9 @@ const useUrgensiVM = () => {
     dataSwot,
     objectState,
     uploadStakeholder,
+    uploadCp,
     stakeholderMapping,
+    cpMapping,
   };
 };
 export default useUrgensiVM;
