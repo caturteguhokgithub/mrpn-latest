@@ -3,6 +3,7 @@ import {
   Button,
   FormControl,
   Grid,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
@@ -10,16 +11,20 @@ import Iconify from "@/app/components/icons/iconify";
 import { VisuallyHiddenInput } from "@/app/utils/constant";
 import { SetStateAction } from "react";
 import { dtoReqBuktiDukungPengesahan } from "../pageModel";
+import usePenetapanObjectVM from "../pageVM";
 
 export default function FormBuktiDukung({
   // handleUnggahBuktiDukung,
   reqBuktiDukungPengesahan,
-  setReqBuktiDukungPengesahan
+  setReqBuktiDukungPengesahan,
 }: {
   // handleUnggahBuktiDukung: any;
   reqBuktiDukungPengesahan: dtoReqBuktiDukungPengesahan;
-  setReqBuktiDukungPengesahan: (value: SetStateAction<dtoReqBuktiDukungPengesahan>) => void;
+  setReqBuktiDukungPengesahan: (
+    value: SetStateAction<dtoReqBuktiDukungPengesahan>
+  ) => void;
 }) {
+  const { uploadedFileName, setUploadedFileName } = usePenetapanObjectVM();
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -38,7 +43,7 @@ export default function FormBuktiDukung({
                   ...prev,
                   filename: e.target.value,
                 };
-              })
+              });
             }}
           />
         </FormControl>
@@ -46,7 +51,7 @@ export default function FormBuktiDukung({
       <Grid item xs={12}>
         <FormControl fullWidth>
           <Typography gutterBottom>Unggah Bukti Dukung</Typography>
-          <Box>
+          <Stack direction="row" gap={2} alignContent="center">
             <Button
               size="small"
               component="label"
@@ -66,6 +71,7 @@ export default function FormBuktiDukung({
                   const file = e.target.files?.[0];
 
                   if (file) {
+                    setUploadedFileName(file.name);
                     const reader = new FileReader();
 
                     reader.readAsDataURL(file);
@@ -79,14 +85,22 @@ export default function FormBuktiDukung({
 
                     reader.onerror = (error) => {
                       console.error("Error reading file:", error);
+                      setUploadedFileName(null); // Clear file name on error
                     };
+                  } else {
+                    setUploadedFileName(null); // Clear file name if no file is selected
                   }
                 }}
                 // onChange={(event: any) => handleUnggahBuktiDukung(event)}
-                multiple
+                // multiple
               />
             </Button>
-          </Box>
+            <Stack alignItems="center" justifyContent="center">
+              <Typography fontSize={14} color="text.secondary" lineHeight={1}>
+                {uploadedFileName ? uploadedFileName : "Belum ada data"}
+              </Typography>
+            </Stack>
+          </Stack>
         </FormControl>
       </Grid>
     </Grid>

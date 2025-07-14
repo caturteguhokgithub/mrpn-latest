@@ -72,6 +72,8 @@ const useNotaDinasVM = () => {
     if (response?.code == API_CODE.success) {
       getDataImage();
     }
+
+    // await getNotaDinasGambar(objectState?.id ?? 0);
   }
 
   async function deleteNodin(id: number) {
@@ -88,6 +90,17 @@ const useNotaDinasVM = () => {
       getDataImage();
     }
   }
+
+  const getNotaDinasGambar = async (objectId: number) => {
+    const response = await doGetBuktiDukung({
+      body: { penetapan_object_id: objectId },
+    });
+    if (response?.code === API_CODE.success) {
+      setGambar(response.result);
+    } else {
+      setGambar([]);
+    }
+  };
 
   useEffect(() => {
     getDataImage();
@@ -115,6 +128,8 @@ const useNotaDinasVM = () => {
     setModalApproval,
     isApproval,
     setIsApproval,
+    getNotaDinasGambar,
+    getDataImage,
   };
 };
 export default useNotaDinasVM;

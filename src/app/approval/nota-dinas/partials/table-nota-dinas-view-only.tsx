@@ -62,7 +62,6 @@ export default function TableNotaDinasViewOnly({
   stateApproval?: dtoGetApproval;
   handleUploadBuktiDukung?: () => void;
 }) {
-
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalViewImage, setModalViewImage] = React.useState(false);
   const [thisGambar, setThisGambar] = React.useState("");
@@ -70,9 +69,9 @@ export default function TableNotaDinasViewOnly({
 
   const { rpjmn, year } = useRKPContext((state) => state);
   const { permission } = useAuthContext((state) => state);
-
   const { objectState } = usePenetapanObjectVM();
-  const { stateShorList, getPenetapanObjectShortList, updateApproval } = usePenetapanObjectVM();
+  const { stateShorList, getPenetapanObjectShortList, updateApproval } =
+    usePenetapanObjectVM();
   const {
     gambar,
     uploadImage,
@@ -198,12 +197,12 @@ export default function TableNotaDinasViewOnly({
       const param: dtoGetApproval = {
         ...stateApproval,
         id: objectState?.id ?? 0,
-        status: "review"
-      }
+        status: "review",
+      };
 
-      updateApproval(param)
+      updateApproval(param);
     }
-  }
+  };
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
@@ -309,29 +308,32 @@ export default function TableNotaDinasViewOnly({
       />
       {!pageApproval && (
         <Typography color={red[800]} fontSize={14}>
-          Ditolak tanggal <strong>{
-            stateApproval ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            }) : "-"
-          }</strong>
+          Ditolak tanggal{" "}
+          <strong>
+            {stateApproval
+              ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })
+              : "-"}
+          </strong>
         </Typography>
       )}
-      {
-        hasPrivilege(permission, "/penetapan/objectUpr", "approve") ? (
-          <>
-            <AddButton
-              color="success"
-              title="Ajukan Pengesahan"
-              filled
-              noMargin
-              startIcon={<Iconify name="mdi:check-circle" size={16} />}
-              onclick={() => setModalConfirm(true)}
-            />
-          </>
-        ) : ""
-      }
+      {hasPrivilege(permission, "/penetapan/objectUpr", "approve") ? (
+        <>
+          <AddButton
+            color="success"
+            title="Ajukan Pengesahan"
+            filled
+            noMargin
+            startIcon={<Iconify name="mdi:check-circle" size={16} />}
+            onclick={() => setModalConfirm(true)}
+          />
+        </>
+      ) : (
+        ""
+      )}
     </Fragment>
   );
 
@@ -350,13 +352,16 @@ export default function TableNotaDinasViewOnly({
       />
       {!pageApproval && (
         <Typography color={green[800]} fontSize={14}>
-          Disahkan tanggal <strong>{
-            stateApproval ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            }) : "-"
-          }</strong>
+          Disahkan tanggal{" "}
+          <strong>
+            {stateApproval
+              ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })
+              : "-"}
+          </strong>
         </Typography>
       )}
     </Fragment>
@@ -400,20 +405,20 @@ export default function TableNotaDinasViewOnly({
             textTransform: "uppercase",
           }}
         />
-        {
-          hasPrivilege(permission, "/penetapan/objectUpr", "approve") ? (
-            <>
-              <AddButton
-                color="success"
-                title="Ajukan Pengesahan"
-                filled
-                noMargin
-                startIcon={<Iconify name="mdi:check-circle" size={16} />}
-                onclick={() => setModalConfirm(true)}
-              />
-            </>
-          ) : ""
-        }
+        {hasPrivilege(permission, "/penetapan/objectUpr", "approve") ? (
+          <>
+            <AddButton
+              color="success"
+              title="Ajukan Pengesahan"
+              filled
+              noMargin
+              startIcon={<Iconify name="mdi:check-circle" size={16} />}
+              onclick={() => setModalConfirm(true)}
+            />
+          </>
+        ) : (
+          ""
+        )}
       </Fragment>
     ) : stateApproval?.status === "review" ? (
       statusReviewMApproval
@@ -421,16 +426,18 @@ export default function TableNotaDinasViewOnly({
       statusRejectM
     ) : stateApproval?.status == "approved" ? (
       statusApprovalM
-    ) : statusReviewMApproval;
+    ) : (
+      statusReviewMApproval
+    );
 
   const statusReviewRejectApproval =
     stateApproval?.status === "review" || isReview
       ? statusReviewM
       : stateApproval?.status == "rejected" || isReject
-        ? statusRejectM
-        : stateApproval?.status == "approved" || isApproval
-          ? statusApprovalM
-          : statusDraftM;
+      ? statusRejectM
+      : stateApproval?.status == "approved" || isApproval
+      ? statusApprovalM
+      : statusDraftM;
 
   const conditionDraftReject =
     stateApproval?.status === "draft" || stateApproval?.status === "rejected";
@@ -959,14 +966,14 @@ export default function TableNotaDinasViewOnly({
                   <Fragment>
                     {(stateApproval?.status === "rejected" ||
                       stateApproval?.status == "approved") && (
-                        <AddButton
-                          title="Tambah Catatan"
-                          filled
-                          noMargin
-                          startIcon={<Iconify name="mdi:plus-circle" size={16} />}
-                          onclick={() => setModalOpenAdd(true)}
-                        />
-                      )}
+                      <AddButton
+                        title="Tambah Catatan"
+                        filled
+                        noMargin
+                        startIcon={<Iconify name="mdi:plus-circle" size={16} />}
+                        onclick={() => setModalOpenAdd(true)}
+                      />
+                    )}
                   </Fragment>
                 )}
               </Stack>
@@ -1335,7 +1342,7 @@ export default function TableNotaDinasViewOnly({
               variant="contained"
               type="submit"
               onClick={() => {
-                handleUpdateStatus()
+                handleUpdateStatus();
                 setModalConfirm(false);
                 // setIsReject(false);
                 // setIsApproval(false);
