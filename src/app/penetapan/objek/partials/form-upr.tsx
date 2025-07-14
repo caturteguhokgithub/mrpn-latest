@@ -137,11 +137,10 @@ export default function FormUPR({
     );
     setItems(updatedItems);
 
-    // Sinkron ke state utama
     setState((prev) => ({
       ...prev,
       values: updatedItems.map((item) => ({
-        entitas: item.stakeholder.id,
+        entitas: item.stakeholder?.id ?? null,
         ruang_lingkup: item.ruang_lingkup,
         type: item.type,
       })),
@@ -273,7 +272,7 @@ export default function FormUPR({
                         <AutocompleteSelectSingle
                           value={tags.stakeholder ?? null}
                           options={listStakeholder}
-                          getOptionLabel={(option) => option?.value || ""}
+                          getOptionLabel={(option) => option?.value || "-"}
                           handleChange={(
                             newValue: MiscMasterListStakeholderRes
                           ) =>
