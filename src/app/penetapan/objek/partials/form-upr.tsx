@@ -137,11 +137,10 @@ export default function FormUPR({
     );
     setItems(updatedItems);
 
-    // Sinkron ke state utama
     setState((prev) => ({
       ...prev,
       values: updatedItems.map((item) => ({
-        entitas: item.stakeholder.id,
+        entitas: item.stakeholder?.id ?? null,
         ruang_lingkup: item.ruang_lingkup,
         type: item.type,
       })),
@@ -251,36 +250,33 @@ export default function FormUPR({
                 sx={{ p: 2, minWidth: "0 !important" }}
               >
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <FormControl fullWidth>
-                      <Stack
-                        justifyContent="space-between"
-                        direction="row"
-                        mb={1}
-                      >
-                        <Typography gutterBottom>Entitas MRPN</Typography>
-                        {key > 0 && (
-                          <AddButton
-                            small
-                            errorColor
-                            title="Hapus"
-                            noMargin
-                            onclick={() => minus(tags.id)}
-                          />
-                        )}
-                      </Stack>
-                      <AutocompleteSelectSingle
-                        // value={stateStakeholder}
-                        value={tags.stakeholder}
-                        options={listStakeholder}
-                        getOptionLabel={(option) => option.value}
-                        handleChange={(
-                          newValue: MiscMasterListStakeholderRes
-                        ) => handleSubChange(tags.id, "stakeholder", newValue)}
-                        placeHolder={"Pilih entitas MRPN"}
-                      />
-                    </FormControl>
-                  </Grid>
+                  {tags && (
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <Stack justifyContent="space-between" direction="row" mb={1}>
+                          <Typography gutterBottom>Entitas MRPN</Typography>
+                          {key > 0 && (
+                            <AddButton
+                              small
+                              errorColor
+                              title="Hapus"
+                              noMargin
+                              onclick={() => minus(tags.id)}
+                            />
+                          )}
+                        </Stack>
+                        <AutocompleteSelectSingle
+                          value={tags.stakeholder ?? null}
+                          options={listStakeholder}
+                          getOptionLabel={(option) => option?.value || "-"}
+                          handleChange={(newValue: MiscMasterListStakeholderRes) =>
+                            handleSubChange(tags.id, "stakeholder", newValue)
+                          }
+                          placeHolder={"Pilih entitas MRPN"}
+                        />
+                      </FormControl>
+                    </Grid>
+                  )}
                   <Grid item xs={12}>
                     <FormControl fullWidth>
                       <Typography gutterBottom>Ruang Lingkup</Typography>
