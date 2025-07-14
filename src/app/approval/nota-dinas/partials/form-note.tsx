@@ -8,11 +8,14 @@ export default function FormNote({ mode }: { mode?: string }) {
       <Grid item xs={12}>
         <FormControl fullWidth>
           {mode === "add" ? (
-            <TextareaComponent label="Catatan" placeholder="Catatan" />
+            <TextareaComponent
+              label="Catatan penolakan"
+              placeholder="Catatan penolakan"
+            />
           ) : mode === "edit" ? (
             <TextareaComponent
-              label="Catatan"
-              placeholder="Catatan"
+              label="Catatan penolakan"
+              placeholder="Catatan penolakan"
               value="-"
             />
           ) : (
