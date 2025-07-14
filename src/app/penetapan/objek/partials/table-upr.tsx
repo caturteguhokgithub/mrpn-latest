@@ -79,32 +79,34 @@ function Row(props: {
             )}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            gap={1}
-          >
-            <Stack direction="row" alignItems="center" gap={1}>
-              <Typography component="span" color={grey[600]}>
-                Objek Shortlist:
-              </Typography>{" "}
-              <Typography component="span" fontWeight={500}>
-                {row.rkp}
-              </Typography>
-            </Stack>
-            <Button
-              color="error"
-              size="small"
-              variant="outlined"
-              onClick={() => handleModalDeleteObject(row.id)}
-              sx={{ borderRadius: 2, px: 2, minWidth: 0 }}
+        {row && (
+          <TableCell component="th" scope="row">
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              gap={1}
             >
-              <Iconify name="mdi:trash" color={red[500]} />
-            </Button>
-          </Stack>
-        </TableCell>
+              <Stack direction="row" alignItems="center" gap={1}>
+                <Typography component="span" color={grey[600]}>
+                  Objek Shortlist:
+                </Typography>{" "}
+                <Typography component="span" fontWeight={500}>
+                  {row.rkp || "-"}
+                </Typography>
+              </Stack>
+              <Button
+                color="error"
+                size="small"
+                variant="outlined"
+                onClick={() => handleModalDeleteObject?.(row.id)}
+                sx={{ borderRadius: 2, px: 2, minWidth: 0 }}
+              >
+                <Iconify name="mdi:trash" color={red[500]} />
+              </Button>
+            </Stack>
+          </TableCell>
+        )}
       </TableRow>
       <TableRow>
         <TableCell colSpan={6} sx={{ p: 0 }}>
