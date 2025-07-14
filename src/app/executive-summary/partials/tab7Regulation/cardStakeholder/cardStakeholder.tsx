@@ -208,16 +208,12 @@ export default function CardStakeholder({
         )
       }
     >
-      {/* {isIntExtPage && isDeveloping ? (
-        <EmptyDevelopingState />
-      ) :  */}
       {isIntExtPage ? (
         <Stack width="100%" direction="row" justifyContent="center">
           {stakeholderMapping?.file != "" ? (
             <Box>
               <Image
                 alt="MRPN"
-                // src="https://res.cloudinary.com/caturteguh/image/upload/v1738912448/mrpn/hierarchy_ic8yuc.jpg"
                 src={
                   process.env.NEXT_PUBLIC_BASE_URL_FILES +
                   stakeholderMapping.file
@@ -228,7 +224,6 @@ export default function CardStakeholder({
                 style={{
                   width: "auto",
                   height: "300px",
-                  // maxWidth: "100%",
                   cursor: "pointer",
                 }}
                 onClick={() => setModalViewImageIntExt(true)}
@@ -467,9 +462,6 @@ export default function CardStakeholder({
           ".transform-component-module_wrapper__SPB86": {
             width: "100%",
             height: "100vh",
-            // display: "flex",
-            // alignItems: "center",
-            // justifyContent: "center",
           },
           ".MuiDialogContent-root": {
             p: 0,
@@ -565,7 +557,6 @@ export default function CardStakeholder({
               >
                 <Image
                   alt="Instansi Pelaksana"
-                  // src="https://res.cloudinary.com/caturteguh/image/upload/v1738912448/mrpn/hierarchy_ic8yuc.jpg"
                   src={
                     process.env.NEXT_PUBLIC_BASE_URL_FILES +
                     stakeholderMapping.file

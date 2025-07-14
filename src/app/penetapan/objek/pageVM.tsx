@@ -75,7 +75,7 @@ const usePenetapanObjectVM = () => {
     nota,
     setNota,
   } = usePenetapanTopicContext((state) => state);
-  const { uploadImage } = useNotaDinasVM();
+  const { uploadImage, getNotaDinasGambar } = useNotaDinasVM();
   const { showToast } = useToast();
 
   const initState = JSON.parse(JSON.stringify(initPenetapanObjectState));
@@ -114,6 +114,7 @@ const usePenetapanObjectVM = () => {
   const [modalDeleteObject, setModalDeleteObject] = useState<boolean>(false);
   const [modalEditEntitas, setModalEditEntitas] = useState<boolean>(false);
   const [modalDeleteEntitas, setModalDeleteEntitas] = useState<boolean>(false);
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
 
   const generateOptionPN = () => {
     let opt: ProjectDefaultDto[] = [];
@@ -383,8 +384,8 @@ const usePenetapanObjectVM = () => {
     if (response?.code === API_CODE.success) {
       getPenetapanObjectEntity();
 
-      setModalDeleteObject(false)
-      setModalDeleteEntitas(false)
+      setModalDeleteObject(false);
+      setModalDeleteEntitas(false);
     }
   }
 
@@ -603,7 +604,9 @@ const usePenetapanObjectVM = () => {
   };
 
   async function handleUnggahBuktiDukung(param: dtoReqBuktiDukungPengesahan) {
-    uploadImage(param.file, param.filename);
+    await uploadImage(param.file, param.filename);
+    showToast("Data berhasil disimpan", "success");
+    // getNotaDinasGambar(objectState?.id ?? 0);
   }
 
   // const handleUnggahBuktiDukung = async (
@@ -686,6 +689,8 @@ const usePenetapanObjectVM = () => {
     modalDeleteEntitas,
     setModalDeleteEntitas,
     updateApproval,
+    uploadedFileName,
+    setUploadedFileName,
   };
 };
 

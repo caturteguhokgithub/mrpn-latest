@@ -2,7 +2,6 @@
 
 import ContentPage from "@/app/components/contents";
 import React, { Fragment, useEffect, useState } from "react";
-import DashboardLayout from "@/app/components/layouts/layout";
 import EmptyState from "@/app/components/empty";
 import { IconEmptyPage } from "@/app/components/icons";
 import {
@@ -17,13 +16,10 @@ import {
   Stack,
 } from "@mui/material";
 import theme from "@/theme";
-import { green, grey, orange, red } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import AddButton from "@/app/components/buttonAdd";
 import DialogComponent from "@/app/components/dialog";
 import FormTable from "./partials/form-table";
-import SearchKP from "./partials/search";
-import useThemes from "./hooks/useTheme";
-import LoadingPage from "@/app/components/loadingPage";
 import ThemeToggleButton from "@/app/components/toggleButton/theme";
 import TabObject from "./partials/tab";
 import { IconFA } from "@/app/components/icons/icon-fa";
@@ -35,31 +31,17 @@ import {
 } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
-import {
-  PenetapanObjectDto,
-  PenetapanObjectState,
-} from "@/lib/core/context/penetapanTopicContext";
-import useRkpVM from "@/components/dropdown/rkpVM";
+import { PenetapanObjectDto } from "@/lib/core/context/penetapanTopicContext";
 import DialogDelete from "@/app/components/dialogDelete";
-import {
-  dtoUraian,
-  PenetapanObjectEntityReqDto,
-  PenetapanObjectVMState,
-} from "@/app/penetapan/objek/pageModel";
+import { PenetapanObjectVMState } from "@/app/penetapan/objek/pageModel";
 import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
-import { forEach } from "lodash";
 import Iconify from "@/app/components/icons/iconify";
 import TableLog from "./partials/table-log";
-import {
-  AutocompleteSelectSingle,
-  AutoCompleteSingleProp,
-} from "@/app/components/autocomplete";
 import FormUPR from "./partials/form-upr";
-import Toast from "@/app/components/snackbar/snackbar";
 import useCardIndicationVM from "@/app/executive-summary/partials/tab9Indication/cardIndicationVM";
-import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
 import FormBuktiDukung from "./partials/form-bukti-dukung";
 import { useToast } from "@/lib/core/context/toastContext";
+import useNotaDinasVM from "@/app/approval/nota-dinas/notaDinasVM";
 
 const styleToggleButton = [
   {
@@ -138,11 +120,11 @@ export default function PageTemaView() {
   );
 
   const [stateDelete, setStateDelete] = useState<{
-    id: number,
-    module: string
+    id: number;
+    module: string;
   }>({
     id: 0,
-    module: ""
+    module: "",
   });
 
   const {
@@ -188,6 +170,8 @@ export default function PageTemaView() {
     setModalDeleteEntitas,
   } = usePenetapanObjectVM();
 
+  const { getDataImage } = useNotaDinasVM();
+
   const { showToast } = useToast();
 
   const { optionStakeholder } = useCardIndicationVM();
@@ -224,18 +208,18 @@ export default function PageTemaView() {
 
   const handleDeleteObjectUpr = (id: number, module: string) => {
     // DeleteEntity(id, module);
-    setStateDelete({ id: id, module: module })
+    setStateDelete({ id: id, module: module });
     if (module == "Object") {
-      setModalDeleteObject(true)
+      setModalDeleteObject(true);
     } else {
-      setModalDeleteEntitas(true)
+      setModalDeleteEntitas(true);
     }
-  }
+  };
 
   const handleSimpanDeleteObjectUpr = async () => {
     DeleteEntity(stateDelete.id, stateDelete.module);
-    setStateDelete({ id: 0, module: "" })
-  }
+    setStateDelete({ id: 0, module: "" });
+  };
 
   const handleEditTopic = (x: PenetapanObjectDto) => {
     let optState: ProjectDefaultDto[] = [];
@@ -297,10 +281,11 @@ export default function PageTemaView() {
   return (
     <>
       <ContentPage
-        title={`Objek MRPN & UPR LS ${year == 0
-          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-          : "Tahun " + year
-          }`}
+        title={`Objek MRPN & UPR LS ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip={
           <Stack spacing={2}>
             <div>
@@ -473,9 +458,13 @@ export default function PageTemaView() {
                 handleUploadBuktiDukung={() => setModalBuktiDukung(true)}
                 stateApproval={stateApproval}
                 setModalObjek={setModalObjek}
-                handleModalDeleteObject={(id: number) => { handleDeleteObjectUpr(id, "Object") }}
+                handleModalDeleteObject={(id: number) => {
+                  handleDeleteObjectUpr(id, "Object");
+                }}
                 handleModalEditEntitas={() => setModalEditEntitas(true)}
-                handleModalDeleteEntitas={(id: number) => { handleDeleteObjectUpr(id, "Entitas") }}
+                handleModalDeleteEntitas={(id: number) => {
+                  handleDeleteObjectUpr(id, "Entitas");
+                }}
               />
             </Collapse>
           </Fragment>
@@ -599,6 +588,7 @@ export default function PageTemaView() {
                 // handleCreateUpr();
                 setModalBuktiDukung(false);
                 handleUnggahBuktiDukung(reqBuktiDukungPengesahan);
+                getDataImage();
               }}
               sx={{
                 color: "white !important",

@@ -142,13 +142,13 @@ export default function TableLonglistStepOne({ mode }: { mode?: string }) {
                     <TableCell align="center">
                       <Checkbox
                         value={x.id}
-                        disabled={
-                          !(
-                            hasPrivilege(permission, pathname, "add") ||
-                            hasPrivilege(permission, pathname, "update") ||
-                            hasPrivilege(permission, pathname, "delete")
-                          )
-                        }
+                        // disabled={
+                        //   !(
+                        //     hasPrivilege(permission, pathname, "add") ||
+                        //     hasPrivilege(permission, pathname, "update") ||
+                        //     hasPrivilege(permission, pathname, "delete")
+                        //   )
+                        // }
                         checked={getIsChecked(row.prioritas, x.id)}
                         onChange={(e) =>
                           handleChecked(e.target.checked, i, x.id)
