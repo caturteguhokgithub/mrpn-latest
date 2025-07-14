@@ -130,9 +130,9 @@ export default function FormUPR({
     const updatedItems = items.map((item) =>
       item.id === id
         ? {
-          ...item,
-          [field]: value,
-        }
+            ...item,
+            [field]: value,
+          }
         : item
     );
     setItems(updatedItems);
@@ -253,7 +253,11 @@ export default function FormUPR({
                   {tags && (
                     <Grid item xs={12}>
                       <FormControl fullWidth>
-                        <Stack justifyContent="space-between" direction="row" mb={1}>
+                        <Stack
+                          justifyContent="space-between"
+                          direction="row"
+                          mb={1}
+                        >
                           <Typography gutterBottom>Entitas MRPN</Typography>
                           {key > 0 && (
                             <AddButton
@@ -269,7 +273,9 @@ export default function FormUPR({
                           value={tags.stakeholder ?? null}
                           options={listStakeholder}
                           getOptionLabel={(option) => option?.value || "-"}
-                          handleChange={(newValue: MiscMasterListStakeholderRes) =>
+                          handleChange={(
+                            newValue: MiscMasterListStakeholderRes
+                          ) =>
                             handleSubChange(tags.id, "stakeholder", newValue)
                           }
                           placeHolder={"Pilih entitas MRPN"}
