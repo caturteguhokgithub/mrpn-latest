@@ -11,11 +11,11 @@ import {
 } from "@mui/material";
 import theme from "@/theme";
 import { AddCircle } from "@mui/icons-material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import DialogComponent from "@/app/components/dialog";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import DialogComponent from "@/components/dialog";
 import FormDampak from "./form-dampak";
-import CardItem from "@/app/components/cardTabItem";
+import CardItem from "@/components/cardTabItem";
 
 export default function TableDampak({ mode }: { mode?: string }) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);

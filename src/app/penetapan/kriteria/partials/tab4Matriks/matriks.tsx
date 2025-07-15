@@ -13,7 +13,7 @@ import {
 import { blue, green, grey, orange, red, yellow } from "@mui/material/colors";
 import { dataMatriks } from "../../dataMatriks";
 import theme from "@/theme";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 
 export default function Matriks({ levelId }: { levelId?: number }) {
   const colorMap: { [key: string]: string } = {

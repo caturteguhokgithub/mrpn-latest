@@ -8,18 +8,18 @@ import {
   Stack,
   useMediaQuery,
 } from "@mui/material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import CardItem from "@/app/components/cardTabItem";
-import DialogComponent from "@/app/components/dialog";
-import AddButton from "@/app/components/buttonAdd";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import CardItem from "@/components/cardTabItem";
+import DialogComponent from "@/components/dialog";
+import AddButton from "@/components/buttonAdd";
 import TableIndication from "./partials/table";
 import FormIndication from "./partials/form";
 import useCardIndicationVM from "@/app/executive-summary/partials/tab9Indication/cardIndicationVM";
 import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
-import DialogDelete from "@/app/components/dialogDelete";
+import DialogDelete from "@/components/dialogDelete";
 import FormPerlakuanRisiko from "@/app/executive-summary/partials/tab9Indication/partials/formPerlakuanRisiko";
 import FormRegulation from "@/app/executive-summary/partials/tab9Indication/partials/formRegulation";
 import { ExsumIndicationStateValue } from "./cardIndicationModel";

@@ -9,10 +9,10 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import CardItem from "@/app/components/cardTabItem";
-import DialogComponent from "@/app/components/dialog";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import CardItem from "@/components/cardTabItem";
+import DialogComponent from "@/components/dialog";
 import FormStakeholder from "./form-stakeholder";
 import StakeholderChart from "@/components/cardStakeholder/stakeholder-chart";
 import useCardStakeholderVM from "@/app/executive-summary/partials/tab7Regulation/cardStakeholder/cardStakeholderVM";
@@ -26,12 +26,12 @@ import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import DraggableScroll from "@/app/components/cardStakeholder/draggableScroll";
+import DraggableScroll from "@/components/cardStakeholder/draggableScroll";
 import { styleOrgChart } from "@/app/executive-summary/style";
 import { SxParams } from "@/app/executive-summary/types";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
-import EmptyDevelopingState from "@/app/components/empty/developing";
-import { isDeveloping } from "@/app/components/layouts/layout";
+import EmptyDevelopingState from "@/components/empty/developing";
+import { isDeveloping } from "@/components/layouts/layout";
 import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
 
 export default function CardStakeholder({

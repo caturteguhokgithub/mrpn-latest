@@ -1,9 +1,9 @@
 import React from "react";
 import { Grid, Paper, Stack, Typography } from "@mui/material";
 import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
-import { InfoTooltip } from "@/app/components/InfoTooltip";
-import { AutocompleteSelectMultiple } from "@/app/components/autocomplete";
-import { listProvinsi } from "@/app/utils/provinsi";
+import { InfoTooltip } from "@/components/InfoTooltip";
+import { AutocompleteSelectMultiple } from "@/components/autocomplete";
+import { listProvinsi } from "@/utils/provinsi";
 
 type Option = (typeof listProvinsi)[number];
 

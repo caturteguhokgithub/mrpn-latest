@@ -12,7 +12,7 @@ import {
   Stack,
   Grow,
 } from "@mui/material";
-import { IconFA } from "@/app/components/icons/icon-fa";
+import { IconFA } from "@/components/icons/icon-fa";
 import { grey, red } from "@mui/material/colors";
 import theme from "@/theme";
 import { usePathname } from "next/navigation";
@@ -146,19 +146,20 @@ export default function CardItem({
         anchorOrigin={{ horizontal: "right", vertical: "top" }}
       >
         {multiEdit &&
-          (hasPrivilege(permission, pathname, "add") ||
-            hasPrivilege(permission, pathname, "update")) ? (
+        (hasPrivilege(permission, pathname, "add") ||
+          hasPrivilege(permission, pathname, "update")) ? (
           <>
             <MenuItem onClick={settingEditBisnisClick}>
               <ListItemDropdownMenu label="Tambah Proses Bisnis" />
             </MenuItem>
 
-            {year && year > 0 ? "" :
+            {year && year > 0 ? (
+              ""
+            ) : (
               <MenuItem onClick={settingEditOutputClick}>
                 <ListItemDropdownMenu label="Tambah Expected Output" />
               </MenuItem>
-            }
-
+            )}
           </>
         ) : settingAddOnclick ? (
           <>

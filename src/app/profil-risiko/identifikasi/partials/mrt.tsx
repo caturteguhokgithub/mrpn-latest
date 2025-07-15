@@ -1,12 +1,12 @@
 import React, { useMemo } from "react";
-import { advancedTable } from "@/app/components/table";
+import { advancedTable } from "@/components/table";
 import { Box, Paper, Stack } from "@mui/material";
 import {
   useMaterialReactTable,
   MaterialReactTable,
 } from "material-react-table";
-import ActionColumn from "@/app/components/actions/action";
-import AddButton from "@/app/components/buttonAdd";
+import ActionColumn from "@/components/actions/action";
+import AddButton from "@/components/buttonAdd";
 import { data } from "../setting";
 import HeaderIdentifikasi from "./header";
 

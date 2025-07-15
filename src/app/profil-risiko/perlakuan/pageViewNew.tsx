@@ -1,6 +1,6 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React, { Fragment, useEffect, useMemo } from "react";
 import {
   Box,
@@ -19,7 +19,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import FormTable from "./partials/form-table";
 import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
@@ -50,7 +50,7 @@ import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { FormatIDR } from "@/lib/utils/currency";
 import { getDetailRO } from "@/lib/utils/roDetail";
 import { SortNumber } from "./partials/mrt-complete";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 import CollapsibleTable from "./partials/table-collapsible";
 
 function ChipLevelRisiko(props: { level: any }) {

@@ -10,8 +10,8 @@ import {
   TableRow,
 } from "@mui/material";
 import { green, grey, red } from "@mui/material/colors";
-import { bgColorTh } from "@/app/utils/color";
-import Iconify from "@/app/components/icons/iconify";
+import { bgColorTh } from "@/utils/color";
+import Iconify from "@/components/icons/iconify";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { create } from "lodash";
@@ -19,13 +19,9 @@ import { create } from "lodash";
 export default function TableLog() {
   const { rkp, year, rpjmn } = useRKPContext((state) => state);
 
-  const {
-    useEffectLogActivity,
-    getStateLogActivity
-  } = usePenetapanObjectVM();
+  const { useEffectLogActivity, getStateLogActivity } = usePenetapanObjectVM();
 
   useEffect(useEffectLogActivity, [year]);
-
 
   const data = getStateLogActivity.map((item) => ({
     object: item.topik,

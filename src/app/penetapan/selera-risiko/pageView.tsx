@@ -1,6 +1,6 @@
 "use client";
 
-import ContentPage from "@/app/components/contents/index";
+import ContentPage from "@/components/contents/index";
 import React, { Fragment, useEffect } from "react";
 import { FormControl, Tooltip } from "@mui/material";
 // import RiskContent from "./partials/risk";

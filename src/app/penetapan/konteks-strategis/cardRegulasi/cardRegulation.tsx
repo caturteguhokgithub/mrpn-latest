@@ -18,18 +18,18 @@ import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
 import useCardRegulasi from "@/app/penetapan/konteks-strategis/cardRegulasi/vm";
-import EmptyDevelopingState from "@/app/components/empty/developing";
-import { isDeveloping } from "@/app/components/layouts/layout";
+import EmptyDevelopingState from "@/components/empty/developing";
+import { isDeveloping } from "@/components/layouts/layout";
 
 import useCardRegulationVM from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationVM";
 import TablePeraturan from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/table-peraturan";
-import DialogDelete from "@/app/components/dialogDelete";
-import DialogComponent from "@/app/components/dialog";
+import DialogDelete from "@/components/dialogDelete";
+import DialogComponent from "@/components/dialog";
 import FormRegulation from "./partials/form";
 import { ExsumRegulationDto } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
 import { DividerIntExt } from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgent";
-import AddButton from "@/app/components/buttonAdd";
-import Iconify from "@/app/components/icons/iconify";
+import AddButton from "@/components/buttonAdd";
+import Iconify from "@/components/icons/iconify";
 import useUrgensiVM from "../../internal-eksternal/pageVM";
 import useCardIndicationVM from "@/app/executive-summary/partials/tab9Indication/cardIndicationVM";
 import { doRequestRegulasiDto } from "./model";
@@ -136,10 +136,7 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
           </DialogActions>
         }
       >
-        <FormRegulation
-          state={requestRegulasi}
-          setState={setRequestRegulasi}
-        />
+        <FormRegulation state={requestRegulasi} setState={setRequestRegulasi} />
       </DialogComponent>
       <DialogComponent
         dialogOpen={modalEdit}
@@ -159,10 +156,7 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
           </DialogActions>
         }
       >
-        <FormRegulation
-          state={requestRegulasi}
-          setState={setRequestRegulasi}
-        />
+        <FormRegulation state={requestRegulasi} setState={setRequestRegulasi} />
       </DialogComponent>
       <DialogDelete
         title="Hapus Data"

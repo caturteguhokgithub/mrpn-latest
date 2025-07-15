@@ -22,22 +22,22 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import SelectCustomTheme from "@/app/components/select";
+import SelectCustomTheme from "@/components/select";
 import {
   listKeputusan,
   listPenanggungjawab,
   listPeristiwaRisiko,
 } from "../setting";
 import { grey, red } from "@mui/material/colors";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import { SxAutocompleteTextField } from "@/app/components/dropdown/dropdownDefault";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
+import { SxAutocompleteTextField } from "@/components/dropdown/dropdownDefault";
 import DateRangePicker, {
   convertDateToString,
   convertStringToDate,
   DateRangeState,
-} from "@/app/components/dateRange";
+} from "@/components/dateRange";
 import theme from "@/theme";
-import { paramVariantDefault } from "@/app/utils/constant";
+import { paramVariantDefault } from "@/utils/constant";
 import Matriks from "../../analisis-evaluasi/partials/matriks";
 import {
   initPerlakuanStateReq,
@@ -59,14 +59,14 @@ import {
 } from "@/app/misc/rkp/rkpServiceModel";
 import dayjs from "dayjs";
 import DialogComponent from "@/components/dialog";
-import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
+import TextareaComponent, { TextareaStyled } from "@/components/textarea";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { FormatIDR } from "@/lib/utils/currency";
 import { getDetailRO } from "@/lib/utils/roDetail";
-import AddButton from "@/app/components/buttonAdd";
+import AddButton from "@/components/buttonAdd";
 import { dataMatriks } from "@/app/penetapan/kriteria/dataMatriks";
 
 const highlightText = (text: any, highlight: any) => {
@@ -141,7 +141,11 @@ const TablePerlakuanMultiCheck = ({
   }, [search, data]);
 
   return (
-    <Paper elevation={0} variant="outlined" sx={{ minWidth: "100% !important" }}>
+    <Paper
+      elevation={0}
+      variant="outlined"
+      sx={{ minWidth: "100% !important" }}
+    >
       <Box p={1}>
         <TextField
           variant="outlined"
@@ -172,7 +176,8 @@ const TablePerlakuanMultiCheck = ({
                   />
                 </TableCell>
                 <TableCell>
-                  [{row.code}] - [{row.pkkr}] - {highlightText(row.value, search)}
+                  [{row.code}] - [{row.pkkr}] -{" "}
+                  {highlightText(row.value, search)}
                 </TableCell>
               </TableRow>
             ))}
@@ -228,13 +233,11 @@ export default function FormTable({
   optionsStakeholder: MiscMasterListStakeholderRes[];
   optionsRiskMatrix: MasterRiskMatrixRes[];
 }) {
-
   const [clickedCell, setClickedCell] = useState<{
     rowIndex: number;
     colIndex: number;
     value: number;
   } | null>(null);
-
 
   useEffect(() => {
     if (state.src_matriks_risiko) {
@@ -243,7 +246,9 @@ export default function FormTable({
       if (!matrix) return;
 
       for (let rowIndex = 0; rowIndex < matrix.rows.length; rowIndex++) {
-        const colIndex = matrix.rows[rowIndex].values.findIndex((v) => v === nilai);
+        const colIndex = matrix.rows[rowIndex].values.findIndex(
+          (v) => v === nilai
+        );
         if (colIndex !== -1) {
           setClickedCell({ rowIndex, colIndex, value: nilai });
           break;
@@ -251,7 +256,6 @@ export default function FormTable({
       }
     }
   }, [state.src_matriks_risiko]);
-
 
   const handleClick = (rowIndex: any, colIndex: any, value: any) => {
     const getIndex = optionsRiskMatrix.findIndex((x) => x.nilai == value);
@@ -267,7 +271,12 @@ export default function FormTable({
     }
   };
 
-  type SubChangeValue = string | number | number[] | RiskAnalysisDto | MiscMasterListStakeholderRes;
+  type SubChangeValue =
+    | string
+    | number
+    | number[]
+    | RiskAnalysisDto
+    | MiscMasterListStakeholderRes;
 
   const handleSubChange = (
     id: number,
@@ -278,9 +287,9 @@ export default function FormTable({
       const updated = prevItems.map((item) =>
         item.id === id
           ? {
-            ...item,
-            [field]: value,
-          }
+              ...item,
+              [field]: value,
+            }
           : item
       );
 
@@ -289,9 +298,9 @@ export default function FormTable({
         perlakuan: prev.perlakuan.map((item) =>
           item.id === id
             ? {
-              ...item,
-              [field]: value,
-            }
+                ...item,
+                [field]: value,
+              }
             : item
         ),
       }));
@@ -300,13 +309,15 @@ export default function FormTable({
     });
   };
 
-
   const [modal, setModal] = useState<boolean>(false);
 
   useEffect(() => {
-    if (state.perlakuan && state.perlakuan.length > 0 && optionsStakeholder.length > 0) {
+    if (
+      state.perlakuan &&
+      state.perlakuan.length > 0 &&
+      optionsStakeholder.length > 0
+    ) {
       const loadedItems = state.perlakuan.map((val, index) => {
-
         const matchedStakeholder = optionsStakeholder.find(
           (s) => s.id === val.src_stakeholder_id
         ) || {
@@ -334,7 +345,7 @@ export default function FormTable({
           start_date: val.start_date,
           end_date: val.end_date,
           src_stakeholder_id: val.src_stakeholder_id,
-          src_stakeholder: matchedStakeholder
+          src_stakeholder: matchedStakeholder,
         };
       });
 
@@ -342,7 +353,9 @@ export default function FormTable({
     }
   }, [state.perlakuan, optionsStakeholder]);
 
-  const [items, setItems] = useState<Perlakuan[]>([{ ...initPerlakuanStateReq }]);
+  const [items, setItems] = useState<Perlakuan[]>([
+    { ...initPerlakuanStateReq },
+  ]);
 
   const perlakuanAdd = () => {
     if (items.length >= 10) return;
@@ -363,7 +376,7 @@ export default function FormTable({
       start_date: "",
       end_date: "",
       src_stakeholder_id: 0,
-      src_stakeholder: undefined
+      src_stakeholder: undefined,
     };
 
     const newItems = [...items, newItem];
@@ -372,7 +385,7 @@ export default function FormTable({
     // Sinkron ke state utama
     setState((prev) => ({
       ...prev,
-      perlakuan: newItems
+      perlakuan: newItems,
     }));
   };
 
@@ -386,7 +399,6 @@ export default function FormTable({
       perlakuan: [...newItems],
     }));
   };
-
 
   return (
     <Fragment>
@@ -428,7 +440,7 @@ export default function FormTable({
                       return {
                         ...prevState,
                         profil_risiko: undefined,
-                        profil_risiko_id: 0
+                        profil_risiko_id: 0,
                       };
                     });
                   } else {
@@ -436,7 +448,7 @@ export default function FormTable({
                       return {
                         ...prevState,
                         profil_risiko: e,
-                        profil_risiko_id: e.id
+                        profil_risiko_id: e.id,
                       };
                     });
                   }
@@ -636,7 +648,11 @@ export default function FormTable({
                         <TextareaStyled
                           value={tags.keterangan_risiko}
                           onChange={(e) =>
-                            handleSubChange(tags.id, "keterangan_risiko", e.target.value)
+                            handleSubChange(
+                              tags.id,
+                              "keterangan_risiko",
+                              e.target.value
+                            )
                           }
                           // onChange={(e) =>
                           //   setState((prevState) => {
@@ -671,7 +687,11 @@ export default function FormTable({
                               }}
                               value={tags.target_triwulan_1}
                               onChange={(e) =>
-                                handleSubChange(tags.id, "target_triwulan_1", e.target.value)
+                                handleSubChange(
+                                  tags.id,
+                                  "target_triwulan_1",
+                                  e.target.value
+                                )
                               }
                               placeholder="Target TW I"
                               sx={{ bgcolor: "white" }}
@@ -684,7 +704,11 @@ export default function FormTable({
                               }}
                               value={tags.satuan_triwulan_1}
                               onChange={(e) =>
-                                handleSubChange(tags.id, "satuan_triwulan_1", e.target.value)
+                                handleSubChange(
+                                  tags.id,
+                                  "satuan_triwulan_1",
+                                  e.target.value
+                                )
                               }
                               placeholder="Satuan TW I"
                               sx={{ bgcolor: "white" }}
@@ -704,7 +728,11 @@ export default function FormTable({
                               }}
                               value={tags.target_triwulan_2}
                               onChange={(e) =>
-                                handleSubChange(tags.id, "target_triwulan_2", e.target.value)
+                                handleSubChange(
+                                  tags.id,
+                                  "target_triwulan_2",
+                                  e.target.value
+                                )
                               }
                               placeholder="Target TW II"
                               sx={{ bgcolor: "white" }}
@@ -717,7 +745,11 @@ export default function FormTable({
                               }}
                               value={tags.satuan_triwulan_2}
                               onChange={(e) =>
-                                handleSubChange(tags.id, "satuan_triwulan_2", e.target.value)
+                                handleSubChange(
+                                  tags.id,
+                                  "satuan_triwulan_2",
+                                  e.target.value
+                                )
                               }
                               placeholder="Satuan TW II"
                               sx={{ bgcolor: "white" }}
@@ -737,7 +769,11 @@ export default function FormTable({
                               }}
                               value={tags.target_triwulan_3}
                               onChange={(e) =>
-                                handleSubChange(tags.id, "target_triwulan_3", e.target.value)
+                                handleSubChange(
+                                  tags.id,
+                                  "target_triwulan_3",
+                                  e.target.value
+                                )
                               }
                               placeholder="Target TW III"
                               sx={{ bgcolor: "white" }}
@@ -750,7 +786,11 @@ export default function FormTable({
                               }}
                               value={tags.satuan_triwulan_3}
                               onChange={(e) =>
-                                handleSubChange(tags.id, "satuan_triwulan_3", e.target.value)
+                                handleSubChange(
+                                  tags.id,
+                                  "satuan_triwulan_3",
+                                  e.target.value
+                                )
                               }
                               placeholder="Satuan TW III"
                               sx={{ bgcolor: "white" }}
@@ -770,7 +810,11 @@ export default function FormTable({
                               }}
                               value={tags.target_triwulan_4}
                               onChange={(e) =>
-                                handleSubChange(tags.id, "target_triwulan_4", e.target.value)
+                                handleSubChange(
+                                  tags.id,
+                                  "target_triwulan_4",
+                                  e.target.value
+                                )
                               }
                               placeholder="Target TW IV"
                               sx={{ bgcolor: "white" }}
@@ -783,7 +827,11 @@ export default function FormTable({
                               }}
                               value={tags.satuan_triwulan_4}
                               onChange={(e) =>
-                                handleSubChange(tags.id, "satuan_triwulan_4", e.target.value)
+                                handleSubChange(
+                                  tags.id,
+                                  "satuan_triwulan_4",
+                                  e.target.value
+                                )
                               }
                               placeholder="Satuan TW IV"
                               sx={{ bgcolor: "white" }}
@@ -802,11 +850,11 @@ export default function FormTable({
                         const updatedItems = items.map((item) =>
                           item.id === tags.id
                             ? {
-                              ...item,
-                              ...(typeof updater === "function"
-                                ? updater(item)
-                                : updater),
-                            }
+                                ...item,
+                                ...(typeof updater === "function"
+                                  ? updater(item)
+                                  : updater),
+                              }
                             : item
                         );
                         setItems(updatedItems);
@@ -830,10 +878,15 @@ export default function FormTable({
                             format={"MMM YYYY"}
                             views={["month", "year"]}
                             value={dayjs(tags.start_date)}
-                            onChange={(e: any) => {
-                              const thisDate = dayjs(e).format("YYYY-MM-DD");
-                              handleSubChange(tags.id, "start_date", thisDate)
-                            }
+                            onChange={
+                              (e: any) => {
+                                const thisDate = dayjs(e).format("YYYY-MM-DD");
+                                handleSubChange(
+                                  tags.id,
+                                  "start_date",
+                                  thisDate
+                                );
+                              }
                               // setState((prevState) => {
                               //   const thisDate = dayjs(e).format("YYYY-MM-DD");
                               //   return {
@@ -867,10 +920,11 @@ export default function FormTable({
                             format={"MMM YYYY"}
                             views={["month", "year"]}
                             value={dayjs(tags.end_date)}
-                            onChange={(e: any) => {
-                              const thisDate = dayjs(e).format("YYYY-MM-DD");
-                              handleSubChange(tags.id, "end_date", thisDate)
-                            }
+                            onChange={
+                              (e: any) => {
+                                const thisDate = dayjs(e).format("YYYY-MM-DD");
+                                handleSubChange(tags.id, "end_date", thisDate);
+                              }
                               // setState((prevState) => {
                               //   const thisDate = dayjs(e).format("YYYY-MM-DD");
                               //   return {
@@ -903,8 +957,13 @@ export default function FormTable({
                           value={tags.src_stakeholder}
                           options={optionsStakeholder}
                           getOptionLabel={(opt) => opt.value}
-                          handleChange={(e: MiscMasterListStakeholderRes) =>
-                            handleSubChange(tags.id, "src_stakeholder_id", e.id)
+                          handleChange={
+                            (e: MiscMasterListStakeholderRes) =>
+                              handleSubChange(
+                                tags.id,
+                                "src_stakeholder_id",
+                                e.id
+                              )
                             // setState((prevState) => {
                             //   return {
                             //     ...prevState,

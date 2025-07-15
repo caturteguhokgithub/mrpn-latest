@@ -1,13 +1,13 @@
 import React, { Fragment } from "react";
 import { Box, Button, Chip, DialogActions, Divider } from "@mui/material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import CardItem from "@/app/components/cardTabItem";
-import DialogComponent from "@/app/components/dialog";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import CardItem from "@/components/cardTabItem";
+import DialogComponent from "@/components/dialog";
 import useCardUrgentVM from "./cardUrgentVM";
 import dynamic from "next/dynamic";
 import type ReactQuill from "react-quill";
-import DialogDelete from "@/app/components/dialogDelete";
+import DialogDelete from "@/components/dialogDelete";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
 import { grey } from "@mui/material/colors";
@@ -116,7 +116,7 @@ export default function CardUrgent({
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
       setting
-      >
+    >
       {penetapan ? (
         <Fragment>
           <Box sx={{ opacity: 0.6 }}>

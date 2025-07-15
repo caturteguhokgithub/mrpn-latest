@@ -1,10 +1,6 @@
 import React, { SetStateAction, useEffect, useMemo } from "react";
-import {
-  Box,
-  Chip,
-  Stack,
-} from "@mui/material";
-import {RODataTable} from "@/app/misc/rkp/rkpServiceModel";
+import { Box, Chip, Stack } from "@mui/material";
+import { RODataTable } from "@/app/misc/rkp/rkpServiceModel";
 import { FormatIDR } from "@/lib/utils/currency";
 import {
   MaterialReactTable,
@@ -12,9 +8,9 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { ExsumInterventionState } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
-import { advancedTable } from "@/app/components/table";
-import {useRKPContext} from "@/lib/core/hooks/useHooks";
-import {GenerateRpjmnYear} from "@/lib/utils/common";
+import { advancedTable } from "@/components/table";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import { GenerateRpjmnYear } from "@/lib/utils/common";
 
 export default function TableProfilRoKunci({
   data,
@@ -23,8 +19,7 @@ export default function TableProfilRoKunci({
   data: RODataTable[];
   setState: (value: SetStateAction<ExsumInterventionState>) => void;
 }) {
-
-  const {year, rpjmn} = useRKPContext(store => store)
+  const { year, rpjmn } = useRKPContext((store) => store);
 
   const columns = [
     {
@@ -93,11 +88,11 @@ export default function TableProfilRoKunci({
     },
   ];
 
-  let detailRpjmn: any[] = []
+  let detailRpjmn: any[] = [];
 
-  let multiyear:number[] = [year]
-  if (year == 0){
-    multiyear = GenerateRpjmnYear(rpjmn)
+  let multiyear: number[] = [year];
+  if (year == 0) {
+    multiyear = GenerateRpjmnYear(rpjmn);
   }
   multiyear.map((y, i) => {
     let tahunDetail: any = {
@@ -108,24 +103,22 @@ export default function TableProfilRoKunci({
           accessorKey: "target_" + i,
           header: "Target",
           enableColumnActions: false,
-          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
-            renderedCellValue == "" ? "-" : renderedCellValue
-          ),
+          Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+            renderedCellValue == "" ? "-" : renderedCellValue,
         },
         {
           accessorKey: "satuan_" + i,
           header: "Satuan",
           enableColumnActions: false,
-          textAlign: 'center',
-          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
-            renderedCellValue == "" ? "-" : renderedCellValue
-          ),
+          textAlign: "center",
+          Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+            renderedCellValue == "" ? "-" : renderedCellValue,
         },
         {
           accessorKey: "anggaran_" + i,
           header: "Pembiayaan",
           enableColumnActions: false,
-          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
+          Cell: ({ renderedCellValue }: { renderedCellValue: any }) => (
             <Stack alignItems={"flex-end"} width={"100%"}>
               {FormatIDR(renderedCellValue)}
             </Stack>
@@ -135,15 +128,14 @@ export default function TableProfilRoKunci({
           accessorKey: "sumber_anggaran_" + i,
           header: "Sumber Pembiayaan",
           enableColumnActions: false,
-          Cell: ({renderedCellValue}: { renderedCellValue: any }) => (
-            renderedCellValue == "" ? "-" : renderedCellValue
-          ),
-        }
-      ]
-    }
-    detailRpjmn.push(tahunDetail)
-  })
-  columns.push(...detailRpjmn)
+          Cell: ({ renderedCellValue }: { renderedCellValue: any }) =>
+            renderedCellValue == "" ? "-" : renderedCellValue,
+        },
+      ],
+    };
+    detailRpjmn.push(tahunDetail);
+  });
+  columns.push(...detailRpjmn);
 
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     {}

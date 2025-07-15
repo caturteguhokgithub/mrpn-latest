@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, TextField } from "@mui/material";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
 import { ReqAddMatDamKomite } from "./hooks/model";
 
 export default function FormAreaDampak({
@@ -8,8 +8,10 @@ export default function FormAreaDampak({
   setRequestMatDamKomite,
   mode,
 }: {
-  requestMatDamKomite: ReqAddMatDamKomite
-  setRequestMatDamKomite: React.Dispatch<React.SetStateAction<ReqAddMatDamKomite>>;
+  requestMatDamKomite: ReqAddMatDamKomite;
+  setRequestMatDamKomite: React.Dispatch<
+    React.SetStateAction<ReqAddMatDamKomite>
+  >;
   mode?: string;
 }) {
   return (

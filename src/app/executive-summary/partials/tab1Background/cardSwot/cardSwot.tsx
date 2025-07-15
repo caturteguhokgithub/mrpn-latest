@@ -15,23 +15,23 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import CardItem from "@/app/components/cardTabItem";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import CardItem from "@/components/cardTabItem";
 import theme from "@/theme";
 import { grey, red } from "@mui/material/colors";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import useCardSWOTVM from "./cardSwotVM";
 import {
   ExsumSWOTRequestDto,
   ExsumSWOTValuesDto,
   LISTSWOT,
 } from "./cardSwotModel";
-import { TextareaStyled } from "@/app/components/textarea";
+import { TextareaStyled } from "@/components/textarea";
 import AddButton from "@/components/buttonAdd";
 import { IconFA } from "@/components/icons/icon-fa";
-import DialogDelete from "@/app/components/dialogDelete";
-import { InfoTooltip } from "@/app/components/InfoTooltip";
+import DialogDelete from "@/components/dialogDelete";
+import { InfoTooltip } from "@/components/InfoTooltip";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
 import { doRequestSwotDto } from "@/app/penetapan/internal-eksternal/pageModel";

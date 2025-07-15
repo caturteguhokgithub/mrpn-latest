@@ -13,9 +13,9 @@ import {
   Typography,
 } from "@mui/material";
 import { green, red } from "@mui/material/colors";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import { IconFA } from "@/app/components/icons/icon-fa";
-import { VisuallyHiddenInput } from "@/app/utils/constant";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
+import { IconFA } from "@/components/icons/icon-fa";
+import { VisuallyHiddenInput } from "@/utils/constant";
 
 export default function FormTable({ mode }: { mode?: string }) {
   const [project, setProject] = React.useState("");

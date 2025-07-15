@@ -17,7 +17,7 @@ import { ExsumSupportProjectRes } from "@/app/executive-summary/partials/tab2Pro
 import { ExsumDto } from "@/lib/core/context/exsumContext";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 import { GetTarget } from "@/lib/utils/common";
 import { grey } from "@mui/material/colors";
 

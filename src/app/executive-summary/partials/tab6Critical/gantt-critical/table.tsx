@@ -10,8 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { bgColorTh } from "@/app/utils/color";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import { bgColorTh } from "@/utils/color";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
 
 export default function TableDetail() {
   const data = {

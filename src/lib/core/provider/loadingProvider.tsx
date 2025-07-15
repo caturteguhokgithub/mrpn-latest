@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ILoading } from "@/app/components/iLoading";
+import { ILoading } from "@/components/iLoading";
 import { LoadingContext } from "../context/loadingContext";
 
 type LoadingProviderProps = {
@@ -11,8 +11,8 @@ export const LoadingProvider = (children: LoadingProviderProps) => {
 
   return (
     <LoadingContext.Provider value={{ isLoading, setLoading }}>
-        <ILoading isLoading={isLoading} />
-        {children.children}
+      <ILoading isLoading={isLoading} />
+      {children.children}
     </LoadingContext.Provider>
   );
 };

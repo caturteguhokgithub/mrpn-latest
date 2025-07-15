@@ -1,9 +1,7 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React from "react";
-import EmptyState from "@/components/empty";
-import { IconEmptyPage } from "@/components/icons";
 import { Box, Collapse, Tab, Tabs } from "@mui/material";
 import { IconFA } from "@/components/icons/icon-fa";
 import Tab1Background from "./partials/tab1Background";

@@ -1,14 +1,14 @@
 "use client";
 
-import DashboardLayout from "@/app/components/layouts/layout";
+import DashboardLayout from "@/components/layouts/layout";
 import PageAnalisisEvaluasiView from "@/app/profil-risiko/analisis-evaluasi/pageView";
-import {usePermissionChecker} from "@/lib/core/helpers/authHelpers";
+import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 
 export default function PageAnalisisEvaluasi({}) {
-  usePermissionChecker("profilRisiko.analisisEvaluasiRisiko")
+  usePermissionChecker("profilRisiko.analisisEvaluasiRisiko");
   return (
     <DashboardLayout>
-      <PageAnalisisEvaluasiView/>
+      <PageAnalisisEvaluasiView />
     </DashboardLayout>
   );
 }

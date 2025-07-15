@@ -1,22 +1,22 @@
 import React, { Fragment, useEffect } from "react";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import CardItem from "@/app/components/cardTabItem";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import CardItem from "@/components/cardTabItem";
 import "gantt-task-react/dist/index.css";
 import GanttChart from "./gantt-critical";
 import { Box, Button, DialogActions, Stack, Typography } from "@mui/material";
 import { green, grey, orange } from "@mui/material/colors";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import FormCritical from "./form";
 import useCardCriticalVM from "@/app/executive-summary/partials/tab6Critical/cardCriticalVM";
 import { GetColor } from "@/utils/color";
 import TableCritical from "./table";
-import DialogDelete from "@/app/components/dialogDelete";
+import DialogDelete from "@/components/dialogDelete";
 import GanttChartMonthly from "./gantt-critical/monthly";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
-import AddButton from "@/app/components/buttonAdd";
-import EmptyDevelopingState from "@/app/components/empty/developing";
-import { isDeveloping } from "@/app/components/layouts/layout";
+import AddButton from "@/components/buttonAdd";
+import EmptyDevelopingState from "@/components/empty/developing";
+import { isDeveloping } from "@/components/layouts/layout";
 import TableCriticalCustom from "./partials/tableCritical";
 
 const ProjectType = ({ label, color }: { label: string; color: string }) => {
@@ -72,7 +72,7 @@ export default function CardCritical({
     getListRO,
     getListProjectCategory,
     getData,
-    getDataROKunci
+    getDataROKunci,
   } = useCardCriticalVM();
 
   useEffect(() => {
@@ -220,8 +220,9 @@ export default function CardCritical({
         width={"50%"}
         dialogOpen={modalAdd}
         dialogClose={handleModalCloseAdd}
-        title={`Tambah Critical Path ${year > 0 ? "RKP" : "RPJMN"} ${year > 0 ? year : ""
-          }`}
+        title={`Tambah Critical Path ${year > 0 ? "RKP" : "RPJMN"} ${
+          year > 0 ? year : ""
+        }`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button variant="outlined" onClick={handleModalCloseAdd}>

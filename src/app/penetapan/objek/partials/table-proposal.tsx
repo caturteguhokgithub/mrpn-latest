@@ -13,8 +13,8 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import { usePenetapanTopicContext } from "@/lib/core/hooks/useHooks";
 import {
@@ -22,9 +22,9 @@ import {
   PenetapanObjectEntityItemDto,
   PenetapanObjectStateEntityDto,
 } from "@/app/penetapan/objek/pageModel";
-import { InfoTooltip } from "@/app/components/InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 import { grey } from "@mui/material/colors";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 
 export default function TableProposal({ mode }: { mode?: string }) {
   const {

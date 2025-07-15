@@ -22,7 +22,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
 import {
   AutocompleteSelectFreeSolo,
   AutocompleteSelectMultiple,
@@ -36,8 +36,8 @@ import {
 import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
 import { ExsumSWOTValuesDto } from "@/app/executive-summary/partials/tab1Background/cardSwot/cardSwotModel";
 import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
-import TextareaComponent, { TextareaStyled } from "@/app/components/textarea";
-import AddButton from "@/app/components/buttonAdd";
+import TextareaComponent, { TextareaStyled } from "@/components/textarea";
+import AddButton from "@/components/buttonAdd";
 import { green, grey, red } from "@mui/material/colors";
 import { ExsumTWOSDto } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
 import { Text } from "recharts";

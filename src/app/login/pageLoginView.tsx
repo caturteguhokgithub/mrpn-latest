@@ -23,14 +23,14 @@ import { loadCSS } from "fg-loadcss";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import theme from "@/theme";
-import { IconFA } from "../components/icons/icon-fa";
-import SelectCustomTheme from "../components/select";
-import { listUser } from "../utils/data";
+import { IconFA } from "../../components/icons/icon-fa";
+import SelectCustomTheme from "../../components/select";
+import { listUser } from "../../utils/data";
 import useAuthorizationVM from "@/app/authorizationVM";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import DialogComponent from "@/components/dialog";
-import LoadingPage from "../components/loadingPage";
+import LoadingPage from "../../components/loadingPage";
 
 gsap.registerPlugin(useGSAP);
 

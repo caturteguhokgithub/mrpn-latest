@@ -8,9 +8,9 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import { bgColorTh } from "@/app/utils/color";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import { bgColorTh } from "@/utils/color";
 
 export default function TableRas({ mode }: { mode?: string }) {
   const rows = [

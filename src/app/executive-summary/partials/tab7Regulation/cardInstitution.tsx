@@ -1,7 +1,7 @@
 import React from "react";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import CardItem from "@/app/components/cardTabItem";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import CardItem from "@/components/cardTabItem";
 import InstitutionOrgChart from "./partials/org-chart";
 
 export default function CardInstitution({ project }: { project: string }) {

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import DashboardLayout from "@/app/components/layouts/layout";
+import DashboardLayout from "@/components/layouts/layout";
 import PageOverviewView from "@/app/profil-risiko/overview/pageView";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 

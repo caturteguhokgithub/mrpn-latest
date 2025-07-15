@@ -18,12 +18,12 @@ import {
 } from "@mui/material";
 import theme from "@/theme";
 import { AddCircle } from "@mui/icons-material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import DialogComponent from "@/app/components/dialog";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import DialogComponent from "@/components/dialog";
 import FormKemungkinan from "../tab2Possibility/form-kemungkinan";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import { bgColorTh } from "@/app/utils/color";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
+import { bgColorTh } from "@/utils/color";
 
 export default function TableKategori({ mode }: { mode?: string }) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);

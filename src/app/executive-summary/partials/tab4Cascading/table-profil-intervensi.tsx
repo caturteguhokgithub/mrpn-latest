@@ -6,7 +6,7 @@ import {
 } from "material-react-table";
 import React, { useEffect, useState } from "react";
 import { FormatIDR } from "@/lib/utils/currency";
-import { advancedTable } from "@/app/components/table";
+import { advancedTable } from "@/components/table";
 import ActionColumn from "@/components/actions/action";
 import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";

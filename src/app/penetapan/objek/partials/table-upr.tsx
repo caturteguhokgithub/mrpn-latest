@@ -18,24 +18,24 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
 import {
   dtoUraian,
   dtoUsulanUprLs,
   UnitPengelolaRisikoEntity,
 } from "@/app/penetapan/objek/pageModel";
-import { InfoTooltip } from "@/app/components/InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 import { blue, grey, red } from "@mui/material/colors";
-import { bgColorTh } from "@/app/utils/color";
-import Iconify from "@/app/components/icons/iconify";
+import { bgColorTh } from "@/utils/color";
+import Iconify from "@/components/icons/iconify";
 import usePenetapanObjectVM from "../pageVM";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
 import {
   usePenetapanTopicContext,
   useRKPContext,
 } from "@/lib/core/hooks/useHooks";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 
 function createData(name: string) {
   return {
@@ -226,7 +226,11 @@ function Row(props: {
                               {/* <IconButton onClick={handleModalEditEntitas}>
                                 <Iconify name="mdi:pencil" color={blue[500]} />
                               </IconButton> */}
-                              <IconButton onClick={() => handleModalDeleteEntitas(entity.id)}>
+                              <IconButton
+                                onClick={() =>
+                                  handleModalDeleteEntitas(entity.id)
+                                }
+                              >
                                 <Iconify name="mdi:trash" color={red[500]} />
                               </IconButton>
                             </Stack>

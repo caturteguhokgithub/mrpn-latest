@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Button, FormControl, Grid, Typography } from "@mui/material";
-import { TextareaStyled } from "@/app/components/textarea";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import { TextareaStyled } from "@/components/textarea";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
 
-export default function FormPeristiwa({ onSave }: { onSave: (newValue: string) => void }) {
+export default function FormPeristiwa({
+  onSave,
+}: {
+  onSave: (newValue: string) => void;
+}) {
   const [newPeristiwa, setNewPeristiwa] = useState("");
 
   return (

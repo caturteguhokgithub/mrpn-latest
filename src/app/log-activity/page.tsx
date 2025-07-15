@@ -1,6 +1,6 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React from "react";
 import DashboardLayout from "@/components/layouts/layout";
 import {
@@ -12,7 +12,7 @@ import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 import useLogActivityVM from "@/app/log-activity/pageVM";
 import dayjs from "dayjs";
 import { blue, grey } from "@mui/material/colors";
-import { advancedTable } from "../components/table";
+import { advancedTable } from "../../components/table";
 
 export default function PageRoleManagement() {
   usePermissionChecker("log-activity");

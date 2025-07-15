@@ -1,22 +1,22 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React, { useMemo } from "react";
-import DashboardLayout from "@/app/components/layouts/layout";
-import ActionColumn from "@/app/components/actions/action";
-import AddButton from "@/app/components/buttonAdd";
-import { advancedTable } from "@/app/components/table";
+import DashboardLayout from "@/components/layouts/layout";
+import ActionColumn from "@/components/actions/action";
+import AddButton from "@/components/buttonAdd";
+import { advancedTable } from "@/components/table";
 import { DialogActions, Button, Alert, AlertTitle, Chip } from "@mui/material";
 import {
   useMaterialReactTable,
   MaterialReactTable,
   MRT_ColumnDef,
 } from "material-react-table";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import FormTable from "./partials/form-table";
 import { data, type PeringatanType } from "./setting";
 import { green, red, yellow } from "@mui/material/colors";
-import { IconFA } from "@/app/components/icons/icon-fa";
+import { IconFA } from "@/components/icons/icon-fa";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 
 export default function PagePeringatanDiniSaran({}) {

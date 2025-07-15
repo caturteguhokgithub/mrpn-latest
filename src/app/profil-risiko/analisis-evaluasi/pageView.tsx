@@ -1,6 +1,6 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React, { useEffect, useMemo } from "react";
 import {
   Box,
@@ -10,15 +10,15 @@ import {
   FormControl,
   Stack,
 } from "@mui/material";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import FormTable from "./partials/form-table";
-import AddButton from "@/app/components/buttonAdd";
+import AddButton from "@/components/buttonAdd";
 import {
   MRT_ColumnDef,
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
-import ActionColumn from "@/app/components/actions/action";
+import ActionColumn from "@/components/actions/action";
 import { orange, red, green, blue, grey } from "@mui/material/colors";
 import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";

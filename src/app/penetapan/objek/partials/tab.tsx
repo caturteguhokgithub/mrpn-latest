@@ -3,9 +3,9 @@ import { Box, Stack, Tab, Tabs } from "@mui/material";
 import theme from "@/theme";
 import { IconFA } from "@/components/icons/icon-fa";
 import { styleTab } from "@/app/executive-summary/style";
-import CardItem from "@/app/components/cardTabItem";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
+import CardItem from "@/components/cardTabItem";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
 import TableShortlist from "./table-short";
 import TableLonglistStepper from "./table-long-stepper";
 import TableProposal from "./table-proposal";
@@ -20,12 +20,12 @@ import {
   usePenetapanTopicContext,
   useRKPContext,
 } from "@/lib/core/hooks/useHooks";
-import { isDeveloping } from "@/app/components/layouts/layout";
-import EmptyDevelopingState from "@/app/components/empty/developing";
+import { isDeveloping } from "@/components/layouts/layout";
+import EmptyDevelopingState from "@/components/empty/developing";
 import TableUPR from "./table-upr";
 import CollapsibleTableUpr from "./table-upr";
 import { dtoUraian } from "../pageModel";
-import Iconify from "@/app/components/icons/iconify";
+import Iconify from "@/components/icons/iconify";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -114,16 +114,6 @@ export default function TabObject({
   const { objects, objectState, setObjectState } = usePenetapanTopicContext(
     (state) => state
   );
-
-  // const {
-  //   useEffectObjectState,
-  //   updateOrCreateLongList,
-  //   setShowSave,
-  //   showSave,
-  //   stateUpr,
-  //   getRanking,
-  //   stateApproval
-  // } = usePenetapanObjectVM();
 
   useEffect(useEffectObjectState, [year, objectState]);
 
@@ -291,16 +281,16 @@ export default function TabObject({
         <CardItem
           // title="Nota Dinas Objek MRPN & UPR LS"
           title="Penetapan"
-        // addButton={
-        //   !editNotaDinas && (
-        //     <AddButton
-        //       title={`Ubah`}
-        //       filled
-        //       startIcon={<IconFA size={14} name="pencil" />}
-        //       onclick={() => setEditNotaDinas(true)}
-        //     />
-        //   )
-        // }
+          // addButton={
+          //   !editNotaDinas && (
+          //     <AddButton
+          //       title={`Ubah`}
+          //       filled
+          //       startIcon={<IconFA size={14} name="pencil" />}
+          //       onclick={() => setEditNotaDinas(true)}
+          //     />
+          //   )
+          // }
         >
           {/* {isDeveloping ? (
             <EmptyDevelopingState />

@@ -11,7 +11,7 @@ import {
 import { blue, green, grey, orange, red, yellow } from "@mui/material/colors";
 import { dataMatriks } from "../dataMatriks";
 import theme from "@/theme";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 
 const CircleNumber = ({
   value,

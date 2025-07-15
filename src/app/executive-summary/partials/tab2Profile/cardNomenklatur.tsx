@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 import { Button, DialogActions, Typography } from "@mui/material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import CardItem from "@/app/components/cardTabItem";
-import AddButton from "@/app/components/buttonAdd";
-import DialogComponent from "@/app/components/dialog";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import CardItem from "@/components/cardTabItem";
+import AddButton from "@/components/buttonAdd";
+import DialogComponent from "@/components/dialog";
 // import TableDampak from "./table-dampak";
 // import FormSasaran from "./form-sasaran";
 import { dataTema } from "../../dataTema";

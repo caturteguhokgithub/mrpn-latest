@@ -11,14 +11,14 @@ import {
   TableRow,
 } from "@mui/material";
 import theme from "@/theme";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import { bgColorTh } from "@/app/utils/color";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import { bgColorTh } from "@/utils/color";
 import { blue, grey, red } from "@mui/material/colors";
 import usePossibilityList from "./hooks/usePossibility";
 import { ResultPossibility } from "./hooks/possibilityModel";
 import { referencePossibility } from "./reference";
-import Iconify from "@/app/components/icons/iconify";
+import Iconify from "@/components/icons/iconify";
 
 export default function TableKemungkinan({
   mode,

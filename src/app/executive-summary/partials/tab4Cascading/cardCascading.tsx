@@ -1,5 +1,5 @@
 import React from "react";
-import CardItem from "@/app/components/cardTabItem";
+import CardItem from "@/components/cardTabItem";
 import CascadingOrgChart from "./partials/org-chart";
 import useCardDiagramVM from "@/app/executive-summary/partials/tab4Cascading/cardDiagram/cardDiagramVM";
 import { Button, DialogActions } from "@mui/material";

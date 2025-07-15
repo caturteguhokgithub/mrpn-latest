@@ -10,7 +10,7 @@ import {
 import { BlockCard } from "./card";
 import { grey, orange, yellow } from "@mui/material/colors";
 import theme from "@/theme";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 
 export default function TablePeristiwa({ darkMode }: { darkMode?: boolean }) {
   function createData(

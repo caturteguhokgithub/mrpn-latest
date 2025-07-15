@@ -11,8 +11,8 @@ import {
   TableRow,
 } from "@mui/material";
 import { green, grey, red } from "@mui/material/colors";
-import { bgColorTh } from "@/app/utils/color";
-import Iconify from "@/app/components/icons/iconify";
+import { bgColorTh } from "@/utils/color";
+import Iconify from "@/components/icons/iconify";
 
 export default function TableStatus() {
   const data = [

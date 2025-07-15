@@ -14,8 +14,8 @@ import {
 } from "@mui/material";
 import theme from "@/theme";
 import { dataTema } from "../../dataTema";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
 
 export default function TableProfilOutput({ project }: { project: string }) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);

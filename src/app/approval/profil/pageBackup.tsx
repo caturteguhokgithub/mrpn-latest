@@ -1,8 +1,8 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React from "react";
-import DashboardLayout from "@/app/components/layouts/layout";
+import DashboardLayout from "@/components/layouts/layout";
 import {
   Box,
   Button,
@@ -12,14 +12,13 @@ import {
   alpha,
 } from "@mui/material";
 import MRTIdentifikasi from "@/app/profil-risiko/identifikasi/partials/mrt";
-import {IconFA} from "@/app/components/icons/icon-fa";
+import { IconFA } from "@/components/icons/icon-fa";
 import MRTPerlakuanComplete from "@/app/profil-risiko/perlakuan/partials/mrt-complete";
-import {CardWithStamp} from "@/app/components/card-w-stamp";
-import DialogComponent from "@/app/components/dialog";
+import { CardWithStamp } from "@/components/card-w-stamp";
+import DialogComponent from "@/components/dialog";
 import FormReject from "../nota-dinas/partials/form-reject";
 
 export default function PageApprovalProfil() {
-
   const [approvalStamp, setApprovalStamp] = React.useState(false);
   const [rejectStamp, setRejectStamp] = React.useState(false);
   const [buttonStamp, setButtonStamp] = React.useState(true);
@@ -45,7 +44,7 @@ export default function PageApprovalProfil() {
   };
 
   const dialogActionFooter = (
-    <DialogActions sx={{p: 2, px: 3}}>
+    <DialogActions sx={{ p: 2, px: 3 }}>
       <Button onClick={handleModalClose}>Batal</Button>
       <Button
         variant="contained"
@@ -70,8 +69,8 @@ export default function PageApprovalProfil() {
                 <Button
                   variant="outlined"
                   color="error"
-                  startIcon={<IconFA name="thumbs-down" size={14}/>}
-                  sx={{px: 3, borderRadius: 12, whiteSpace: "nowrap"}}
+                  startIcon={<IconFA name="thumbs-down" size={14} />}
+                  sx={{ px: 3, borderRadius: 12, whiteSpace: "nowrap" }}
                   onClick={handleModalOpen}
                 >
                   Reject
@@ -79,8 +78,8 @@ export default function PageApprovalProfil() {
                 <Button
                   variant="contained"
                   color="success"
-                  startIcon={<IconFA name="thumbs-up" size={14}/>}
-                  sx={{px: 3, borderRadius: 12, whiteSpace: "nowrap"}}
+                  startIcon={<IconFA name="thumbs-up" size={14} />}
+                  sx={{ px: 3, borderRadius: 12, whiteSpace: "nowrap" }}
                   onClick={handleApprovalStamp}
                 >
                   Approve
@@ -100,7 +99,10 @@ export default function PageApprovalProfil() {
               },
             }}
           >
-            <CardWithStamp rejectStamp={rejectStamp} approvalStamp={approvalStamp}>
+            <CardWithStamp
+              rejectStamp={rejectStamp}
+              approvalStamp={approvalStamp}
+            >
               <MRTIdentifikasi
                 viewOnly
                 headerOnly
@@ -111,7 +113,10 @@ export default function PageApprovalProfil() {
                 }
               />
             </CardWithStamp>
-            <CardWithStamp rejectStamp={rejectStamp} approvalStamp={approvalStamp}>
+            <CardWithStamp
+              rejectStamp={rejectStamp}
+              approvalStamp={approvalStamp}
+            >
               <MRTPerlakuanComplete
                 viewOnly
                 renderCaption={
@@ -131,7 +136,7 @@ export default function PageApprovalProfil() {
         title="Tuliskan Alasan Reject"
         dialogFooter={dialogActionFooter}
       >
-        <FormReject mode="add"/>
+        <FormReject mode="add" />
       </DialogComponent>
     </>
   );

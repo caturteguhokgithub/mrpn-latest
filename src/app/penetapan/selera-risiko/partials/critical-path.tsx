@@ -1,15 +1,15 @@
 import React from "react";
 import { Box, Button, Icon, IconButton, Stack } from "@mui/material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import CardItem from "@/app/components/cardTabItem";
-import DialogComponent from "@/app/components/dialog";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import CardItem from "@/components/cardTabItem";
+import DialogComponent from "@/components/dialog";
 import useCardStakeholderVM from "@/app/executive-summary/partials/tab7Regulation/cardStakeholder/cardStakeholderVM";
 import Image from "next/image";
 import { IconFA } from "@/components/icons/icon-fa";
 import { VisuallyHiddenInput } from "@/utils/constant";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import DraggableScroll from "@/app/components/cardStakeholder/draggableScroll";
+import DraggableScroll from "@/components/cardStakeholder/draggableScroll";
 import { styleOrgChart } from "@/app/executive-summary/style";
 import { SxParams } from "@/app/executive-summary/types";
 import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
@@ -101,9 +101,7 @@ export default function CriticalPathIntEks({ title }: { title?: string }) {
           <Box>
             <Image
               alt="MRPN"
-              src={
-                process.env.NEXT_PUBLIC_BASE_URL_FILES + cpMapping.file
-              }
+              src={process.env.NEXT_PUBLIC_BASE_URL_FILES + cpMapping.file}
               width={0}
               height={0}
               sizes="100vw"
@@ -169,10 +167,7 @@ export default function CriticalPathIntEks({ title }: { title?: string }) {
               >
                 <Image
                   alt="Instansi Pelaksana"
-                  src={
-                    process.env.NEXT_PUBLIC_BASE_URL_FILES +
-                    cpMapping.file
-                  }
+                  src={process.env.NEXT_PUBLIC_BASE_URL_FILES + cpMapping.file}
                   width={0}
                   height={0}
                   sizes="100vw"

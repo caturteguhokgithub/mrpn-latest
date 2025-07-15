@@ -20,11 +20,11 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "@/theme";
-import { IconFA } from "@/app/components/icons/icon-fa";
+import { IconFA } from "@/components/icons/icon-fa";
 import { blue, green, grey, red } from "@mui/material/colors";
 import { dataTema } from "../../dataTema";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
 import {
   ExsumFundDataTableRes,
   ExsumFundRes,
@@ -33,7 +33,7 @@ import { RODataTable, RoDto } from "@/app/misc/rkp/rkpServiceModel";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { FormatIDR } from "@/lib/utils/currency";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 
 const ChevronBtn = ({ name }: { name: string }) => {
   return (

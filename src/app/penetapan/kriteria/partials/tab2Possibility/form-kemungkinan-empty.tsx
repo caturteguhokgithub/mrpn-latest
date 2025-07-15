@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@mui/material";
 import theme from "@/theme";
-import { TextareaStyled } from "@/app/components/textarea";
+import { TextareaStyled } from "@/components/textarea";
 import { doRequestPossibilityDto } from "./hooks/possibilityModel";
 
 export default function FormKemungkinanEmpty({

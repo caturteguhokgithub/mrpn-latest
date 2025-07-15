@@ -1,6 +1,6 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React, { useMemo } from "react";
 import DashboardLayout from "@/components/layouts/layout";
 import {
@@ -8,9 +8,9 @@ import {
   type MRT_ColumnDef,
   useMaterialReactTable,
 } from "material-react-table";
-import { advancedTable } from "@/app/components/table";
+import { advancedTable } from "@/components/table";
 import ActionColumn from "@/components/actions/action";
-import AddButton from "@/app/components/buttonAdd";
+import AddButton from "@/components/buttonAdd";
 import DialogComponent from "@/components/dialog";
 import { DialogActions, Button, Chip, Stack } from "@mui/material";
 import FormTable from "./partials/form-table";
@@ -22,7 +22,7 @@ import {
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { blue, grey } from "@mui/material/colors";
-import LoaderClones from "../components/loader/clones";
+import LoaderClones from "../../components/loader/clones";
 
 export default function PageRoleManagement() {
   usePermissionChecker("manajemenRole");

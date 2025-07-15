@@ -11,15 +11,15 @@ import {
   TableRow,
 } from "@mui/material";
 import theme from "@/theme";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
 import { usePenetapanTopicContext } from "@/lib/core/hooks/useHooks";
 import {
   PenetapanObjectPrioritas,
   PenetapanObjectUraianDto,
 } from "@/lib/core/context/penetapanTopicContext";
 import { grey } from "@mui/material/colors";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 
 export default function TableLonglistStepTwo({ mode }: { mode?: string }) {
   const { uraianState, setUraianState } = usePenetapanTopicContext(
@@ -27,7 +27,6 @@ export default function TableLonglistStepTwo({ mode }: { mode?: string }) {
   );
 
   console.log(uraianState);
-
 
   function handleChecked(checked: boolean, i: number) {
     const curUraian: PenetapanObjectUraianDto[] = uraianState;
