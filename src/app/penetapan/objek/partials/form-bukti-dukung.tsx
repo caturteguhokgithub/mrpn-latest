@@ -36,7 +36,7 @@ export default function FormBuktiDukung({
               shrink: true,
             }}
             placeholder="Keterangan File"
-            // value={nota?.tanggal}
+            value={reqBuktiDukungPengesahan.filename || ""}
             onChange={(e) => {
               setReqBuktiDukungPengesahan((prev) => {
                 return {
@@ -97,7 +97,7 @@ export default function FormBuktiDukung({
             </Button>
             <Stack alignItems="center" justifyContent="center">
               <Typography fontSize={14} color="text.secondary" lineHeight={1}>
-                {uploadedFileName ? uploadedFileName : "Belum ada data"}
+                {uploadedFileName || "Belum ada data"}
               </Typography>
             </Stack>
           </Stack>
