@@ -1,9 +1,9 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React, { Fragment, useEffect, useState } from "react";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyPage } from "@/app/components/icons";
+import EmptyState from "@/components/empty";
+import { IconEmptyPage } from "@/components/icons";
 import {
   ToggleButtonGroup,
   Typography,
@@ -17,12 +17,12 @@ import {
 } from "@mui/material";
 import theme from "@/theme";
 import { grey } from "@mui/material/colors";
-import AddButton from "@/app/components/buttonAdd";
-import DialogComponent from "@/app/components/dialog";
+import AddButton from "@/components/buttonAdd";
+import DialogComponent from "@/components/dialog";
 import FormTable from "./partials/form-table";
-import ThemeToggleButton from "@/app/components/toggleButton/theme";
+import ThemeToggleButton from "@/components/toggleButton/theme";
 import TabObject from "./partials/tab";
-import { IconFA } from "@/app/components/icons/icon-fa";
+import { IconFA } from "@/components/icons/icon-fa";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import {
   useAuthContext,
@@ -32,10 +32,10 @@ import {
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import { PenetapanObjectDto } from "@/lib/core/context/penetapanTopicContext";
-import DialogDelete from "@/app/components/dialogDelete";
+import DialogDelete from "@/components/dialogDelete";
 import { PenetapanObjectVMState } from "@/app/penetapan/objek/pageModel";
 import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
-import Iconify from "@/app/components/icons/iconify";
+import Iconify from "@/components/icons/iconify";
 import TableLog from "./partials/table-log";
 import FormUPR from "./partials/form-upr";
 import useCardIndicationVM from "@/app/executive-summary/partials/tab9Indication/cardIndicationVM";

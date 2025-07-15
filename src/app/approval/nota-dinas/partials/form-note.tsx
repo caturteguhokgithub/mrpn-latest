@@ -1,6 +1,6 @@
 import React from "react";
 import { FormControl, Grid, Typography } from "@mui/material";
-import TextareaComponent from "@/app/components/textarea";
+import TextareaComponent from "@/components/textarea";
 
 export default function FormNote({ mode }: { mode?: string }) {
   return (

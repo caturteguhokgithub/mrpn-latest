@@ -19,13 +19,13 @@ import { grey, red } from "@mui/material/colors";
 import { ExsumIndicationResDto } from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
 import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
-import ActionColumn from "@/app/components/actions/action";
+import ActionColumn from "@/components/actions/action";
 import { Task } from "gantt-task-react";
 import { ExsumCriticalData } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
 import dayjs from "dayjs";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import TableDetail from "./gantt-critical/table";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 
 export default function TableCritical({
   handleEdit,

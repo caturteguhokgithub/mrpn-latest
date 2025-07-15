@@ -1,4 +1,4 @@
-import React, {SetStateAction} from "react";
+import React, { SetStateAction } from "react";
 import {
   Checkbox,
   FormControl,
@@ -7,51 +7,49 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import {TextareaStyled} from "@/app/components/textarea";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import { TextareaStyled } from "@/components/textarea";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
 import TableAnggaran from "./table-anggaran";
-import {red} from "@mui/material/colors";
+import { red } from "@mui/material/colors";
 import {
   AutoCompleteSingleProp,
-  AutocompleteSelectSingle, AutoCompleteMultipleProp, AutocompleteSelectMultiple,
+  AutocompleteSelectSingle,
+  AutoCompleteMultipleProp,
+  AutocompleteSelectMultiple,
 } from "@/components/autocomplete";
-import {ProPDto} from "@/app/misc/rkp/rkpServiceModel";
-import {
-  ExsumInterventionState
-} from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
+import { ProPDto } from "@/app/misc/rkp/rkpServiceModel";
+import { ExsumInterventionState } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
 import {
   MiscMasterListProvinsiRes,
   MiscMasterListStakeholderRes,
   MiscMasterRPJMNRes,
 } from "@/app/misc/master/masterServiceModel";
-import {useRKPContext} from "@/lib/core/hooks/useHooks";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
 
-export default function FormProfilRoProject(
-  {
-    selectLocation,
-    selectProP,
-    selectStakeholder,
-    state,
-    setState,
-    rpjmn,
-    type
-  }: {
-    selectLocation: AutoCompleteMultipleProp<MiscMasterListProvinsiRes>;
-    selectProP: AutoCompleteSingleProp<ProPDto>;
-    selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes>;
-    state: ExsumInterventionState;
-    setState: (value: SetStateAction<ExsumInterventionState>) => void;
-    rpjmn: MiscMasterRPJMNRes | undefined;
-    type: string
-  }) {
-
-  const {year} = useRKPContext(store => store)
+export default function FormProfilRoProject({
+  selectLocation,
+  selectProP,
+  selectStakeholder,
+  state,
+  setState,
+  rpjmn,
+  type,
+}: {
+  selectLocation: AutoCompleteMultipleProp<MiscMasterListProvinsiRes>;
+  selectProP: AutoCompleteSingleProp<ProPDto>;
+  selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes>;
+  state: ExsumInterventionState;
+  setState: (value: SetStateAction<ExsumInterventionState>) => void;
+  rpjmn: MiscMasterRPJMNRes | undefined;
+  type: string;
+}) {
+  const { year } = useRKPContext((store) => store);
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={5}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Format Kode"/>
+          <FieldLabelInfo title="Format Kode" />
           <TextField
             value={state.code}
             onChange={(e) =>
@@ -73,7 +71,7 @@ export default function FormProfilRoProject(
       </Grid>
       <Grid item xs={12} md={5}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Tagging ProP"/>
+          <FieldLabelInfo title="Tagging ProP" />
           <AutocompleteSelectSingle
             key={state.prop?.id}
             value={selectProP.value}
@@ -86,7 +84,7 @@ export default function FormProfilRoProject(
       </Grid>
       <Grid item xs={12} md={2}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Intervensi Kunci"/>
+          <FieldLabelInfo title="Intervensi Kunci" />
           <FormControlLabel
             control={
               <Checkbox
@@ -113,7 +111,7 @@ export default function FormProfilRoProject(
       </Grid>
       <Grid item xs={12} md={5}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Penanggungjawab"/>
+          <FieldLabelInfo title="Penanggungjawab" />
           <AutocompleteSelectSingle
             key={state.id}
             value={selectStakeholder.value}
@@ -126,7 +124,7 @@ export default function FormProfilRoProject(
       </Grid>
       <Grid item xs={12} md={7}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Nomenklatur RO/Project"/>
+          <FieldLabelInfo title="Nomenklatur RO/Project" />
           <TextField
             value={state.nomenklatur}
             onChange={(e) =>
@@ -148,7 +146,7 @@ export default function FormProfilRoProject(
       </Grid>
       <Grid item xs={12} md={12}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Lokasi"/>
+          <FieldLabelInfo title="Lokasi" />
           <AutocompleteSelectMultiple
             value={selectLocation.value}
             options={selectLocation.options}
@@ -161,7 +159,7 @@ export default function FormProfilRoProject(
       </Grid>
       <Grid item xs={12}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Indikator Project"/>
+          <FieldLabelInfo title="Indikator Project" />
           <TextareaStyled
             value={state.indikator}
             onChange={(e) =>

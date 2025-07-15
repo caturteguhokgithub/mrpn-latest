@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, DialogActions } from "@mui/material";
-import CardItem from "@/app/components/cardTabItem";
-import DialogComponent from "@/app/components/dialog";
+import CardItem from "@/components/cardTabItem";
+import DialogComponent from "@/components/dialog";
 import FormDampak from "../tab3Impact/form-dampak";
 import Matriks from "./matriks";
 

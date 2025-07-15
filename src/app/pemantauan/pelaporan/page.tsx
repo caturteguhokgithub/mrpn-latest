@@ -1,8 +1,8 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React from "react";
-import DashboardLayout from "@/app/components/layouts/layout";
+import DashboardLayout from "@/components/layouts/layout";
 import {
   Stack,
   Typography,
@@ -13,7 +13,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import AddButton from "@/app/components/buttonAdd";
+import AddButton from "@/components/buttonAdd";
 import theme from "@/theme";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 

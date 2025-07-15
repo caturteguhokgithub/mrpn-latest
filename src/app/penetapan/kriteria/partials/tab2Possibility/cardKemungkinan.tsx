@@ -1,16 +1,16 @@
-import AddButton from "@/app/components/buttonAdd";
-import CardItem from "@/app/components/cardTabItem";
+import AddButton from "@/components/buttonAdd";
+import CardItem from "@/components/cardTabItem";
 import React, { Fragment } from "react";
 import TableKemungkinan from "./table-kriteria-kemungkinan";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import FormKemungkinan from "./form-kemungkinan";
 import { DialogActions, Button, Stack } from "@mui/material";
-import Iconify from "@/app/components/icons/iconify";
-import EmptyDevelopingState from "@/app/components/empty/developing";
-import { isDeveloping } from "@/app/components/layouts/layout";
+import Iconify from "@/components/icons/iconify";
+import EmptyDevelopingState from "@/components/empty/developing";
+import { isDeveloping } from "@/components/layouts/layout";
 import usePossibilityList from "./hooks/usePossibility";
 import FormPossibility from "./form-possibility";
-import DialogDelete from "@/app/components/dialogDelete";
+import DialogDelete from "@/components/dialogDelete";
 import FormKemungkinanEmpty from "./form-kemungkinan-empty";
 
 export default function CardKemungkinan() {

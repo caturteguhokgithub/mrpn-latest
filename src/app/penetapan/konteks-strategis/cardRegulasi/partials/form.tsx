@@ -20,7 +20,7 @@ import {
 import { IconFA } from "@/components/icons/icon-fa";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { GenerateRpjmnYear } from "@/lib/utils/common";
-import { TextareaStyled } from "@/app/components/textarea";
+import { TextareaStyled } from "@/components/textarea";
 import useCardRegulasi from "../vm";
 import { doRequestRegulasiDto } from "../model";
 

@@ -8,13 +8,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 import { blue, grey, red } from "@mui/material/colors";
 import { Stack } from "@mui/material";
-import Iconify from "@/app/components/icons/iconify";
+import Iconify from "@/components/icons/iconify";
 import { ResultCategory, SubKategoriRisiko } from "./hooks/categoryModel";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
 
 function Row(props: {
   rowIndex: number;

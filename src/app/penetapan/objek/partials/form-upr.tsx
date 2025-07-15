@@ -10,11 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 import { SetStateAction, useEffect, useState } from "react";
-import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
-import AddButton from "@/app/components/buttonAdd";
+import { AutocompleteSelectSingle } from "@/components/autocomplete";
+import AddButton from "@/components/buttonAdd";
 import { dtoUraian, PenetapanObjectEntityReqDto } from "../pageModel";
 import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
-import { TextareaStyled } from "@/app/components/textarea";
+import { TextareaStyled } from "@/components/textarea";
 
 export default function FormUPR({
   optionSL,
@@ -272,7 +272,7 @@ export default function FormUPR({
                         <AutocompleteSelectSingle
                           value={tags.stakeholder ?? null}
                           options={listStakeholder}
-                          getOptionLabel={(option) => option?.value || "-"}
+                          getOptionLabel={(option) => option?.value || ""}
                           handleChange={(
                             newValue: MiscMasterListStakeholderRes
                           ) =>

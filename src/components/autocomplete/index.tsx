@@ -14,7 +14,7 @@ import {
   SxAutocomplete,
   SxAutocompleteTextField,
 } from "@/components/dropdown/dropdownRkp";
-import { paramVariantDefault } from "@/app/utils/constant";
+import { paramVariantDefault } from "@/utils/constant";
 
 export interface AutoCompleteMultipleProp<T> {
   value: T[];
@@ -141,11 +141,10 @@ export function AutocompleteSelectSingle<T>({
       onChange={(_e, value) => {
         handleChange(value);
       }}
-      renderOption={renderOption || ((props, option) => ( 
-        <li {...props}>
-          {getOptionLabel(option)}
-        </li>
-      ))}
+      renderOption={
+        renderOption ||
+        ((props, option) => <li {...props}>{getOptionLabel(option)}</li>)
+      }
       renderInput={(params) => (
         <TextField
           {...params}

@@ -14,14 +14,14 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "@/theme";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import useRkpVM from "@/components/dropdown/rkpVM";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
-import { InfoTooltip } from "@/app/components/InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 import { grey } from "@mui/material/colors";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 
 type Row = {
   object: string;

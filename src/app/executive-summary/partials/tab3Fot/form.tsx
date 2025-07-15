@@ -9,11 +9,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import TextareaComponent from "@/app/components/textarea";
+import TextareaComponent from "@/components/textarea";
 import { dataTema } from "../../dataTema";
 import ImageGalleryStakeholder from "../tab2Profile/partials/imageSearch";
-import { IconFA } from "@/app/components/icons/icon-fa";
-import { VisuallyHiddenInput } from "@/app/utils/constant";
+import { IconFA } from "@/components/icons/icon-fa";
+import { VisuallyHiddenInput } from "@/utils/constant";
 import { grey } from "@mui/material/colors";
 
 export default function FormFramework({

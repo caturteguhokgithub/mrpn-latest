@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import CardItem from "@/app/components/cardTabItem";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import CardItem from "@/components/cardTabItem";
 import TableFund from "./tableFund";
 import useCardFundVM from "@/app/executive-summary/partials/tab8Fund/cardFundVM";
 import { Icon, Stack, useMediaQuery } from "@mui/material";

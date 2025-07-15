@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { grey, red } from "@mui/material/colors";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
 import Matriks from "./matriks";
 import { RiskAnalysisAddStateDto } from "@/app/profil-risiko/analisis-evaluasi/pageModel";
 import { MasterRiskMatrixRes } from "@/app/misc/master/masterServiceModel";

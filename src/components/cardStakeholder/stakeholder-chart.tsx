@@ -6,8 +6,8 @@ import "@dabeng/react-orgchart/dist/ChartContainer.css";
 import theme from "@/theme";
 import { IconFA } from "@/components/icons/icon-fa";
 import { styleOrgChart, styleOrgChart2 } from "@/app/executive-summary/style";
-import ImageGalleryStakeholder from "../../executive-summary/partials/tab2Profile/partials/imageSearch";
-import DraggableScroll from "../../executive-summary/partials/tab2Profile/partials/draggableScroll";
+import ImageGalleryStakeholder from "../../app/executive-summary/partials/tab2Profile/partials/imageSearch";
+import DraggableScroll from "../../app/executive-summary/partials/tab2Profile/partials/draggableScroll";
 import Image from "next/image";
 import {
   ExsumStakeholderResDto,

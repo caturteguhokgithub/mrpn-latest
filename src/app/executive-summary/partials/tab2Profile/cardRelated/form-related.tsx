@@ -30,14 +30,14 @@ import {
   SxAutocomplete,
 } from "@/components/dropdown/dropdownRkp";
 import { grey } from "@mui/material/colors";
-import { paramVariantDefault } from "@/app/utils/constant";
+import { paramVariantDefault } from "@/utils/constant";
 import { MiscMasterListKebijakanRes } from "@/app/misc/master/masterServiceModel";
 import {
   ExsumRelatedInitState,
   ExsumRelatedDto,
 } from "@/app/executive-summary/partials/tab2Profile/cardRelated/cardRelatedModel";
 import type ReactQuill from "react-quill";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
 import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
 
 const FCLItem = ({ keyIndex, item }: { keyIndex: any; item: string }) => {
@@ -286,7 +286,6 @@ MRPN"
                             />
                           }
                           label={
-
                             <Stack
                               direction="row"
                               alignItems="flex-start"
@@ -296,16 +295,14 @@ MRPN"
                                 {index2 + 1}.
                               </Typography>{" "}
                               <Stack direction={"column"} gap={0}>
-                                <>
-                                  {item.value}
-                                </>
+                                <>{item.value}</>
                                 <List
-                                  sx={{ ml: 2, listStyleType: "disc", py:0 }}
+                                  sx={{ ml: 2, listStyleType: "disc", py: 0 }}
                                 >
                                   {item.child.map((child) => (
                                     <ListItem
                                       sx={{
-                                        py:0,
+                                        py: 0,
                                         display: "list-item",
                                         px: 1,
                                       }}

@@ -1,5 +1,5 @@
 import { styled } from "@mui/material";
-import { SxParams } from "../executive-summary/types";
+import { SxParams } from "../app/executive-summary/types";
 
 export const mainUrl = "/penetapan/konteks-strategis/";
 export const addUrl = `${mainUrl}form/add`;

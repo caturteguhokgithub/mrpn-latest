@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { blue, green, grey, orange, red, yellow } from "@mui/material/colors";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
 import {
   ManagementRoleDto,
   PermissionRoleDto,

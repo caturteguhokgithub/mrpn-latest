@@ -13,8 +13,8 @@ import {
 } from "@mui/material";
 import { green, grey, orange } from "@mui/material/colors";
 import TooltipCP from "./tooltip";
-import Iconify from "@/app/components/icons/iconify";
-import { bgColorTh } from "@/app/utils/color";
+import Iconify from "@/components/icons/iconify";
+import { bgColorTh } from "@/utils/color";
 import {
   BlockCell,
   ChildRow,

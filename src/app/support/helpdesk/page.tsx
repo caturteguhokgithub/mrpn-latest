@@ -1,11 +1,11 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React from "react";
-import DashboardLayout from "@/app/components/layouts/layout";
+import DashboardLayout from "@/components/layouts/layout";
 import { SelectChangeEvent } from "@mui/material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyPage } from "@/app/components/icons";
+import EmptyState from "@/components/empty";
+import { IconEmptyPage } from "@/components/icons";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 
 export default function PageHelpdesk() {

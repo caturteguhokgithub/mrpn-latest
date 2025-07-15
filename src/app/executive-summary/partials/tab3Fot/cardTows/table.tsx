@@ -27,10 +27,10 @@ import {
   ExsumTWOSDto,
   ExsumTWOSResDto,
 } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
-import { InfoTooltip } from "@/app/components/InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 
 const TitleTableContent = ({
   title,

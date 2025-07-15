@@ -13,14 +13,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import AddButton from "@/app/components/buttonAdd";
-import Iconify from "@/app/components/icons/iconify";
-import DialogComponent from "@/app/components/dialog";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
+import AddButton from "@/components/buttonAdd";
+import Iconify from "@/components/icons/iconify";
+import DialogComponent from "@/components/dialog";
 import dynamic from "next/dynamic";
 import type ReactQuill from "react-quill";
 import useCardSegmentVM from "@/app/executive-summary/partials/tab1Background/cardSegment/cardSegmentVM";
-import { VisuallyHiddenInput } from "@/app/utils/constant";
+import { VisuallyHiddenInput } from "@/utils/constant";
 import { doReqInformasiLainnya } from "../hooks/informationModel";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {

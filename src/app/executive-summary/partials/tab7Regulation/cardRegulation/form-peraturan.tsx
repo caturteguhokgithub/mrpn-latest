@@ -15,13 +15,13 @@ import {
   MiscMasterListStakeholderRes,
 } from "@/app/misc/master/masterServiceModel";
 import { ExsumRegulationDto } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
-import { listPeraturan } from "@/app/utils/data";
+import { listPeraturan } from "@/utils/data";
 import {
   AutocompleteSelectMultiple,
   AutocompleteSelectSingle,
 } from "@/components/autocomplete";
-import { IconFA } from "@/app/components/icons/icon-fa";
-import DialogComponent from "@/app/components/dialog";
+import { IconFA } from "@/components/icons/icon-fa";
+import DialogComponent from "@/components/dialog";
 
 type Option = (typeof listPeraturan)[number];
 

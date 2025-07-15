@@ -17,7 +17,7 @@ import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
 import useCardSasaranUPRVM from "@/app/penetapan/konteks-strategis/cardSasaranKinerjaUPR/vm";
-import { InfoTooltip } from "@/app/components/InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 
 export default function CardSasaranKinerjaUPR() {
   const { objectState, getData, data } = useCardSasaranUPRVM();

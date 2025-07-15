@@ -15,9 +15,9 @@ import {
   Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { IconFA } from "@/app/components/icons/icon-fa";
-import { VisuallyHiddenInput } from "@/app/utils/constant";
-import { TextareaStyled } from "@/app/components/textarea";
+import { IconFA } from "@/components/icons/icon-fa";
+import { VisuallyHiddenInput } from "@/utils/constant";
+import { TextareaStyled } from "@/components/textarea";
 import { usePenetapanTopicContext } from "@/lib/core/hooks/useHooks";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import Image from "next/image";

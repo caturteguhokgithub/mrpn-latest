@@ -1,5 +1,5 @@
 import React, { Fragment, useMemo } from "react";
-import { advancedTable } from "@/app/components/table";
+import { advancedTable } from "@/components/table";
 import { Box, Chip, Paper, Stack, Typography } from "@mui/material";
 import {
   useMaterialReactTable,
@@ -7,8 +7,8 @@ import {
   MRT_ColumnDef,
   MRT_Column,
 } from "material-react-table";
-import ActionColumn from "@/app/components/actions/action";
-import AddButton from "@/app/components/buttonAdd";
+import ActionColumn from "@/components/actions/action";
+import AddButton from "@/components/buttonAdd";
 import { blue, green, grey, orange, red, yellow } from "@mui/material/colors";
 import { RiskOverviewData } from "@/app/profil-risiko/overview/pageModel";
 
@@ -34,10 +34,10 @@ function ChipLevelRisiko(props: { level: any }) {
             props.level === "Sangat Tinggi (5)"
               ? "error"
               : props.level === "Tinggi (4)"
-                ? "warning"
-                : props.level === "Rendah (2)"
-                  ? "success"
-                  : undefined
+              ? "warning"
+              : props.level === "Rendah (2)"
+              ? "success"
+              : undefined
           }
           sx={{
             minWidth: 80,

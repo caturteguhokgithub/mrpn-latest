@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import DashboardLayout from "@/app/components/layouts/layout";
+import DashboardLayout from "@/components/layouts/layout";
 import PageApprovalProfilView from "@/app/approval/profil/pageView";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 

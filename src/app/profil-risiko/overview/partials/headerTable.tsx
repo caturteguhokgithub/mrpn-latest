@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import theme from "@/theme";
 import { IdentificationRiskResDto } from "@/app/profil-risiko/identifikasi/pageModel";
-import { InfoTooltip } from "@/app/components/InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 import { blue, grey } from "@mui/material/colors";
 import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";

@@ -12,9 +12,9 @@ import {
 } from "@mui/material";
 import { logoOrange, logoBrown, logoGreen, logoBlue, red } from "@/utils/color";
 import { BlockCard, CardValue } from "../partials/card";
-import SelectCustomTheme from "@/app/components/select";
-import { listKldBadanUsaha } from "@/app/utils/data";
-import DialogComponent from "@/app/components/dialog";
+import SelectCustomTheme from "@/components/select";
+import { listKldBadanUsaha } from "@/utils/data";
+import DialogComponent from "@/components/dialog";
 
 export default function CardGroup({ darkMode }: { darkMode?: boolean }) {
   const [valueSelect, setValueSelect] = React.useState("");

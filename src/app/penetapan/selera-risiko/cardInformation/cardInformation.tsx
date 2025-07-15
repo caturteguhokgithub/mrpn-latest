@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from "react";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import CardItem from "@/app/components/cardTabItem";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import CardItem from "@/components/cardTabItem";
 import type ReactQuill from "react-quill";
 import dynamic from "next/dynamic";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import useCardSegmentVM from "@/app/executive-summary/partials/tab1Background/cardSegment/cardSegmentVM";
 import {
   Box,
@@ -21,21 +21,21 @@ import {
   TableRow,
 } from "@mui/material";
 import Image from "next/image";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 import { blue, grey, red } from "@mui/material/colors";
-import Iconify from "@/app/components/icons/iconify";
-import { IconFA } from "@/app/components/icons/icon-fa";
+import Iconify from "@/components/icons/iconify";
+import { IconFA } from "@/components/icons/icon-fa";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { styleOrgChart } from "@/app/executive-summary/style";
-import DraggableScroll from "@/app/components/cardStakeholder/draggableScroll";
+import DraggableScroll from "@/components/cardStakeholder/draggableScroll";
 import { SxParams } from "@/app/executive-summary/types";
 import FormInformation from "./form";
 import useInformationList from "../hooks/useInformation";
-import EmptyDevelopingState from "@/app/components/empty/developing";
-import { isDeveloping } from "@/app/components/layouts/layout";
-import DialogDelete from "@/app/components/dialogDelete";
+import EmptyDevelopingState from "@/components/empty/developing";
+import { isDeveloping } from "@/components/layouts/layout";
+import DialogDelete from "@/components/dialogDelete";
 import { listsDao } from "../hooks/informationModel";
-import Toast from "@/app/components/snackbar/snackbar";
+import Toast from "@/components/snackbar/snackbar";
 import usePenetapanObjectVM from "../../objek/pageVM";
 import { useToast } from "@/lib/core/context/toastContext";
 

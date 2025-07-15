@@ -12,8 +12,8 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "@/theme";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
 import {
   useAuthContext,
   usePenetapanTopicContext,
@@ -27,7 +27,7 @@ import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import { grey } from "@mui/material/colors";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 
 export default function TableLonglistStepOne({ mode }: { mode?: string }) {
   const { uraianState, setUraianState } = usePenetapanTopicContext(
@@ -142,13 +142,13 @@ export default function TableLonglistStepOne({ mode }: { mode?: string }) {
                     <TableCell align="center">
                       <Checkbox
                         value={x.id}
-                        // disabled={
-                        //   !(
-                        //     hasPrivilege(permission, pathname, "add") ||
-                        //     hasPrivilege(permission, pathname, "update") ||
-                        //     hasPrivilege(permission, pathname, "delete")
-                        //   )
-                        // }
+                        disabled={
+                          !(
+                            hasPrivilege(permission, pathname, "add") ||
+                            hasPrivilege(permission, pathname, "update") ||
+                            hasPrivilege(permission, pathname, "delete")
+                          )
+                        }
                         checked={getIsChecked(row.prioritas, x.id)}
                         onChange={(e) =>
                           handleChecked(e.target.checked, i, x.id)

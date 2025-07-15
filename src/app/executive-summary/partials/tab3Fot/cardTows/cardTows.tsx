@@ -26,7 +26,7 @@ import {
 import AddButton from "@/components/buttonAdd";
 import { AutocompleteSelectMultiple } from "@/components/autocomplete";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
-import Iconify from "@/app/components/icons/iconify";
+import Iconify from "@/components/icons/iconify";
 import { blue } from "@mui/material/colors";
 
 export default function CardTows({ project }: { project: string }) {

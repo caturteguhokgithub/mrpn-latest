@@ -1,8 +1,8 @@
 import React from "react";
 import { FormControl, Grid, Typography } from "@mui/material";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import { TextareaStyled } from "@/app/components/textarea";
-import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
+import { TextareaStyled } from "@/components/textarea";
+import { AutocompleteSelectSingle } from "@/components/autocomplete";
 import { doValues } from "./hooks/possibilityModel";
 import { cloneDeep, isEmpty } from "lodash";
 

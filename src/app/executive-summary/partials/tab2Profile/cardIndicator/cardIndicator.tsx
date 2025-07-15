@@ -22,7 +22,7 @@ import theme from "@/theme";
 import { DasarPemilihan } from "@/app/penetapan/objek/pageModel";
 import { GenerateRpjmnYear, GetTarget } from "@/lib/utils/common";
 import { grey } from "@mui/material/colors";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 
 export const getLevel = (level: string) => {
   switch (level) {

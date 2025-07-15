@@ -7,8 +7,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Iconify from "@/app/components/icons/iconify";
-import { VisuallyHiddenInput } from "@/app/utils/constant";
+import Iconify from "@/components/icons/iconify";
+import { VisuallyHiddenInput } from "@/utils/constant";
 import { SetStateAction } from "react";
 import { dtoReqBuktiDukungPengesahan } from "../pageModel";
 import usePenetapanObjectVM from "../pageVM";

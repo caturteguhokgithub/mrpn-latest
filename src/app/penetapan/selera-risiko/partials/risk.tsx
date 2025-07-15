@@ -12,17 +12,17 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import theme from "@/theme";
-import CustomToggleButton from "@/app/components/toggleButton";
-import { TextareaStyled } from "@/app/components/textarea";
+import CustomToggleButton from "@/components/toggleButton";
+import { TextareaStyled } from "@/components/textarea";
 import FormatBP from "./formatBp";
 import FormatKL from "./formatKl";
-import { LabelRadio } from "@/app/components/labelRadio";
+import { LabelRadio } from "@/components/labelRadio";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
-import { InfoTooltip } from "@/app/components/InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 import SeleraMatriks from "../../kriteria/partials/tab4Selera/matriks";
 import TableRas from "./table-ras";
 import { doReqSeleraDto } from "../../kriteria/partials/tab4Selera/hooks/model";
-import Iconify from "@/app/components/icons/iconify";
+import Iconify from "@/components/icons/iconify";
 
 export default function RiskContent({
   handleSaveButton,

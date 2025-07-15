@@ -17,12 +17,12 @@ import {
 } from "@mui/material";
 import theme from "@/theme";
 import { ExsumRelatedDto } from "@/app/executive-summary/partials/tab2Profile/cardRelated/cardRelatedModel";
-import DialogDelete from "@/app/components/dialogDelete";
-import ActionColumn from "@/app/components/actions/action";
+import DialogDelete from "@/components/dialogDelete";
+import ActionColumn from "@/components/actions/action";
 import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 
 export default function TableTagging({
   project,

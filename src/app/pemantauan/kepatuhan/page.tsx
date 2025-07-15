@@ -1,11 +1,11 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React, { Fragment } from "react";
-import DashboardLayout from "@/app/components/layouts/layout";
+import DashboardLayout from "@/components/layouts/layout";
 import { Button, DialogActions } from "@mui/material";
-import DialogComponent from "@/app/components/dialog";
-import AddButton from "@/app/components/buttonAdd";
+import DialogComponent from "@/components/dialog";
+import AddButton from "@/components/buttonAdd";
 import TableAdd from "./partials/table";
 import CardGroup from "./partials/card-group";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";

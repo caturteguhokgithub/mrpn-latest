@@ -15,10 +15,10 @@ import {
 import "@dabeng/react-orgchart/dist/ChartNode.css";
 import "@dabeng/react-orgchart/dist/ChartContainer.css";
 import theme from "@/theme";
-import { IconFA } from "@/app/components/icons/icon-fa";
+import { IconFA } from "@/components/icons/icon-fa";
 import { styleList, styleOrgChart } from "@/app/executive-summary/style";
 import { grey, orange } from "@mui/material/colors";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import { RKPCascadingDto } from "@/app/executive-summary/partials/tab4Cascading/cardDiagram/cardDiagramModel";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import DraggableScroll from "@/app/executive-summary/partials/tab2Profile/partials/draggableScroll";

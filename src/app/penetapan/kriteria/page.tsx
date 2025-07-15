@@ -1,8 +1,8 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React from "react";
-import DashboardLayout from "@/app/components/layouts/layout";
+import DashboardLayout from "@/components/layouts/layout";
 // import { SelectChangeEvent } from "@mui/material";
 import TabCriteria from "./partials/tab";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";

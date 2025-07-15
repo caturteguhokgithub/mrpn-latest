@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import DashboardLayout from "@/app/components/layouts/layout";
+import DashboardLayout from "@/components/layouts/layout";
 import PageTemaView from "@/app/penetapan/objek/pageView";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 import { PenetapanTopicProvider } from "@/lib/core/provider/penetapanTopicProvider";

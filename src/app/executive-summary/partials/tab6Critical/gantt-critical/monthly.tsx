@@ -18,7 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "@/theme";
-import { IconFA } from "@/app/components/icons/icon-fa";
+import { IconFA } from "@/components/icons/icon-fa";
 import { TaskAdditionalData } from "@/app/executive-summary/partials/tab6Critical/cardCriticalModel";
 
 const CustomTaskListHeader = ({

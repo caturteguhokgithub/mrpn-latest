@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import theme from "@/theme";
 import { IdentificationRiskResDto } from "@/app/profil-risiko/identifikasi/pageModel";
-import { InfoTooltip } from "@/app/components/InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 import { grey } from "@mui/material/colors";
 import HeaderTable from "@/app/profil-risiko/overview/partials/headerTable";
 

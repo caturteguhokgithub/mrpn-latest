@@ -17,7 +17,7 @@ import { defaultInitAuthState } from "@/lib/core/context/authContext";
 import { defaultPenetapanState } from "@/lib/core/context/penetapanContext";
 import { PenetapanProvider } from "@/lib/core/provider/penetapanProvider";
 import { ToastProvider } from "@/lib/core/context/toastContext";
-import Toast from "./components/snackbar/snackbar";
+import Toast from "../components/snackbar/snackbar";
 // import Head from "next/head";
 
 export const metadata: Metadata = {

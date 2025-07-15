@@ -1,8 +1,8 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React from "react";
-import DashboardLayout from "@/app/components/layouts/layout";
+import DashboardLayout from "@/components/layouts/layout";
 import {
   Box,
   Button,
@@ -15,13 +15,13 @@ import {
   Typography,
   alpha,
 } from "@mui/material";
-import { IconFA } from "@/app/components/icons/icon-fa";
+import { IconFA } from "@/components/icons/icon-fa";
 import theme from "@/theme";
-import CustomToggleButton from "@/app/components/toggleButton";
+import CustomToggleButton from "@/components/toggleButton";
 import FormatKL from "@/app/penetapan/selera-risiko/partials/formatKl";
-import { CardWithStamp } from "@/app/components/card-w-stamp";
-import { LabelRadio } from "@/app/components/labelRadio";
-import DialogComponent from "@/app/components/dialog";
+import { CardWithStamp } from "@/components/card-w-stamp";
+import { LabelRadio } from "@/components/labelRadio";
+import DialogComponent from "@/components/dialog";
 import FormReject from "../nota-dinas/partials/form-reject";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 

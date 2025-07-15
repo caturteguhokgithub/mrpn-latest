@@ -23,7 +23,7 @@ import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { ProPDto, RODataTable } from "@/app/misc/rkp/rkpServiceModel";
 import { FormatIDR } from "@/lib/utils/currency";
 import { ExsumIndicationStateValue } from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
 import {
   AutoCompleteMultipleProp,
   AutocompleteSelectMultiple,

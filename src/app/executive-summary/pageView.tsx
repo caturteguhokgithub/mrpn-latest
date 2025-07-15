@@ -1,6 +1,6 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React, { Fragment, useEffect } from "react";
 import {
   Box,
@@ -32,11 +32,11 @@ import useApprovalVM from "@/app/executive-summary/approvalVM";
 import { grey } from "@mui/material/colors";
 import { ApprovalDto } from "@/lib/core/context/exsumContext";
 import { OverridableStringUnion } from "@mui/types";
-import { InfoTooltip } from "../components/InfoTooltip";
+import { InfoTooltip } from "../../components/InfoTooltip";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
-import AddButton from "../components/buttonAdd";
-import Iconify from "../components/icons/iconify";
+import AddButton from "../../components/buttonAdd";
+import Iconify from "../../components/icons/iconify";
 
 export default function PageExecutiveSummary({}) {
   const { permission, user } = useAuthContext((state) => state);

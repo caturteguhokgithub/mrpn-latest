@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { advancedTable } from "@/app/components/table";
+import { advancedTable } from "@/components/table";
 import {
   Box,
   Checkbox,
@@ -18,8 +18,8 @@ import {
   MaterialReactTable,
   MRT_ColumnDef,
 } from "material-react-table";
-import ActionColumn from "@/app/components/actions/action";
-import AddButton from "@/app/components/buttonAdd";
+import ActionColumn from "@/components/actions/action";
+import AddButton from "@/components/buttonAdd";
 import { data, type PerlakuanType } from "../setting";
 import { green, grey, orange, red } from "@mui/material/colors";
 import theme from "@/theme";

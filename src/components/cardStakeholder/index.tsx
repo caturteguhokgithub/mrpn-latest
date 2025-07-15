@@ -8,27 +8,24 @@ import {
   Tooltip,
   alpha,
 } from "@mui/material";
-import {grey} from "@mui/material/colors";
-import {IconFA} from "@/app/components/icons/icon-fa";
+import { grey } from "@mui/material/colors";
+import { IconFA } from "@/components/icons/icon-fa";
 import theme from "@/theme";
-import EmptyState from "@/app/components/empty";
-import {IconEmptyImage} from "@/app/components/icons";
+import EmptyState from "@/components/empty";
+import { IconEmptyImage } from "@/components/icons";
 import DraggableScroll from "./draggableScroll";
 
-const StakeholderOptionsForm = (
-  {
-    images,
-    searchTerm,
-    checkedImage,
-    handleCheckImage
-  }: {
-    images: any;
-    searchTerm: any;
-    checkedImage:number[]
-    handleCheckImage:(items:number[]) => void
-  }
-) => {
-
+const StakeholderOptionsForm = ({
+  images,
+  searchTerm,
+  checkedImage,
+  handleCheckImage,
+}: {
+  images: any;
+  searchTerm: any;
+  checkedImage: number[];
+  handleCheckImage: (items: number[]) => void;
+}) => {
   const styles = {
     pt: 1,
     mb: 1,
@@ -75,7 +72,7 @@ const StakeholderOptionsForm = (
     return (
       <EmptyState
         dense
-        icon={<IconEmptyImage width={60}/>}
+        icon={<IconEmptyImage width={60} />}
         description="Stakeholder tidak ditemukan"
       />
     );
@@ -122,7 +119,9 @@ const StakeholderOptionsForm = (
                       key={index}
                       alt={image.value}
                       value={image.id}
-                      imgSrc={process.env.NEXT_PUBLIC_BASE_URL_FILES+image.icon}
+                      imgSrc={
+                        process.env.NEXT_PUBLIC_BASE_URL_FILES + image.icon
+                      }
                     />
                   </Box>
                 </Stack>
@@ -135,17 +134,15 @@ const StakeholderOptionsForm = (
   );
 };
 
-const ToggleButtonLogo = (
-  {
-    alt,
-    value,
-    imgSrc,
-  }: {
-    alt:string
-    value: string
-    imgSrc: string
-  }
-) => {
+const ToggleButtonLogo = ({
+  alt,
+  value,
+  imgSrc,
+}: {
+  alt: string;
+  value: string;
+  imgSrc: string;
+}) => {
   return (
     <Tooltip title={alt} arrow>
       <ToggleButton
@@ -160,22 +157,24 @@ const ToggleButtonLogo = (
           },
         }}
       >
-        {(imgSrc == null || imgSrc == "") ?
-          <IconEmptyImage
-            width={60}
-          />
-        :
+        {imgSrc == null || imgSrc == "" ? (
+          <IconEmptyImage width={60} />
+        ) : (
           <Image
             alt={alt}
             src={imgSrc}
             width={0}
             height={0}
             sizes="100vw"
-            style={{width: "auto", height: "50px"}}
+            style={{ width: "auto", height: "50px" }}
           />
-        }
-        <IconFA name="circle" size={15} color={theme.palette.primary.main}/>
-        <IconFA name="circle-check" size={15} color={theme.palette.primary.main}/>
+        )}
+        <IconFA name="circle" size={15} color={theme.palette.primary.main} />
+        <IconFA
+          name="circle-check"
+          size={15}
+          color={theme.palette.primary.main}
+        />
       </ToggleButton>
     </Tooltip>
   );

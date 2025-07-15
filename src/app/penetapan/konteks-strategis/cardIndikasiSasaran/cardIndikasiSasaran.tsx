@@ -15,7 +15,7 @@ import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
 import useIndikatorSasaranVM from "@/app/penetapan/konteks-strategis/cardIndikasiSasaran/vm";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 import { grey } from "@mui/material/colors";
 
 type Row = {

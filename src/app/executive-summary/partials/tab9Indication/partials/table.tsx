@@ -19,9 +19,9 @@ import { ExsumIndicationResDto } from "@/app/executive-summary/partials/tab9Indi
 import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
-import { InfoTooltip } from "@/app/components/InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 import ActionColumn from "@/components/actions/action";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 
 export default function TableIndication({
   data,
@@ -150,21 +150,21 @@ export default function TableIndication({
             )}
             {(hasPrivilege(permission, pathname, "update") ||
               hasPrivilege(permission, pathname, "delete")) && (
-                <TableCell
-                  sx={{
-                    // position: "sticky",
-                    // right: 0,
-                    // boxShadow: "2px -6px 10px grey",
-                    // borderLeft: "1px solid #e0e0e0",
-                    bgcolor: bgColorTh,
-                    width: 100,
-                  }}
-                >
-                  <Typography variant="body1" fontWeight={600} textAlign="center">
-                    Aksi
-                  </Typography>
-                </TableCell>
-              )}
+              <TableCell
+                sx={{
+                  // position: "sticky",
+                  // right: 0,
+                  // boxShadow: "2px -6px 10px grey",
+                  // borderLeft: "1px solid #e0e0e0",
+                  bgcolor: bgColorTh,
+                  width: 100,
+                }}
+              >
+                <Typography variant="body1" fontWeight={600} textAlign="center">
+                  Aksi
+                </Typography>
+              </TableCell>
+            )}
           </TableRow>
           <TableRow
             sx={{
@@ -316,26 +316,26 @@ export default function TableIndication({
 
                   {(hasPrivilege(permission, pathname, "update") ||
                     hasPrivilege(permission, pathname, "delete")) && (
-                      <TableCell
-                        rowSpan={
-                          (row.perlakuan.length == 0 ? 1 : row.perlakuan.length) +
-                          row.regulasi.length
+                    <TableCell
+                      rowSpan={
+                        (row.perlakuan.length == 0 ? 1 : row.perlakuan.length) +
+                        row.regulasi.length
+                      }
+                    >
+                      <ActionColumn
+                        editClick={
+                          hasPrivilege(permission, pathname, "update")
+                            ? () => handleEditData(row.id)
+                            : undefined
                         }
-                      >
-                        <ActionColumn
-                          editClick={
-                            hasPrivilege(permission, pathname, "update")
-                              ? () => handleEditData(row.id)
-                              : undefined
-                          }
-                          deleteClick={
-                            hasPrivilege(permission, pathname, "delete")
-                              ? () => handleDeleteData(row.id)
-                              : undefined
-                          }
-                        />
-                      </TableCell>
-                    )}
+                        deleteClick={
+                          hasPrivilege(permission, pathname, "delete")
+                            ? () => handleDeleteData(row.id)
+                            : undefined
+                        }
+                      />
+                    </TableCell>
+                  )}
                 </TableRow>
 
                 {row.perlakuan.slice(1).map((perlakuan, i) => (
@@ -414,16 +414,18 @@ export default function TableIndication({
                   <TableRow>
                     <TableCell sx={{ verticalAlign: "top" }}>
                       <ul>
-                        {Array.isArray(regulation.perpres) ? regulation.perpres.map((y, index2) => (
-                          <li>
-                            <Typography
-                              key={`perpres-${index2}`}
-                              color={y.flag != null ? "#EA6228" : undefined}
-                            >
-                              {`${y.title}`}
-                            </Typography>
-                          </li>
-                        )) : ""}
+                        {Array.isArray(regulation.perpres)
+                          ? regulation.perpres.map((y, index2) => (
+                              <li>
+                                <Typography
+                                  key={`perpres-${index2}`}
+                                  color={y.flag != null ? "#EA6228" : undefined}
+                                >
+                                  {`${y.title}`}
+                                </Typography>
+                              </li>
+                            ))
+                          : ""}
                       </ul>
                     </TableCell>
 

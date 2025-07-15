@@ -1,6 +1,6 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React, { useEffect } from "react";
 import TableNotaDinasViewOnly from "./partials/table-nota-dinas-view-only";
 import {
@@ -14,7 +14,7 @@ import { PenetapanObjectDto } from "@/lib/core/context/penetapanTopicContext";
 import DialogComponent from "@/components/dialog";
 import EmptyState from "@/components/empty";
 import { IconEmptyPage } from "@/components/icons";
-import Iconify from "@/app/components/icons/iconify";
+import Iconify from "@/components/icons/iconify";
 import TableStatus from "./partials/table-status";
 
 export default function PageApprovalNotaDinasView({}) {

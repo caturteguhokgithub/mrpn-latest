@@ -1,16 +1,16 @@
 import React, { Fragment } from "react";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import CardItem from "@/app/components/cardTabItem";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import CardItem from "@/components/cardTabItem";
 import type ReactQuill from "react-quill";
 import dynamic from "next/dynamic";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import useCardSegmentVM from "@/app/executive-summary/partials/tab1Background/cardSegment/cardSegmentVM";
 import { Button, DialogActions } from "@mui/material";
 import useInformationList from "./hooks/useInformation";
-import { isDeveloping } from "@/app/components/layouts/layout";
-import EmptyDevelopingState from "@/app/components/empty/developing";
-import DialogDelete from "@/app/components/dialogDelete";
+import { isDeveloping } from "@/components/layouts/layout";
+import EmptyDevelopingState from "@/components/empty/developing";
+import DialogDelete from "@/components/dialogDelete";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;

@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 import { Box, Button, DialogActions, Tooltip, styled } from "@mui/material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import CardItem from "@/app/components/cardTabItem";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import CardItem from "@/components/cardTabItem";
 import Image from "next/image";
 import { dataTema } from "../../dataTema";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import FormFramework from "./form";
 
 export default function CardFot({ project }: { project: string }) {

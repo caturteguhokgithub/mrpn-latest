@@ -9,21 +9,21 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import CardItem from "@/app/components/cardTabItem";
-import DialogComponent from "@/app/components/dialog";
+import CardItem from "@/components/cardTabItem";
+import DialogComponent from "@/components/dialog";
 import CollapsibleTable from "./table-kategori-collapsible";
 import FormCategory from "./form-category";
-import DialogDelete from "@/app/components/dialogDelete";
-import AddButton from "@/app/components/buttonAdd";
-import Iconify from "@/app/components/icons/iconify";
+import DialogDelete from "@/components/dialogDelete";
+import AddButton from "@/components/buttonAdd";
+import Iconify from "@/components/icons/iconify";
 import TableRerefence from "./table-reference";
-import EmptyDevelopingState from "@/app/components/empty/developing";
-import { isDeveloping } from "@/app/components/layouts/layout";
+import EmptyDevelopingState from "@/components/empty/developing";
+import { isDeveloping } from "@/components/layouts/layout";
 import useCategoryList from "./hooks/useCategory";
 import { ResultCategory } from "./hooks/categoryModel";
 import useAuthorizationVM from "@/app/authorizationVM";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import { TextareaStyled } from "@/app/components/textarea";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
+import { TextareaStyled } from "@/components/textarea";
 
 export default function CardKategori() {
   const [modalOpenRef, setModalOpenRef] = React.useState(false);

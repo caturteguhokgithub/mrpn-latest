@@ -9,11 +9,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import FieldLabelInfo from "@/app/components/fieldLabelInfo";
-import AddButton from "@/app/components/buttonAdd";
-import { TextareaStyled } from "@/app/components/textarea";
-import { AutocompleteSelectSingle } from "@/app/components/autocomplete";
-import Iconify from "@/app/components/icons/iconify";
+import FieldLabelInfo from "@/components/fieldLabelInfo";
+import AddButton from "@/components/buttonAdd";
+import { TextareaStyled } from "@/components/textarea";
+import { AutocompleteSelectSingle } from "@/components/autocomplete";
+import Iconify from "@/components/icons/iconify";
 import {
   ReqAddMatDamKomite,
   ReqAddMatDamUpr,

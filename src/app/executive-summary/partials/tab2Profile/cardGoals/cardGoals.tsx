@@ -1,13 +1,19 @@
 import React, { Fragment } from "react";
-import {Button, DialogActions, List, ListItem, Typography} from "@mui/material";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyData } from "@/app/components/icons";
-import CardItem from "@/app/components/cardTabItem";
+import {
+  Button,
+  DialogActions,
+  List,
+  ListItem,
+  Typography,
+} from "@mui/material";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import CardItem from "@/components/cardTabItem";
 import dynamic from "next/dynamic";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import useCardGoalsVM from "./cardGoalsVM";
 import type ReactQuill from "react-quill";
-import DialogDelete from "@/app/components/dialogDelete";
+import DialogDelete from "@/components/dialogDelete";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -25,7 +31,7 @@ export default function CardGoals({ project }: { project: string }) {
     modalDelete,
     setModalDelete,
     handleModalDelete,
-    sasaran
+    sasaran,
   } = useCardGoalsVM();
 
   const ReactQuill = dynamic(
@@ -71,9 +77,11 @@ export default function CardGoals({ project }: { project: string }) {
         />
       ) : (
         // <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
-        sasaran?.sasaran_kp.map((ssr,iSsr) =>
-            <Typography key={`ssr-${iSsr}`}>{`${ssr.code} - ${ssr.value}`}</Typography>
-        )
+        sasaran?.sasaran_kp.map((ssr, iSsr) => (
+          <Typography
+            key={`ssr-${iSsr}`}
+          >{`${ssr.code} - ${ssr.value}`}</Typography>
+        ))
       )}
       <DialogComponent
         dialogOpen={modal}

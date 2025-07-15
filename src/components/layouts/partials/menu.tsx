@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { whiteRGB } from "@/app/utils/color";
+import { whiteRGB } from "@/utils/color";
 import theme from "@/theme";
 import {
   ListItemIcon,

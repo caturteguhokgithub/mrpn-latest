@@ -1,6 +1,6 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React, { Fragment, useEffect } from "react";
 import {
   Box,
@@ -24,20 +24,20 @@ import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import useRiskOverviewVM from "@/app/profil-risiko/overview/pageVM";
 import HeaderTable from "./partials/headerTable";
-import AddButton from "@/app/components/buttonAdd";
-import Iconify from "@/app/components/icons/iconify";
+import AddButton from "@/components/buttonAdd";
+import Iconify from "@/components/icons/iconify";
 import { styleDownload, styleTab } from "@/app/executive-summary/style";
 import { TabPanelProps } from "@/app/executive-summary/types";
 import theme from "@/theme";
 import SeleraMatriks from "./partials/matriks";
-import CardItem from "@/app/components/cardTabItem";
-import { IconFA } from "@/app/components/icons/icon-fa";
-import { isDeveloping } from "@/app/components/layouts/layout";
-import EmptyDevelopingState from "@/app/components/empty/developing";
+import CardItem from "@/components/cardTabItem";
+import { IconFA } from "@/components/icons/icon-fa";
+import { isDeveloping } from "@/components/layouts/layout";
+import EmptyDevelopingState from "@/components/empty/developing";
 import TableOverview from "./partials/table";
 import { green, red } from "@mui/material/colors";
 import FormNote from "./partials/form-note";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 
 interface SxParams {
   variant?: string;

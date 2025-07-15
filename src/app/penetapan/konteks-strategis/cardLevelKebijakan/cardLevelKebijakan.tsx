@@ -12,10 +12,10 @@ import {
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
-import { bgColorTh } from "@/app/utils/color";
+import { bgColorTh } from "@/utils/color";
 import { grey } from "@mui/material/colors";
-import { isDeveloping } from "@/app/components/layouts/layout";
-import EmptyDevelopingState from "@/app/components/empty/developing";
+import { isDeveloping } from "@/components/layouts/layout";
+import EmptyDevelopingState from "@/components/empty/developing";
 import useLevelKebijakanVM from "./vm";
 import { sasaranDto } from "./model";
 

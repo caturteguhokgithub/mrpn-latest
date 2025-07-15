@@ -1,6 +1,6 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React, { useEffect, useMemo } from "react";
 import {
   Box,
@@ -12,9 +12,9 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import FormTable from "./partials/form-table";
-import AddButton from "@/app/components/buttonAdd";
+import AddButton from "@/components/buttonAdd";
 import useIdentificationRiskVM from "@/app/profil-risiko/identifikasi/pageVM";
 import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
@@ -31,9 +31,9 @@ import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import HeaderTable from "../overview/partials/headerTable";
 import useRiskOverviewVM from "../overview/pageVM";
-import { advancedTable } from "@/app/components/table";
+import { advancedTable } from "@/components/table";
 import { blue, grey, red } from "@mui/material/colors";
-import { InfoTooltip } from "@/app/components/InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 import { SortNumber } from "../perlakuan/partials/mrt-complete";
 import FormPeristiwa from "./partials/form-peristiwa";
 

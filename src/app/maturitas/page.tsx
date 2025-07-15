@@ -1,13 +1,13 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React, { useMemo } from "react";
-import DashboardLayout from "@/app/components/layouts/layout";
-import EmptyState from "@/app/components/empty";
-import { IconEmptyPage } from "@/app/components/icons";
-import ActionColumn from "@/app/components/actions/action";
-import AddButton from "@/app/components/buttonAdd";
-import { advancedTable } from "@/app/components/table";
+import DashboardLayout from "@/components/layouts/layout";
+import EmptyState from "@/components/empty";
+import { IconEmptyPage } from "@/components/icons";
+import ActionColumn from "@/components/actions/action";
+import AddButton from "@/components/buttonAdd";
+import { advancedTable } from "@/components/table";
 import {
   DialogActions,
   Button,
@@ -19,7 +19,7 @@ import {
   useMaterialReactTable,
   MaterialReactTable,
 } from "material-react-table";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import FormTable from "./partials/form-table";
 import { data } from "./setting";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";

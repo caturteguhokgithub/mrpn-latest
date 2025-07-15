@@ -1,9 +1,9 @@
 "use client";
 
-import ContentPage from "@/app/components/contents";
+import ContentPage from "@/components/contents";
 import React, { useMemo } from "react";
-import DashboardLayout from "@/app/components/layouts/layout";
-import { advancedTable } from "@/app/components/table";
+import DashboardLayout from "@/components/layouts/layout";
+import { advancedTable } from "@/components/table";
 import {
   Box,
   Button,
@@ -28,12 +28,12 @@ import {
   MaterialReactTable,
   MRT_ColumnDef,
 } from "material-react-table";
-import ActionColumn from "@/app/components/actions/action";
+import ActionColumn from "@/components/actions/action";
 import { data, type PemantauanType } from "./setting";
-import DialogComponent from "@/app/components/dialog";
+import DialogComponent from "@/components/dialog";
 import FormTable from "./partials/form-table";
 import { blue, green, grey, orange, red } from "@mui/material/colors";
-import { IconFA } from "@/app/components/icons/icon-fa";
+import { IconFA } from "@/components/icons/icon-fa";
 import Image from "next/image";
 import theme from "@/theme";
 import { dataSub } from "@/app/profil-risiko/analisis-evaluasi/setting";
