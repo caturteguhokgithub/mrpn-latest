@@ -1,9 +1,5 @@
-import React, { Fragment } from "react";
 import {
-  alpha,
   Chip,
-  Icon,
-  IconButton,
   Paper,
   Stack,
   Table,
@@ -12,12 +8,9 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
   Typography,
 } from "@mui/material";
-import theme from "@/theme";
 import { ExsumRelatedDto } from "@/app/executive-summary/partials/tab2Profile/cardRelated/cardRelatedModel";
-import DialogDelete from "@/components/dialogDelete";
 import ActionColumn from "@/components/actions/action";
 import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
