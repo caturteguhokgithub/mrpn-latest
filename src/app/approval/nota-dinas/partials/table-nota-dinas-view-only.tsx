@@ -194,12 +194,13 @@ export default function TableNotaDinasViewOnly({
     return rows;
   };
 
-  const handleUpdateStatus = async (status: string) => {
+  const handleUpdateStatus = async (status: string, msg = "") => {
     if (stateApproval) {
       const param: dtoGetApproval = {
         ...stateApproval,
         id: objectState?.id ?? 0,
         status: status,
+        message: msg
       };
 
       updateApproval(param);
@@ -429,7 +430,7 @@ export default function TableNotaDinasViewOnly({
     ) : stateApproval?.status == "approved" ? (
       statusApprovalM
     ) : (
-      statusReviewMApproval
+      statusDraftM
     );
 
   const statusReviewRejectApproval =
