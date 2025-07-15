@@ -55,12 +55,14 @@ export default function TableNotaDinasViewOnly({
   pageApproval,
   stateApproval,
   handleUploadBuktiDukung,
+  refreshBuktiDukungTable,
 }: {
   notaDinas: PenetapanObjectNotaDto;
   actionApprove?: React.ReactNode;
   pageApproval?: boolean;
   stateApproval?: dtoGetApproval;
   handleUploadBuktiDukung?: () => void;
+  refreshBuktiDukungTable?: () => void;
 }) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalViewImage, setModalViewImage] = React.useState(false);

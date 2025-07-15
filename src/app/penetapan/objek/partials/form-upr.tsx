@@ -241,13 +241,27 @@ export default function FormUPR({
         </Stack>
       </Grid>
       <Grid item xs={12}>
-        <Grid container spacing={2}>
+        <Grid
+          container
+          spacing={2}
+          sx={{
+            maxHeight: "50vh",
+            overflowY: "auto",
+            "&::-webkit-scrollbar": {
+              width: "6px",
+              cursor: "pointer",
+            },
+          }}
+        >
           {items.map((tags, key) => (
             <Grid item xs={12} key={`${tags.id}`}>
               <Paper
                 variant="outlined"
                 elevation={0}
-                sx={{ p: 2, minWidth: "0 !important" }}
+                sx={{
+                  p: 2,
+                  minWidth: "0 !important",
+                }}
               >
                 <Grid container spacing={2}>
                   {tags && (

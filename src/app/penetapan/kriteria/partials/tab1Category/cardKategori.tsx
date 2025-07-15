@@ -17,11 +17,7 @@ import DialogDelete from "@/components/dialogDelete";
 import AddButton from "@/components/buttonAdd";
 import Iconify from "@/components/icons/iconify";
 import TableRerefence from "./table-reference";
-import EmptyDevelopingState from "@/components/empty/developing";
-import { isDeveloping } from "@/components/layouts/layout";
 import useCategoryList from "./hooks/useCategory";
-import { ResultCategory } from "./hooks/categoryModel";
-import useAuthorizationVM from "@/app/authorizationVM";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
 import { TextareaStyled } from "@/components/textarea";
 

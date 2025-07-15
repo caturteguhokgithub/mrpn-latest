@@ -3,9 +3,6 @@ import {
   Box,
   Button,
   Collapse,
-  DialogActions,
-  FormControl,
-  Grid,
   IconButton,
   Paper,
   Stack,
@@ -15,33 +12,19 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
   Typography,
 } from "@mui/material";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
-import {
-  dtoUraian,
-  dtoUsulanUprLs,
-  UnitPengelolaRisikoEntity,
-} from "@/app/penetapan/objek/pageModel";
+import { dtoUraian, dtoUsulanUprLs } from "@/app/penetapan/objek/pageModel";
 import { InfoTooltip } from "@/components/InfoTooltip";
-import { blue, grey, red } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 import { bgColorTh } from "@/utils/color";
 import Iconify from "@/components/icons/iconify";
-import usePenetapanObjectVM from "../pageVM";
-import FieldLabelInfo from "@/components/fieldLabelInfo";
 import {
   usePenetapanTopicContext,
   useRKPContext,
 } from "@/lib/core/hooks/useHooks";
-import DialogComponent from "@/components/dialog";
-
-function createData(name: string) {
-  return {
-    name,
-  };
-}
 
 function Row(props: {
   row: dtoUraian;
@@ -284,20 +267,35 @@ export default function CollapsibleTableUpr({
       >
         <Table>
           <TableBody>
-            {stateUpr &&
-              stateUpr.map((item) => {
-                return (
-                  <Row
-                    key={item.id}
-                    row={item}
-                    uprData={item.usulan_upr_linsek}
-                    setModalObjek={setModalObjek}
-                    handleModalDeleteObject={handleModalDeleteObject}
-                    handleModalEditEntitas={handleModalEditEntitas}
-                    handleModalDeleteEntitas={handleModalDeleteEntitas}
+            {stateUpr && stateUpr.length ? (
+              <React.Fragment>
+                {stateUpr &&
+                  stateUpr.map((item) => {
+                    return (
+                      <Row
+                        key={item.id}
+                        row={item}
+                        uprData={item.usulan_upr_linsek}
+                        setModalObjek={setModalObjek}
+                        handleModalDeleteObject={handleModalDeleteObject}
+                        handleModalEditEntitas={handleModalEditEntitas}
+                        handleModalDeleteEntitas={handleModalDeleteEntitas}
+                      />
+                    );
+                  })}
+              </React.Fragment>
+            ) : (
+              <TableRow>
+                <TableCell colSpan={4}>
+                  <EmptyState
+                    icon={<IconEmptyData />}
+                    title="Data Kosong"
+                    description="Silahkan isi konten tabel ini"
                   />
-                );
-              })}
+                </TableCell>
+              </TableRow>
+            )}
+
             {/* {listObject.map((object) => {
               const uprData = listUpr.filter(
                 (upr) => upr.object_id === object.id
