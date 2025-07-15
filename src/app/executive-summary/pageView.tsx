@@ -32,13 +32,13 @@ import useApprovalVM from "@/app/executive-summary/approvalVM";
 import { grey } from "@mui/material/colors";
 import { ApprovalDto } from "@/lib/core/context/exsumContext";
 import { OverridableStringUnion } from "@mui/types";
-import { InfoTooltip } from "../../components/InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import AddButton from "../../components/buttonAdd";
 import Iconify from "../../components/icons/iconify";
 
-export default function PageExecutiveSummary({}) {
+export default function PageExecutiveSummary({ }) {
   const { permission, user } = useAuthContext((state) => state);
   const pathname = usePathname();
 
@@ -161,15 +161,15 @@ export default function PageExecutiveSummary({}) {
     let label: string = "Draft";
     let color:
       | OverridableStringUnion<
-          | "default"
-          | "primary"
-          | "secondary"
-          | "error"
-          | "info"
-          | "success"
-          | "warning",
-          ChipPropsColorOverrides
-        >
+        | "default"
+        | "primary"
+        | "secondary"
+        | "error"
+        | "info"
+        | "success"
+        | "warning",
+        ChipPropsColorOverrides
+      >
       | undefined = "default";
     let sx: any = { bgcolor: grey[600], color: "white", px: 1 };
 

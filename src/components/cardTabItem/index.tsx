@@ -18,7 +18,7 @@ import theme from "@/theme";
 import { usePathname } from "next/navigation";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
-import { InfoTooltip } from "../InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 
 export const ListItemDropdownMenu = ({
   label,
@@ -146,8 +146,8 @@ export default function CardItem({
         anchorOrigin={{ horizontal: "right", vertical: "top" }}
       >
         {multiEdit &&
-        (hasPrivilege(permission, pathname, "add") ||
-          hasPrivilege(permission, pathname, "update")) ? (
+          (hasPrivilege(permission, pathname, "add") ||
+            hasPrivilege(permission, pathname, "update")) ? (
           <>
             <MenuItem onClick={settingEditBisnisClick}>
               <ListItemDropdownMenu label="Tambah Proses Bisnis" />

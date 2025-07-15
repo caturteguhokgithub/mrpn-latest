@@ -267,7 +267,7 @@ const usePenetapanObjectVM = () => {
   }
 
   async function getPenetapanObjectShortList() {
-    if (objectState !== undefined) {
+    if (objectState !== undefined && objectState !== null) {
       const response = await doGetPenetapanObjectShortList({
         body: { id: objectState.id },
         loadingContext: loadingContext,
@@ -281,7 +281,7 @@ const usePenetapanObjectVM = () => {
   }
 
   async function getPenetapanObjectCascading() {
-    if (objectState !== undefined) {
+    if (objectState !== undefined && objectState !== null) {
       const response = await doGetPenetapanObjectCascading({
         body: { id: objectState.id },
         loadingContext: loadingContext,
@@ -295,7 +295,7 @@ const usePenetapanObjectVM = () => {
   }
 
   async function getPenetapanObjectEntity() {
-    if (objectState !== undefined) {
+    if (objectState !== undefined && objectState !== null) {
       setLoading(true);
       const response = await doGetPenetapanObjectEntity({
         body: { id: objectState.id },
@@ -428,7 +428,7 @@ const usePenetapanObjectVM = () => {
   }
 
   async function getPenetapanObjectNotaDinas() {
-    if (objectState !== undefined) {
+    if (objectState !== undefined && objectState !== null) {
       const response = await doGetPenetapanObjectNotaDinas({
         body: { id_topik: objectState.id },
         errorModalContext: errorModalContext,
@@ -458,7 +458,7 @@ const usePenetapanObjectVM = () => {
         ttd_penyetuju_filename: nota.ttd_penyetuju_filename,
       };
 
-      if (objectState !== undefined) {
+      if (objectState !== undefined && objectState !== null) {
         const response = await doUpdateOrCreateGetPenetapanObjectNotaDinas({
           body: request,
           errorModalContext: errorModalContext,
@@ -475,7 +475,7 @@ const usePenetapanObjectVM = () => {
   }
 
   async function getApproval() {
-    if (objectState !== undefined) {
+    if (objectState !== undefined && objectState !== null) {
       setLoading(true);
       const response = await doGetApproval({
         body: { id: objectState.id },
@@ -496,7 +496,7 @@ const usePenetapanObjectVM = () => {
   }
 
   async function updateApproval(param: dtoGetApproval) {
-    if (objectState !== undefined) {
+    if (objectState !== undefined && objectState !== null) {
       const response = await doUpdateApproval({
         body: param,
         loadingContext: loadingContext,
@@ -577,7 +577,7 @@ const usePenetapanObjectVM = () => {
   };
 
   const useEffectObjectState = () => {
-    if (objectState !== undefined) {
+    if (objectState !== undefined && objectState !== null) {
       const uraianDt: PenetapanObjectUraianDto[] =
         objectState.penetapan_object_list.reduce<PenetapanObjectUraianDto[]>(
           (acc, b) => {

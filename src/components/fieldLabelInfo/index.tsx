@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { IconFA } from "../icons/icon-fa";
 import { grey } from "@mui/material/colors";
-import { InfoTooltip } from "../InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 
 export default function FieldLabelInfo({
   title,

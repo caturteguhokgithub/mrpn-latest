@@ -4,7 +4,7 @@ import { Typography, ListItemButton, Stack, Box } from "@mui/material";
 import Link from "next/link";
 import { grey, orange } from "@mui/material/colors";
 import { usePathname } from "next/navigation";
-import { InfoTooltip } from "../../InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 
 export const SubmenuItem = ({ label, url, urlLv2, isOpen }: IMenu) => {
   const pathname = usePathname();
@@ -43,8 +43,8 @@ export const SubmenuItem = ({ label, url, urlLv2, isOpen }: IMenu) => {
             color={grey[700]}
             className={
               pathname === `/${url}` ||
-              pathname === `/${urlLv2}` ||
-              pathname === `/${url}/${urlLv2}`
+                pathname === `/${urlLv2}` ||
+                pathname === `/${url}/${urlLv2}`
                 ? "link-active"
                 : ""
             }

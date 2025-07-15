@@ -20,7 +20,7 @@ import { grey } from "@mui/material/colors";
 import { listTriwulan } from "@/utils/data";
 import DateRangePicker from "@/components/dateRange";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
-import { InfoTooltip } from "../InfoTooltip";
+import { InfoTooltip } from "@/components/InfoTooltip";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 
 export default function ContentPage({
@@ -133,9 +133,9 @@ export default function ContentPage({
   const items: any =
     typeof window !== "undefined"
       ? (() => {
-          const selectedRKP = window?.localStorage?.getItem("selectedRKP");
-          return selectedRKP ? JSON.parse(selectedRKP) : null;
-        })()
+        const selectedRKP = window?.localStorage?.getItem("selectedRKP");
+        return selectedRKP ? JSON.parse(selectedRKP) : null;
+      })()
       : null;
 
   const currentDate = new Date();
@@ -534,12 +534,12 @@ export default function ContentPage({
           heightTitleBreadcrumb
             ? "calc(100vh - 258px)"
             : overflowHidden
-            ? "calc(100vh - 240px)"
-            : heightNoSet
-            ? "auto"
-            : darkTheme
-            ? "calc(100vh - 180px)"
-            : "calc(100vh - 240px)"
+              ? "calc(100vh - 240px)"
+              : heightNoSet
+                ? "auto"
+                : darkTheme
+                  ? "calc(100vh - 180px)"
+                  : "calc(100vh - 240px)"
         }
         overflow={overflowHidden ? "hidden" : "auto"}
         // margin={noMinusMargin ? 0 : -1}
