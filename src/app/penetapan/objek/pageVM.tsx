@@ -59,6 +59,12 @@ import {
 import useNotaDinasVM from "@/app/approval/nota-dinas/notaDinasVM";
 import { useToast } from "@/lib/core/context/toastContext";
 
+interface BuktiDukungFormState {
+  filename: string;
+  file: string;
+  uploadedFileName: string | null;
+}
+
 const usePenetapanObjectVM = () => {
   const loadingContext = useLoading();
   const [loading, setLoading] = useState(false);
@@ -89,11 +95,11 @@ const usePenetapanObjectVM = () => {
     PenetapanObjectStateEntityDto[]
   >([]);
   const [stateUpr, setStateUpr] = useState<dtoUraian[]>([]);
-
   const [getStateLogActivity, setLogActivity] = useState<LogActivityDto[]>([
     initLogActivity,
   ]);
   const [optionPN, setOptionPN] = useState<ProjectDefaultDto[]>([]);
+
   const [modalAdd, setModalAdd] = useState<boolean>(false);
   const [modalLog, setModalLog] = useState<boolean>(false);
   const [modalUpr, setModalUpr] = useState<boolean>(false);
@@ -604,11 +610,25 @@ const usePenetapanObjectVM = () => {
   };
 
   async function handleUnggahBuktiDukung(param: dtoReqBuktiDukungPengesahan) {
-    await uploadImage(param.file, param.filename);
-    showToast("Data berhasil disimpan", "success");
-    // getNotaDinasGambar(objectState?.id ?? 0);
+    // await uploadImage(param.file, param.filename);
+    // showToast("Data berhasil disimpan", "success");
+    try {
+      await uploadImage(param.file, param.filename);
+      return Promise.resolve();
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      return Promise.reject(error);
+    }
   }
 
+  // Add this function in the usePenetapanObjectVM hook
+  const resetBuktiDukungForm = () => {
+    setReqBuktiDukungPengesahan({
+      filename: "",
+      file: "",
+    });
+    setUploadedFileName(null);
+  };
   // const handleUnggahBuktiDukung = async (
   //   e: React.ChangeEvent<HTMLInputElement>
   // ) => {
@@ -691,6 +711,7 @@ const usePenetapanObjectVM = () => {
     updateApproval,
     uploadedFileName,
     setUploadedFileName,
+    resetBuktiDukungForm,
   };
 };
 

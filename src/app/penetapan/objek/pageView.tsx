@@ -168,6 +168,7 @@ export default function PageTemaView() {
     setModalEditEntitas,
     modalDeleteEntitas,
     setModalDeleteEntitas,
+    setUploadedFileName,
   } = usePenetapanObjectVM();
 
   const { getDataImage } = useNotaDinasVM();
@@ -280,12 +281,50 @@ export default function PageTemaView() {
     </DialogActions>
   );
 
-  const { getDataImage: refreshNotaDinasGambar } = useNotaDinasVM();
+  // const { getDataImage: refreshNotaDinasGambar } = useNotaDinasVM();
 
-  const handleSimpanBuktiDukung = async () => {
-    setModalBuktiDukung(false);
-    await handleUnggahBuktiDukung(reqBuktiDukungPengesahan);
-    refreshNotaDinasGambar(); // Call the getDataImage from useNotaDinasVM directly
+  // const handleSimpanBuktiDukung = async () => {
+  //   setModalBuktiDukung(false);
+  //   await handleUnggahBuktiDukung(reqBuktiDukungPengesahan);
+  //   refreshNotaDinasGambar(); // Call the getDataImage from useNotaDinasVM directly
+  // };
+
+  const handleSaveBuktiDukung = async () => {
+    try {
+      // Upload the file first
+      await handleUnggahBuktiDukung(reqBuktiDukungPengesahan);
+
+      // Wait a bit to ensure upload is complete, then refresh data
+      setTimeout(async () => {
+        await getDataImage();
+      }, 500);
+
+      // Close modal and reset form
+      setModalBuktiDukung(false);
+      setReqBuktiDukungPengesahan({
+        filename: "",
+        file: "",
+      });
+
+      showToast("Data berhasil disimpan", "success");
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      showToast("Gagal menyimpan data", "error");
+    }
+  };
+
+  const handleOpenBuktiDukungModal = () => {
+    // Reset form state to initial empty values
+    setReqBuktiDukungPengesahan({
+      filename: "",
+      file: "",
+    });
+
+    // Reset uploaded file name
+    setUploadedFileName(null);
+
+    // Open modal
+    setModalBuktiDukung(true);
   };
 
   return (
@@ -465,7 +504,8 @@ export default function PageTemaView() {
                 showSave={showSave}
                 setShowSave={setShowSave}
                 stateUpr={stateUpr}
-                handleUploadBuktiDukung={() => setModalBuktiDukung(true)}
+                // handleUploadBuktiDukung={() => setModalBuktiDukung(true)}
+                handleUploadBuktiDukung={handleOpenBuktiDukungModal}
                 stateApproval={stateApproval}
                 setModalObjek={setModalObjek}
                 handleModalDeleteObject={(id: number) => {
@@ -475,7 +515,7 @@ export default function PageTemaView() {
                 handleModalDeleteEntitas={(id: number) => {
                   handleDeleteObjectUpr(id, "Entitas");
                 }}
-                refreshBuktiDukungTable={refreshNotaDinasGambar}
+                // refreshBuktiDukungTable={refreshNotaDinasGambar}
               />
             </Collapse>
           </Fragment>
@@ -595,7 +635,7 @@ export default function PageTemaView() {
             <Button onClick={() => setModalBuktiDukung(false)}>Batal</Button>
             <Button
               variant="contained"
-              onClick={handleSimpanBuktiDukung}
+              onClick={handleSaveBuktiDukung}
               sx={{
                 color: "white !important",
               }}

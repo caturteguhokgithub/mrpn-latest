@@ -55,7 +55,10 @@ const useNotaDinasVM = () => {
   }
 
   async function uploadImage(gambar: string, fileName: string) {
-    if (gambarState == undefined) return;
+    // if (gambarState == undefined) return;
+    if (!objectState?.id || !user.user?.id) {
+      throw new Error("Missing required data for upload");
+    }
 
     const req: BuktiDukungReqDto = {
       filename: fileName ?? "file",
@@ -69,8 +72,17 @@ const useNotaDinasVM = () => {
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
     });
+
+    // if (response?.code == API_CODE.success) {
+    //   getDataImage();
+    // }
+
     if (response?.code == API_CODE.success) {
-      getDataImage();
+      // Automatically refresh the data after successful upload
+      await getDataImage();
+      return Promise.resolve();
+    } else {
+      return Promise.reject(new Error("Upload failed"));
     }
 
     // await getNotaDinasGambar(objectState?.id ?? 0);
