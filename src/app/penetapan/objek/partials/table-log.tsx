@@ -15,6 +15,8 @@ import Iconify from "@/components/icons/iconify";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { create } from "lodash";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
 
 export default function TableLog() {
   const { rkp, year, rpjmn } = useRKPContext((state) => state);
@@ -67,18 +69,32 @@ export default function TableLog() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((item) => (
+          {data.length ? (
+            <React.Fragment>
+              {data.map((item) => (
+                <TableRow>
+                  <TableCell>{item.object}</TableCell>
+                  <TableCell>{item.create ? checkIcon : closeIcon}</TableCell>
+                  <TableCell align="center">
+                    {item.shortlist ? checkIcon : closeIcon}
+                  </TableCell>
+                  <TableCell align="center">
+                    {item.approve ? checkIcon : closeIcon}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </React.Fragment>
+          ) : (
             <TableRow>
-              <TableCell>{item.object}</TableCell>
-              <TableCell>{item.create ? checkIcon : closeIcon}</TableCell>
-              <TableCell align="center">
-                {item.shortlist ? checkIcon : closeIcon}
-              </TableCell>
-              <TableCell align="center">
-                {item.approve ? checkIcon : closeIcon}
+              <TableCell colSpan={4}>
+                <EmptyState
+                  icon={<IconEmptyData />}
+                  title="Data Kosong"
+                  description="Silahkan isi konten tabel ini"
+                />
               </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </TableContainer>

@@ -203,7 +203,9 @@ export default function PageTemaView() {
   const handleCreateUpr = async () => {
     // console.log(stateCreateUpr);
 
-    updateOrCreateEntity(stateCreateUpr);
+    showToast("Data UPR berhasil disimpan", "success");
+    await updateOrCreateEntity(stateCreateUpr);
+    setModalUpr(false);
   };
 
   const handleDeleteObjectUpr = (id: number, module: string) => {
@@ -277,6 +279,14 @@ export default function PageTemaView() {
       </Button>
     </DialogActions>
   );
+
+  const { getDataImage: refreshNotaDinasGambar } = useNotaDinasVM();
+
+  const handleSimpanBuktiDukung = async () => {
+    setModalBuktiDukung(false);
+    await handleUnggahBuktiDukung(reqBuktiDukungPengesahan);
+    refreshNotaDinasGambar(); // Call the getDataImage from useNotaDinasVM directly
+  };
 
   return (
     <>
@@ -465,6 +475,7 @@ export default function PageTemaView() {
                 handleModalDeleteEntitas={(id: number) => {
                   handleDeleteObjectUpr(id, "Entitas");
                 }}
+                refreshBuktiDukungTable={refreshNotaDinasGambar}
               />
             </Collapse>
           </Fragment>
@@ -584,12 +595,7 @@ export default function PageTemaView() {
             <Button onClick={() => setModalBuktiDukung(false)}>Batal</Button>
             <Button
               variant="contained"
-              onClick={() => {
-                // handleCreateUpr();
-                setModalBuktiDukung(false);
-                handleUnggahBuktiDukung(reqBuktiDukungPengesahan);
-                getDataImage();
-              }}
+              onClick={handleSimpanBuktiDukung}
               sx={{
                 color: "white !important",
               }}

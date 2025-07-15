@@ -192,30 +192,34 @@ Lintas Sektor termasuk yang menjadi penanggung jawab atas suatu perlakuan risiko
             </TableRow>
           </TableHead>
           <TableBody>
-            {generateRows().map((row, rowIndex) =>
-              row.indicator.map((subItem, subIndex) => (
-                <TableRow key={`${rowIndex}-${subIndex}`}>
-                  {subIndex === 0 && (
-                    <TableCell
-                      rowSpan={row.indicator.length}
-                      sx={{ verticalAlign: "top" }}
-                    >
-                      {row.object}
-                    </TableCell>
-                  )}
-                  {subIndex === 0 && (
-                    <TableCell
-                      rowSpan={row.indicator.length}
-                      sx={{ verticalAlign: "top" }}
-                    >
-                      {row.sasaran}
-                    </TableCell>
-                  )}
-                  <TableCell sx={{ verticalAlign: "top" }}>{subItem}</TableCell>
-                  <TableCell sx={{ verticalAlign: "top" }}>
-                    {row.target[subIndex]}
-                  </TableCell>
-                  {/* {subIndex === 0 && (
+            {generateRows().length ? (
+              <React.Fragment>
+                {generateRows().map((row, rowIndex) =>
+                  row.indicator.map((subItem, subIndex) => (
+                    <TableRow key={`${rowIndex}-${subIndex}`}>
+                      {subIndex === 0 && (
+                        <TableCell
+                          rowSpan={row.indicator.length}
+                          sx={{ verticalAlign: "top" }}
+                        >
+                          {row.object}
+                        </TableCell>
+                      )}
+                      {subIndex === 0 && (
+                        <TableCell
+                          rowSpan={row.indicator.length}
+                          sx={{ verticalAlign: "top" }}
+                        >
+                          {row.sasaran}
+                        </TableCell>
+                      )}
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        {subItem}
+                      </TableCell>
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        {row.target[subIndex]}
+                      </TableCell>
+                      {/* {subIndex === 0 && (
                     <TableCell
                       rowSpan={row.indicator.length}
                       sx={{ verticalAlign: "top" }}
@@ -320,8 +324,20 @@ Lintas Sektor termasuk yang menjadi penanggung jawab atas suatu perlakuan risiko
                       )}
                     </TableCell>
                   )} */}
-                </TableRow>
-              ))
+                    </TableRow>
+                  ))
+                )}
+              </React.Fragment>
+            ) : (
+              <TableRow>
+                <TableCell colSpan={4}>
+                  <EmptyState
+                    icon={<IconEmptyData />}
+                    title="Data Kosong"
+                    description="Silahkan isi konten tabel ini"
+                  />
+                </TableCell>
+              </TableRow>
             )}
           </TableBody>
         </Table>

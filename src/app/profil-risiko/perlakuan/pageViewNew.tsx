@@ -1,22 +1,14 @@
 "use client";
 
 import ContentPage from "@/components/contents";
-import React, { Fragment, useEffect, useMemo } from "react";
+import { Fragment, useEffect, useMemo } from "react";
 import {
   Box,
   Button,
-  Checkbox,
   Chip,
   DialogActions,
   FormControl,
-  Paper,
   Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   Typography,
 } from "@mui/material";
 import DialogComponent from "@/components/dialog";
@@ -39,18 +31,10 @@ import {
 import { blue, green, grey, orange, red, yellow } from "@mui/material/colors";
 import { advancedTable } from "@/components/table";
 import ActionColumn from "@/components/actions/action";
-import theme from "@/theme";
-import { dataSub } from "@/app/profil-risiko/analisis-evaluasi/setting";
 import useRiskAnalysisVM from "@/app/profil-risiko/analisis-evaluasi/pageVM";
-import { RiskTreatmentDto } from "@/app/profil-risiko/perlakuan/pageModel";
-import dayjs from "dayjs";
-import { RoDetailDto, RoDto } from "@/app/misc/rkp/rkpServiceModel";
 import { RiskOverviewData } from "@/app/profil-risiko/overview/pageModel";
 import { GenerateRpjmnYear } from "@/lib/utils/common";
-import { FormatIDR } from "@/lib/utils/currency";
-import { getDetailRO } from "@/lib/utils/roDetail";
 import { SortNumber } from "./partials/mrt-complete";
-import { bgColorTh } from "@/utils/color";
 import CollapsibleTable from "./partials/table-collapsible";
 
 function ChipLevelRisiko(props: { level: any }) {

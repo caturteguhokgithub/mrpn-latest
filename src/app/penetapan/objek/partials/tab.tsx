@@ -93,6 +93,7 @@ export default function TabObject({
   handleModalDeleteObject,
   handleModalEditEntitas,
   handleModalDeleteEntitas,
+  refreshBuktiDukungTable,
 }: {
   setModalUpr: (value: boolean) => void;
   useEffectObjectState: () => void;
@@ -107,6 +108,7 @@ export default function TabObject({
   handleModalDeleteObject: (id: number) => void;
   handleModalEditEntitas?: () => void;
   handleModalDeleteEntitas: (id: number) => void;
+  refreshBuktiDukungTable?: () => void;
 }) {
   const { nota } = usePenetapanTopicContext((store) => store);
   const { rkp, year, rpjmn } = useRKPContext((state) => state);
@@ -310,6 +312,7 @@ export default function TabObject({
                 notaDinas={nota}
                 stateApproval={stateApproval}
                 handleUploadBuktiDukung={handleUploadBuktiDukung}
+                refreshBuktiDukungTable={refreshBuktiDukungTable}
               />
             ) : (
               <EmptyState
