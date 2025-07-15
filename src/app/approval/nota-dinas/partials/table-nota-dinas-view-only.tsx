@@ -194,12 +194,12 @@ export default function TableNotaDinasViewOnly({
     return rows;
   };
 
-  const handleUpdateStatus = async () => {
+  const handleUpdateStatus = async (status: string) => {
     if (stateApproval) {
       const param: dtoGetApproval = {
         ...stateApproval,
         id: objectState?.id ?? 0,
-        status: "review",
+        status: status,
       };
 
       updateApproval(param);
@@ -314,10 +314,10 @@ export default function TableNotaDinasViewOnly({
           <strong>
             {stateApproval
               ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })
               : "-"}
           </strong>
         </Typography>
@@ -358,10 +358,10 @@ export default function TableNotaDinasViewOnly({
           <strong>
             {stateApproval
               ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })
               : "-"}
           </strong>
         </Typography>
@@ -436,10 +436,10 @@ export default function TableNotaDinasViewOnly({
     stateApproval?.status === "review" || isReview
       ? statusReviewM
       : stateApproval?.status == "rejected" || isReject
-      ? statusRejectM
-      : stateApproval?.status == "approved" || isApproval
-      ? statusApprovalM
-      : statusDraftM;
+        ? statusRejectM
+        : stateApproval?.status == "approved" || isApproval
+          ? statusApprovalM
+          : statusDraftM;
 
   const conditionDraftReject =
     stateApproval?.status === "draft" || stateApproval?.status === "rejected";
@@ -1344,7 +1344,7 @@ export default function TableNotaDinasViewOnly({
               variant="contained"
               type="submit"
               onClick={() => {
-                handleUpdateStatus();
+                handleUpdateStatus("review");
                 setModalConfirm(false);
                 // setIsReject(false);
                 // setIsApproval(false);
@@ -1375,10 +1375,11 @@ export default function TableNotaDinasViewOnly({
               type="submit"
               onClick={() => {
                 setModalReject(false);
-                setIsReview(false);
-                setIsApproval(false);
-                setIsReject(true);
-                showToast("Berhasil menolak pengesahan", "error");
+                handleUpdateStatus("rejected");
+                // setIsReview(false);
+                // setIsApproval(false);
+                // setIsReject(true);
+                // showToast("Berhasil menolak pengesahan", "error");
               }}
             >
               Tolak
@@ -1409,10 +1410,11 @@ export default function TableNotaDinasViewOnly({
               type="submit"
               onClick={() => {
                 setModalApproval(false);
-                setIsReview(false);
-                setIsReject(false);
-                setIsApproval(true);
-                showToast("Berhasil mengajukan approval", "success");
+                handleUpdateStatus("approved");
+                // setIsReview(false);
+                // setIsReject(false);
+                // setIsApproval(true);
+                // showToast("Berhasil mengajukan approval", "success");
               }}
             >
               Terima
