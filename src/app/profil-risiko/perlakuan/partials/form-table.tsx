@@ -95,9 +95,12 @@ const TablePerlakuanMultiCheck = ({
   mode?: string;
   data: RoDto[];
   state: Perlakuan;
-  setState: (value: SetStateAction<Perlakuan>) => void;
+  setState: (value: SetStateAction<Perlakuan[]>) => void;
 }) => {
   const { year, rpjmn } = useRKPContext((store) => store);
+
+  console.log(state);
+
 
   let multiyear: number[] = [year];
   if (year === 0) {
@@ -112,20 +115,22 @@ const TablePerlakuanMultiCheck = ({
   };
 
   const handleChecked = (isChecked: boolean, ro: RoDto) => {
-    setState((prevState) => {
-      const roPrev = [...prevState.ro];
-      const alreadyIncluded = roPrev.includes(ro.id);
+    setState((prevArray) => {
+      return prevArray.map((item) => {
+        if (item.id !== state.id) return item;
 
-      const updatedRo = isChecked
-        ? !alreadyIncluded
-          ? [...roPrev, ro.id]
-          : roPrev
-        : roPrev.filter((id) => id !== ro.id);
+        const alreadyIncluded = item.ro.includes(ro.id);
+        const updatedRo = isChecked
+          ? !alreadyIncluded
+            ? [...item.ro, ro.id]
+            : item.ro
+          : item.ro.filter((id) => id !== ro.id);
 
-      return {
-        ...prevState,
-        ro: updatedRo,
-      };
+        return {
+          ...item,
+          ro: updatedRo,
+        };
+      });
     });
   };
 
@@ -139,6 +144,7 @@ const TablePerlakuanMultiCheck = ({
     );
     setRows(filteredData);
   }, [search, data]);
+
 
   return (
     <Paper
@@ -283,28 +289,36 @@ export default function FormTable({
     field: keyof Perlakuan,
     value: SubChangeValue
   ) => {
+    if (field === "ro") return;
+
     setItems((prevItems) => {
-      const updated = prevItems.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              [field]: value,
-            }
-          : item
-      );
+      const updated = prevItems.map((item) => {
+        if (item.id !== id) return item;
+
+        return {
+          ...item,
+          [field]: value,
+          ro: [...item.ro], // fix ro
+        };
+      });
+
+      // 🔧 Ambil item dari hasil update untuk diset ke state
+      const updatedItem = updated.find((item) => item.id === id)!;
 
       setState((prev) => ({
         ...prev,
         perlakuan: prev.perlakuan.map((item) =>
           item.id === id
             ? {
-                ...item,
-                [field]: value,
-              }
+              ...item,
+              [field]: value,
+              ro: [...updatedItem.ro], // 🧠 Ambil dari hasil updated, bukan dari item lama
+            }
             : item
         ),
       }));
 
+      console.log(updated);
       return updated;
     });
   };
@@ -340,7 +354,7 @@ export default function FormTable({
           satuan_triwulan_3: val.satuan_triwulan_3,
           target_triwulan_4: val.target_triwulan_4,
           satuan_triwulan_4: val.satuan_triwulan_4,
-          ro: val.rincian_output?.map((x) => x.id) ?? [],
+          ro: val.ro ?? [],
           rincian_output: val.rincian_output,
           start_date: val.start_date,
           end_date: val.end_date,
@@ -602,6 +616,7 @@ export default function FormTable({
           </Stack>
           <Stack direction="column" gap={2}>
             {items.map((tags, key) => (
+
               <Paper
                 key={tags.id}
                 elevation={0}
@@ -845,20 +860,27 @@ export default function FormTable({
                   <Grid item xs={12}>
                     <TablePerlakuanMultiCheck
                       data={data?.optionRo ?? []}
-                      state={tags}
-                      setState={(updater) => {
-                        const updatedItems = items.map((item) =>
-                          item.id === tags.id
-                            ? {
-                                ...item,
-                                ...(typeof updater === "function"
-                                  ? updater(item)
-                                  : updater),
-                              }
-                            : item
-                        );
-                        setItems(updatedItems);
-                      }}
+                      // state={tags}
+                      state={items.find((item) => item.id === tags.id)!}
+                      setState={setItems}
+                      // setState={(updater) => {
+                      //   console.log(updater);
+
+                      //   const updatedItems = items.map((item) =>
+                      //     item.id === tags.id
+                      //       ? {
+                      //         ...item,
+                      //         ...(typeof updater === "function"
+                      //           ? updater(item)
+                      //           : {
+                      //             // ...updater,
+                      //             ro: item.ro,
+                      //           }),
+                      //       }
+                      //       : item
+                      //   );
+                      //   setItems(updatedItems);
+                      // }}
                       mode={mode}
                     />
                   </Grid>
