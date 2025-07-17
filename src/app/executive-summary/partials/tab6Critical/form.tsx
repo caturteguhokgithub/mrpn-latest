@@ -779,10 +779,10 @@ export default function FormCritical({
 
                                           const numericValue =
                                             rawValue === ""
-                                              ? 0
+                                              ? ""
                                               : parseInt(rawValue, 10);
 
-                                          console.log(numericValue);
+                                          // console.log(numericValue);
 
                                           setState((prev) => {
                                             const kegiatan = [...prev.kegiatan]; // shallow copy array

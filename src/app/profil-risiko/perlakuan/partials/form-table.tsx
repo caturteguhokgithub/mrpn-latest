@@ -99,6 +99,8 @@ const TablePerlakuanMultiCheck = ({
 }) => {
   const { year, rpjmn } = useRKPContext((store) => store);
 
+  // console.log(state);
+
   let multiyear: number[] = [year];
   if (year === 0) {
     multiyear = GenerateRpjmnYear(rpjmn);
@@ -141,7 +143,6 @@ const TablePerlakuanMultiCheck = ({
     );
     setRows(filteredData);
   }, [search, data]);
-
 
   return (
     <Paper
@@ -242,7 +243,6 @@ export default function FormTable({
     value: number;
   } | null>(null);
 
-
   useEffect(() => {
     if (state.src_matriks_risiko) {
       const nilai = state.src_matriks_risiko.nilai;
@@ -308,14 +308,15 @@ export default function FormTable({
         perlakuan: prev.perlakuan.map((item) =>
           item.id === id
             ? {
-              ...item,
-              [field]: value,
-              ro: [...updatedItem.ro], // 🧠 Ambil dari hasil updated, bukan dari item lama
-            }
+                ...item,
+                [field]: value,
+                ro: [...updatedItem.ro], // 🧠 Ambil dari hasil updated, bukan dari item lama
+              }
             : item
         ),
       }));
 
+      // console.log(updated);
       return updated;
     });
   };
@@ -351,8 +352,7 @@ export default function FormTable({
           satuan_triwulan_3: val.satuan_triwulan_3,
           target_triwulan_4: val.target_triwulan_4,
           satuan_triwulan_4: val.satuan_triwulan_4,
-          ro: val.rincian_output?.map((x) => x.id)
-            ?? (val.ro ?? []),
+          ro: val.rincian_output?.map((x) => x.id) ?? val.ro ?? [],
           rincian_output: val.rincian_output,
           start_date: val.start_date,
           end_date: val.end_date,
@@ -365,7 +365,7 @@ export default function FormTable({
 
       const updatedPerlakuan = state.perlakuan.map((val) => ({
         ...val,
-        ro: val.rincian_output?.map((x) => x.id) ?? (val.ro ?? []),
+        ro: val.rincian_output?.map((x) => x.id) ?? val.ro ?? [],
       }));
 
       const isEqualArray = (a: number[], b: number[]) =>
@@ -383,7 +383,6 @@ export default function FormTable({
           perlakuan: updatedPerlakuan,
         }));
       }
-
     }
   }, [state.perlakuan, optionsStakeholder]);
 
@@ -636,7 +635,6 @@ export default function FormTable({
           </Stack>
           <Stack direction="column" gap={2}>
             {items.map((tags, key) => (
-
               <Paper
                 key={tags.id}
                 elevation={0}

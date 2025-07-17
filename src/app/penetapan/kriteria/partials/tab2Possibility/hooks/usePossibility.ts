@@ -91,7 +91,7 @@ const usePossibilityList = () => {
   }
 
   async function updatePossibility() {
-    console.log({ payloadValues });
+    // console.log({ payloadValues });
 
     const values: doValues[] = payloadValues.map((item, idx: number) => ({
       level_kemungkinan: defaultDropdownList[idx],
@@ -132,7 +132,7 @@ const usePossibilityList = () => {
 
     if (response?.code == API_CODE.success) {
       let result: any[] = response.result;
-      console.log({ result });
+      // console.log({ result });
       if (result) {
         // setDataPossibility(result);
         // const mappedValues = result.map((item) => ({

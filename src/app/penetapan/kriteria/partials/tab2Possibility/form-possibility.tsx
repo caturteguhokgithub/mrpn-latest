@@ -37,9 +37,9 @@ export default function FormPossibility({
           low_frekuensi: "",
         };
 
-    console.log({ tempState });
+    // console.log({ tempState });
     if (!isEmpty(tempState)) {
-      console.log({ tempState, value, field });
+      // console.log({ tempState, value, field });
       setState({
         ...tempState,
         [field]: value,

@@ -90,7 +90,7 @@ export default function CardStakeholder({
       iconPath: stakeholderSelected?.icon ?? "",
       icon: "",
     };
-    console.log(x);
+    // console.log(x);
     setLogoState(x);
     setModalLogo(true);
   };
@@ -110,7 +110,7 @@ export default function CardStakeholder({
         });
       };
       reader.onerror = function (error) {
-        console.log("Error: ", error);
+        // console.log("Error: ", error);
       };
     }
   };

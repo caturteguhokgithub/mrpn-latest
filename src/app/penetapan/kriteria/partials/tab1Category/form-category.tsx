@@ -84,7 +84,7 @@ export default function FormCategory({
     }
   };
 
-  console.log({ state });
+  // console.log({ state });
 
   return (
     <Fragment>

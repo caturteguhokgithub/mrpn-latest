@@ -25,7 +25,7 @@ const useUrgensiVM = () => {
       loadingContext: loadingContext,
       //   errorModalContext: errorModalContext,
     });
-    console.log({ response });
+    // console.log({ response });
     if (response?.code == API_CODE.success) {
       const result: ResponseGet[] = response.result;
       if (result) {

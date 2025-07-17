@@ -81,7 +81,7 @@ export default function TableNotaDinas({
         }
       };
       reader.onerror = function (error) {
-        console.log("Error: ", error);
+        // console.log("Error: ", error);
       };
     }
   };
