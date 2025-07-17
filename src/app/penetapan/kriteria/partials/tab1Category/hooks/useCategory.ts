@@ -185,7 +185,7 @@ const useCategoryList = () => {
     getMasterCategory();
   }, [objectState?.id]);
 
-  console.log({ requestCategory });
+  // console.log({ requestCategory });
 
   return {
     listDataCategory: dataCategory,

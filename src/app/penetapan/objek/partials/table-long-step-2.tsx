@@ -26,7 +26,7 @@ export default function TableLonglistStepTwo({ mode }: { mode?: string }) {
     (state) => state
   );
 
-  console.log(uraianState);
+  // console.log(uraianState);
 
   function handleChecked(checked: boolean, i: number) {
     const curUraian: PenetapanObjectUraianDto[] = uraianState;
