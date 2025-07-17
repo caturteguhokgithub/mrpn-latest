@@ -99,9 +99,6 @@ const TablePerlakuanMultiCheck = ({
 }) => {
   const { year, rpjmn } = useRKPContext((store) => store);
 
-  console.log(state);
-
-
   let multiyear: number[] = [year];
   if (year === 0) {
     multiyear = GenerateRpjmnYear(rpjmn);
@@ -245,6 +242,7 @@ export default function FormTable({
     value: number;
   } | null>(null);
 
+
   useEffect(() => {
     if (state.src_matriks_risiko) {
       const nilai = state.src_matriks_risiko.nilai;
@@ -318,7 +316,6 @@ export default function FormTable({
         ),
       }));
 
-      console.log(updated);
       return updated;
     });
   };
@@ -354,7 +351,8 @@ export default function FormTable({
           satuan_triwulan_3: val.satuan_triwulan_3,
           target_triwulan_4: val.target_triwulan_4,
           satuan_triwulan_4: val.satuan_triwulan_4,
-          ro: val.ro ?? [],
+          ro: val.rincian_output?.map((x) => x.id)
+            ?? (val.ro ?? []),
           rincian_output: val.rincian_output,
           start_date: val.start_date,
           end_date: val.end_date,
@@ -364,6 +362,28 @@ export default function FormTable({
       });
 
       setItems(loadedItems);
+
+      const updatedPerlakuan = state.perlakuan.map((val) => ({
+        ...val,
+        ro: val.rincian_output?.map((x) => x.id) ?? (val.ro ?? []),
+      }));
+
+      const isEqualArray = (a: number[], b: number[]) =>
+        a.length === b.length && a.every((val, i) => val === b[i]);
+
+      const isSame = state.perlakuan.every((val, i) => {
+        const updatedRo = updatedPerlakuan[i].ro ?? [];
+        const originalRo = val.ro ?? [];
+        return isEqualArray(updatedRo, originalRo);
+      });
+
+      if (!isSame) {
+        setState((prev) => ({
+          ...prev,
+          perlakuan: updatedPerlakuan,
+        }));
+      }
+
     }
   }, [state.perlakuan, optionsStakeholder]);
 
@@ -864,7 +884,6 @@ export default function FormTable({
                       state={items.find((item) => item.id === tags.id)!}
                       setState={setItems}
                       // setState={(updater) => {
-                      //   console.log(updater);
 
                       //   const updatedItems = items.map((item) =>
                       //     item.id === tags.id
