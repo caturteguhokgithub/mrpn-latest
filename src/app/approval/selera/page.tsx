@@ -1,7 +1,7 @@
 "use client";
 
 import ContentPage from "@/components/contents";
-import React from "react";
+import React, { useEffect } from "react";
 import DashboardLayout from "@/components/layouts/layout";
 import {
   Box,
@@ -24,6 +24,9 @@ import { LabelRadio } from "@/components/labelRadio";
 import DialogComponent from "@/components/dialog";
 import FormReject from "../nota-dinas/partials/form-reject";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
+import usePenetapanSelera from "@/app/penetapan/kriteria/partials/tab4Selera/hooks/vm";
+import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
+import { doReqSeleraApprovalDto } from "@/app/penetapan/kriteria/partials/tab4Selera/hooks/model";
 
 export default function PageApprovalSelera() {
   usePermissionChecker("approval.seleraRisiko");
@@ -32,16 +35,47 @@ export default function PageApprovalSelera() {
   const [rejectStamp, setRejectStamp] = React.useState(false);
   const [buttonStamp, setButtonStamp] = React.useState(true);
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
+  const nilaiOptions = ["Rendah", "Konservatif", "Moderat", "Tinggi"];
+  const { objectState } = usePenetapanGlobalVM();
 
-  const handleApprovalStamp = () => {
-    setApprovalStamp(true);
-    setButtonStamp(false);
-  };
+  const {
+    getApprovalSelera,
+    setStateApproval,
+    stateApproval,
+    updateApproval,
+    getSelera,
+    requestSelera,
+    setRequestSelera
+  } = usePenetapanSelera();
 
-  const handleRejectStamp = () => {
-    setRejectStamp(true);
-    setButtonStamp(false);
-    setModalOpenAdd(false);
+  useEffect(() => {
+    getApprovalSelera();
+    getSelera();
+  }, [objectState?.id]);
+
+  useEffect(() => {
+    if (stateApproval.status == "approved") {
+      setApprovalStamp(true);
+      setButtonStamp(false);
+    } else if (stateApproval.status == "rejected") {
+      setRejectStamp(true);
+      setButtonStamp(false);
+      setModalOpenAdd(false);
+    }
+  }, [stateApproval]);
+
+
+  const handleApprovalStamp = async (status: string, msg = "") => {
+    if (stateApproval) {
+      const param: doReqSeleraApprovalDto = {
+        ...stateApproval,
+        id: objectState?.id ?? 0,
+        status: status,
+        message: msg
+      };
+
+      updateApproval(param);
+    }
   };
 
   const handleModalOpen = () => {
@@ -59,7 +93,7 @@ export default function PageApprovalSelera() {
         variant="contained"
         type="submit"
         color="error"
-        onClick={handleRejectStamp}
+        onClick={() => handleApprovalStamp("rejected", stateApproval.message)}
       >
         Reject
       </Button>
@@ -98,7 +132,9 @@ export default function PageApprovalSelera() {
                   color="success"
                   startIcon={<IconFA name="thumbs-up" size={14} />}
                   sx={{ px: 3, borderRadius: 12, whiteSpace: "nowrap" }}
-                  onClick={handleApprovalStamp}
+                  onClick={() => {
+                    handleApprovalStamp("approved")
+                  }}
                 >
                   Approve
                 </Button>
@@ -166,32 +202,20 @@ export default function PageApprovalSelera() {
                   },
                 }}
               >
-                <CustomToggleButton
-                  value="1"
-                  label="Rendah"
-                  minheight={60}
-                  disabled
-                />
-                <CustomToggleButton
-                  value="2"
-                  label="Konservatif"
-                  minheight={60}
-                  approvalPage
-                />
-                <CustomToggleButton
-                  value="3"
-                  label="Moderat"
-                  minheight={60}
-                  disabled
-                />
-                <CustomToggleButton
-                  value="4"
-                  label="Tinggi"
-                  minheight={60}
-                  disabled
-                />
+                {nilaiOptions.map((option) => (
+                  <CustomToggleButton
+                    key={option}
+                    value={option}
+                    label={option}
+                    minheight={60}
+                    approvalPage={requestSelera.type_nilai === option}
+                    disabled={requestSelera.type_nilai !== option}
+                  />
+                ))}
               </ToggleButtonGroup>
-              <Box mt={2}>
+
+              {/* Apa bener cuman Konservatif ajj yg dimunculin? */}
+              {/* <Box mt={2}>
                 <LabelRadio
                   heading="KONSERVATIF"
                   rangeValue={"7-12"}
@@ -216,7 +240,9 @@ export default function PageApprovalSelera() {
                     </Stack>
                   }
                 />
-              </Box>
+              </Box> */}
+
+
             </Paper>
           </CardWithStamp>
           {/* {buttonStamp && (
@@ -252,7 +278,7 @@ export default function PageApprovalSelera() {
         title="Tuliskan Alasan Reject"
         dialogFooter={dialogActionFooter}
       >
-        <FormReject mode="add" />
+        <FormReject state={stateApproval} setState={setStateApproval} mode="add" />
       </DialogComponent>
     </>
   );

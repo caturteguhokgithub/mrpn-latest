@@ -4,7 +4,7 @@ import { useGlobalModalContext, useLoading } from "@/lib/core/hooks/useHooks";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { doGetSeleraDto, doReqSeleraApprovalDto, doReqSeleraDto, initApprovalSelera, initSelera } from "./model";
 import useAuthorizationVM from "@/app/authorizationVM";
-import { doCreateSelera, doGetApprovalSelera, doGetSelera } from "./service";
+import { doCreateSelera, doGetApprovalSelera, doGetSelera, doReqApprovalSelera } from "./service";
 
 const usePenetapanSelera = () => {
   const loadingContext = useLoading();
@@ -96,6 +96,20 @@ const usePenetapanSelera = () => {
     }
   }
 
+  async function updateApproval(param: doReqSeleraApprovalDto) {
+    if (objectState !== undefined && objectState !== null) {
+      const response = await doReqApprovalSelera({
+        body: param,
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      });
+
+      if (response?.code == API_CODE.success) {
+        getApprovalSelera();
+      }
+    }
+  }
+
   return {
     loading,
     createSelera,
@@ -105,8 +119,10 @@ const usePenetapanSelera = () => {
     setOpenModalConfirmApproval,
     getApprovalSelera,
     stateApproval,
+    setStateApproval,
     stateSelera,
     getSelera,
+    updateApproval,
   };
 };
 

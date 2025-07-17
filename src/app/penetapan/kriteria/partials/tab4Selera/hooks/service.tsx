@@ -25,3 +25,11 @@ export async function doGetApprovalSelera(param: ApprovalSeleraServiceModel) {
     });
     if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
+
+export async function doReqApprovalSelera(param: ApprovalSeleraServiceModel) {
+    const resp = await post({
+        ...param,
+        url: "penetapan/seleraRisiko/approve",
+    });
+    if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}

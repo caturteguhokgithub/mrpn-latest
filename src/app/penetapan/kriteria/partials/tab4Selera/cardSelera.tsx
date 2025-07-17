@@ -13,6 +13,7 @@ import useAuthorizationVM from "@/app/authorizationVM";
 import usePenetapanSelera from "./hooks/vm";
 import { red, green } from "@mui/material/colors";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
+import { doReqSeleraApprovalDto } from "./hooks/model";
 
 export default function CardSelera() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
@@ -33,6 +34,7 @@ export default function CardSelera() {
     stateApproval,
     stateSelera,
     getSelera,
+    updateApproval,
   } = usePenetapanSelera();
 
   useEffect(() => {
@@ -42,6 +44,19 @@ export default function CardSelera() {
 
   const handleModalClose = () => {
     setModalOpenAdd(false);
+  };
+
+  const handleUpdateStatus = async (status: string, msg = "") => {
+    if (stateApproval) {
+      const param: doReqSeleraApprovalDto = {
+        ...stateApproval,
+        id: objectState?.id ?? 0,
+        status: status,
+        message: msg
+      };
+
+      updateApproval(param);
+    }
   };
 
   const dialogActionFooter = (
@@ -61,6 +76,9 @@ export default function CardSelera() {
     setEmptyRisk(!emptyRisk);
   };
 
+  console.log(stateApproval);
+
+
   const isEmptyRisk = true;
   const isStatus = stateApproval.status;
 
@@ -74,7 +92,7 @@ export default function CardSelera() {
               color={
                 isStatus === "reject"
                   ? "error"
-                  : isStatus === "draf"
+                  : isStatus === "draft"
                     ? "default"
                     : "warning"
               }
@@ -87,8 +105,8 @@ export default function CardSelera() {
                 >
                   {isStatus === "reject"
                     ? "Reject"
-                    : isStatus === "draf"
-                      ? "Draf"
+                    : isStatus === "draft"
+                      ? "Draft"
                       : "Review"}
                 </Typography>
               }
@@ -97,7 +115,7 @@ export default function CardSelera() {
                   name={
                     isStatus === "reject"
                       ? "mdi:close"
-                      : isStatus === "draf"
+                      : isStatus === "draft"
                         ? "mdi:invoice-text-edit"
                         : "mdi:magnify-expand"
                   }
@@ -227,7 +245,14 @@ export default function CardSelera() {
             >
               Tidak
             </Button>
-            <Button variant="contained" type="submit">
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => {
+                handleUpdateStatus("review");
+                setOpenModalConfirmApproval(false);
+              }}
+            >
               Ya
             </Button>
           </DialogActions>

@@ -52,6 +52,12 @@ export default function RiskContent({
   //   }
   // }, [state]);
 
+  useEffect(() => {
+    if (state?.type_nilai) {
+      setValueTheme(state.type_nilai)
+    }
+  }, [state]);
+
   const handleAlignment = (
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string | null
@@ -59,25 +65,26 @@ export default function RiskContent({
     setValueTheme(newAlignment);
     var type_nilai = state?.type_nilai ?? "";
 
+    type_nilai = newAlignment ?? "";
 
-    switch (newAlignment) {
-      case "1":
-        type_nilai = "Rendah";
-        break;
-      case "2":
-        type_nilai = "Konservatif";
-        break;
-      case "3":
-        type_nilai = "Moderat";
-        break;
-      case "4":
-        type_nilai = "Tinggi";
-        break;
+    // switch (newAlignment) {
+    //   case "1":
+    //     type_nilai = "Rendah";
+    //     break;
+    //   case "2":
+    //     type_nilai = "Konservatif";
+    //     break;
+    //   case "3":
+    //     type_nilai = "Moderat";
+    //     break;
+    //   case "4":
+    //     type_nilai = "Tinggi";
+    //     break;
 
-      default:
-        type_nilai = "";
-        break;
-    }
+    //   default:
+    //     type_nilai = "";
+    //     break;
+    // }
 
     setState &&
       setState((prevState) => ({
@@ -128,11 +135,11 @@ perencanaan pembangunan nasional"
           <Stack gap={1}>
             <Typography fontStyle="italic" fontSize={14} color={grey[600]}>
               Tuliskan pernyataan selera risiko{" "}
-              {valueTheme == "1"
+              {valueTheme == "Rendah"
                 ? "Rendah"
-                : valueTheme == "2"
+                : valueTheme == "Konservatif"
                   ? "Konservatif"
-                  : valueTheme == "3"
+                  : valueTheme == "Moderat"
                     ? "Moderat"
                     : "Tinggi"}
             </Typography>
@@ -148,11 +155,11 @@ perencanaan pembangunan nasional"
                     pernyataan: e.target.value,
                   }));
               }}
-              placeholder={`Deskripsi ${valueTheme == "1"
+              placeholder={`Deskripsi ${valueTheme == "Rendah"
                 ? "Rendah"
-                : valueTheme == "2"
+                : valueTheme == "Konservatif"
                   ? "Konservatif"
-                  : valueTheme == "3"
+                  : valueTheme == "Moderat"
                     ? "Moderat"
                     : "Tinggi"
                 }`}
@@ -219,7 +226,7 @@ perencanaan pembangunan nasional"
           <CustomToggleButton
             //    variant="danger"
             code={userLevel === "bappenas" ? "Nilai" : null}
-            value="1"
+            value="Rendah"
             //    valueLabel="1-6"
             label="Rendah"
             minheight={60}
@@ -227,7 +234,7 @@ perencanaan pembangunan nasional"
           <CustomToggleButton
             //    variant="warning"
             code={userLevel === "bappenas" ? "Nilai" : null}
-            value="2"
+            value="Konservatif"
             //    valueLabel="7-12"
             label="Konservatif"
             minheight={60}
@@ -235,7 +242,7 @@ perencanaan pembangunan nasional"
           <CustomToggleButton
             //    variant="success"
             code={userLevel === "bappenas" ? "Nilai" : null}
-            value="3"
+            value="Moderat"
             //    valueLabel="13-18"
             label="Moderat"
             minheight={60}
@@ -243,14 +250,14 @@ perencanaan pembangunan nasional"
           <CustomToggleButton
             //    variant="primary"
             code={userLevel === "bappenas" ? "Nilai" : null}
-            value="4"
+            value="Tinggi"
             //    valueLabel="19-25"
             label="Tinggi"
             minheight={60}
           />
         </ToggleButtonGroup>
       </Stack>
-      <Collapse in={valueTheme === "1"}>
+      <Collapse in={valueTheme === "Rendah"}>
         <Box mb={2}>
           <LabelRadio
             heading="RENDAH"
@@ -312,7 +319,7 @@ perencanaan pembangunan nasional"
         </Box>
         {/* {saveButton} */}
       </Collapse>
-      <Collapse in={valueTheme === "2"}>
+      <Collapse in={valueTheme === "Konservatif"}>
         <Box mb={2}>
           <LabelRadio
             heading="KONSERVATIF"
@@ -382,7 +389,7 @@ perencanaan pembangunan nasional"
         </Box>
         {/* {saveButton} */}
       </Collapse>
-      <Collapse in={valueTheme === "3"}>
+      <Collapse in={valueTheme === "Moderat"}>
         <Box mb={2}>
           <LabelRadio
             heading="MODERAT"
@@ -456,7 +463,7 @@ perencanaan pembangunan nasional"
         </Box>
         {/* {saveButton} */}
       </Collapse>
-      <Collapse in={valueTheme === "4"}>
+      <Collapse in={valueTheme === "Tinggi"}>
         <Box mb={2}>
           <LabelRadio
             heading="TINGGI"
