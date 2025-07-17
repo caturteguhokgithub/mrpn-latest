@@ -10,6 +10,14 @@ export async function doCreateSelera(param: CreateSeleraServiceModel) {
     if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
 
+export async function doGetSelera(param: CreateSeleraServiceModel) {
+    const resp = await post({
+        ...param,
+        url: "penetapan/seleraRisiko/show",
+    });
+    if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
 export async function doGetApprovalSelera(param: ApprovalSeleraServiceModel) {
     const resp = await post({
         ...param,

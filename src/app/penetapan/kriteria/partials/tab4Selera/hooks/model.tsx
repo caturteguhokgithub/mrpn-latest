@@ -1,17 +1,21 @@
 import { BaseAPIServiceParam } from "@/lib/core/api/apiModel";
 
 export interface doReqSeleraDto {
+    id: number
     uraian_penetapan_objek_id: number
     type_user: string
     type_nilai: string
     pernyataan: string
+    nilai: string
 }
 
 export const initSelera: doReqSeleraDto = {
+    id: 0,
     uraian_penetapan_objek_id: 0,
     type_user: "",
     type_nilai: "",
-    pernyataan: ""
+    pernyataan: "",
+    nilai: ""
 }
 
 export type CreateSeleraServiceModel = BaseAPIServiceParam & {
@@ -42,3 +46,16 @@ export const initApprovalSelera: doReqSeleraApprovalDto = {
 export type ApprovalSeleraServiceModel = BaseAPIServiceParam & {
     body: doReqSeleraApprovalDto;
 };
+
+export interface doGetSeleraDto {
+    referensi: string | null,
+    seleraRisiko: dtoSeleraRisiko[]
+}
+export interface dtoSeleraRisiko {
+    id: number
+    uraian_penetapan_objek_id: number
+    type_user: string
+    type_nilai: string
+    pernyataan: string
+    nilai: string
+}

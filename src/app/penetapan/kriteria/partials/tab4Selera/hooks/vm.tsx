@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import { useGlobalModalContext, useLoading } from "@/lib/core/hooks/useHooks";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
-import { doReqSeleraApprovalDto, doReqSeleraDto, initApprovalSelera, initSelera } from "./model";
+import { doGetSeleraDto, doReqSeleraApprovalDto, doReqSeleraDto, initApprovalSelera, initSelera } from "./model";
 import useAuthorizationVM from "@/app/authorizationVM";
-import { doCreateSelera, doGetApprovalSelera } from "./service";
+import { doCreateSelera, doGetApprovalSelera, doGetSelera } from "./service";
 
 const usePenetapanSelera = () => {
   const loadingContext = useLoading();
@@ -12,6 +12,8 @@ const usePenetapanSelera = () => {
   const [loading, setLoading] = useState(false);
   const { objectState } = usePenetapanGlobalVM();
   const { user } = useAuthorizationVM();
+  const [openModalConfirmApproval, setOpenModalConfirmApproval] = useState<boolean>(false);
+  const [stateSelera, setStateSelera] = useState<doGetSeleraDto>();
 
   const [requestSelera, setRequestSelera] = useState<doReqSeleraDto>({
     ...initSelera,
@@ -20,9 +22,6 @@ const usePenetapanSelera = () => {
   const [stateApproval, setStateApproval] = useState<doReqSeleraApprovalDto>({
     ...initApprovalSelera,
   });
-
-  const [openModalConfirmApproval, setOpenModalConfirmApproval] =
-    useState<boolean>(false);
 
   async function createSelera(param: doReqSeleraDto) {
     const req: doReqSeleraDto = {
@@ -41,6 +40,35 @@ const usePenetapanSelera = () => {
     if (response?.code == API_CODE.success) {
       // getData();
       // setModalOpenAdd(false);
+    }
+  }
+
+  async function getSelera() {
+    const req: doReqSeleraDto = {
+      ...initSelera,
+      type_user: user?.type || "",
+      uraian_penetapan_objek_id: objectState?.id ?? 0,
+    };
+
+    const params = {
+      body: req,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    };
+
+    const response = await doGetSelera(params);
+    if (response?.code == API_CODE.success) {
+      let result: doGetSeleraDto = response.result;
+
+      if (result) {
+        const finalResult: doGetSeleraDto = {
+          referensi: response.result.referensi,
+          seleraRisiko: response.result.seleraRisiko[0]
+        }
+        setStateSelera(finalResult)
+        setRequestSelera(response.result.seleraRisiko[0])
+      }
+
     }
   }
 
@@ -77,6 +105,8 @@ const usePenetapanSelera = () => {
     setOpenModalConfirmApproval,
     getApprovalSelera,
     stateApproval,
+    stateSelera,
+    getSelera,
   };
 };
 

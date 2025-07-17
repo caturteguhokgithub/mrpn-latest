@@ -1,4 +1,4 @@
-import React, { Fragment, SetStateAction } from "react";
+import React, { Fragment, SetStateAction, useEffect } from "react";
 import {
   Box,
   Button,
@@ -46,12 +46,19 @@ export default function RiskContent({
   );
   const [userLevel, setUserLevel] = React.useState<string | null>(userLv);
 
+  // useEffect(() => {
+  //   if (state?.nilai) {
+  //     handleAlignment()
+  //   }
+  // }, [state]);
+
   const handleAlignment = (
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string | null
   ) => {
     setValueTheme(newAlignment);
-    var type_nilai = "";
+    var type_nilai = state?.type_nilai ?? "";
+
 
     switch (newAlignment) {
       case "1":
@@ -124,15 +131,16 @@ perencanaan pembangunan nasional"
               {valueTheme == "1"
                 ? "Rendah"
                 : valueTheme == "2"
-                ? "Konservatif"
-                : valueTheme == "3"
-                ? "Moderat"
-                : "Tinggi"}
+                  ? "Konservatif"
+                  : valueTheme == "3"
+                    ? "Moderat"
+                    : "Tinggi"}
             </Typography>
 
             <TextareaStyled
               aria-label="Deskripsi"
               minRows={3}
+              value={state?.pernyataan}
               onChange={(e) => {
                 setState &&
                   setState((prevState) => ({
@@ -140,16 +148,15 @@ perencanaan pembangunan nasional"
                     pernyataan: e.target.value,
                   }));
               }}
-              placeholder={`Deskripsi ${
-                valueTheme == "1"
-                  ? "Rendah"
-                  : valueTheme == "2"
+              placeholder={`Deskripsi ${valueTheme == "1"
+                ? "Rendah"
+                : valueTheme == "2"
                   ? "Konservatif"
                   : valueTheme == "3"
-                  ? "Moderat"
-                  : "Tinggi"
-              }`}
-              // width="100%"
+                    ? "Moderat"
+                    : "Tinggi"
+                }`}
+            // width="100%"
             />
           </Stack>
         </Stack>

@@ -31,10 +31,13 @@ export default function CardSelera() {
     setOpenModalConfirmApproval,
     getApprovalSelera,
     stateApproval,
+    stateSelera,
+    getSelera,
   } = usePenetapanSelera();
 
   useEffect(() => {
     getApprovalSelera();
+    getSelera();
   }, [objectState?.id]);
 
   const handleModalClose = () => {
@@ -72,8 +75,8 @@ export default function CardSelera() {
                 isStatus === "reject"
                   ? "error"
                   : isStatus === "draf"
-                  ? "default"
-                  : "warning"
+                    ? "default"
+                    : "warning"
               }
               variant="outlined"
               label={
@@ -85,8 +88,8 @@ export default function CardSelera() {
                   {isStatus === "reject"
                     ? "Reject"
                     : isStatus === "draf"
-                    ? "Draf"
-                    : "Review"}
+                      ? "Draf"
+                      : "Review"}
                 </Typography>
               }
               icon={
@@ -95,8 +98,8 @@ export default function CardSelera() {
                     isStatus === "reject"
                       ? "mdi:close"
                       : isStatus === "draf"
-                      ? "mdi:invoice-text-edit"
-                      : "mdi:magnify-expand"
+                        ? "mdi:invoice-text-edit"
+                        : "mdi:magnify-expand"
                   }
                 />
               }
@@ -108,13 +111,13 @@ export default function CardSelera() {
                 <Typography component="strong" fontWeight={600} fontSize={14}>
                   {stateApproval?.created_at
                     ? new Date(stateApproval.created_at).toLocaleDateString(
-                        "id-ID",
-                        {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        }
-                      )
+                      "id-ID",
+                      {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      }
+                    )
                     : "-"}
                 </Typography>
               </Typography>
@@ -124,13 +127,13 @@ export default function CardSelera() {
                 <Typography component="strong" fontWeight={600} fontSize={14}>
                   {stateApproval?.created_at
                     ? new Date(stateApproval.created_at).toLocaleDateString(
-                        "id-ID",
-                        {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        }
-                      )
+                      "id-ID",
+                      {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      }
+                    )
                     : "-"}
                 </Typography>
               </Typography>
@@ -148,7 +151,7 @@ export default function CardSelera() {
                   borderRadius: 50,
                   px: 2,
                 }}
-                // onClick={() => setOpenModal(true)}
+              // onClick={() => setOpenModal(true)}
               >
                 Catatan
               </Button>
@@ -158,7 +161,7 @@ export default function CardSelera() {
         addButton={
           <Fragment>
             {user?.role.name == "Komite MRPN LS" ||
-            user?.role.name == "Super Admin" ? (
+              user?.role.name == "Super Admin" ? (
               <AddButton
                 noMargin
                 startIcon={<Iconify name="mdi:chart-bar-stacked" />}

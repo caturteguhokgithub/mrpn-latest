@@ -30,9 +30,13 @@ const useTreatmentRiskVM = () => {
   } = usePenetapanGlobalVM()
 
   const [modal, setModal] = useState<{ isOpen: boolean, action: string }>({ isOpen: false, action: "create" })
-
   const [dataTable, setDataTable] = useState<RiskOverviewData[]>([])
   const [dataTreatmentRisk, setDataTreatmentRisk] = useState<RiskTreatmentResDto | undefined>(undefined)
+  const [optionRiskDecision, setOptionRiskDecision] = useState<string[]>([])
+  const [optionStakeholder, setOptionStakeholder] = useState<MiscMasterListStakeholderRes[]>([])
+  const [state, setState] = useState<RiskTreatmentReqDto>(initRiskTreatmentStateReq)
+  const [reqState, setReqState] = useState<RiskTreatmentReqDto>({ ...initRiskTreatmentStateReq })
+
   const getTreatmentRiskData = async () => {
     const response = await doGetRiskTreatment({
       body: {
@@ -64,8 +68,6 @@ const useTreatmentRiskVM = () => {
     }
   }
 
-
-  const [optionRiskDecision, setOptionRiskDecision] = useState<string[]>([])
   async function getOptionRiskDecision() {
     const response = await doGetSystemParamByModuleAndName({
       body: {
@@ -83,8 +85,6 @@ const useTreatmentRiskVM = () => {
     }
   }
 
-
-  const [optionStakeholder, setOptionStakeholder] = useState<MiscMasterListStakeholderRes[]>([])
   async function getOptionStakeholder() {
     const response = await doGetMasterListStakeholder({
       body: {},
@@ -98,10 +98,6 @@ const useTreatmentRiskVM = () => {
       }
     }
   }
-
-  const [state, setState] = useState<RiskTreatmentReqDto>(initRiskTreatmentStateReq)
-
-  const [reqState, setReqState] = useState<RiskTreatmentReqDto>({ ...initRiskTreatmentStateReq })
 
   const actionModal = (isOpen: boolean, action: string, id?: number) => {
     let initState: RiskTreatmentReqDto = JSON.parse(JSON.stringify(initRiskTreatmentStateReq))
@@ -148,7 +144,6 @@ const useTreatmentRiskVM = () => {
       action: action
     })
   }
-
 
   const updateOrCreateOrDelete = async () => {
 

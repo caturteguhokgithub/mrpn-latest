@@ -300,7 +300,6 @@ export default function FormTable({
         };
       });
 
-      // 🔧 Ambil item dari hasil update untuk diset ke state
       const updatedItem = updated.find((item) => item.id === id)!;
 
       setState((prev) => ({
@@ -308,10 +307,10 @@ export default function FormTable({
         perlakuan: prev.perlakuan.map((item) =>
           item.id === id
             ? {
-                ...item,
-                [field]: value,
-                ro: [...updatedItem.ro], // 🧠 Ambil dari hasil updated, bukan dari item lama
-              }
+              ...item,
+              [field]: value,
+              ro: [...updatedItem.ro],
+            }
             : item
         ),
       }));
@@ -352,7 +351,7 @@ export default function FormTable({
           satuan_triwulan_3: val.satuan_triwulan_3,
           target_triwulan_4: val.target_triwulan_4,
           satuan_triwulan_4: val.satuan_triwulan_4,
-          ro: val.rincian_output?.map((x) => x.id) ?? val.ro ?? [],
+          ro: val.ro ?? [],
           rincian_output: val.rincian_output,
           start_date: val.start_date,
           end_date: val.end_date,
@@ -362,33 +361,22 @@ export default function FormTable({
       });
 
       setItems(loadedItems);
-
-      const updatedPerlakuan = state.perlakuan.map((val) => ({
-        ...val,
-        ro: val.rincian_output?.map((x) => x.id) ?? val.ro ?? [],
-      }));
-
-      const isEqualArray = (a: number[], b: number[]) =>
-        a.length === b.length && a.every((val, i) => val === b[i]);
-
-      const isSame = state.perlakuan.every((val, i) => {
-        const updatedRo = updatedPerlakuan[i].ro ?? [];
-        const originalRo = val.ro ?? [];
-        return isEqualArray(updatedRo, originalRo);
-      });
-
-      if (!isSame) {
-        setState((prev) => ({
-          ...prev,
-          perlakuan: updatedPerlakuan,
-        }));
-      }
     }
   }, [state.perlakuan, optionsStakeholder]);
 
   const [items, setItems] = useState<Perlakuan[]>([
     { ...initPerlakuanStateReq },
   ]);
+
+  useEffect(() => {
+    const isSame = JSON.stringify(items) === JSON.stringify(state.perlakuan);
+    if (!isSame) {
+      setState((prev) => ({
+        ...prev,
+        perlakuan: items,
+      }));
+    }
+  }, [items]);
 
   const perlakuanAdd = () => {
     if (items.length >= 10) return;
