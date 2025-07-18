@@ -1192,8 +1192,8 @@ export default function TableNotaDinasViewOnly({
                           left={-70}
                           zIndex={0}
                         >
-                          {notaDinas.alasan_ttd_penyetuju &&
-                            !notaDinas.approve_ttd_penyetuju && (
+                          {stateApproval &&
+                            stateApproval.status == "rejected" && (
                               <Image
                                 alt="Disetujui oleh"
                                 src="https://res.cloudinary.com/caturteguh/image/upload/v1721703228/mrpn/ttd/stamp-rejected_gdzucv.png"
@@ -1207,7 +1207,7 @@ export default function TableNotaDinasViewOnly({
                                 }}
                               />
                             )}
-                          {notaDinas.approve_ttd_penyetuju && (
+                          {stateApproval?.status == "approved" && (
                             <Image
                               alt="Disetujui oleh"
                               src="https://res.cloudinary.com/caturteguh/image/upload/v1721703223/mrpn/ttd/stamp-approved_dduusw.png"
