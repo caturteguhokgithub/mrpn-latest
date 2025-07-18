@@ -1,22 +1,45 @@
-import React from "react";
+import React, { SetStateAction } from "react";
 import { FormControl, Grid, Typography } from "@mui/material";
-import TextareaComponent from "@/components/textarea";
+import TextareaComponent, { TextareaStyled } from "@/components/textarea";
+import { dtoGetApproval } from "@/app/penetapan/objek/pageModel";
 
-export default function FormNote({ mode }: { mode?: string }) {
+export default function FormNote({
+  mode,
+  state,
+  setState,
+}: {
+  mode?: string
+  state?: dtoGetApproval;
+  setState?: (value: SetStateAction<dtoGetApproval>) => void;
+}) {
+  const handleChange = (e: string) => {
+    if (setState) {
+      setState((prevState) => ({
+        ...prevState,
+        message: e,
+      }));
+    }
+  };
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <FormControl fullWidth>
           {mode === "add" ? (
-            <TextareaComponent
-              label="Catatan penolakan"
+            <TextareaStyled
+              aria-label="Catatan penolakan"
               placeholder="Catatan penolakan"
+              minRows={3}
+              value={state?.message ?? ""}
+              onChange={(e) => handleChange(e.target.value)}
             />
           ) : mode === "edit" ? (
-            <TextareaComponent
-              label="Catatan penolakan"
+            <TextareaStyled
+              aria-label="Catatan penolakan"
               placeholder="Catatan penolakan"
-              value="-"
+              minRows={3}
+              value={state?.message ?? ""}
+              onChange={(e) => handleChange(e.target.value)}
             />
           ) : (
             <Typography fontWeight={600}>-</Typography>

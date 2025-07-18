@@ -76,8 +76,6 @@ export default function CardSelera() {
     setEmptyRisk(!emptyRisk);
   };
 
-  console.log(stateApproval);
-
 
   const isEmptyRisk = true;
   const isStatus = stateApproval.status;

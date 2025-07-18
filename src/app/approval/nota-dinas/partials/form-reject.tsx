@@ -18,9 +18,6 @@ export default function FormReject({
         ...prevState,
         message: e,
       }));
-
-      console.log(state);
-
     }
   };
 
@@ -34,7 +31,7 @@ export default function FormReject({
                 aria-label="Tuliskan Alasan Reject"
                 placeholder="Tuliskan Alasan Reject"
                 minRows={3}
-                value={state?.message}
+                value={state?.message ?? ""}
                 onChange={(e) => handleChange(e.target.value)}
               />
             ) : mode === "edit" ? (
@@ -42,7 +39,7 @@ export default function FormReject({
                 aria-label="Tuliskan Alasan Reject"
                 placeholder="Tuliskan Alasan Reject"
                 minRows={3}
-                value={state?.message}
+                value={state?.message ?? ""}
                 onChange={(e) => handleChange(e.target.value)}
               />
             ) : (

@@ -374,3 +374,13 @@ export const initShorlist: dtoUraian = {
   usulan_upr_linsek: [],
   ranking: 0
 };
+
+export const initApprovalObjek: dtoGetApproval = {
+  id: 0,
+  user_id: 0,
+  status: "",
+  message: "",
+  approvalable_id: 0,
+  approvalable_type: "",
+  created_at: ""
+}

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, SetStateAction, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -54,6 +54,7 @@ export default function TableNotaDinasViewOnly({
   actionApprove,
   pageApproval,
   stateApproval,
+  setStateApproval,
   handleUploadBuktiDukung,
   refreshBuktiDukungTable,
 }: {
@@ -61,6 +62,7 @@ export default function TableNotaDinasViewOnly({
   actionApprove?: React.ReactNode;
   pageApproval?: boolean;
   stateApproval?: dtoGetApproval;
+  setStateApproval?: (value: SetStateAction<dtoGetApproval>) => void;
   handleUploadBuktiDukung?: () => void;
   refreshBuktiDukungTable?: () => void;
 }) {
@@ -72,8 +74,8 @@ export default function TableNotaDinasViewOnly({
   const { rpjmn, year } = useRKPContext((state) => state);
   const { permission } = useAuthContext((state) => state);
   const { objectState } = usePenetapanObjectVM();
-  const { stateShorList, getPenetapanObjectShortList, updateApproval } =
-    usePenetapanObjectVM();
+  const { stateShorList, getPenetapanObjectShortList, updateApproval } = usePenetapanObjectVM();
+
   const {
     gambar,
     uploadImage,
@@ -980,7 +982,7 @@ export default function TableNotaDinasViewOnly({
               </Fragment> */}
               {/* )} */}
             </Stack>
-            <Typography>-</Typography>
+            <Typography>{stateApproval?.message}</Typography>
             {/* <Box>
             <Button
               color="primary"
@@ -1376,7 +1378,7 @@ export default function TableNotaDinasViewOnly({
               type="submit"
               onClick={() => {
                 setModalReject(false);
-                handleUpdateStatus("rejected");
+                handleUpdateStatus("rejected", stateApproval?.message);
                 // setIsReview(false);
                 // setIsApproval(false);
                 // setIsReject(true);
@@ -1393,7 +1395,8 @@ export default function TableNotaDinasViewOnly({
             Apakah Anda yakin ingin <strong>MENOLAK PENGESAHAN</strong>?<br />
             Tuliskan catatan penolakan
           </Typography>
-          <FormNote mode="add" />
+
+          <FormNote state={stateApproval} setState={setStateApproval} mode="add" />
         </Stack>
       </DialogComponent>
       <DialogComponent
@@ -1411,7 +1414,7 @@ export default function TableNotaDinasViewOnly({
               type="submit"
               onClick={() => {
                 setModalApproval(false);
-                handleUpdateStatus("approved");
+                handleUpdateStatus("approved", stateApproval?.message);
                 // setIsReview(false);
                 // setIsReject(false);
                 // setIsApproval(true);

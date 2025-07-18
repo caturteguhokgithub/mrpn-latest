@@ -10,6 +10,7 @@ import {
   dtoGetApproval,
   dtoReqBuktiDukungPengesahan,
   dtoUraian,
+  initApprovalObjek,
   initLogActivity,
   initPenetapanObjectState,
   initReqBuktiDukungPengesahan,
@@ -115,7 +116,7 @@ const usePenetapanObjectVM = () => {
     ...initShorlist,
   });
 
-  const [stateApproval, setStateApproval] = useState<dtoGetApproval>();
+  const [stateApproval, setStateApproval] = useState<dtoGetApproval>({ ...initApprovalObjek });
 
   const [modalDeleteObject, setModalDeleteObject] = useState<boolean>(false);
   const [modalEditEntitas, setModalEditEntitas] = useState<boolean>(false);
@@ -697,6 +698,7 @@ const usePenetapanObjectVM = () => {
     setStateUprSingle,
     getRanking,
     stateApproval,
+    setStateApproval,
     modalBuktiDukung,
     setModalBuktiDukung,
     handleUnggahBuktiDukung,

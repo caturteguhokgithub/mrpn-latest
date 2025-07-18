@@ -25,11 +25,9 @@ export default function PageApprovalNotaDinasView({ }) {
   const { objects, objectState, setObjectState, nota } =
     usePenetapanTopicContext((state) => state);
 
-  const { useEffectGenerateOption, useEffectObjectState, stateApproval, } =
-    usePenetapanObjectVM();
+  const { useEffectGenerateOption, useEffectObjectState, stateApproval, setStateApproval, } = usePenetapanObjectVM();
 
   useEffect(useEffectGenerateOption, [year]);
-
   useEffect(useEffectObjectState, [year, objectState]);
 
   return (
@@ -87,7 +85,7 @@ export default function PageApprovalNotaDinasView({ }) {
       }
     >
       {nota !== undefined ? (
-        <TableNotaDinasViewOnly notaDinas={nota} stateApproval={stateApproval} pageApproval />
+        <TableNotaDinasViewOnly notaDinas={nota} stateApproval={stateApproval} setStateApproval={setStateApproval} pageApproval />
       ) : (
         <EmptyState
           icon={<IconEmptyPage />}
@@ -100,107 +98,6 @@ export default function PageApprovalNotaDinasView({ }) {
         />
       )}
 
-      {/*<DialogComponent*/}
-      {/*  width={480}*/}
-      {/*  dialogOpen={modalOpenAdd}*/}
-      {/*  dialogClose={handleModalClose}*/}
-      {/*  title="Tuliskan Alasan Reject"*/}
-      {/*  dialogFooter={<DialogActions sx={{p: 2, px: 3}}>*/}
-      {/*    <Button onClick={handleModalClose}>Batal</Button>*/}
-      {/*    <Button*/}
-      {/*      variant="contained"*/}
-      {/*      type="submit"*/}
-      {/*      color="error"*/}
-      {/*      onClick={handleRejectLeft}*/}
-      {/*    >*/}
-      {/*      Reject*/}
-      {/*    </Button>*/}
-      {/*  </DialogActions>}*/}
-      {/*>*/}
-      {/*  <FormReject mode="add"/>*/}
-      {/*</DialogComponent>*/}
-      {/*<DialogComponent*/}
-      {/*  width={480}*/}
-      {/*  dialogOpen={modalOpenRejectRight}*/}
-      {/*  dialogClose={handleModalClose}*/}
-      {/*  title="Tuliskan Alasan Reject"*/}
-      {/*  dialogFooter={<DialogActions sx={{p: 2, px: 3}}>*/}
-      {/*    <Button onClick={handleModalClose}>Batal</Button>*/}
-      {/*    <Button*/}
-      {/*      variant="contained"*/}
-      {/*      type="submit"*/}
-      {/*      color="error"*/}
-      {/*      onClick={handleRejectRight}*/}
-      {/*    >*/}
-      {/*      Reject*/}
-      {/*    </Button>*/}
-      {/*  </DialogActions>}*/}
-      {/*>*/}
-      {/*  <FormReject mode="add"/>*/}
-      {/*</DialogComponent>*/}
-
-      {/*<TableRow>*/}
-      {/*  <TableCell align="center">*/}
-      {/*    {buttonLeft && (*/}
-      {/*      <Stack direction="row" gap={1} justifyContent="center">*/}
-      {/*        <Box>*/}
-      {/*          <Button*/}
-      {/*            color="error"*/}
-      {/*            size="small"*/}
-      {/*            variant="outlined"*/}
-      {/*            sx={{borderRadius: 24, px: 3}}*/}
-      {/*            startIcon={<IconFA name="thumbs-down" size={14}/>}*/}
-      {/*            onClick={handleModalOpen}*/}
-      {/*          >*/}
-      {/*            Reject*/}
-      {/*          </Button>*/}
-      {/*        </Box>*/}
-      {/*        <Box>*/}
-      {/*          <Button*/}
-      {/*            color="success"*/}
-      {/*            size="small"*/}
-      {/*            variant="contained"*/}
-      {/*            sx={{borderRadius: 24, px: 3}}*/}
-      {/*            startIcon={<IconFA name="thumbs-up" size={14}/>}*/}
-      {/*            onClick={handleApprovalLeft}*/}
-      {/*          >*/}
-      {/*            Approve*/}
-      {/*          </Button>*/}
-      {/*        </Box>*/}
-      {/*      </Stack>*/}
-      {/*    )}*/}
-      {/*  </TableCell>*/}
-      {/*  <TableCell align="center">*/}
-      {/*    {buttonRight && (*/}
-      {/*      <Stack direction="row" gap={1} justifyContent="center">*/}
-      {/*        <Box>*/}
-      {/*          <Button*/}
-      {/*            color="error"*/}
-      {/*            size="small"*/}
-      {/*            variant="outlined"*/}
-      {/*            sx={{borderRadius: 24, px: 3}}*/}
-      {/*            startIcon={<IconFA name="thumbs-down" size={14}/>}*/}
-      {/*            onClick={handleModalOpenRejectRight}*/}
-      {/*          >*/}
-      {/*            Reject*/}
-      {/*          </Button>*/}
-      {/*        </Box>*/}
-      {/*        <Box>*/}
-      {/*          <Button*/}
-      {/*            color="success"*/}
-      {/*            size="small"*/}
-      {/*            variant="contained"*/}
-      {/*            sx={{borderRadius: 24, px: 3}}*/}
-      {/*            startIcon={<IconFA name="thumbs-up" size={14}/>}*/}
-      {/*            onClick={handleApprovalRight}*/}
-      {/*          >*/}
-      {/*            Approve*/}
-      {/*          </Button>*/}
-      {/*        </Box>*/}
-      {/*      </Stack>*/}
-      {/*    )}*/}
-      {/*  </TableCell>*/}
-      {/*</TableRow>*/}
       <DialogComponent
         tableMode
         dialogOpen={modalOpenAdd}
