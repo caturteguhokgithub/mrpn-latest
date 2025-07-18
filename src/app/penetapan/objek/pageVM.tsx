@@ -116,12 +116,19 @@ const usePenetapanObjectVM = () => {
     ...initShorlist,
   });
 
-  const [stateApproval, setStateApproval] = useState<dtoGetApproval>({ ...initApprovalObjek });
+  const [stateApproval, setStateApproval] = useState<dtoGetApproval>({
+    ...initApprovalObjek,
+  });
 
   const [modalDeleteObject, setModalDeleteObject] = useState<boolean>(false);
   const [modalEditEntitas, setModalEditEntitas] = useState<boolean>(false);
   const [modalDeleteEntitas, setModalDeleteEntitas] = useState<boolean>(false);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
+  const [modalDeleteObjectTopik, setModalDeleteObjectTopik] =
+    useState<boolean>(false);
+  const [selectedTopic, setSelectedTopic] = useState<PenetapanObjectDto | null>(
+    null
+  );
 
   const generateOptionPN = () => {
     let opt: ProjectDefaultDto[] = [];
@@ -714,6 +721,10 @@ const usePenetapanObjectVM = () => {
     uploadedFileName,
     setUploadedFileName,
     resetBuktiDukungForm,
+    modalDeleteObjectTopik,
+    setModalDeleteObjectTopik,
+    selectedTopic,
+    setSelectedTopic,
   };
 };
 

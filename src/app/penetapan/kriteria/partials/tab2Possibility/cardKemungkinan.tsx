@@ -63,12 +63,12 @@ export default function CardKemungkinan() {
         // settingAddOnclick={() => setModalOpenAdd(true)}
         addButton={
           <Stack gap={1} direction="row" alignItems="center">
-            <AddButton
+            {/* <AddButton
               noMargin
               startIcon={<Iconify name="mdi:table" />}
               title="Tabel Referensi"
               onclick={() => setModalOpenRef(true)}
-            />
+            /> */}
             {!isDisabledAdd ? (
               <AddButton
                 noMargin
