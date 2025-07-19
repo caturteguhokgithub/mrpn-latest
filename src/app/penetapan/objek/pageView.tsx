@@ -169,6 +169,7 @@ export default function PageTemaView() {
     modalDeleteEntitas,
     setModalDeleteEntitas,
     setUploadedFileName,
+    uploadImage,
   } = usePenetapanObjectVM();
 
   const { getDataImage } = useNotaDinasVM();
@@ -179,6 +180,12 @@ export default function PageTemaView() {
 
   useEffect(useEffectGenerateOption, [year]);
   useEffect(useEffectObjectState, [year, objectState]);
+
+  useEffect(() => {
+    if (objectState !== undefined) {
+      getDataImage();
+    }
+  }, [objectState]);
 
   useEffect(() => {
     generateOptionPN();
@@ -204,9 +211,9 @@ export default function PageTemaView() {
   const handleCreateUpr = async () => {
     // console.log(stateCreateUpr);
 
-    showToast("Data UPR berhasil disimpan", "success");
-    await updateOrCreateEntity(stateCreateUpr);
-    setModalUpr(false);
+    // showToast("Data UPR berhasil disimpan", "success");
+    updateOrCreateEntity(stateCreateUpr);
+    // setModalUpr(false);
   };
 
   const handleDeleteObjectUpr = (id: number, module: string) => {
@@ -289,40 +296,12 @@ export default function PageTemaView() {
   //   refreshNotaDinasGambar(); // Call the getDataImage from useNotaDinasVM directly
   // };
 
-  const handleSaveBuktiDukung = async () => {
-    try {
-      // Upload the file first
-      await handleUnggahBuktiDukung(reqBuktiDukungPengesahan);
-
-      // Wait a bit to ensure upload is complete, then refresh data
-      setTimeout(async () => {
-        await getDataImage();
-      }, 500);
-
-      // Close modal and reset form
-      setModalBuktiDukung(false);
-      setReqBuktiDukungPengesahan({
-        filename: "",
-        file: "",
-      });
-
-      showToast("Data berhasil disimpan", "success");
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      showToast("Gagal menyimpan data", "error");
-    }
+  const handleSaveBuktiDukung = () => {
+    // handleUnggahBuktiDukung(reqBuktiDukungPengesahan)
+    uploadImage(reqBuktiDukungPengesahan.file, reqBuktiDukungPengesahan.filename);
   };
 
   const handleOpenBuktiDukungModal = () => {
-    // Reset form state to initial empty values
-    setReqBuktiDukungPengesahan({
-      filename: "",
-      file: "",
-    });
-
-    // Reset uploaded file name
-    setUploadedFileName(null);
-
     // Open modal
     setModalBuktiDukung(true);
   };
@@ -330,11 +309,10 @@ export default function PageTemaView() {
   return (
     <>
       <ContentPage
-        title={`Objek MRPN & UPR LS ${
-          year == 0
-            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-            : "Tahun " + year
-        }`}
+        title={`Objek MRPN & UPR LS ${year == 0
+          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+          : "Tahun " + year
+          }`}
         infoToolTip={
           <Stack spacing={2}>
             <div>
@@ -515,7 +493,7 @@ export default function PageTemaView() {
                 handleModalDeleteEntitas={(id: number) => {
                   handleDeleteObjectUpr(id, "Entitas");
                 }}
-                // refreshBuktiDukungTable={refreshNotaDinasGambar}
+              // refreshBuktiDukungTable={refreshNotaDinasGambar}
               />
             </Collapse>
           </Fragment>
@@ -570,7 +548,7 @@ export default function PageTemaView() {
               variant="contained"
               onClick={() => {
                 handleCreateUpr();
-                setModalUpr(false);
+                // setModalUpr(false);
               }}
               sx={{
                 color: "white !important",
@@ -672,7 +650,7 @@ export default function PageTemaView() {
         handleCloseModal={() => setModalDeleteObject(false)}
         handleDelete={() => {
           handleSimpanDeleteObjectUpr();
-          showToast("Data berhasil dihapus", "error");
+          // showToast("Data berhasil dihapus", "error");
         }}
       />
       <DialogDelete

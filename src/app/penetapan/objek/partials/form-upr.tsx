@@ -130,9 +130,9 @@ export default function FormUPR({
     const updatedItems = items.map((item) =>
       item.id === id
         ? {
-            ...item,
-            [field]: value,
-          }
+          ...item,
+          [field]: value,
+        }
         : item
     );
     setItems(updatedItems);
@@ -215,7 +215,7 @@ export default function FormUPR({
             </Typography>
           ) : (
             <AutocompleteSelectSingle
-              value={stateUprSingle}
+              value={stateUprSingle ?? undefined}
               options={optionSL}
               getOptionLabel={(opt) => opt.rkp}
               handleChange={(newValue: dtoUraian) =>

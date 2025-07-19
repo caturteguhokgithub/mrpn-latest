@@ -17,6 +17,7 @@ import {
   BuktiDukungResDto,
   initUploadBuktiDukung,
 } from "./notaDinasModel";
+// import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 
 const useNotaDinasVM = () => {
   const loadingContext = useLoading();
@@ -33,6 +34,8 @@ const useNotaDinasVM = () => {
   const [isReview, setIsReview] = useState(false);
   const [isReject, setIsReject] = useState(false);
   const [isApproval, setIsApproval] = useState(false);
+
+  // const { resetBuktiDukungForm, setModalBuktiDukung } = usePenetapanObjectVM();
 
   // const { year } = useRKPContext((state) => state);
 
@@ -77,15 +80,18 @@ const useNotaDinasVM = () => {
     //   getDataImage();
     // }
 
-    if (response?.code == API_CODE.success) {
-      // Automatically refresh the data after successful upload
+    if (response?.code === API_CODE.success) {
       await getDataImage();
       return Promise.resolve();
     } else {
       return Promise.reject(new Error("Upload failed"));
     }
 
-    // await getNotaDinasGambar(objectState?.id ?? 0);
+    // if (response?.code == API_CODE.success) {
+    //   // resetBuktiDukungForm();
+    //   getDataImage();
+    //   // setModalBuktiDukung(false);
+    // }
   }
 
   async function deleteNodin(id: number) {

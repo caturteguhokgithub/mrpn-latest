@@ -24,38 +24,63 @@ import { IconFA } from "@/components/icons/icon-fa";
 import DialogComponent from "@/components/dialog";
 import FormReject from "@/app/approval/nota-dinas/partials/form-reject";
 import { CardWithStamp } from "@/components/card-w-stamp";
+import { dtoGetApproval } from "@/app/penetapan/objek/pageModel";
 
 export default function PageApprovalProfilView() {
   const { year } = useRKPContext((state) => state);
 
-  const { objects, objectState, setObjectState, getMasterListObject } =
-    usePenetapanGlobalVM();
-
-  useEffect(() => {
-    if (year > 0) getMasterListObject();
-  }, [year]);
-
-  const { dataRiskOverview, getRiskOverviewData } = useRiskOverviewVM();
-
-  useEffect(() => {
-    if (objectState !== undefined) getRiskOverviewData();
-  }, [objectState]);
-
-  // edit lagi
+  const { objects, objectState, setObjectState, getMasterListObject } = usePenetapanGlobalVM();
   const [approvalStamp, setApprovalStamp] = React.useState(false);
   const [rejectStamp, setRejectStamp] = React.useState(false);
   const [buttonStamp, setButtonStamp] = React.useState(true);
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
 
-  const handleApprovalStamp = () => {
-    setApprovalStamp(true);
-    setButtonStamp(false);
-  };
 
-  const handleRejectStamp = () => {
-    setRejectStamp(true);
+  const {
+    dataRiskOverview,
+    getRiskOverviewData,
+    getApproval,
+    updateApproval,
+    stateApproval,
+    setStateApproval,
+  } = useRiskOverviewVM();
+
+
+  useEffect(() => {
+    if (year > 0) getMasterListObject();
+  }, [year]);
+
+  useEffect(() => {
+    if (objectState !== undefined) {
+      getRiskOverviewData()
+      getApproval()
+    };
+  }, [objectState]);
+
+  useEffect(() => {
+    setApprovalStamp(false);
+    setRejectStamp(false);
     setButtonStamp(false);
-    setModalOpenAdd(false);
+
+    if (stateApproval.status === "approved") {
+      setApprovalStamp(true);
+    } else if (stateApproval.status === "rejected") {
+      setRejectStamp(true);
+      setModalOpenAdd(false);
+    }
+  }, [stateApproval]);
+
+  const handleApprovalStamp = async (status: string, msg = "") => {
+    if (stateApproval) {
+      const param: dtoGetApproval = {
+        ...stateApproval,
+        id: objectState?.id ?? 0,
+        status: status,
+        message: msg
+      };
+
+      updateApproval(param);
+    }
   };
 
   const handleModalOpen = () => {
@@ -96,7 +121,7 @@ export default function PageApprovalProfilView() {
         </FormControl>
       }
       addButton={
-        objectState != undefined && (
+        stateApproval.status == "review" && (
           <Stack direction="row" gap={1}>
             <Button
               variant="outlined"
@@ -112,7 +137,9 @@ export default function PageApprovalProfilView() {
               color="success"
               startIcon={<IconFA name="thumbs-up" size={14} />}
               sx={{ px: 3, borderRadius: 12, whiteSpace: "nowrap" }}
-              onClick={handleApprovalStamp}
+              onClick={() => {
+                handleApprovalStamp("approved")
+              }}
             >
               Approve
             </Button>
@@ -149,7 +176,7 @@ export default function PageApprovalProfilView() {
             >
               <Box className="table-sticky-horizontal">
                 <MRTPerlakuanComplete
-                  dataTable={dataRiskOverview?.overviews}
+                  dataTable={dataRiskOverview?.overviews_sekre}
                   viewOnly
                   renderCaption={
                     <Typography fontWeight={600} fontSize={17} px={1}>
@@ -175,14 +202,15 @@ export default function PageApprovalProfilView() {
               variant="contained"
               type="submit"
               color="error"
-              onClick={handleRejectStamp}
+              onClick={() => handleApprovalStamp("rejected", stateApproval.message)}
             >
               Reject
             </Button>
           </DialogActions>
         }
       >
-        <FormReject mode="add" />
+        {/* <FormReject mode="add" /> */}
+        <FormReject state={stateApproval} setState={setStateApproval} mode="add" />
       </DialogComponent>
     </ContentPage>
   );

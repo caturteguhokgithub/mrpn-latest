@@ -26,13 +26,21 @@ export default function TableLonglistStepTwo({ mode }: { mode?: string }) {
     (state) => state
   );
 
-  // console.log(uraianState);
-
-  function handleChecked(checked: boolean, i: number) {
-    const curUraian: PenetapanObjectUraianDto[] = uraianState;
-    curUraian[i].objek = checked;
-    setUraianState(curUraian);
+  function handleChecked(checked: boolean, id: number) {
+    const updated = uraianState.map((row) =>
+      row.id === id ? { ...row, objek: checked } : row
+    );
+    setUraianState(updated);
   }
+
+  // function handleChecked(checked: boolean, i: number) {
+  //   const curUraian: PenetapanObjectUraianDto[] = uraianState;
+  //   curUraian[i].objek = checked;
+  //   console.log(i);
+  //   console.log(curUraian[i]);
+
+  //   setUraianState(curUraian);
+  // }
 
   return (
     <TableContainer component={Paper} elevation={0} variant="outlined">
@@ -82,7 +90,7 @@ export default function TableLonglistStepTwo({ mode }: { mode?: string }) {
                 .map(
                   (row, i) =>
                     row.prioritas.length > 0 && (
-                      <TableRow key={i}>
+                      <TableRow key={row.id}>
                         <TableCell>{i + 1}</TableCell>
                         <TableCell>{row.rkp.value}</TableCell>
                         <TableCell align="center">
@@ -91,7 +99,7 @@ export default function TableLonglistStepTwo({ mode }: { mode?: string }) {
                         <TableCell align="center">
                           <Checkbox
                             checked={row.objek}
-                            onChange={(e) => handleChecked(e.target.checked, i)}
+                            onChange={(e) => handleChecked(e.target.checked, row.id)}
                           />
                         </TableCell>
                       </TableRow>

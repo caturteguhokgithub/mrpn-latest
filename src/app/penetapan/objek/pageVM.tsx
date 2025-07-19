@@ -1,4 +1,5 @@
 import {
+  useAuthContext,
   useGlobalModalContext,
   useLoading,
   usePenetapanTopicContext,
@@ -59,6 +60,8 @@ import {
 } from "@/lib/core/context/penetapanTopicContext";
 import useNotaDinasVM from "@/app/approval/nota-dinas/notaDinasVM";
 import { useToast } from "@/lib/core/context/toastContext";
+import { BuktiDukungReqDto } from "@/app/approval/nota-dinas/notaDinasModel";
+import { doUnggahBuktiDukung } from "@/app/approval/nota-dinas/notaDinasService";
 
 interface BuktiDukungFormState {
   filename: string;
@@ -71,6 +74,7 @@ const usePenetapanObjectVM = () => {
   const [loading, setLoading] = useState(false);
   const errorModalContext = useGlobalModalContext();
   const { rkp, year, rpjmn } = useRKPContext((state) => state);
+  const user = useAuthContext((state) => state);
   const { getData } = useRkpVM();
   const {
     objects,
@@ -82,8 +86,10 @@ const usePenetapanObjectVM = () => {
     nota,
     setNota,
   } = usePenetapanTopicContext((state) => state);
-  const { uploadImage, getNotaDinasGambar } = useNotaDinasVM();
-  const { showToast } = useToast();
+
+  const { getDataImage } = useNotaDinasVM();
+
+  // const { showToast } = useToast();
 
   const initState = JSON.parse(JSON.stringify(initPenetapanObjectState));
   const [stateTopic, setStateTopic] =
@@ -368,6 +374,9 @@ const usePenetapanObjectVM = () => {
     });
     if (response?.code == API_CODE.success) {
       getPenetapanObjectEntity();
+      setStateCreateUpr({ ...initReqUpr })
+      setModalUpr(false);
+      setStateUprSingle({ ...initShorlist })
     }
   }
 
@@ -610,16 +619,57 @@ const usePenetapanObjectVM = () => {
     getLogActivity();
   };
 
-  async function handleUnggahBuktiDukung(param: dtoReqBuktiDukungPengesahan) {
-    // await uploadImage(param.file, param.filename);
-    // showToast("Data berhasil disimpan", "success");
-    try {
-      await uploadImage(param.file, param.filename);
-      return Promise.resolve();
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      return Promise.reject(error);
+  async function uploadImage(gambar: string, fileName: string) {
+    // if (gambarState == undefined) return;
+    if (!objectState?.id || !user.user?.id) {
+      throw new Error("Missing required data for upload");
     }
+
+    const req: BuktiDukungReqDto = {
+      filename: fileName ?? "file",
+      file: gambar ?? "",
+      penetapan_object_id: objectState?.id ?? 0,
+      user_id: user.user?.id ?? 0,
+    };
+
+    const response = await doUnggahBuktiDukung({
+      body: req,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+
+    // if (response?.code == API_CODE.success) {
+    //   getDataImage();
+    // }
+
+    if (response?.code === API_CODE.success) {
+      getDataImage();
+      setReqBuktiDukungPengesahan({ ...initReqBuktiDukungPengesahan });
+      setUploadedFileName(null);
+      setModalBuktiDukung(false);
+      // return Promise.resolve();
+    }
+
+    // if (response?.code == API_CODE.success) {
+    //   // resetBuktiDukungForm();
+    //   getDataImage();
+    //   // setModalBuktiDukung(false);
+    // }
+  }
+
+  async function handleUnggahBuktiDukung(param: dtoReqBuktiDukungPengesahan) {
+    uploadImage(param.file, param.filename);
+    // showToast("Data berhasil disimpan", "success");
+    // try {
+    //   await uploadImage(param.file, param.filename);
+    //   resetBuktiDukungForm();
+    //   setModalBuktiDukung(false);
+
+    //   return Promise.resolve();
+    // } catch (error) {
+    //   console.error("Error uploading file:", error);
+    //   return Promise.reject(error);
+    // }
   }
 
   // Add this function in the usePenetapanObjectVM hook
@@ -714,6 +764,7 @@ const usePenetapanObjectVM = () => {
     uploadedFileName,
     setUploadedFileName,
     resetBuktiDukungForm,
+    uploadImage,
   };
 };
 

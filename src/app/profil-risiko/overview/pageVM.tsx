@@ -8,13 +8,16 @@ import {
   RiskOverview,
   RiskOverviewData,
 } from "@/app/profil-risiko/overview/pageModel";
-import { doGetRiskOverview } from "@/app/profil-risiko/overview/pageService";
+import { doGetApproval, doGetRiskOverview, doUpdateApproval } from "@/app/profil-risiko/overview/pageService";
+import { dtoGetApproval, initApprovalObjek } from "@/app/penetapan/objek/pageModel";
 
 const useRiskOverviewVM = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
+  const [loading, setLoading] = useState(false);
 
   const { objectState } = usePenetapanGlobalVM();
+  const [stateApproval, setStateApproval] = useState<dtoGetApproval>({ ...initApprovalObjek });
 
   const [dataRiskOverview, setDataRiskOverview] = useState<
     RiskOverview | undefined
@@ -43,55 +46,46 @@ const useRiskOverviewVM = () => {
       body: {
         uraian_penetapan_objek_id: objectState?.id ?? 0,
       },
-      loadingContext: loadingContext,
-      errorModalContext: errorModalContext,
+      loadingContext,
+      errorModalContext,
     });
+
     if (response?.code === API_CODE.success) {
       const result: RiskOverview = response.result;
 
       if (result) {
-        const obj = Object.groupBy(result.overviews, (risk) =>
-          risk.analisis_br == null ? 0 : risk.analisis_br
-        );
-        const sorted = Object.keys(obj).sort((a, b) =>
-          parseInt(a) < parseInt(b) ? 1 : -1
-        );
+        let finalOverviewData: RiskOverviewData[] = [];
+        let finalOverviewDataSekre: RiskOverviewData[] = [];
 
-        const finalOverviewData = result.overviews.reduce<RiskOverviewData[]>(
-          (a, b) => {
-            let prior: number = 0;
-            const getIndex = sorted.findIndex(
-              (x) => parseInt(x) == b.analisis_br
-            );
-            if (getIndex > -1) {
-              prior = getIndex + 1;
-            }
-            b.prioritas = prior;
-            return [...a, b];
-          },
-          []
-        );
-
-        const objSekre = Object.groupBy(result.overviews_sekre, (risk) =>
-          risk.analisis_br == null ? 0 : risk.analisis_br
-        );
-        const sortedSekre = Object.keys(objSekre).sort((a, b) =>
-          parseInt(a) < parseInt(b) ? 1 : -1
-        );
-
-        const finalOverviewDataSekre = result.overviews_sekre.reduce<
-          RiskOverviewData[]
-        >((a, b) => {
-          let prior: number = 0;
-          const getIndex = sortedSekre.findIndex(
-            (x) => parseInt(x) == b.analisis_br
+        if (result.overviews && result.overviews.length > 0) {
+          const obj = Object.groupBy(result.overviews, (risk) =>
+            risk.analisis_br == null ? 0 : risk.analisis_br
           );
-          if (getIndex > -1) {
-            prior = getIndex + 1;
-          }
-          b.prioritas = prior;
-          return [...a, b];
-        }, []);
+          const sorted = Object.keys(obj).sort((a, b) => parseInt(b) - parseInt(a));
+
+          finalOverviewData = result.overviews.reduce<RiskOverviewData[]>((acc, curr) => {
+            let prior = 0;
+            const index = sorted.findIndex((x) => parseInt(x) == curr.analisis_br);
+            if (index > -1) prior = index + 1;
+            curr.prioritas = prior;
+            return [...acc, curr];
+          }, []);
+        }
+
+        if (result.overviews_sekre && result.overviews_sekre.length > 0) {
+          const objSekre = Object.groupBy(result.overviews_sekre, (risk) =>
+            risk.analisis_br == null ? 0 : risk.analisis_br
+          );
+          const sortedSekre = Object.keys(objSekre).sort((a, b) => parseInt(b) - parseInt(a));
+
+          finalOverviewDataSekre = result.overviews_sekre.reduce<RiskOverviewData[]>((acc, curr) => {
+            let prior = 0;
+            const index = sortedSekre.findIndex((x) => parseInt(x) == curr.analisis_br);
+            if (index > -1) prior = index + 1;
+            curr.prioritas = prior;
+            return [...acc, curr];
+          }, []);
+        }
 
         setDataRiskOverview({
           object: result.object,
@@ -101,6 +95,42 @@ const useRiskOverviewVM = () => {
       }
     }
   };
+
+  async function getApproval() {
+    if (objectState !== undefined && objectState !== null) {
+      setLoading(true);
+      const response = await doGetApproval({
+        body: { id: objectState.id },
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      });
+
+      if (response?.code == API_CODE.success) {
+        let result: dtoGetApproval[] = response.result;
+        if (result) {
+          setStateApproval(result[0]);
+          setLoading(false);
+        } else {
+          setLoading(true);
+        }
+      }
+    }
+  }
+
+  async function updateApproval(param: dtoGetApproval) {
+    if (objectState !== undefined && objectState !== null) {
+      const response = await doUpdateApproval({
+        body: param,
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      });
+
+      if (response?.code == API_CODE.success) {
+        getApproval();
+      }
+    }
+  }
+
 
   return {
     dataRiskOverview,
@@ -112,6 +142,10 @@ const useRiskOverviewVM = () => {
     setOpenModal,
     openModalConfirmApproval,
     setOpenModalConfirmApproval,
+    getApproval,
+    updateApproval,
+    stateApproval,
+    setStateApproval,
   };
 };
 

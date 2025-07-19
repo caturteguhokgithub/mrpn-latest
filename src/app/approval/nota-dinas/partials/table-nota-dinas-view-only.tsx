@@ -73,8 +73,14 @@ export default function TableNotaDinasViewOnly({
 
   const { rpjmn, year } = useRKPContext((state) => state);
   const { permission } = useAuthContext((state) => state);
-  const { objectState } = usePenetapanObjectVM();
-  const { stateShorList, getPenetapanObjectShortList, updateApproval } = usePenetapanObjectVM();
+
+  const {
+    getPenetapanObjectShortList,
+    updateApproval,
+    objectState,
+    useEffectObjectState,
+    stateUpr,
+  } = usePenetapanObjectVM();
 
   const {
     gambar,
@@ -114,6 +120,10 @@ export default function TableNotaDinasViewOnly({
     }
   }, [objectState]);
 
+  useEffect(() => {
+    useEffectObjectState()
+  }, [year, objectState]);
+
   const generateRows = () => {
     let index = 0;
 
@@ -126,9 +136,9 @@ export default function TableNotaDinasViewOnly({
     }
 
     let rows: Row[] = [];
-    stateShorList.map((data) => {
+    stateUpr.map((data) => {
       let row: Row = {
-        object: data.rkp.value,
+        object: data.rkp,
         sasaran: "",
         indicator: [],
         target: [],
@@ -136,53 +146,20 @@ export default function TableNotaDinasViewOnly({
         main: [],
         support: [],
       };
-      data.rkp.sasaran.map((sasaran) => {
-        row.sasaran = sasaran.value;
-        sasaran.indikator.map((indikator) => {
-          row.indicator.push(indikator.value);
-          let target = "";
-          switch (index) {
-            case 0:
-              target = indikator.target_0 + " " + indikator.satuan;
-              break;
-            case 1:
-              target = indikator.target_1 + " " + indikator.satuan;
-              break;
-            case 2:
-              target = indikator.target_2 + " " + indikator.satuan;
-              break;
-            case 3:
-              target = indikator.target_3 + " " + indikator.satuan;
-              break;
-            case 4:
-              target = indikator.target_4 + " " + indikator.satuan;
-              break;
-            default:
-              target = indikator.target_0 + " " + indikator.satuan;
-              break;
-          }
-          row.target.push(target);
-        });
-      });
-      if (data.exsum !== null) {
+
+      if (data.usulan_upr_linsek.length > 0) {
         let coordinator: string[] = [];
         let main: string[] = [];
         let support: string[] = [];
-        data.exsum.kelembagaan.map((kl) => {
-          if (kl.type == "COORDINATION") {
-            kl.stakeholder.map((st) => {
-              coordinator.push(st.value);
-            });
+        data.usulan_upr_linsek.map((kl) => {
+          if (kl.type == "Koordinator") {
+            coordinator.push(kl.entitas.value);
           }
-          if (kl.type == "MAIN_ENTITY") {
-            kl.stakeholder.map((st) => {
-              main.push(st.value);
-            });
+          if (kl.type == "Utama") {
+            main.push(kl.entitas.value);
           }
-          if (kl.type == "SUPPORT") {
-            kl.stakeholder.map((st) => {
-              support.push(st.value);
-            });
+          if (kl.type == "Pendukung") {
+            support.push(kl.entitas.value);
           }
         });
 
@@ -615,106 +592,108 @@ export default function TableNotaDinasViewOnly({
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {generateRows().map((row, rowIndex) => (
-                    <TableRow>
-                      <TableCell align="center" sx={{ verticalAlign: "top" }}>
-                        {++rowIndex}
-                      </TableCell>
-                      <TableCell sx={{ verticalAlign: "top" }}>
-                        {row.object}
-                      </TableCell>
-                      <TableCell sx={{ verticalAlign: "top" }}>
-                        {row.coordinator.length === 0 ? (
-                          "-"
-                        ) : (
-                          <Stack
-                            display="inline-flex"
-                            alignItems="center"
-                            direction="row"
-                            gap={0.5}
-                            flexWrap="wrap"
-                          >
-                            {row.coordinator.map((item, index) => (
-                              <Box component="div" key={index}>
-                                <Chip
-                                  label={item}
-                                  size="small"
-                                  sx={{
-                                    height: "auto",
-                                    ".MuiChip-label": {
-                                      whiteSpace: "wrap",
-                                      lineHeight: 1.2,
-                                      py: 0.6,
-                                    },
-                                  }}
-                                />
-                              </Box>
-                            ))}
-                          </Stack>
-                        )}
-                      </TableCell>
-                      <TableCell sx={{ verticalAlign: "top" }}>
-                        {row.main.length === 0 ? (
-                          "-"
-                        ) : (
-                          <Stack
-                            display="inline-flex"
-                            alignItems="center"
-                            direction="row"
-                            gap={0.5}
-                            flexWrap="wrap"
-                          >
-                            {row.main.map((item, index) => (
-                              <Box component="div" key={index}>
-                                <Chip
-                                  label={item}
-                                  size="small"
-                                  sx={{
-                                    height: "auto",
-                                    ".MuiChip-label": {
-                                      whiteSpace: "wrap",
-                                      lineHeight: 1.2,
-                                      py: 0.6,
-                                    },
-                                  }}
-                                />
-                              </Box>
-                            ))}
-                          </Stack>
-                        )}
-                      </TableCell>
-                      <TableCell sx={{ verticalAlign: "top" }}>
-                        {row.support.length === 0 ? (
-                          "-"
-                        ) : (
-                          <Stack
-                            display="inline-flex"
-                            alignItems="center"
-                            direction="row"
-                            gap={0.5}
-                            flexWrap="wrap"
-                          >
-                            {row.support.map((item, index) => (
-                              <Box component="div" key={index}>
-                                <Chip
-                                  label={item}
-                                  size="small"
-                                  sx={{
-                                    height: "auto",
-                                    ".MuiChip-label": {
-                                      whiteSpace: "wrap",
-                                      lineHeight: 1.2,
-                                      py: 0.6,
-                                    },
-                                  }}
-                                />
-                              </Box>
-                            ))}
-                          </Stack>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {generateRows().map((row, rowIndex) => {
+                    return (
+                      <TableRow>
+                        <TableCell align="center" sx={{ verticalAlign: "top" }}>
+                          {++rowIndex}
+                        </TableCell>
+                        <TableCell sx={{ verticalAlign: "top" }}>
+                          {row.object}
+                        </TableCell>
+                        <TableCell sx={{ verticalAlign: "top" }}>
+                          {row.coordinator.length === 0 ? (
+                            "-"
+                          ) : (
+                            <Stack
+                              display="inline-flex"
+                              alignItems="center"
+                              direction="row"
+                              gap={0.5}
+                              flexWrap="wrap"
+                            >
+                              {row.coordinator.map((item, index) => (
+                                <Box component="div" key={index}>
+                                  <Chip
+                                    label={item}
+                                    size="small"
+                                    sx={{
+                                      height: "auto",
+                                      ".MuiChip-label": {
+                                        whiteSpace: "wrap",
+                                        lineHeight: 1.2,
+                                        py: 0.6,
+                                      },
+                                    }}
+                                  />
+                                </Box>
+                              ))}
+                            </Stack>
+                          )}
+                        </TableCell>
+                        <TableCell sx={{ verticalAlign: "top" }}>
+                          {row.main.length === 0 ? (
+                            "-"
+                          ) : (
+                            <Stack
+                              display="inline-flex"
+                              alignItems="center"
+                              direction="row"
+                              gap={0.5}
+                              flexWrap="wrap"
+                            >
+                              {row.main.map((item, index) => (
+                                <Box component="div" key={index}>
+                                  <Chip
+                                    label={item}
+                                    size="small"
+                                    sx={{
+                                      height: "auto",
+                                      ".MuiChip-label": {
+                                        whiteSpace: "wrap",
+                                        lineHeight: 1.2,
+                                        py: 0.6,
+                                      },
+                                    }}
+                                  />
+                                </Box>
+                              ))}
+                            </Stack>
+                          )}
+                        </TableCell>
+                        <TableCell sx={{ verticalAlign: "top" }}>
+                          {row.support.length === 0 ? (
+                            "-"
+                          ) : (
+                            <Stack
+                              display="inline-flex"
+                              alignItems="center"
+                              direction="row"
+                              gap={0.5}
+                              flexWrap="wrap"
+                            >
+                              {row.support.map((item, index) => (
+                                <Box component="div" key={index}>
+                                  <Chip
+                                    label={item}
+                                    size="small"
+                                    sx={{
+                                      height: "auto",
+                                      ".MuiChip-label": {
+                                        whiteSpace: "wrap",
+                                        lineHeight: 1.2,
+                                        py: 0.6,
+                                      },
+                                    }}
+                                  />
+                                </Box>
+                              ))}
+                            </Stack>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })}
                   {/* <TableRow>
                   <TableCell align="center">1</TableCell>
                   <TableCell>

@@ -38,6 +38,7 @@ import TableOverview from "./partials/table";
 import { green, red } from "@mui/material/colors";
 import FormNote from "./partials/form-note";
 import DialogComponent from "@/components/dialog";
+import { dtoGetApproval } from "@/app/penetapan/objek/pageModel";
 
 interface SxParams {
   variant?: string;
@@ -81,13 +82,6 @@ function CustomTabPanel(props: TabPanelProps) {
 export default function PageOverviewView() {
   const { year, rpjmn } = useRKPContext((state) => state);
 
-  const { objects, objectState, setObjectState, getMasterListObject } =
-    usePenetapanGlobalVM();
-
-  useEffect(() => {
-    getMasterListObject();
-  }, [year]);
-
   const {
     dataRiskOverview,
     getRiskOverviewData,
@@ -98,25 +92,50 @@ export default function PageOverviewView() {
     setOpenModal,
     openModalConfirmApproval,
     setOpenModalConfirmApproval,
+    getApproval,
+    updateApproval,
+    stateApproval,
   } = useRiskOverviewVM();
 
-  useEffect(() => {
-    if (objectState !== undefined) getRiskOverviewData();
-  }, [objectState]);
+  const { objects, objectState, setObjectState, getMasterListObject } =
+    usePenetapanGlobalVM();
 
   const sxParams: SxParams = { variant: "default" };
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isEmpty = false;
-  const isStatus = "reject";
+  const isStatus = stateApproval.status;
+
+  useEffect(() => {
+    getMasterListObject();
+  }, [year]);
+
+  useEffect(() => {
+    if (objectState !== undefined) {
+      getRiskOverviewData()
+      getApproval()
+    };
+  }, [objectState]);
+
+  const handleUpdateStatus = async (status: string, msg = "") => {
+    if (stateApproval) {
+      const param: dtoGetApproval = {
+        ...stateApproval,
+        id: objectState?.id ?? 0,
+        status: status,
+        message: msg
+      };
+
+      updateApproval(param);
+    }
+  };
 
   return (
     <Fragment>
       <ContentPage
-        title={`Overview Risiko ${
-          year == 0
-            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-            : "Tahun " + year
-        }`}
+        title={`Overview Risiko ${year == 0
+          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+          : "Tahun " + year
+          }`}
         withCard={objectState === undefined}
         chooseObject={
           year == 0 ? (
@@ -211,21 +230,21 @@ export default function PageOverviewView() {
                               title="Download Excel"
                               color="success"
                               startIcon={<Iconify name="mdi:file-excel" />}
-                              // onclick={() => {
-                              //   const uri =
-                              //     process.env.NEXT_PUBLIC_BASE_URL_API +
-                              //     "export/exsum/indikasi/excel";
-                              //   const token = sessionStorage.getItem(
-                              //     API_CONSTANT.token
-                              //   );
-                              //   const exsum_id = exsum.id;
-                              //   const params =
-                              //     "token=" + token + "&exsum_id=" + exsum_id;
+                            // onclick={() => {
+                            //   const uri =
+                            //     process.env.NEXT_PUBLIC_BASE_URL_API +
+                            //     "export/exsum/indikasi/excel";
+                            //   const token = sessionStorage.getItem(
+                            //     API_CONSTANT.token
+                            //   );
+                            //   const exsum_id = exsum.id;
+                            //   const params =
+                            //     "token=" + token + "&exsum_id=" + exsum_id;
 
-                              //   window
-                              //     .open(uri + "?" + params, "_blank")
-                              //     ?.focus();
-                              // }}
+                            //   window
+                            //     .open(uri + "?" + params, "_blank")
+                            //     ?.focus();
+                            // }}
                             />
                           </Stack>
                         }
@@ -297,7 +316,7 @@ export default function PageOverviewView() {
                                   fontWeight={600}
                                   fontSize={14}
                                 >
-                                  28 Juni 2025
+                                  {stateApproval.created_at}
                                 </Typography>
                               </Typography>
                             ) : isStatus === "approve" ? (
@@ -308,7 +327,7 @@ export default function PageOverviewView() {
                                   fontWeight={600}
                                   fontSize={14}
                                 >
-                                  28 Juni 2025
+                                  {stateApproval.created_at}
                                 </Typography>
                               </Typography>
                             ) : (
@@ -318,9 +337,9 @@ export default function PageOverviewView() {
                               color={
                                 isStatus === "reject"
                                   ? "error"
-                                  : isStatus === "draf"
-                                  ? "default"
-                                  : "warning"
+                                  : isStatus === "draft"
+                                    ? "default"
+                                    : "warning"
                               }
                               variant="outlined"
                               label={
@@ -331,9 +350,9 @@ export default function PageOverviewView() {
                                 >
                                   {isStatus === "reject"
                                     ? "Reject"
-                                    : isStatus === "draf"
-                                    ? "Draf"
-                                    : "Review"}
+                                    : isStatus === "draft"
+                                      ? "Draft"
+                                      : "Review"}
                                 </Typography>
                               }
                               icon={
@@ -341,9 +360,9 @@ export default function PageOverviewView() {
                                   name={
                                     isStatus === "reject"
                                       ? "mdi:close"
-                                      : isStatus === "draf"
-                                      ? "mdi:invoice-text-edit"
-                                      : "mdi:magnify-expand"
+                                      : isStatus === "draft"
+                                        ? "mdi:invoice-text-edit"
+                                        : "mdi:magnify-expand"
                                   }
                                 />
                               }
@@ -441,7 +460,13 @@ export default function PageOverviewView() {
             >
               Tidak
             </Button>
-            <Button variant="contained" type="submit">
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => {
+                handleUpdateStatus("review");
+                setOpenModalConfirmApproval(false);
+              }}>
               Ya
             </Button>
           </DialogActions>

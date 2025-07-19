@@ -25,6 +25,9 @@ export default function FormBuktiDukung({
   ) => void;
 }) {
   const { uploadedFileName, setUploadedFileName } = usePenetapanObjectVM();
+  console.log(uploadedFileName);
+
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -91,13 +94,13 @@ export default function FormBuktiDukung({
                     setUploadedFileName(null); // Clear file name if no file is selected
                   }
                 }}
-                // onChange={(event: any) => handleUnggahBuktiDukung(event)}
-                // multiple
+              // onChange={(event: any) => handleUnggahBuktiDukung(event)}
+              // multiple
               />
             </Button>
             <Stack alignItems="center" justifyContent="center">
               <Typography fontSize={14} color="text.secondary" lineHeight={1}>
-                {uploadedFileName || "Belum ada data"}
+                {uploadedFileName ?? "Belum ada data"}
               </Typography>
             </Stack>
           </Stack>
