@@ -8,24 +8,16 @@ import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import TableShortlist from "./table-short";
 import TableLonglistStepper from "./table-long-stepper";
-import TableProposal from "./table-proposal";
 import TableNotaDinas from "./table-nota-dinas";
-import CascadingOrgChart from "@/app/executive-summary/partials/tab4Cascading/partials/org-chart";
 import { SxParams } from "@/app/executive-summary/types";
-import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
-import CascadingPenetapanObjectOrgChart from "@/app/penetapan/objek/partials/org-chart";
 import AddButton from "@/components/buttonAdd";
 import TableNotaDinasViewOnly from "@/app/approval/nota-dinas/partials/table-nota-dinas-view-only";
 import {
   usePenetapanTopicContext,
   useRKPContext,
 } from "@/lib/core/hooks/useHooks";
-import { isDeveloping } from "@/components/layouts/layout";
-import EmptyDevelopingState from "@/components/empty/developing";
-import TableUPR from "./table-upr";
 import CollapsibleTableUpr from "./table-upr";
 import { dtoUraian } from "../pageModel";
-import Iconify from "@/components/icons/iconify";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -203,6 +195,7 @@ export default function TabObject({
             <TableLonglistStepper
               handleOpenShortlist={handleOpenShortlist}
               handleRanking={() => handleRanking()}
+              stateApproval={stateApproval}
             />
           )}
         </CardItem>
@@ -240,20 +233,14 @@ export default function TabObject({
           title="UPR LS"
           addButton={
             <Stack direction="row" gap={1}>
-              {/* {showSave && ( */}
-              {/* <AddButton
-                title="Edit UPR"
-                startIcon={<Iconify name="mdi:pencil" />}
-                noMargin
-                onclick={() => setShowSave(false)}
-              /> */}
-              {/* )} */}
-              <AddButton
-                title="Tambah UPR"
-                filled
-                noMargin
-                onclick={() => setModalUpr(true)}
-              />
+              {!["approved", "review"].includes(stateApproval?.status) && (
+                <AddButton
+                  title="Tambah UPR"
+                  filled
+                  noMargin
+                  onclick={() => setModalUpr(true)}
+                />
+              )}
             </Stack>
           }
         >
@@ -274,6 +261,7 @@ export default function TabObject({
                 handleModalDeleteObject={handleModalDeleteObject}
                 handleModalEditEntitas={handleModalEditEntitas}
                 handleModalDeleteEntitas={handleModalDeleteEntitas}
+                stateApproval={stateApproval}
               />
             </Fragment>
           )}

@@ -42,7 +42,8 @@ export default function AddButton({
             baseClassName="fas"
             className={errorColor ? "fa-trash-alt" : `fa-plus-circle`}
             sx={{
-              fontSize: small || errorColor ? "16px !important" : "18px",
+              fontSize:
+                small || errorColor ? "16px !important" : "16px !important",
             }}
           />
         )

@@ -179,7 +179,7 @@ export default function TableNotaDinasViewOnly({
         ...stateApproval,
         id: objectState?.id ?? 0,
         status: status,
-        message: msg
+        message: msg,
       };
 
       updateApproval(param);
@@ -304,14 +304,16 @@ export default function TableNotaDinasViewOnly({
       )}
       {hasPrivilege(permission, "/penetapan/objectUpr", "approve") ? (
         <>
-          <AddButton
-            color="success"
-            title="Ajukan Pengesahan"
-            filled
-            noMargin
-            startIcon={<Iconify name="mdi:check-circle" size={16} />}
-            onclick={() => setModalConfirm(true)}
-          />
+          {!pageApproval && (
+            <AddButton
+              color="success"
+              title="Ajukan Pengesahan"
+              filled
+              noMargin
+              startIcon={<Iconify name="mdi:check-circle" size={16} />}
+              onclick={() => setModalConfirm(true)}
+            />
+          )}
         </>
       ) : (
         ""
@@ -1075,14 +1077,14 @@ export default function TableNotaDinasViewOnly({
             <TableContainer sx={{ py: 1 }}>
               <Table sx={{ minWidth: 650, td: { border: 0 } }} size="small">
                 <TableBody>
-                  <TableRow>
+                  {/* <TableRow>
                     <TableCell colSpan={2} sx={{ pb: 4 }}>
                       <Typography textAlign="center">{`${notaDinas.lokasi}, ${notaDinas.tanggal}`}</Typography>
                       <Typography textAlign="center">
                         {notaDinas.direktorat}
                       </Typography>
                     </TableCell>
-                  </TableRow>
+                  </TableRow> */}
                   <TableRow>
                     {/* <TableCell>
                   <Typography textAlign="center">Dibuat oleh,</Typography>
@@ -1166,9 +1168,9 @@ export default function TableNotaDinasViewOnly({
                           )}
                         </Box>
                         <Box
-                          position="absolute"
-                          top={-70}
-                          left={-70}
+                          // position="absolute"
+                          // top={-70}
+                          // left={-70}
                           zIndex={0}
                         >
                           {stateApproval &&
@@ -1201,6 +1203,7 @@ export default function TableNotaDinasViewOnly({
                             />
                           )}
                         </Box>
+                        <Typography fontWeight={600}>Komite MRPN</Typography>
                       </Box>
                     </TableCell>
                   </TableRow>
@@ -1375,7 +1378,11 @@ export default function TableNotaDinasViewOnly({
             Tuliskan catatan penolakan
           </Typography>
 
-          <FormNote state={stateApproval} setState={setStateApproval} mode="add" />
+          <FormNote
+            state={stateApproval}
+            setState={setStateApproval}
+            mode="add"
+          />
         </Stack>
       </DialogComponent>
       <DialogComponent

@@ -170,6 +170,10 @@ export default function PageTemaView() {
     setModalDeleteEntitas,
     setUploadedFileName,
     uploadImage,
+    modalDeleteObjectTopik,
+    setModalDeleteObjectTopik,
+    selectedTopic,
+    setSelectedTopic,
   } = usePenetapanObjectVM();
 
   const { getDataImage } = useNotaDinasVM();
@@ -461,13 +465,18 @@ export default function PageTemaView() {
                     sx={styleToggleButton}
                   >
                     {objects.map((x, indexPntp) => (
-                      <ThemeToggleButton
-                        key={indexPntp}
-                        value={x}
-                        label={x.topik}
-                        handleEdit={() => handleEditTopic(x)}
-                        handleDelete={() => handleDeleteTopic(x)}
-                      />
+                      <>
+                        <ThemeToggleButton
+                          key={indexPntp}
+                          value={x}
+                          label={x.topik}
+                          handleEdit={() => handleEditTopic(x)}
+                          handleDelete={() => {
+                            setSelectedTopic(x);
+                            setModalDeleteObjectTopik(true);
+                          }}
+                        />
+                      </>
                     ))}
                   </ToggleButtonGroup>
                 </Box>
@@ -499,7 +508,6 @@ export default function PageTemaView() {
           </Fragment>
         )}
       </ContentPage>
-
       <DialogComponent
         width={1000}
         dialogOpen={modalAdd}
@@ -514,7 +522,6 @@ export default function PageTemaView() {
           optionPN={optionPN}
         />
       </DialogComponent>
-
       <DialogDelete
         title="Hapus Topik"
         handleOpenModal={modalDeleteTopic}
@@ -522,9 +529,9 @@ export default function PageTemaView() {
         handleDelete={() => {
           deleteTopic();
           setModalDeleteTopic(false);
+          showToast("Data berhasil dihapus", "error");
         }}
       />
-
       <DialogComponent
         title="Log Activity"
         tableMode
@@ -535,7 +542,6 @@ export default function PageTemaView() {
       >
         <TableLog />
       </DialogComponent>
-
       <DialogComponent
         title="Tambah UPR"
         width={600}
@@ -568,7 +574,6 @@ export default function PageTemaView() {
           setStateUprSingle={setStateUprSingle}
         />
       </DialogComponent>
-
       <DialogComponent
         title="Edit UPR"
         width={600}
@@ -602,7 +607,6 @@ export default function PageTemaView() {
           setStateUprSingle={setStateUprSingle}
         />
       </DialogComponent>
-
       <DialogComponent
         title="Tambah Bukti Dukung"
         width={600}
@@ -629,7 +633,6 @@ export default function PageTemaView() {
           setReqBuktiDukungPengesahan={setReqBuktiDukungPengesahan}
         />
       </DialogComponent>
-
       {/*<DialogComponent*/}
       {/* noDivider={true}*/}
       {/* width={1000}*/}
@@ -660,6 +663,16 @@ export default function PageTemaView() {
         handleDelete={() => {
           handleSimpanDeleteObjectUpr();
           showToast("Data berhasil dihapus", "error");
+        }}
+      />
+      <DialogDelete
+        title="Hapus Data Objek"
+        question="Jika objek ini dihapus, akan berpengaruh ke banyak proses lain. Apakah Anda yakin akan menghapus data ini?"
+        handleOpenModal={modalDeleteObjectTopik}
+        handleCloseModal={() => setModalDeleteObjectTopik(false)}
+        handleDelete={() => {
+          handleDeleteTopic(selectedTopic!);
+          setModalDeleteObjectTopik(false);
         }}
       />
     </>

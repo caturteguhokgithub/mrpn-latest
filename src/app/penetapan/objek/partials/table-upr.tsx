@@ -16,7 +16,11 @@ import {
 } from "@mui/material";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
-import { dtoUraian, dtoUsulanUprLs } from "@/app/penetapan/objek/pageModel";
+import {
+  dtoGetApproval,
+  dtoUraian,
+  dtoUsulanUprLs,
+} from "@/app/penetapan/objek/pageModel";
 import { InfoTooltip } from "@/components/InfoTooltip";
 import { grey, red } from "@mui/material/colors";
 import { bgColorTh } from "@/utils/color";
@@ -34,6 +38,7 @@ function Row(props: {
   handleModalDeleteObject: (id: number) => void;
   handleModalEditEntitas: () => void;
   handleModalDeleteEntitas: (id: number) => void;
+  stateApproval?: any;
 }) {
   const {
     row,
@@ -43,6 +48,7 @@ function Row(props: {
     handleModalDeleteObject,
     handleModalEditEntitas,
     handleModalDeleteEntitas,
+    stateApproval,
   } = props;
   const [open, setOpen] = React.useState(true);
 
@@ -78,15 +84,17 @@ function Row(props: {
                   {row.rkp || "-"}
                 </Typography>
               </Stack>
-              <Button
-                color="error"
-                size="small"
-                variant="outlined"
-                onClick={() => handleModalDeleteObject?.(row.id)}
-                sx={{ borderRadius: 2, px: 2, minWidth: 0 }}
-              >
-                <Iconify name="mdi:trash" color={red[500]} />
-              </Button>
+              {!["approved", "review"].includes(stateApproval?.status) && (
+                <Button
+                  color="error"
+                  size="small"
+                  variant="outlined"
+                  onClick={() => handleModalDeleteObject?.(row.id)}
+                  sx={{ borderRadius: 2, px: 2, minWidth: 0 }}
+                >
+                  <Iconify name="mdi:trash" color={red[500]} />
+                </Button>
+              )}
             </Stack>
           </TableCell>
         )}
@@ -139,13 +147,17 @@ function Row(props: {
                       <TableCell align="center" width={200}>
                         Keterangan
                       </TableCell>
-                      <TableCell
-                        width={110}
-                        align="center"
-                        sx={{ bgcolor: bgColorTh }}
-                      >
-                        Aksi
-                      </TableCell>
+                      {!["approved", "review"].includes(
+                        stateApproval?.status
+                      ) && (
+                        <TableCell
+                          width={110}
+                          align="center"
+                          sx={{ bgcolor: bgColorTh }}
+                        >
+                          Aksi
+                        </TableCell>
+                      )}
                     </TableRow>
                     {/* <TableRow>
                       {UnitPengelolaRisikoEntity.map((uprItem, indexUpr) => (
@@ -201,23 +213,27 @@ function Row(props: {
                           <TableCell sx={{ verticalAlign: "top" }}>
                             Entitas MRPN {entity.type}
                           </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{ verticalAlign: "top" }}
-                          >
-                            <Stack direction="row" justifyContent="center">
-                              {/* <IconButton onClick={handleModalEditEntitas}>
+                          {!["approved", "review"].includes(
+                            stateApproval?.status
+                          ) && (
+                            <TableCell
+                              align="center"
+                              sx={{ verticalAlign: "top" }}
+                            >
+                              <Stack direction="row" justifyContent="center">
+                                {/* <IconButton onClick={handleModalEditEntitas}>
                                 <Iconify name="mdi:pencil" color={blue[500]} />
                               </IconButton> */}
-                              <IconButton
-                                onClick={() =>
-                                  handleModalDeleteEntitas(entity.id)
-                                }
-                              >
-                                <Iconify name="mdi:trash" color={red[500]} />
-                              </IconButton>
-                            </Stack>
-                          </TableCell>
+                                <IconButton
+                                  onClick={() =>
+                                    handleModalDeleteEntitas(entity.id)
+                                  }
+                                >
+                                  <Iconify name="mdi:trash" color={red[500]} />
+                                </IconButton>
+                              </Stack>
+                            </TableCell>
+                          )}
                         </TableRow>
                       ))
                     )}
@@ -240,6 +256,7 @@ export default function CollapsibleTableUpr({
   handleModalDeleteObject,
   handleModalEditEntitas,
   handleModalDeleteEntitas,
+  stateApproval,
 }: {
   useEffectObjectState?: any;
   showSave?: boolean;
@@ -248,6 +265,7 @@ export default function CollapsibleTableUpr({
   handleModalDeleteObject: (id: number) => void;
   handleModalEditEntitas: any;
   handleModalDeleteEntitas: (id: number) => void;
+  stateApproval?: any;
 }) {
   const { year } = useRKPContext((state) => state);
   const { objectState } = usePenetapanTopicContext((state) => state);
@@ -280,6 +298,7 @@ export default function CollapsibleTableUpr({
                         handleModalDeleteObject={handleModalDeleteObject}
                         handleModalEditEntitas={handleModalEditEntitas}
                         handleModalDeleteEntitas={handleModalDeleteEntitas}
+                        stateApproval={stateApproval}
                       />
                     );
                   })}

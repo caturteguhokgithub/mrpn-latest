@@ -12,9 +12,9 @@ import {
   usePenetapanTopicContext,
 } from "@/lib/core/hooks/useHooks";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
-import { PenetapanObjectUraianDto } from "@/lib/core/context/penetapanTopicContext";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
+import { Stack } from "@mui/material";
 
 const steps = [
   "Dasar Pemilihan Prioritas Objek MRPN LS",
@@ -24,9 +24,11 @@ const steps = [
 export default function TableLonglistStepper({
   handleOpenShortlist,
   handleRanking,
+  stateApproval,
 }: {
   handleOpenShortlist?: () => void;
   handleRanking?: any;
+  stateApproval?: any;
 }) {
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
@@ -60,7 +62,7 @@ export default function TableLonglistStepper({
     setUraianState(updateStateUraian);
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    handleRanking()
+    handleRanking();
     setSkipped(newSkipped);
   };
 
@@ -88,26 +90,28 @@ export default function TableLonglistStepper({
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label, index) => {
-          const stepProps: { completed?: boolean } = {};
-          const labelProps: {
-            optional?: React.ReactNode;
-          } = {};
-          //  if (isStepOptional(index)) {
-          //   labelProps.optional = <Typography variant="caption">Optional</Typography>;
-          //  }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
+    <Stack direction="column" gap={2} alignItems="stretch">
+      {!["approved", "review"].includes(stateApproval?.status) && (
+        <Stepper activeStep={activeStep} alternativeLabel>
+          {steps.map((label, index) => {
+            const stepProps: { completed?: boolean } = {};
+            const labelProps: {
+              optional?: React.ReactNode;
+            } = {};
+            //  if (isStepOptional(index)) {
+            //   labelProps.optional = <Typography variant="caption">Optional</Typography>;
+            //  }
+            if (isStepSkipped(index)) {
+              stepProps.completed = false;
+            }
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+      )}
       {activeStep === steps.length ? (
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>
@@ -120,78 +124,60 @@ export default function TableLonglistStepper({
         </React.Fragment>
       ) : (
         <React.Fragment>
-          {activeStep === 0 && (
-            <Box pt={3}>
-              <TableLonglistStepOne />
-            </Box>
+          {!["approved", "review"].includes(stateApproval?.status) ? (
+            <>
+              {activeStep === 0 && <TableLonglistStepOne />}
+              {activeStep === 1 && <TableLonglistStepTwo />}
+            </>
+          ) : (
+            <TableLonglistStepTwo />
           )}
-          {activeStep === 1 && (
-            <Box pt={3}>
-              <TableLonglistStepTwo />
-            </Box>
+          {!["approved", "review"].includes(stateApproval?.status) && (
+            <>
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                {activeStep === 0 ? null : (
+                  <Button
+                    color="primary"
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    variant="outlined"
+                    sx={{ borderRadius: 24, mr: 1, px: 4 }}
+                  >
+                    Kembali
+                  </Button>
+                )}
+
+                <Box sx={{ flex: "1 1 auto" }} />
+                {hasPrivilege(permission, pathname, "add") ||
+                hasPrivilege(permission, pathname, "update") ||
+                hasPrivilege(permission, pathname, "delete") ? (
+                  <Button
+                    onClick={
+                      activeStep === steps.length - 1
+                        ? handleOpenShortlist
+                        : handleNext
+                    }
+                    variant="contained"
+                    sx={{ borderRadius: 24, px: 4 }}
+                  >
+                    {activeStep === steps.length - 1 ? "Selesai" : "Simpan"}
+                  </Button>
+                ) : (
+                  activeStep < steps.length - 1 && (
+                    <Button
+                      onClick={handleNext}
+                      variant="contained"
+                      sx={{ borderRadius: 24, px: 4 }}
+                    >
+                      Selanjutnya
+                    </Button>
+                  )
+                )}
+              </Box>
+            </>
           )}
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            {activeStep === 0 ? null : (
-              <Button
-                color="primary"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                variant="outlined"
-                sx={{ borderRadius: 24, mr: 1, px: 4 }}
-              >
-                Kembali
-              </Button>
-            )}
-
-            <Box sx={{ flex: "1 1 auto" }} />
-            {/* {isStepOptional(activeStep) && (
-       <Button
-        color="inherit"
-        onClick={handleSkip}
-        variant="outlined"
-        sx={{ mr: 1, borderRadius: 24 }}
-       >
-        Lewati
-       </Button>
-      )} */}
-            {hasPrivilege(permission, pathname, "add") ||
-              hasPrivilege(permission, pathname, "update") ||
-              hasPrivilege(permission, pathname, "delete") ? (
-              <Button
-                onClick={
-                  activeStep === steps.length - 1
-                    ? handleOpenShortlist
-                    : handleNext
-                }
-                variant="contained"
-                sx={{ borderRadius: 24, px: 4 }}
-              >
-                {activeStep === steps.length - 1 ? "Selesai" : "Simpan"}
-              </Button>
-            ) : (
-              activeStep < steps.length - 1 && (
-                <Button
-                  onClick={handleNext}
-                  variant="contained"
-                  sx={{ borderRadius: 24, px: 4 }}
-                >
-                  Selanjutnya
-                </Button>
-              )
-            )}
-
-            {/* {activeStep === steps.length - 1 && (
-       <Button
-        onClick={handleOpenShortlist}
-        variant="contained"
-        sx={{ borderRadius: 24 }}
-       >
-        Simpan
-       </Button>
-      )} */}
-          </Box>
         </React.Fragment>
       )}
-    </Box>
+    </Stack>
   );
 }
