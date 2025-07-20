@@ -381,9 +381,9 @@ const usePenetapanObjectVM = () => {
     });
     if (response?.code == API_CODE.success) {
       getPenetapanObjectEntity();
-      setStateCreateUpr({ ...initReqUpr })
+      setStateCreateUpr({ ...initReqUpr });
       setModalUpr(false);
-      setStateUprSingle({ ...initShorlist })
+      setStateUprSingle({ ...initShorlist });
     }
   }
 
@@ -687,6 +687,14 @@ const usePenetapanObjectVM = () => {
     });
     setUploadedFileName(null);
   };
+
+  const dataLogActivity = getStateLogActivity.map((item) => ({
+    object: item.topik,
+    create: true,
+    shortlist: item.shortlist,
+    approve: item.approval,
+  }));
+
   // const handleUnggahBuktiDukung = async (
   //   e: React.ChangeEvent<HTMLInputElement>
   // ) => {
@@ -776,6 +784,7 @@ const usePenetapanObjectVM = () => {
     setModalDeleteObjectTopik,
     selectedTopic,
     setSelectedTopic,
+    dataLogActivity,
   };
 };
 
