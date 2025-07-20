@@ -174,6 +174,7 @@ export default function PageTemaView() {
     setModalDeleteObjectTopik,
     selectedTopic,
     setSelectedTopic,
+    dataLogActivity,
   } = usePenetapanObjectVM();
 
   const { getDataImage } = useNotaDinasVM();
@@ -302,7 +303,10 @@ export default function PageTemaView() {
 
   const handleSaveBuktiDukung = () => {
     // handleUnggahBuktiDukung(reqBuktiDukungPengesahan)
-    uploadImage(reqBuktiDukungPengesahan.file, reqBuktiDukungPengesahan.filename);
+    uploadImage(
+      reqBuktiDukungPengesahan.file,
+      reqBuktiDukungPengesahan.filename
+    );
   };
 
   const handleOpenBuktiDukungModal = () => {
@@ -313,10 +317,11 @@ export default function PageTemaView() {
   return (
     <>
       <ContentPage
-        title={`Objek MRPN & UPR LS ${year == 0
-          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-          : "Tahun " + year
-          }`}
+        title={`Objek MRPN & UPR LS ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip={
           <Stack spacing={2}>
             <div>
@@ -502,7 +507,7 @@ export default function PageTemaView() {
                 handleModalDeleteEntitas={(id: number) => {
                   handleDeleteObjectUpr(id, "Entitas");
                 }}
-              // refreshBuktiDukungTable={refreshNotaDinasGambar}
+                // refreshBuktiDukungTable={refreshNotaDinasGambar}
               />
             </Collapse>
           </Fragment>
@@ -535,12 +540,14 @@ export default function PageTemaView() {
       <DialogComponent
         title="Log Activity"
         tableMode
-        // width={800}
         dialogOpen={modalLog}
         dialogClose={() => setModalLog(false)}
         dialogFooter={false}
       >
-        <TableLog />
+        <TableLog
+          data={dataLogActivity}
+          useEffectLogActivity={useEffectLogActivity}
+        />
       </DialogComponent>
       <DialogComponent
         title="Tambah UPR"

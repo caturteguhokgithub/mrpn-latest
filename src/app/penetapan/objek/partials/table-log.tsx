@@ -12,25 +12,20 @@ import {
 import { green, grey, red } from "@mui/material/colors";
 import { bgColorTh } from "@/utils/color";
 import Iconify from "@/components/icons/iconify";
-import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
-import { create } from "lodash";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 
-export default function TableLog() {
-  const { rkp, year, rpjmn } = useRKPContext((state) => state);
-
-  const { useEffectLogActivity, getStateLogActivity } = usePenetapanObjectVM();
+export default function TableLog({
+  data,
+  useEffectLogActivity,
+}: {
+  data: any;
+  useEffectLogActivity: any;
+}) {
+  const { year } = useRKPContext((state) => state);
 
   useEffect(useEffectLogActivity, [year]);
-
-  const data = getStateLogActivity.map((item) => ({
-    object: item.topik,
-    create: true,
-    shortlist: item.shortlist,
-    approve: item.approval,
-  }));
 
   const checkIcon = (
     <Stack justifyContent="center" alignItems="center" height="100%">
@@ -71,7 +66,7 @@ export default function TableLog() {
         <TableBody>
           {data.length ? (
             <React.Fragment>
-              {data.map((item) => (
+              {data.map((item: any) => (
                 <TableRow>
                   <TableCell>{item.object}</TableCell>
                   <TableCell>{item.create ? checkIcon : closeIcon}</TableCell>
