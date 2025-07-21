@@ -45,13 +45,17 @@ export default function PageApprovalSelera() {
     updateApproval,
     getSelera,
     requestSelera,
+    stateSelera,
     setRequestSelera
   } = usePenetapanSelera();
 
   useEffect(() => {
-    getApprovalSelera();
     getSelera();
   }, [objectState?.id]);
+
+  useEffect(() => {
+    getApprovalSelera();
+  }, [stateSelera?.seleraRisiko]);
 
   useEffect(() => {
     if (stateApproval.status == "approved") {
@@ -69,7 +73,7 @@ export default function PageApprovalSelera() {
     if (stateApproval) {
       const param: doReqSeleraApprovalDto = {
         ...stateApproval,
-        id: objectState?.id ?? 0,
+        id: stateSelera?.seleraRisiko[0].id ?? 0,
         status: status,
         message: msg
       };

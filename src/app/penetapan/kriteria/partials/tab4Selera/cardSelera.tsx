@@ -38,9 +38,12 @@ export default function CardSelera() {
   } = usePenetapanSelera();
 
   useEffect(() => {
-    getApprovalSelera();
     getSelera();
   }, [objectState?.id]);
+
+  useEffect(() => {
+    getApprovalSelera();
+  }, [stateSelera?.seleraRisiko]);
 
   const handleModalClose = () => {
     setModalOpenAdd(false);
@@ -50,7 +53,7 @@ export default function CardSelera() {
     if (stateApproval) {
       const param: doReqSeleraApprovalDto = {
         ...stateApproval,
-        id: objectState?.id ?? 0,
+        id: stateSelera?.seleraRisiko[0].id ?? 0,
         status: status,
         message: msg
       };
@@ -88,7 +91,7 @@ export default function CardSelera() {
             Selera Risiko
             <Chip
               color={
-                isStatus === "reject"
+                isStatus === "rejected"
                   ? "error"
                   : isStatus === "draft"
                     ? "default"
@@ -101,8 +104,8 @@ export default function CardSelera() {
                   fontSize={13}
                   textTransform="uppercase"
                 >
-                  {isStatus === "reject"
-                    ? "Reject"
+                  {isStatus === "rejected"
+                    ? "Rejected"
                     : isStatus === "draft"
                       ? "Draft"
                       : "Review"}
@@ -111,7 +114,7 @@ export default function CardSelera() {
               icon={
                 <Iconify
                   name={
-                    isStatus === "reject"
+                    isStatus === "rejected"
                       ? "mdi:close"
                       : isStatus === "draft"
                         ? "mdi:invoice-text-edit"
@@ -121,7 +124,7 @@ export default function CardSelera() {
               }
               sx={{ px: 2 }}
             />
-            {isStatus === "reject" ? (
+            {isStatus === "rejected" ? (
               <Typography fontSize={14} color={red[700]}>
                 Ditolak tanggal:{" "}
                 <Typography component="strong" fontWeight={600} fontSize={14}>
@@ -156,7 +159,7 @@ export default function CardSelera() {
             ) : (
               ""
             )}
-            {isStatus === "reject" && (
+            {isStatus === "rejected" && (
               <Button
                 size="small"
                 color="primary"

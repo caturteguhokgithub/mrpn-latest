@@ -76,7 +76,7 @@ const usePenetapanSelera = () => {
     if (objectState !== undefined) {
       const req: doReqSeleraApprovalDto = {
         ...initApprovalSelera,
-        id: objectState?.id ?? 0,
+        id: requestSelera?.id ?? 0,
       };
 
       const params = {

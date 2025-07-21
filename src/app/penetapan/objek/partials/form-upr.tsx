@@ -85,7 +85,7 @@ export default function FormUPR({
   ]);
 
   const add = () => {
-    if (items.length >= 10) return;
+    // if (items.length >= 10) return;
 
     const newItem = {
       id: Math.floor(Math.random() * 1000),
