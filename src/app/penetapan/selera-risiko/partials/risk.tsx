@@ -54,7 +54,7 @@ export default function RiskContent({
 
   useEffect(() => {
     if (state?.type_nilai) {
-      setValueTheme(state.type_nilai)
+      setValueTheme(state.type_nilai);
     }
   }, [state]);
 
@@ -138,10 +138,10 @@ perencanaan pembangunan nasional"
               {valueTheme == "Rendah"
                 ? "Rendah"
                 : valueTheme == "Konservatif"
-                  ? "Konservatif"
-                  : valueTheme == "Moderat"
-                    ? "Moderat"
-                    : "Tinggi"}
+                ? "Konservatif"
+                : valueTheme == "Moderat"
+                ? "Moderat"
+                : "Tinggi"}
             </Typography>
 
             <TextareaStyled
@@ -155,15 +155,16 @@ perencanaan pembangunan nasional"
                     pernyataan: e.target.value,
                   }));
               }}
-              placeholder={`Deskripsi ${valueTheme == "Rendah"
-                ? "Rendah"
-                : valueTheme == "Konservatif"
+              placeholder={`Deskripsi ${
+                valueTheme == "Rendah"
+                  ? "Rendah"
+                  : valueTheme == "Konservatif"
                   ? "Konservatif"
                   : valueTheme == "Moderat"
-                    ? "Moderat"
-                    : "Tinggi"
-                }`}
-            // width="100%"
+                  ? "Moderat"
+                  : "Tinggi"
+              }`}
+              // width="100%"
             />
           </Stack>
         </Stack>
@@ -184,8 +185,8 @@ perencanaan pembangunan nasional"
         )}
         {isEmptyRisk && (
           <Typography color={grey[600]} fontSize={14} fontStyle="italic">
-            Pilih salah satu untuk memberikan{" "}
-            {userLevel === "bappenas" ? "deskripsi" : "nilai"}
+            Pilih salah satu untuk memberikan deskripsi
+            {/* {userLevel === "bappenas" ? "deskripsi" : "nilai"} */}
           </Typography>
         )}
         <ToggleButtonGroup
@@ -283,35 +284,47 @@ perencanaan pembangunan nasional"
                     <SeleraMatriks levelId={1} levelDampak="rendah" />
                   </Stack>
                 ) : (
-                  <FormatKL
-                    listItem={
-                      <>
-                        <ListItem sx={{ display: "list-item" }}>
-                          Sangat berhati-hati dalam mengambil risiko dan lebih
-                          memilih menjaga stabilitas dan konsistensi dalam
-                          Pembangunan Nasional.
-                        </ListItem>
-                        <ListItem sx={{ display: "list-item" }}>
-                          Sangat tidak ingin risiko ini terjadi, cenderung
-                          memilih opsi teraman untuk menghindari dampak kritikal
-                          dan melaksanakan perlakuan risiko untuk mempertahankan
-                          keberlangsungan Pembangunan Nasional.
-                        </ListItem>
-                      </>
-                    }
-                    form={
-                      <TextField
-                        type="number"
-                        variant="outlined"
-                        size="small"
-                        placeholder="Isi nilai rendah"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        helperText="Isi dengan angka"
+                  <>
+                    {/* <FormatKL
+                      listItem={
+                        <>
+                          <ListItem sx={{ display: "list-item" }}>
+                            Sangat berhati-hati dalam mengambil risiko dan lebih
+                            memilih menjaga stabilitas dan konsistensi dalam
+                            Pembangunan Nasional.
+                          </ListItem>
+                          <ListItem sx={{ display: "list-item" }}>
+                            Sangat tidak ingin risiko ini terjadi, cenderung
+                            memilih opsi teraman untuk menghindari dampak
+                            kritikal dan melaksanakan perlakuan risiko untuk
+                            mempertahankan keberlangsungan Pembangunan Nasional.
+                          </ListItem>
+                        </>
+                      }
+                      form={
+                        <TextField
+                          type="number"
+                          variant="outlined"
+                          size="small"
+                          placeholder="Isi nilai rendah"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          helperText="Isi dengan angka"
+                        />
+                      }
+                    /> */}
+                    <Stack gap={1}>
+                      <FormatBP
+                        levelId={1}
+                        target="Sama atau meningkat ≤ 5%"
+                        kapasitas="Rendah/tetap/sebanding dengan peningkatan target"
+                        inherent="Sangat Rendah"
+                        note="Sering tidak ingin risiko terjadi"
                       />
-                    }
-                  />
+                      <SeleraMatriks levelId={1} levelDampak="rendah" />
+                    </Stack>
+                  </>
                 )}
               </Stack>
             }
@@ -354,35 +367,58 @@ perencanaan pembangunan nasional"
                     <SeleraMatriks levelId={1} levelDampak="konservatif" />
                   </Stack>
                 ) : (
-                  <FormatKL
-                    listItem={
-                      <>
-                        <ListItem sx={{ display: "list-item" }}>
-                          Toleransi terbatas atas hasil yang tidak pasti dalam
-                          pencapaian visi, misi, atau tujuan strategis
-                          Pembangunan Nasional.
-                        </ListItem>
-                        <ListItem sx={{ display: "list-item" }}>
-                          Akan menerima risiko jika pencapaian hasil sangat
-                          penting untuk visi, misi, atau tujuan strategis
-                          Pembangunan Nasional.
-                        </ListItem>
-                      </>
-                    }
-                    form={
-                      <TextField
-                        type="number"
-                        variant="outlined"
-                        size="small"
-                        placeholder="Isi nilai konservatif"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        helperText="Isi dengan angka"
+                  <>
+                    {/* <FormatKL
+                      listItem={
+                        <>
+                          <ListItem sx={{ display: "list-item" }}>
+                            Toleransi terbatas atas hasil yang tidak pasti dalam
+                            pencapaian visi, misi, atau tujuan strategis
+                            Pembangunan Nasional.
+                          </ListItem>
+                          <ListItem sx={{ display: "list-item" }}>
+                            Akan menerima risiko jika pencapaian hasil sangat
+                            penting untuk visi, misi, atau tujuan strategis
+                            Pembangunan Nasional.
+                          </ListItem>
+                        </>
+                      }
+                      form={
+                        <TextField
+                          type="number"
+                          variant="outlined"
+                          size="small"
+                          placeholder="Isi nilai konservatif"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          helperText="Isi dengan angka"
+                        />
+                      }
+                    /> */}
+
+                    <Stack gap={1}>
+                      <FormatBP
+                        levelId={2}
+                        target="Meningkat 5% < x ≤ 10%"
+                        kapasitas="Rendah/tetap/sebanding dengan peningkatan target"
+                        inherent="Rendah"
+                        note="Terdapat gap ketercapaian target yang dapat diterima"
                       />
-                    }
-                  />
+                      <SeleraMatriks levelId={1} levelDampak="konservatif" />
+                    </Stack>
+                  </>
                 )}
+                <Stack gap={1}>
+                  <FormatBP
+                    levelId={2}
+                    target="Meningkat 5% < x ≤ 10%"
+                    kapasitas="Rendah/tetap/sebanding dengan peningkatan target"
+                    inherent="Rendah"
+                    note="Terdapat gap ketercapaian target yang dapat diterima"
+                  />
+                  <SeleraMatriks levelId={1} levelDampak="konservatif" />
+                </Stack>
               </Stack>
             }
           />
@@ -424,38 +460,51 @@ perencanaan pembangunan nasional"
                     <SeleraMatriks levelId={1} levelDampak="moderat" />
                   </Stack>
                 ) : (
-                  <FormatKL
-                    listItem={
-                      <>
-                        <ListItem sx={{ display: "list-item" }}>
-                          Bersedia mengambil risiko dalam batas tertentu untuk
-                          mencapai sasaran, tetapi tetap memperhatikan
-                          perlindungan terhadap risiko.
-                        </ListItem>
-                        <ListItem sx={{ display: "list-item" }}>
-                          Perlakuan risiko dengan mempertimbangkan cost dan
-                          benefit.
-                        </ListItem>
-                        <ListItem sx={{ display: "list-item" }}>
-                          Tingkat toleransi atas hasil yang tidak pasti bersifat
-                          relatif terhadap visi, misi, atau tujuan Pembangunan
-                          Nasional.
-                        </ListItem>
-                      </>
-                    }
-                    form={
-                      <TextField
-                        type="number"
-                        variant="outlined"
-                        size="small"
-                        placeholder="Isi nilai moderat"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        helperText="Isi dengan angka"
+                  <>
+                    {/* <FormatKL
+                      listItem={
+                        <>
+                          <ListItem sx={{ display: "list-item" }}>
+                            Bersedia mengambil risiko dalam batas tertentu untuk
+                            mencapai sasaran, tetapi tetap memperhatikan
+                            perlindungan terhadap risiko.
+                          </ListItem>
+                          <ListItem sx={{ display: "list-item" }}>
+                            Perlakuan risiko dengan mempertimbangkan cost dan
+                            benefit.
+                          </ListItem>
+                          <ListItem sx={{ display: "list-item" }}>
+                            Tingkat toleransi atas hasil yang tidak pasti
+                            bersifat relatif terhadap visi, misi, atau tujuan
+                            Pembangunan Nasional.
+                          </ListItem>
+                        </>
+                      }
+                      form={
+                        <TextField
+                          type="number"
+                          variant="outlined"
+                          size="small"
+                          placeholder="Isi nilai moderat"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          helperText="Isi dengan angka"
+                        />
+                      }
+                    /> */}
+
+                    <Stack gap={1}>
+                      <FormatBP
+                        levelId={3}
+                        target="Meningkat 10% < x < 50%"
+                        kapasitas="Rendah/tetap/meningkat tetapi tidak sebanding dengan peningkatan target"
+                        inherent="Sedang"
+                        note="Mempertimbangkan Cost & Benefit"
                       />
-                    }
-                  />
+                      <SeleraMatriks levelId={1} levelDampak="moderat" />
+                    </Stack>
+                  </>
                 )}
               </Stack>
             }
@@ -498,28 +547,40 @@ perencanaan pembangunan nasional"
                     <SeleraMatriks levelId={1} levelDampak="tinggi" />
                   </Stack>
                 ) : (
-                  <FormatKL
-                    listItem={
-                      <ListItem sx={{ display: "list-item" }}>
-                        Secara aktif menerapkan strategi yang melibatkan
-                        pengelolaan risiko sebagai bagian integral dari rencana
-                        kegiatan, mengambil risiko lebih tinggi dalam rangka
-                        mencapai peluang dan inovasi yang lebih besar
-                      </ListItem>
-                    }
-                    form={
-                      <TextField
-                        type="number"
-                        variant="outlined"
-                        size="small"
-                        placeholder="Isi nilai tinggi"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        helperText="Isi dengan angka"
+                  <>
+                    {/* <FormatKL
+                      listItem={
+                        <ListItem sx={{ display: "list-item" }}>
+                          Secara aktif menerapkan strategi yang melibatkan
+                          pengelolaan risiko sebagai bagian integral dari
+                          rencana kegiatan, mengambil risiko lebih tinggi dalam
+                          rangka mencapai peluang dan inovasi yang lebih besar
+                        </ListItem>
+                      }
+                      form={
+                        <TextField
+                          type="number"
+                          variant="outlined"
+                          size="small"
+                          placeholder="Isi nilai tinggi"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          helperText="Isi dengan angka"
+                        />
+                      }
+                    /> */}
+                    <Stack gap={1}>
+                      <FormatBP
+                        levelId={4}
+                        target="Meningkat sangat signifikan > 50%"
+                        kapasitas="Rendah/tetap/meningkat tetapi tidak sebanding dengan peningkatan target"
+                        inherent="Tinggi"
+                        note="Diperlukan banyak program inovasi untuk mengambil peluang & mencapai target kinerja dengan difasilitasi RO/Komponen (agar tersedia anggaran)"
                       />
-                    }
-                  />
+                      <SeleraMatriks levelId={1} levelDampak="tinggi" />
+                    </Stack>
+                  </>
                 )}
               </Stack>
             }
@@ -535,7 +596,7 @@ perencanaan pembangunan nasional"
         mt={2}
       >
         {isEmptyRisk && saveButton}
-        <Button
+        {/* <Button
           color="success"
           variant="contained"
           endIcon={<Iconify name="mdi:send" />}
@@ -543,7 +604,7 @@ perencanaan pembangunan nasional"
           onClick={handleConfirm}
         >
           Ajukan Approval
-        </Button>
+        </Button> */}
       </Stack>
     </Fragment>
   );

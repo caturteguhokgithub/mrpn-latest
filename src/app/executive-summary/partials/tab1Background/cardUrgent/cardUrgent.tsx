@@ -16,7 +16,7 @@ interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
 }
 
-export const DividerIntExt = () => {
+export const DividerIntExt = ({ label }: { label?: string }) => {
   return (
     <Divider
       sx={{
@@ -27,7 +27,7 @@ export const DividerIntExt = () => {
       }}
     >
       <Chip
-        label="Data Konteks Internal Eksternal"
+        label={label || "Data Konteks Internal Eksternal"}
         size="small"
         sx={{
           fontWeight: 600,

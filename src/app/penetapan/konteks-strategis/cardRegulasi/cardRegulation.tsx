@@ -1,36 +1,18 @@
-import React, { Fragment, useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  DialogActions,
-  Paper,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  alpha,
-} from "@mui/material";
-import theme from "@/theme";
+import { Fragment } from "react";
+import { Box, Button, DialogActions } from "@mui/material";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
 import useCardRegulasi from "@/app/penetapan/konteks-strategis/cardRegulasi/vm";
-import EmptyDevelopingState from "@/components/empty/developing";
-import { isDeveloping } from "@/components/layouts/layout";
 
 import useCardRegulationVM from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationVM";
 import TablePeraturan from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/table-peraturan";
 import DialogDelete from "@/components/dialogDelete";
 import DialogComponent from "@/components/dialog";
 import FormRegulation from "./partials/form";
-import { ExsumRegulationDto } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
 import { DividerIntExt } from "@/app/executive-summary/partials/tab1Background/cardUrgent/cardUrgent";
 import AddButton from "@/components/buttonAdd";
 import Iconify from "@/components/icons/iconify";
-import useUrgensiVM from "../../internal-eksternal/pageVM";
 import useCardIndicationVM from "@/app/executive-summary/partials/tab9Indication/cardIndicationVM";
 import { doRequestRegulasiDto } from "./model";
 

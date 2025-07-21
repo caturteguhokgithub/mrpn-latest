@@ -144,7 +144,7 @@ export default function CardKategori() {
               title="Tabel Referensi"
               onclick={() => setModalOpenRef(true)}
             /> */}
-            {user?.type !== "NON_BAPPENAS" && (
+            {user?.type !== "NON BAPPENAS" && (
               <AddButton
                 noMargin
                 filled
@@ -254,6 +254,27 @@ export default function CardKategori() {
                   value: e.target.value,
                 }));
               }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FieldLabelInfo title="Prioritas" />
+            <TextField
+              // value={requestMatDamKomite.prioritas}
+              type="number"
+              fullWidth
+              variant="outlined"
+              size="small"
+              placeholder="Prioritas"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              // onChange={(e) => {
+              //   setRequestMatDamKomite &&
+              //     setRequestMatDamKomite((prevState: ReqAddMatDamKomite) => ({
+              //       ...prevState,
+              //       prioritas: Number(e.target.value),
+              //     }));
+              // }}
             />
           </Grid>
           <Grid item xs={12}>

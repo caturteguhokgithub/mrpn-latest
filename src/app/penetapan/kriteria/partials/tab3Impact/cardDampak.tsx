@@ -121,7 +121,7 @@ export default function CardDampak() {
               title="Tabel Referensi"
               onclick={() => setModalOpenRef(true)}
             /> */}
-            {user?.type !== "NON_BAPPENAS" && (
+            {user?.type !== "NON BAPPENAS" && (
               <AddButton
                 noMargin
                 filled
