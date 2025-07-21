@@ -61,12 +61,17 @@ const usePenetapanSelera = () => {
       let result: doGetSeleraDto = response.result;
 
       if (result) {
+        const seleraRisikoList = Array.isArray(response.result?.seleraRisiko)
+          ? response.result.seleraRisiko
+          : [];
+
         const finalResult: doGetSeleraDto = {
           referensi: response.result.referensi,
-          seleraRisiko: response.result.seleraRisiko[0]
-        }
-        setStateSelera(finalResult)
-        setRequestSelera(response.result.seleraRisiko[0])
+          seleraRisiko: seleraRisikoList[0] ?? {}
+        };
+
+        setStateSelera(finalResult);
+        setRequestSelera(seleraRisikoList[0] ?? {});
       }
 
     }
