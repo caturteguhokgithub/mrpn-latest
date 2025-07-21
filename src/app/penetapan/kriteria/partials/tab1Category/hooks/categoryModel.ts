@@ -38,6 +38,7 @@ export interface doListCategory {
 export interface doMasterKategori {
   id: number;
   value: string;
+  prioritas: number;
   uraian: string;
 }
 // export interface doRequestCategoryDto {
@@ -71,6 +72,7 @@ export const initCategory: doRequestCategoryDto = {
 export const initMasterCategory: doMasterKategori = {
   id: 0,
   value: "",
+  prioritas: 0,
   uraian: ""
 }
 

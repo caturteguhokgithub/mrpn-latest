@@ -131,6 +131,7 @@ const useCategoryList = () => {
 
     if (response?.code == API_CODE.success) {
       getData();
+      getMasterCategory();
       setRequestMasterCategory({ ...initMasterCategory });
       setModalOpenAddMasterCategory(false);
     }
@@ -178,13 +179,6 @@ const useCategoryList = () => {
     setModalOpenAdd(true);
   };
 
-  useEffect(() => {
-    // if (!isEmptyPenetapanObject) {
-    getData();
-    // }
-    getMasterCategory();
-  }, [objectState?.id]);
-
   // console.log({ requestCategory });
 
   return {
@@ -211,6 +205,8 @@ const useCategoryList = () => {
     modalOpenAddMasterCategory,
     setModalOpenAddMasterCategory,
     handleAdd,
+    getMasterCategory,
+    getData,
   };
 };
 

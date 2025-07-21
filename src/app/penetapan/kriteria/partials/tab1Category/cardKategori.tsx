@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   Button,
   DialogActions,
@@ -21,6 +21,7 @@ import useCategoryList from "./hooks/useCategory";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
 import { TextareaStyled } from "@/components/textarea";
 import useAuthorizationVM from "@/app/authorizationVM";
+import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 
 export default function CardKategori() {
   const [modalOpenRef, setModalOpenRef] = React.useState(false);
@@ -49,9 +50,17 @@ export default function CardKategori() {
     modalOpenAddMasterCategory,
     setModalOpenAddMasterCategory,
     handleAdd,
+    getMasterCategory,
+    getData,
   } = useCategoryList();
 
   const { user } = useAuthorizationVM();
+  const { objectState } = usePenetapanGlobalVM();
+
+  useEffect(() => {
+    getData();
+    getMasterCategory();
+  }, [objectState?.id]);
 
   const handleCreate = async () => {
     createCategory(requestCategory);
@@ -268,13 +277,19 @@ export default function CardKategori() {
               InputLabelProps={{
                 shrink: true,
               }}
-              // onChange={(e) => {
-              //   setRequestMatDamKomite &&
-              //     setRequestMatDamKomite((prevState: ReqAddMatDamKomite) => ({
-              //       ...prevState,
-              //       prioritas: Number(e.target.value),
-              //     }));
-              // }}
+              onChange={(e) => {
+                setRequestMasterCategory((prev) => ({
+                  ...prev,
+                  prioritas: Number(e.target.value),
+                }));
+              }}
+            // onChange={(e) => {
+            //   setRequestMatDamKomite &&
+            //     setRequestMatDamKomite((prevState: ReqAddMatDamKomite) => ({
+            //       ...prevState,
+            //       prioritas: Number(e.target.value),
+            //     }));
+            // }}
             />
           </Grid>
           <Grid item xs={12}>
