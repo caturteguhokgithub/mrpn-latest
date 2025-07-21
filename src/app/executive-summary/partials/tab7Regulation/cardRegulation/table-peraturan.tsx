@@ -27,6 +27,7 @@ import Iconify from "@/components/icons/iconify";
 import { blue, grey, red } from "@mui/material/colors";
 import { doRequestRegulasiDto } from "@/app/penetapan/konteks-strategis/cardRegulasi/model";
 import { ExsumIndicationResDto } from "../../tab9Indication/cardIndicationModel";
+import { DividerIntExt } from "../../tab1Background/cardUrgent/cardUrgent";
 
 export default function TablePeraturan({
   data,
@@ -86,142 +87,155 @@ export default function TablePeraturan({
       </Stack>
       {!intExt ? (
         dataExsum?.length === 0 ? (
-          <EmptyState
-            dense
-            icon={<IconEmptyData width={100} />}
-            title="Data Kosong"
-            description="Silahkan isi konten ini pada exsum!"
-          />
+          <>
+            {/* <EmptyState
+              dense
+              icon={<IconEmptyData width={100} />}
+              title="Data Kosong"
+              description="Silahkan isi konten ini pada exsum!"
+            /> */}
+          </>
         ) : (
-          <TableContainer component={Paper} elevation={0} variant="outlined">
-            <Table size="small">
-              <TableHead sx={{ bgcolor: bgColorTh }}>
-                <TableRow>
-                  <TableCell width={500}>Entitas</TableCell>
-                  {/* <TableCell width={240}>Peraturan Terkait</TableCell> */}
-                  <TableCell width={penetapan ? 240 : "auto"}>
-                    {penetapan ? "Tentang" : "Peraturan Terkait"}
-                  </TableCell>
-                  {/* <TableCell>Amanat Peraturan yang Terkait</TableCell> */}
-                  <TableCell>
-                    {penetapan ? "Keterangan" : "Amanat Peraturan yang Terkait"}
-                  </TableCell>
-                  {penetapan && (
-                    <TableCell align="center" width={120}>
-                      Aksi
+          <Stack gap={3}>
+            <DividerIntExt label="Data ini merupakan referensi dari Executive Summary" />
+            <TableContainer component={Paper} elevation={0} variant="outlined">
+              <Table size="small">
+                <TableHead sx={{ bgcolor: bgColorTh }}>
+                  <TableRow>
+                    <TableCell width={500}>Entitas</TableCell>
+                    {/* <TableCell width={240}>Peraturan Terkait</TableCell> */}
+                    <TableCell width={penetapan ? 240 : "auto"}>
+                      {penetapan ? "Tentang" : "Peraturan Terkait"}
                     </TableCell>
-                  )}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {dataExsum?.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell sx={{ verticalAlign: "top" }}>
-                      <Stack
-                        display="inline-flex"
-                        alignItems="center"
-                        direction="row"
-                        gap={0.5}
-                        flexWrap="wrap"
-                      >
-                        {Array.isArray(row.entitas) &&
-                          row.entitas.map((e, idx) => {
-                            if (
-                              typeof e === "object" &&
-                              e !== null &&
-                              "value" in e
-                            ) {
-                              // Jika entitas bertipe object
-                              return (
-                                <Box key={e.id} component="span">
-                                  <Chip
-                                    label={e.value}
-                                    size="small"
-                                    sx={{
-                                      height: "auto",
-                                      ".MuiChip-label": {
-                                        whiteSpace: "wrap",
-                                        lineHeight: 1.2,
-                                        py: 0.6,
-                                      },
-                                    }}
-                                  />
-                                </Box>
-                              );
-                            } else {
-                              // Jika entitas berupa number (ID), fallback ditampilkan sebagai angka
-                              return (
-                                <Box key={idx} component="span">
-                                  <Chip
-                                    label={`Entitas ID: ${e}`}
-                                    size="small"
-                                    color="default"
-                                    sx={{
-                                      height: "auto",
-                                      ".MuiChip-label": {
-                                        whiteSpace: "wrap",
-                                        lineHeight: 1.2,
-                                        py: 0.6,
-                                      },
-                                    }}
-                                  />
-                                </Box>
-                              );
-                            }
-                          })}
-                      </Stack>
+                    {/* <TableCell>Amanat Peraturan yang Terkait</TableCell> */}
+                    <TableCell>
+                      {penetapan
+                        ? "Keterangan"
+                        : "Amanat Peraturan yang Terkait"}
                     </TableCell>
-                    <TableCell sx={{ verticalAlign: "top" }}>
-                      {
-                        // row.tentang
-                        typeof row.perpres === "string"
-                          ? row.perpres // perpres bertipe string
-                          : Array.isArray(row.perpres)
-                          ? row.perpres.map((y, index2) => (
-                              <Chip
-                                key={index2}
-                                size="small"
-                                label={y.title}
-                                sx={
-                                  y.flag != null
-                                    ? {
-                                        background: "#EA6228",
-                                        color: "white",
+                    {penetapan && (
+                      <TableCell align="center" width={120}>
+                        Aksi
+                      </TableCell>
+                    )}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {dataExsum?.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        <Stack
+                          display="inline-flex"
+                          alignItems="center"
+                          direction="row"
+                          gap={0.5}
+                          flexWrap="wrap"
+                        >
+                          {Array.isArray(row.entitas) &&
+                            row.entitas.map((e, idx) => {
+                              if (
+                                typeof e === "object" &&
+                                e !== null &&
+                                "value" in e
+                              ) {
+                                // Jika entitas bertipe object
+                                return (
+                                  <Box key={e.id} component="span">
+                                    <Chip
+                                      label={e.value}
+                                      size="small"
+                                      sx={{
                                         height: "auto",
                                         ".MuiChip-label": {
                                           whiteSpace: "wrap",
                                           lineHeight: 1.2,
-                                          paddingTop: "4.8px",
-                                          paddingBottom: "4.8px",
+                                          py: 0.6,
                                         },
-                                      }
-                                    : undefined
-                                }
-                              />
-                            ))
-                          : "-" // fallback kalau bukan array
-                      }
-                    </TableCell>
-                    <TableCell sx={{ verticalAlign: "top" }}>
-                      {row.amanat}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                                      }}
+                                    />
+                                  </Box>
+                                );
+                              } else {
+                                // Jika entitas berupa number (ID), fallback ditampilkan sebagai angka
+                                return (
+                                  <Box key={idx} component="span">
+                                    <Chip
+                                      label={`Entitas ID: ${e}`}
+                                      size="small"
+                                      color="default"
+                                      sx={{
+                                        height: "auto",
+                                        ".MuiChip-label": {
+                                          whiteSpace: "wrap",
+                                          lineHeight: 1.2,
+                                          py: 0.6,
+                                        },
+                                      }}
+                                    />
+                                  </Box>
+                                );
+                              }
+                            })}
+                        </Stack>
+                      </TableCell>
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        {
+                          // row.tentang
+                          typeof row.perpres === "string"
+                            ? row.perpres // perpres bertipe string
+                            : Array.isArray(row.perpres)
+                            ? row.perpres.map((y, index2) => (
+                                <Chip
+                                  key={index2}
+                                  size="small"
+                                  label={y.title}
+                                  sx={
+                                    y.flag != null
+                                      ? {
+                                          background: "#EA6228",
+                                          color: "white",
+                                          height: "auto",
+                                          ".MuiChip-label": {
+                                            whiteSpace: "wrap",
+                                            lineHeight: 1.2,
+                                            paddingTop: "4.8px",
+                                            paddingBottom: "4.8px",
+                                          },
+                                        }
+                                      : undefined
+                                  }
+                                />
+                              ))
+                            : "-" // fallback kalau bukan array
+                        }
+                      </TableCell>
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        {row.amanat}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Stack>
         )
       ) : // INTEXT
       data?.length === 0 ? (
-        <EmptyState
-          dense
-          icon={<IconEmptyData width={100} />}
-          title="Data Kosong"
-          description="Silahkan isi konten halaman ini"
-        />
+        <>
+          {penetapan ? (
+            ""
+          ) : (
+            <EmptyState
+              dense
+              icon={<IconEmptyData width={100} />}
+              title="Data Kosong"
+              description="Silahkan isi konten halaman ini"
+            />
+          )}
+        </>
       ) : (
         <TableContainer component={Paper} elevation={0} variant="outlined">
           <Table size="small">
