@@ -69,7 +69,7 @@ export default function CardKemungkinan() {
               onclick={() => setModalOpenRef(true)}
             /> */}
 
-            {user?.type !== "NON_BAPPENAS" && (
+            {user?.type !== "NON BAPPENAS" && (
               <>
                 {!isDisabledAdd ? (
                   <AddButton
