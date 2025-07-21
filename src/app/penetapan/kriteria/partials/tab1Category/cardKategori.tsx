@@ -258,7 +258,7 @@ export default function CardKategori() {
                 // width="100%"
                 minRows={2}
                 aria-label=""
-                placeholder="Sub Kategori"
+                placeholder="Uraian Kategori Risiko"
                 onChange={(e) => {
                   setRequestMasterCategory((prev) => ({
                     ...prev,
