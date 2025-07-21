@@ -83,6 +83,8 @@ function CustomTabPanel(props: TabPanelProps) {
 export default function PageOverviewView() {
   const { year, rpjmn } = useRKPContext((state) => state);
   const { user } = useAuthorizationVM();
+  console.log(user);
+
 
   const {
     dataRiskOverview,
@@ -156,7 +158,7 @@ export default function PageOverviewView() {
           )
         }
         addButton={
-          user?.type == "NON_BAPPENAS" ?
+          user?.type == "NON BAPPENAS" ?
             <Button
               color="success"
               variant="contained"
