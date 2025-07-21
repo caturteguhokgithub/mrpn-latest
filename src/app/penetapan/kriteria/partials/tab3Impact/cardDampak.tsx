@@ -121,13 +121,15 @@ export default function CardDampak() {
               title="Tabel Referensi"
               onclick={() => setModalOpenRef(true)}
             /> */}
-            <AddButton
-              noMargin
-              filled
-              startIcon={<Iconify name="mdi:plus-circle" />}
-              title="Tambah Kriteria Dampak"
-              onclick={() => setModalOpenAdd(true)}
-            />
+            {user?.type !== "NON_BAPPENAS" && (
+              <AddButton
+                noMargin
+                filled
+                startIcon={<Iconify name="mdi:plus-circle" />}
+                title="Tambah Kriteria Dampak"
+                onclick={() => setModalOpenAdd(true)}
+              />
+            )}
           </Stack>
         }
       >

@@ -20,6 +20,7 @@ import TableRerefence from "./table-reference";
 import useCategoryList from "./hooks/useCategory";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
 import { TextareaStyled } from "@/components/textarea";
+import useAuthorizationVM from "@/app/authorizationVM";
 
 export default function CardKategori() {
   const [modalOpenRef, setModalOpenRef] = React.useState(false);
@@ -49,6 +50,8 @@ export default function CardKategori() {
     setModalOpenAddMasterCategory,
     handleAdd,
   } = useCategoryList();
+
+  const { user } = useAuthorizationVM();
 
   const handleCreate = async () => {
     createCategory(requestCategory);
@@ -141,13 +144,15 @@ export default function CardKategori() {
               title="Tabel Referensi"
               onclick={() => setModalOpenRef(true)}
             /> */}
-            <AddButton
-              noMargin
-              filled
-              startIcon={<Iconify name="mdi:plus-circle" />}
-              title="Tambah Kategori Risiko"
-              onclick={handleAdd}
-            />
+            {user?.type !== "NON_BAPPENAS" && (
+              <AddButton
+                noMargin
+                filled
+                startIcon={<Iconify name="mdi:plus-circle" />}
+                title="Tambah Kategori Risiko"
+                onclick={handleAdd}
+              />
+            )}
           </Stack>
         }
       >

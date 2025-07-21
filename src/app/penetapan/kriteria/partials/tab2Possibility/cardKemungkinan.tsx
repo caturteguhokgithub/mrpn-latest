@@ -3,15 +3,12 @@ import CardItem from "@/components/cardTabItem";
 import React, { Fragment } from "react";
 import TableKemungkinan from "./table-kriteria-kemungkinan";
 import DialogComponent from "@/components/dialog";
-import FormKemungkinan from "./form-kemungkinan";
 import { DialogActions, Button, Stack } from "@mui/material";
 import Iconify from "@/components/icons/iconify";
-import EmptyDevelopingState from "@/components/empty/developing";
-import { isDeveloping } from "@/components/layouts/layout";
 import usePossibilityList from "./hooks/usePossibility";
-import FormPossibility from "./form-possibility";
 import DialogDelete from "@/components/dialogDelete";
 import FormKemungkinanEmpty from "./form-kemungkinan-empty";
+import useAuthorizationVM from "@/app/authorizationVM";
 
 export default function CardKemungkinan() {
   const [modalOpenEdit, setModalOpenEdit] = React.useState(false);
@@ -32,6 +29,8 @@ export default function CardKemungkinan() {
     isDisabledAddButton,
     loading,
   } = usePossibilityList();
+
+  const { user } = useAuthorizationVM();
 
   const handleCreate = async () => {
     setModalOpenAdd(false);
@@ -69,22 +68,27 @@ export default function CardKemungkinan() {
               title="Tabel Referensi"
               onclick={() => setModalOpenRef(true)}
             /> */}
-            {!isDisabledAdd ? (
-              <AddButton
-                noMargin
-                filled
-                startIcon={<Iconify name="mdi:plus-circle" />}
-                title="Tambah Kriteria Kemungkinan"
-                onclick={() => setModalOpenAdd(true)}
-              />
-            ) : (
-              <AddButton
-                noMargin
-                filled
-                startIcon={<Iconify name="mdi:pencil" />}
-                title="Ubah Kriteria Kemungkinan"
-                onclick={() => setModalOpenEdit(true)}
-              />
+
+            {user?.type !== "NON_BAPPENAS" && (
+              <>
+                {!isDisabledAdd ? (
+                  <AddButton
+                    noMargin
+                    filled
+                    startIcon={<Iconify name="mdi:plus-circle" />}
+                    title="Tambah Kriteria Kemungkinan"
+                    onclick={() => setModalOpenAdd(true)}
+                  />
+                ) : (
+                  <AddButton
+                    noMargin
+                    filled
+                    startIcon={<Iconify name="mdi:pencil" />}
+                    title="Ubah Kriteria Kemungkinan"
+                    onclick={() => setModalOpenEdit(true)}
+                  />
+                )}
+              </>
             )}
           </Stack>
         }
