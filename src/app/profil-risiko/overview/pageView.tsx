@@ -39,6 +39,7 @@ import { green, red } from "@mui/material/colors";
 import FormNote from "./partials/form-note";
 import DialogComponent from "@/components/dialog";
 import { dtoGetApproval } from "@/app/penetapan/objek/pageModel";
+import useAuthorizationVM from "@/app/authorizationVM";
 
 interface SxParams {
   variant?: string;
@@ -81,6 +82,7 @@ function CustomTabPanel(props: TabPanelProps) {
 
 export default function PageOverviewView() {
   const { year, rpjmn } = useRKPContext((state) => state);
+  const { user } = useAuthorizationVM();
 
   const {
     dataRiskOverview,
@@ -154,15 +156,16 @@ export default function PageOverviewView() {
           )
         }
         addButton={
-          <Button
-            color="success"
-            variant="contained"
-            endIcon={<Iconify name="mdi:send" />}
-            sx={{ whiteSpace: "nowrap", borderRadius: 50 }}
-            onClick={() => setOpenModalConfirmApproval(true)}
-          >
-            Ajukan Approval
-          </Button>
+          user?.type == "BAPPENAS" ? "" :
+            <Button
+              color="success"
+              variant="contained"
+              endIcon={<Iconify name="mdi:send" />}
+              sx={{ whiteSpace: "nowrap", borderRadius: 50 }}
+              onClick={() => setOpenModalConfirmApproval(true)}
+            >
+              Ajukan Approval
+            </Button>
         }
       >
         <Stack gap={3}>
