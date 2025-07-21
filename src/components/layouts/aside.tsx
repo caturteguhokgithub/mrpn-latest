@@ -73,12 +73,12 @@ function getMenuItem(
 
     const isParentActive =
       typeof window !== "undefined"
-        ? currentPath.includes(mn.route) && currentPath !== "/penetapan/objek"
+        ? currentPath.includes(mn.route) && (currentPath !== "/penetapan/objek" && currentPath !== "penetapan/objek")
         : false;
 
     const isChildActive = mn.submenu.some((sm) =>
       typeof window !== "undefined"
-        ? currentPath.includes(sm.route) && currentPath !== "/penetapan/objek"
+        ? currentPath.includes(sm.route) && (currentPath !== "/penetapan/objek" && currentPath !== "penetapan/objek")
         : false
     );
 
