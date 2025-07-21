@@ -338,9 +338,13 @@ export default function PageAnalisisEvaluasiView({}) {
     displayColumnDefOptions: {
       "mrt-row-actions": {
         header: "",
-        size: 150,
+        size: 120,
+        muiTableBodyCellProps: {
+          align: "center",
+        },
         Cell: (item: any) => (
           <ActionColumn
+            center
             viewClick={
               hasPrivilege(permission, pathname, "list")
                 ? () => actionModal(true, "read", item.cell.row.original.id)
