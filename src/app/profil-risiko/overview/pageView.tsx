@@ -156,7 +156,7 @@ export default function PageOverviewView() {
           )
         }
         addButton={
-          user?.type == "BAPPENAS" ? "" :
+          user?.type == "NON_BAPPENAS" ?
             <Button
               color="success"
               variant="contained"
@@ -166,6 +166,7 @@ export default function PageOverviewView() {
             >
               Ajukan Approval
             </Button>
+            : ""
         }
       >
         <Stack gap={3}>

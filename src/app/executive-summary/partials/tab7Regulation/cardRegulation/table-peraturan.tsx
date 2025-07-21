@@ -98,8 +98,8 @@ export default function TablePeraturan({
               <TableHead sx={{ bgcolor: bgColorTh }}>
                 <TableRow>
                   <TableCell width={500}>Entitas</TableCell>
-                  {/* <TableCell width={240}>Peraturan Terkait</TableCell> */}
-                  <TableCell width={240}>Tentang</TableCell>
+                  <TableCell width={240}>Peraturan Terkait</TableCell>
+                  {/* <TableCell width={240}>Tentang</TableCell> */}
                   {/* <TableCell>Amanat Peraturan yang Terkait</TableCell> */}
                   <TableCell>Keterangan</TableCell>
                   {penetapan && (
@@ -176,7 +176,7 @@ export default function TablePeraturan({
                         typeof row.perpres === "string"
                           ? row.perpres // perpres bertipe string
                           : Array.isArray(row.perpres)
-                          ? row.perpres.map((y, index2) => (
+                            ? row.perpres.map((y, index2) => (
                               <Chip
                                 key={index2}
                                 size="small"
@@ -184,21 +184,21 @@ export default function TablePeraturan({
                                 sx={
                                   y.flag != null
                                     ? {
-                                        background: "#EA6228",
-                                        color: "white",
-                                        height: "auto",
-                                        ".MuiChip-label": {
-                                          whiteSpace: "wrap",
-                                          lineHeight: 1.2,
-                                          paddingTop: "4.8px",
-                                          paddingBottom: "4.8px",
-                                        },
-                                      }
+                                      background: "#EA6228",
+                                      color: "white",
+                                      height: "auto",
+                                      ".MuiChip-label": {
+                                        whiteSpace: "wrap",
+                                        lineHeight: 1.2,
+                                        paddingTop: "4.8px",
+                                        paddingBottom: "4.8px",
+                                      },
+                                    }
                                     : undefined
                                 }
                               />
                             ))
-                          : "-" // fallback kalau bukan array
+                            : "-" // fallback kalau bukan array
                       }
                     </TableCell>
                     <TableCell sx={{ verticalAlign: "top" }}>
@@ -211,68 +211,68 @@ export default function TablePeraturan({
           </TableContainer>
         )
       ) : // INTEXT
-      data?.length === 0 ? (
-        <EmptyState
-          dense
-          icon={<IconEmptyData width={100} />}
-          title="Data Kosong"
-          description="Silahkan isi konten halaman ini"
-        />
-      ) : (
-        <TableContainer component={Paper} elevation={0} variant="outlined">
-          <Table size="small">
-            <TableHead sx={{ bgcolor: bgColorTh }}>
-              <TableRow>
-                {/* <TableCell width={500}>Entitas</TableCell> */}
-                <TableCell width={500}>
-                  {penetapan ? "Nomor Regulasi" : "Entitas"}
-                </TableCell>
-                {/* <TableCell width={240}>Peraturan Terkait</TableCell> */}
-                <TableCell width={240}>Tentang</TableCell>
-                {/* <TableCell>Amanat Peraturan yang Terkait</TableCell> */}
-                <TableCell>Keterangan</TableCell>
-                {penetapan && (
-                  <TableCell align="center" width={120}>
-                    Aksi
+        data?.length === 0 ? (
+          <EmptyState
+            dense
+            icon={<IconEmptyData width={100} />}
+            title="Data Kosong"
+            description="Silahkan isi konten halaman ini"
+          />
+        ) : (
+          <TableContainer component={Paper} elevation={0} variant="outlined">
+            <Table size="small">
+              <TableHead sx={{ bgcolor: bgColorTh }}>
+                <TableRow>
+                  {/* <TableCell width={500}>Entitas</TableCell> */}
+                  <TableCell width={500}>
+                    {penetapan ? "Nomor Regulasi" : "Entitas"}
                   </TableCell>
-                )}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data?.map((row) => (
-                <TableRow
-                  key={row.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  {/*{(hasPrivilege(permission, pathname, "update") ||*/}
-                  {/*  hasPrivilege(permission, pathname, "delete")) && (*/}
-                  {/*  <TableCell*/}
-                  {/*    sx={{ textAlign: "center", verticalAlign: "top" }}*/}
-                  {/*  >*/}
-                  {/*    <Tooltip title="Delete" placement="top">*/}
-                  {/*      <IconButton*/}
-                  {/*        aria-label="delete"*/}
-                  {/*        color="error"*/}
-                  {/*        onClick={() => deleteData(row.id)}*/}
-                  {/*        // disabled={*/}
-                  {/*        //   hasPrivilege(permission, pathname, "update") ||*/}
-                  {/*        //   hasPrivilege(permission, pathname, "delete")*/}
-                  {/*        // }*/}
-                  {/*      >*/}
-                  {/*        <Icon*/}
-                  {/*          baseClassName="fas"*/}
-                  {/*          className={`fa-trash-alt`}*/}
-                  {/*          sx={{*/}
-                  {/*            fontSize: "14px",*/}
-                  {/*          }}*/}
-                  {/*        />*/}
-                  {/*      </IconButton>*/}
-                  {/*    </Tooltip>*/}
-                  {/*  </TableCell>*/}
-                  {/*)}*/}
-                  <TableCell sx={{ verticalAlign: "top" }}>
-                    {row.no_regulasi}
-                    {/* <Stack
+                  {/* <TableCell width={240}>Peraturan Terkait</TableCell> */}
+                  <TableCell width={240}>Tentang</TableCell>
+                  {/* <TableCell>Amanat Peraturan yang Terkait</TableCell> */}
+                  <TableCell>Keterangan</TableCell>
+                  {penetapan && (
+                    <TableCell align="center" width={120}>
+                      Aksi
+                    </TableCell>
+                  )}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data?.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    {/*{(hasPrivilege(permission, pathname, "update") ||*/}
+                    {/*  hasPrivilege(permission, pathname, "delete")) && (*/}
+                    {/*  <TableCell*/}
+                    {/*    sx={{ textAlign: "center", verticalAlign: "top" }}*/}
+                    {/*  >*/}
+                    {/*    <Tooltip title="Delete" placement="top">*/}
+                    {/*      <IconButton*/}
+                    {/*        aria-label="delete"*/}
+                    {/*        color="error"*/}
+                    {/*        onClick={() => deleteData(row.id)}*/}
+                    {/*        // disabled={*/}
+                    {/*        //   hasPrivilege(permission, pathname, "update") ||*/}
+                    {/*        //   hasPrivilege(permission, pathname, "delete")*/}
+                    {/*        // }*/}
+                    {/*      >*/}
+                    {/*        <Icon*/}
+                    {/*          baseClassName="fas"*/}
+                    {/*          className={`fa-trash-alt`}*/}
+                    {/*          sx={{*/}
+                    {/*            fontSize: "14px",*/}
+                    {/*          }}*/}
+                    {/*        />*/}
+                    {/*      </IconButton>*/}
+                    {/*    </Tooltip>*/}
+                    {/*  </TableCell>*/}
+                    {/*)}*/}
+                    <TableCell sx={{ verticalAlign: "top" }}>
+                      {row.no_regulasi}
+                      {/* <Stack
                       display="inline-flex"
                       alignItems="center"
                       direction="row"
@@ -325,66 +325,66 @@ export default function TablePeraturan({
                           }
                         })}
                     </Stack> */}
-                  </TableCell>
-                  <TableCell sx={{ verticalAlign: "top" }}>
-                    {
-                      row.tentang
-                      // intExt && typeof row.perpres === "string"
-                      //   ? row.perpres // perpres bertipe string
-                      //   : Array.isArray(row.perpres)
-                      //   ? row.perpres.map((y, index2) => (
-                      //       <Chip
-                      //         key={index2}
-                      //         size="small"
-                      //         label={y.title}
-                      //         sx={
-                      //           y.flag != null
-                      //             ? {
-                      //                 background: "#EA6228",
-                      //                 color: "white",
-                      //                 height: "auto",
-                      //                 ".MuiChip-label": {
-                      //                   whiteSpace: "wrap",
-                      //                   lineHeight: 1.2,
-                      //                   paddingTop: "4.8px",
-                      //                   paddingBottom: "4.8px",
-                      //                 },
-                      //               }
-                      //             : undefined
-                      //         }
-                      //       />
-                      //     ))
-                      //   : "-" // fallback kalau bukan array
-                    }
-                  </TableCell>
-                  <TableCell sx={{ verticalAlign: "top" }}>
-                    {row.keterangan}
-                  </TableCell>
-                  {penetapan && (
-                    <TableCell
-                      align="center"
-                      sx={{
-                        bgcolor: grey[50],
-                      }}
-                    >
-                      <Stack direction="row">
-                        <IconButton onClick={() => handleBtnEdit(row, "edit")}>
-                          <Iconify name="mdi:pencil" color={blue[500]} />
-                        </IconButton>
-                        <IconButton
-                          onClick={() => handleBtnEdit(row, "delete")}
-                        >
-                          <Iconify name="mdi:trash" color={red[500]} />
-                        </IconButton>
-                      </Stack>
                     </TableCell>
-                  )}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )}
+                    <TableCell sx={{ verticalAlign: "top" }}>
+                      {
+                        row.tentang
+                        // intExt && typeof row.perpres === "string"
+                        //   ? row.perpres // perpres bertipe string
+                        //   : Array.isArray(row.perpres)
+                        //   ? row.perpres.map((y, index2) => (
+                        //       <Chip
+                        //         key={index2}
+                        //         size="small"
+                        //         label={y.title}
+                        //         sx={
+                        //           y.flag != null
+                        //             ? {
+                        //                 background: "#EA6228",
+                        //                 color: "white",
+                        //                 height: "auto",
+                        //                 ".MuiChip-label": {
+                        //                   whiteSpace: "wrap",
+                        //                   lineHeight: 1.2,
+                        //                   paddingTop: "4.8px",
+                        //                   paddingBottom: "4.8px",
+                        //                 },
+                        //               }
+                        //             : undefined
+                        //         }
+                        //       />
+                        //     ))
+                        //   : "-" // fallback kalau bukan array
+                      }
+                    </TableCell>
+                    <TableCell sx={{ verticalAlign: "top" }}>
+                      {row.keterangan}
+                    </TableCell>
+                    {penetapan && (
+                      <TableCell
+                        align="center"
+                        sx={{
+                          bgcolor: grey[50],
+                        }}
+                      >
+                        <Stack direction="row">
+                          <IconButton onClick={() => handleBtnEdit(row, "edit")}>
+                            <Iconify name="mdi:pencil" color={blue[500]} />
+                          </IconButton>
+                          <IconButton
+                            onClick={() => handleBtnEdit(row, "delete")}
+                          >
+                            <Iconify name="mdi:trash" color={red[500]} />
+                          </IconButton>
+                        </Stack>
+                      </TableCell>
+                    )}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
     </Fragment>
   );
 }
