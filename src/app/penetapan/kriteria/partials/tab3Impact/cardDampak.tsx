@@ -115,12 +115,12 @@ export default function CardDampak() {
         title="Kriteria Dampak"
         addButton={
           <Stack gap={1} direction="row" alignItems="center">
-            <AddButton
+            {/* <AddButton
               noMargin
               startIcon={<Iconify name="mdi:table" />}
               title="Tabel Referensi"
               onclick={() => setModalOpenRef(true)}
-            />
+            /> */}
             <AddButton
               noMargin
               filled
