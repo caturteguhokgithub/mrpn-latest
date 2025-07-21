@@ -2,9 +2,20 @@ import { useEffect, useState } from "react";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import { useGlobalModalContext, useLoading } from "@/lib/core/hooks/useHooks";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
-import { doGetSeleraDto, doReqSeleraApprovalDto, doReqSeleraDto, initApprovalSelera, initSelera } from "./model";
+import {
+  doGetSeleraDto,
+  doReqSeleraApprovalDto,
+  doReqSeleraDto,
+  initApprovalSelera,
+  initSelera,
+} from "./model";
 import useAuthorizationVM from "@/app/authorizationVM";
-import { doCreateSelera, doGetApprovalSelera, doGetSelera, doReqApprovalSelera } from "./service";
+import {
+  doCreateSelera,
+  doGetApprovalSelera,
+  doGetSelera,
+  doReqApprovalSelera,
+} from "./service";
 
 const usePenetapanSelera = () => {
   const loadingContext = useLoading();
@@ -12,7 +23,8 @@ const usePenetapanSelera = () => {
   const [loading, setLoading] = useState(false);
   const { objectState } = usePenetapanGlobalVM();
   const { user } = useAuthorizationVM();
-  const [openModalConfirmApproval, setOpenModalConfirmApproval] = useState<boolean>(false);
+  const [openModalConfirmApproval, setOpenModalConfirmApproval] =
+    useState<boolean>(false);
   const [stateSelera, setStateSelera] = useState<doGetSeleraDto>();
 
   const [requestSelera, setRequestSelera] = useState<doReqSeleraDto>({
@@ -63,12 +75,11 @@ const usePenetapanSelera = () => {
       if (result) {
         const finalResult: doGetSeleraDto = {
           referensi: response.result.referensi,
-          seleraRisiko: response.result.seleraRisiko[0]
-        }
-        setStateSelera(finalResult)
-        setRequestSelera(response.result.seleraRisiko[0])
+          seleraRisiko: response?.result?.seleraRisiko[0],
+        };
+        setStateSelera(finalResult);
+        setRequestSelera(response.result.seleraRisiko[0]);
       }
-
     }
   }
 

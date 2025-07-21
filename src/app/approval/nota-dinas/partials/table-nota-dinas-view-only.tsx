@@ -57,6 +57,7 @@ export default function TableNotaDinasViewOnly({
   setStateApproval,
   handleUploadBuktiDukung,
   refreshBuktiDukungTable,
+  imageProps,
 }: {
   notaDinas: PenetapanObjectNotaDto;
   actionApprove?: React.ReactNode;
@@ -65,6 +66,7 @@ export default function TableNotaDinasViewOnly({
   setStateApproval?: (value: SetStateAction<dtoGetApproval>) => void;
   handleUploadBuktiDukung?: () => void;
   refreshBuktiDukungTable?: () => void;
+  imageProps?: any;
 }) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalViewImage, setModalViewImage] = React.useState(false);
@@ -292,10 +294,10 @@ export default function TableNotaDinasViewOnly({
           <strong>
             {stateApproval
               ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })
               : "-"}
           </strong>
         </Typography>
@@ -338,10 +340,10 @@ export default function TableNotaDinasViewOnly({
           <strong>
             {stateApproval
               ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })
               : "-"}
           </strong>
         </Typography>
@@ -416,14 +418,15 @@ export default function TableNotaDinasViewOnly({
     stateApproval?.status === "review" || isReview
       ? statusReviewM
       : stateApproval?.status == "rejected" || isReject
-        ? statusRejectM
-        : stateApproval?.status == "approved" || isApproval
-          ? statusApprovalM
-          : statusDraftM;
+      ? statusRejectM
+      : stateApproval?.status == "approved" || isApproval
+      ? statusApprovalM
+      : statusDraftM;
 
   const conditionDraftReject =
     stateApproval?.status === "draft" || stateApproval?.status === "rejected";
 
+  console.log("first render", notaDinas, gambar);
   return (
     <Fragment>
       <Stack gap={2}>
@@ -692,7 +695,7 @@ export default function TableNotaDinasViewOnly({
                           )}
                         </TableCell>
                       </TableRow>
-                    )
+                    );
                   })}
                   {/* <TableRow>
                   <TableCell align="center">1</TableCell>
@@ -816,7 +819,8 @@ export default function TableNotaDinasViewOnly({
               </Button>
             )}
           </Stack>
-          {gambar?.length == 0 ? (
+          {imageProps?.length == 0 ? (
+            // {imageProps?.length == 0 ? (}
             <Paper elevation={0} variant="outlined">
               <EmptyState
                 dense
@@ -869,7 +873,7 @@ export default function TableNotaDinasViewOnly({
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {gambar.map((item, index) => (
+                  {imageProps.map((item: any, index: number) => (
                     <TableRow key={index}>
                       <TableCell align="center">{index + 1}</TableCell>
                       <TableCell>

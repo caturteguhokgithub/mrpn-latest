@@ -24,6 +24,7 @@ interface TabPanelProps {
   index: number;
   value: number;
   project?: string;
+  gambar?: any;
 }
 
 function a11yProps(index: number) {
@@ -86,6 +87,7 @@ export default function TabObject({
   handleModalEditEntitas,
   handleModalDeleteEntitas,
   refreshBuktiDukungTable,
+  gambar,
 }: {
   setModalUpr: (value: boolean) => void;
   useEffectObjectState: () => void;
@@ -101,6 +103,7 @@ export default function TabObject({
   handleModalEditEntitas?: () => void;
   handleModalDeleteEntitas: (id: number) => void;
   refreshBuktiDukungTable?: () => void;
+  gambar?: any;
 }) {
   const { nota } = usePenetapanTopicContext((store) => store);
   const { rkp, year, rpjmn } = useRKPContext((state) => state);
@@ -301,6 +304,7 @@ export default function TabObject({
                 stateApproval={stateApproval}
                 handleUploadBuktiDukung={handleUploadBuktiDukung}
                 refreshBuktiDukungTable={refreshBuktiDukungTable}
+                imageProps={gambar}
               />
             ) : (
               <EmptyState

@@ -55,6 +55,19 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
     } else {
       uriRequestRegulasi(dataRequest);
     }
+
+    //reset state
+    setRequestRegulasi({
+      id: 0,
+      no_regulasi: "",
+      tentang: "",
+      keterangan: "",
+      uraian_penetapan_object_id: 0,
+    });
+
+    setModal(false);
+    setModalEdit(false);
+    setModalDelete(false);
   };
 
   return (
