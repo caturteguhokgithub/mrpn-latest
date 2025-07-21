@@ -177,8 +177,6 @@ export default function PageTemaView() {
     dataLogActivity,
   } = usePenetapanObjectVM();
 
-  const { getDataImage } = useNotaDinasVM();
-
   const { showToast } = useToast();
 
   const { optionStakeholder } = useCardIndicationVM();
@@ -293,7 +291,7 @@ export default function PageTemaView() {
     </DialogActions>
   );
 
-  // const { getDataImage: refreshNotaDinasGambar } = useNotaDinasVM();
+  const { getDataImage, gambar } = useNotaDinasVM();
 
   // const handleSimpanBuktiDukung = async () => {
   //   setModalBuktiDukung(false);
@@ -301,12 +299,25 @@ export default function PageTemaView() {
   //   refreshNotaDinasGambar(); // Call the getDataImage from useNotaDinasVM directly
   // };
 
-  const handleSaveBuktiDukung = () => {
+  const handleSaveBuktiDukung = async () => {
     // handleUnggahBuktiDukung(reqBuktiDukungPengesahan)
-    uploadImage(
+    await uploadImage(
       reqBuktiDukungPengesahan.file,
       reqBuktiDukungPengesahan.filename
     );
+
+    // call get data image to refresh the image list
+    // setModalBuktiDukung(false);
+    // setReqBuktiDukungPengesahan({
+    //   filename: "",
+    //   file: "",
+    //   // penetapan_object_id: get(objectState, "id", 0),
+    //   // user_id: get(objectState, "user_id", 0),
+    // });
+    // setUploadedFileName("");
+    showToast("Bukti dukung berhasil diunggah", "success");
+    // Refresh the image list
+    await getDataImage();
   };
 
   const handleOpenBuktiDukungModal = () => {
@@ -507,6 +518,7 @@ export default function PageTemaView() {
                 handleModalDeleteEntitas={(id: number) => {
                   handleDeleteObjectUpr(id, "Entitas");
                 }}
+                gambar={gambar}
                 // refreshBuktiDukungTable={refreshNotaDinasGambar}
               />
             </Collapse>

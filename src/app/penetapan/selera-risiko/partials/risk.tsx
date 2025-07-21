@@ -409,16 +409,6 @@ perencanaan pembangunan nasional"
                     </Stack>
                   </>
                 )}
-                <Stack gap={1}>
-                  <FormatBP
-                    levelId={2}
-                    target="Meningkat 5% < x ≤ 10%"
-                    kapasitas="Rendah/tetap/sebanding dengan peningkatan target"
-                    inherent="Rendah"
-                    note="Terdapat gap ketercapaian target yang dapat diterima"
-                  />
-                  <SeleraMatriks levelId={1} levelDampak="konservatif" />
-                </Stack>
               </Stack>
             }
           />

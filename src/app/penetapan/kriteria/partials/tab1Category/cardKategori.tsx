@@ -265,7 +265,7 @@ export default function CardKategori() {
               }}
             />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <FieldLabelInfo title="Prioritas" />
             <TextField
               // value={requestMatDamKomite.prioritas}
@@ -291,7 +291,7 @@ export default function CardKategori() {
             //     }));
             // }}
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <FieldLabelInfo title="Uraian Kategori Risiko" />
             <FormControl fullWidth>
