@@ -120,9 +120,7 @@ export default function TableNotaDinasViewOnly({
     }
   }, [objectState]);
 
-  useEffect(() => {
-    useEffectObjectState()
-  }, [year, objectState]);
+  useEffect(useEffectObjectState, [year, objectState]);
 
   const generateRows = () => {
     let index = 0;
