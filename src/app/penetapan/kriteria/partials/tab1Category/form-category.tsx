@@ -128,13 +128,21 @@ export default function FormCategory({
                 )}
                 options={listMasterCategory}
                 getOptionLabel={(option) => option.value}
-                handleChange={(newValue: doMasterKategori) =>
-                  setState
-                    ? setState((prevState) => ({
-                        ...prevState,
-                        src_kategori_id: newValue.id,
-                      }))
-                    : ""
+                handleChange={(newValue: doMasterKategori) => {
+                  if (!newValue) {
+                    // Jika diklik silang, kosongkan src_kategori_id
+                    setState?.((prev) => ({
+                      ...prev,
+                      src_kategori_id: 0,
+                    }));
+                  } else {
+                    // Jika pilih kategori, ambil ID-nya
+                    setState?.((prev) => ({
+                      ...prev,
+                      src_kategori_id: newValue.id,
+                    }));
+                  }
+                }
                 }
                 placeHolder={"Pilih kategori"}
                 actionButton={
