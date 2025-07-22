@@ -291,7 +291,8 @@ export default function PageTemaView() {
     </DialogActions>
   );
 
-  const { getDataImage, gambar, modalDelete, setModalDelete, deleteNodin } = useNotaDinasVM();
+  const { getDataImage, gambar, modalDelete, setModalDelete, deleteNodin } =
+    useNotaDinasVM();
 
   // const handleSimpanBuktiDukung = async () => {
   //   setModalBuktiDukung(false);
@@ -315,7 +316,7 @@ export default function PageTemaView() {
     //   // user_id: get(objectState, "user_id", 0),
     // });
     // setUploadedFileName("");
-    showToast("Bukti dukung berhasil diunggah", "success");
+    // showToast("Bukti dukung berhasil diunggah", "success");
     // Refresh the image list
     await getDataImage();
   };
@@ -328,10 +329,11 @@ export default function PageTemaView() {
   return (
     <>
       <ContentPage
-        title={`Objek MRPN & UPR LS ${year == 0
-          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-          : "Tahun " + year
-          }`}
+        title={`Objek MRPN & UPR LS ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip={
           <Stack spacing={2}>
             <div>
@@ -506,7 +508,6 @@ export default function PageTemaView() {
                 showSave={showSave}
                 setShowSave={setShowSave}
                 stateUpr={stateUpr}
-                // handleUploadBuktiDukung={() => setModalBuktiDukung(true)}
                 handleUploadBuktiDukung={handleOpenBuktiDukungModal}
                 stateApproval={stateApproval}
                 setModalObjek={setModalObjek}
@@ -521,7 +522,6 @@ export default function PageTemaView() {
                 modalDelete={modalDelete}
                 setModalDelete={setModalDelete}
                 deleteNodin={deleteNodin}
-              // refreshBuktiDukungTable={refreshNotaDinasGambar}
               />
             </Collapse>
           </Fragment>
