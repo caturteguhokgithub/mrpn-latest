@@ -40,6 +40,7 @@ import FormNote from "./partials/form-note";
 import DialogComponent from "@/components/dialog";
 import { dtoGetApproval } from "@/app/penetapan/objek/pageModel";
 import useAuthorizationVM from "@/app/authorizationVM";
+import { API_CONSTANT } from "@/lib/core/api/apiModel";
 
 interface SxParams {
   variant?: string;
@@ -236,21 +237,21 @@ export default function PageOverviewView() {
                               title="Download Excel"
                               color="success"
                               startIcon={<Iconify name="mdi:file-excel" />}
-                            // onclick={() => {
-                            //   const uri =
-                            //     process.env.NEXT_PUBLIC_BASE_URL_API +
-                            //     "export/exsum/indikasi/excel";
-                            //   const token = sessionStorage.getItem(
-                            //     API_CONSTANT.token
-                            //   );
-                            //   const exsum_id = exsum.id;
-                            //   const params =
-                            //     "token=" + token + "&exsum_id=" + exsum_id;
+                              onclick={() => {
+                                const uri =
+                                  process.env.NEXT_PUBLIC_BASE_URL_API +
+                                  "export/profilRisiko/laporanOverview";
+                                const token = sessionStorage.getItem(
+                                  API_CONSTANT.token
+                                );
+                                const objek_id = objectState?.id ?? 0;
+                                const params =
+                                  "token=" + token + "&uraian_penetapan_objek_id=" + objek_id;
 
-                            //   window
-                            //     .open(uri + "?" + params, "_blank")
-                            //     ?.focus();
-                            // }}
+                                window
+                                  .open(uri + "?" + params, "_blank")
+                                  ?.focus();
+                              }}
                             />
                           </Stack>
                         }
