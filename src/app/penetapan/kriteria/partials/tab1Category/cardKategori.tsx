@@ -265,10 +265,9 @@ export default function CardKategori() {
               }}
             />
           </Grid>
-          {/* <Grid item xs={12}>
+          <Grid item xs={12}>
             <FieldLabelInfo title="Prioritas" />
             <TextField
-              // value={requestMatDamKomite.prioritas}
               type="number"
               fullWidth
               variant="outlined"
@@ -283,15 +282,8 @@ export default function CardKategori() {
                   prioritas: Number(e.target.value),
                 }));
               }}
-            // onChange={(e) => {
-            //   setRequestMatDamKomite &&
-            //     setRequestMatDamKomite((prevState: ReqAddMatDamKomite) => ({
-            //       ...prevState,
-            //       prioritas: Number(e.target.value),
-            //     }));
-            // }}
             />
-          </Grid> */}
+          </Grid>
           <Grid item xs={12}>
             <FieldLabelInfo title="Uraian Kategori Risiko" />
             <FormControl fullWidth>
