@@ -227,7 +227,7 @@ export default function CardSelera() {
         closeButton
         dialogOpen={modalOpenRef}
         dialogClose={() => setModalOpenRef(false)}
-        title={`Matriks Referensi Selera Risiko ${stateSelera?.seleraRisiko[0].type_nilai}`}
+        title={`Matriks Referensi Selera Risiko ${stateSelera?.seleraRisiko[0]?.type_nilai ?? ""}`}
       >
         <SeleraMatriks
           levelId={1}
