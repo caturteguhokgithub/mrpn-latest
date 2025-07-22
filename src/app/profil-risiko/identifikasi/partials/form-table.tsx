@@ -56,7 +56,7 @@ export default function FormTable({
       <HeaderIdentifikasi noPadding noPaddingChip asTable isModal data={data} />
 
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={8}>
+        <Grid item xs={12} sm={12}>
           <FormControl fullWidth>
             <FieldLabelInfo
               title="Kategori Risiko MRPN LS"
@@ -101,7 +101,7 @@ export default function FormTable({
             )}
           </FormControl>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        {/* <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
             <FieldLabelInfo
               title="Insidentil"
@@ -156,7 +156,7 @@ export default function FormTable({
               />
             )}
           </FormControl>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Peristiwa Risiko Strategis MRPN LS" />
