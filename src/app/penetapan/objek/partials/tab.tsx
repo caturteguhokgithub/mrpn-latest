@@ -88,6 +88,9 @@ export default function TabObject({
   handleModalDeleteEntitas,
   refreshBuktiDukungTable,
   gambar,
+  modalDelete,
+  setModalDelete,
+  deleteNodin,
 }: {
   setModalUpr: (value: boolean) => void;
   useEffectObjectState: () => void;
@@ -104,6 +107,9 @@ export default function TabObject({
   handleModalDeleteEntitas: (id: number) => void;
   refreshBuktiDukungTable?: () => void;
   gambar?: any;
+  modalDelete?: any;
+  setModalDelete?: any;
+  deleteNodin?: any;
 }) {
   const { nota } = usePenetapanTopicContext((store) => store);
   const { rkp, year, rpjmn } = useRKPContext((state) => state);
@@ -274,16 +280,16 @@ export default function TabObject({
         <CardItem
           // title="Nota Dinas Objek MRPN & UPR LS"
           title="Penetapan"
-          // addButton={
-          //   !editNotaDinas && (
-          //     <AddButton
-          //       title={`Ubah`}
-          //       filled
-          //       startIcon={<IconFA size={14} name="pencil" />}
-          //       onclick={() => setEditNotaDinas(true)}
-          //     />
-          //   )
-          // }
+        // addButton={
+        //   !editNotaDinas && (
+        //     <AddButton
+        //       title={`Ubah`}
+        //       filled
+        //       startIcon={<IconFA size={14} name="pencil" />}
+        //       onclick={() => setEditNotaDinas(true)}
+        //     />
+        //   )
+        // }
         >
           {/* {isDeveloping ? (
             <EmptyDevelopingState />
@@ -305,6 +311,9 @@ export default function TabObject({
                 handleUploadBuktiDukung={handleUploadBuktiDukung}
                 refreshBuktiDukungTable={refreshBuktiDukungTable}
                 imageProps={gambar}
+                modalDelete={modalDelete}
+                setModalDelete={setModalDelete}
+                deleteNodin={deleteNodin}
               />
             ) : (
               <EmptyState

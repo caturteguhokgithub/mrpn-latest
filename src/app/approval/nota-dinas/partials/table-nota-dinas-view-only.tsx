@@ -58,6 +58,9 @@ export default function TableNotaDinasViewOnly({
   handleUploadBuktiDukung,
   refreshBuktiDukungTable,
   imageProps,
+  modalDelete,
+  setModalDelete,
+  deleteNodin,
 }: {
   notaDinas: PenetapanObjectNotaDto;
   actionApprove?: React.ReactNode;
@@ -67,6 +70,9 @@ export default function TableNotaDinasViewOnly({
   handleUploadBuktiDukung?: () => void;
   refreshBuktiDukungTable?: () => void;
   imageProps?: any;
+  modalDelete?: any;
+  setModalDelete?: any;
+  deleteNodin?: any;
 }) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalViewImage, setModalViewImage] = React.useState(false);
@@ -87,9 +93,9 @@ export default function TableNotaDinasViewOnly({
   const {
     gambar,
     uploadImage,
-    modalDelete,
-    setModalDelete,
-    deleteNodin,
+    // modalDelete,
+    // setModalDelete,
+    // deleteNodin,
     modalConfirm,
     setModalConfirm,
     isReview,
@@ -112,6 +118,8 @@ export default function TableNotaDinasViewOnly({
   };
 
   const handleBtnDelete = async (id: number) => {
+    // console.log(id);
+
     setDeleteID(id);
     setModalDelete(true);
   };
@@ -294,10 +302,10 @@ export default function TableNotaDinasViewOnly({
           <strong>
             {stateApproval
               ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })
               : "-"}
           </strong>
         </Typography>
@@ -340,10 +348,10 @@ export default function TableNotaDinasViewOnly({
           <strong>
             {stateApproval
               ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })
               : "-"}
           </strong>
         </Typography>
@@ -418,15 +426,15 @@ export default function TableNotaDinasViewOnly({
     stateApproval?.status === "review" || isReview
       ? statusReviewM
       : stateApproval?.status == "rejected" || isReject
-      ? statusRejectM
-      : stateApproval?.status == "approved" || isApproval
-      ? statusApprovalM
-      : statusDraftM;
+        ? statusRejectM
+        : stateApproval?.status == "approved" || isApproval
+          ? statusApprovalM
+          : statusDraftM;
 
   const conditionDraftReject =
     stateApproval?.status === "draft" || stateApproval?.status === "rejected";
 
-  console.log("first render", notaDinas, gambar);
+  // console.log("first render", notaDinas, gambar);
   return (
     <Fragment>
       <Stack gap={2}>

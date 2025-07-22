@@ -291,7 +291,7 @@ export default function PageTemaView() {
     </DialogActions>
   );
 
-  const { getDataImage, gambar } = useNotaDinasVM();
+  const { getDataImage, gambar, modalDelete, setModalDelete, deleteNodin } = useNotaDinasVM();
 
   // const handleSimpanBuktiDukung = async () => {
   //   setModalBuktiDukung(false);
@@ -328,11 +328,10 @@ export default function PageTemaView() {
   return (
     <>
       <ContentPage
-        title={`Objek MRPN & UPR LS ${
-          year == 0
-            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-            : "Tahun " + year
-        }`}
+        title={`Objek MRPN & UPR LS ${year == 0
+          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+          : "Tahun " + year
+          }`}
         infoToolTip={
           <Stack spacing={2}>
             <div>
@@ -519,7 +518,10 @@ export default function PageTemaView() {
                   handleDeleteObjectUpr(id, "Entitas");
                 }}
                 gambar={gambar}
-                // refreshBuktiDukungTable={refreshNotaDinasGambar}
+                modalDelete={modalDelete}
+                setModalDelete={setModalDelete}
+                deleteNodin={deleteNodin}
+              // refreshBuktiDukungTable={refreshNotaDinasGambar}
               />
             </Collapse>
           </Fragment>
