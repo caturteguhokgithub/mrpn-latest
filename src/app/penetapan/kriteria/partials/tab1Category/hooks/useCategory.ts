@@ -98,6 +98,19 @@ const useCategoryList = () => {
       getData();
       setModalOpenAdd(false);
     }
+
+    // Reset state for requestCategory
+    // setRequestCategory({
+    //   src_kategori_id: 0,
+    //   prioritas: 1,
+    //   sub: [
+    //     {
+    //       value: "",
+    //       desc: "",
+    //     },
+    //   ],
+    //   uraian_penetapan_object_id: 0,
+    // });
   }
 
   async function getMasterCategory() {
