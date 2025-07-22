@@ -12,6 +12,8 @@ import { blue, green, grey, orange, red, yellow } from "@mui/material/colors";
 import { dataMatriks } from "./dataMatriks";
 import theme from "@/theme";
 import { bgColorTh } from "@/utils/color";
+import EmptyState from "@/components/empty";
+import { IconEmptyPage } from "@/components/icons";
 
 const CircleNumber = ({
   value,
@@ -82,7 +84,7 @@ export default function SeleraMatriks({
 
   const matriksFive = (
     <>
-      {levelDampak != "" ?
+      {levelDampak != "" ? (
         dataMatriks.map((itemMatriks, index) => (
           <Fragment key={index}>
             {levelId === itemMatriks.id && (
@@ -92,7 +94,9 @@ export default function SeleraMatriks({
                     border: `1px solid ${grey[300]}`,
                     td: {
                       "&:first-of-type, &:nth-of-type(2)": {
-                        color: darkMode ? "white" : theme.palette.secondary.dark,
+                        color: darkMode
+                          ? "white"
+                          : theme.palette.secondary.dark,
                       },
                     },
                     tr: {
@@ -178,7 +182,9 @@ export default function SeleraMatriks({
                   </TableHead>
                   <TableBody
                     sx={{
-                      "td, th": { borderColor: darkMode ? grey[700] : grey[300] },
+                      "td, th": {
+                        borderColor: darkMode ? grey[700] : grey[300],
+                      },
                     }}
                   >
                     <TableRow
@@ -385,8 +391,14 @@ export default function SeleraMatriks({
               </>
             )}
           </Fragment>
-        )) : "data not found!"
-      }
+        ))
+      ) : (
+        <EmptyState
+          icon={<IconEmptyPage />}
+          title="Matriks Selera Risiko Kosong"
+          description="Silahkan pilih level dampak untuk menampilkan matriks selera risiko"
+        />
+      )}
     </>
   );
 
