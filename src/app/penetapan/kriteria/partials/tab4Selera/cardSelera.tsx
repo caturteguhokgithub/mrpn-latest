@@ -179,16 +179,13 @@ export default function CardSelera() {
         }
         addButton={
           <Fragment>
-            {user?.role.name == "Komite MRPN LS" ||
-              user?.role.name == "Super Admin" ? (
+            {user?.type == "NON BAPPENAS" && (
               <AddButton
                 noMargin
                 startIcon={<Iconify name="mdi:chart-bar-stacked" />}
                 title="Matriks Referensi"
                 onclick={() => setModalOpenRef(true)}
               />
-            ) : (
-              ""
             )}
             <Fragment>
               {!isEmptyRisk && (
@@ -230,9 +227,17 @@ export default function CardSelera() {
         closeButton
         dialogOpen={modalOpenRef}
         dialogClose={() => setModalOpenRef(false)}
-        title={`Matriks Referensi Selera Risiko Moderat`}
+        title={`Matriks Referensi Selera Risiko ${stateSelera?.seleraRisiko[0].type_nilai}`}
       >
-        <SeleraMatriks levelId={1} levelDampak="rendah" />
+        <SeleraMatriks
+          levelId={1}
+          levelDampak=
+          {
+            Array.isArray(stateSelera?.seleraRisiko) && stateSelera.seleraRisiko.length > 0
+              ? stateSelera?.seleraRisiko[0].type_nilai.toLowerCase()
+              : ""
+          }
+        />
       </DialogComponent>
       <DialogComponent
         width={360}

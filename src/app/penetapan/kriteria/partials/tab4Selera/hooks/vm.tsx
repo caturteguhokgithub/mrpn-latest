@@ -50,6 +50,7 @@ const usePenetapanSelera = () => {
 
     const response = await doCreateSelera(params);
     if (response?.code == API_CODE.success) {
+      getSelera();
       // getData();
       // setModalOpenAdd(false);
     }
@@ -79,7 +80,7 @@ const usePenetapanSelera = () => {
 
         const finalResult: doGetSeleraDto = {
           referensi: response.result.referensi,
-          seleraRisiko: seleraRisikoList[0] ?? {}
+          seleraRisiko: seleraRisikoList
         };
 
         setStateSelera(finalResult);
