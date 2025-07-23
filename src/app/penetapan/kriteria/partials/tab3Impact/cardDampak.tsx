@@ -46,10 +46,12 @@ export default function CardDampak() {
     deleteMatDamKomite,
     modalOpenDeleteArea,
     setModalDeleteArea,
+    handleResetRequestMatDamUpr,
   } = useKriteriaDampakVM();
 
   const handleCreate = async () => {
     createMatDamUpr(requestMatDamUpr);
+    handleResetRequestMatDamUpr();
   };
 
   const handleUpdate = async () => {
@@ -69,11 +71,18 @@ export default function CardDampak() {
     deleteMatDamKomite(requestMatDamKomite);
   };
 
+  const handleCancelModal = () => {
+    setModalOpenAdd(false);
+    setModalOpenEdit(false);
+    handleResetRequestMatDamUpr();
+  };
+
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
       <Button
         onClick={() => {
-          setModalOpenAdd(false), setModalOpenEdit(false);
+          // setModalOpenAdd(false), setModalOpenEdit(false);
+          handleCancelModal();
         }}
       >
         Batal

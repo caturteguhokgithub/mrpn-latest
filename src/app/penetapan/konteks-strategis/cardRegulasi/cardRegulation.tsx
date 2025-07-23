@@ -41,6 +41,21 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
     setStateRegulation,
   } = useCardIndicationVM();
 
+  const handleRegulation = () => {
+    //reset state
+    setRequestRegulasi({
+      id: 0,
+      no_regulasi: "",
+      tentang: "",
+      keterangan: "",
+      uraian_penetapan_object_id: 0,
+    });
+
+    setModal(false);
+    setModalEdit(false);
+    setModalDelete(false);
+  };
+
   const handleSubmitRegulation = async (act: string) => {
     const dataRequest: doRequestRegulasiDto = {
       id: requestRegulasi.id,
@@ -57,17 +72,7 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
     }
 
     //reset state
-    setRequestRegulasi({
-      id: 0,
-      no_regulasi: "",
-      tentang: "",
-      keterangan: "",
-      uraian_penetapan_object_id: 0,
-    });
-
-    setModal(false);
-    setModalEdit(false);
-    setModalDelete(false);
+    handleRegulation();
   };
 
   return (
@@ -115,11 +120,11 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
       </CardItem>
       <DialogComponent
         dialogOpen={modal}
-        dialogClose={() => setModal(false)}
+        dialogClose={handleRegulation}
         title="Tambah Daftar Regulasi, Kebijakan, Peraturan, Prosedur Terkait"
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button variant="outlined" onClick={() => setModal(false)}>
+            <Button variant="outlined" onClick={handleRegulation}>
               Batal
             </Button>
             <Button

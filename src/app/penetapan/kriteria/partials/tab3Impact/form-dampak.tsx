@@ -200,6 +200,7 @@ export default function FormDampak({
                   />
                 ) : (
                   <AutocompleteSelectSingle
+                    key={`stateUpr?.matrix_id-${stateUpr?.matrix_id}`}
                     value={optionAD?.find(
                       (option) => option.id === stateUpr?.matrix_id
                     )}

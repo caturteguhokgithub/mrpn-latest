@@ -726,6 +726,12 @@ const usePenetapanObjectVM = () => {
   //   }
   // };
 
+  const handleResetUploadedFileName = () => {
+    setUploadedFileName(null);
+    setModalBuktiDukung(false);
+    resetBuktiDukungForm();
+  };
+
   return {
     useEffectGenerateOption,
     useEffectObjectState,
@@ -793,6 +799,7 @@ const usePenetapanObjectVM = () => {
     setSelectedTopic,
     dataLogActivity,
     resetTopicState,
+    handleResetUploadedFileName,
   };
 };
 

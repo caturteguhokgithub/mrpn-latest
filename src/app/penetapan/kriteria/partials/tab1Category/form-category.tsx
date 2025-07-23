@@ -123,6 +123,7 @@ export default function FormCategory({
               />
             ) : (
               <AutocompleteSelectSingle<doMasterKategori>
+                key={`state?.src_kategori_id-${state?.src_kategori_id}`}
                 value={listMasterCategory.find(
                   (category) => category.id === state?.src_kategori_id
                 )}
@@ -142,8 +143,7 @@ export default function FormCategory({
                       src_kategori_id: newValue.id,
                     }));
                   }
-                }
-                }
+                }}
                 placeHolder={"Pilih kategori"}
                 actionButton={
                   <Button
@@ -215,6 +215,7 @@ export default function FormCategory({
                         <Grid item xs={12}>
                           <FormControl fullWidth>
                             <TextareaStyled
+                              key={`key-cat-${state?.src_kategori_id}`}
                               minRows={2}
                               aria-label=""
                               placeholder="Sub Kategori"

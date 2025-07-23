@@ -59,7 +59,8 @@ const useCategoryList = () => {
   //   !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
 
   const resetCategoryState = () => {
-    setRequestCategory(cloneDeep({ ...initCategory }));
+    // setRequestCategory(cloneDeep({ ...initCategory }));
+    setRequestCategory(cloneDeep({ ...initCategory, src_kategori_id: -1 }));
   };
 
   async function getData() {
