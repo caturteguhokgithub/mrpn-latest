@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   FormControl,
   Grid,
@@ -11,22 +10,24 @@ import Iconify from "@/components/icons/iconify";
 import { VisuallyHiddenInput } from "@/utils/constant";
 import { SetStateAction } from "react";
 import { dtoReqBuktiDukungPengesahan } from "../pageModel";
-import usePenetapanObjectVM from "../pageVM";
 
 export default function FormBuktiDukung({
   // handleUnggahBuktiDukung,
   reqBuktiDukungPengesahan,
   setReqBuktiDukungPengesahan,
+  uploadedFileName,
+  setUploadedFileName,
 }: {
   // handleUnggahBuktiDukung: any;
   reqBuktiDukungPengesahan: dtoReqBuktiDukungPengesahan;
   setReqBuktiDukungPengesahan: (
     value: SetStateAction<dtoReqBuktiDukungPengesahan>
   ) => void;
+  uploadedFileName: any;
+  setUploadedFileName: (value: SetStateAction<string | null>) => void;
 }) {
-  const { uploadedFileName, setUploadedFileName } = usePenetapanObjectVM();
-  console.log(uploadedFileName);
-
+  // const { uploadedFileName, setUploadedFileName } = usePenetapanObjectVM();
+  console.log({ uploadedFileName });
 
   return (
     <Grid container spacing={2}>
@@ -94,8 +95,8 @@ export default function FormBuktiDukung({
                     setUploadedFileName(null); // Clear file name if no file is selected
                   }
                 }}
-              // onChange={(event: any) => handleUnggahBuktiDukung(event)}
-              // multiple
+                // onChange={(event: any) => handleUnggahBuktiDukung(event)}
+                // multiple
               />
             </Button>
             <Stack alignItems="center" justifyContent="center">

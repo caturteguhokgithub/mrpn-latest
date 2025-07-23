@@ -176,6 +176,8 @@ export default function PageTemaView() {
     setSelectedTopic,
     dataLogActivity,
     resetTopicState,
+    handleResetUploadedFileName,
+    uploadedFileName,
   } = usePenetapanObjectVM();
 
   const { showToast } = useToast();
@@ -643,7 +645,7 @@ export default function PageTemaView() {
         dialogClose={() => setModalBuktiDukung(false)}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button onClick={() => setModalBuktiDukung(false)}>Batal</Button>
+            <Button onClick={handleResetUploadedFileName}>Batal</Button>
             <Button
               variant="contained"
               onClick={handleSaveBuktiDukung}
@@ -660,6 +662,8 @@ export default function PageTemaView() {
           // handleUnggahBuktiDukung={handleUnggahBuktiDukung}
           reqBuktiDukungPengesahan={reqBuktiDukungPengesahan}
           setReqBuktiDukungPengesahan={setReqBuktiDukungPengesahan}
+          uploadedFileName={uploadedFileName}
+          setUploadedFileName={setUploadedFileName}
         />
       </DialogComponent>
       {/*<DialogComponent*/}

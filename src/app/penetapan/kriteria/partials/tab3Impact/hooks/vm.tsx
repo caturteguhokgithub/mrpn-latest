@@ -336,6 +336,10 @@ const useKriteriaDampakVM = () => {
     }
   };
 
+  const handleResetRequestMatDamUpr = () => {
+    setRequestMatDamUpr({ ...initReqAddMatDamUpr, matrix_id: -1 });
+  };
+
   return {
     dataMatDamKomite,
     loading,
@@ -378,6 +382,7 @@ const useKriteriaDampakVM = () => {
     setStateUpr,
     stateKom,
     setStateKom,
+    handleResetRequestMatDamUpr,
   };
 };
 
