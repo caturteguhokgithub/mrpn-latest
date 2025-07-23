@@ -58,6 +58,10 @@ const useCategoryList = () => {
   // const isEmptyPenetapanObject =
   //   !kpPenetapanObj || Object.keys(kpPenetapanObj).length === 0;
 
+  const resetCategoryState = () => {
+    setRequestCategory(cloneDeep({ ...initCategory }));
+  };
+
   async function getData() {
     setLoading(true);
     const response = await doGetCategory({
@@ -97,20 +101,9 @@ const useCategoryList = () => {
     if (response?.code == API_CODE.success) {
       getData();
       setModalOpenAdd(false);
+      // Reset state
+      resetCategoryState();
     }
-
-    // Reset state for requestCategory
-    // setRequestCategory({
-    //   src_kategori_id: 0,
-    //   prioritas: 1,
-    //   sub: [
-    //     {
-    //       value: "",
-    //       desc: "",
-    //     },
-    //   ],
-    //   uraian_penetapan_object_id: 0,
-    // });
   }
 
   async function getMasterCategory() {
@@ -220,6 +213,7 @@ const useCategoryList = () => {
     handleAdd,
     getMasterCategory,
     getData,
+    resetCategoryState,
   };
 };
 

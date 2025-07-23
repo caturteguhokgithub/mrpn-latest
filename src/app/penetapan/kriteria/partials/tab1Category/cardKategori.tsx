@@ -52,6 +52,7 @@ export default function CardKategori() {
     handleAdd,
     getMasterCategory,
     getData,
+    resetCategoryState,
   } = useCategoryList();
 
   const { user } = useAuthorizationVM();
@@ -97,7 +98,9 @@ export default function CardKategori() {
     <DialogActions sx={{ p: 2, px: 3 }}>
       <Button
         onClick={() => {
-          setModalOpenAdd(false), setModalOpenCategory(false);
+          setModalOpenAdd(false);
+          setModalOpenCategory(false);
+          resetCategoryState();
         }}
       >
         Batal
@@ -174,6 +177,7 @@ export default function CardKategori() {
             handleDelete={() => setModalDelete(true)}
             setRequestEdit={setRequestSubCategory}
             listDataCategory={listDataCategory}
+            user={user}
           />
         </Fragment>
         {/* )} */}

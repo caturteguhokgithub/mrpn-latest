@@ -34,6 +34,7 @@ function Row(props: {
   handleDelete?: any;
   handleDeleteArea?: any;
   handleEditArea?: any;
+  user?: any;
 }) {
   const {
     row,
@@ -43,6 +44,7 @@ function Row(props: {
     setRequestMatDamUpr,
     setRequestMatDamKomite,
     handleEditArea,
+    user,
   } = props;
 
   const [openCollapse, setOpenCollapse] = React.useState(true);
@@ -120,16 +122,18 @@ function Row(props: {
         <TableCell colSpan={8} sx={{ fontWeight: 600, bgcolor: blue[100] }}>
           {row.dampak}
         </TableCell>
-        <TableCell align="center">
-          <Stack direction="row" justifyContent="center">
-            <IconButton onClick={() => prosesBtnEditArea(row, "edit")}>
-              <Iconify name="mdi:pencil" color={blue[500]} />
-            </IconButton>
-            <IconButton onClick={() => prosesBtnEditArea(row, "delete")}>
-              <Iconify name="mdi:trash" color={red[500]} />
-            </IconButton>
-          </Stack>
-        </TableCell>
+        {user?.type !== "NON BAPPENAS" && (
+          <TableCell align="center">
+            <Stack direction="row" justifyContent="center">
+              <IconButton onClick={() => prosesBtnEditArea(row, "edit")}>
+                <Iconify name="mdi:pencil" color={blue[500]} />
+              </IconButton>
+              <IconButton onClick={() => prosesBtnEditArea(row, "delete")}>
+                <Iconify name="mdi:trash" color={red[500]} />
+              </IconButton>
+            </Stack>
+          </TableCell>
+        )}
       </TableRow>
       <TableRow>
         <TableCell colSpan={10} sx={{ bgcolor: grey[200], p: 0 }}>
@@ -152,14 +156,16 @@ function Row(props: {
                     >
                       Level Dampak
                     </TableCell>
-                    <TableCell
-                      rowSpan={3}
-                      width={110}
-                      align="center"
-                      sx={{ bgcolor: bgColorTh }}
-                    >
-                      Aksi
-                    </TableCell>
+                    {user?.type !== "NON BAPPENAS" && (
+                      <TableCell
+                        rowSpan={3}
+                        width={110}
+                        align="center"
+                        sx={{ bgcolor: bgColorTh }}
+                      >
+                        Aksi
+                      </TableCell>
+                    )}
                   </TableRow>
                   <TableRow>
                     <TableCell
@@ -236,24 +242,26 @@ function Row(props: {
                           </TableCell>
                         );
                       })}
-                      <TableCell
-                        sx={{
-                          bgcolor: grey[50],
-                        }}
-                      >
-                        <Stack direction="row">
-                          <IconButton
-                            onClick={() => prosesBtnEdit(row, resultRow)}
-                          >
-                            <Iconify name="mdi:pencil" color={blue[500]} />
-                          </IconButton>
-                          <IconButton
-                            onClick={() => prosesBtnDelete(resultRow)}
-                          >
-                            <Iconify name="mdi:trash" color={red[500]} />
-                          </IconButton>
-                        </Stack>
-                      </TableCell>
+                      {user?.type !== "NON BAPPENAS" && (
+                        <TableCell
+                          sx={{
+                            bgcolor: grey[50],
+                          }}
+                        >
+                          <Stack direction="row">
+                            <IconButton
+                              onClick={() => prosesBtnEdit(row, resultRow)}
+                            >
+                              <Iconify name="mdi:pencil" color={blue[500]} />
+                            </IconButton>
+                            <IconButton
+                              onClick={() => prosesBtnDelete(resultRow)}
+                            >
+                              <Iconify name="mdi:trash" color={red[500]} />
+                            </IconButton>
+                          </Stack>
+                        </TableCell>
+                      )}
                     </TableRow>
                   ))}
                 </TableBody>
@@ -274,6 +282,7 @@ export default function CollapsibleImpactTable({
   handleDelete,
   handleDeleteArea,
   handleEditArea,
+  user,
 }: {
   data: ValuesShowMatDamKomite[];
   setRequestMatDamKomite?: (
@@ -284,6 +293,7 @@ export default function CollapsibleImpactTable({
   handleDelete?: any;
   handleDeleteArea?: any;
   handleEditArea?: any;
+  user?: any;
 }) {
   return (
     <TableContainer
@@ -323,9 +333,11 @@ export default function CollapsibleImpactTable({
             <TableCell colSpan={8} align="center" sx={{ bgcolor: bgColorTh }}>
               Area Dampak
             </TableCell>
-            <TableCell width={80} align="center" sx={{ bgcolor: bgColorTh }}>
-              Aksi
-            </TableCell>
+            {user?.type !== "NON BAPPENAS" && (
+              <TableCell width={80} align="center" sx={{ bgcolor: bgColorTh }}>
+                Aksi
+              </TableCell>
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -341,6 +353,7 @@ export default function CollapsibleImpactTable({
                   handleDelete={handleDelete}
                   handleDeleteArea={handleDeleteArea}
                   handleEditArea={handleEditArea}
+                  user={user}
                 />
               ))}
             </React.Fragment>

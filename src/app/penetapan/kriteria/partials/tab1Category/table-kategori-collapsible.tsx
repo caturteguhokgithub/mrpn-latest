@@ -22,8 +22,10 @@ function Row(props: {
   handleEdit: any;
   handleDelete?: any;
   setRequestEdit?: (value: React.SetStateAction<SubKategoriRisiko>) => void;
+  user?: any;
 }) {
-  const { row, handleEdit, handleDelete, setRequestEdit, rowIndex } = props;
+  const { row, handleEdit, handleDelete, setRequestEdit, rowIndex, user } =
+    props;
 
   const prosesBtnEdit = (value: SubKategoriRisiko, proses: string) => {
     const updated = {
@@ -86,32 +88,35 @@ function Row(props: {
             </React.Fragment>
           )}
           <TableCell sx={{ verticalAlign: "top" }}>{subItem.value}</TableCell>
-          <TableCell>
-            <Stack direction="row">
-              <IconButton
-                onClick={() => prosesBtnEdit(subItem, "edit")}
-                sx={{
-                  py: 0,
-                  "&:hover": {
-                    bgcolor: "transparent",
-                  },
-                }}
-              >
-                <Iconify name="mdi:pencil" color={blue[500]} />
-              </IconButton>
-              <IconButton
-                onClick={() => prosesBtnEdit(subItem, "delete")}
-                sx={{
-                  py: 0,
-                  "&:hover": {
-                    bgcolor: "transparent",
-                  },
-                }}
-              >
-                <Iconify name="mdi:trash" color={red[500]} />
-              </IconButton>
-            </Stack>
-          </TableCell>
+
+          {user?.type !== "NON BAPPENAS" && (
+            <TableCell>
+              <Stack direction="row">
+                <IconButton
+                  onClick={() => prosesBtnEdit(subItem, "edit")}
+                  sx={{
+                    py: 0,
+                    "&:hover": {
+                      bgcolor: "transparent",
+                    },
+                  }}
+                >
+                  <Iconify name="mdi:pencil" color={blue[500]} />
+                </IconButton>
+                <IconButton
+                  onClick={() => prosesBtnEdit(subItem, "delete")}
+                  sx={{
+                    py: 0,
+                    "&:hover": {
+                      bgcolor: "transparent",
+                    },
+                  }}
+                >
+                  <Iconify name="mdi:trash" color={red[500]} />
+                </IconButton>
+              </Stack>
+            </TableCell>
+          )}
         </TableRow>
       ))}
     </React.Fragment>
@@ -123,11 +128,13 @@ export default function CollapsibleTable({
   handleDelete,
   setRequestEdit,
   listDataCategory,
+  user,
 }: {
   handleEdit?: any;
   handleDelete?: any;
   setRequestEdit?: (value: React.SetStateAction<SubKategoriRisiko>) => void;
   listDataCategory: any;
+  user?: any;
 }) {
   return (
     <TableContainer
@@ -162,9 +169,11 @@ export default function CollapsibleTable({
             <TableCell align="center" width={300} sx={{ bgcolor: bgColorTh }}>
               Subkategori Risiko
             </TableCell>
-            <TableCell width={100} align="center" sx={{ bgcolor: bgColorTh }}>
-              Aksi
-            </TableCell>
+            {user?.type !== "NON BAPPENAS" && (
+              <TableCell width={100} align="center" sx={{ bgcolor: bgColorTh }}>
+                Aksi
+              </TableCell>
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -178,6 +187,7 @@ export default function CollapsibleTable({
                   handleEdit={handleEdit}
                   handleDelete={handleDelete}
                   setRequestEdit={setRequestEdit}
+                  user={user}
                 />
               ))}
             </React.Fragment>

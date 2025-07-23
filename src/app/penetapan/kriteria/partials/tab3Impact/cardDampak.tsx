@@ -142,6 +142,7 @@ export default function CardDampak() {
             handleDelete={() => setModalDelete(true)}
             handleDeleteArea={() => setModalDeleteArea(true)}
             handleEditArea={() => setModalOpenEditKomite(true)}
+            user={user}
           />
         </Fragment>
       </CardItem>

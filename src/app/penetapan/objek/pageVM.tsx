@@ -167,6 +167,10 @@ const usePenetapanObjectVM = () => {
     setOptionPN(opt);
   };
 
+  const resetTopicState = () => {
+    setStateTopic({ ...initPenetapanObjectState });
+  };
+
   async function getPenetapanObjectTopic() {
     const response = await doGetPenetapanObject({
       body: {
@@ -208,6 +212,9 @@ const usePenetapanObjectVM = () => {
     }
     if (response?.code == API_CODE.success) {
       getPenetapanObjectTopic();
+
+      // Reset state after successful creation/update
+      resetTopicState();
       const initState = JSON.parse(JSON.stringify(initPenetapanObjectState));
       setModalAdd(false);
       setStateTopic(initState);
@@ -785,6 +792,7 @@ const usePenetapanObjectVM = () => {
     selectedTopic,
     setSelectedTopic,
     dataLogActivity,
+    resetTopicState,
   };
 };
 

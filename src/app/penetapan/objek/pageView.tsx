@@ -175,6 +175,7 @@ export default function PageTemaView() {
     selectedTopic,
     setSelectedTopic,
     dataLogActivity,
+    resetTopicState,
   } = usePenetapanObjectVM();
 
   const { showToast } = useToast();
@@ -278,7 +279,14 @@ export default function PageTemaView() {
 
   const dialogActionFooterAdd = (
     <DialogActions sx={{ p: 2, px: 3 }}>
-      <Button onClick={() => setModalAdd(false)}>Batal</Button>
+      <Button
+        onClick={() => {
+          setModalAdd(false);
+          resetTopicState();
+        }}
+      >
+        Batal
+      </Button>
       <Button
         variant="contained"
         onClick={() => updateOrCreateTopic()}
