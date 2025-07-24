@@ -166,7 +166,7 @@ const TooltipCP = ({ isParent, data, year }: TooltipCPProps) => {
                       <Typography component="strong" fontWeight={600}>
                         {/* {month.aktivitas} ({FormatCurrency(month.target)}{" "}
                         {month.satuan}) */}
-                        {FormatCurrency(month.target)}
+                        {month.target.replace(/\./g, ",")}
                       </Typography>
                     </Stack>
                   ))}

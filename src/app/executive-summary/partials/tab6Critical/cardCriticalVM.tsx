@@ -153,12 +153,12 @@ const useCardCriticalVM = () => {
             );
             return monthData
               ? {
-                  id: monthData.id,
-                  name: monthData.name,
-                  aktivitas: monthData.aktivitas,
-                  target: monthData.target,
-                  satuan: monthData.satuan,
-                }
+                id: monthData.id,
+                name: monthData.name,
+                aktivitas: monthData.aktivitas,
+                target: monthData.target,
+                satuan: monthData.satuan,
+              }
               : null;
           }),
         })),
@@ -185,7 +185,7 @@ const useCardCriticalVM = () => {
   }
 
   const handleSubmit = async () => {
-    setLoadingRoKunci(true);
+    // setLoadingRoKunci(true);
     if (
       state.ro == undefined
       // state.start_date == "" ||
@@ -216,6 +216,21 @@ const useCardCriticalVM = () => {
     //   ).format("YYYY-MM-DD");
     // });
 
+    const clonedKegiatan = state.kegiatan.map((kgt) => {
+      const updatedMonths = kgt.months.map((month) => {
+        const sanitized = month.target.replace(/\./g, "").replace(",", ".");
+        return {
+          ...month,
+          target: sanitized === "" ? "0" : parseFloat(sanitized).toString(),
+        };
+      });
+
+      return {
+        ...kgt,
+        months: updatedMonths,
+      };
+    });
+
     const request: ExsumCriticalReqDto = {
       id: state.id,
       exsum_id: exsum.id,
@@ -226,11 +241,9 @@ const useCardCriticalVM = () => {
       keterangan_kegiatan: state.keterangan_kegiatan,
       values: value,
       depedencies: state.dependency?.id ?? 0,
-      kegiatan: state.kegiatan,
+      kegiatan: clonedKegiatan,
       color: state.color ?? "",
     };
-
-    // console.log(request);
 
     let response;
     if (request.id == 0) {
