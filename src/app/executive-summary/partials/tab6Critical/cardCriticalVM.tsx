@@ -115,6 +115,7 @@ const useCardCriticalVM = () => {
       const mappedDataCP: DataCPType[] = result.map((item) => ({
         id: item.id.toString(),
         ro: item.ro?.value || "-",
+        type_ro: item.ro?.type || "",
         intervention: item.ro.intervention || false,
         code_ro: item.ro.code || "-",
         code_pkkr: item.ro?.pkkr || "-",

@@ -135,6 +135,7 @@ export interface ChildData {
 export interface DataCPType {
   id: string;
   ro: string;
+  type_ro: string;
   intervention: boolean;
   code_ro: string;
   code_pkkr: string;

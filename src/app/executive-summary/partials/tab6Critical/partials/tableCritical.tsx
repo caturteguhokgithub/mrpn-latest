@@ -416,7 +416,7 @@ export default function ProjectTable({
                                       color={grey[500]}
                                       fontSize={14}
                                     >
-                                      RO{" "}
+                                      {parent.type_ro}{" "}
                                     </Typography>
                                     <Typography
                                       component="span"
