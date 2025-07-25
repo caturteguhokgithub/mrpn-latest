@@ -496,7 +496,8 @@ export default function FormCritical({
                           justifyContent="space-between"
                         >
                           <Typography fontWeight={600} fontSize={14}>
-                            Aktivitas Turunan RO #{index + 1}
+                            {/* Aktivitas Turunan RO #{index + 1} */}
+                            Aktivitas Turunan RO
                           </Typography>
                           <AddButton
                             small
@@ -507,7 +508,30 @@ export default function FormCritical({
                           />
                         </Stack>
                       </Grid>
-                      <Grid item xs={12}>
+                      <Grid item xs={3}>
+                        <FormControl fullWidth>
+                          <TextField
+                            variant="outlined"
+                            size="small"
+                            placeholder="Nomor Urut"
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            value={tags.kegiatan}
+                            onChange={(e) =>
+                              setState((prevState) => {
+                                const kegiatan = prevState.kegiatan;
+                                kegiatan[index].kegiatan = e.target.value;
+                                return {
+                                  ...prevState,
+                                  kegiatan: kegiatan,
+                                };
+                              })
+                            }
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={9}>
                         <FormControl fullWidth>
                           <TextField
                             variant="outlined"
@@ -799,7 +823,7 @@ export default function FormCritical({
                                               ...prev,
                                               kegiatan,
                                             };
-                                          })
+                                          });
                                         }}
                                         customInput={TextField}
                                         variant="outlined"
