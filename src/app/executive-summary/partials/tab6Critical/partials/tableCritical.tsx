@@ -160,8 +160,14 @@ export default function ProjectTable({
                 left="50%"
                 sx={{ transform: "translate(-50%, -50%)" }}
               >
-                {FormatCurrencyID(total)}
-                {/* {group.childData.target} */}
+                <NumericFormat
+                  value={total}
+                  decimalScale={2}
+                  decimalSeparator=","
+                  thousandSeparator="."
+                  displayType="text"
+                  renderText={(value) => <b>{value}</b>}
+                />
               </Typography>
             </Box>
           </HtmlTooltip>
@@ -345,29 +351,29 @@ export default function ProjectTable({
               </TableCell>
               {year === 0
                 ? [2025, 2026, 2027, 2028, 2029].map((year) => (
-                  <TableCell
-                    key={year}
-                    align="center"
-                    sx={{
-                      bgcolor: bgColorTh,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {year}
-                  </TableCell>
-                ))
+                    <TableCell
+                      key={year}
+                      align="center"
+                      sx={{
+                        bgcolor: bgColorTh,
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {year}
+                    </TableCell>
+                  ))
                 : months.map((month) => (
-                  <TableCell
-                    key={month}
-                    align="center"
-                    sx={{
-                      bgcolor: bgColorTh,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {month}
-                  </TableCell>
-                ))}
+                    <TableCell
+                      key={month}
+                      align="center"
+                      sx={{
+                        bgcolor: bgColorTh,
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {month}
+                    </TableCell>
+                  ))}
               {year > 0 && (
                 <TableCell
                   sx={{
@@ -416,15 +422,19 @@ export default function ProjectTable({
                                       color={grey[500]}
                                       fontSize={14}
                                     >
-                                      {parent.type_ro}{" "}
+                                      {parent.type_ro === "NON_RO"
+                                        ? "NON-RO"
+                                        : "RO"}{" "}
                                     </Typography>
-                                    <Typography
-                                      component="span"
-                                      fontSize={14}
-                                      color={grey[700]}
-                                    >
-                                      {parent.code_ro}
-                                    </Typography>
+                                    {parent.type_ro !== "NON_RO" && (
+                                      <Typography
+                                        component="span"
+                                        fontSize={14}
+                                        color={grey[700]}
+                                      >
+                                        {parent.code_ro}
+                                      </Typography>
+                                    )}
                                   </>
                                 }
                                 sx={{
@@ -432,33 +442,35 @@ export default function ProjectTable({
                                 }}
                               />
                             </Box>
-                            <Box>
-                              <Chip
-                                size="small"
-                                color="default"
-                                label={
-                                  <>
-                                    <Typography
-                                      component="span"
-                                      color={grey[500]}
-                                      fontSize={14}
-                                    >
-                                      PKKR{" "}
-                                    </Typography>
-                                    <Typography
-                                      component="span"
-                                      fontSize={14}
-                                      color={grey[700]}
-                                    >
-                                      {parent.code_pkkr}
-                                    </Typography>
-                                  </>
-                                }
-                                sx={{
-                                  px: 0.5,
-                                }}
-                              />
-                            </Box>
+                            {parent.type_ro !== "NON_RO" && (
+                              <Box>
+                                <Chip
+                                  size="small"
+                                  color="default"
+                                  label={
+                                    <>
+                                      <Typography
+                                        component="span"
+                                        color={grey[500]}
+                                        fontSize={14}
+                                      >
+                                        PKKR{" "}
+                                      </Typography>
+                                      <Typography
+                                        component="span"
+                                        fontSize={14}
+                                        color={grey[700]}
+                                      >
+                                        {parent.code_pkkr}
+                                      </Typography>
+                                    </>
+                                  }
+                                  sx={{
+                                    px: 0.5,
+                                  }}
+                                />
+                              </Box>
+                            )}
                           </Stack>
                           <HtmlTooltip
                             title={
@@ -499,12 +511,12 @@ export default function ProjectTable({
                             parent.kategori_proyek_id === 1
                               ? "#C63C51"
                               : parent.kategori_proyek_id === 2
-                                ? "#8C3061"
-                                : parent.kategori_proyek_id === 3
-                                  ? "#FFD35A"
-                                  : parent.kategori_proyek_id === 3
-                                    ? "#FFA823"
-                                    : "#DC0083",
+                              ? "#8C3061"
+                              : parent.kategori_proyek_id === 3
+                              ? "#FFD35A"
+                              : parent.kategori_proyek_id === 3
+                              ? "#FFA823"
+                              : "#DC0083",
                         }}
                       />
                     </Stack>
