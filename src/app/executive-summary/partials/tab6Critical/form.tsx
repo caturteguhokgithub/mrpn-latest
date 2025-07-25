@@ -45,6 +45,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Iconify from "@/components/icons/iconify";
 import { FormatCurrency } from "@/lib/utils/currency";
+import { NumericFormat } from "react-number-format";
 
 export default function FormCritical({
   dataExisting,
@@ -266,15 +267,15 @@ export default function FormCritical({
                     year > 0
                       ? dayjs(`${year}-01-01`)
                       : rpjmn
-                        ? dayjs(`${rpjmn.start}-01-01`)
-                        : undefined
+                      ? dayjs(`${rpjmn.start}-01-01`)
+                      : undefined
                   }
                   maxDate={
                     year > 0
                       ? dayjs(`${year}-12-31`)
                       : rpjmn
-                        ? dayjs(`${rpjmn.end}-12-31`)
-                        : undefined
+                      ? dayjs(`${rpjmn.end}-12-31`)
+                      : undefined
                   }
                   value={dayjs(state.start_date)}
                   onChange={(e: any) =>
@@ -312,8 +313,8 @@ export default function FormCritical({
                     year > 0
                       ? dayjs(`${year}-12-31`)
                       : rpjmn
-                        ? dayjs(`${rpjmn.end}-12-31`)
-                        : undefined
+                      ? dayjs(`${rpjmn.end}-12-31`)
+                      : undefined
                   }
                   value={dayjs(state.end_date)}
                   onChange={(e: any) =>
@@ -656,29 +657,29 @@ export default function FormCritical({
                                 };
                               })
                             }
-                          // onChange={(e) =>
-                          //   setState((prev) => {
-                          //     const kegiatan = [...prev.kegiatan]; // shallow copy array
+                            // onChange={(e) =>
+                            //   setState((prev) => {
+                            //     const kegiatan = [...prev.kegiatan]; // shallow copy array
 
-                          //     const currentMonths = kegiatan[index].months;
-                          //     if (!currentMonths) return prev; // jika null, jangan ubah state
+                            //     const currentMonths = kegiatan[index].months;
+                            //     if (!currentMonths) return prev; // jika null, jangan ubah state
 
-                          //     // pastikan indexMonth aman
-                          //     if (!currentMonths[indexMonth]) return prev;
+                            //     // pastikan indexMonth aman
+                            //     if (!currentMonths[indexMonth]) return prev;
 
-                          //     currentMonths[indexMonth] = {
-                          //       ...currentMonths[indexMonth]!,
-                          //       satuan: e.target.value,
-                          //     };
+                            //     currentMonths[indexMonth] = {
+                            //       ...currentMonths[indexMonth]!,
+                            //       satuan: e.target.value,
+                            //     };
 
-                          //     kegiatan[index].months = currentMonths;
+                            //     kegiatan[index].months = currentMonths;
 
-                          //     return {
-                          //       ...prev,
-                          //       kegiatan,
-                          //     };
-                          //   })
-                          // }
+                            //     return {
+                            //       ...prev,
+                            //       kegiatan,
+                            //     };
+                            //   })
+                            // }
                           />
                         </FormControl>
                       </Grid>
@@ -760,9 +761,55 @@ export default function FormCritical({
                                     // marginY={0.5}
                                     item
                                     xs={12}
-                                  // md={indexMonth > 0 ? 3 : 3}
+                                    // md={indexMonth > 0 ? 3 : 3}
                                   >
                                     <FormControl fullWidth>
+                                      {/* <NumericFormat
+                                        thousandSeparator="."
+                                        decimalSeparator=","
+                                        decimalScale={2}
+                                        allowNegative={false}
+                                        placeholder="Target"
+                                        value={tags.months[indexMonth].target}
+                                        onValueChange={(values) => {
+                                          const rawValue =
+                                            values.floatValue !== undefined
+                                              ? values.floatValue.toString()
+                                              : values.value; // <- fix here
+
+                                          setState((prev) => {
+                                            const kegiatan = [...prev.kegiatan];
+                                            const currentMonths =
+                                              kegiatan[index].months;
+                                            if (!currentMonths) return prev;
+                                            if (!currentMonths[indexMonth])
+                                              return prev;
+
+                                            currentMonths[indexMonth] = {
+                                              ...currentMonths[indexMonth]!,
+                                              target: rawValue, // decimal-safe
+                                            };
+
+                                            kegiatan[index].months =
+                                              currentMonths;
+
+                                            return {
+                                              ...prev,
+                                              kegiatan,
+                                            };
+                                          });
+                                          console.log("value", values.value);
+                                          console.log(
+                                            "floatValue",
+                                            values.floatValue
+                                          );
+                                        }}
+                                        customInput={TextField}
+                                        variant="outlined"
+                                        size="small"
+                                        InputLabelProps={{ shrink: true }}
+                                      /> */}
+
                                       <TextField
                                         variant="outlined"
                                         size="small"
@@ -770,9 +817,7 @@ export default function FormCritical({
                                         InputLabelProps={{
                                           shrink: true,
                                         }}
-                                        value={FormatCurrency(
-                                          tags.months[indexMonth].target
-                                        )}
+                                        value={tags.months[indexMonth].target}
                                         onChange={(e) => {
                                           const rawValue = e.target.value;
 
