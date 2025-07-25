@@ -764,7 +764,7 @@ export default function FormCritical({
                                   // md={indexMonth > 0 ? 3 : 3}
                                   >
                                     <FormControl fullWidth>
-                                      {/* <NumericFormat
+                                      <NumericFormat
                                         thousandSeparator="."
                                         decimalSeparator=","
                                         decimalScale={2}
@@ -772,22 +772,19 @@ export default function FormCritical({
                                         placeholder="Target"
                                         value={tags.months[indexMonth].target}
                                         onValueChange={(values) => {
-                                          const rawValue =
-                                            values.floatValue !== undefined
-                                              ? values.floatValue.toString()
-                                              : values.value; // <- fix here
-
                                           setState((prev) => {
                                             const kegiatan = [...prev.kegiatan];
+
                                             const currentMonths =
                                               kegiatan[index].months;
                                             if (!currentMonths) return prev;
+
                                             if (!currentMonths[indexMonth])
                                               return prev;
 
                                             currentMonths[indexMonth] = {
                                               ...currentMonths[indexMonth]!,
-                                              target: rawValue, // decimal-safe
+                                              target: values.value,
                                             };
 
                                             kegiatan[index].months =
@@ -797,20 +794,15 @@ export default function FormCritical({
                                               ...prev,
                                               kegiatan,
                                             };
-                                          });
-                                          console.log("value", values.value);
-                                          console.log(
-                                            "floatValue",
-                                            values.floatValue
-                                          );
+                                          })
                                         }}
                                         customInput={TextField}
                                         variant="outlined"
                                         size="small"
                                         InputLabelProps={{ shrink: true }}
-                                      /> */}
+                                      />
 
-                                      <TextField
+                                      {/* <TextField
                                         variant="outlined"
                                         size="small"
                                         placeholder="Target"
@@ -847,7 +839,7 @@ export default function FormCritical({
                                             };
                                           });
                                         }}
-                                      />
+                                      /> */}
                                     </FormControl>
                                   </Grid>
                                   {/* <Grid

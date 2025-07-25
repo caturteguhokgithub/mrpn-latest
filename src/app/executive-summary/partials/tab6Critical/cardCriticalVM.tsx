@@ -218,10 +218,17 @@ const useCardCriticalVM = () => {
 
     const clonedKegiatan = state.kegiatan.map((kgt) => {
       const updatedMonths = kgt.months.map((month) => {
-        const sanitized = month.target.replace(/\./g, "").replace(",", ".");
+        let input = month.target.trim();
+
+        if (input.includes(",")) {
+          input = input.replace(/\./g, "").replace(",", ".");
+        } else {
+          input = input.replace(/[^0-9.]/g, "");
+        }
+
         return {
           ...month,
-          target: sanitized === "" ? "0" : parseFloat(sanitized).toString(),
+          target: input === "" ? "" : parseFloat(input).toString(),
         };
       });
 
