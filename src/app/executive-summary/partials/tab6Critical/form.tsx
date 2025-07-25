@@ -190,7 +190,7 @@ export default function FormCritical({
                           sx={{ position: "relative", top: 2 }}
                         />
                       )}{" "}
-                      {option.value}
+                      {option.value} - {option.type}
                     </Typography>
                   </Tooltip>
                 </Stack>
@@ -267,15 +267,15 @@ export default function FormCritical({
                     year > 0
                       ? dayjs(`${year}-01-01`)
                       : rpjmn
-                      ? dayjs(`${rpjmn.start}-01-01`)
-                      : undefined
+                        ? dayjs(`${rpjmn.start}-01-01`)
+                        : undefined
                   }
                   maxDate={
                     year > 0
                       ? dayjs(`${year}-12-31`)
                       : rpjmn
-                      ? dayjs(`${rpjmn.end}-12-31`)
-                      : undefined
+                        ? dayjs(`${rpjmn.end}-12-31`)
+                        : undefined
                   }
                   value={dayjs(state.start_date)}
                   onChange={(e: any) =>
@@ -313,8 +313,8 @@ export default function FormCritical({
                     year > 0
                       ? dayjs(`${year}-12-31`)
                       : rpjmn
-                      ? dayjs(`${rpjmn.end}-12-31`)
-                      : undefined
+                        ? dayjs(`${rpjmn.end}-12-31`)
+                        : undefined
                   }
                   value={dayjs(state.end_date)}
                   onChange={(e: any) =>
@@ -657,29 +657,29 @@ export default function FormCritical({
                                 };
                               })
                             }
-                            // onChange={(e) =>
-                            //   setState((prev) => {
-                            //     const kegiatan = [...prev.kegiatan]; // shallow copy array
+                          // onChange={(e) =>
+                          //   setState((prev) => {
+                          //     const kegiatan = [...prev.kegiatan]; // shallow copy array
 
-                            //     const currentMonths = kegiatan[index].months;
-                            //     if (!currentMonths) return prev; // jika null, jangan ubah state
+                          //     const currentMonths = kegiatan[index].months;
+                          //     if (!currentMonths) return prev; // jika null, jangan ubah state
 
-                            //     // pastikan indexMonth aman
-                            //     if (!currentMonths[indexMonth]) return prev;
+                          //     // pastikan indexMonth aman
+                          //     if (!currentMonths[indexMonth]) return prev;
 
-                            //     currentMonths[indexMonth] = {
-                            //       ...currentMonths[indexMonth]!,
-                            //       satuan: e.target.value,
-                            //     };
+                          //     currentMonths[indexMonth] = {
+                          //       ...currentMonths[indexMonth]!,
+                          //       satuan: e.target.value,
+                          //     };
 
-                            //     kegiatan[index].months = currentMonths;
+                          //     kegiatan[index].months = currentMonths;
 
-                            //     return {
-                            //       ...prev,
-                            //       kegiatan,
-                            //     };
-                            //   })
-                            // }
+                          //     return {
+                          //       ...prev,
+                          //       kegiatan,
+                          //     };
+                          //   })
+                          // }
                           />
                         </FormControl>
                       </Grid>
@@ -761,7 +761,7 @@ export default function FormCritical({
                                     // marginY={0.5}
                                     item
                                     xs={12}
-                                    // md={indexMonth > 0 ? 3 : 3}
+                                  // md={indexMonth > 0 ? 3 : 3}
                                   >
                                     <FormControl fullWidth>
                                       {/* <NumericFormat

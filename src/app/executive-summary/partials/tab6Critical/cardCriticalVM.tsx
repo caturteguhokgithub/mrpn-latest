@@ -83,8 +83,8 @@ const useCardCriticalVM = () => {
     if (response?.code == API_CODE.success) {
       let result: RoDto[] = response.result;
       // let finalResult: RoDto[] = result.filter((x) => x.intervention);
-      let finalResult: RoDto[] = result.filter((x) => x.type == "RO");
-      setOptionRO(finalResult);
+      // let finalResult: RoDto[] = result.filter((x) => x.type == "RO");
+      setOptionRO(result);
     }
   }
 
