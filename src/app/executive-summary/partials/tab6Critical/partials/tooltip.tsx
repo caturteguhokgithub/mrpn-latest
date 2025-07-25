@@ -3,6 +3,7 @@ import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { ChildData, MonthData } from "../cardCriticalModel";
 import { FormatCurrency } from "@/lib/utils/currency";
+import { NumericFormat } from "react-number-format";
 
 interface ParentData {
   id: string;
@@ -166,7 +167,16 @@ const TooltipCP = ({ isParent, data, year }: TooltipCPProps) => {
                       <Typography component="strong" fontWeight={600}>
                         {/* {month.aktivitas} ({FormatCurrency(month.target)}{" "}
                         {month.satuan}) */}
-                        {month.target.replace(/\./g, ",")}
+
+                        <NumericFormat
+                          value={month.target}
+                          decimalSeparator=","
+                          thousandSeparator="."
+                          displayType="text"
+                          renderText={(value) => <b>{value}</b>}
+                        />
+
+                        {/* {month.target.replace(/\./g, ",")} */}
                       </Typography>
                     </Stack>
                   ))}

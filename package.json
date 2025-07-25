@@ -44,6 +44,7 @@
     "react-dom": "^18",
     "react-google-charts": "^5.1.0",
     "react-highlight-words": "^0.20.0",
+    "react-number-format": "^5.4.4",
     "react-quill": "^2.0.0",
     "react-zoom-pan-pinch": "^3.6.1",
     "recharts": "^2.12.7",

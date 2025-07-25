@@ -31,7 +31,12 @@ import {
   DataRoKunci,
   MonthData,
 } from "../cardCriticalModel";
-import { FormatCurrency, FormatCurrencyID } from "@/lib/utils/currency";
+import {
+  FormatCurrency,
+  FormatCurrencyID,
+  formatNumberID,
+} from "@/lib/utils/currency";
+import { NumericFormat } from "react-number-format";
 
 // Helper function to group consecutive months
 const groupConsecutiveMonths = (months: any) => {
@@ -114,17 +119,23 @@ export default function ProjectTable({
       //   return sum + target;
       // }, 0);
 
+      // const cleanNumber = (value: string | number): number => {
+      //   if (typeof value === "number") return value;
+      //   // Remove any non-numeric characters except decimal point
+      //   const cleaned = value.replace(/[^\d.-]/g, "");
+      //   return parseFloat(cleaned) || 0;
+      // };
+
       const cleanNumber = (value: string | number): number => {
-        if (typeof value === "number") return value;
-        // Remove any non-numeric characters except decimal point
-        const cleaned = value.replace(/[^\d.-]/g, "");
-        return parseFloat(cleaned) || 0;
+        return typeof value === "number" ? value : parseFloat(value) || 0;
       };
 
       const total = groupMonths.reduce(
         (sum, month) => sum + cleanNumber(month.target),
         0
       );
+
+      console.log("Total for group:", total);
 
       // Add the block cell
       cells.push(
@@ -613,7 +624,15 @@ export default function ProjectTable({
                                 fontWeight: 600,
                               }}
                             >
-                              {FormatCurrency(child.total_kegiatan.toString())}{" "}
+                              <NumericFormat
+                                value={child.total_kegiatan}
+                                decimalScale={2}
+                                decimalSeparator=","
+                                thousandSeparator="."
+                                displayType="text"
+                                renderText={(value) => <b>{value}</b>}
+                              />{" "}
+                              {formatNumberID(child.total_kegiatan)}{" "}
                               {child.satuan}
                             </TableCell>
                           )}
