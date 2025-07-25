@@ -87,6 +87,7 @@ export interface KegiatanDtoNew {
   kegiatan: string;
   satuan: string;
   total_kegiatan: number;
+  no_urut: number;
   months: MonthsDto[];
 }
 
