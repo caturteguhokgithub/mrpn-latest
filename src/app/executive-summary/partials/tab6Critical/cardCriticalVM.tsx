@@ -250,7 +250,7 @@ const useCardCriticalVM = () => {
       keterangan_kegiatan: state.keterangan_kegiatan,
       values: value,
       depedencies: state.dependency?.id ?? 0,
-      kegiatan: clonedKegiatan,
+      kegiatan: JSON.stringify(clonedKegiatan),
       color: state.color ?? "",
     };
 

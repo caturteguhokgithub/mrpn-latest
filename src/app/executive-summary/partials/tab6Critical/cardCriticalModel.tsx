@@ -41,7 +41,7 @@ export interface ExsumCriticalReqDto {
     tagging: string;
   }[];
   depedencies: number;
-  kegiatan: KegiatanDtoNew[];
+  kegiatan: KegiatanDtoNew[] | string;
   color: string;
 }
 
