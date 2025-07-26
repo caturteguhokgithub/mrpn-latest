@@ -351,29 +351,29 @@ export default function ProjectTable({
               </TableCell>
               {year === 0
                 ? [2025, 2026, 2027, 2028, 2029].map((year) => (
-                  <TableCell
-                    key={year}
-                    align="center"
-                    sx={{
-                      bgcolor: bgColorTh,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {year}
-                  </TableCell>
-                ))
+                    <TableCell
+                      key={year}
+                      align="center"
+                      sx={{
+                        bgcolor: bgColorTh,
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {year}
+                    </TableCell>
+                  ))
                 : months.map((month) => (
-                  <TableCell
-                    key={month}
-                    align="center"
-                    sx={{
-                      bgcolor: bgColorTh,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {month}
-                  </TableCell>
-                ))}
+                    <TableCell
+                      key={month}
+                      align="center"
+                      sx={{
+                        bgcolor: bgColorTh,
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {month}
+                    </TableCell>
+                  ))}
               {year > 0 && (
                 <TableCell
                   sx={{
@@ -511,12 +511,12 @@ export default function ProjectTable({
                             parent.kategori_proyek_id === 1
                               ? "#C63C51"
                               : parent.kategori_proyek_id === 2
-                                ? "#8C3061"
-                                : parent.kategori_proyek_id === 3
-                                  ? "#FFD35A"
-                                  : parent.kategori_proyek_id === 3
-                                    ? "#FFA823"
-                                    : "#DC0083",
+                              ? "#8C3061"
+                              : parent.kategori_proyek_id === 3
+                              ? "#FFD35A"
+                              : parent.kategori_proyek_id === 3
+                              ? "#FFA823"
+                              : "#DC0083",
                         }}
                       />
                     </Stack>
@@ -570,7 +570,7 @@ export default function ProjectTable({
                       //   // Compare the first month indices
                       //   return aFirstMonth - bFirstMonth;
                       // })
-                      .map((child) => (
+                      .map((child, index) => (
                         <ChildRow key={`${parent.id}-${child.id}`}>
                           <TableCell
                             sx={{
@@ -589,13 +589,17 @@ export default function ProjectTable({
                                 gap={1}
                                 ml={2}
                               >
-                                <Box width={40} flex={0} lineHeight={1}>
+                                {/* <Box width={40} flex={0} lineHeight={1}>
                                   <Iconify
                                     name="mdi:brightness-1"
                                     size={8}
                                     color={grey[500]}
                                   />
-                                </Box>
+                                </Box> */}
+
+                                <Typography component="span">
+                                  {child.no_urut}
+                                </Typography>
                                 <Box component="p">{child.kegiatan}</Box>
                               </Stack>
                               {/* <Chip

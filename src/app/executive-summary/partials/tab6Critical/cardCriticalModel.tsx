@@ -87,7 +87,7 @@ export interface KegiatanDtoNew {
   kegiatan: string;
   satuan: string;
   total_kegiatan: number;
-  no_urut: number;
+  no_urut: number | string;
   months: MonthsDto[];
 }
 
@@ -130,6 +130,7 @@ export interface ChildData {
   satuan: string;
   color: string;
   total_kegiatan: number;
+  no_urut: number | string;
   months: (MonthData | null)[];
 }
 
