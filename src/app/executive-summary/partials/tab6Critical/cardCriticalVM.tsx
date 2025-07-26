@@ -129,6 +129,7 @@ const useCardCriticalVM = () => {
         color: item.color,
         children: (item.kegiatan ?? []).map((keg) => ({
           id: keg.id,
+          no_urut: keg.no_urut,
           kegiatan: keg.kegiatan,
           target: "",
           satuan: keg.satuan,
