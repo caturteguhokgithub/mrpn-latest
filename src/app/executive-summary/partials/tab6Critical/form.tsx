@@ -482,13 +482,23 @@ export default function FormCritical({
                 </Stack>
               </Grid>
             </Grid>
-            <Stack>
+            <Stack
+              mt={2}
+              gap={2}
+              maxHeight="70vh"
+              overflow="auto"
+              sx={{
+                "&::-webkit-scrollbar": {
+                  width: "3px",
+                },
+              }}
+            >
               {state.kegiatan &&
                 state.kegiatan.map((tags: KegiatanDtoNew, index) => (
                   <Paper
                     key={`kegiatan-${tags.id}`}
                     variant="outlined"
-                    sx={{ mt: 1, p: 2, minWidth: "0 !important" }}
+                    sx={{ p: 2, minWidth: "0 !important" }}
                   >
                     <Grid container spacing={1}>
                       <Grid item xs={12}>
