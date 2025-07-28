@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: "export",
+  output: "export",
   // output: "standalone",
 
   // basePath: "/fe",
@@ -33,24 +33,6 @@ const nextConfig = {
   },
   compiler: {
     styledComponents: true,
-  },
-
-  async headers() {
-    return [
-      {
-        source: "/api/:path*", // apply CORS to API routes
-        headers: [
-          {
-            key: "Access-Control-Allow-Origin",
-            value: "*", // or a specific origin like "https://example.com"
-          },
-          {
-            key: "Access-Control-Allow-Methods",
-            value: "GET,POST,PUT,DELETE,OPTIONS",
-          },
-        ],
-      },
-    ];
   },
 };
 
