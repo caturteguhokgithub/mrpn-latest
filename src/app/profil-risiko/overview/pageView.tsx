@@ -41,6 +41,7 @@ import DialogComponent from "@/components/dialog";
 import { dtoGetApproval } from "@/app/penetapan/objek/pageModel";
 import useAuthorizationVM from "@/app/authorizationVM";
 import { API_CONSTANT } from "@/lib/core/api/apiModel";
+import usePenetapanSelera from "@/app/penetapan/kriteria/partials/tab4Selera/hooks/vm";
 
 interface SxParams {
   variant?: string;
@@ -102,6 +103,11 @@ export default function PageOverviewView() {
     stateApproval,
   } = useRiskOverviewVM();
 
+  const {
+    stateSelera,
+    getSelera,
+  } = usePenetapanSelera();
+
   const { objects, objectState, setObjectState, getMasterListObject } =
     usePenetapanGlobalVM();
 
@@ -118,6 +124,7 @@ export default function PageOverviewView() {
     if (objectState !== undefined) {
       getRiskOverviewData()
       getApproval()
+      getSelera();
     };
   }, [objectState]);
 
@@ -426,11 +433,25 @@ export default function PageOverviewView() {
                     />
                   ) : (
                     <CardItem title="Selera Risiko">
-                      {isDeveloping ? (
-                        <EmptyDevelopingState />
-                      ) : (
-                        <SeleraMatriks levelId={1} levelDampak="rendah" />
-                      )}
+                      {
+                        // Value Pernyataan
+                        // Array.isArray(stateSelera?.seleraRisiko) && stateSelera.seleraRisiko.length > 0
+                        //       ? stateSelera?.seleraRisiko[0].pernyataan
+                        //       : ""
+
+                        // Value Deskripsi
+                        // Array.isArray(stateSelera?.seleraRisiko) && stateSelera.seleraRisiko.length > 0
+                        //       ? stateSelera?.seleraRisiko[0].nilai
+                        //       : ""
+
+                        <SeleraMatriks
+                          levelId={1}
+                          levelDampak={
+                            Array.isArray(stateSelera?.seleraRisiko) && stateSelera.seleraRisiko.length > 0
+                              ? stateSelera?.seleraRisiko[0].type_nilai.toLowerCase()
+                              : ""
+                          } />
+                      }
                     </CardItem>
                   )}
                 </CustomTabPanel>
