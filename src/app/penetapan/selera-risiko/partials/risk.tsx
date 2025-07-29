@@ -2,7 +2,10 @@ import React, { Fragment, SetStateAction, useEffect } from "react";
 import {
   Box,
   Button,
+  Chip,
   Collapse,
+  FormControl,
+  Grid,
   ListItem,
   Stack,
   TextField,
@@ -23,6 +26,7 @@ import SeleraMatriks from "../../kriteria/partials/tab4Selera/matriks";
 import TableRas from "./table-ras";
 import { doReqSeleraDto } from "../../kriteria/partials/tab4Selera/hooks/model";
 import Iconify from "@/components/icons/iconify";
+import usePenetapanSelera from "../../kriteria/partials/tab4Selera/hooks/vm";
 
 export default function RiskContent({
   handleSaveButton,
@@ -30,14 +34,18 @@ export default function RiskContent({
   setState,
   isEmptyRisk,
   handleConfirm,
+  isEditSeleraRisiko,
 }: {
   handleSaveButton?: () => void;
   state?: doReqSeleraDto;
   setState?: (value: SetStateAction<doReqSeleraDto>) => void;
   isEmptyRisk?: boolean;
   handleConfirm?: () => void;
+  isEditSeleraRisiko?: boolean;
 }) {
   const { user } = useAuthContext((state) => state);
+  const { stateSelera } = usePenetapanSelera();
+
   const initialValue = isEmptyRisk ? "" : "1";
 
   const userLv = user?.type === "BAPPENAS" ? "bappenas" : "kl";
@@ -133,133 +141,178 @@ perencanaan pembangunan nasional"
           </Stack>
           <TableRas />
           <Stack gap={1}>
-            <Typography fontStyle="italic" fontSize={14} color={grey[600]}>
-              Tuliskan pernyataan selera risiko{" "}
-              {valueTheme == "Rendah"
-                ? "Rendah"
-                : valueTheme == "Konservatif"
-                ? "Konservatif"
-                : valueTheme == "Moderat"
-                ? "Moderat"
-                : "Tinggi"}
-            </Typography>
-
-            <TextareaStyled
-              aria-label="Deskripsi"
-              minRows={3}
-              value={state?.pernyataan}
-              onChange={(e) => {
-                setState &&
-                  setState((prevState) => ({
-                    ...prevState,
-                    pernyataan: e.target.value,
-                  }));
-              }}
-              placeholder={`Deskripsi ${
-                valueTheme == "Rendah"
-                  ? "Rendah"
-                  : valueTheme == "Konservatif"
-                  ? "Konservatif"
-                  : valueTheme == "Moderat"
-                  ? "Moderat"
-                  : "Tinggi"
-              }`}
-              // width="100%"
-            />
+            {state?.pernyataan !== "" && !isEditSeleraRisiko ? (
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={3}>
+                  <FormControl fullWidth>
+                    <Typography gutterBottom color={grey[600]}>
+                      Selera Risiko
+                    </Typography>
+                    <Box>
+                      <Chip
+                        color="primary"
+                        label={
+                          valueTheme == "Rendah"
+                            ? "Rendah"
+                            : valueTheme == "Konservatif"
+                            ? "Konservatif"
+                            : valueTheme == "Moderat"
+                            ? "Moderat"
+                            : "Tinggi"
+                        }
+                        sx={{
+                          fontSize: 14,
+                          px: 1,
+                        }}
+                      />
+                    </Box>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={9}>
+                  <FormControl fullWidth>
+                    <Typography gutterBottom color={grey[600]}>
+                      Pernyataan Selera Risiko
+                    </Typography>
+                    <Typography fontWeight={600}>
+                      {state?.pernyataan}
+                    </Typography>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            ) : (
+              <>
+                <Typography fontStyle="italic" fontSize={14} color={grey[600]}>
+                  Tuliskan pernyataan selera risiko{" "}
+                  {valueTheme == "Rendah"
+                    ? "Rendah"
+                    : valueTheme == "Konservatif"
+                    ? "Konservatif"
+                    : valueTheme == "Moderat"
+                    ? "Moderat"
+                    : "Tinggi"}
+                </Typography>
+                <TextareaStyled
+                  aria-label="Deskripsi"
+                  minRows={3}
+                  value={state?.pernyataan}
+                  onChange={(e) => {
+                    setState &&
+                      setState((prevState) => ({
+                        ...prevState,
+                        pernyataan: e.target.value,
+                      }));
+                  }}
+                  placeholder={`Deskripsi ${
+                    valueTheme == "Rendah"
+                      ? "Rendah"
+                      : valueTheme == "Konservatif"
+                      ? "Konservatif"
+                      : valueTheme == "Moderat"
+                      ? "Moderat"
+                      : "Tinggi"
+                  }`}
+                  // width="100%"
+                />
+              </>
+            )}
           </Stack>
         </Stack>
       )}
-      <Stack gap={2} mt={3}>
-        {!isEmptyRisk && (
-          <Stack gap={0}>
-            <Typography fontStyle="italic" fontSize={14} color={grey[600]}>
-              Pernyataan selera risiko
+      {state?.pernyataan === "" || isEditSeleraRisiko ? (
+        <Stack gap={2} mt={3}>
+          {!isEmptyRisk && (
+            <Stack gap={0}>
+              <Typography fontStyle="italic" fontSize={14} color={grey[600]}>
+                Pernyataan selera risiko
+              </Typography>
+              <Typography component="p">
+                Pernyataan Selera Risiko: Lorem ipsum dolor sit amet consectetur
+                adipisicing elit. Inventore sapiente magni qui libero, impedit
+                tempora odit maiores omnis accusantium voluptates debitis
+                tempore a sit, quo nisi necessitatibus esse incidunt in!
+              </Typography>
+            </Stack>
+          )}
+          {isEmptyRisk && (
+            <Typography color={grey[600]} fontSize={14} fontStyle="italic">
+              Pilih salah satu untuk memberikan deskripsi
+              {/* {userLevel === "bappenas" ? "deskripsi" : "nilai"} */}
             </Typography>
-            <Typography component="p">
-              Pernyataan Selera Risiko: Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Inventore sapiente magni qui libero, impedit
-              tempora odit maiores omnis accusantium voluptates debitis tempore
-              a sit, quo nisi necessitatibus esse incidunt in!
-            </Typography>
-          </Stack>
-        )}
-        {isEmptyRisk && (
-          <Typography color={grey[600]} fontSize={14} fontStyle="italic">
-            Pilih salah satu untuk memberikan deskripsi
-            {/* {userLevel === "bappenas" ? "deskripsi" : "nilai"} */}
-          </Typography>
-        )}
-        <ToggleButtonGroup
-          value={valueTheme}
-          exclusive
-          onChange={handleAlignment}
-          aria-label="text alignment"
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr 1fr",
-            [theme.breakpoints.down("md")]: {
-              gridTemplateColumns: "1fr 1fr",
-            },
-            [theme.breakpoints.down("sm")]: {
-              gridTemplateColumns: "1fr",
-            },
-            gap: 2,
-            button: {
-              "&:hover": {
-                bgcolor: alpha(theme.palette.primary.main, 0.1),
+          )}
+          <ToggleButtonGroup
+            value={valueTheme}
+            exclusive
+            onChange={handleAlignment}
+            aria-label="text alignment"
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr 1fr",
+              [theme.breakpoints.down("md")]: {
+                gridTemplateColumns: "1fr 1fr",
               },
-              "&.Mui-selected": {
-                bgcolor: theme.palette.primary.main,
-                color: "white",
-                ".MuiBox-root": {
-                  bgcolor: theme.palette.primary.main,
-                  color: "white",
-                  borderRight: "1px solid white",
-                },
+              [theme.breakpoints.down("sm")]: {
+                gridTemplateColumns: "1fr",
+              },
+              gap: 2,
+              button: {
                 "&:hover": {
+                  bgcolor: alpha(theme.palette.primary.main, 0.1),
+                },
+                "&.Mui-selected": {
                   bgcolor: theme.palette.primary.main,
                   color: "white",
+                  ".MuiBox-root": {
+                    bgcolor: theme.palette.primary.main,
+                    color: "white",
+                    borderRight: "1px solid white",
+                  },
+                  "&:hover": {
+                    bgcolor: theme.palette.primary.main,
+                    color: "white",
+                  },
                 },
               },
-            },
-          }}
-        >
-          <CustomToggleButton
-            //    variant="danger"
-            code={userLevel === "bappenas" ? "Nilai" : null}
-            value="Rendah"
-            //    valueLabel="1-6"
-            label="Rendah"
-            minheight={60}
-          />
-          <CustomToggleButton
-            //    variant="warning"
-            code={userLevel === "bappenas" ? "Nilai" : null}
-            value="Konservatif"
-            //    valueLabel="7-12"
-            label="Konservatif"
-            minheight={60}
-          />
-          <CustomToggleButton
-            //    variant="success"
-            code={userLevel === "bappenas" ? "Nilai" : null}
-            value="Moderat"
-            //    valueLabel="13-18"
-            label="Moderat"
-            minheight={60}
-          />
-          <CustomToggleButton
-            //    variant="primary"
-            code={userLevel === "bappenas" ? "Nilai" : null}
-            value="Tinggi"
-            //    valueLabel="19-25"
-            label="Tinggi"
-            minheight={60}
-          />
-        </ToggleButtonGroup>
-      </Stack>
+            }}
+          >
+            <CustomToggleButton
+              //    variant="danger"
+              code={userLevel === "bappenas" ? "Nilai" : null}
+              value="Rendah"
+              //    valueLabel="1-6"
+              label="Rendah"
+              minheight={60}
+            />
+            <CustomToggleButton
+              //    variant="warning"
+              code={userLevel === "bappenas" ? "Nilai" : null}
+              value="Konservatif"
+              //    valueLabel="7-12"
+              label="Konservatif"
+              minheight={60}
+            />
+            <CustomToggleButton
+              //    variant="success"
+              code={userLevel === "bappenas" ? "Nilai" : null}
+              value="Moderat"
+              //    valueLabel="13-18"
+              label="Moderat"
+              minheight={60}
+            />
+            <CustomToggleButton
+              //    variant="primary"
+              code={userLevel === "bappenas" ? "Nilai" : null}
+              value="Tinggi"
+              //    valueLabel="19-25"
+              label="Tinggi"
+              minheight={60}
+            />
+          </ToggleButtonGroup>
+        </Stack>
+      ) : (
+        ""
+      )}
       <Collapse in={valueTheme === "Rendah"}>
-        <Box mb={2}>
+        <Box>
           <LabelRadio
             heading="RENDAH"
             rangeValue={userLevel === "bappenas" ? "1-5" : "1-6"}
@@ -333,7 +386,7 @@ perencanaan pembangunan nasional"
         {/* {saveButton} */}
       </Collapse>
       <Collapse in={valueTheme === "Konservatif"}>
-        <Box mb={2}>
+        <Box>
           <LabelRadio
             heading="KONSERVATIF"
             rangeValue={userLevel === "bappenas" ? "1-10" : "7-12"}
@@ -416,7 +469,7 @@ perencanaan pembangunan nasional"
         {/* {saveButton} */}
       </Collapse>
       <Collapse in={valueTheme === "Moderat"}>
-        <Box mb={2}>
+        <Box>
           <LabelRadio
             heading="MODERAT"
             rangeValue={userLevel === "bappenas" ? "1-15" : "13-18"}
@@ -503,7 +556,7 @@ perencanaan pembangunan nasional"
         {/* {saveButton} */}
       </Collapse>
       <Collapse in={valueTheme === "Tinggi"}>
-        <Box mb={2}>
+        <Box>
           <LabelRadio
             heading="TINGGI"
             rangeValue={userLevel === "bappenas" ? "1-20" : "19-25"}
@@ -578,15 +631,16 @@ perencanaan pembangunan nasional"
         </Box>
         {/* {saveButton} */}
       </Collapse>
-      <Stack
-        direction="row"
-        gap={1}
-        alignItems="center"
-        justifyContent="flex-end"
-        mt={2}
-      >
-        {isEmptyRisk && saveButton}
-        {/* <Button
+      {(state?.pernyataan === "" || isEditSeleraRisiko) && (
+        <Stack
+          direction="row"
+          gap={1}
+          alignItems="center"
+          justifyContent="flex-end"
+          mt={2}
+        >
+          {isEmptyRisk && saveButton}
+          {/* <Button
           color="success"
           variant="contained"
           endIcon={<Iconify name="mdi:send" />}
@@ -595,7 +649,8 @@ perencanaan pembangunan nasional"
         >
           Ajukan Approval
         </Button> */}
-      </Stack>
+        </Stack>
+      )}
     </Fragment>
   );
 }

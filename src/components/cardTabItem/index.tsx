@@ -55,6 +55,7 @@ export default function CardItem({
   settingEditBisnisClick,
   settingAddOnclickOnly,
   infoTooltip,
+  sxCardContent,
 }: {
   title?: React.ReactNode;
   children: React.ReactNode;
@@ -71,6 +72,7 @@ export default function CardItem({
   settingEditBisnisClick?: () => void;
   settingAddOnclickOnly?: () => void;
   infoTooltip?: React.ReactNode;
+  sxCardContent?: React.CSSProperties | any;
 }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -146,8 +148,8 @@ export default function CardItem({
         anchorOrigin={{ horizontal: "right", vertical: "top" }}
       >
         {multiEdit &&
-          (hasPrivilege(permission, pathname, "add") ||
-            hasPrivilege(permission, pathname, "update")) ? (
+        (hasPrivilege(permission, pathname, "add") ||
+          hasPrivilege(permission, pathname, "update")) ? (
           <>
             <MenuItem onClick={settingEditBisnisClick}>
               <ListItemDropdownMenu label="Tambah Proses Bisnis" />
@@ -286,6 +288,7 @@ export default function CardItem({
         sx={{
           p: contentNoPadding ? "0 !important" : 2,
           pb: contentNoPadding ? 0 : "16px !important",
+          ...sxCardContent,
         }}
       >
         {children}

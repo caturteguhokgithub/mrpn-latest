@@ -14,6 +14,7 @@ import usePenetapanSelera from "./hooks/vm";
 import { red, green } from "@mui/material/colors";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { doReqSeleraApprovalDto } from "./hooks/model";
+import { max } from "lodash";
 
 export default function CardSelera() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
@@ -35,6 +36,8 @@ export default function CardSelera() {
     stateSelera,
     getSelera,
     updateApproval,
+    isEditSeleraRisiko,
+    handleEditSeleraRisiko,
   } = usePenetapanSelera();
 
   useEffect(() => {
@@ -55,7 +58,7 @@ export default function CardSelera() {
         ...stateApproval,
         id: stateSelera?.seleraRisiko[0].id ?? 0,
         status: status,
-        message: msg
+        message: msg,
       };
 
       updateApproval(param);
@@ -79,7 +82,6 @@ export default function CardSelera() {
     setEmptyRisk(!emptyRisk);
   };
 
-
   const isEmptyRisk = true;
   const isStatus = stateApproval.status;
 
@@ -94,10 +96,10 @@ export default function CardSelera() {
                 isStatus === "rejected"
                   ? "error"
                   : isStatus === "draft"
-                    ? "default"
-                    : "warning"
+                  ? "default"
+                  : "warning"
               }
-              variant="outlined"
+              // variant="outlined"
               label={
                 <Typography
                   fontWeight={600}
@@ -107,22 +109,22 @@ export default function CardSelera() {
                   {isStatus === "rejected"
                     ? "Rejected"
                     : isStatus === "draft"
-                      ? "Draft"
-                      : "Review"}
+                    ? "Draft"
+                    : "Review"}
                 </Typography>
               }
-              icon={
-                <Iconify
-                  name={
-                    isStatus === "rejected"
-                      ? "mdi:close"
-                      : isStatus === "draft"
-                        ? "mdi:invoice-text-edit"
-                        : "mdi:magnify-expand"
-                  }
-                />
-              }
-              sx={{ px: 2 }}
+              // icon={
+              //   <Iconify
+              //     name={
+              //       isStatus === "rejected"
+              //         ? "mdi:close"
+              //         : isStatus === "draft"
+              //         ? "mdi:invoice-text-edit"
+              //         : "mdi:magnify-expand"
+              //     }
+              //   />
+              // }
+              sx={{ px: 1 }}
             />
             {isStatus === "rejected" ? (
               <Typography fontSize={14} color={red[700]}>
@@ -130,13 +132,13 @@ export default function CardSelera() {
                 <Typography component="strong" fontWeight={600} fontSize={14}>
                   {stateApproval?.created_at
                     ? new Date(stateApproval.created_at).toLocaleDateString(
-                      "id-ID",
-                      {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      }
-                    )
+                        "id-ID",
+                        {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        }
+                      )
                     : "-"}
                 </Typography>
               </Typography>
@@ -146,13 +148,13 @@ export default function CardSelera() {
                 <Typography component="strong" fontWeight={600} fontSize={14}>
                   {stateApproval?.created_at
                     ? new Date(stateApproval.created_at).toLocaleDateString(
-                      "id-ID",
-                      {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      }
-                    )
+                        "id-ID",
+                        {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        }
+                      )
                     : "-"}
                 </Typography>
               </Typography>
@@ -170,7 +172,7 @@ export default function CardSelera() {
                   borderRadius: 50,
                   px: 2,
                 }}
-              // onClick={() => setOpenModal(true)}
+                // onClick={() => setOpenModal(true)}
               >
                 Catatan
               </Button>
@@ -187,19 +189,24 @@ export default function CardSelera() {
                 onclick={() => setModalOpenRef(true)}
               />
             )}
-            <Fragment>
-              {!isEmptyRisk && (
-                <AddButton
-                  noMargin
-                  filled
-                  startIcon={<Iconify name="mdi:pencil" />}
-                  title="Edit Selera Risiko"
-                  onclick={handleSetRisk}
-                />
-              )}
-            </Fragment>
+            {requestSelera?.pernyataan !== "" && !isEditSeleraRisiko && (
+              <AddButton
+                noMargin
+                filled
+                startIcon={<Iconify name="mdi:pencil" />}
+                title="Edit Selera Risiko"
+                onclick={handleEditSeleraRisiko}
+              />
+            )}
           </Fragment>
         }
+        sxCardContent={{
+          maxHeight: "calc(100vh - 404px)",
+          overflowY: "auto",
+          "&::-webkit-scrollbar": {
+            width: 3,
+          },
+        }}
       >
         {/* {isDeveloping ? (
           <EmptyDevelopingState />
@@ -210,6 +217,7 @@ export default function CardSelera() {
           setState={setRequestSelera}
           isEmptyRisk={isEmptyRisk}
           handleConfirm={() => setOpenModalConfirmApproval(true)}
+          isEditSeleraRisiko={isEditSeleraRisiko}
         />
         {/* )} */}
       </CardItem>
@@ -227,13 +235,15 @@ export default function CardSelera() {
         closeButton
         dialogOpen={modalOpenRef}
         dialogClose={() => setModalOpenRef(false)}
-        title={`Matriks Referensi Selera Risiko ${stateSelera?.seleraRisiko[0]?.type_nilai ?? ""}`}
+        title={`Matriks Referensi Selera Risiko ${
+          stateSelera?.seleraRisiko[0]?.type_nilai ?? ""
+        }`}
       >
         <SeleraMatriks
           levelId={1}
-          levelDampak=
-          {
-            Array.isArray(stateSelera?.seleraRisiko) && stateSelera.seleraRisiko.length > 0
+          levelDampak={
+            Array.isArray(stateSelera?.seleraRisiko) &&
+            stateSelera.seleraRisiko.length > 0
               ? stateSelera?.seleraRisiko[0].type_nilai.toLowerCase()
               : ""
           }
