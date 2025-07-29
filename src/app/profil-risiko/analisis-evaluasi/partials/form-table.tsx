@@ -120,7 +120,7 @@ export default function FormTable({
         />
       </Grid>
 
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={12} sm={4}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Level Kemungkinan (LK)" />
           <Typography fontWeight={600}>
@@ -128,7 +128,7 @@ export default function FormTable({
           </Typography>
         </FormControl>
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={12} sm={4}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Level Dampak (LD)" />
           <Typography fontWeight={600}>

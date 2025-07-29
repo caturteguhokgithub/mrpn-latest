@@ -35,7 +35,7 @@ import { IconFA } from "@/components/icons/icon-fa";
 import { isDeveloping } from "@/components/layouts/layout";
 import EmptyDevelopingState from "@/components/empty/developing";
 import TableOverview from "./partials/table";
-import { green, red } from "@mui/material/colors";
+import { green, grey, red } from "@mui/material/colors";
 import FormNote from "./partials/form-note";
 import DialogComponent from "@/components/dialog";
 import { dtoGetApproval } from "@/app/penetapan/objek/pageModel";
@@ -87,7 +87,6 @@ export default function PageOverviewView() {
   const { user } = useAuthorizationVM();
   console.log(user);
 
-
   const {
     dataRiskOverview,
     getRiskOverviewData,
@@ -103,10 +102,7 @@ export default function PageOverviewView() {
     stateApproval,
   } = useRiskOverviewVM();
 
-  const {
-    stateSelera,
-    getSelera,
-  } = usePenetapanSelera();
+  const { stateSelera, getSelera } = usePenetapanSelera();
 
   const { objects, objectState, setObjectState, getMasterListObject } =
     usePenetapanGlobalVM();
@@ -122,10 +118,10 @@ export default function PageOverviewView() {
 
   useEffect(() => {
     if (objectState !== undefined) {
-      getRiskOverviewData()
-      getApproval()
+      getRiskOverviewData();
+      getApproval();
       getSelera();
-    };
+    }
   }, [objectState]);
 
   const handleUpdateStatus = async (status: string, msg = "") => {
@@ -134,7 +130,7 @@ export default function PageOverviewView() {
         ...stateApproval,
         id: objectState?.id ?? 0,
         status: status,
-        message: msg
+        message: msg,
       };
 
       updateApproval(param);
@@ -144,10 +140,11 @@ export default function PageOverviewView() {
   return (
     <Fragment>
       <ContentPage
-        title={`Overview Risiko ${year == 0
-          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-          : "Tahun " + year
-          }`}
+        title={`Overview Risiko ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         withCard={objectState === undefined}
         chooseObject={
           year == 0 ? (
@@ -166,7 +163,7 @@ export default function PageOverviewView() {
           )
         }
         addButton={
-          user?.type == "NON BAPPENAS" ?
+          user?.type == "NON BAPPENAS" ? (
             <Button
               color="success"
               variant="contained"
@@ -176,7 +173,9 @@ export default function PageOverviewView() {
             >
               Ajukan Approval
             </Button>
-            : ""
+          ) : (
+            ""
+          )
         }
       >
         <Stack gap={3}>
@@ -253,7 +252,10 @@ export default function PageOverviewView() {
                                 );
                                 const objek_id = objectState?.id ?? 0;
                                 const params =
-                                  "token=" + token + "&uraian_penetapan_objek_id=" + objek_id;
+                                  "token=" +
+                                  token +
+                                  "&uraian_penetapan_objek_id=" +
+                                  objek_id;
 
                                 window
                                   .open(uri + "?" + params, "_blank")
@@ -352,8 +354,8 @@ export default function PageOverviewView() {
                                 isStatus === "reject"
                                   ? "error"
                                   : isStatus === "draft"
-                                    ? "default"
-                                    : "warning"
+                                  ? "default"
+                                  : "warning"
                               }
                               variant="outlined"
                               label={
@@ -365,8 +367,8 @@ export default function PageOverviewView() {
                                   {isStatus === "reject"
                                     ? "Reject"
                                     : isStatus === "draft"
-                                      ? "Draft"
-                                      : "Review"}
+                                    ? "Draft"
+                                    : "Review"}
                                 </Typography>
                               }
                               icon={
@@ -375,8 +377,8 @@ export default function PageOverviewView() {
                                     isStatus === "reject"
                                       ? "mdi:close"
                                       : isStatus === "draft"
-                                        ? "mdi:invoice-text-edit"
-                                        : "mdi:magnify-expand"
+                                      ? "mdi:invoice-text-edit"
+                                      : "mdi:magnify-expand"
                                   }
                                 />
                               }
@@ -432,26 +434,67 @@ export default function PageOverviewView() {
                       description="Silahkan isi konten halaman ini"
                     />
                   ) : (
-                    <CardItem title="Selera Risiko">
-                      {
-                        // Value Pernyataan
-                        // Array.isArray(stateSelera?.seleraRisiko) && stateSelera.seleraRisiko.length > 0
-                        //       ? stateSelera?.seleraRisiko[0].pernyataan
-                        //       : ""
-
-                        // Value Deskripsi
-                        // Array.isArray(stateSelera?.seleraRisiko) && stateSelera.seleraRisiko.length > 0
-                        //       ? stateSelera?.seleraRisiko[0].nilai
-                        //       : ""
-
-                        <SeleraMatriks
-                          levelId={1}
-                          levelDampak={
-                            Array.isArray(stateSelera?.seleraRisiko) && stateSelera.seleraRisiko.length > 0
-                              ? stateSelera?.seleraRisiko[0].type_nilai.toLowerCase()
-                              : ""
-                          } />
+                    <CardItem
+                      title={
+                        <Stack direction="row" alignItems="center" gap={1}>
+                          Selera Risiko
+                          {Array.isArray(stateSelera?.seleraRisiko) &&
+                          stateSelera.seleraRisiko.length > 0 ? (
+                            <Chip
+                              label={
+                                stateSelera?.seleraRisiko[0].type_nilai.toLowerCase() ===
+                                "rendah"
+                                  ? "Rendah"
+                                  : stateSelera?.seleraRisiko[0].type_nilai.toLowerCase() ===
+                                    "konservatif"
+                                  ? "Konservatif"
+                                  : stateSelera?.seleraRisiko[0].type_nilai.toLowerCase() ===
+                                    "moderat"
+                                  ? "Moderat"
+                                  : "Tinggi"
+                              }
+                              color="primary"
+                            />
+                          ) : (
+                            ""
+                          )}
+                        </Stack>
                       }
+                    >
+                      {Array.isArray(stateSelera?.seleraRisiko) &&
+                      stateSelera.seleraRisiko.length > 0 ? (
+                        <Stack direction="column" gap={1}>
+                          <Typography color={grey[600]}>
+                            Pernyataan Selera Risiko:{" "}
+                            <Typography
+                              component="span"
+                              color={grey[800]}
+                              fontWeight={500}
+                            >
+                              {Array.isArray(stateSelera?.seleraRisiko) &&
+                              stateSelera.seleraRisiko.length > 0
+                                ? stateSelera?.seleraRisiko[0].pernyataan
+                                : ""}
+                            </Typography>
+                          </Typography>
+                          <SeleraMatriks
+                            levelId={1}
+                            levelDampak={
+                              Array.isArray(stateSelera?.seleraRisiko) &&
+                              stateSelera.seleraRisiko.length > 0
+                                ? stateSelera?.seleraRisiko[0].type_nilai.toLowerCase()
+                                : ""
+                            }
+                          />
+                        </Stack>
+                      ) : (
+                        <EmptyState
+                          dense
+                          icon={<IconEmptyData width={100} />}
+                          title="Data Kosong"
+                          description="Silahkan isi konten halaman ini"
+                        />
+                      )}
                     </CardItem>
                   )}
                 </CustomTabPanel>
@@ -494,7 +537,8 @@ export default function PageOverviewView() {
               onClick={() => {
                 handleUpdateStatus("review");
                 setOpenModalConfirmApproval(false);
-              }}>
+              }}
+            >
               Ya
             </Button>
           </DialogActions>

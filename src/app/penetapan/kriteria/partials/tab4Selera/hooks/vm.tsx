@@ -26,14 +26,13 @@ const usePenetapanSelera = () => {
   const [openModalConfirmApproval, setOpenModalConfirmApproval] =
     useState<boolean>(false);
   const [stateSelera, setStateSelera] = useState<doGetSeleraDto>();
-
   const [requestSelera, setRequestSelera] = useState<doReqSeleraDto>({
     ...initSelera,
   });
-
   const [stateApproval, setStateApproval] = useState<doReqSeleraApprovalDto>({
     ...initApprovalSelera,
   });
+  const [isEditSeleraRisiko, setEditSeleraRisiko] = useState(false);
 
   async function createSelera(param: doReqSeleraDto) {
     const req: doReqSeleraDto = {
@@ -80,7 +79,7 @@ const usePenetapanSelera = () => {
 
         const finalResult: doGetSeleraDto = {
           referensi: response.result.referensi,
-          seleraRisiko: seleraRisikoList
+          seleraRisiko: seleraRisikoList,
         };
 
         setStateSelera(finalResult);
@@ -127,6 +126,10 @@ const usePenetapanSelera = () => {
     }
   }
 
+  const handleEditSeleraRisiko = () => {
+    setEditSeleraRisiko(!isEditSeleraRisiko);
+  };
+
   return {
     loading,
     createSelera,
@@ -140,6 +143,8 @@ const usePenetapanSelera = () => {
     stateSelera,
     getSelera,
     updateApproval,
+    isEditSeleraRisiko,
+    handleEditSeleraRisiko,
   };
 };
 
