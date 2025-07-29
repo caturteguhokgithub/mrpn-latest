@@ -109,6 +109,7 @@ const useAuthorizationVM = () => {
       Object.assign(new ResponseBaseDto(), response);
       if (response.code == API_CODE.success) {
         sessionStorage.clear();
+        window?.localStorage?.removeItem("selectedRKP");
         setUser(undefined);
         setToken(undefined);
         setMenu([]);

@@ -19,6 +19,7 @@ import { blue, grey } from "@mui/material/colors";
 import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { GetTarget } from "@/lib/utils/common";
+import { SasaranDto } from "@/app/executive-summary/partials/tab4Cascading/cardDiagram/cardDiagramModel";
 
 export default function HeaderTable({
   noPadding,
@@ -173,31 +174,32 @@ export default function HeaderTable({
           </TableHead>
           <TableBody>
             {data &&
-              data.sasaran &&
-              data.sasaran.map((ssr, index) => (
+              data.rkp &&
+              data.rkp.sasaran &&
+              data.rkp.sasaran.map((ssr: SasaranDto, index) => (
                 <React.Fragment key={index}>
                   <TableRow>
                     <TableCell
-                      rowSpan={data.indikator.length}
+                      rowSpan={ssr.indikator.length}
                       sx={{
                         verticalAlign: "top",
                       }}
                     >
-                      {ssr}
+                      {ssr.value}
                     </TableCell>
                     <TableCell
                       sx={{
                         verticalAlign: "top",
                       }}
                     >
-                      {data.indikator[0].value}
+                      {ssr.indikator[0].value}
                     </TableCell>
                     <TableCell
                       sx={{
                         verticalAlign: "top",
                       }}
                     >
-                      {getTarget(data.indikator[0])}
+                      {getTarget(ssr.indikator[0])}
                     </TableCell>
                     <TableCell
                       align="center"
@@ -208,7 +210,7 @@ export default function HeaderTable({
                       {data.periode}
                     </TableCell>
                   </TableRow>
-                  {data.indikator.slice(1).map((child, childIndex) => (
+                  {ssr.indikator.slice(1).map((child: IndikatorDto, childIndex) => (
                     <TableRow key={childIndex}>
                       <TableCell
                         sx={{

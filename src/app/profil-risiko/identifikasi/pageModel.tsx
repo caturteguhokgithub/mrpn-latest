@@ -1,6 +1,7 @@
 import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
 import { BaseAPIServiceParam } from "@/lib/core/api/apiModel";
 import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
+import { KPDto } from "@/app/executive-summary/partials/tab4Cascading/cardDiagram/cardDiagramModel";
 
 export interface ProfileRiskDto {
   id: number
@@ -27,6 +28,7 @@ export interface IndikasiRisiko {
 
 export interface IdentificationRiskResDto {
   objek_mrpn: string
+  rkp: KPDto
   topik: string
   sasaran: string[]
   indikasi_risiko: IndikasiRisiko[]

@@ -23,6 +23,9 @@ const useIdentificationRiskVM = () => {
   const [optionImpactArea, setOptionImpactArea] = useState<string[]>([]);
   const [optionPeristiwaRisiko, setOptionPeristiwaRisiko] = useState<string[]>([]);
 
+  const initReq: IdentificationRiskAddReqDto = JSON.parse(JSON.stringify(initIdentificationRiskAddReqDto));
+  const [request, setRequest] = useState<IdentificationRiskAddReqDto>(initReq);
+
   const { objectState } = usePenetapanGlobalVM();
 
   const [modal, setModal] = useState<{ isOpen: boolean; action: string }>({
@@ -88,11 +91,6 @@ const useIdentificationRiskVM = () => {
       setOptionImpactArea(paramValue);
     }
   }
-
-  const initReq: IdentificationRiskAddReqDto = JSON.parse(
-    JSON.stringify(initIdentificationRiskAddReqDto)
-  );
-  const [request, setRequest] = useState<IdentificationRiskAddReqDto>(initReq);
 
   const actionModal = (isOpen: boolean, action: string, id?: number) => {
     let initReq: IdentificationRiskAddReqDto = JSON.parse(

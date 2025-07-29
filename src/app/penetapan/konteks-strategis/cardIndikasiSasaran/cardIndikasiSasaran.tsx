@@ -17,17 +17,15 @@ import useIndikatorSasaranVM from "@/app/penetapan/konteks-strategis/cardIndikas
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { bgColorTh } from "@/utils/color";
 import { grey } from "@mui/material/colors";
-
-type Row = {
-  uraian: string;
-  sasaran: string;
-  indicator: string[];
-  target: string[];
-  satuan: string[];
-};
+import { IndikatorDto, SasaranDto } from "@/app/misc/rkp/rkpServiceModel";
+import { GetTarget } from "@/lib/utils/common";
 
 export default function CardIndikasiSasaran() {
   const { rpjmn, year } = useRKPContext((state) => state);
+
+  const getTarget = (indikator: IndikatorDto) => {
+    return GetTarget(rpjmn, year, indikator);
+  };
 
   const { objectState, indikatorSasaranData, getDataIndikatorSasaran } =
     useIndikatorSasaranVM();
@@ -37,82 +35,6 @@ export default function CardIndikasiSasaran() {
       getDataIndikatorSasaran();
     }
   }, [objectState]);
-
-  const generateRows = () => {
-    if (indikatorSasaranData == undefined) {
-      return [];
-    }
-    let index = 0;
-
-    if (rpjmn != undefined) {
-      for (let i = rpjmn.start; i <= rpjmn.end; i++) {
-        if (i !== year && i <= year) {
-          index++;
-        }
-      }
-    }
-
-    let rows: Row[] = [];
-    let row: Row = {
-      uraian: indikatorSasaranData.rkp.value,
-      sasaran: "",
-      indicator: [],
-      target: [],
-      satuan: [],
-    };
-    indikatorSasaranData.rkp.sasaran.map((sasaran) => {
-      row.sasaran = sasaran.value;
-      sasaran.indikator.map((indikator) => {
-        row.indicator.push(indikator.value);
-        let target = "";
-        // switch (index) {
-        //   case 0:
-        //     target = indikator.target_0 + " " + indikator.satuan;
-        //     break;
-        //   case 1:
-        //     target = indikator.target_1 + " " + indikator.satuan;
-        //     break;
-        //   case 2:
-        //     target = indikator.target_2 + " " + indikator.satuan;
-        //     break;
-        //   case 3:
-        //     target = indikator.target_3 + " " + indikator.satuan;
-        //     break;
-        //   case 4:
-        //     target = indikator.target_4 + " " + indikator.satuan;
-        //     break;
-        //   default:
-        //     target = indikator.target_0 + " " + indikator.satuan;
-        //     break;
-        // }
-
-        switch (index) {
-          case 0:
-            target = indikator.target_0;
-            break;
-          case 1:
-            target = indikator.target_1;
-            break;
-          case 2:
-            target = indikator.target_2;
-            break;
-          case 3:
-            target = indikator.target_3;
-            break;
-          case 4:
-            target = indikator.target_4;
-            break;
-          default:
-            target = indikator.target_0;
-            break;
-        }
-        row.target.push(target);
-        row.satuan.push(indikator.satuan); // Push the satuan value
-      });
-      rows.push(row);
-    });
-    return rows;
-  };
 
   return (
     <CardItem
@@ -186,38 +108,54 @@ export default function CardIndikasiSasaran() {
               ))}
             </TableHead>
             <TableBody>
-              {generateRows().map((row, rowIndex) =>
-                row.indicator.map((subItem, subIndex) => (
-                  <TableRow key={`${rowIndex}-${subIndex}`}>
-                    {subIndex === 0 && (
+              {indikatorSasaranData?.rkp?.sasaran.map((sasaran: SasaranDto, indexSasaran) => (
+                <React.Fragment key={indexSasaran}>
+                  <TableRow>
+                    {indexSasaran === 0 && (
                       <TableCell
-                        rowSpan={row.indicator.length}
+                        rowSpan={indikatorSasaranData.rkp.sasaran.reduce(
+                          (total, sasaran) => total + sasaran.indikator.length,
+                          0
+                        )}
                         sx={{ verticalAlign: "top" }}
                       >
-                        {row.uraian}
+                        {indikatorSasaranData.rkp.value}
                       </TableCell>
                     )}
-                    {subIndex === 0 && (
-                      <TableCell
-                        rowSpan={row.indicator.length}
-                        sx={{ verticalAlign: "top" }}
-                      >
-                        {row.sasaran}
-                      </TableCell>
-                    )}
-                    <TableCell sx={{ verticalAlign: "top" }}>
-                      {subItem}
-                    </TableCell>
-                    <TableCell align="right" sx={{ verticalAlign: "top" }}>
-                      {row.target[subIndex]}
+                    <TableCell
+                      rowSpan={sasaran.indikator.length}
+                      sx={{ verticalAlign: "top" }}
+                    >
+                      {sasaran.value}
                     </TableCell>
                     <TableCell sx={{ verticalAlign: "top" }}>
-                      {row.satuan[subIndex]}
+                      {sasaran.indikator[0].value}
+                    </TableCell>
+                    <TableCell sx={{ verticalAlign: "top" }}>
+                      {getTarget(sasaran.indikator[0])}
+                    </TableCell>
+                    <TableCell align="center" sx={{ verticalAlign: "top" }}>
+                      {sasaran.indikator[0].satuan}
                     </TableCell>
                   </TableRow>
-                ))
-              )}
+
+                  {sasaran.indikator.slice(1).map((indikator, indexIndikator) => (
+                    <TableRow key={indexIndikator}>
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        {indikator.value}
+                      </TableCell>
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        {getTarget(indikator)}
+                      </TableCell>
+                      <TableCell align="center" sx={{ verticalAlign: "top" }}>
+                        {indikator.satuan}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </React.Fragment>
+              ))}
             </TableBody>
+
           </Table>
         </TableContainer>
       )}

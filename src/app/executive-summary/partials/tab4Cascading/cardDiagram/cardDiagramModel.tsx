@@ -1,6 +1,6 @@
-import {BaseAPIServiceParam} from "@/lib/core/api/apiModel";
-import {MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel";
-import {ProPDto, RoDto} from "@/app/misc/rkp/rkpServiceModel";
+import { BaseAPIServiceParam } from "@/lib/core/api/apiModel";
+import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
+import { ProPDto, RoDto } from "@/app/misc/rkp/rkpServiceModel";
 
 export interface ProjectDefaultDto {
   id: number
@@ -10,18 +10,26 @@ export interface ProjectDefaultDto {
 }
 
 export type PropDto = ProPDto & {
-  ro:RoDto[]
+  ro: RoDto[]
 }
 
 export type KLPengampu = MiscMasterListStakeholderRes & {
-  id:number
-  props:PropDto[]
+  id: number
+  props: PropDto[]
 }
 
 export interface IndikatorDto {
   id: number
   code: string
   value: string
+  kementerian_id: number
+  satuan: string
+  src_rkp_kp_sasaran_id: number
+  target_0: string
+  target_1: string
+  target_2: string
+  target_3: string
+  target_4: string
 }
 
 export interface SasaranDto {
@@ -45,7 +53,7 @@ export type PNDto = ProjectDefaultDto & {
 }
 
 export type RKPCascadingDto = {
-  pn : PNDto,
+  pn: PNDto,
   total_anggaran: number
 }
 
@@ -78,5 +86,5 @@ export type UpdateExsumCascadingDiagramByExsumIdServiceModel = BaseAPIServicePar
 };
 
 export type DeleteExsumCascadingDiagramByIdServiceModel = BaseAPIServiceParam & {
-  body: { id:number };
+  body: { id: number };
 };
