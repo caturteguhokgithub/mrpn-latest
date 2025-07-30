@@ -3,13 +3,16 @@ import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { useState } from "react";
 import {
   initRiskAnalysisAddState,
-  RiskAnalysisAddReqDto, RiskAnalysisAddStateDto, RiskAnalysisDto,
-  RiskAnalysisResDto
+  RiskAnalysisAddReqDto,
+  RiskAnalysisAddStateDto,
+  RiskAnalysisDto,
+  RiskAnalysisResDto,
 } from "@/app/profil-risiko/analisis-evaluasi/pageModel";
 import {
-  doCreateRiskAnalysis, doDeleteRiskAnalysis,
+  doCreateRiskAnalysis,
+  doDeleteRiskAnalysis,
   doGetRiskAnalysis,
-  doUpdateRiskAnalysis
+  doUpdateRiskAnalysis,
 } from "@/app/profil-risiko/analisis-evaluasi/pageService";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import { doGetMasterRiskMatrix } from "@/app/misc/master/masterService";
@@ -18,70 +21,75 @@ import { ProfileRiskDto } from "@/app/profil-risiko/identifikasi/pageModel";
 import { RiskOverviewData } from "@/app/profil-risiko/overview/pageModel";
 
 export const useRiskAnalysisVM = () => {
-
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
 
-  const {
-    objectState
-  } = usePenetapanGlobalVM()
+  const { objectState } = usePenetapanGlobalVM();
 
-  const [optionsRiskMatrix, setOptionsRiskMatrix] = useState<MasterRiskMatrixRes[]>([])
+  const [optionsRiskMatrix, setOptionsRiskMatrix] = useState<
+    MasterRiskMatrixRes[]
+  >([]);
   const getMasterRiskMatrix = async () => {
     const response = await doGetMasterRiskMatrix({
       body: {},
       loadingContext: loadingContext,
-      errorModalContext: errorModalContext
-    })
+      errorModalContext: errorModalContext,
+    });
     if (response?.code == API_CODE.success) {
-      let result: MasterRiskMatrixRes[] = response.result
-      setOptionsRiskMatrix(result)
+      let result: MasterRiskMatrixRes[] = response.result;
+      setOptionsRiskMatrix(result);
     }
-  }
+  };
 
-  const [optionsRisk, setOptionRisk] = useState<ProfileRiskDto[]>([])
-  const [riskAnalysisData, setRiskAnalysisData] = useState<RiskAnalysisDto[]>([])
-  const [dataTable, setDataTable] = useState<RiskOverviewData[]>([])
+  const [optionsRisk, setOptionRisk] = useState<ProfileRiskDto[]>([]);
+  const [riskAnalysisData, setRiskAnalysisData] = useState<RiskAnalysisDto[]>(
+    []
+  );
+  const [dataTable, setDataTable] = useState<RiskOverviewData[]>([]);
 
   const getRiskAnalysisData = async () => {
     const response = await doGetRiskAnalysis({
       body: {
-        uraian_penetapan_objek_id: objectState?.id ?? 0
+        uraian_penetapan_objek_id: objectState?.id ?? 0,
       },
       loadingContext: loadingContext,
-      errorModalContext: errorModalContext
-    })
+      errorModalContext: errorModalContext,
+    });
     if (response?.code == API_CODE.success) {
-      let result: RiskAnalysisResDto = response.result
+      let result: RiskAnalysisResDto = response.result;
 
-      const obj = Object.groupBy(result.dataTable, (risk) => risk.analisis_br)
-      const sorted = Object.keys(obj).sort((a, b) => (parseInt(a) < parseInt(b)) ? 1 : -1)
+      const obj = Object.groupBy(result.dataTable, (risk) => risk.analisis_br);
+      const sorted = Object.keys(obj).sort((a, b) =>
+        parseInt(a) < parseInt(b) ? 1 : -1
+      );
 
       const finalDataTable = result.dataTable.reduce<RiskOverviewData[]>(
         (a, b) => {
-          let prior: number = 1
-          const getIndex = sorted.findIndex(x => parseInt(x) == b.analisis_br)
+          let prior: number = 1;
+          const getIndex = sorted.findIndex(
+            (x) => parseInt(x) == b.analisis_br
+          );
           if (getIndex > -1) {
-            prior = getIndex + 1
+            prior = getIndex + 1;
           }
-          b.prioritas = prior
-          return [...a, b]
+          b.prioritas = prior;
+          return [...a, b];
         },
         []
-      )
+      );
 
-      setDataTable(finalDataTable)
-      setRiskAnalysisData(result.profilRisiko)
-      setOptionRisk(result.options)
-
+      setDataTable(finalDataTable);
+      setRiskAnalysisData(result.profilRisiko);
+      setOptionRisk(result.options);
     }
-  }
+  };
 
-  const initState: RiskAnalysisAddStateDto = JSON.parse(JSON.stringify(initRiskAnalysisAddState))
-  const [state, setState] = useState<RiskAnalysisAddStateDto>(initState)
+  const initState: RiskAnalysisAddStateDto = JSON.parse(
+    JSON.stringify(initRiskAnalysisAddState)
+  );
+  const [state, setState] = useState<RiskAnalysisAddStateDto>(initState);
 
   const updateOrCreateOrDelete = async () => {
-
     const today = new Date();
     const quarter = Math.floor((today.getMonth() + 3) / 3);
 
@@ -89,63 +97,89 @@ export const useRiskAnalysisVM = () => {
       id: state.id,
       profil_risiko_id: state.profil_risiko?.id ?? 0,
       src_matriks_risiko_id: state.src_matriks_risiko?.id ?? 0,
-      triwulan: quarter
-    }
+      triwulan: quarter,
+    };
 
-    let response
+    let response;
 
     if (modal.action == "delete") {
       response = await doDeleteRiskAnalysis({
         body: request,
         loadingContext: loadingContext,
-        errorModalContext: errorModalContext
-      })
+        errorModalContext: errorModalContext,
+      });
     } else {
       if (state.id == 0) {
         response = await doCreateRiskAnalysis({
           body: request,
           loadingContext: loadingContext,
-          errorModalContext: errorModalContext
-        })
+          errorModalContext: errorModalContext,
+        });
       } else {
         response = await doUpdateRiskAnalysis({
           body: request,
           loadingContext: loadingContext,
-          errorModalContext: errorModalContext
-        })
+          errorModalContext: errorModalContext,
+        });
       }
     }
 
     if (response?.code == API_CODE.success) {
-      getRiskAnalysisData()
-      actionModal(false, "create")
+      getRiskAnalysisData();
+      actionModal(false, "create");
     }
+  };
 
-  }
-
-  const [modal, setModal] = useState<{ isOpen: boolean, action: string }>({ isOpen: false, action: "create" })
+  const [modal, setModal] = useState<{ isOpen: boolean; action: string }>({
+    isOpen: false,
+    action: "create",
+  });
   const actionModal = (isOpen: boolean, action: string, id?: number) => {
-    let initState: RiskAnalysisAddStateDto = JSON.parse(JSON.stringify(initRiskAnalysisAddState))
+    let initState: RiskAnalysisAddStateDto = JSON.parse(
+      JSON.stringify(initRiskAnalysisAddState)
+    );
     if (id != undefined) {
-      const getIndex = riskAnalysisData.findIndex(x => x.analisis.id == id)
+      const getIndex = riskAnalysisData.findIndex((x) => x.analisis.id == id);
       if (getIndex > -1) {
-        const reqData = riskAnalysisData[getIndex]
+        const reqData = riskAnalysisData[getIndex];
         initState = {
           id: reqData.analisis.id,
           profil_risiko: reqData,
           src_matriks_risiko: reqData.analisis.matriks,
-          triwulan: reqData.analisis.triwulan
-        }
+          triwulan: reqData.analisis.triwulan,
+        };
       }
     }
 
-    setState(initState)
+    setState(initState);
 
     setModal({
       isOpen: isOpen,
-      action: action
-    })
-  }
+      action: action,
+    });
+  };
+
+  const handleCancelFooter = () => {
+    actionModal(false, "create");
+    setState({
+      ...initState,
+      id: 0,
+      profil_risiko: undefined,
+      src_matriks_risiko: undefined,
+      triwulan: 0,
+    });
+  };
+
+  const handleAddAnalysis = () => {
+    actionModal(true, "create");
+    setState({
+      ...initState,
+      id: 0,
+      profil_risiko: undefined,
+      src_matriks_risiko: undefined,
+      triwulan: 0,
+    });
+  };
 
   return {
     optionsRisk,
@@ -159,8 +193,10 @@ export const useRiskAnalysisVM = () => {
     optionsRiskMatrix,
     getMasterRiskMatrix,
     getRiskAnalysisData,
-    updateOrCreateOrDelete
-  }
-}
+    updateOrCreateOrDelete,
+    handleCancelFooter,
+    handleAddAnalysis,
+  };
+};
 
-export default useRiskAnalysisVM
+export default useRiskAnalysisVM;
