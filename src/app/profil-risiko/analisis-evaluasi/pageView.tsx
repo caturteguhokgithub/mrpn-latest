@@ -64,6 +64,8 @@ export default function PageAnalisisEvaluasiView({}) {
     getRiskAnalysisData,
     updateOrCreateOrDelete,
     dataTable,
+    handleCancelFooter,
+    handleAddAnalysis,
   } = useRiskAnalysisVM();
 
   useEffect(() => {
@@ -75,7 +77,7 @@ export default function PageAnalisisEvaluasiView({}) {
 
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
-      <Button onClick={() => actionModal(false, "create")}>
+      <Button onClick={handleCancelFooter}>
         {modal.action == "read" ? "Keluar" : "Batal"}
       </Button>
       {modal.action !== "read" && (
@@ -282,7 +284,7 @@ export default function PageAnalisisEvaluasiView({}) {
     renderTopToolbarCustomActions: () =>
       hasPrivilege(permission, pathname, "add") && optionsRisk.length > 0 ? (
         <AddButton
-          onclick={() => actionModal(true, "create")}
+          onclick={handleAddAnalysis}
           title="Tambah Analisis & Evaluasi"
         />
       ) : (

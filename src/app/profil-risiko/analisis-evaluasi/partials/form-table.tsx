@@ -77,8 +77,8 @@ export default function FormTable({
           />
           {mode == "create" ? (
             <AutocompleteSelectSingle
-              key={optionsRiskProfile.length}
-              value={state.profil_risiko}
+              key={`options-key-${state.profil_risiko?.id || 0}`}
+              value={(state && state.profil_risiko) || undefined}
               options={optionsRiskProfile}
               getOptionLabel={(opt) => opt.peristiwa_risiko}
               handleChange={(e: ProfileRiskDto) =>
