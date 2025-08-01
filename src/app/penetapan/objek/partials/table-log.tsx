@@ -60,7 +60,7 @@ export default function TableLog({
             <TableCell align="center">Objek</TableCell>
             <TableCell align="center">Create</TableCell>
             <TableCell align="center">Shortlist</TableCell>
-            <TableCell align="center">Approve</TableCell>
+            <TableCell align="center">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -74,7 +74,8 @@ export default function TableLog({
                     {item.shortlist ? checkIcon : closeIcon}
                   </TableCell>
                   <TableCell align="center">
-                    {item.approve ? checkIcon : closeIcon}
+                    {/* {item.approve ? checkIcon : closeIcon} */}
+                    {item.status ?? "-"}
                   </TableCell>
                 </TableRow>
               ))}

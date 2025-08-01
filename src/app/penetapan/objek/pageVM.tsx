@@ -700,6 +700,7 @@ const usePenetapanObjectVM = () => {
     create: true,
     shortlist: item.shortlist,
     approve: item.approval,
+    status: item.status,
   }));
 
   // const handleUnggahBuktiDukung = async (
