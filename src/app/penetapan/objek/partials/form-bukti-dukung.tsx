@@ -7,9 +7,10 @@ import {
   Typography,
 } from "@mui/material";
 import Iconify from "@/components/icons/iconify";
-import { VisuallyHiddenInput } from "@/utils/constant";
+import { MAX_FILE_SIZE_2MB, VisuallyHiddenInput } from "@/utils/constant";
 import { SetStateAction } from "react";
 import { dtoReqBuktiDukungPengesahan } from "../pageModel";
+import { useToast } from "@/lib/core/context/toastContext";
 
 export default function FormBuktiDukung({
   // handleUnggahBuktiDukung,
@@ -28,6 +29,7 @@ export default function FormBuktiDukung({
 }) {
   // const { uploadedFileName, setUploadedFileName } = usePenetapanObjectVM();
   console.log({ uploadedFileName });
+  const { showToast } = useToast();
 
   return (
     <Grid container spacing={2}>
@@ -72,13 +74,22 @@ export default function FormBuktiDukung({
               <VisuallyHiddenInput
                 type="file"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  const file = e.target.files?.[0];
+                  const files = e.target.files?.[0];
 
-                  if (file) {
-                    setUploadedFileName(file.name);
+                  if (files) {
+                    if (files.size > MAX_FILE_SIZE_2MB) {
+                      showToast(
+                        "Gagal unggah gambar, ukuran file maksimal 2 MB",
+                        "error"
+                      );
+                      setUploadedFileName(null);
+                      return;
+                    }
+
+                    setUploadedFileName(files.name);
                     const reader = new FileReader();
 
-                    reader.readAsDataURL(file);
+                    reader.readAsDataURL(files);
                     reader.onload = () => {
                       const result = reader.result as string;
                       setReqBuktiDukungPengesahan((prev) => ({

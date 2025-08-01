@@ -229,6 +229,11 @@ export default function DashboardLayout(props: {
           maxWidth: "calc(100vw - 368px)",
         },
       },
+      "&.table-overview-profil": {
+        ".MuiTableContainer-root": {
+          maxWidth: "calc(100vw - 372px)",
+        },
+      },
     },
     ".orgchart-container": {
       // maxWidth: "calc(100vw - 444px)",

@@ -311,23 +311,11 @@ export default function PageTemaView() {
   // };
 
   const handleSaveBuktiDukung = async () => {
-    // handleUnggahBuktiDukung(reqBuktiDukungPengesahan)
     await uploadImage(
       reqBuktiDukungPengesahan.file,
       reqBuktiDukungPengesahan.filename
     );
 
-    // call get data image to refresh the image list
-    // setModalBuktiDukung(false);
-    // setReqBuktiDukungPengesahan({
-    //   filename: "",
-    //   file: "",
-    //   // penetapan_object_id: get(objectState, "id", 0),
-    //   // user_id: get(objectState, "user_id", 0),
-    // });
-    // setUploadedFileName("");
-    // showToast("Bukti dukung berhasil diunggah", "success");
-    // Refresh the image list
     await getDataImage();
   };
 

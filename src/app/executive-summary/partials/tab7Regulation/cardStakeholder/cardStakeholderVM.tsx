@@ -68,6 +68,13 @@ const useCardStakeholderVM = () => {
 
   const [edited, setEdited] = useState(false);
 
+  const [errorUploadStakeholder, setErrorUploadStakeholder] = useState<
+    string | null
+  >(null);
+  const [fileNameStakeholder, setFileNameStakeholder] = useState<string | null>(
+    null
+  );
+
   async function getListStakeholder() {
     const response = await doGetMasterListStakeholder({
       body: {},
@@ -268,6 +275,10 @@ const useCardStakeholderVM = () => {
     conditionEditingImg,
     modalViewImageIntExt,
     setModalViewImageIntExt,
+    errorUploadStakeholder,
+    setErrorUploadStakeholder,
+    fileNameStakeholder,
+    setFileNameStakeholder,
   };
 };
 export default useCardStakeholderVM;

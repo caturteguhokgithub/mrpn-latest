@@ -20,8 +20,10 @@ import DialogComponent from "@/components/dialog";
 import dynamic from "next/dynamic";
 import type ReactQuill from "react-quill";
 import useCardSegmentVM from "@/app/executive-summary/partials/tab1Background/cardSegment/cardSegmentVM";
-import { VisuallyHiddenInput } from "@/utils/constant";
+import { MAX_FILE_SIZE_2MB, VisuallyHiddenInput } from "@/utils/constant";
 import { doReqInformasiLainnya } from "../hooks/informationModel";
+import { useToast } from "@/lib/core/context/toastContext";
+import { green } from "@mui/material/colors";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -38,7 +40,14 @@ export default function FormInformation({
   state: doReqInformasiLainnya;
   setState: (value: SetStateAction<doReqInformasiLainnya>) => void;
 }) {
-  const { request } = useCardSegmentVM();
+  const {
+    request,
+    errorUploadStakeholder,
+    setErrorUploadStakeholder,
+    fileNameStakeholder,
+    setFileNameStakeholder,
+  } = useCardSegmentVM();
+  const { showToast } = useToast();
 
   const [items, setItem] = React.useState([{ id: 1 }]);
 
@@ -132,6 +141,14 @@ export default function FormInformation({
     const files = e.target.files?.[0];
 
     if (files) {
+      if (files.size > MAX_FILE_SIZE_2MB) {
+        showToast("Gagal unggah gambar, ukuran file maksimal 2 MB", "error");
+        setFileNameStakeholder(null);
+        return;
+      }
+      setErrorUploadStakeholder(null);
+      setFileNameStakeholder(files.name);
+
       const reader = new FileReader();
 
       reader.readAsDataURL(files);
@@ -310,6 +327,16 @@ export default function FormInformation({
                               // multiple
                             />
                           </Button>
+                          {fileNameStakeholder && (
+                            <Typography color={green[700]} fontSize={14} mt={1}>
+                              Berhasil unggah gambar: {fileNameStakeholder}
+                            </Typography>
+                          )}
+                          {errorUploadStakeholder && (
+                            <Typography color="error">
+                              {errorUploadStakeholder}
+                            </Typography>
+                          )}
                         </FormControl>
                       </Grid>
                     </Grid>
@@ -380,6 +407,16 @@ export default function FormInformation({
                           multiple
                         />
                       </Button>
+                      {fileNameStakeholder && (
+                        <Typography color={green[700]} fontSize={14} mt={1}>
+                          Berhasil unggah gambar: {fileNameStakeholder}
+                        </Typography>
+                      )}
+                      {errorUploadStakeholder && (
+                        <Typography color="error">
+                          {errorUploadStakeholder}
+                        </Typography>
+                      )}
                     </FormControl>
                   </Grid>
                 </Grid>

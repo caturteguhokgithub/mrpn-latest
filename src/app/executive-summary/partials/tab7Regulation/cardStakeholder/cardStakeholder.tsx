@@ -21,7 +21,7 @@ import FormListLogo from "@/app/executive-summary/partials/tab7Regulation/cardSt
 import { UpdateLogoStakeholderDto } from "@/app/misc/master/masterServiceModel";
 import Image from "next/image";
 import { IconFA } from "@/components/icons/icon-fa";
-import { VisuallyHiddenInput } from "@/utils/constant";
+import { MAX_FILE_SIZE_2MB, VisuallyHiddenInput } from "@/utils/constant";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
@@ -30,9 +30,9 @@ import DraggableScroll from "@/components/cardStakeholder/draggableScroll";
 import { styleOrgChart } from "@/app/executive-summary/style";
 import { SxParams } from "@/app/executive-summary/types";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
-import EmptyDevelopingState from "@/components/empty/developing";
-import { isDeveloping } from "@/components/layouts/layout";
 import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
+import { useToast } from "@/lib/core/context/toastContext";
+import { green, red } from "@mui/material/colors";
 
 export default function CardStakeholder({
   project,
@@ -67,7 +67,13 @@ export default function CardStakeholder({
     setModalViewImage,
     modalViewImageIntExt,
     setModalViewImageIntExt,
+    errorUploadStakeholder,
+    setErrorUploadStakeholder,
+    fileNameStakeholder,
+    setFileNameStakeholder,
   } = useCardStakeholderVM();
+
+  const { showToast } = useToast();
 
   const { handleEdited, conditionEditingImg } = useCardLocationVM();
   const { uploadStakeholder, stakeholderMapping } = useUrgensiVM();
@@ -139,6 +145,15 @@ export default function CardStakeholder({
     const files = e.target.files?.[0];
 
     if (files) {
+      if (files.size > MAX_FILE_SIZE_2MB) {
+        showToast("Gagal unggah gambar, ukuran file maksimal 2 MB", "error");
+        setFileNameStakeholder(null);
+        return;
+      }
+
+      setErrorUploadStakeholder(null);
+      setFileNameStakeholder(files.name);
+
       const reader = new FileReader();
 
       reader.readAsDataURL(files);
@@ -228,14 +243,32 @@ export default function CardStakeholder({
                 }}
                 onClick={() => setModalViewImageIntExt(true)}
               />
+              {fileNameStakeholder && (
+                <Typography color={green[700]} fontSize={14} mt={1}>
+                  Berhasil unggah gambar: {fileNameStakeholder}
+                </Typography>
+              )}
+              {errorUploadStakeholder && (
+                <Typography color="error">{errorUploadStakeholder}</Typography>
+              )}
             </Box>
           ) : (
-            <EmptyState
-              dense
-              icon={<IconEmptyData width={100} />}
-              title="Data Kosong"
-              description="Silahkan isi konten halaman ini"
-            />
+            <Stack gap={1}>
+              <EmptyState
+                dense
+                icon={<IconEmptyData width={100} />}
+                title="Data Kosong"
+                description={
+                  <Stack gap={1} alignItems="center" justifyContent="center">
+                    <Typography>Silahkan isi konten halaman ini</Typography>
+                    <Typography fontSize={14} color={red[500]}>
+                      Ukuran file maksimal <strong>2MB</strong> dengan ekstensi
+                      file yang diterima <strong>.jpg/.jpeg/.png</strong>
+                    </Typography>
+                  </Stack>
+                }
+              />
+            </Stack>
           )}
         </Stack>
       ) : (
