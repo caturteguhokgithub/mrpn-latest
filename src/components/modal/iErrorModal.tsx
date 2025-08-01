@@ -76,6 +76,7 @@ export const IErrorModal = () => {
       setToken(undefined);
       setMenu([]);
       setPermission([]);
+      window?.localStorage?.removeItem("selectedRKP");
       sessionStorage.removeItem(API_CONSTANT.token);
       return router.replace("/login");
     }
@@ -100,7 +101,7 @@ export const IErrorModal = () => {
           <ErrorModal
             icon={<IconErrorBadRequest />}
             title="Error 400 Bad Request"
-            message={message}
+            message={message == "The uraian penetapan object id field is required." ? "Silahkan untuk memilih KP/Objek terlebih dahulu pada halaman sub menu lingkup objek." : message}
           />
         ) : (
           <ErrorModal
