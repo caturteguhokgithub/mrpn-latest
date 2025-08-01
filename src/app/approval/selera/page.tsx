@@ -212,8 +212,8 @@ export default function PageApprovalSelera() {
                     value={option}
                     label={option}
                     minheight={60}
-                    approvalPage={requestSelera.type_nilai === option}
-                    disabled={requestSelera.type_nilai !== option}
+                    approvalPage={stateSelera?.seleraRisiko[0]?.type_nilai === option}
+                    disabled={stateSelera?.seleraRisiko[0]?.type_nilai !== option}
                   />
                 ))}
               </ToggleButtonGroup>

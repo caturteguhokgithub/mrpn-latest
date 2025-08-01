@@ -73,17 +73,28 @@ const usePenetapanSelera = () => {
       let result: doGetSeleraDto = response.result;
 
       if (result) {
-        const seleraRisikoList = Array.isArray(response.result?.seleraRisiko)
-          ? response.result.seleraRisiko
-          : [];
+        let seleraRisikoList = []
+        if (user?.type === "BAPPENAS") {
+          seleraRisikoList = response.result.referensi ?? [{ ...initSelera }];
+
+        } else {
+          seleraRisikoList = response.result.seleraRisiko ?? [{ ...initSelera }];
+        }
+        // let seleraRisikoList = Array.isArray(response.result?.seleraRisiko)
+        //   ? response.result.seleraRisiko
+        //   : [];
+
+        if (seleraRisikoList.length === 0) {
+          seleraRisikoList = [{ ...initSelera }];
+        }
 
         const finalResult: doGetSeleraDto = {
-          referensi: response.result.referensi,
-          seleraRisiko: seleraRisikoList,
+          referensi: response.result.referensi ?? [{ ...initSelera }],
+          seleraRisiko: response.result.seleraRisiko ?? [{ ...initSelera }],
         };
 
         setStateSelera(finalResult);
-        setRequestSelera(seleraRisikoList[0] ?? {});
+        setRequestSelera(seleraRisikoList[0] ?? initSelera);
       }
     }
   }

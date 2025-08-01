@@ -24,12 +24,13 @@ import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { InfoTooltip } from "@/components/InfoTooltip";
 import SeleraMatriks from "../../kriteria/partials/tab4Selera/matriks";
 import TableRas from "./table-ras";
-import { doReqSeleraDto } from "../../kriteria/partials/tab4Selera/hooks/model";
+import { doGetSeleraDto, doReqSeleraDto } from "../../kriteria/partials/tab4Selera/hooks/model";
 import Iconify from "@/components/icons/iconify";
 import usePenetapanSelera from "../../kriteria/partials/tab4Selera/hooks/vm";
 
 export default function RiskContent({
   handleSaveButton,
+  stateSelera,
   state,
   setState,
   isEmptyRisk,
@@ -37,6 +38,7 @@ export default function RiskContent({
   isEditSeleraRisiko,
 }: {
   handleSaveButton?: () => void;
+  stateSelera?: doGetSeleraDto;
   state?: doReqSeleraDto;
   setState?: (value: SetStateAction<doReqSeleraDto>) => void;
   isEmptyRisk?: boolean;
@@ -44,7 +46,7 @@ export default function RiskContent({
   isEditSeleraRisiko?: boolean;
 }) {
   const { user } = useAuthContext((state) => state);
-  const { stateSelera } = usePenetapanSelera();
+  // const { stateSelera } = usePenetapanSelera();
 
   const initialValue = isEmptyRisk ? "" : "1";
 
@@ -53,6 +55,14 @@ export default function RiskContent({
     initialValue
   );
   const [userLevel, setUserLevel] = React.useState<string | null>(userLv);
+
+  console.log(state);
+
+
+  const pernyataan =
+    user?.type === "BAPPENAS"
+      ? stateSelera?.referensi?.[0]?.pernyataan ?? ""
+      : stateSelera?.seleraRisiko?.[0]?.pernyataan ?? "";
 
   // useEffect(() => {
   //   if (state?.nilai) {
@@ -141,7 +151,7 @@ perencanaan pembangunan nasional"
           </Stack>
           <TableRas />
           <Stack gap={1}>
-            {state?.pernyataan !== "" && !isEditSeleraRisiko ? (
+            {pernyataan !== "" && !isEditSeleraRisiko ? (
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={3}>
                   <FormControl fullWidth>
@@ -155,10 +165,10 @@ perencanaan pembangunan nasional"
                           valueTheme == "Rendah"
                             ? "Rendah"
                             : valueTheme == "Konservatif"
-                            ? "Konservatif"
-                            : valueTheme == "Moderat"
-                            ? "Moderat"
-                            : "Tinggi"
+                              ? "Konservatif"
+                              : valueTheme == "Moderat"
+                                ? "Moderat"
+                                : "Tinggi"
                         }
                         sx={{
                           fontSize: 14,
@@ -183,13 +193,13 @@ perencanaan pembangunan nasional"
               <>
                 <Typography fontStyle="italic" fontSize={14} color={grey[600]}>
                   Tuliskan pernyataan selera risiko{" "}
-                  {valueTheme == "Rendah"
+                  {/* {valueTheme == "Rendah"
                     ? "Rendah"
                     : valueTheme == "Konservatif"
-                    ? "Konservatif"
-                    : valueTheme == "Moderat"
-                    ? "Moderat"
-                    : "Tinggi"}
+                      ? "Konservatif"
+                      : valueTheme == "Moderat"
+                        ? "Moderat"
+                        : "Tinggi"} */}
                 </Typography>
                 <TextareaStyled
                   aria-label="Deskripsi"
@@ -202,23 +212,23 @@ perencanaan pembangunan nasional"
                         pernyataan: e.target.value,
                       }));
                   }}
-                  placeholder={`Deskripsi ${
-                    valueTheme == "Rendah"
-                      ? "Rendah"
-                      : valueTheme == "Konservatif"
-                      ? "Konservatif"
-                      : valueTheme == "Moderat"
-                      ? "Moderat"
-                      : "Tinggi"
-                  }`}
-                  // width="100%"
+                  placeholder={`Deskripsi `}
+                // placeholder={`Deskripsi ${valueTheme == "Rendah"
+                //   ? "Rendah"
+                //   : valueTheme == "Konservatif"
+                //     ? "Konservatif"
+                //     : valueTheme == "Moderat"
+                //       ? "Moderat"
+                //       : "Tinggi"
+                //   }`}
+                // width="100%"
                 />
               </>
             )}
           </Stack>
         </Stack>
       )}
-      {state?.pernyataan === "" || isEditSeleraRisiko ? (
+      {pernyataan === "" || isEditSeleraRisiko ? (
         <Stack gap={2} mt={3}>
           {!isEmptyRisk && (
             <Stack gap={0}>
@@ -631,7 +641,7 @@ perencanaan pembangunan nasional"
         </Box>
         {/* {saveButton} */}
       </Collapse>
-      {(state?.pernyataan === "" || isEditSeleraRisiko) && (
+      {(pernyataan === "" || isEditSeleraRisiko) && (
         <Stack
           direction="row"
           gap={1}

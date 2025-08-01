@@ -48,7 +48,7 @@ export type ApprovalSeleraServiceModel = BaseAPIServiceParam & {
 };
 
 export interface doGetSeleraDto {
-    referensi: string | null,
+    referensi: dtoSeleraRisiko[] | null,
     seleraRisiko: dtoSeleraRisiko[]
 }
 export interface dtoSeleraRisiko {

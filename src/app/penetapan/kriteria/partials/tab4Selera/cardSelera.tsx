@@ -76,6 +76,7 @@ export default function CardSelera() {
 
   const handleModalOpenSave = () => {
     createSelera(requestSelera);
+    handleEditSeleraRisiko()
   };
 
   const handleSetRisk = () => {
@@ -84,6 +85,13 @@ export default function CardSelera() {
 
   const isEmptyRisk = true;
   const isStatus = stateApproval.status;
+
+  console.log(stateSelera);
+
+  const pernyataan =
+    user?.type === "BAPPENAS"
+      ? stateSelera?.referensi?.[0]?.pernyataan ?? ""
+      : stateSelera?.seleraRisiko?.[0]?.pernyataan ?? "";
 
   return (
     <Fragment>
@@ -96,8 +104,8 @@ export default function CardSelera() {
                 isStatus === "rejected"
                   ? "error"
                   : isStatus === "draft"
-                  ? "default"
-                  : "warning"
+                    ? "default"
+                    : "warning"
               }
               // variant="outlined"
               label={
@@ -109,8 +117,8 @@ export default function CardSelera() {
                   {isStatus === "rejected"
                     ? "Rejected"
                     : isStatus === "draft"
-                    ? "Draft"
-                    : "Review"}
+                      ? "Draft"
+                      : "Review"}
                 </Typography>
               }
               // icon={
@@ -132,13 +140,13 @@ export default function CardSelera() {
                 <Typography component="strong" fontWeight={600} fontSize={14}>
                   {stateApproval?.created_at
                     ? new Date(stateApproval.created_at).toLocaleDateString(
-                        "id-ID",
-                        {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        }
-                      )
+                      "id-ID",
+                      {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      }
+                    )
                     : "-"}
                 </Typography>
               </Typography>
@@ -148,13 +156,13 @@ export default function CardSelera() {
                 <Typography component="strong" fontWeight={600} fontSize={14}>
                   {stateApproval?.created_at
                     ? new Date(stateApproval.created_at).toLocaleDateString(
-                        "id-ID",
-                        {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        }
-                      )
+                      "id-ID",
+                      {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      }
+                    )
                     : "-"}
                 </Typography>
               </Typography>
@@ -172,7 +180,7 @@ export default function CardSelera() {
                   borderRadius: 50,
                   px: 2,
                 }}
-                // onClick={() => setOpenModal(true)}
+              // onClick={() => setOpenModal(true)}
               >
                 Catatan
               </Button>
@@ -189,7 +197,7 @@ export default function CardSelera() {
                 onclick={() => setModalOpenRef(true)}
               />
             )}
-            {requestSelera?.pernyataan !== "" && !isEditSeleraRisiko && (
+            {pernyataan !== "" && !isEditSeleraRisiko && (
               <AddButton
                 noMargin
                 filled
@@ -213,6 +221,7 @@ export default function CardSelera() {
         ) : ( */}
         <RiskContent
           handleSaveButton={handleModalOpenSave}
+          stateSelera={stateSelera}
           state={requestSelera}
           setState={setRequestSelera}
           isEmptyRisk={isEmptyRisk}
@@ -235,16 +244,15 @@ export default function CardSelera() {
         closeButton
         dialogOpen={modalOpenRef}
         dialogClose={() => setModalOpenRef(false)}
-        title={`Matriks Referensi Selera Risiko ${
-          stateSelera?.seleraRisiko[0]?.type_nilai ?? ""
-        }`}
+        title={`Matriks Referensi Selera Risiko ${stateSelera?.seleraRisiko[0]?.type_nilai ?? ""
+          }`}
       >
         <SeleraMatriks
           levelId={1}
           levelDampak={
-            Array.isArray(stateSelera?.seleraRisiko) &&
-            stateSelera.seleraRisiko.length > 0
-              ? stateSelera?.seleraRisiko[0].type_nilai.toLowerCase()
+            Array.isArray(stateSelera?.referensi) &&
+              stateSelera.referensi.length > 0
+              ? stateSelera?.referensi[0].type_nilai.toLowerCase()
               : ""
           }
         />
