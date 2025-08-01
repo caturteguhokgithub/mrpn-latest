@@ -18,6 +18,7 @@ import {
 import { TransitionProps } from "@mui/material/transitions";
 import { API_CONSTANT } from "@/lib/core/api/apiModel";
 import { IconErrorBadRequest, IconTimeout } from "../icons";
+import { grey } from "@mui/material/colors";
 
 const ErrorModal = ({
   icon,
@@ -26,7 +27,7 @@ const ErrorModal = ({
 }: {
   icon: React.ReactNode;
   title: string;
-  message: string;
+  message: React.ReactNode;
 }) => {
   return (
     <>
@@ -101,13 +102,26 @@ export const IErrorModal = () => {
           <ErrorModal
             icon={<IconErrorBadRequest />}
             title="Error 400 Bad Request"
-            message={message == "The uraian penetapan object id field is required." ? "Silahkan untuk memilih KP/Objek terlebih dahulu pada halaman sub menu lingkup objek." : message}
+            message={
+              message == "The uraian penetapan object id field is required." ? (
+                <Typography color={grey[900]}>
+                  Silahkan untuk memilih <strong>KP/Objek</strong> terlebih
+                  dahulu pada halaman sub menu lingkup objek.
+                </Typography>
+              ) : (
+                message
+              )
+            }
           />
         ) : (
           <ErrorModal
             icon={<IconTimeout />}
             title={code == 503 ? "Service Offline" : "Session Timeout"}
-            message={code == 503 ? "Saat ini service sedang tidak tersedia. harap coba beberapa saat lagi." : "Sesi Anda telah berakhir, silahkan login kembali."}
+            message={
+              code == 503
+                ? "Saat ini service sedang tidak tersedia. harap coba beberapa saat lagi."
+                : "Sesi Anda telah berakhir, silahkan login kembali."
+            }
           />
         )}
       </DialogContent>

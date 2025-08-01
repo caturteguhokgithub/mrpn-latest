@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import {
+  Chip,
   Paper,
   Stack,
   Table,
@@ -74,8 +75,22 @@ export default function TableLog({
                     {item.shortlist ? checkIcon : closeIcon}
                   </TableCell>
                   <TableCell align="center">
-                    {/* {item.approve ? checkIcon : closeIcon} */}
-                    {item.status ?? "-"}
+                    <Chip
+                      label={item.status}
+                      size="small"
+                      color={
+                        item.status === "draft"
+                          ? "default"
+                          : item.status === "review"
+                          ? "warning"
+                          : item.status === "rejected"
+                          ? "error"
+                          : "success"
+                      }
+                      sx={{
+                        textTransform: "capitalize",
+                      }}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
