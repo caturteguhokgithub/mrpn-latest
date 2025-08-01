@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Button, Icon, IconButton, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  Icon,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
@@ -7,19 +14,27 @@ import DialogComponent from "@/components/dialog";
 import useCardStakeholderVM from "@/app/executive-summary/partials/tab7Regulation/cardStakeholder/cardStakeholderVM";
 import Image from "next/image";
 import { IconFA } from "@/components/icons/icon-fa";
-import { VisuallyHiddenInput } from "@/utils/constant";
+import { MAX_FILE_SIZE_2MB, VisuallyHiddenInput } from "@/utils/constant";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import DraggableScroll from "@/components/cardStakeholder/draggableScroll";
 import { styleOrgChart } from "@/app/executive-summary/style";
 import { SxParams } from "@/app/executive-summary/types";
 import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
+import { useToast } from "@/lib/core/context/toastContext";
+import { green, red } from "@mui/material/colors";
 
 export default function CriticalPathIntEks({ title }: { title?: string }) {
   const {
     setModalOpenStakeholder,
     modalViewImageIntExt,
     setModalViewImageIntExt,
+    errorUploadStakeholder,
+    setErrorUploadStakeholder,
+    fileNameStakeholder,
+    setFileNameStakeholder,
   } = useCardStakeholderVM();
+
+  const { showToast } = useToast();
 
   const { uploadCp, cpMapping } = useUrgensiVM();
 
@@ -33,6 +48,15 @@ export default function CriticalPathIntEks({ title }: { title?: string }) {
     const files = e.target.files?.[0];
 
     if (files) {
+      if (files.size > MAX_FILE_SIZE_2MB) {
+        showToast("Gagal unggah gambar, ukuran file maksimal 2MB", "error");
+        setFileNameStakeholder(null);
+        return;
+      }
+
+      setErrorUploadStakeholder(null);
+      setFileNameStakeholder(files.name);
+
       const reader = new FileReader();
 
       reader.readAsDataURL(files);
@@ -112,14 +136,32 @@ export default function CriticalPathIntEks({ title }: { title?: string }) {
               }}
               onClick={() => setModalViewImageIntExt(true)}
             />
+            {fileNameStakeholder && (
+              <Typography color={green[700]} fontSize={14} mt={1}>
+                Berhasil unggah gambar: {fileNameStakeholder}
+              </Typography>
+            )}
+            {errorUploadStakeholder && (
+              <Typography color="error">{errorUploadStakeholder}</Typography>
+            )}
           </Box>
         ) : (
-          <EmptyState
-            dense
-            icon={<IconEmptyData width={100} />}
-            title="Data Kosong"
-            description="Silahkan isi konten halaman ini"
-          />
+          <Stack gap={1}>
+            <EmptyState
+              dense
+              icon={<IconEmptyData width={100} />}
+              title="Data Kosong"
+              description={
+                <Stack gap={1} alignItems="center" justifyContent="center">
+                  <Typography>Silahkan isi konten halaman ini</Typography>
+                  <Typography fontSize={14} color={red[500]}>
+                    Ukuran file maksimal <strong>2MB</strong> dengan ekstensi
+                    file yang diterima <strong>.jpg/.jpeg/.png</strong>
+                  </Typography>
+                </Stack>
+              }
+            />
+          </Stack>
         )}
       </Stack>
       <DialogComponent

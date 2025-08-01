@@ -97,7 +97,9 @@ export default function TablePeraturan({
           </>
         ) : (
           <Stack gap={3}>
-            <DividerIntExt label="Data ini merupakan referensi dari Executive Summary" />
+            {penetapan && (
+              <DividerIntExt label="Data ini merupakan referensi dari Executive Summary" />
+            )}
             <TableContainer component={Paper} elevation={0} variant="outlined">
               <Table size="small">
                 <TableHead sx={{ bgcolor: bgColorTh }}>

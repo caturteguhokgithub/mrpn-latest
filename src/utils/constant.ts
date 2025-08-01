@@ -18,3 +18,5 @@ export const VisuallyHiddenInput = styled("input")({
 });
 
 export const paramVariantDefault: SxParams = { variant: "default" };
+
+export const MAX_FILE_SIZE_2MB = 2 * 1024 * 1024;

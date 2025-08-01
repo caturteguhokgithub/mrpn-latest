@@ -302,10 +302,10 @@ export default function TableNotaDinasViewOnly({
           <strong>
             {stateApproval
               ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })
               : "-"}
           </strong>
         </Typography>
@@ -348,10 +348,10 @@ export default function TableNotaDinasViewOnly({
           <strong>
             {stateApproval
               ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })
               : "-"}
           </strong>
         </Typography>
@@ -426,10 +426,10 @@ export default function TableNotaDinasViewOnly({
     stateApproval?.status === "review" || isReview
       ? statusReviewM
       : stateApproval?.status == "rejected" || isReject
-        ? statusRejectM
-        : stateApproval?.status == "approved" || isApproval
-          ? statusApprovalM
-          : statusDraftM;
+      ? statusRejectM
+      : stateApproval?.status == "approved" || isApproval
+      ? statusApprovalM
+      : statusDraftM;
 
   const conditionDraftReject =
     stateApproval?.status === "draft" || stateApproval?.status === "rejected";
@@ -858,7 +858,10 @@ export default function TableNotaDinasViewOnly({
                       No.
                     </TableCell>
                     <TableCell align="center">File Bukti Dukung</TableCell>
-                    <TableCell align="center">Aksi</TableCell>
+                    {stateApproval &&
+                      !["approved", "review"].includes(
+                        stateApproval?.status
+                      ) && <TableCell align="center">Aksi</TableCell>}
                   </TableRow>
                   <TableRow
                     sx={{
@@ -932,14 +935,19 @@ export default function TableNotaDinasViewOnly({
                           )}
                         </Stack>
                       </TableCell>
-                      <TableCell align="center">
-                        <IconButton
-                          color="error"
-                          onClick={() => handleBtnDelete(item.id)}
-                        >
-                          <Iconify name="mdi:trash" color="red" size={16} />
-                        </IconButton>
-                      </TableCell>
+                      {stateApproval &&
+                        !["approved", "review"].includes(
+                          stateApproval?.status
+                        ) && (
+                          <TableCell align="center">
+                            <IconButton
+                              color="error"
+                              onClick={() => handleBtnDelete(item.id)}
+                            >
+                              <Iconify name="mdi:trash" color="red" size={16} />
+                            </IconButton>
+                          </TableCell>
+                        )}
                     </TableRow>
                   ))}
                 </TableBody>

@@ -111,8 +111,6 @@ export default function CardInformation({
     setModalDelete(true);
   };
 
-  const emptyData = true;
-
   const sxParamsFull: SxParams = { variant: "full" };
 
   // console.log({ listData });

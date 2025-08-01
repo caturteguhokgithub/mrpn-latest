@@ -403,7 +403,7 @@ export default function PageOverviewView() {
                           </Stack>
                         }
                       >
-                        <Box className="table-sticky-horizontal">
+                        <Box className="table-sticky-horizontal table-overview-profil">
                           <TableOverview
                             data={dataRiskOverview?.overviews ?? []}
                           />

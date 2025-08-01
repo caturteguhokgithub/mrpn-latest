@@ -23,6 +23,13 @@ const useCardSegmentVM = () => {
   const [modalDelete, setModalDelete] = useState(false);
   const [modalObjectScope, setModalObjectScope] = useState(false);
 
+  const [errorUploadStakeholder, setErrorUploadStakeholder] = useState<
+    string | null
+  >(null);
+  const [fileNameStakeholder, setFileNameStakeholder] = useState<string | null>(
+    null
+  );
+
   const handleModalDelete = () => {
     setModalDelete(true);
   };
@@ -107,6 +114,10 @@ const useCardSegmentVM = () => {
     handleModalDelete,
     modalObjectScope,
     setModalObjectScope,
+    errorUploadStakeholder,
+    setErrorUploadStakeholder,
+    fileNameStakeholder,
+    setFileNameStakeholder,
   };
 };
 

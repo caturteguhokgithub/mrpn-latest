@@ -11,6 +11,8 @@ import DialogDelete from "@/components/dialogDelete";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
 import { grey } from "@mui/material/colors";
+import AddButton from "@/components/buttonAdd";
+import Iconify from "@/components/icons/iconify";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -115,11 +117,24 @@ export default function CardUrgent({
       // setting={year <= 0 || activeSetting}
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
-      setting
+      setting={penetapan ? false : true}
+      addButton={
+        <>
+          {penetapan && (
+            <AddButton
+              filled
+              startIcon={<Iconify name="mdi:pencil" />}
+              title="Ubah Urgensi"
+              onclick={() => setModal(true)}
+            />
+          )}
+        </>
+      }
     >
       {penetapan ? (
         <Fragment>
-          <Box sx={{ opacity: 0.6 }}>
+          <Box sx={{ opacity: 0.8 }}>
+            <DividerIntExt label="Data ini merupakan referensi dari Executive Summary" />
             <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
           </Box>
           <DividerIntExt />

@@ -100,8 +100,12 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
           />
         ) : (
           <Fragment>
-            <Box sx={{ opacity: 0.6 }}>
-              <TablePeraturan dataExsum={data} deleteData={deleteData} />
+            <Box sx={{ opacity: 0.8 }}>
+              <TablePeraturan
+                dataExsum={data}
+                deleteData={deleteData}
+                penetapan={penetapan}
+              />
             </Box>
             <Box my={3}>
               <DividerIntExt />

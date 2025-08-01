@@ -1,17 +1,18 @@
 import React, { Fragment } from "react";
-import { Box, Button, DialogActions, Typography } from "@mui/material";
+import { Box, Button, DialogActions } from "@mui/material";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
 import dynamic from "next/dynamic";
 import DialogComponent from "@/components/dialog";
-import { dataTema } from "../../../dataTema";
 import type ReactQuill from "react-quill";
 import useCardSegmentVM from "@/app/executive-summary/partials/tab1Background/cardSegment/cardSegmentVM";
 import DialogDelete from "@/components/dialogDelete";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
 import { DividerIntExt } from "../cardUrgent/cardUrgent";
+import AddButton from "@/components/buttonAdd";
+import Iconify from "@/components/icons/iconify";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -96,11 +97,24 @@ export default function CardSegment({
       // setting={year <= 0 || activeSetting}
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
-      setting
+      setting={penetapan ? false : true}
+      addButton={
+        <>
+          {penetapan && (
+            <AddButton
+              filled
+              startIcon={<Iconify name="mdi:pencil" />}
+              title="Ubah Segmen"
+              onclick={() => setModal(true)}
+            />
+          )}
+        </>
+      }
     >
       {penetapan ? (
         <Fragment>
-          <Box sx={{ opacity: 0.6 }}>
+          <Box sx={{ opacity: 0.8 }}>
+            <DividerIntExt label="Data ini merupakan referensi dari Executive Summary" />
             <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
           </Box>
           <>
