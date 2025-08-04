@@ -42,6 +42,7 @@ import useCardIndicationVM from "@/app/executive-summary/partials/tab9Indication
 import FormBuktiDukung from "./partials/form-bukti-dukung";
 import { useToast } from "@/lib/core/context/toastContext";
 import useNotaDinasVM from "@/app/approval/nota-dinas/notaDinasVM";
+import FormNote from "@/app/approval/nota-dinas/partials/form-note";
 
 const styleToggleButton = [
   {
@@ -178,6 +179,19 @@ export default function PageTemaView() {
     resetTopicState,
     handleResetUploadedFileName,
     uploadedFileName,
+    modalConfirm,
+    setModalConfirm,
+    isReview,
+    setIsReview,
+    modalReject,
+    setModalReject,
+    isReject,
+    setIsReject,
+    modalApproval,
+    setModalApproval,
+    isApproval,
+    setIsApproval,
+    handleUpdateStatus,
   } = usePenetapanObjectVM();
 
   const { showToast } = useToast();
@@ -520,6 +534,19 @@ export default function PageTemaView() {
                 modalDelete={modalDelete}
                 setModalDelete={setModalDelete}
                 deleteNodin={deleteNodin}
+                // APPROVAL
+                modalConfirm={modalConfirm}
+                setModalConfirm={setModalConfirm}
+                isReview={isReview}
+                // setIsReview={}
+                modalReject={modalReject}
+                setModalReject={setModalReject}
+                isReject={isReject}
+                // setIsReject={}
+                modalApproval={modalApproval}
+                setModalApproval={setModalApproval}
+                isApproval={isApproval}
+                // setIsApproval={}
               />
             </Collapse>
           </Fragment>
@@ -696,6 +723,105 @@ export default function PageTemaView() {
           setModalDeleteObjectTopik(false);
         }}
       />
+      {/* APPROVAL TABLE NOTA DINAS */}
+      <DialogComponent
+        width={360}
+        dialogOpen={modalConfirm ?? false}
+        dialogClose={() => setModalConfirm?.(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button color="error" onClick={() => setModalConfirm?.(false)}>
+              Tidak
+            </Button>
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={async () => {
+                await handleUpdateStatus("review");
+                setModalConfirm?.(false);
+                // setIsReject(false);
+                // setIsApproval(false);
+                // setIsReview(true);
+                // showToast("Berhasil mengajukan pengesahan", "success");
+              }}
+            >
+              Ya
+            </Button>
+          </DialogActions>
+        }
+      >
+        Apakah Anda yakin ingin <strong>MENGAJUKAN PENGESAHAN</strong>?
+      </DialogComponent>
+      <DialogComponent
+        width={480}
+        title="Catatan Penolakan"
+        dialogOpen={modalReject ?? false}
+        dialogClose={() => setModalReject?.(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button color="error" onClick={() => setModalReject?.(false)}>
+              Tidak
+            </Button>
+            <Button
+              color="error"
+              variant="contained"
+              type="submit"
+              onClick={() => {
+                setModalReject?.(false);
+                handleUpdateStatus("rejected", stateApproval?.message);
+                // setIsReview(false);
+                // setIsApproval(false);
+                // setIsReject(true);
+                // showToast("Berhasil menolak pengesahan", "error");
+              }}
+            >
+              Tolak
+            </Button>
+          </DialogActions>
+        }
+      >
+        <Stack gap={1}>
+          <Typography>
+            Apakah Anda yakin ingin <strong>MENOLAK PENGESAHAN</strong>?<br />
+            Tuliskan catatan penolakan
+          </Typography>
+
+          <FormNote
+            state={stateApproval}
+            // setState={setStateApproval}
+            mode="add"
+          />
+        </Stack>
+      </DialogComponent>
+      <DialogComponent
+        width={360}
+        dialogOpen={modalApproval ?? false}
+        dialogClose={() => setModalApproval?.(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button color="error" onClick={() => setModalApproval?.(false)}>
+              Tidak
+            </Button>
+            <Button
+              color="success"
+              variant="contained"
+              type="submit"
+              onClick={() => {
+                setModalApproval?.(false);
+                handleUpdateStatus("approved", stateApproval?.message);
+                // setIsReview(false);
+                // setIsReject(false);
+                // setIsApproval(true);
+                // showToast("Berhasil mengajukan approval", "success");
+              }}
+            >
+              Terima
+            </Button>
+          </DialogActions>
+        }
+      >
+        Apakah Anda yakin ingin <strong>MENERIMA PENGESAHAN</strong>?
+      </DialogComponent>
     </>
   );
 }

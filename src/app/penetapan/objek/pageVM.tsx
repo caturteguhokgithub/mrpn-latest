@@ -136,6 +136,13 @@ const usePenetapanObjectVM = () => {
     null
   );
 
+  const [modalConfirm, setModalConfirm] = useState(false);
+  const [modalReject, setModalReject] = useState(false);
+  const [modalApproval, setModalApproval] = useState(false);
+  const [isReview, setIsReview] = useState(false);
+  const [isReject, setIsReject] = useState(false);
+  const [isApproval, setIsApproval] = useState(false);
+
   const generateOptionPN = () => {
     let opt: ProjectDefaultDto[] = [];
     rkp.map((pn) => {
@@ -169,6 +176,14 @@ const usePenetapanObjectVM = () => {
 
   const resetTopicState = () => {
     setStateTopic({ ...initPenetapanObjectState });
+  };
+
+  const refreshAllViewData = async () => {
+    if (objectState !== undefined && objectState !== null) {
+      await getPenetapanObjectEntity(); // Refreshes stateUpr
+      await getPenetapanObjectNotaDinas(); // Refreshes nota
+      await getApproval(); // Refreshes stateApproval
+    }
   };
 
   async function getPenetapanObjectTopic() {
@@ -538,6 +553,8 @@ const usePenetapanObjectVM = () => {
         if (result) {
           getApproval();
         }
+
+        await refreshAllViewData();
       }
     }
   }
@@ -733,6 +750,21 @@ const usePenetapanObjectVM = () => {
     resetBuktiDukungForm();
   };
 
+  // APPROVAL
+
+  const handleUpdateStatus = async (status: string, msg = "") => {
+    if (stateApproval) {
+      const param: dtoGetApproval = {
+        ...stateApproval,
+        id: objectState?.id ?? 0,
+        status: status,
+        message: msg,
+      };
+
+      await updateApproval(param);
+    }
+  };
+
   return {
     useEffectGenerateOption,
     useEffectObjectState,
@@ -801,6 +833,21 @@ const usePenetapanObjectVM = () => {
     dataLogActivity,
     resetTopicState,
     handleResetUploadedFileName,
+    refreshAllViewData,
+    // APPROVAL
+    modalConfirm,
+    setModalConfirm,
+    isReview,
+    setIsReview,
+    modalReject,
+    setModalReject,
+    isReject,
+    setIsReject,
+    modalApproval,
+    setModalApproval,
+    isApproval,
+    setIsApproval,
+    handleUpdateStatus,
   };
 };
 

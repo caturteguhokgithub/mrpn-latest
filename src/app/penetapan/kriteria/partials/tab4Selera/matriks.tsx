@@ -94,7 +94,7 @@ export default function SeleraMatriks({
       {levelDampak != "" ? (
         dataMatriks.map((itemMatriks, index) => (
           <Fragment key={index}>
-            <Stack gap={1}>
+            {/* <Stack gap={1}>
               <Grid item xs={12} sm={3}>
                 <FormControl fullWidth>
                   <Typography gutterBottom color={grey[600]}>
@@ -129,7 +129,7 @@ export default function SeleraMatriks({
                   </Typography>
                 </FormControl>
               </Grid>
-            </Stack>
+            </Stack> */}
             {levelId === itemMatriks.id && (
               <>
                 <Table
