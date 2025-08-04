@@ -11,6 +11,7 @@ import { MAX_FILE_SIZE_2MB, VisuallyHiddenInput } from "@/utils/constant";
 import { SetStateAction } from "react";
 import { dtoReqBuktiDukungPengesahan } from "../pageModel";
 import { useToast } from "@/lib/core/context/toastContext";
+import { useGlobalModalContext } from "@/lib/core/hooks/useHooks";
 
 export default function FormBuktiDukung({
   // handleUnggahBuktiDukung,
@@ -30,6 +31,8 @@ export default function FormBuktiDukung({
   // const { uploadedFileName, setUploadedFileName } = usePenetapanObjectVM();
   console.log({ uploadedFileName });
   const { showToast } = useToast();
+
+  const errorModalContext = useGlobalModalContext();
 
   return (
     <Grid container spacing={2}>
@@ -78,10 +81,19 @@ export default function FormBuktiDukung({
 
                   if (files) {
                     if (files.size > MAX_FILE_SIZE_2MB) {
-                      showToast(
-                        "Gagal unggah gambar, ukuran file maksimal 2 MB",
-                        "error"
+                      errorModalContext.showModal(
+                        "ERROR_MODAL",
+                        {
+                          code: 400,
+                          message: "Ukuran file maksimal 2 MB",
+                        }
                       );
+
+                      // showToast(
+                      //   "Gagal unggah gambar, ukuran file maksimal 2 MB",
+                      //   "error"
+                      // );
+                      e.target.value = "";
                       setUploadedFileName(null);
                       return;
                     }
@@ -100,14 +112,15 @@ export default function FormBuktiDukung({
 
                     reader.onerror = (error) => {
                       console.error("Error reading file:", error);
+                      e.target.value = "";
                       setUploadedFileName(null); // Clear file name on error
                     };
                   } else {
                     setUploadedFileName(null); // Clear file name if no file is selected
                   }
                 }}
-                // onChange={(event: any) => handleUnggahBuktiDukung(event)}
-                // multiple
+              // onChange={(event: any) => handleUnggahBuktiDukung(event)}
+              // multiple
               />
             </Button>
             <Stack alignItems="center" justifyContent="center">

@@ -16,6 +16,7 @@ import EmptyState from "@/components/empty";
 import { IconEmptyPage } from "@/components/icons";
 import Iconify from "@/components/icons/iconify";
 import TableStatus from "./partials/table-status";
+import useNotaDinasVM from "./notaDinasVM";
 
 export default function PageApprovalNotaDinasView({ }) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
@@ -26,6 +27,7 @@ export default function PageApprovalNotaDinasView({ }) {
     usePenetapanTopicContext((state) => state);
 
   const { useEffectGenerateOption, useEffectObjectState, stateApproval, setStateApproval, } = usePenetapanObjectVM();
+  const { gambar } = useNotaDinasVM();
 
   useEffect(useEffectGenerateOption, [year]);
   useEffect(useEffectObjectState, [year, objectState]);
@@ -85,7 +87,7 @@ export default function PageApprovalNotaDinasView({ }) {
       }
     >
       {nota !== undefined ? (
-        <TableNotaDinasViewOnly notaDinas={nota} stateApproval={stateApproval} setStateApproval={setStateApproval} pageApproval />
+        <TableNotaDinasViewOnly notaDinas={nota} stateApproval={stateApproval} setStateApproval={setStateApproval} imageProps={gambar} pageApproval />
       ) : (
         <EmptyState
           icon={<IconEmptyPage />}

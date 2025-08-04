@@ -66,7 +66,7 @@ const usePossibilityList = () => {
     setLoading(true);
     const response = await doGetPossibility({
       body: {
-        uraian_penetapan_objek_id: kpPenetapanObj?.id,
+        uraian_penetapan_objek_id: objectState?.id,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
@@ -103,7 +103,7 @@ const usePossibilityList = () => {
     const req: doRequestPossibilityDto = {
       values: values,
       // uraian_penetapan_objek_id: objectState?.id ?? 0,
-      uraian_penetapan_objek_id: kpPenetapanObj?.id ?? 0,
+      uraian_penetapan_objek_id: objectState?.id ?? 0,
     };
 
     const params = {
@@ -124,7 +124,7 @@ const usePossibilityList = () => {
     const response = await doDeletePossibility({
       body: {
         uraian_penetapan_objek_id: objectState?.id ?? 0,
-        // uraian_penetapan_objek_id: kpPenetapanObj?.id,
+        // uraian_penetapan_objek_id: objectState?.id,
       },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
