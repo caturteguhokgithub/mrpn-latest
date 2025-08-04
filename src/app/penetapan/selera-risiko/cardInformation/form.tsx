@@ -24,6 +24,7 @@ import { MAX_FILE_SIZE_2MB, VisuallyHiddenInput } from "@/utils/constant";
 import { doReqInformasiLainnya } from "../hooks/informationModel";
 import { useToast } from "@/lib/core/context/toastContext";
 import { green } from "@mui/material/colors";
+import { useGlobalModalContext } from "@/lib/core/hooks/useHooks";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -40,6 +41,8 @@ export default function FormInformation({
   state: doReqInformasiLainnya;
   setState: (value: SetStateAction<doReqInformasiLainnya>) => void;
 }) {
+  const errorModalContext = useGlobalModalContext();
+
   const {
     request,
     errorUploadStakeholder,
@@ -142,7 +145,15 @@ export default function FormInformation({
 
     if (files) {
       if (files.size > MAX_FILE_SIZE_2MB) {
-        showToast("Gagal unggah gambar, ukuran file maksimal 2 MB", "error");
+        errorModalContext.showModal("ERROR_MODAL", {
+          code: 400,
+          message: (
+            <Typography>
+              Gagal unggah gambar, ukuran file maksimal <strong>2MB</strong>
+            </Typography>
+          ),
+        });
+        // showToast("Gagal unggah gambar, ukuran file maksimal 2 MB", "error");
         setFileNameStakeholder(null);
         return;
       }

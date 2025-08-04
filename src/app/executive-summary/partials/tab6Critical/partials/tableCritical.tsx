@@ -596,10 +596,11 @@ export default function ProjectTable({
                                     color={grey[500]}
                                   />
                                 </Box> */}
-
                                 <Typography component="span">
-                                  {child.no_urut}
-                                </Typography>
+                                  {child.no_urut === null
+                                    ? "-  "
+                                    : `${child.no_urut}.`}
+                                </Typography>{" "}
                                 <Box component="p">{child.kegiatan}</Box>
                               </Stack>
                               {/* <Chip

@@ -1111,10 +1111,12 @@ export default function TableNotaDinasViewOnly({
           {/*  </TableContainer>*/}
           {/*</Paper>*/}
           <Paper elevation={0} variant="outlined">
-            <TableContainer sx={{ py: 1 }}>
-              <Table sx={{ minWidth: 650, td: { border: 0 } }} size="small">
-                <TableBody>
-                  {/* <TableRow>
+            {stateApproval?.status == "approved" ||
+            (stateApproval && stateApproval.status == "rejected") ? (
+              <TableContainer sx={{ py: 1 }}>
+                <Table sx={{ minWidth: 650, td: { border: 0 } }} size="small">
+                  <TableBody>
+                    {/* <TableRow>
                     <TableCell colSpan={2} sx={{ pb: 4 }}>
                       <Typography textAlign="center">{`${notaDinas.lokasi}, ${notaDinas.tanggal}`}</Typography>
                       <Typography textAlign="center">
@@ -1122,18 +1124,22 @@ export default function TableNotaDinasViewOnly({
                       </Typography>
                     </TableCell>
                   </TableRow> */}
-                  <TableRow>
-                    {/* <TableCell>
+                    <TableRow>
+                      {/* <TableCell>
                   <Typography textAlign="center">Dibuat oleh,</Typography>
                 </TableCell> */}
-                    <TableCell>
-                      <Typography textAlign="center">
-                        Disetujui oleh,
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    {/* <TableCell align="center">
+                      <TableCell>
+                        <Typography textAlign="center">
+                          {stateApproval?.status == "approved"
+                            ? "Disetujui oleh,"
+                            : stateApproval?.status == "rejected"
+                            ? "Ditolak oleh,"
+                            : ""}
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      {/* <TableCell align="center">
                   <Box position="relative" width="auto" display="inline-block">
                     <Box position="relative" zIndex={1}>
                       {notaDinas.ttd_pembuat && (
@@ -1183,96 +1189,104 @@ export default function TableNotaDinasViewOnly({
                     </Box>
                   </Box>
                 </TableCell> */}
-                    <TableCell align="center">
-                      <Box
-                        position="relative"
-                        width="auto"
-                        display="inline-block"
-                      >
-                        <Box position="relative" zIndex={1}>
-                          {notaDinas.ttd_penyetuju && (
-                            <Image
-                              alt="Disetujui oleh"
-                              src={
-                                process.env.NEXT_PUBLIC_BASE_URL_FILES +
-                                notaDinas.ttd_pembuat
-                              }
-                              width={0}
-                              height={0}
-                              sizes="100vw"
-                              style={{ width: "auto", height: "120px" }}
-                            />
-                          )}
-                        </Box>
+                      <TableCell align="center">
                         <Box
-                          // position="absolute"
-                          // top={-70}
-                          // left={-70}
-                          zIndex={0}
+                          position="relative"
+                          width="auto"
+                          display="inline-block"
                         >
-                          {stateApproval &&
-                            stateApproval.status == "rejected" && (
+                          <Box position="relative" zIndex={1}>
+                            {notaDinas.ttd_penyetuju && (
                               <Image
                                 alt="Disetujui oleh"
-                                src="https://res.cloudinary.com/caturteguh/image/upload/v1721703228/mrpn/ttd/stamp-rejected_gdzucv.png"
+                                src={
+                                  process.env.NEXT_PUBLIC_BASE_URL_FILES +
+                                  notaDinas.ttd_pembuat
+                                }
                                 width={0}
                                 height={0}
                                 sizes="100vw"
-                                style={{
-                                  width: "auto",
-                                  height: "200px",
-                                  opacity: 0.3,
-                                }}
+                                style={{ width: "auto", height: "120px" }}
                               />
                             )}
-                          {stateApproval?.status == "approved" && (
-                            <Image
-                              alt="Disetujui oleh"
-                              src="https://res.cloudinary.com/caturteguh/image/upload/v1721703223/mrpn/ttd/stamp-approved_dduusw.png"
-                              width={0}
-                              height={0}
-                              sizes="100vw"
-                              style={{
-                                width: "auto",
-                                height: "200px",
-                                opacity: 0.3,
-                              }}
-                            />
-                          )}
+                          </Box>
+                          <Box
+                            // position="absolute"
+                            // top={-70}
+                            // left={-70}
+                            zIndex={0}
+                          >
+                            {stateApproval &&
+                              stateApproval.status == "rejected" && (
+                                <Image
+                                  alt="Disetujui oleh"
+                                  src="https://res.cloudinary.com/caturteguh/image/upload/v1721703228/mrpn/ttd/stamp-rejected_gdzucv.png"
+                                  width={0}
+                                  height={0}
+                                  sizes="100vw"
+                                  style={{
+                                    width: "auto",
+                                    height: "200px",
+                                    opacity: 0.3,
+                                  }}
+                                />
+                              )}
+                            {stateApproval &&
+                              stateApproval?.status == "approved" && (
+                                <Image
+                                  alt="Disetujui oleh"
+                                  src="https://res.cloudinary.com/caturteguh/image/upload/v1721703223/mrpn/ttd/stamp-approved_dduusw.png"
+                                  width={0}
+                                  height={0}
+                                  sizes="100vw"
+                                  style={{
+                                    width: "auto",
+                                    height: "200px",
+                                    opacity: 0.3,
+                                  }}
+                                />
+                              )}
+                          </Box>
+                          <Typography fontWeight={600}>Komite MRPN</Typography>
                         </Box>
-                        <Typography fontWeight={600}>Komite MRPN</Typography>
-                      </Box>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    {/* <TableCell sx={{ verticalAlign: "top" }}>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      {/* <TableCell sx={{ verticalAlign: "top" }}>
                   <Stack gap="4px" maxWidth={300} m="0 auto">
                     <Typography textAlign="center" fontWeight={500}>
                       {notaDinas.dibuat}
                     </Typography>
                   </Stack>
                 </TableCell> */}
-                    <TableCell sx={{ verticalAlign: "top" }}>
-                      <Stack gap="4px" maxWidth={300} m="0 auto">
-                        <Typography textAlign="center" fontWeight={500}>
-                          {notaDinas.disetujui}
-                        </Typography>
-                        {/*<Divider />*/}
-                        {/*<Typography*/}
-                        {/*  textAlign="center"*/}
-                        {/*  fontSize={14}*/}
-                        {/*  color={grey[700]}*/}
-                        {/*>*/}
-                        {/*  Kepala Pusat Data dan Informasi Perencanaan Pembangunan*/}
-                        {/*</Typography>*/}
-                      </Stack>
-                    </TableCell>
-                  </TableRow>
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        <Stack gap="4px" maxWidth={300} m="0 auto">
+                          <Typography textAlign="center" fontWeight={500}>
+                            {notaDinas.disetujui}
+                          </Typography>
+                          {/*<Divider />*/}
+                          {/*<Typography*/}
+                          {/*  textAlign="center"*/}
+                          {/*  fontSize={14}*/}
+                          {/*  color={grey[700]}*/}
+                          {/*>*/}
+                          {/*  Kepala Pusat Data dan Informasi Perencanaan Pembangunan*/}
+                          {/*</Typography>*/}
+                        </Stack>
+                      </TableCell>
+                    </TableRow>
 
-                  {actionApprove}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                    {actionApprove}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              <EmptyState
+                dense
+                icon={<IconEmptyData width={100} />}
+                title="Pengajuan Pengesahan Kosong"
+              />
+            )}
           </Paper>
         </Fragment>
         {/* )} */}

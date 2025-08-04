@@ -22,7 +22,7 @@ import { UpdateLogoStakeholderDto } from "@/app/misc/master/masterServiceModel";
 import Image from "next/image";
 import { IconFA } from "@/components/icons/icon-fa";
 import { MAX_FILE_SIZE_2MB, VisuallyHiddenInput } from "@/utils/constant";
-import { useAuthContext } from "@/lib/core/hooks/useHooks";
+import { useAuthContext, useGlobalModalContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
@@ -43,6 +43,8 @@ export default function CardStakeholder({
   title?: string;
   isIntExtPage?: boolean;
 }) {
+  const errorModalContext = useGlobalModalContext();
+
   const {
     data,
     gambar,
@@ -146,7 +148,15 @@ export default function CardStakeholder({
 
     if (files) {
       if (files.size > MAX_FILE_SIZE_2MB) {
-        showToast("Gagal unggah gambar, ukuran file maksimal 2 MB", "error");
+        errorModalContext.showModal("ERROR_MODAL", {
+          code: 400,
+          message: (
+            <Typography>
+              Gagal unggah gambar, ukuran file maksimal <strong>2MB</strong>
+            </Typography>
+          ),
+        });
+        // showToast("Gagal unggah gambar, ukuran file maksimal 2 MB", "error");
         setFileNameStakeholder(null);
         return;
       }

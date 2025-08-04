@@ -75,11 +75,13 @@ export default function SeleraMatriks({
   darkMode,
   levelDampak,
   dataSelera,
+  penetapan,
 }: {
   levelId?: number;
   darkMode?: boolean;
   levelDampak: string;
   dataSelera?: doGetSeleraDto;
+  penetapan?: boolean;
 }) {
   const colorMap: { [key: string]: string } = {
     blue: blue[400],
@@ -94,42 +96,43 @@ export default function SeleraMatriks({
       {levelDampak != "" ? (
         dataMatriks.map((itemMatriks, index) => (
           <Fragment key={index}>
-            {/* <Stack gap={1}>
-              <Grid item xs={12} sm={3}>
-                <FormControl fullWidth>
-                  <Typography gutterBottom color={grey[600]}>
-                    Selera Risiko
-                  </Typography>
-                  <Box>
-                    <Chip
-                      color="primary"
-                      label={
-                        levelDampak
-                      }
-                      sx={{
-                        fontSize: 14,
-                        px: 1,
-                      }}
-                    />
-                  </Box>
-                </FormControl>
-              </Grid>
+            {penetapan && (
+              <Stack gap={1}>
+                <Grid item xs={12} sm={3}>
+                  <FormControl fullWidth>
+                    <Typography gutterBottom color={grey[600]}>
+                      Selera Risiko
+                    </Typography>
+                    <Box>
+                      <Chip
+                        color="primary"
+                        label={levelDampak}
+                        sx={{
+                          fontSize: 14,
+                          px: 1,
+                          textTransform: "capitalize",
+                        }}
+                      />
+                    </Box>
+                  </FormControl>
+                </Grid>
 
-              <Grid item xs={12} sm={9}>
-                <FormControl fullWidth>
-                  <Typography gutterBottom color={grey[600]}>
-                    Pernyataan Selera Risiko
-                  </Typography>
-                  <Typography fontWeight={600}>
-                    {
-                      dataSelera && dataSelera.referensi && dataSelera.referensi[0]
+                <Grid item xs={12} sm={9}>
+                  <FormControl fullWidth>
+                    <Typography gutterBottom color={grey[600]}>
+                      Pernyataan Selera Risiko
+                    </Typography>
+                    <Typography fontWeight={600}>
+                      {dataSelera &&
+                      dataSelera.referensi &&
+                      dataSelera.referensi[0]
                         ? dataSelera.referensi[0].pernyataan
-                        : "-"
-                    }
-                  </Typography>
-                </FormControl>
-              </Grid>
-            </Stack> */}
+                        : "-"}
+                    </Typography>
+                  </FormControl>
+                </Grid>
+              </Stack>
+            )}
             {levelId === itemMatriks.id && (
               <>
                 <Table
