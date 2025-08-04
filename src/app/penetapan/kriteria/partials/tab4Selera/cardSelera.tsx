@@ -249,6 +249,7 @@ export default function CardSelera() {
       >
         <SeleraMatriks
           levelId={1}
+          dataSelera={stateSelera}
           levelDampak={
             Array.isArray(stateSelera?.referensi) &&
               stateSelera.referensi.length > 0

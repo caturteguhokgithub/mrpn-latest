@@ -1,12 +1,16 @@
 import React, { Fragment } from "react";
 import {
   Box,
+  Chip,
+  FormControl,
+  Grid,
   Stack,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { blue, green, grey, orange, red, yellow } from "@mui/material/colors";
 import { dataMatriks } from "./dataMatriks";
@@ -14,6 +18,7 @@ import theme from "@/theme";
 import { bgColorTh } from "@/utils/color";
 import EmptyState from "@/components/empty";
 import { IconEmptyPage } from "@/components/icons";
+import { doGetSeleraDto } from "./hooks/model";
 
 const CircleNumber = ({
   value,
@@ -69,10 +74,12 @@ export default function SeleraMatriks({
   levelId,
   darkMode,
   levelDampak,
+  dataSelera,
 }: {
   levelId?: number;
   darkMode?: boolean;
   levelDampak: string;
+  dataSelera?: doGetSeleraDto;
 }) {
   const colorMap: { [key: string]: string } = {
     blue: blue[400],
@@ -87,6 +94,42 @@ export default function SeleraMatriks({
       {levelDampak != "" ? (
         dataMatriks.map((itemMatriks, index) => (
           <Fragment key={index}>
+            <Stack gap={1}>
+              <Grid item xs={12} sm={3}>
+                <FormControl fullWidth>
+                  <Typography gutterBottom color={grey[600]}>
+                    Selera Risiko
+                  </Typography>
+                  <Box>
+                    <Chip
+                      color="primary"
+                      label={
+                        levelDampak
+                      }
+                      sx={{
+                        fontSize: 14,
+                        px: 1,
+                      }}
+                    />
+                  </Box>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} sm={9}>
+                <FormControl fullWidth>
+                  <Typography gutterBottom color={grey[600]}>
+                    Pernyataan Selera Risiko
+                  </Typography>
+                  <Typography fontWeight={600}>
+                    {
+                      dataSelera && dataSelera.referensi && dataSelera.referensi[0]
+                        ? dataSelera.referensi[0].pernyataan
+                        : "-"
+                    }
+                  </Typography>
+                </FormControl>
+              </Grid>
+            </Stack>
             {levelId === itemMatriks.id && (
               <>
                 <Table
