@@ -76,7 +76,7 @@ export default function CardSelera() {
 
   const handleModalOpenSave = () => {
     createSelera(requestSelera);
-    handleEditSeleraRisiko()
+    handleEditSeleraRisiko();
   };
 
   const handleSetRisk = () => {
@@ -104,8 +104,8 @@ export default function CardSelera() {
                 isStatus === "rejected"
                   ? "error"
                   : isStatus === "draft"
-                    ? "default"
-                    : "warning"
+                  ? "default"
+                  : "warning"
               }
               // variant="outlined"
               label={
@@ -117,8 +117,8 @@ export default function CardSelera() {
                   {isStatus === "rejected"
                     ? "Rejected"
                     : isStatus === "draft"
-                      ? "Draft"
-                      : "Review"}
+                    ? "Draft"
+                    : "Review"}
                 </Typography>
               }
               // icon={
@@ -140,13 +140,13 @@ export default function CardSelera() {
                 <Typography component="strong" fontWeight={600} fontSize={14}>
                   {stateApproval?.created_at
                     ? new Date(stateApproval.created_at).toLocaleDateString(
-                      "id-ID",
-                      {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      }
-                    )
+                        "id-ID",
+                        {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        }
+                      )
                     : "-"}
                 </Typography>
               </Typography>
@@ -156,13 +156,13 @@ export default function CardSelera() {
                 <Typography component="strong" fontWeight={600} fontSize={14}>
                   {stateApproval?.created_at
                     ? new Date(stateApproval.created_at).toLocaleDateString(
-                      "id-ID",
-                      {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      }
-                    )
+                        "id-ID",
+                        {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        }
+                      )
                     : "-"}
                 </Typography>
               </Typography>
@@ -180,7 +180,7 @@ export default function CardSelera() {
                   borderRadius: 50,
                   px: 2,
                 }}
-              // onClick={() => setOpenModal(true)}
+                // onClick={() => setOpenModal(true)}
               >
                 Catatan
               </Button>
@@ -244,15 +244,27 @@ export default function CardSelera() {
         closeButton
         dialogOpen={modalOpenRef}
         dialogClose={() => setModalOpenRef(false)}
-        title={`Matriks Referensi Selera Risiko ${stateSelera?.seleraRisiko[0]?.type_nilai ?? ""
-          }`}
+        title={
+          <Stack direction="row" gap={1} alignItems="center">
+            Matriks Referensi Selera Risiko
+            <Chip
+              color="primary"
+              label={stateSelera?.seleraRisiko[0]?.type_nilai ?? ""}
+              sx={{
+                fontSize: 14,
+                px: 1,
+              }}
+            />
+          </Stack>
+        }
       >
         <SeleraMatriks
+          penetapan
           levelId={1}
           dataSelera={stateSelera}
           levelDampak={
             Array.isArray(stateSelera?.referensi) &&
-              stateSelera.referensi.length > 0
+            stateSelera.referensi.length > 0
               ? stateSelera?.referensi[0].type_nilai.toLowerCase()
               : ""
           }

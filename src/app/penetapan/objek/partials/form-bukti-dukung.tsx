@@ -81,13 +81,15 @@ export default function FormBuktiDukung({
 
                   if (files) {
                     if (files.size > MAX_FILE_SIZE_2MB) {
-                      errorModalContext.showModal(
-                        "ERROR_MODAL",
-                        {
-                          code: 400,
-                          message: "Ukuran file maksimal 2 MB",
-                        }
-                      );
+                      errorModalContext.showModal("ERROR_MODAL", {
+                        code: 400,
+                        message: (
+                          <Typography>
+                            Gagal unggah gambar, ukuran file maksimal{" "}
+                            <strong>2MB</strong>
+                          </Typography>
+                        ),
+                      });
 
                       // showToast(
                       //   "Gagal unggah gambar, ukuran file maksimal 2 MB",
@@ -119,8 +121,8 @@ export default function FormBuktiDukung({
                     setUploadedFileName(null); // Clear file name if no file is selected
                   }
                 }}
-              // onChange={(event: any) => handleUnggahBuktiDukung(event)}
-              // multiple
+                // onChange={(event: any) => handleUnggahBuktiDukung(event)}
+                // multiple
               />
             </Button>
             <Stack alignItems="center" justifyContent="center">
