@@ -7,7 +7,15 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { blue, green, grey, orange, red, yellow } from "@mui/material/colors";
+import {
+  blue,
+  green,
+  grey,
+  orange,
+  purple,
+  red,
+  yellow,
+} from "@mui/material/colors";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
 import {
   ManagementRoleDto,
@@ -25,20 +33,37 @@ function getIsChecked(statePermission: number[], id: number) {
   return statePermission.includes(id);
 }
 
+const getCheckboxColor = (label: string): string => {
+  switch (label.toLowerCase()) {
+    case "approve":
+      return green[700];
+    case "read":
+      return blue[700];
+    case "add":
+      return yellow[700];
+    case "update":
+      return purple[700];
+    case "delete":
+      return red[700];
+    default:
+      return grey[700];
+  }
+};
+
 function GenerateCheckbox(props: {
   prm: PermissionRoleDto;
   label: string;
   stateRolePermission: number[];
   setStateRolePermission: (value: SetStateAction<number[]>) => void;
 }) {
+  const color = getCheckboxColor(props.label);
+
   return (
     <FormControlLabel
       key={props.prm.id}
-      // key={`${props.label}-${props.prm.id}`}
       value="start"
       control={
         <Checkbox
-          color="success"
           checked={getIsChecked(props.stateRolePermission, props.prm.id)}
           onChange={() => {
             if (getIsChecked(props.stateRolePermission, props.prm.id)) {
@@ -56,22 +81,13 @@ function GenerateCheckbox(props: {
               });
             }
           }}
-          // sx={{
-          //   "&.Mui-checked": {
-          //     svg: {
-          //       fill:
-          //         props.prm.id == 1
-          //           ? green[700]
-          //           : props.prm.id == 2
-          //           ? yellow[700]
-          //           : props.prm.id == 3
-          //           ? blue[700]
-          //           : props.prm.id == 4
-          //           ? orange[700]
-          //           : red[700],
-          //     },
-          //   },
-          // }}
+          sx={{
+            "&.Mui-checked": {
+              "& svg": {
+                fill: color,
+              },
+            },
+          }}
         />
       }
       label={props.label}

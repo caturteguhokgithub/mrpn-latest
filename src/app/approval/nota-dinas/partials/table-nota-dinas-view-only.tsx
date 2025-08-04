@@ -61,6 +61,16 @@ export default function TableNotaDinasViewOnly({
   modalDelete,
   setModalDelete,
   deleteNodin,
+  // APPROVAL
+  modalConfirm,
+  setModalConfirm,
+  isReview,
+  modalReject,
+  setModalReject,
+  isReject,
+  modalApproval,
+  setModalApproval,
+  isApproval,
 }: {
   notaDinas: PenetapanObjectNotaDto;
   actionApprove?: React.ReactNode;
@@ -73,6 +83,16 @@ export default function TableNotaDinasViewOnly({
   modalDelete?: any;
   setModalDelete?: any;
   deleteNodin?: any;
+  // APPROVAL
+  modalConfirm?: boolean;
+  setModalConfirm?: (value: boolean) => void;
+  isReview?: boolean;
+  modalReject?: boolean;
+  setModalReject?: (value: boolean) => void;
+  isReject?: boolean;
+  modalApproval?: boolean;
+  setModalApproval?: (value: boolean) => void;
+  isApproval?: boolean;
 }) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalViewImage, setModalViewImage] = React.useState(false);
@@ -96,18 +116,18 @@ export default function TableNotaDinasViewOnly({
     // modalDelete,
     // setModalDelete,
     // deleteNodin,
-    modalConfirm,
-    setModalConfirm,
-    isReview,
-    setIsReview,
-    modalReject,
-    setModalReject,
-    isReject,
-    setIsReject,
-    modalApproval,
-    setModalApproval,
-    isApproval,
-    setIsApproval,
+    // modalConfirm,
+    // setModalConfirm,
+    // isReview,
+    // setIsReview,
+    // modalReject,
+    // setModalReject,
+    // isReject,
+    // setIsReject,
+    // modalApproval,
+    // setModalApproval,
+    // isApproval,
+    // setIsApproval,
   } = useNotaDinasVM();
 
   const { showToast } = useToast();
@@ -237,7 +257,7 @@ export default function TableNotaDinasViewOnly({
         filled
         noMargin
         startIcon={<Iconify name="mdi:close-circle" size={16} />}
-        onclick={() => setModalReject(true)}
+        onclick={() => setModalReject?.(true)}
       />
       <AddButton
         color="success"
@@ -245,7 +265,7 @@ export default function TableNotaDinasViewOnly({
         filled
         noMargin
         startIcon={<Iconify name="mdi:check-circle" size={16} />}
-        onclick={() => setModalApproval(true)}
+        onclick={() => setModalApproval?.(true)}
       />
     </Fragment>
   );
@@ -319,7 +339,7 @@ export default function TableNotaDinasViewOnly({
               filled
               noMargin
               startIcon={<Iconify name="mdi:check-circle" size={16} />}
-              onclick={() => setModalConfirm(true)}
+              onclick={() => setModalConfirm?.(true)}
             />
           )}
         </>
@@ -378,7 +398,7 @@ export default function TableNotaDinasViewOnly({
         filled
         noMargin
         startIcon={<Iconify name="mdi:check-circle" size={16} />}
-        onclick={() => setModalConfirm(true)}
+        onclick={() => setModalConfirm?.(true)}
       />
     </Fragment>
   );
@@ -405,7 +425,7 @@ export default function TableNotaDinasViewOnly({
               filled
               noMargin
               startIcon={<Iconify name="mdi:check-circle" size={16} />}
-              onclick={() => setModalConfirm(true)}
+              onclick={() => setModalConfirm?.(true)}
             />
           </>
         ) : (
@@ -434,7 +454,6 @@ export default function TableNotaDinasViewOnly({
   const conditionDraftReject =
     stateApproval?.status === "draft" || stateApproval?.status === "rejected";
 
-  // console.log("first render", notaDinas, gambar);
   return (
     <Fragment>
       <Stack gap={2}>
@@ -1334,13 +1353,13 @@ export default function TableNotaDinasViewOnly({
           showToast("Data berhasil dihapus", "error");
         }}
       />
-      <DialogComponent
+      {/* <DialogComponent
         width={360}
-        dialogOpen={modalConfirm}
-        dialogClose={() => setModalConfirm(false)}
+        dialogOpen={modalConfirm ?? false}
+        dialogClose={() => setModalConfirm?.(false)}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button color="error" onClick={() => setModalConfirm(false)}>
+            <Button color="error" onClick={() => setModalConfirm?.(false)}>
               Tidak
             </Button>
             <Button
@@ -1348,7 +1367,7 @@ export default function TableNotaDinasViewOnly({
               type="submit"
               onClick={() => {
                 handleUpdateStatus("review");
-                setModalConfirm(false);
+                setModalConfirm?.(false);
                 // setIsReject(false);
                 // setIsApproval(false);
                 // setIsReview(true);
@@ -1365,11 +1384,11 @@ export default function TableNotaDinasViewOnly({
       <DialogComponent
         width={480}
         title="Catatan Penolakan"
-        dialogOpen={modalReject}
-        dialogClose={() => setModalReject(false)}
+        dialogOpen={modalReject ?? false}
+        dialogClose={() => setModalReject?.(false)}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button color="error" onClick={() => setModalReject(false)}>
+            <Button color="error" onClick={() => setModalReject?.(false)}>
               Tidak
             </Button>
             <Button
@@ -1377,7 +1396,7 @@ export default function TableNotaDinasViewOnly({
               variant="contained"
               type="submit"
               onClick={() => {
-                setModalReject(false);
+                setModalReject?.(false);
                 handleUpdateStatus("rejected", stateApproval?.message);
                 // setIsReview(false);
                 // setIsApproval(false);
@@ -1405,11 +1424,11 @@ export default function TableNotaDinasViewOnly({
       </DialogComponent>
       <DialogComponent
         width={360}
-        dialogOpen={modalApproval}
-        dialogClose={() => setModalApproval(false)}
+        dialogOpen={modalApproval ?? false}
+        dialogClose={() => setModalApproval?.(false)}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button color="error" onClick={() => setModalApproval(false)}>
+            <Button color="error" onClick={() => setModalApproval?.(false)}>
               Tidak
             </Button>
             <Button
@@ -1417,7 +1436,7 @@ export default function TableNotaDinasViewOnly({
               variant="contained"
               type="submit"
               onClick={() => {
-                setModalApproval(false);
+                setModalApproval?.(false);
                 handleUpdateStatus("approved", stateApproval?.message);
                 // setIsReview(false);
                 // setIsReject(false);
@@ -1431,7 +1450,7 @@ export default function TableNotaDinasViewOnly({
         }
       >
         Apakah Anda yakin ingin <strong>MENERIMA PENGESAHAN</strong>?
-      </DialogComponent>
+      </DialogComponent> */}
     </Fragment>
   );
 }

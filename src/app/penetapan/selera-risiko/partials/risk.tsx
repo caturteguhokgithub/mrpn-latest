@@ -24,7 +24,10 @@ import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { InfoTooltip } from "@/components/InfoTooltip";
 import SeleraMatriks from "../../kriteria/partials/tab4Selera/matriks";
 import TableRas from "./table-ras";
-import { doGetSeleraDto, doReqSeleraDto } from "../../kriteria/partials/tab4Selera/hooks/model";
+import {
+  doGetSeleraDto,
+  doReqSeleraDto,
+} from "../../kriteria/partials/tab4Selera/hooks/model";
 import Iconify from "@/components/icons/iconify";
 import usePenetapanSelera from "../../kriteria/partials/tab4Selera/hooks/vm";
 
@@ -57,7 +60,6 @@ export default function RiskContent({
   const [userLevel, setUserLevel] = React.useState<string | null>(userLv);
 
   console.log(state);
-
 
   const pernyataan =
     user?.type === "BAPPENAS"
@@ -165,10 +167,10 @@ perencanaan pembangunan nasional"
                           valueTheme == "Rendah"
                             ? "Rendah"
                             : valueTheme == "Konservatif"
-                              ? "Konservatif"
-                              : valueTheme == "Moderat"
-                                ? "Moderat"
-                                : "Tinggi"
+                            ? "Konservatif"
+                            : valueTheme == "Moderat"
+                            ? "Moderat"
+                            : "Tinggi"
                         }
                         sx={{
                           fontSize: 14,
@@ -213,15 +215,15 @@ perencanaan pembangunan nasional"
                       }));
                   }}
                   placeholder={`Deskripsi `}
-                // placeholder={`Deskripsi ${valueTheme == "Rendah"
-                //   ? "Rendah"
-                //   : valueTheme == "Konservatif"
-                //     ? "Konservatif"
-                //     : valueTheme == "Moderat"
-                //       ? "Moderat"
-                //       : "Tinggi"
-                //   }`}
-                // width="100%"
+                  // placeholder={`Deskripsi ${valueTheme == "Rendah"
+                  //   ? "Rendah"
+                  //   : valueTheme == "Konservatif"
+                  //     ? "Konservatif"
+                  //     : valueTheme == "Moderat"
+                  //       ? "Moderat"
+                  //       : "Tinggi"
+                  //   }`}
+                  // width="100%"
                 />
               </>
             )}
@@ -230,7 +232,7 @@ perencanaan pembangunan nasional"
       )}
       {pernyataan === "" || isEditSeleraRisiko ? (
         <Stack gap={2} mt={3}>
-          {!isEmptyRisk && (
+          {/* {!isEmptyRisk && (
             <Stack gap={0}>
               <Typography fontStyle="italic" fontSize={14} color={grey[600]}>
                 Pernyataan selera risiko
@@ -246,9 +248,8 @@ perencanaan pembangunan nasional"
           {isEmptyRisk && (
             <Typography color={grey[600]} fontSize={14} fontStyle="italic">
               Pilih salah satu untuk memberikan deskripsi
-              {/* {userLevel === "bappenas" ? "deskripsi" : "nilai"} */}
             </Typography>
-          )}
+          )} */}
           <ToggleButtonGroup
             value={valueTheme}
             exclusive
