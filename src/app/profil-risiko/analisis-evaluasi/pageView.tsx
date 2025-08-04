@@ -19,7 +19,7 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import ActionColumn from "@/components/actions/action";
-import { orange, red, green, blue, grey } from "@mui/material/colors";
+import { orange, red, green, blue, grey, yellow } from "@mui/material/colors";
 import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { AutocompleteSelectSingle } from "@/components/autocomplete";
@@ -219,7 +219,9 @@ export default function PageAnalisisEvaluasiView({}) {
                       ? "error"
                       : renderedCellValue === "Tinggi (4)"
                       ? "warning"
-                      : "success"
+                      : renderedCellValue === "Rendah (2)"
+                      ? "success"
+                      : undefined
                   }
                   sx={{
                     minWidth: 80,
@@ -242,6 +244,18 @@ export default function PageAnalisisEvaluasiView({}) {
                       bgcolor: green[100],
                       borderColor: green[400],
                       color: green[900],
+                    },
+                    "&.MuiChip-root": {
+                      ...(renderedCellValue === "Sedang (3)" && {
+                        bgcolor: yellow[100],
+                        borderColor: yellow[700],
+                        color: yellow[900],
+                      }),
+                      ...(renderedCellValue === "Sangat Rendah (1)" && {
+                        bgcolor: blue[100],
+                        borderColor: blue[700],
+                        color: blue[900],
+                      }),
                     },
                   }}
                   label={renderedCellValue}
