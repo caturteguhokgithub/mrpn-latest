@@ -22,6 +22,7 @@ import { SxParams } from "@/app/executive-summary/types";
 import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
 import { useToast } from "@/lib/core/context/toastContext";
 import { green, red } from "@mui/material/colors";
+import { useGlobalModalContext } from "@/lib/core/hooks/useHooks";
 
 export default function CriticalPathIntEks({ title }: { title?: string }) {
   const {
@@ -33,6 +34,8 @@ export default function CriticalPathIntEks({ title }: { title?: string }) {
     fileNameStakeholder,
     setFileNameStakeholder,
   } = useCardStakeholderVM();
+
+  const errorModalContext = useGlobalModalContext();
 
   const { showToast } = useToast();
 
@@ -49,7 +52,16 @@ export default function CriticalPathIntEks({ title }: { title?: string }) {
 
     if (files) {
       if (files.size > MAX_FILE_SIZE_2MB) {
-        showToast("Gagal unggah gambar, ukuran file maksimal 2MB", "error");
+        // showToast("Gagal unggah gambar, ukuran file maksimal 2MB", "error");
+        errorModalContext.showModal("ERROR_MODAL", {
+          code: 400,
+          message: (
+            <Typography>
+              Gagal unggah gambar, ukuran file maksimal <strong>2MB</strong>
+            </Typography>
+          ),
+        });
+
         setFileNameStakeholder(null);
         return;
       }

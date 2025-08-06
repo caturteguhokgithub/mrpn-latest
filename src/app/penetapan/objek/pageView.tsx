@@ -182,15 +182,12 @@ export default function PageTemaView() {
     modalConfirm,
     setModalConfirm,
     isReview,
-    setIsReview,
     modalReject,
     setModalReject,
     isReject,
-    setIsReject,
     modalApproval,
     setModalApproval,
     isApproval,
-    setIsApproval,
     handleUpdateStatus,
   } = usePenetapanObjectVM();
 
@@ -766,9 +763,9 @@ export default function PageTemaView() {
               color="error"
               variant="contained"
               type="submit"
-              onClick={() => {
+              onClick={async () => {
                 setModalReject?.(false);
-                handleUpdateStatus("rejected", stateApproval?.message);
+                await handleUpdateStatus("rejected", stateApproval?.message);
                 // setIsReview(false);
                 // setIsApproval(false);
                 // setIsReject(true);
@@ -806,9 +803,9 @@ export default function PageTemaView() {
               color="success"
               variant="contained"
               type="submit"
-              onClick={() => {
+              onClick={async () => {
                 setModalApproval?.(false);
-                handleUpdateStatus("approved", stateApproval?.message);
+                await handleUpdateStatus("approved", stateApproval?.message);
                 // setIsReview(false);
                 // setIsReject(false);
                 // setIsApproval(true);
