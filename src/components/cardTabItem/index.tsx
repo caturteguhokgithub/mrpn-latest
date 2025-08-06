@@ -148,8 +148,8 @@ export default function CardItem({
         anchorOrigin={{ horizontal: "right", vertical: "top" }}
       >
         {multiEdit &&
-        (hasPrivilege(permission, pathname, "add") ||
-          hasPrivilege(permission, pathname, "update")) ? (
+          (hasPrivilege(permission, pathname, "add") ||
+            hasPrivilege(permission, pathname, "update")) ? (
           <>
             <MenuItem onClick={settingEditBisnisClick}>
               <ListItemDropdownMenu label="Tambah Proses Bisnis" />
@@ -258,20 +258,20 @@ export default function CardItem({
             <>
               <Stack direction="row" alignItems="center" gap={0.5}>
                 {downloadButton}
-                {/* {addButton
+                {addButton
                   ? hasPrivilege(permission, pathname, "add")
                     ? addButton
                     : null
                   : setting
-                  ? hasPrivilege(permission, pathname, "add") ||
-                    hasPrivilege(permission, pathname, "update") ||
-                    hasPrivilege(permission, pathname, "delete")
-                    ? settingButton
-                    : null
-                  : null} */}
+                    ? hasPrivilege(permission, pathname, "add") ||
+                      hasPrivilege(permission, pathname, "update") ||
+                      hasPrivilege(permission, pathname, "delete")
+                      ? settingButton
+                      : null
+                    : null}
                 {/* {addButton ? addButton : setting ? settingButton : null} */}
                 {addButton}
-                {setting && settingButton}
+                {/* {setting && settingButton} */}
               </Stack>
             </>
           }
