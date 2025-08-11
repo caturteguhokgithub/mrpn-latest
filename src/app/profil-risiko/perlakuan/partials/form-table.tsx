@@ -504,7 +504,7 @@ export default function FormTable({
               }
             />
             <Typography fontWeight={600}>
-              {state.profil_risiko?.peristiwa_risiko ?? "-"}
+              {state.profil_risiko?.kategori_risiko ?? "-"}
             </Typography>
           </FormControl>
         </Grid>

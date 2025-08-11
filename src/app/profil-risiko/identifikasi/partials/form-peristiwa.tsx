@@ -10,6 +10,16 @@ export default function FormPeristiwa({
 }) {
   const [newPeristiwa, setNewPeristiwa] = useState("");
 
+  const now = new Date();
+  const tglhariIni = now.toLocaleString("id-ID", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  });
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -21,7 +31,7 @@ export default function FormPeristiwa({
             title="Dibuat Tanggal Jam"
             sx={{ "& > p": { margin: 0 } }}
           />
-          <Typography>24 Okt 2025 09:56:22</Typography>
+          <Typography>{tglhariIni}</Typography>
         </FormControl>
       </Grid>
       <Grid item xs={12}>
