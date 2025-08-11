@@ -38,9 +38,9 @@ const getCheckboxColor = (label: string): string => {
     case "approve":
       return green[700];
     case "read":
-      return blue[700];
-    case "add":
       return yellow[700];
+    case "add":
+      return blue[700];
     case "update":
       return purple[700];
     case "delete":

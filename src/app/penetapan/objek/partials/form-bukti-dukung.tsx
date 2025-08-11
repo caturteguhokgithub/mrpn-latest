@@ -12,6 +12,7 @@ import { SetStateAction } from "react";
 import { dtoReqBuktiDukungPengesahan } from "../pageModel";
 import { useToast } from "@/lib/core/context/toastContext";
 import { useGlobalModalContext } from "@/lib/core/hooks/useHooks";
+import { red } from "@mui/material/colors";
 
 export default function FormBuktiDukung({
   // handleUnggahBuktiDukung,
@@ -60,76 +61,82 @@ export default function FormBuktiDukung({
       <Grid item xs={12}>
         <FormControl fullWidth>
           <Typography gutterBottom>Unggah Bukti Dukung</Typography>
-          <Stack direction="row" gap={2} alignContent="center">
-            <Button
-              size="small"
-              component="label"
-              role={undefined}
-              variant="contained"
-              tabIndex={-1}
-              startIcon={<Iconify name="mdi:upload" size={16} />}
-              sx={{
-                borderRadius: 50,
-                textTransform: "capitalize",
-              }}
-            >
-              Unggah
-              <VisuallyHiddenInput
-                type="file"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  const files = e.target.files?.[0];
-
-                  if (files) {
-                    if (files.size > MAX_FILE_SIZE_2MB) {
-                      errorModalContext.showModal("ERROR_MODAL", {
-                        code: 400,
-                        message: (
-                          <Typography>
-                            Gagal unggah gambar, ukuran file maksimal{" "}
-                            <strong>2MB</strong>
-                          </Typography>
-                        ),
-                      });
-
-                      // showToast(
-                      //   "Gagal unggah gambar, ukuran file maksimal 2 MB",
-                      //   "error"
-                      // );
-                      e.target.value = "";
-                      setUploadedFileName(null);
-                      return;
-                    }
-
-                    setUploadedFileName(files.name);
-                    const reader = new FileReader();
-
-                    reader.readAsDataURL(files);
-                    reader.onload = () => {
-                      const result = reader.result as string;
-                      setReqBuktiDukungPengesahan((prev) => ({
-                        ...prev,
-                        file: result,
-                      }));
-                    };
-
-                    reader.onerror = (error) => {
-                      console.error("Error reading file:", error);
-                      e.target.value = "";
-                      setUploadedFileName(null); // Clear file name on error
-                    };
-                  } else {
-                    setUploadedFileName(null); // Clear file name if no file is selected
-                  }
+          <Stack gap={1}>
+            <Stack direction="row" gap={2} alignContent="center">
+              <Button
+                size="small"
+                component="label"
+                role={undefined}
+                variant="contained"
+                tabIndex={-1}
+                startIcon={<Iconify name="mdi:upload" size={16} />}
+                sx={{
+                  borderRadius: 50,
+                  textTransform: "capitalize",
                 }}
-                // onChange={(event: any) => handleUnggahBuktiDukung(event)}
-                // multiple
-              />
-            </Button>
-            <Stack alignItems="center" justifyContent="center">
-              <Typography fontSize={14} color="text.secondary" lineHeight={1}>
-                {uploadedFileName ?? "Belum ada data"}
-              </Typography>
+              >
+                Unggah
+                <VisuallyHiddenInput
+                  type="file"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    const files = e.target.files?.[0];
+
+                    if (files) {
+                      if (files.size > MAX_FILE_SIZE_2MB) {
+                        errorModalContext.showModal("ERROR_MODAL", {
+                          code: 400,
+                          message: (
+                            <Typography>
+                              Gagal unggah gambar, ukuran file maksimal{" "}
+                              <strong>2MB</strong>
+                            </Typography>
+                          ),
+                        });
+
+                        // showToast(
+                        //   "Gagal unggah gambar, ukuran file maksimal 2 MB",
+                        //   "error"
+                        // );
+                        e.target.value = "";
+                        setUploadedFileName(null);
+                        return;
+                      }
+
+                      setUploadedFileName(files.name);
+                      const reader = new FileReader();
+
+                      reader.readAsDataURL(files);
+                      reader.onload = () => {
+                        const result = reader.result as string;
+                        setReqBuktiDukungPengesahan((prev) => ({
+                          ...prev,
+                          file: result,
+                        }));
+                      };
+
+                      reader.onerror = (error) => {
+                        console.error("Error reading file:", error);
+                        e.target.value = "";
+                        setUploadedFileName(null); // Clear file name on error
+                      };
+                    } else {
+                      setUploadedFileName(null); // Clear file name if no file is selected
+                    }
+                  }}
+                  // onChange={(event: any) => handleUnggahBuktiDukung(event)}
+                  // multiple
+                />
+              </Button>
+              <Stack alignItems="center" justifyContent="center">
+                <Typography fontSize={14} color="text.secondary" lineHeight={1}>
+                  {uploadedFileName ?? "Belum ada data"}
+                </Typography>
+              </Stack>
             </Stack>
+            <Typography fontSize={14} color={red[600]}>
+              Ukuran file maksimal <strong>2MB</strong> dengan ekstensi file
+              yang diterima <strong>.jpg/.jpeg/.png</strong>
+            </Typography>
           </Stack>
         </FormControl>
       </Grid>

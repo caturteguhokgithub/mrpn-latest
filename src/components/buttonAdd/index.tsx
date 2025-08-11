@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Icon } from "@mui/material";
 import { blue, green, red } from "@mui/material/colors";
 import Link from "next/link";
+import Iconify from "@/icons/iconify";
 
 export default function AddButton({
   title,
@@ -38,13 +39,9 @@ export default function AddButton({
         startIcon ? (
           startIcon
         ) : (
-          <Icon
-            baseClassName="fas"
-            className={errorColor ? "fa-trash-alt" : `fa-plus-circle`}
-            sx={{
-              fontSize:
-                small || errorColor ? "16px !important" : "16px !important",
-            }}
+          <Iconify
+            name={errorColor ? "mdi:delete-outline" : "mdi:plus-circle"}
+            size={small || errorColor ? 16 : 18}
           />
         )
       }
@@ -71,6 +68,13 @@ export default function AddButton({
       }}
       onClick={onclick}
     >
+      {/* <Icon
+        baseClassName="fas"
+        className={errorColor ? "fa-trash-alt" : `fa-plus-circle`}
+        sx={{
+          fontSize: small || errorColor ? "16px !important" : "16px !important",
+        }}
+      /> */}
       {title || ""}
     </Button>
   );
