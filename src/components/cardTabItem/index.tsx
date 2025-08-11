@@ -90,6 +90,9 @@ export default function CardItem({
     case "/penetapan/konteks-strategis":
       pathname = "/penetapan/kriteriaRisiko";
       break;
+    case "/penetapan/kriteria":
+      pathname = "/penetapan/kriteriaRisiko";
+      break;
     case "/penetapan/objek":
       pathname = "/penetapan/objectUpr";
       break;
