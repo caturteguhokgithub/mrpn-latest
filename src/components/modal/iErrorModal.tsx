@@ -18,7 +18,7 @@ import {
 import { TransitionProps } from "@mui/material/transitions";
 import { API_CONSTANT } from "@/lib/core/api/apiModel";
 import { IconErrorBadRequest, IconTimeout } from "../icons";
-import { grey } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 
 const ErrorModal = ({
   icon,
@@ -104,9 +104,10 @@ export const IErrorModal = () => {
             title="Error 400 Bad Request"
             message={
               message == "The uraian penetapan object id field is required." ? (
-                <Typography color={grey[900]}>
+                <Typography color={red[600]}>
                   Silahkan untuk memilih <strong>KP/Objek</strong> terlebih
-                  dahulu pada halaman sub menu lingkup objek.
+                  dahulu pada halaman sub-menu <strong>Lingkup Objek</strong>{" "}
+                  atau <strong>Konteks Internal Eksternal</strong>.
                 </Typography>
               ) : (
                 message

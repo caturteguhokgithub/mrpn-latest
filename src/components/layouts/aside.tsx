@@ -8,7 +8,7 @@ import { IconDashboard, IconKeluar, IconManajemen } from "../icons";
 import useAuthorizationVM from "@/app/authorizationVM";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { Menu } from "@/lib/core/context/authContext";
-import Iconify from "../icons/iconify";
+import Iconify from "@/icons/iconify";
 import useLayoutVM from "./hooks";
 
 const getIcon = (icon: string) => {
@@ -73,12 +73,16 @@ function getMenuItem(
 
     const isParentActive =
       typeof window !== "undefined"
-        ? currentPath.includes(mn.route) && (currentPath !== "/penetapan/objek" && currentPath !== "penetapan/objek")
+        ? currentPath.includes(mn.route) &&
+          currentPath !== "/penetapan/objek" &&
+          currentPath !== "penetapan/objek"
         : false;
 
     const isChildActive = mn.submenu.some((sm) =>
       typeof window !== "undefined"
-        ? currentPath.includes(sm.route) && (currentPath !== "/penetapan/objek" && currentPath !== "penetapan/objek")
+        ? currentPath.includes(sm.route) &&
+          currentPath !== "/penetapan/objek" &&
+          currentPath !== "penetapan/objek"
         : false
     );
 

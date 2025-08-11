@@ -889,7 +889,14 @@ export default function TableNotaDinasViewOnly({
                       },
                     }}
                   >
-                    {[...new Array(3)].map((_, i) => (
+                    {[
+                      ...new Array(
+                        stateApproval &&
+                        !["approved", "review"].includes(stateApproval?.status)
+                          ? 3
+                          : 2
+                      ),
+                    ].map((_, i) => (
                       <TableCell sx={{ bgcolor: grey[100] }}>
                         <Typography
                           color={`${grey[500]} !important`}

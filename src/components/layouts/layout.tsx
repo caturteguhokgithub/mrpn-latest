@@ -26,6 +26,7 @@ import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { doGetMasterListRpjmn } from "@/app/misc/master/masterService";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import { MiscMasterRPJMNRes } from "@/app/misc/master/masterServiceModel";
+import Iconify from "@/icons/iconify";
 
 const Aside = dynamic(() => import("./aside"), { ssr: false });
 
@@ -415,20 +416,30 @@ export default function DashboardLayout(props: {
               }}
             />
           ) : (
-            <Icon
-              baseClassName="fas"
-              className={`fa-chevron-right`}
+            <Iconify
+              name="mdi:chevron-right"
+              size={20}
               sx={{
-                fontSize: "12px",
                 color: "white",
                 transform: checked ? "rotate(180deg)" : "rotate(0deg)",
                 transition: "all 1s ease",
                 position: "relative",
-                top: checked ? -1 : 0,
-                left: 0,
               }}
             />
           )}
+          {/* <Icon
+            baseClassName="fas"
+            className={`fa-chevron-right`}
+            sx={{
+              fontSize: "12px",
+              color: "white",
+              transform: checked ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "all 1s ease",
+              position: "relative",
+              top: checked ? -1 : 0,
+              left: 0,
+            }}
+          /> */}
         </Stack>
         <ILayout>{props.children}</ILayout>
       </Box>

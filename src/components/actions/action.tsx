@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { IconButton, Link, Stack } from "@mui/material";
 import { blue, green, red } from "@mui/material/colors";
 import { IconFA } from "../icons/icon-fa";
+import Iconify from "@/icons/iconify";
 
 export const ActionIcon = ({
   icon,
@@ -45,11 +46,12 @@ export const ActionIcon = ({
           onClick={onclick}
           disabled={disabled}
         >
-          <IconFA
+          <Iconify name={`mdi:${icon}`} size={size == "sm" ? 16 : 18} />
+          {/* <IconFA
             size={size == "sm" ? 12 : 14}
             name={icon}
             sx={{ width: "auto" }}
-          />
+          /> */}
         </IconButton>
       ) : (
         <IconButton
@@ -58,11 +60,12 @@ export const ActionIcon = ({
           sx={iconStyle}
           disabled={disabled}
         >
-          <IconFA
+          <Iconify name={`mdi:${icon}`} size={size == "sm" ? 16 : 18} />
+          {/* <IconFA
             size={size == "sm" ? 12 : 14}
             name={icon}
             sx={{ width: "auto" }}
-          />
+          /> */}
         </IconButton>
       )}
     </Fragment>

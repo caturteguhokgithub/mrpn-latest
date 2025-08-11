@@ -1,5 +1,4 @@
 import theme from "@/theme";
-import { Check } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -16,16 +15,13 @@ import {
 import { blue, orange, red } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
 import { IconKeluar } from "../icons";
-import { IconFA } from "../icons/icon-fa";
-import Image from "next/image";
 import Aside from "./aside";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
 import useAuthorizationVM from "@/app/authorizationVM";
 import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import Iconify from "@/icons/iconify";
 
 gsap.registerPlugin(useGSAP);
 
@@ -333,7 +329,7 @@ export default function Header({}) {
                 bgcolor: orange[900],
               },
             }}
-            startIcon={<IconFA size={16} name="list-ol" />}
+            startIcon={<Iconify name="mdi:format-list-numbered" size={20} />}
           >
             <Typography variant="body1" textTransform="capitalize">
               {year == 0
@@ -343,15 +339,16 @@ export default function Header({}) {
           </Button>
           <Button onClick={handleClick} sx={{ p: 0, m: 0, minWidth: 0 }}>
             <Avatar sx={{ bgcolor: "white", width: 36, height: 36 }}>
-              <IconFA
-                size={16}
-                name="user-tie"
+              <Iconify
+                name="mdi:account-tie"
+                size={20}
                 color={theme.palette.primary.main}
               />
             </Avatar>
           </Button>
           <Box
             component="span"
+            onClick={toggleDrawerMobile(true)}
             sx={{
               display: "inline-flex",
               cursor: "pointer",
@@ -360,12 +357,7 @@ export default function Header({}) {
               },
             }}
           >
-            <IconFA
-              size={20}
-              name="bars"
-              color={theme.palette.primary.light}
-              onclick={toggleDrawerMobile(true)}
-            />
+            <Iconify name="mdi:menu" size={24} />
           </Box>
         </Stack>
         <Menu
@@ -424,18 +416,7 @@ export default function Header({}) {
                       RPJMN {rpjmn?.start + "-" + rpjmn?.end}
                     </Typography>
                     {year == y && (
-                      <IconFA
-                        size={18}
-                        name="circle-check"
-                        color={theme.palette.primary.main}
-                        sx={{
-                          width: 20,
-                          height: 20,
-                          overflow: "visible",
-                          display: "inline-flex",
-                          alignItems: "center",
-                        }}
-                      />
+                      <Iconify name="mdi:checkbox-marked-outline" size={20} />
                     )}
                   </Stack>
                 </ListItemText>
@@ -454,18 +435,7 @@ export default function Header({}) {
                       RKP {y}
                     </Typography>
                     {year == y && (
-                      <IconFA
-                        size={18}
-                        name="circle-check"
-                        color={theme.palette.primary.main}
-                        sx={{
-                          width: 20,
-                          height: 20,
-                          overflow: "visible",
-                          display: "inline-flex",
-                          alignItems: "center",
-                        }}
-                      />
+                      <Iconify name="mdi:checkbox-marked-outline" size={20} />
                     )}
                   </Stack>
                 </ListItemText>
