@@ -86,6 +86,7 @@ export default function CardItem({
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
 
+
   switch (pathname) {
     case "/penetapan/konteks-strategis":
       pathname = "/penetapan/kriteriaRisiko";
@@ -95,6 +96,9 @@ export default function CardItem({
       break;
     case "/penetapan/objek":
       pathname = "/penetapan/objectUpr";
+      break;
+    case "/penetapan/internal-eksternal":
+      pathname = "/penetapan/eksplorasiKonteks";
       break;
     default:
       break;
