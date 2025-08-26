@@ -37,7 +37,7 @@ import { InfoTooltip } from "@/components/InfoTooltip";
 import { SortNumber } from "../perlakuan/partials/mrt-complete";
 import FormPeristiwa from "./partials/form-peristiwa";
 
-export default function PageIdentifikasiView({ }) {
+export default function PageIdentifikasiView({}) {
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
   pathname =
@@ -79,7 +79,6 @@ export default function PageIdentifikasiView({ }) {
     getOptionImpactArea();
     if (objectState !== undefined) getIdentificationRiskData();
   }, [objectState]);
-
 
   const columns = [
     {
@@ -321,10 +320,11 @@ export default function PageIdentifikasiView({ }) {
   return (
     <>
       <ContentPage
-        title={`Identifikasi Risiko ${year == 0
-          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-          : "Tahun " + year
-          }`}
+        title={`Identifikasi Risiko ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         infoToolTip="Proses menemukenali dan mendeskripsikan risiko"
         withCard={objectState === undefined}
         chooseObject={
@@ -398,12 +398,13 @@ export default function PageIdentifikasiView({ }) {
         width={"50%"}
         dialogOpen={modal.isOpen && modal.action != "delete"}
         dialogClose={() => actionModal(true, "create")}
-        title={`${modal.action == "read"
-          ? "Detail"
-          : modal.action == "update"
+        title={`${
+          modal.action == "read"
+            ? "Detail"
+            : modal.action == "update"
             ? "Ubah"
             : "Tambah"
-          } Identifikasi Risiko`}
+        } Identifikasi Risiko`}
         dialogFooter={dialogActionFooter}
         sx={{
           ".MuiDialogContent-root": {
@@ -433,18 +434,18 @@ export default function PageIdentifikasiView({ }) {
         dialogOpen={modalPeristiwa}
         dialogClose={() => setModalPeristiwa(false)}
         title="Tambah Peristiwa Risiko Baru"
-      // dialogFooter={
-      //   <DialogActions sx={{ p: 2, px: 3 }}>
-      //     <Button onClick={() => setModalPeristiwa(false)}>Batal</Button>
-      //     <Button
-      //       variant="contained"
-      //     // type="submit"
-      //     // onClick={() => updateOrCreateOrDelete()}
-      //     >
-      //       Simpan
-      //     </Button>
-      //   </DialogActions>
-      // }
+        // dialogFooter={
+        //   <DialogActions sx={{ p: 2, px: 3 }}>
+        //     <Button onClick={() => setModalPeristiwa(false)}>Batal</Button>
+        //     <Button
+        //       variant="contained"
+        //     // type="submit"
+        //     // onClick={() => updateOrCreateOrDelete()}
+        //     >
+        //       Simpan
+        //     </Button>
+        //   </DialogActions>
+        // }
       >
         <FormPeristiwa
           onSave={(newValue: string) => {

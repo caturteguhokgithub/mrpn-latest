@@ -18,6 +18,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { blue } from "@mui/material/colors";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import Iconify from "@/components/icons/iconify";
 
 export const MenuItem = ({
   label,
@@ -84,6 +85,14 @@ export const MenuItem = ({
       display: "flex",
       flexDirection: "column",
       transition: "all 300ms ease",
+
+      // "&.MuiListItemButton-root": {
+      //   display: "grid",
+      //   gridTemplateColumns: "24px auto 24px",
+      //   alignItems: "center",
+      //   justifyContent: "normal",
+      // },
+
       ".MuiListItemIcon-root": {
         color: theme.palette.primary.light,
       },
@@ -119,6 +128,18 @@ export const MenuItem = ({
         borderRadius: "50px",
         mx: "16px",
         flexDirection: "row",
+
+        // "&.MuiListItemButton-root": {
+        //   display: "inline-flex",
+        // },
+
+        // "&.MuiListItemButton-root": {
+        //   display: "grid",
+        //   gridTemplateColumns: "24px auto 24px",
+        //   alignItems: "center",
+        //   justifyContent: "normal",
+        // },
+
         ".MuiIcon-root, p": {
           color: theme.palette.primary.light,
         },
@@ -283,6 +304,26 @@ export const MenuItem = ({
               }),
         }}
       />
+      {/* <Iconify
+        name="mdi:chevron-down"
+        size={24}
+        sx={{
+          width: "auto",
+          height: "auto",
+          transition: "transform 0.3s ease-in-out",
+          fill: isExpanded
+            ? theme.palette.primary.main
+            : theme.palette.primary.light,
+
+          ...(openSubmenu || activeSubmenuCollapse
+            ? {
+                transform: "rotate(0deg)",
+              }
+            : {
+                transform: "rotate(-90deg)",
+              }),
+        }}
+      /> */}
     </Fragment>
   );
 

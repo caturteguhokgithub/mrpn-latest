@@ -1,7 +1,7 @@
 "use client";
 
 import ContentPage from "@/components/contents";
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Button,
@@ -10,7 +10,6 @@ import {
   Collapse,
   DialogActions,
   Grow,
-  Icon,
   Stack,
   Tabs,
   Tooltip,
@@ -21,11 +20,7 @@ import {
 import theme from "@/theme";
 import { IconFA } from "@/components/icons/icon-fa";
 import { CustomTab, styleDownload } from "./style";
-import {
-  useAuthContext,
-  useExsumContext,
-  useRKPContext,
-} from "@/lib/core/hooks/useHooks";
+import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import PageExecutiveSummaryContent from "@/app/executive-summary/pageViewContent";
 import DialogComponent from "@/components/dialog";
 import useApprovalVM from "@/app/executive-summary/approvalVM";
@@ -35,10 +30,8 @@ import { OverridableStringUnion } from "@mui/types";
 import { InfoTooltip } from "@/components/InfoTooltip";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
-import AddButton from "../../components/buttonAdd";
-import Iconify from "../../components/icons/iconify";
 
-export default function PageExecutiveSummary({ }) {
+export default function PageExecutiveSummary({}) {
   const { permission, user } = useAuthContext((state) => state);
   const pathname = usePathname();
 
@@ -161,15 +154,15 @@ export default function PageExecutiveSummary({ }) {
     let label: string = "Draft";
     let color:
       | OverridableStringUnion<
-        | "default"
-        | "primary"
-        | "secondary"
-        | "error"
-        | "info"
-        | "success"
-        | "warning",
-        ChipPropsColorOverrides
-      >
+          | "default"
+          | "primary"
+          | "secondary"
+          | "error"
+          | "info"
+          | "success"
+          | "warning",
+          ChipPropsColorOverrides
+        >
       | undefined = "default";
     let sx: any = { bgcolor: grey[600], color: "white", px: 1 };
 
@@ -211,14 +204,6 @@ export default function PageExecutiveSummary({ }) {
       titleChild={
         <Stack direction="row" alignItems="center" gap={1}>
           {approvalStatus(exsum.approval)}
-          {/* Jika Status Approved maka muncul tanggal approval */}
-
-          {/* <Stack direction="row" alignItems="center" gap={0.5}>
-            <Iconify name="mdi:calendar" color={grey[600]} />
-            <Typography component="span" fontSize={14} color={grey[600]}>
-              16 Mei 2025
-            </Typography>
-          </Stack> */}
         </Stack>
       }
       tabArrow={

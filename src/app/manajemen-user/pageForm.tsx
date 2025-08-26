@@ -2,38 +2,47 @@ import {
   ManagementRoleDto,
   ManagementRoleReqDto,
 } from "@/app/manajemen-role/pageModel";
-import {FormControl, Grid, List, ListItem, TextField, Typography} from "@mui/material";
+import {
+  FormControl,
+  Grid,
+  List,
+  ListItem,
+  TextField,
+  Typography,
+} from "@mui/material";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
-import React, {SetStateAction, useEffect} from "react";
-import {AutocompleteSelectMultiple, AutocompleteSelectSingle} from "@/components/autocomplete";
+import React, { SetStateAction, useEffect } from "react";
+import {
+  AutocompleteSelectMultiple,
+  AutocompleteSelectSingle,
+} from "@/components/autocomplete";
 import {
   ManagementUserDataDto,
-  ManagementUserStateDto, OptionKP,
+  ManagementUserStateDto,
+  OptionKP,
 } from "@/app/manajemen-user/pageModel";
-import {useRKPContext} from "@/lib/core/hooks/useHooks";
-import {ProjectDefaultDto} from "@/lib/core/context/rkpContext";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import { ProjectDefaultDto } from "@/lib/core/context/rkpContext";
 
-export default function FormUser(
-  {
-    mode,
-    roleData,
-    request,
-    setRequest,
-    optionKP
-  }: {
-    mode: string;
-    roleData: ManagementRoleDto[];
-    request: ManagementUserStateDto;
-    setRequest: (value: SetStateAction<ManagementUserStateDto>) => void;
-    optionKP: OptionKP[]
-  }) {
-
+export default function FormUser({
+  mode,
+  roleData,
+  request,
+  setRequest,
+  optionKP,
+}: {
+  mode: string;
+  roleData: ManagementRoleDto[];
+  request: ManagementUserStateDto;
+  setRequest: (value: SetStateAction<ManagementUserStateDto>) => void;
+  optionKP: OptionKP[];
+}) {
   return (
     <Grid container spacing={2}>
       <Grid item xs={6}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Tipe User"/>
-          {mode != "view" ?
+          <FieldLabelInfo title="Tipe User" />
+          {mode != "view" ? (
             <AutocompleteSelectSingle
               key={request.id}
               value={request.type}
@@ -49,18 +58,16 @@ export default function FormUser(
               }
               placeHolder={"Pilih tipe user"}
             />
-            :
-            <Typography>
-              {request.type}
-            </Typography>
-          }
+          ) : (
+            <Typography>{request.type}</Typography>
+          )}
         </FormControl>
       </Grid>
       <Grid item xs={6}>
         <FormControl fullWidth>
           {request.type == "BAPPENAS" || mode == "view" ? null : (
             <>
-              <FieldLabelInfo title="Password"/>
+              <FieldLabelInfo title="Password" />
               <TextField
                 variant="outlined"
                 size="small"
@@ -84,8 +91,8 @@ export default function FormUser(
       </Grid>
       <Grid item xs={6}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Nama User"/>
-          {mode != "view" ?
+          <FieldLabelInfo title="Nama User" />
+          {mode != "view" ? (
             <TextField
               variant="outlined"
               size="small"
@@ -103,17 +110,15 @@ export default function FormUser(
                 })
               }
             />
-            :
-            <Typography>
-              {request.name}
-            </Typography>
-          }
+          ) : (
+            <Typography>{request.name}</Typography>
+          )}
         </FormControl>
       </Grid>
       <Grid item xs={6}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Email"/>
-          {mode != "view" ?
+          <FieldLabelInfo title="Email" />
+          {mode != "view" ? (
             <TextField
               error={false}
               variant="outlined"
@@ -133,17 +138,15 @@ export default function FormUser(
                 })
               }
             />
-            :
-            <Typography>
-              {request.email}
-            </Typography>
-          }
+          ) : (
+            <Typography>{request.email}</Typography>
+          )}
         </FormControl>
       </Grid>
       <Grid item xs={6}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Role User"/>
-          {mode != "view" ?
+          <FieldLabelInfo title="Role User" />
+          {mode != "view" ? (
             <AutocompleteSelectSingle
               key={request.id}
               value={request.role_id}
@@ -159,44 +162,52 @@ export default function FormUser(
               }
               placeHolder={"Pilih Role User"}
             />
-            :
-            <Typography>
-              {request.role_id?.name ?? "-"}
-            </Typography>
-          }
+          ) : (
+            <Typography>{request.role_id?.name ?? "-"}</Typography>
+          )}
         </FormControl>
       </Grid>
       <Grid item xs={12}>
         <FormControl fullWidth>
-          <FieldLabelInfo title="Allowed KP"/>
-          {mode != "view" ?
+          <FieldLabelInfo title="Allowed KP" />
+          {mode != "view" ? (
             <AutocompleteSelectMultiple
               value={request.options}
               options={optionKP}
-              getOptionLabel={(opt) => `${opt.code} ${opt.value} (${opt.tahun})`}
-              handleChange={(e: OptionKP[]) => setRequest((prevState) => {
-                return {
-                  ...prevState,
-                  options: e,
-                };
-              })}
+              getOptionLabel={(opt) =>
+                `${opt.code} ${opt.value} (${opt.tahun})`
+              }
+              handleChange={(e: OptionKP[]) =>
+                setRequest((prevState) => {
+                  return {
+                    ...prevState,
+                    options: e,
+                  };
+                })
+              }
               placeHolder={"Select KP"}
               labelSelectAll={"Select all KP"}
+              labelSelectAllSearchResult={"Select all search results KP"}
             />
-            :
-            request.options.length > 0
-              ?
-              <List>
-                {request.options.map(x =>
-                  <ListItem sx={{ display: "list-item", listStyleType: "square", padding:0, marginLeft:2, marginTop:0 }}>
-                    <Typography>
-                      {`${x.code} ${x.value} (${x.tahun})`}
-                    </Typography>
-                  </ListItem>
-                )}
-              </List>
-              : "-"
-          }
+          ) : request.options.length > 0 ? (
+            <List>
+              {request.options.map((x) => (
+                <ListItem
+                  sx={{
+                    display: "list-item",
+                    listStyleType: "square",
+                    padding: 0,
+                    marginLeft: 2,
+                    marginTop: 0,
+                  }}
+                >
+                  <Typography>{`${x.code} ${x.value} (${x.tahun})`}</Typography>
+                </ListItem>
+              ))}
+            </List>
+          ) : (
+            "-"
+          )}
         </FormControl>
       </Grid>
     </Grid>

@@ -7,10 +7,8 @@ import {
   Box,
   Button,
   DialogActions,
-  ListItem,
   Paper,
   Stack,
-  TextField,
   ToggleButtonGroup,
   Typography,
   alpha,
@@ -18,15 +16,14 @@ import {
 import { IconFA } from "@/components/icons/icon-fa";
 import theme from "@/theme";
 import CustomToggleButton from "@/components/toggleButton";
-import FormatKL from "@/app/penetapan/selera-risiko/partials/formatKl";
 import { CardWithStamp } from "@/components/card-w-stamp";
-import { LabelRadio } from "@/components/labelRadio";
 import DialogComponent from "@/components/dialog";
 import FormReject from "../nota-dinas/partials/form-reject";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
 import usePenetapanSelera from "@/app/penetapan/kriteria/partials/tab4Selera/hooks/vm";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { doReqSeleraApprovalDto } from "@/app/penetapan/kriteria/partials/tab4Selera/hooks/model";
+import Iconify from "@/components/icons/iconify";
 
 export default function PageApprovalSelera() {
   usePermissionChecker("approval.seleraRisiko");
@@ -46,7 +43,7 @@ export default function PageApprovalSelera() {
     getSelera,
     requestSelera,
     stateSelera,
-    setRequestSelera
+    setRequestSelera,
   } = usePenetapanSelera();
 
   useEffect(() => {
@@ -68,14 +65,13 @@ export default function PageApprovalSelera() {
     }
   }, [stateApproval]);
 
-
   const handleApprovalStamp = async (status: string, msg = "") => {
     if (stateApproval) {
       const param: doReqSeleraApprovalDto = {
         ...stateApproval,
         id: stateSelera?.seleraRisiko[0].id ?? 0,
         status: status,
-        message: msg
+        message: msg,
       };
 
       updateApproval(param);
@@ -125,7 +121,7 @@ export default function PageApprovalSelera() {
                 <Button
                   variant="outlined"
                   color="error"
-                  startIcon={<IconFA name="thumbs-down" size={14} />}
+                  startIcon={<Iconify name="mdi:thumb-down" size={14} />}
                   sx={{ px: 3, borderRadius: 12, whiteSpace: "nowrap" }}
                   onClick={handleModalOpen}
                 >
@@ -134,10 +130,10 @@ export default function PageApprovalSelera() {
                 <Button
                   variant="contained"
                   color="success"
-                  startIcon={<IconFA name="thumbs-up" size={14} />}
+                  startIcon={<Iconify name="mdi:thumb-up" size={14} />}
                   sx={{ px: 3, borderRadius: 12, whiteSpace: "nowrap" }}
                   onClick={() => {
-                    handleApprovalStamp("approved")
+                    handleApprovalStamp("approved");
                   }}
                 >
                   Approve
@@ -212,8 +208,12 @@ export default function PageApprovalSelera() {
                     value={option}
                     label={option}
                     minheight={60}
-                    approvalPage={stateSelera?.seleraRisiko[0]?.type_nilai === option}
-                    disabled={stateSelera?.seleraRisiko[0]?.type_nilai !== option}
+                    approvalPage={
+                      stateSelera?.seleraRisiko[0]?.type_nilai === option
+                    }
+                    disabled={
+                      stateSelera?.seleraRisiko[0]?.type_nilai !== option
+                    }
                   />
                 ))}
               </ToggleButtonGroup>
@@ -245,8 +245,6 @@ export default function PageApprovalSelera() {
                   }
                 />
               </Box> */}
-
-
             </Paper>
           </CardWithStamp>
           {/* {buttonStamp && (
@@ -282,7 +280,11 @@ export default function PageApprovalSelera() {
         title="Tuliskan Alasan Reject"
         dialogFooter={dialogActionFooter}
       >
-        <FormReject state={stateApproval} setState={setStateApproval} mode="add" />
+        <FormReject
+          state={stateApproval}
+          setState={setStateApproval}
+          mode="add"
+        />
       </DialogComponent>
     </>
   );
