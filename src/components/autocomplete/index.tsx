@@ -23,6 +23,7 @@ export interface AutoCompleteMultipleProp<T> {
   handleChange: Function;
   placeHolder: string;
   labelSelectAll: string;
+  labelSelectAllSearchResult?: string;
   bgWhite?: boolean | any;
   actionButton?: any;
 }
@@ -34,9 +35,12 @@ export function AutocompleteSelectMultiple<T>({
   handleChange,
   placeHolder,
   labelSelectAll,
+  labelSelectAllSearchResult,
   bgWhite,
   actionButton,
 }: AutoCompleteMultipleProp<T>) {
+  const [filteredOptions, setFilteredOptions] = React.useState<T[]>(options);
+
   return (
     <Autocomplete
       multiple
@@ -52,6 +56,18 @@ export function AutocompleteSelectMultiple<T>({
           handleChange(options);
         }
         handleChange(value);
+      }}
+      onInputChange={(_e, inputValue) => {
+        if (inputValue) {
+          const filtered = options.filter((option) =>
+            getOptionLabel(option)
+              .toLowerCase()
+              .includes(inputValue.toLowerCase())
+          );
+          setFilteredOptions(filtered);
+        } else {
+          setFilteredOptions(options);
+        }
       }}
       renderInput={(params) => (
         <TextField
@@ -81,6 +97,36 @@ export function AutocompleteSelectMultiple<T>({
                   />
                 }
               />
+              {labelSelectAllSearchResult &&
+                filteredOptions.length !== options.length && (
+                  <FormControlLabel
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const newValue = [...value];
+                      filteredOptions.forEach((option) => {
+                        if (
+                          !newValue.find(
+                            (v) => getOptionLabel(v) === getOptionLabel(option)
+                          )
+                        ) {
+                          newValue.push(option);
+                        }
+                      });
+                      handleChange(newValue);
+                    }}
+                    label={labelSelectAllSearchResult}
+                    control={
+                      <Checkbox
+                        id="select-all-search-result-checkbox"
+                        checked={filteredOptions.every((option) =>
+                          value.find(
+                            (v) => getOptionLabel(v) === getOptionLabel(option)
+                          )
+                        )}
+                      />
+                    }
+                  />
+                )}
             </Box>
             <Divider />
             {children}

@@ -30,12 +30,18 @@ export default function EmptyState({
             fontSize="16px"
             textTransform="capitalize"
             mt={2}
+            color="text.primary"
           >
             {title}
           </Typography>
         )}
         {description && (
-          <Typography component="p" fontSize="14px" mt={1}>
+          <Typography
+            component="p"
+            fontSize="14px"
+            mt={1}
+            color="text.secondary"
+          >
             {description}
           </Typography>
         )}

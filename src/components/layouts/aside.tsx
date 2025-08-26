@@ -258,6 +258,7 @@ export default function Aside({
         icon={<IconKeluar />}
         url={"/"}
         onclick={() => doLogout()}
+        // sx={{ color: "red" }}
       />
     </Stack>
   );

@@ -18,6 +18,8 @@ import DropdownRkp from "@/components/dropdown/dropdownRkp";
 import { SxParams, TabPanelProps } from "./types";
 import Tab7Stakeholder from "./partials/tab7Stakeholder";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import EmptyState from "@/components/empty";
+import { IconEmptyPage } from "@/components/icons/empty-page";
 
 function a11yProps(index: number) {
   return {
@@ -73,27 +75,6 @@ export default function PageExecutiveSummaryContent({
     setValueTabChild(newValue);
   };
 
-  // const usetheme = useTheme();
-  // const breakpointDownMd = useMediaQuery(usetheme.breakpoints.down("md"));
-
-  // const downloadAttachment = (
-  //   <Chip
-  //     color="primary"
-  //     variant="outlined"
-  //     label={
-  //       <Stack direction="row" gap={1}>
-  //         <IconFA
-  //           size={14}
-  //           name="download"
-  //           color={theme.palette.primary.main}
-  //         />
-  //         {breakpointDownMd ? null : "Download Lampiran"}
-  //       </Stack>
-  //     }
-  //     sx={styleDownload}
-  //   />
-  // );
-
   const sxParamsOutlined: SxParams = { variant: "outlined" };
   const sxParamsFilled: SxParams = { variant: "filled" };
   const condTabHeightLv1 = toggleShowTab ? "0" : "unset";
@@ -107,29 +88,18 @@ export default function PageExecutiveSummaryContent({
       noMarginBotttom
       noMinusMargin
     >
-      {rkpState === undefined ? (
-        <>
-          {/* <EmptyState
-            icon={<IconEmptyPage />}
-            title="Halaman Executive Summary Kosong"
-            description={
-              rkpOption.length > 0
-                ? `Silahkan pilih kegiatan pembangunan di bawah ini`
-                : undefined
-            }
-            button={
-              <DropdownRkp
-                handleChangeProject={handleChangeProject}
-                variant="primary"
-              />
-            }
-          /> */}
-          <DropdownRkp
-            // handleChangeProject={handleChangeProject}
-            variant="primary"
-          />
-        </>
-      ) : null}
+      {rkpState === undefined && <DropdownRkp variant="primary" />}
+      {rkpOption.length === 0 && (
+        <EmptyState
+          icon={<IconEmptyPage />}
+          title={`Executive Summary Kosong`}
+          description={
+            rkpOption.length > 0
+              ? `Silahkan pilih kegiatan pembangunan di bawah ini`
+              : `Executive Summary akan muncul setelah RKP dibuat`
+          }
+        />
+      )}
       <Collapse in={!(rkpState === undefined)}>
         <Box sx={{ width: "100%" }}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

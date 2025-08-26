@@ -462,13 +462,22 @@ export default function Header({}) {
                     py: 0,
                   },
                 },
+                ".MuiAvatar-img": {
+                  width: 24,
+                  height: "auto",
+                },
               },
             },
           }}
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
-          <MenuItem sx={{ py: "10px !important", gap: 1 }}>
+          <MenuItem
+            sx={{
+              py: "10px !important",
+              gap: 1,
+            }}
+          >
             <Avatar
               alt={user?.name ?? ""}
               src="https://res.cloudinary.com/caturteguh/image/upload/v1708049745/mrpn/logo-2024_ne4yaj.png"
@@ -485,6 +494,23 @@ export default function Header({}) {
               }}
             >
               {user?.name ?? ""}
+            </ListItemText>
+          </MenuItem>
+          <Divider sx={{ m: "0 !important" }} />
+          <MenuItem sx={{ py: "10px !important", gap: 1 }}>
+            <Avatar alt={user?.name ?? ""} src="/mrpn/logo-emonev.png" />
+            <ListItemText
+              sx={{
+                span: {
+                  fontWeight: 500,
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                },
+              }}
+            >
+              Pindah ke E-Monev
             </ListItemText>
           </MenuItem>
           {/* <Divider sx={{ m: "0 !important" }} />
