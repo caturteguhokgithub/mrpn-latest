@@ -497,7 +497,12 @@ export default function Header({}) {
             </ListItemText>
           </MenuItem>
           <Divider sx={{ m: "0 !important" }} />
-          <MenuItem sx={{ py: "10px !important", gap: 1 }}>
+          <MenuItem
+            sx={{ py: "10px !important", gap: 1 }}
+            onClick={() =>
+              window.open("https://e-monev.bappenas.go.id", "_self")
+            }
+          >
             <Avatar alt={user?.name ?? ""} src="/mrpn/logo-emonev.png" />
             <ListItemText
               sx={{
