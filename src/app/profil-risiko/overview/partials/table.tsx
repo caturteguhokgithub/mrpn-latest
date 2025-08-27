@@ -125,7 +125,13 @@ export default function TableOverview({ data }: { data: RiskOverviewData[] }) {
               Perlakuan Risiko
             </TableCell>
           </TableRow>
-          <TableRow>
+          <TableRow
+            sx={{
+              ".MuiTableCell-stickyHeader": {
+                top: 37,
+              },
+            }}
+          >
             <TableCell align="center" sx={{ bgcolor: bgColorTh }}>
               Peristiwa Risiko
             </TableCell>
@@ -164,11 +170,11 @@ export default function TableOverview({ data }: { data: RiskOverviewData[] }) {
             </TableCell>
           </TableRow>
           <TableRow
-          // sx={{
-          //   ".MuiTableCell-stickyHeader": {
-          //     top: 37,
-          //   },
-          // }}
+            sx={{
+              ".MuiTableCell-stickyHeader": {
+                top: 37 + 37,
+              },
+            }}
           >
             {[...new Array(12)].map((_, i) => (
               <TableCell sx={{ bgcolor: grey[100] }}>

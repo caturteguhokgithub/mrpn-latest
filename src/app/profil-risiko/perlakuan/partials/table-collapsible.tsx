@@ -12,17 +12,13 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { bgColorTh } from "@/utils/color";
-import { blue, green, grey, orange, red } from "@mui/material/colors";
+import { green, grey, orange } from "@mui/material/colors";
 import { Stack } from "@mui/material";
-import Iconify from "@/components/icons/iconify";
 import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import theme from "@/theme";
-import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
-import { getDetailRO } from "@/lib/utils/roDetail";
-import { PerlakuanData, RiskOverviewData } from "../../overview/pageModel";
+import { PerlakuanData } from "../../overview/pageModel";
 
 function Row(props: { row: PerlakuanData; index?: number }) {
   const { row, index } = props;
@@ -208,7 +204,7 @@ function Row(props: { row: PerlakuanData; index?: number }) {
                                 fontSize={14}
                                 color={orange[600]}
                               >
-                                ({rowItem.type})
+                                {rowItem.type === "NON_RO" && "(Non-RO)"}
                               </Typography>
                             </TableCell>
                             <TableCell align="right">

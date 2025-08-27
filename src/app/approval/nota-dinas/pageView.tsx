@@ -7,7 +7,13 @@ import {
   usePenetapanTopicContext,
   useRKPContext,
 } from "@/lib/core/hooks/useHooks";
-import { Button, DialogActions, FormControl, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  DialogActions,
+  FormControl,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { AutocompleteSelectSingle } from "@/components/autocomplete";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import { PenetapanObjectDto } from "@/lib/core/context/penetapanTopicContext";
@@ -19,7 +25,7 @@ import TableStatus from "./partials/table-status";
 import useNotaDinasVM from "./notaDinasVM";
 import FormNote from "./partials/form-note";
 
-export default function PageApprovalNotaDinasView({ }) {
+export default function PageApprovalNotaDinasView({}) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
 
   const { year } = useRKPContext((state) => state);
@@ -36,7 +42,7 @@ export default function PageApprovalNotaDinasView({ }) {
     modalReject,
     handleUpdateStatus,
     setModalApproval,
-    modalApproval
+    modalApproval,
   } = usePenetapanObjectVM();
 
   const { gambar } = useNotaDinasVM();
@@ -103,7 +109,8 @@ export default function PageApprovalNotaDinasView({ }) {
           notaDinas={nota}
           stateApproval={stateApproval}
           setStateApproval={setStateApproval}
-          imageProps={gambar} pageApproval
+          imageProps={gambar}
+          pageApproval
           modalReject={modalReject}
           setModalReject={setModalReject}
           modalApproval={modalApproval}
