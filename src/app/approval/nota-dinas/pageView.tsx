@@ -7,7 +7,7 @@ import {
   usePenetapanTopicContext,
   useRKPContext,
 } from "@/lib/core/hooks/useHooks";
-import { Button, FormControl, Stack } from "@mui/material";
+import { Button, DialogActions, FormControl, Stack, Typography } from "@mui/material";
 import { AutocompleteSelectSingle } from "@/components/autocomplete";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import { PenetapanObjectDto } from "@/lib/core/context/penetapanTopicContext";
@@ -17,6 +17,7 @@ import { IconEmptyPage } from "@/components/icons";
 import Iconify from "@/components/icons/iconify";
 import TableStatus from "./partials/table-status";
 import useNotaDinasVM from "./notaDinasVM";
+import FormNote from "./partials/form-note";
 
 export default function PageApprovalNotaDinasView({ }) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
@@ -26,7 +27,18 @@ export default function PageApprovalNotaDinasView({ }) {
   const { objects, objectState, setObjectState, nota } =
     usePenetapanTopicContext((state) => state);
 
-  const { useEffectGenerateOption, useEffectObjectState, stateApproval, setStateApproval, } = usePenetapanObjectVM();
+  const {
+    useEffectGenerateOption,
+    useEffectObjectState,
+    stateApproval,
+    setStateApproval,
+    setModalReject,
+    modalReject,
+    handleUpdateStatus,
+    setModalApproval,
+    modalApproval
+  } = usePenetapanObjectVM();
+
   const { gambar } = useNotaDinasVM();
 
   useEffect(useEffectGenerateOption, [year]);
@@ -87,7 +99,16 @@ export default function PageApprovalNotaDinasView({ }) {
       }
     >
       {nota !== undefined ? (
-        <TableNotaDinasViewOnly notaDinas={nota} stateApproval={stateApproval} setStateApproval={setStateApproval} imageProps={gambar} pageApproval />
+        <TableNotaDinasViewOnly
+          notaDinas={nota}
+          stateApproval={stateApproval}
+          setStateApproval={setStateApproval}
+          imageProps={gambar} pageApproval
+          modalReject={modalReject}
+          setModalReject={setModalReject}
+          modalApproval={modalApproval}
+          setModalApproval={setModalApproval}
+        />
       ) : (
         <EmptyState
           icon={<IconEmptyPage />}
@@ -107,6 +128,73 @@ export default function PageApprovalNotaDinasView({ }) {
         title="Status Topik"
       >
         <TableStatus />
+      </DialogComponent>
+
+      <DialogComponent
+        width={480}
+        title="Catatan Penolakan"
+        dialogOpen={modalReject ?? false}
+        dialogClose={() => setModalReject?.(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button color="error" onClick={() => setModalReject?.(false)}>
+              Tidak
+            </Button>
+            <Button
+              color="error"
+              variant="contained"
+              type="submit"
+              onClick={async () => {
+                setModalReject?.(false);
+                await handleUpdateStatus("rejected", stateApproval?.message);
+              }}
+            >
+              Tolak
+            </Button>
+          </DialogActions>
+        }
+      >
+        <Stack gap={1}>
+          <Typography>
+            Apakah Anda yakin ingin <strong>MENOLAK PENGESAHAN</strong>?<br />
+            Tuliskan catatan penolakan
+          </Typography>
+
+          <FormNote
+            state={stateApproval}
+            // setState={setStateApproval}
+            mode="add"
+          />
+        </Stack>
+      </DialogComponent>
+      <DialogComponent
+        width={360}
+        dialogOpen={modalApproval ?? false}
+        dialogClose={() => setModalApproval?.(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button color="error" onClick={() => setModalApproval?.(false)}>
+              Tidak
+            </Button>
+            <Button
+              color="success"
+              variant="contained"
+              type="submit"
+              onClick={async () => {
+                setModalApproval?.(false);
+                await handleUpdateStatus("approved", stateApproval?.message);
+                // setIsReview(false);
+                // setIsReject(false);
+                // setIsApproval(true);
+                // showToast("Berhasil mengajukan approval", "success");
+              }}
+            >
+              Terima
+            </Button>
+          </DialogActions>
+        }
+      >
+        Apakah Anda yakin ingin <strong>MENERIMA PENGESAHAN</strong>?
       </DialogComponent>
     </ContentPage>
   );

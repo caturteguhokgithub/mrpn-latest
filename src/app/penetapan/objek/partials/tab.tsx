@@ -103,39 +103,39 @@ export default function TabObject({
   setModalApproval,
   isApproval,
 }: // setIsApproval,
-{
-  setModalUpr: (value: boolean) => void;
-  useEffectObjectState: () => void;
-  getRanking: () => Promise<void>;
-  updateOrCreateLongList: any;
-  showSave: boolean;
-  setShowSave: (value: boolean) => void;
-  stateUpr: dtoUraian[];
-  handleUploadBuktiDukung?: () => void;
-  stateApproval: any;
-  setModalObjek: (value: boolean) => void;
-  handleModalDeleteObject: (id: number) => void;
-  handleModalEditEntitas?: () => void;
-  handleModalDeleteEntitas: (id: number) => void;
-  refreshBuktiDukungTable?: () => void;
-  gambar?: any;
-  modalDelete?: any;
-  setModalDelete?: any;
-  deleteNodin?: any;
-  // APPROVAL
-  modalConfirm?: any;
-  setModalConfirm?: any;
-  isReview?: any;
-  // setIsReview?: any;
-  modalReject?: any;
-  setModalReject?: any;
-  isReject?: any;
-  // setIsReject?: any;
-  modalApproval?: any;
-  setModalApproval?: any;
-  isApproval?: any;
-  // setIsApproval?: any;
-}) {
+  {
+    setModalUpr: (value: boolean) => void;
+    useEffectObjectState: () => void;
+    getRanking: () => Promise<void>;
+    updateOrCreateLongList: any;
+    showSave: boolean;
+    setShowSave: (value: boolean) => void;
+    stateUpr: dtoUraian[];
+    handleUploadBuktiDukung?: () => void;
+    stateApproval: any;
+    setModalObjek: (value: boolean) => void;
+    handleModalDeleteObject: (id: number) => void;
+    handleModalEditEntitas?: () => void;
+    handleModalDeleteEntitas: (id: number) => void;
+    refreshBuktiDukungTable?: () => void;
+    gambar?: any;
+    modalDelete?: any;
+    setModalDelete?: any;
+    deleteNodin?: any;
+    // APPROVAL
+    modalConfirm?: any;
+    setModalConfirm?: any;
+    isReview?: any;
+    // setIsReview?: any;
+    modalReject?: any;
+    setModalReject?: any;
+    isReject?: any;
+    // setIsReject?: any;
+    modalApproval?: any;
+    setModalApproval?: any;
+    isApproval?: any;
+    // setIsApproval?: any;
+  }) {
   const { nota } = usePenetapanTopicContext((store) => store);
   const { rkp, year, rpjmn } = useRKPContext((state) => state);
 
@@ -305,16 +305,16 @@ export default function TabObject({
         <CardItem
           // title="Nota Dinas Objek MRPN & UPR LS"
           title="Penetapan"
-          // addButton={
-          //   !editNotaDinas && (
-          //     <AddButton
-          //       title={`Ubah`}
-          //       filled
-          //       startIcon={<IconFA size={14} name="pencil" />}
-          //       onclick={() => setEditNotaDinas(true)}
-          //     />
-          //   )
-          // }
+        // addButton={
+        //   !editNotaDinas && (
+        //     <AddButton
+        //       title={`Ubah`}
+        //       filled
+        //       startIcon={<IconFA size={14} name="pencil" />}
+        //       onclick={() => setEditNotaDinas(true)}
+        //     />
+        //   )
+        // }
         >
           {/* {isDeveloping ? (
             <EmptyDevelopingState />
@@ -351,7 +351,7 @@ export default function TabObject({
                 modalApproval={modalApproval}
                 setModalApproval={setModalApproval}
                 isApproval={isApproval}
-                // setIsApproval={}
+              // setIsApproval={}
               />
             ) : (
               <EmptyState
