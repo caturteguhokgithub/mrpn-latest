@@ -134,7 +134,7 @@ function Row(props: { row: PerlakuanData; index?: number }) {
                         align="center"
                         sx={{ bgcolor: green[50], width: 30 }}
                       >
-                        No
+                        PKKR
                       </TableCell>
                       <TableCell
                         rowSpan={2}
@@ -188,35 +188,35 @@ function Row(props: { row: PerlakuanData; index?: number }) {
                   <TableBody>
                     {row?.rincian_output
                       ? row.rincian_output.map((rowItem) => (
-                          <TableRow key={rowItem.id}>
-                            <TableCell align="center">{rowItem.id}</TableCell>
-                            <TableCell>
-                              <Typography
-                                component="span"
-                                fontSize={14}
-                                color={grey[600]}
-                              >
-                                {rowItem.code}
-                              </Typography>{" "}
-                              - {rowItem.value}{" "}
-                              <Typography
-                                component="span"
-                                fontSize={14}
-                                color={orange[600]}
-                              >
-                                {rowItem.type === "NON_RO" && "(Non-RO)"}
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="right">
-                              {rowItem.target}
-                            </TableCell>
-                            <TableCell>{rowItem.satuan}</TableCell>
-                            <TableCell align="right">
-                              {rowItem.anggaran}
-                            </TableCell>
-                            {/* <TableCell>{rowItem.sumber_anggaran}</TableCell> */}
-                          </TableRow>
-                        ))
+                        <TableRow key={rowItem.id}>
+                          <TableCell align="center">{rowItem.pkkr ?? "-"}</TableCell>
+                          <TableCell>
+                            <Typography
+                              component="span"
+                              fontSize={14}
+                              color={grey[600]}
+                            >
+                              {rowItem.code}
+                            </Typography>{" "}
+                            - {rowItem.value}{" "}
+                            <Typography
+                              component="span"
+                              fontSize={14}
+                              color={orange[600]}
+                            >
+                              ({rowItem.type})
+                            </Typography>
+                          </TableCell>
+                          <TableCell align="right">
+                            {rowItem.target}
+                          </TableCell>
+                          <TableCell>{rowItem.satuan}</TableCell>
+                          <TableCell align="right">
+                            {rowItem.anggaran}
+                          </TableCell>
+                          {/* <TableCell>{rowItem.sumber_anggaran}</TableCell> */}
+                        </TableRow>
+                      ))
                       : ""}
                   </TableBody>
                 </Table>

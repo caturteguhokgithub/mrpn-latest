@@ -50,6 +50,9 @@ export default function PageUserManagement() {
     managementRoleData,
     optionKP,
     loading,
+    pagination,
+    setPagination,
+    total,
   } = useManagementUserVM();
 
   const columns = [
@@ -131,7 +134,13 @@ export default function PageUserManagement() {
   const data = users;
   const table = useMaterialReactTable({
     columns,
-    data,
+    data: users,
+    manualPagination: true,
+    rowCount: total,
+    state: { pagination, isLoading: loading },
+    onPaginationChange: setPagination,
+    // columns,
+    // data,
     // initialState: { density: "compact" },
     ...advancedTable,
     enableRowNumbers: true,

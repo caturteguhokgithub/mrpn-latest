@@ -28,8 +28,7 @@ const useCategoryList = () => {
   const [loading, setLoading] = useState(false);
   const [dataCategory, setDataCategory] = useState<ResultCategory[]>([]);
   const [masterCategory, setMasterCategory] = useState<doMasterKategori[]>([]);
-  const [requestMasterCategory, setRequestMasterCategory] =
-    useState<doMasterKategori>({ ...initMasterCategory });
+  const [requestMasterCategory, setRequestMasterCategory] = useState<doMasterKategori>({ ...initMasterCategory });
   const { objectState } = usePenetapanGlobalVM();
   const [modalOpenAdd, setModalOpenAdd] = useState(false);
   const [modalOpenCategory, setModalOpenCategory] = useState(false);
@@ -139,7 +138,7 @@ const useCategoryList = () => {
     if (response?.code == API_CODE.success) {
       getData();
       getMasterCategory();
-      setRequestMasterCategory({ ...initMasterCategory });
+      setRequestMasterCategory(initMasterCategory);
       setModalOpenAddMasterCategory(false);
     }
   }

@@ -18,6 +18,7 @@ import {
 } from "@/app/manajemen-user/pageModel";
 import useManagementRoleVM from "@/app/manajemen-role/pageVM";
 import { doGetKP } from "@/app/misc/rkp/rkpService";
+import { PaginatedResponse } from "@/lib/core/context/globalContext";
 
 interface ModalDto {
   action: boolean;
@@ -32,6 +33,11 @@ const initModalDto: ModalDto = {
 const useManagementUserVM = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+  const [total, setTotal] = useState(0);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [users, setUsers] = useState<ManagementUserDataDto[]>([]);
@@ -51,35 +57,41 @@ const useManagementUserVM = () => {
     }
   };
 
-  async function getUsers() {
+  async function getUsers(page: number = 1, perPage: number = 10, sortBy?: string, search?: string) {
     setLoading(true);
+
     const response = await doGetUser({
       body: {},
-      loadingContext: loadingContext,
-      errorModalContext: errorModalContext,
+      query: {
+        page,
+        per_page: perPage,
+        sort_by: sortBy,
+        search,
+      },
+      loadingContext,
+      errorModalContext,
     });
+
     if (response?.code === API_CODE.success) {
-      let result: ManagementUserResDto[] = response.result;
-      let data: ManagementUserDataDto[] = [];
-      result.map((x) => {
-        const d: ManagementUserDataDto = {
-          id: x.id,
-          name: x.name,
-          email: x.email,
-          role: x.role?.name ?? "",
-          role_id: x.role?.id ?? 0,
-          type: x.type,
-          list_kp_id: x.list_kp_id,
-        };
-        // if (d.name !== "admin") {
-        data.push(d);
-        // }
-      });
+      const payload = response.result as PaginatedResponse<ManagementUserResDto>;
+
+      const data: ManagementUserDataDto[] = payload.data.map((x) => ({
+        id: x.id,
+        name: x.name,
+        email: x.email,
+        role: x.role?.name ?? "",
+        role_id: x.role?.id ?? 0,
+        type: x.type,
+        list_kp_id: x.list_kp_id,
+      }));
 
       setUsers(data);
+      setTotal(payload.total);
     }
+
     setLoading(false);
   }
+
 
   async function createOrUpdateUser() {
     if (
@@ -154,9 +166,14 @@ const useManagementUserVM = () => {
   };
 
   useEffect(() => {
-    getUsers();
+    // getUsers();
     getOptionKP();
   }, []);
+
+  useEffect(() => {
+    getUsers(pagination.pageIndex + 1, pagination.pageSize);
+  }, [pagination.pageIndex, pagination.pageSize]);
+
 
   return {
     users,
@@ -169,6 +186,9 @@ const useManagementUserVM = () => {
     managementRoleData,
     optionKP,
     loading,
+    pagination,
+    setPagination,
+    total,
   };
 };
 

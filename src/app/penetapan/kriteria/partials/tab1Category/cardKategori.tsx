@@ -277,6 +277,7 @@ export default function CardKategori() {
               variant="outlined"
               size="small"
               placeholder="Prioritas"
+              value={requestMasterCategory?.prioritas ?? ""}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -296,6 +297,7 @@ export default function CardKategori() {
                 minRows={2}
                 aria-label=""
                 placeholder="Uraian Kategori Risiko"
+                value={requestMasterCategory?.uraian ?? ""}
                 onChange={(e) => {
                   setRequestMasterCategory((prev) => ({
                     ...prev,
