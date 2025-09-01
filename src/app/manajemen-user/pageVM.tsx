@@ -35,8 +35,11 @@ const useManagementUserVM = () => {
   const errorModalContext = useGlobalModalContext();
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 10
   });
+
+  const [globalFilter, setGlobalFilter] = useState("");
+
   const [total, setTotal] = useState(0);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -91,7 +94,6 @@ const useManagementUserVM = () => {
 
     setLoading(false);
   }
-
 
   async function createOrUpdateUser() {
     if (
@@ -171,9 +173,13 @@ const useManagementUserVM = () => {
   }, []);
 
   useEffect(() => {
-    getUsers(pagination.pageIndex + 1, pagination.pageSize);
-  }, [pagination.pageIndex, pagination.pageSize]);
-
+    getUsers(
+      pagination.pageIndex + 1,
+      pagination.pageSize,
+      "",
+      globalFilter
+    );
+  }, [pagination, globalFilter]);
 
   return {
     users,
@@ -189,6 +195,8 @@ const useManagementUserVM = () => {
     pagination,
     setPagination,
     total,
+    globalFilter,
+    setGlobalFilter
   };
 };
 

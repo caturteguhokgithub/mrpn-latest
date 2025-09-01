@@ -53,6 +53,8 @@ export default function PageUserManagement() {
     pagination,
     setPagination,
     total,
+    globalFilter,
+    setGlobalFilter
   } = useManagementUserVM();
 
   const columns = [
@@ -139,6 +141,7 @@ export default function PageUserManagement() {
     rowCount: total,
     state: { pagination, isLoading: loading },
     onPaginationChange: setPagination,
+    onGlobalFilterChange: setGlobalFilter,
     // columns,
     // data,
     // initialState: { density: "compact" },
