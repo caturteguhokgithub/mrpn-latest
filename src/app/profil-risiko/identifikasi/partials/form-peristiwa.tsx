@@ -22,7 +22,7 @@ export default function FormPeristiwa({
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <FormControl
           fullWidth
           sx={{ flexDirection: "row", alignItems: "center", gap: 2 }}
@@ -33,7 +33,7 @@ export default function FormPeristiwa({
           />
           <Typography>{tglhariIni}</Typography>
         </FormControl>
-      </Grid>
+      </Grid> */}
       <Grid item xs={12}>
         <FormControl fullWidth>
           <FieldLabelInfo

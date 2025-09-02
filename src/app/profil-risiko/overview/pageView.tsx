@@ -140,11 +140,10 @@ export default function PageOverviewView() {
   return (
     <Fragment>
       <ContentPage
-        title={`Overview Risiko ${
-          year == 0
-            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-            : "Tahun " + year
-        }`}
+        title={`Overview Risiko ${year == 0
+          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+          : "Tahun " + year
+          }`}
         withCard={objectState === undefined}
         chooseObject={
           year == 0 ? (
@@ -354,8 +353,8 @@ export default function PageOverviewView() {
                                 isStatus === "reject"
                                   ? "error"
                                   : isStatus === "draft"
-                                  ? "default"
-                                  : "warning"
+                                    ? "default"
+                                    : "warning"
                               }
                               variant="outlined"
                               label={
@@ -367,8 +366,8 @@ export default function PageOverviewView() {
                                   {isStatus === "reject"
                                     ? "Reject"
                                     : isStatus === "draft"
-                                    ? "Draft"
-                                    : "Review"}
+                                      ? "Draft"
+                                      : "Review"}
                                 </Typography>
                               }
                               icon={
@@ -377,8 +376,8 @@ export default function PageOverviewView() {
                                     isStatus === "reject"
                                       ? "mdi:close"
                                       : isStatus === "draft"
-                                      ? "mdi:invoice-text-edit"
-                                      : "mdi:magnify-expand"
+                                        ? "mdi:invoice-text-edit"
+                                        : "mdi:magnify-expand"
                                   }
                                 />
                               }
@@ -439,30 +438,31 @@ export default function PageOverviewView() {
                         <Stack direction="row" alignItems="center" gap={1}>
                           Selera Risiko
                           {Array.isArray(stateSelera?.seleraRisiko) &&
-                          stateSelera.seleraRisiko.length > 0 ? (
+                            stateSelera.seleraRisiko.length > 0 &&
+                            stateSelera.seleraRisiko[0].type_nilai !== "" ? (
                             <Chip
                               label={
-                                stateSelera?.seleraRisiko[0].type_nilai.toLowerCase() ===
-                                "rendah"
+                                stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() === "rendah"
                                   ? "Rendah"
-                                  : stateSelera?.seleraRisiko[0].type_nilai.toLowerCase() ===
+                                  : stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() ===
                                     "konservatif"
-                                  ? "Konservatif"
-                                  : stateSelera?.seleraRisiko[0].type_nilai.toLowerCase() ===
-                                    "moderat"
-                                  ? "Moderat"
-                                  : "Tinggi"
+                                    ? "Konservatif"
+                                    : stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() ===
+                                      "moderat"
+                                      ? "Moderat"
+                                      : stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() === "tinggi"
+                                        ? "Tinggi"
+                                        : "-"
                               }
                               color="primary"
                             />
-                          ) : (
-                            ""
-                          )}
+                          ) : null}
                         </Stack>
                       }
                     >
                       {Array.isArray(stateSelera?.seleraRisiko) &&
-                      stateSelera.seleraRisiko.length > 0 ? (
+                        stateSelera.seleraRisiko.length > 0 &&
+                        stateSelera.seleraRisiko[0].type_nilai !== "" ? (
                         <Stack direction="column" gap={1}>
                           <Typography color={grey[600]}>
                             Pernyataan Selera Risiko:{" "}
@@ -472,7 +472,7 @@ export default function PageOverviewView() {
                               fontWeight={500}
                             >
                               {Array.isArray(stateSelera?.seleraRisiko) &&
-                              stateSelera.seleraRisiko.length > 0
+                                stateSelera.seleraRisiko.length > 0
                                 ? stateSelera?.seleraRisiko[0].pernyataan
                                 : ""}
                             </Typography>
@@ -481,7 +481,7 @@ export default function PageOverviewView() {
                             levelId={1}
                             levelDampak={
                               Array.isArray(stateSelera?.seleraRisiko) &&
-                              stateSelera.seleraRisiko.length > 0
+                                stateSelera.seleraRisiko.length > 0
                                 ? stateSelera?.seleraRisiko[0].type_nilai.toLowerCase()
                                 : ""
                             }

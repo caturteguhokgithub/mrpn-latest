@@ -99,54 +99,44 @@ export default function CardSelera() {
         title={
           <Stack direction="row" gap={1} alignItems="center">
             Selera Risiko
-            <Chip
-              color={
-                isStatus === "rejected"
-                  ? "error"
-                  : isStatus === "draft"
-                  ? "default"
-                  : "warning"
-              }
-              // variant="outlined"
-              label={
-                <Typography
-                  fontWeight={600}
-                  fontSize={13}
-                  textTransform="uppercase"
-                >
-                  {isStatus === "rejected"
-                    ? "Rejected"
+            {user?.type == "NON BAPPENAS" ?
+              <Chip
+                color={
+                  isStatus === "rejected"
+                    ? "error"
                     : isStatus === "draft"
-                    ? "Draft"
-                    : "Review"}
-                </Typography>
-              }
-              // icon={
-              //   <Iconify
-              //     name={
-              //       isStatus === "rejected"
-              //         ? "mdi:close"
-              //         : isStatus === "draft"
-              //         ? "mdi:invoice-text-edit"
-              //         : "mdi:magnify-expand"
-              //     }
-              //   />
-              // }
-              sx={{ px: 1 }}
-            />
+                      ? "default"
+                      : "warning"
+                }
+                label={
+                  <Typography
+                    fontWeight={600}
+                    fontSize={13}
+                    textTransform="uppercase"
+                  >
+                    {isStatus === "rejected"
+                      ? "Rejected"
+                      : isStatus === "draft"
+                        ? "Draft"
+                        : "Review"}
+                  </Typography>
+                }
+                sx={{ px: 1 }}
+              /> : ""}
+
             {isStatus === "rejected" ? (
               <Typography fontSize={14} color={red[700]}>
                 Ditolak tanggal:{" "}
                 <Typography component="strong" fontWeight={600} fontSize={14}>
                   {stateApproval?.created_at
                     ? new Date(stateApproval.created_at).toLocaleDateString(
-                        "id-ID",
-                        {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        }
-                      )
+                      "id-ID",
+                      {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      }
+                    )
                     : "-"}
                 </Typography>
               </Typography>
@@ -156,13 +146,13 @@ export default function CardSelera() {
                 <Typography component="strong" fontWeight={600} fontSize={14}>
                   {stateApproval?.created_at
                     ? new Date(stateApproval.created_at).toLocaleDateString(
-                        "id-ID",
-                        {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        }
-                      )
+                      "id-ID",
+                      {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      }
+                    )
                     : "-"}
                 </Typography>
               </Typography>
@@ -180,7 +170,7 @@ export default function CardSelera() {
                   borderRadius: 50,
                   px: 2,
                 }}
-                // onClick={() => setOpenModal(true)}
+              // onClick={() => setOpenModal(true)}
               >
                 Catatan
               </Button>
@@ -264,7 +254,7 @@ export default function CardSelera() {
           dataSelera={stateSelera}
           levelDampak={
             Array.isArray(stateSelera?.referensi) &&
-            stateSelera.referensi.length > 0
+              stateSelera.referensi.length > 0
               ? stateSelera?.referensi[0].type_nilai.toLowerCase()
               : ""
           }

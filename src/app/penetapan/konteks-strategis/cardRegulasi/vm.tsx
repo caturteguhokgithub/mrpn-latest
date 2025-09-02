@@ -17,12 +17,14 @@ import { doCreateRegulasi, doDeleteRegulasi, doGetRegulasi, doUpdateRegulasi } f
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { MiscMasterListPerpresRes } from "@/app/misc/master/masterServiceModel";
 import { ExsumRegulationResDto } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
+import useCardRegulationVM from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationVM";
 
 const useCardRegulasi = () => {
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
   const { objectState } = usePenetapanGlobalVM();
   const { year } = useRKPContext((state) => state);
+  const { data, deleteData } = useCardRegulationVM();
 
   const [dataRegulasi, setDataRegulasi] = useState<doRequestRegulasiDto[]>([]);
   const [modal, setModal] = useState(false);
@@ -113,7 +115,9 @@ const useCardRegulasi = () => {
     requestRegulasi,
     setRequestRegulasi,
     uriRequestRegulasi,
-    uriDeleteRegulasi
+    uriDeleteRegulasi,
+    data,
+    deleteData
   };
 };
 

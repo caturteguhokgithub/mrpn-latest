@@ -129,9 +129,9 @@ export default function FormInformation({
       lists: prevState.lists.map((item, index) =>
         index === key
           ? {
-              ...item,
-              value: value,
-            }
+            ...item,
+            value: value,
+          }
           : item
       ),
     }));
@@ -335,12 +335,12 @@ export default function FormInformation({
                               onChange={(event) =>
                                 handleUnggahBuktiDukung(event, key)
                               }
-                              // multiple
+                            // multiple
                             />
                           </Button>
-                          {fileNameStakeholder && (
+                          {state.lists[key]?.filename && (
                             <Typography color={green[700]} fontSize={14} mt={1}>
-                              Berhasil unggah gambar: {fileNameStakeholder}
+                              Berhasil unggah gambar: {state.lists[key]?.filename}
                             </Typography>
                           )}
                           {errorUploadStakeholder && (

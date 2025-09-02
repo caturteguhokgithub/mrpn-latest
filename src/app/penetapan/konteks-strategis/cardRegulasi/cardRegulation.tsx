@@ -30,16 +30,9 @@ export default function CardRegulation({ penetapan }: { penetapan?: boolean }) {
     uriDeleteRegulasi,
     requestRegulasi,
     setRequestRegulasi,
+    data,
+    deleteData
   } = useCardRegulasi();
-
-  const { data, deleteData } = useCardRegulationVM();
-
-  const {
-    optionStakeholder,
-    listPerpres,
-    stateRegulation,
-    setStateRegulation,
-  } = useCardIndicationVM();
 
   const handleRegulation = () => {
     //reset state
