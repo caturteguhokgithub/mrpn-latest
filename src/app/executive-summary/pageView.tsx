@@ -30,6 +30,7 @@ import { OverridableStringUnion } from "@mui/types";
 import { InfoTooltip } from "@/components/InfoTooltip";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
+import Iconify from "@/components/icons/iconify";
 
 export default function PageExecutiveSummary({}) {
   const { permission, user } = useAuthContext((state) => state);
@@ -212,10 +213,15 @@ export default function PageExecutiveSummary({}) {
             color="primary"
             variant="outlined"
             label={
-              <Stack direction="row" gap={1}>
-                <IconFA
+              <Stack direction="row" alignItems="center" gap={1}>
+                {/* <IconFA
                   size={14}
                   name="chevron-down"
+                  color={theme.palette.primary.main}
+                /> */}
+                <Iconify
+                  name="mdi:chevron-down"
+                  size={16}
                   color={theme.palette.primary.main}
                 />
                 {breakpointDownMd ? null : "Tab RPJMN RKP"}

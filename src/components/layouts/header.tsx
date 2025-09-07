@@ -503,7 +503,10 @@ export default function Header({}) {
               window.open("https://e-monev.bappenas.go.id", "_self")
             }
           >
-            <Avatar alt={user?.name ?? ""} src="/mrpn/logo-emonev.png" />
+            <Avatar
+              alt={user?.name ?? ""}
+              src="https://mrpn.bappenas.go.id/fe/mrpn/logo-emonev.png"
+            />
             <ListItemText
               sx={{
                 span: {
