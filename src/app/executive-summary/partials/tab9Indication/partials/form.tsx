@@ -1,15 +1,10 @@
-import React, { Fragment, SetStateAction } from "react";
+import { SetStateAction } from "react";
 import {
-  alpha,
-  Autocomplete,
   Box,
-  Checkbox,
   Chip,
   Divider,
   FormControl,
-  FormControlLabel,
   Grid,
-  IconButton,
   Paper,
   Stack,
   Table,
@@ -18,33 +13,17 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
-import {
-  AutocompleteSelectFreeSolo,
-  AutocompleteSelectMultiple,
-  AutocompleteSelectSingle,
-} from "@/components/autocomplete";
-import {
-  ExsumIndicationState,
-  ExsumIndicationStateValue,
-  ModalDto,
-} from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
-import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
-import { ExsumSWOTValuesDto } from "@/app/executive-summary/partials/tab1Background/cardSwot/cardSwotModel";
-import { RoDto } from "@/app/misc/rkp/rkpServiceModel";
-import TextareaComponent, { TextareaStyled } from "@/components/textarea";
+import { AutocompleteSelectSingle } from "@/components/autocomplete";
+import { ExsumIndicationState } from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
+import { TextareaStyled } from "@/components/textarea";
 import AddButton from "@/components/buttonAdd";
-import { green, grey, red } from "@mui/material/colors";
+import { green, red } from "@mui/material/colors";
 import { ExsumTWOSDto } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
-import { Text } from "recharts";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import theme from "@/theme";
-import EmptyState from "@/components/empty";
-import { IconEmptyData } from "@/components/icons";
 import { IconFA } from "@/components/icons/icon-fa";
 import ActionColumn from "@/components/actions/action";
 
