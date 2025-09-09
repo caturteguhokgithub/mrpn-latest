@@ -101,23 +101,28 @@ const usePenetapanSelera = () => {
 
   async function getApprovalSelera() {
     if (objectState !== undefined) {
-      const req: doReqSeleraApprovalDto = {
-        ...initApprovalSelera,
-        id: requestSelera?.id ?? 0,
-      };
+      if (stateSelera !== undefined) {
+        if (stateSelera.seleraRisiko[0].id !== 0) {
+          const req: doReqSeleraApprovalDto = {
+            ...initApprovalSelera,
+            // id: requestSelera?.id ?? 0,
+            id: stateSelera?.seleraRisiko[0].id ?? 0,
+          };
 
-      const params = {
-        body: req,
-        loadingContext: loadingContext,
-        errorModalContext: errorModalContext,
-      };
+          const params = {
+            body: req,
+            loadingContext: loadingContext,
+            errorModalContext: errorModalContext,
+          };
 
-      const response = await doGetApprovalSelera(params);
+          const response = await doGetApprovalSelera(params);
 
-      if (response?.code == API_CODE.success) {
-        let result: doReqSeleraApprovalDto[] = response.result;
-        if (result) {
-          setStateApproval(result[0]);
+          if (response?.code == API_CODE.success) {
+            let result: doReqSeleraApprovalDto[] = response.result;
+            if (result) {
+              setStateApproval(result[0]);
+            }
+          }
         }
       }
     }
