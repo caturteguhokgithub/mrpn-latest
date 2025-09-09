@@ -122,9 +122,7 @@ const usePenetapanObjectVM = () => {
     ...initShorlist,
   });
 
-  const [stateApproval, setStateApproval] = useState<dtoGetApproval>({
-    ...initApprovalObjek,
-  });
+  const [stateApproval, setStateApproval] = useState<dtoGetApproval>({ ...initApprovalObjek, });
 
   const [modalDeleteObject, setModalDeleteObject] = useState<boolean>(false);
   const [modalEditEntitas, setModalEditEntitas] = useState<boolean>(false);

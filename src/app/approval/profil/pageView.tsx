@@ -176,7 +176,7 @@ export default function PageApprovalProfilView() {
             >
               <Box className="table-sticky-horizontal">
                 <MRTPerlakuanComplete
-                  dataTable={dataRiskOverview?.overviews_sekre}
+                  dataTable={dataRiskOverview?.overviews}
                   viewOnly
                   renderCaption={
                     <Typography fontWeight={600} fontSize={17} px={1}>

@@ -25,13 +25,14 @@ import TableStatus from "./partials/table-status";
 import useNotaDinasVM from "./notaDinasVM";
 import FormNote from "./partials/form-note";
 
-export default function PageApprovalNotaDinasView({}) {
+export default function PageApprovalNotaDinasView({ }) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
 
   const { year } = useRKPContext((state) => state);
 
-  const { objects, objectState, setObjectState, nota } =
-    usePenetapanTopicContext((state) => state);
+  const { objects, objectState, setObjectState, nota } = usePenetapanTopicContext((state) => state);
+
+  console.log(objectState);
 
   const {
     useEffectGenerateOption,
@@ -96,8 +97,10 @@ export default function PageApprovalNotaDinasView({}) {
                 value={objectState}
                 options={objects}
                 getOptionLabel={(opt) => `${opt.code} - ${opt.topik}`}
-                handleChange={(val: PenetapanObjectDto) => setObjectState(val)}
-                placeHolder={"Pilih Topik"}
+                handleChange={(val: PenetapanObjectDto | null) =>
+                  setObjectState(val ?? undefined)
+                }
+                placeHolder="Pilih Topik"
               />
             </FormControl>
           </Stack>
@@ -169,7 +172,7 @@ export default function PageApprovalNotaDinasView({}) {
 
           <FormNote
             state={stateApproval}
-            // setState={setStateApproval}
+            setState={setStateApproval}
             mode="add"
           />
         </Stack>
