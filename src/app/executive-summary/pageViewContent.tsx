@@ -3,7 +3,6 @@
 import ContentPage from "@/components/contents";
 import React from "react";
 import { Box, Collapse, Tab, Tabs } from "@mui/material";
-import { IconFA } from "@/components/icons/icon-fa";
 import Tab1Background from "./partials/tab1Background";
 import Tab2Profile from "./partials/tab2Profile";
 import Tab3Fot from "./partials/tab3Fot";
@@ -20,6 +19,7 @@ import Tab7Stakeholder from "./partials/tab7Stakeholder";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import EmptyState from "@/components/empty";
 import { IconEmptyPage } from "@/components/icons/empty-page";
+import Iconify from "@/components/icons/iconify";
 
 function a11yProps(index: number) {
   return {
@@ -112,47 +112,37 @@ export default function PageExecutiveSummaryContent({
                 label={`Profil ${rkpState?.level}`}
                 {...a11yProps(0)}
                 iconPosition="start"
-                icon={
-                  <IconFA
-                    size={16}
-                    name="address-card"
-                    sx={{ width: "auto" }}
-                  />
-                }
+                icon={<Iconify size={20} name="mdi:card-account-details" />}
               />
               <Tab
                 label="Latar Belakang"
                 {...a11yProps(1)}
                 iconPosition="start"
-                icon={<IconFA size={16} name="pen-to-square" />}
+                icon={<Iconify size={20} name="mdi:square-edit-outline" />}
               />
               <Tab
                 label="Penyusunan Strategi"
                 {...a11yProps(2)}
                 iconPosition="start"
-                icon={
-                  <IconFA size={16} name="lightbulb" sx={{ width: "auto" }} />
-                }
+                icon={<Iconify size={20} name="mdi:lightbulb" />}
               />
               <Tab
                 label="Indikasi Risiko"
                 {...a11yProps(3)}
                 iconPosition="start"
-                icon={<IconFA size={16} name="rotate" sx={{ width: "auto" }} />}
+                icon={<Iconify size={20} name="mdi:sync-circle" />}
               />
               <Tab
                 label="Cascading"
                 {...a11yProps(4)}
                 iconPosition="start"
-                icon={
-                  <IconFA size={16} name="layer-group" sx={{ width: "auto" }} />
-                }
+                icon={<Iconify size={20} name="mdi:layers-triple" />}
               />
               <Tab
                 label="Project Roadmap"
                 {...a11yProps(5)}
                 iconPosition="start"
-                icon={<IconFA size={16} name="route" sx={{ width: "auto" }} />}
+                icon={<Iconify size={20} name="mdi:map-marker-path" />}
                 sx={{
                   display: rkpState === undefined ? "none" : "inline-flex",
                 }}
@@ -161,13 +151,7 @@ export default function PageExecutiveSummaryContent({
                 label="Critical Path"
                 {...a11yProps(6)}
                 iconPosition="start"
-                icon={
-                  <IconFA
-                    size={16}
-                    name="exclamation-triangle"
-                    sx={{ width: "auto" }}
-                  />
-                }
+                icon={<Iconify size={20} name="mdi:alert" />}
                 sx={{
                   display: rkpState === undefined ? "none" : "inline-flex",
                 }}
@@ -176,15 +160,13 @@ export default function PageExecutiveSummaryContent({
                 label="Kelembagaan & Regulasi"
                 {...a11yProps(7)}
                 iconPosition="start"
-                icon={<IconFA size={16} name="gavel" sx={{ width: "auto" }} />}
+                icon={<Iconify size={20} name="mdi:gavel" />}
               />
               <Tab
                 label="Pendanaan & Investasi"
                 {...a11yProps(8)}
                 iconPosition="start"
-                icon={
-                  <IconFA size={16} name="dollar-sign" sx={{ width: "auto" }} />
-                }
+                icon={<Iconify size={20} name="mdi:cash-usd" />}
               />
             </Tabs>
           </Box>

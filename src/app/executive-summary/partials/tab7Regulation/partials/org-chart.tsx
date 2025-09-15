@@ -7,6 +7,7 @@ import theme from "@/theme";
 import { grey } from "@mui/material/colors";
 import { IconFA } from "@/components/icons/icon-fa";
 import { styleOrgChart2 } from "@/app/executive-summary/style";
+import Iconify from "@/components/icons/iconify";
 
 const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
   const isAssistant = nodeData.isAssistant === true;
@@ -27,7 +28,7 @@ const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
           sx={{ transform: "translateY(-50%)" }}
         >
           {nodeData.children && nodeData.children.length > 0 && (
-            <IconFA name="circle-plus" size={14} color="White" />
+            <Iconify name="mdi:plus-circle" size={16} color="White" />
           )}
         </Box>
         <Box

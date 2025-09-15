@@ -33,6 +33,7 @@ const usePenetapanSelera = () => {
     ...initApprovalSelera,
   });
   const [isEditSeleraRisiko, setEditSeleraRisiko] = useState(false);
+  const [modalReject, setModalReject] = useState(false);
 
   async function createSelera(param: doReqSeleraDto) {
     const req: doReqSeleraDto = {
@@ -73,12 +74,13 @@ const usePenetapanSelera = () => {
       let result: doGetSeleraDto = response.result;
 
       if (result) {
-        let seleraRisikoList = []
+        let seleraRisikoList = [];
         if (user?.type === "BAPPENAS") {
           seleraRisikoList = response.result.referensi ?? [{ ...initSelera }];
-
         } else {
-          seleraRisikoList = response.result.seleraRisiko ?? [{ ...initSelera }];
+          seleraRisikoList = response.result.seleraRisiko ?? [
+            { ...initSelera },
+          ];
         }
         // let seleraRisikoList = Array.isArray(response.result?.seleraRisiko)
         //   ? response.result.seleraRisiko
@@ -161,6 +163,8 @@ const usePenetapanSelera = () => {
     updateApproval,
     isEditSeleraRisiko,
     handleEditSeleraRisiko,
+    modalReject,
+    setModalReject,
   };
 };
 

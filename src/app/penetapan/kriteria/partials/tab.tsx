@@ -10,6 +10,7 @@ import CardKemungkinan from "./tab2Possibility/cardKemungkinan";
 import CardDampak from "./tab3Impact/cardDampak";
 import CardMatriks from "./tab4Matriks/cardMatriks";
 import CardSelera from "./tab4Selera/cardSelera";
+import Iconify from "@/components/icons/iconify";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -82,25 +83,25 @@ export default function TabCriteria({}) {
             label="Kategori Risiko"
             {...a11yProps(0)}
             iconPosition="start"
-            icon={<IconFA size={16} name="gauge-high" />}
+            icon={<Iconify size={20} name="mdi:gauge" />}
           />
           <Tab
             label="Kriteria Kemungkinan"
             {...a11yProps(1)}
             iconPosition="start"
-            icon={<IconFA size={16} name="maximize" />}
+            icon={<Iconify size={20} name="mdi:arrow-expand-all" />}
           />
           <Tab
             label="Kriteria Dampak"
             {...a11yProps(2)}
             iconPosition="start"
-            icon={<IconFA size={16} name="minimize" />}
+            icon={<Iconify size={20} name="mdi:arrow-collapse-all" />}
           />
           <Tab
             label="Selera Risiko"
             {...a11yProps(3)}
             iconPosition="start"
-            icon={<IconFA size={16} name="flask-vial" sx={{ width: 20 }} />}
+            icon={<Iconify size={20} name="mdi:flask-outline" />}
           />
           {/* <Tab
             label="Matriks Analisis Risiko"

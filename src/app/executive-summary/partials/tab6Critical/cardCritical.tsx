@@ -12,6 +12,8 @@ import TableCritical from "./table";
 import DialogDelete from "@/components/dialogDelete";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import TableCriticalCustom from "./partials/tableCritical";
+import AddButton from "@/components/buttonAdd";
+import Iconify from "@/components/icons/iconify";
 
 const ProjectType = ({ label, color }: { label: string; color: string }) => {
   return (
@@ -140,6 +142,24 @@ export default function CardCritical({
         setting={true}
         settingAddOnclick={handleModalAdd}
         settingEditOnclick={handleModalOpen}
+        addButton={
+          <Stack direction="row" spacing={1}>
+            <AddButton
+              noMargin
+              title="Ubah"
+              color="primary"
+              startIcon={<Iconify name="mdi:pencil" size={14} />}
+              onclick={handleModalOpen}
+            />
+            <AddButton
+              noMargin
+              filled
+              title="Tambah CP"
+              color="primary"
+              onclick={handleModalAdd}
+            />
+          </Stack>
+        }
       >
         {/* {isIntExtPage && isDeveloping ? ( */}
         {isIntExtPage ? (

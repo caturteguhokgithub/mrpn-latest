@@ -310,7 +310,7 @@ export default function PageExecutiveSummary({}) {
                   TransitionComponent={Grow}
                 >
                   <Button onClick={handleToggleTab}>
-                    <IconFA name="chevron-up" size={20} />
+                    <Iconify name="mdi:chevron-up" size={24} />
                   </Button>
                 </Tooltip>
               </Box>

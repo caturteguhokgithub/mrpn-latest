@@ -365,7 +365,7 @@ export default function PageTemaView() {
         }
         noMinusMargin
         heightNoSet
-        withCard={objects.length == 0 || year == 0}
+        withCard={objects.length === 0}
         selectedTopic={
           <Collapse in={objectState !== undefined}>
             <Chip
@@ -422,7 +422,7 @@ export default function PageTemaView() {
                 title="Ganti Topik"
                 filled
                 noMargin
-                startIcon={<IconFA name="refresh" size={16} />}
+                startIcon={<Iconify name="mdi:sync" size={18} />}
                 onclick={() => setObjectState(undefined)}
               />
             </Collapse>

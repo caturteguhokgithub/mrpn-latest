@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import theme from "@/theme";
 import { IconFA } from "../icons/icon-fa";
+import Iconify from "../icons/iconify";
 
 export default function DialogComponent({
   title,
@@ -97,7 +98,7 @@ export default function DialogComponent({
             color: (theme) => theme.palette.grey[500],
           }}
         >
-          <IconFA name="close" size={15} />
+          <Iconify name="mdi:close" size={15} />
         </IconButton>
       )}
       <DialogContent

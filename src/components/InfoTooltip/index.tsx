@@ -2,6 +2,7 @@ import React from "react";
 import { Grow, styled, Typography } from "@mui/material";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import { IconFA } from "../icons/icon-fa";
+import Iconify from "../icons/iconify";
 
 export const InfoTooltip = ({
   title,
@@ -44,10 +45,10 @@ export const InfoTooltip = ({
           },
         }}
       >
-        <IconFA
-          name="circle-info"
-          size={17}
-          sx={{ cursor: "help", width: 24, color: color }}
+        <Iconify
+          name="mdi:information-slab-circle"
+          size={18}
+          sx={{ cursor: "help", color: color, position: "relative", top: 1 }}
         />
       </Typography>
     </HtmlTooltip>

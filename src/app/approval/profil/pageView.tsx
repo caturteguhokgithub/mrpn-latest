@@ -25,16 +25,17 @@ import DialogComponent from "@/components/dialog";
 import FormReject from "@/app/approval/nota-dinas/partials/form-reject";
 import { CardWithStamp } from "@/components/card-w-stamp";
 import { dtoGetApproval } from "@/app/penetapan/objek/pageModel";
+import Iconify from "@/components/icons/iconify";
 
 export default function PageApprovalProfilView() {
   const { year } = useRKPContext((state) => state);
 
-  const { objects, objectState, setObjectState, getMasterListObject } = usePenetapanGlobalVM();
+  const { objects, objectState, setObjectState, getMasterListObject } =
+    usePenetapanGlobalVM();
   const [approvalStamp, setApprovalStamp] = React.useState(false);
   const [rejectStamp, setRejectStamp] = React.useState(false);
   const [buttonStamp, setButtonStamp] = React.useState(true);
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
-
 
   const {
     dataRiskOverview,
@@ -45,16 +46,15 @@ export default function PageApprovalProfilView() {
     setStateApproval,
   } = useRiskOverviewVM();
 
-
   useEffect(() => {
     if (year > 0) getMasterListObject();
   }, [year]);
 
   useEffect(() => {
     if (objectState !== undefined) {
-      getRiskOverviewData()
-      getApproval()
-    };
+      getRiskOverviewData();
+      getApproval();
+    }
   }, [objectState]);
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export default function PageApprovalProfilView() {
         ...stateApproval,
         id: objectState?.id ?? 0,
         status: status,
-        message: msg
+        message: msg,
       };
 
       updateApproval(param);
@@ -126,7 +126,7 @@ export default function PageApprovalProfilView() {
             <Button
               variant="outlined"
               color="error"
-              startIcon={<IconFA name="thumbs-down" size={14} />}
+              startIcon={<Iconify name="mdi:thumb-down" size={16} />}
               sx={{ px: 3, borderRadius: 12, whiteSpace: "nowrap" }}
               onClick={handleModalOpen}
             >
@@ -135,10 +135,10 @@ export default function PageApprovalProfilView() {
             <Button
               variant="contained"
               color="success"
-              startIcon={<IconFA name="thumbs-up" size={14} />}
+              startIcon={<Iconify name="mdi:thumb-up" size={16} />}
               sx={{ px: 3, borderRadius: 12, whiteSpace: "nowrap" }}
               onClick={() => {
-                handleApprovalStamp("approved")
+                handleApprovalStamp("approved");
               }}
             >
               Approve
@@ -202,7 +202,9 @@ export default function PageApprovalProfilView() {
               variant="contained"
               type="submit"
               color="error"
-              onClick={() => handleApprovalStamp("rejected", stateApproval.message)}
+              onClick={() =>
+                handleApprovalStamp("rejected", stateApproval.message)
+              }
             >
               Reject
             </Button>
@@ -210,7 +212,11 @@ export default function PageApprovalProfilView() {
         }
       >
         {/* <FormReject mode="add" /> */}
-        <FormReject state={stateApproval} setState={setStateApproval} mode="add" />
+        <FormReject
+          state={stateApproval}
+          setState={setStateApproval}
+          mode="add"
+        />
       </DialogComponent>
     </ContentPage>
   );

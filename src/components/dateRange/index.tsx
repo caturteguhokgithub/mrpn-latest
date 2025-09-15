@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {DateRange, RangeKeyDict} from "react-date-range";
-import {Box, InputAdornment, Popover, Stack, TextField} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { DateRange, RangeKeyDict } from "react-date-range";
+import { Box, InputAdornment, Popover, Stack, TextField } from "@mui/material";
 import moment from "moment";
-import {IconFA} from "../icons/icon-fa";
-import {grey} from "@mui/material/colors";
+import { IconFA } from "../icons/icon-fa";
+import { grey } from "@mui/material/colors";
 import dayjs from "dayjs";
+import Iconify from "../icons/iconify";
 
 export interface DateRangeState {
   startDate: Date | undefined;
@@ -17,47 +18,49 @@ export interface DateRangeStateToString {
   endDate: string;
 }
 
-export function convertDateToString(data: DateRangeState[]): DateRangeStateToString {
-
-  const startDate = dayjs(data[0].startDate).format('YYYY-MM-DD')
-  const endDate = dayjs(data[0].endDate).format('YYYY-MM-DD')
+export function convertDateToString(
+  data: DateRangeState[]
+): DateRangeStateToString {
+  const startDate = dayjs(data[0].startDate).format("YYYY-MM-DD");
+  const endDate = dayjs(data[0].endDate).format("YYYY-MM-DD");
 
   return {
     startDate: startDate,
-    endDate: endDate
-  }
+    endDate: endDate,
+  };
 }
 
-export function convertStringToDate(start:string, end:string): DateRangeState[] {
-
-  const startDate = dayjs(start).toDate()
-  const endDate = dayjs(end).toDate()
+export function convertStringToDate(
+  start: string,
+  end: string
+): DateRangeState[] {
+  const startDate = dayjs(start).toDate();
+  const endDate = dayjs(end).toDate();
 
   return [
     {
       startDate: startDate,
       endDate: endDate,
-      key: "selection"
-    }
-  ]
+      key: "selection",
+    },
+  ];
 }
 
-const DateRangePicker = (
-  {
-    small,
-    placeholder,
-    rounded,
-    sxInput,
-    initState,
-    handleChangeState
-  }: {
-    small?: boolean;
-    placeholder?: string;
-    rounded?: boolean;
-    sxInput?: React.CSSProperties;
-    initState?: DateRangeState[];
-    handleChangeState?: any
-  }) => {
+const DateRangePicker = ({
+  small,
+  placeholder,
+  rounded,
+  sxInput,
+  initState,
+  handleChangeState,
+}: {
+  small?: boolean;
+  placeholder?: string;
+  rounded?: boolean;
+  sxInput?: React.CSSProperties;
+  initState?: DateRangeState[];
+  handleChangeState?: any;
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
   const curState = initState ?? [
@@ -66,7 +69,7 @@ const DateRangePicker = (
       endDate: undefined,
       key: "selection",
     },
-  ]
+  ];
   const [state, setState] = useState<DateRangeState[]>(curState);
 
   const open = Boolean(anchorEl);
@@ -81,7 +84,7 @@ const DateRangePicker = (
   };
 
   const handleSelect = (ranges: RangeKeyDict) => {
-    const {selection} = ranges;
+    const { selection } = ranges;
     setState([
       {
         startDate: selection.startDate,
@@ -136,14 +139,20 @@ const DateRangePicker = (
           value={
             areDatesDefined
               ? `${
-                state[0].startDate
-                  ? moment.utc(state[0].startDate).utcOffset(7).format("D MMM YYYY")
-                  : ""
-              } - ${
-                state[0].endDate
-                  ? moment.utc(state[0].endDate).utcOffset(7).format("D MMM YYYY")
-                  : ""
-              }`
+                  state[0].startDate
+                    ? moment
+                        .utc(state[0].startDate)
+                        .utcOffset(7)
+                        .format("D MMM YYYY")
+                    : ""
+                } - ${
+                  state[0].endDate
+                    ? moment
+                        .utc(state[0].endDate)
+                        .utcOffset(7)
+                        .format("D MMM YYYY")
+                    : ""
+                }`
               : ""
           }
           InputProps={{
@@ -188,11 +197,11 @@ const DateRangePicker = (
             width={36}
             height={40}
             position="absolute"
-            top={0}
+            top={-2}
             right={0}
-            sx={{cursor: "pointer", pr: 2}}
+            sx={{ cursor: "pointer", pr: 2 }}
           >
-            <IconFA name="xmark" size={20} onclick={handleClear}/>
+            <Iconify name="mdi:close" size={20} onClick={handleClear} />
           </Stack>
         )}
       </Box>

@@ -25,6 +25,7 @@ import { SxParams } from "@/app/executive-summary/types";
 import useRkpVM from "@/components/dropdown/rkpVM";
 import { useExsumContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import { IconFA } from "../icons/icon-fa";
+import Iconify from "../icons/iconify";
 
 export const SxAutocompleteTextField = (params: SxParams) => {
   return {
@@ -191,13 +192,7 @@ export default function DropdownRkp({
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton edge="end">
-                      <IconFA
-                        name="search"
-                        size={16}
-                        sx={{
-                          width: 18,
-                        }}
-                      />
+                      <Iconify name="mdi:magnify" size={20} />
                     </IconButton>
                   </InputAdornment>
                 }

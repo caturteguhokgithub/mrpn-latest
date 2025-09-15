@@ -22,7 +22,10 @@ import { UpdateLogoStakeholderDto } from "@/app/misc/master/masterServiceModel";
 import Image from "next/image";
 import { IconFA } from "@/components/icons/icon-fa";
 import { MAX_FILE_SIZE_2MB, VisuallyHiddenInput } from "@/utils/constant";
-import { useAuthContext, useGlobalModalContext } from "@/lib/core/hooks/useHooks";
+import {
+  useAuthContext,
+  useGlobalModalContext,
+} from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
@@ -33,6 +36,7 @@ import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
 import { useToast } from "@/lib/core/context/toastContext";
 import { green, red } from "@mui/material/colors";
+import Iconify from "@/components/icons/iconify";
 
 export default function CardStakeholder({
   project,
@@ -189,31 +193,19 @@ export default function CardStakeholder({
       settingEditOnclick={handleModalOpenStakeholder}
       addButton={
         isIntExtPage ? (
-          <Box>
-            <Button
-              size="small"
-              variant="outlined"
+          <Stack direction="row" spacing={1}>
+            <AddButton
               color="primary"
-              startIcon={<IconFA name="magnifying-glass-plus" size={14} />}
-              sx={{ borderRadius: 50, mr: 1 }}
-              onClick={() => setModalViewImageIntExt(true)}
-            >
-              Perbesar Gambar
-            </Button>
+              title="Perbesar Gambar"
+              startIcon={<Iconify name="mdi:magnify-plus" size={14} />}
+              onclick={() => setModalViewImageIntExt(true)}
+            />
             <Button
               component="label"
               size="small"
               variant="contained"
               tabIndex={-1}
-              startIcon={
-                <Icon
-                  baseClassName="fas"
-                  className={"fa-upload"}
-                  sx={{
-                    fontSize: "12px !important",
-                  }}
-                />
-              }
+              startIcon={<Iconify name="mdi:upload" size={14} />}
               sx={{
                 paddingInline: 2,
                 borderRadius: "50px",
@@ -227,9 +219,16 @@ export default function CardStakeholder({
                 multiple
               />
             </Button>
-          </Box>
+          </Stack>
         ) : (
-          false
+          <AddButton
+            noMargin
+            filled
+            title="Ubah"
+            color="primary"
+            startIcon={<Iconify name="mdi:pencil" size={14} />}
+            onclick={handleModalOpenStakeholder}
+          />
         )
       }
     >
@@ -299,15 +298,7 @@ export default function CardStakeholder({
                     noMargin
                     small
                     title="Ubah Logo"
-                    startIcon={
-                      <Icon
-                        baseClassName="fas"
-                        className={"fa-pencil"}
-                        sx={{
-                          fontSize: "12px !important",
-                        }}
-                      />
-                    }
+                    startIcon={<Iconify name="mdi:pencil" size={14} />}
                     sx={{ paddingInline: 2 }}
                     onclick={() => setModalListLogo(true)}
                   />
@@ -318,15 +309,7 @@ export default function CardStakeholder({
                   size="small"
                   variant="outlined"
                   tabIndex={-1}
-                  startIcon={
-                    <Icon
-                      baseClassName="fas"
-                      className={"fa-upload"}
-                      sx={{
-                        fontSize: "12px !important",
-                      }}
-                    />
-                  }
+                  startIcon={<Iconify name="mdi:upload" size={14} />}
                   sx={{
                     paddingInline: 2,
                     borderRadius: "50px",
@@ -346,15 +329,7 @@ export default function CardStakeholder({
                     filled
                     small
                     title="Lihat Gambar"
-                    startIcon={
-                      <Icon
-                        baseClassName="fas"
-                        className={"fa-magnifying-glass-plus"}
-                        sx={{
-                          fontSize: "12px !important",
-                        }}
-                      />
-                    }
+                    startIcon={<Iconify name="mdi:magnify-plus" size={14} />}
                     sx={{ paddingInline: 2 }}
                     onclick={() => setModalViewImage(true)}
                   />
@@ -479,7 +454,7 @@ export default function CardStakeholder({
               role={undefined}
               variant="contained"
               tabIndex={-1}
-              startIcon={<IconFA name="upload" size={14} />}
+              startIcon={<Iconify name="mdi:upload" size={14} />}
               sx={{
                 textTransform: "capitalize",
                 px: 2,
@@ -515,7 +490,7 @@ export default function CardStakeholder({
           sx={{ position: "absolute", top: 10, right: 10, zIndex: 9999 }}
           onClick={() => setModalViewImage(false)}
         >
-          <IconFA name="circle-xmark" color="red" size={32} />
+          <Iconify name="mdi:close-circle" color="red" size={32} />
         </IconButton>
         <TransformWrapper
           initialScale={0.5}
@@ -574,7 +549,7 @@ export default function CardStakeholder({
           sx={{ position: "absolute", top: 10, right: 10, zIndex: 9999 }}
           onClick={() => setModalViewImageIntExt(false)}
         >
-          <IconFA name="circle-xmark" color="red" size={32} />
+          <Iconify name="mdi:close-circle" color="red" size={32} />
         </IconButton>
         <TransformWrapper
           centerOnInit

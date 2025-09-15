@@ -27,6 +27,7 @@ import { TextareaStyled } from "@/components/textarea";
 import theme from "@/theme";
 import { API_CONSTANT } from "@/lib/core/api/apiModel";
 import useCardLocationVM from "../tab2Profile/cardLocation/cardLocationVM";
+import Iconify from "@/components/icons/iconify";
 
 export default function CardIndication({ project }: { project: string }) {
   const { year, rpjmn } = useRKPContext((store) => store);
@@ -119,15 +120,7 @@ export default function CardIndication({ project }: { project: string }) {
                 filled
                 title="Download Excel"
                 color="success"
-                startIcon={
-                  <Icon
-                    baseClassName="fas"
-                    className={`fa-file-excel`}
-                    sx={{
-                      fontSize: "16px !important",
-                    }}
-                  />
-                }
+                startIcon={<Iconify name="mdi:file-excel" />}
                 onclick={() => {
                   const uri =
                     process.env.NEXT_PUBLIC_BASE_URL_API +
