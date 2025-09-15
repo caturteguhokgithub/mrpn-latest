@@ -133,9 +133,9 @@ export default function ContentPage({
   const items: any =
     typeof window !== "undefined"
       ? (() => {
-        const selectedRKP = window?.localStorage?.getItem("selectedRKP");
-        return selectedRKP ? JSON.parse(selectedRKP) : null;
-      })()
+          const selectedRKP = window?.localStorage?.getItem("selectedRKP");
+          return selectedRKP ? JSON.parse(selectedRKP) : null;
+        })()
       : null;
 
   const currentDate = new Date();
@@ -221,8 +221,9 @@ export default function ContentPage({
                 variant="outlined"
                 label={
                   <>
-                    <Stack direction="row" alignItems="center">
+                    <Stack component="span" direction="row" alignItems="center">
                       <Stack
+                        component="span"
                         direction="row"
                         bgcolor={theme.palette.primary.main}
                         px={2}
@@ -234,6 +235,7 @@ export default function ContentPage({
                         }}
                       >
                         <Typography
+                          component="span"
                           fontSize={13}
                           color="white"
                           fontWeight={600}
@@ -243,6 +245,7 @@ export default function ContentPage({
                         </Typography>
                       </Stack>
                       <Box
+                        component="span"
                         sx={{
                           [theme.breakpoints.up("sm")]: {
                             display: "block",
@@ -263,6 +266,7 @@ export default function ContentPage({
                             TransitionComponent={Grow}
                           >
                             <Typography
+                              component="span"
                               aria-owns={
                                 open ? "mouse-over-popover" : undefined
                               }
@@ -284,7 +288,12 @@ export default function ContentPage({
                             </Typography>
                           </Tooltip>
                         ) : (
-                          <Typography px={1.5} fontSize={13} fontWeight={600}>
+                          <Typography
+                            component="span"
+                            px={1.5}
+                            fontSize={13}
+                            fontWeight={600}
+                          >
                             {/* {`${objectState?.rkp.code} - ${objectState?.rkp.value}`} */}
                             {`${items?.code} - ${items?.value}`}
                           </Typography>
@@ -534,12 +543,12 @@ export default function ContentPage({
           heightTitleBreadcrumb
             ? "calc(100vh - 258px)"
             : overflowHidden
-              ? "calc(100vh - 240px)"
-              : heightNoSet
-                ? "auto"
-                : darkTheme
-                  ? "calc(100vh - 180px)"
-                  : "calc(100vh - 240px)"
+            ? "calc(100vh - 240px)"
+            : heightNoSet
+            ? "auto"
+            : darkTheme
+            ? "calc(100vh - 180px)"
+            : "calc(100vh - 240px)"
         }
         overflow={overflowHidden ? "hidden" : "auto"}
         // margin={noMinusMargin ? 0 : -1}

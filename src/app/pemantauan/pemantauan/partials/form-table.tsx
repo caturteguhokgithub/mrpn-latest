@@ -16,6 +16,7 @@ import { green, red } from "@mui/material/colors";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
 import { IconFA } from "@/components/icons/icon-fa";
 import { VisuallyHiddenInput } from "@/utils/constant";
+import Iconify from "@/components/icons/iconify";
 
 export default function FormTable({ mode }: { mode?: string }) {
   const [project, setProject] = React.useState("");
@@ -205,21 +206,21 @@ export default function FormTable({ mode }: { mode?: string }) {
             exclusive
             onChange={handleUserLevel}
           >
-            <ToggleButton value="belum" sx={{ px: 3 }} color="primary">
+            <ToggleButton value="belum" sx={{ px: 2 }} color="primary">
               <Stack direction="row" alignItems="center" gap={1}>
-                <IconFA name="xmark" size={12} />
+                <Iconify name="mdi:close-circle" size={20} />
                 <Typography>Belum</Typography>
               </Stack>
             </ToggleButton>
-            <ToggleButton value="proses" sx={{ px: 3 }} color="warning">
+            <ToggleButton value="proses" sx={{ px: 2 }} color="warning">
               <Stack direction="row" alignItems="center" gap={1}>
-                <IconFA name="hourglass-start" size={12} />
+                <Iconify name="mdi:timer-sand" size={20} />
                 <Typography>Proses</Typography>
               </Stack>
             </ToggleButton>
-            <ToggleButton value="selesai" sx={{ px: 3 }} color="success">
+            <ToggleButton value="selesai" sx={{ px: 2 }} color="success">
               <Stack direction="row" alignItems="center" gap={1}>
-                <IconFA name="check" size={12} />
+                <Iconify name="mdi:check-circle" size={20} />
                 <Typography>Selesai</Typography>
               </Stack>
             </ToggleButton>
@@ -236,7 +237,7 @@ export default function FormTable({ mode }: { mode?: string }) {
                 role={undefined}
                 variant="contained"
                 tabIndex={-1}
-                startIcon={<IconFA name="upload" size={14} />}
+                startIcon={<Iconify name="mdi:upload" size={18} />}
               >
                 Upload file
                 <VisuallyHiddenInput type="file" />

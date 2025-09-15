@@ -1,21 +1,12 @@
-import React from "react";
 import {
   alpha,
   Avatar,
   Card,
   CardContent,
-  FormControl,
   Grid,
-  Paper,
   Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
   Typography,
 } from "@mui/material";
-import theme from "@/theme";
-import FieldLabelInfo from "@/components/fieldLabelInfo";
 import { IconFA } from "@/components/icons/icon-fa";
 import { grey } from "@mui/material/colors";
 

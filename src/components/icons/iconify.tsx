@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import { on } from "events";
 import { CSSProperties } from "react";
 
 export default function Iconify({
@@ -7,12 +8,14 @@ export default function Iconify({
   size,
   color,
   sx,
+  onClick,
 }: {
   name: string;
   className?: string;
   size?: number;
   color?: string;
   sx?: CSSProperties;
+  onClick?: (() => void) | undefined;
 }) {
   return (
     <Icon
@@ -21,6 +24,7 @@ export default function Iconify({
       height={size || 18}
       color={color}
       style={sx}
+      onClick={onClick}
     />
   );
 }

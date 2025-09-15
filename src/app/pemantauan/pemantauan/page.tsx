@@ -108,7 +108,7 @@ const CustomChip = ({ title, value }: { title: string; value: string }) => {
                 },
               }}
             >
-              <Typography px={3} fontSize={13} fontWeight={800}>
+              <Typography px={2} fontSize={13} fontWeight={800}>
                 {value}
               </Typography>
             </Box>
@@ -438,16 +438,16 @@ export default function PagePemantauan({}) {
                 title="Klik untuk lihat Bukti Dukung"
                 TransitionComponent={Grow}
               >
-                <IconFA
-                  name={"check-circle"}
+                <Iconify
+                  name="mdi:check-circle"
                   size={24}
                   color={green[700]}
-                  onclick={handleModalOpenBukti}
+                  onClick={handleModalOpenBukti}
                   sx={{ cursor: "pointer" }}
                 />
               </Tooltip>
             ) : (
-              <IconFA name="xmark-circle" size={24} color={red[700]} />
+              <Iconify name="mdi:close-circle" size={24} color={red[700]} />
             )}
           </>
         ),
@@ -504,14 +504,11 @@ export default function PagePemantauan({}) {
           <Chip
             icon={
               renderedCellValue === "Belum" ? (
-                <IconFA name="xmark" size={12} />
+                <Iconify name="mdi:close-circle-outline" size={14} />
               ) : renderedCellValue === "Proses" ? (
-                <>
-                  {/* <IconFA name="hourglass-start" size={12} /> */}
-                  <Iconify name="mdi:hourglass-start" size={12} />
-                </>
+                <Iconify name="mdi:timer-sand" size={14} />
               ) : (
-                <IconFA name="check" size={12} />
+                <Iconify name="mdi:checkbox-marked-circle-outline" size={14} />
               )
             }
             color={
@@ -525,7 +522,14 @@ export default function PagePemantauan({}) {
               minWidth: 80,
               borderWidth: "2px",
               borderStyle: "solid",
-              "&.MuiChip-root": { gap: 1, px: 1.5 },
+              "&.MuiChip-root": {
+                gap: 0.5,
+                px: 1.5,
+
+                "& .MuiChip-icon": {
+                  margin: 0,
+                },
+              },
               "& .MuiChip-label": {
                 fontWeight: 600,
                 px: 0,
