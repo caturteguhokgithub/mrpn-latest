@@ -22,6 +22,7 @@ import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Iconify from "@/icons/iconify";
+import ModulePopup from "./partials/module";
 
 gsap.registerPlugin(useGSAP);
 
@@ -61,6 +62,7 @@ export default function Header({}) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [anchorYear, setAnchorYear] = React.useState<null | HTMLElement>(null);
   const [openDrawerMobile, setOpenDrawerMobile] = React.useState(false);
+  const [emonevModal, setEmonevModal] = React.useState(false);
 
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -499,9 +501,10 @@ export default function Header({}) {
           <Divider sx={{ m: "0 !important" }} />
           <MenuItem
             sx={{ py: "10px !important", gap: 1 }}
-            onClick={() =>
-              window.open("https://e-monev.bappenas.go.id", "_self")
-            }
+            // onClick={() =>
+            //   window.open("https://e-monev.bappenas.go.id", "_self")
+            // }
+            onClick={() => setEmonevModal(true)}
           >
             <Avatar
               alt={user?.name ?? ""}
@@ -571,6 +574,7 @@ export default function Header({}) {
       >
         <Aside isExpanded={true} isMobile />
       </Drawer>
+      <ModulePopup emonevModal={emonevModal} setEmonevModal={setEmonevModal} />
     </Box>
   );
 }
