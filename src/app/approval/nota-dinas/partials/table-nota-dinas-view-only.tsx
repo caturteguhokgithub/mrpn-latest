@@ -419,14 +419,16 @@ export default function TableNotaDinasViewOnly({
         />
         {hasPrivilege(permission, "/penetapan/objectUpr", "approve") ? (
           <>
-            <AddButton
-              color="success"
-              title="Ajukan Pengesahan"
-              filled
-              noMargin
-              startIcon={<Iconify name="mdi:check-circle" size={16} />}
-              onclick={() => setModalConfirm?.(true)}
-            />
+            {!pageApproval && (
+              <AddButton
+                color="success"
+                title="Ajukan Pengesahan"
+                filled
+                noMargin
+                startIcon={<Iconify name="mdi:check-circle" size={16} />}
+                onclick={() => setModalConfirm?.(true)}
+              />
+            )}
           </>
         ) : (
           ""
