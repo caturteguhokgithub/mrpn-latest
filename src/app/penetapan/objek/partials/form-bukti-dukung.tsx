@@ -87,7 +87,7 @@ export default function FormBuktiDukung({
                           code: 400,
                           message: (
                             <Typography>
-                              Gagal unggah gambar, ukuran file maksimal{" "}
+                              Gagal unggah file, ukuran file maksimal{" "}
                               <strong>2MB</strong>
                             </Typography>
                           ),
@@ -135,7 +135,7 @@ export default function FormBuktiDukung({
             </Stack>
             <Typography fontSize={14} color={red[600]}>
               Ukuran file maksimal <strong>2MB</strong> dengan ekstensi file
-              yang diterima <strong>.jpg/.jpeg/.png</strong>
+              yang diterima <strong>.jpg / .jpeg / .png / .pdf</strong>
             </Typography>
           </Stack>
         </FormControl>

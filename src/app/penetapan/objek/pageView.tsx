@@ -250,7 +250,7 @@ export default function PageTemaView() {
 
   const handleEditTopic = (x: PenetapanObjectDto) => {
     let optState: ProjectDefaultDto[] = [];
-    optionPN.map((f) => {
+    optionPN.map((f: any) => {
       x.penetapan_object_list.map((ty) => {
         if (f.id == ty.ref_id && f.level == ty.level) {
           optState.push(f);
@@ -271,7 +271,7 @@ export default function PageTemaView() {
 
   const handleDeleteTopic = (x: PenetapanObjectDto) => {
     let optState: ProjectDefaultDto[] = [];
-    optionPN.map((f) => {
+    optionPN.map((f: any) => {
       x.penetapan_object_list.map((ty) => {
         if (f.id == ty.ref_id && f.level == ty.level) {
           optState.push(f);
@@ -652,7 +652,8 @@ export default function PageTemaView() {
       </DialogComponent>
       <DialogComponent
         title="Tambah Bukti Dukung"
-        width={600}
+        width={500}
+        maxwidth={500}
         dialogOpen={modalBuktiDukung}
         dialogClose={() => setModalBuktiDukung(false)}
         dialogFooter={
