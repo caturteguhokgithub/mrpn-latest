@@ -1325,7 +1325,7 @@ export default function TableNotaDinasViewOnly({
           sx={{ position: "absolute", top: 10, right: 10, zIndex: 9999 }}
           onClick={() => setModalViewImage(false)}
         >
-          <IconFA name="circle-xmark" color="red" size={32} />
+          <Iconify name="mdi:close-circle" color="red" size={32} />
         </IconButton>
         <TransformWrapper
           initialScale={0.5}

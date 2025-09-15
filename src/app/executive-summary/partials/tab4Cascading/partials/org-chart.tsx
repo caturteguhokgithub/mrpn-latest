@@ -15,7 +15,6 @@ import {
 import "@dabeng/react-orgchart/dist/ChartNode.css";
 import "@dabeng/react-orgchart/dist/ChartContainer.css";
 import theme from "@/theme";
-import { IconFA } from "@/components/icons/icon-fa";
 import { styleList, styleOrgChart } from "@/app/executive-summary/style";
 import { grey, orange } from "@mui/material/colors";
 import DialogComponent from "@/components/dialog";
@@ -29,8 +28,8 @@ import { SxParams } from "@/app/executive-summary/types";
 
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
-import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import { FormatIDR } from "@/lib/utils/currency";
+import Iconify from "@/components/icons/iconify";
 
 const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
   const isAssistant = nodeData.isAssistant === true;
@@ -52,7 +51,7 @@ const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
           sx={{ transform: "translateY(-50%)" }}
         >
           {nodeData.children && nodeData.children.length > 0 && (
-            <IconFA name="circle-plus" size={14} color="White" />
+            <Iconify name="mdi:plus-circle" size={16} color="White" />
           )}
         </Box>
         <Box
@@ -119,12 +118,17 @@ const ItemProP = ({
   return (
     <ListItem sx={{ p: 0, alignItems: "flex-start" }}>
       <ListItemIcon
-        sx={{ minWidth: 0, position: "relative", top: 5, width: 10 }}
+        sx={{
+          minWidth: 0,
+          position: "relative",
+          top: isKey ? 4 : 7,
+          width: 10,
+        }}
       >
         {isKey ? (
-          <IconFA name="key" size={12} color={orange[800]} />
+          <Iconify name="mdi:key-variant" size={12} color={orange[800]} />
         ) : (
-          <IconFA name="circle" size={6} />
+          <Iconify name="mdi:circle" size={6} />
         )}
       </ListItemIcon>
       <Tooltip title={isKey ? "Intervensi Kunci" : null} followCursor>
@@ -286,7 +290,7 @@ export default function CascadingOrgChart({
           <Button
             variant="contained"
             color="primary"
-            startIcon={<IconFA name="magnifying-glass-plus" size={14} />}
+            startIcon={<Iconify name="mdi:magnify-plus" size={18} />}
             sx={{ height: 45, px: 3, borderRadius: 2 }}
             onClick={handleModalImg}
           >
@@ -330,7 +334,7 @@ export default function CascadingOrgChart({
           sx={{ position: "absolute", top: 10, right: 10, zIndex: 9999 }}
           onClick={handleModalClose}
         >
-          <IconFA name="circle-xmark" color="red" size={32} />
+          <Iconify name="mdi:close-circle" color="red" size={32} />
         </IconButton>
         <TransformWrapper
           //   centerOnInit

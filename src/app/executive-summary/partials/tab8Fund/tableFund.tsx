@@ -1,47 +1,36 @@
 import React from "react";
 import {
-  alpha,
   Box,
   Button,
   Collapse,
-  FormControlLabel,
-  Grid,
   IconButton,
   Paper,
   Stack,
-  Switch,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import theme from "@/theme";
-import { IconFA } from "@/components/icons/icon-fa";
-import { blue, green, grey, red } from "@mui/material/colors";
-import { dataTema } from "../../dataTema";
-import EmptyState from "@/components/empty";
-import { IconEmptyData } from "@/components/icons";
-import {
-  ExsumFundDataTableRes,
-  ExsumFundRes,
-} from "@/app/executive-summary/partials/tab8Fund/cardFundModel";
-import { RODataTable, RoDto } from "@/app/misc/rkp/rkpServiceModel";
+import { grey } from "@mui/material/colors";
+import { ExsumFundDataTableRes } from "@/app/executive-summary/partials/tab8Fund/cardFundModel";
+import { RODataTable } from "@/app/misc/rkp/rkpServiceModel";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { FormatIDR } from "@/lib/utils/currency";
 import { bgColorTh } from "@/utils/color";
+import Iconify from "@/components/icons/iconify";
 
 const ChevronBtn = ({ name }: { name: string }) => {
   return (
     <Button
-      variant={name === "up" ? "contained" : "outlined"}
+      variant={name === "up" ? "outlined" : "contained"}
       sx={{ width: "auto", p: 1, minWidth: 0 }}
     >
-      <IconFA name={`chevron-${name}`} size={12} />
+      <Iconify name={`mdi:chevron-${name}`} size={18} />
     </Button>
   );
 };

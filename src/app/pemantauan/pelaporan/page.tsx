@@ -16,6 +16,7 @@ import { grey } from "@mui/material/colors";
 import AddButton from "@/components/buttonAdd";
 import theme from "@/theme";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
+import Iconify from "@/components/icons/iconify";
 
 export default function PagePelaporanBerkala({}) {
   usePermissionChecker("pemantauanMrpn.pelaporan");
@@ -173,15 +174,7 @@ analisis, evaluasi, dan tindakan pengendalian yang diambil untuk mengelola risik
             noMargin
             filled
             title="Download PDF & Excel"
-            startIcon={
-              <Icon
-                baseClassName="fas"
-                className={`fa-download`}
-                sx={{
-                  fontSize: "12px !important",
-                }}
-              />
-            }
+            startIcon={<Iconify name="mdi:download" size={20} />}
             sx={{ padding: "0 20px", height: 34 }}
           />
         </Stack>

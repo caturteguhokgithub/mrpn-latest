@@ -1,19 +1,11 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Icon,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
 import DialogComponent from "@/components/dialog";
 import useCardStakeholderVM from "@/app/executive-summary/partials/tab7Regulation/cardStakeholder/cardStakeholderVM";
 import Image from "next/image";
-import { IconFA } from "@/components/icons/icon-fa";
 import { MAX_FILE_SIZE_2MB, VisuallyHiddenInput } from "@/utils/constant";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import DraggableScroll from "@/components/cardStakeholder/draggableScroll";
@@ -23,6 +15,7 @@ import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
 import { useToast } from "@/lib/core/context/toastContext";
 import { green, red } from "@mui/material/colors";
 import { useGlobalModalContext } from "@/lib/core/hooks/useHooks";
+import Iconify from "@/components/icons/iconify";
 
 export default function CriticalPathIntEks({ title }: { title?: string }) {
   const {
@@ -91,12 +84,12 @@ export default function CriticalPathIntEks({ title }: { title?: string }) {
       setting={false}
       settingEditOnclick={handleModalOpenStakeholder}
       addButton={
-        <Box>
+        <Stack direction="row" spacing={1}>
           <Button
             size="small"
             variant="outlined"
             color="primary"
-            startIcon={<IconFA name="magnifying-glass-plus" size={14} />}
+            startIcon={<Iconify name="mdi:magnify-plus" size={14} />}
             sx={{ borderRadius: 50, mr: 1 }}
             onClick={() => setModalViewImageIntExt(true)}
           >
@@ -107,15 +100,7 @@ export default function CriticalPathIntEks({ title }: { title?: string }) {
             size="small"
             variant="contained"
             tabIndex={-1}
-            startIcon={
-              <Icon
-                baseClassName="fas"
-                className={"fa-upload"}
-                sx={{
-                  fontSize: "12px !important",
-                }}
-              />
-            }
+            startIcon={<Iconify name="mdi:upload" size={14} />}
             sx={{
               paddingInline: 2,
               borderRadius: "50px",
@@ -129,7 +114,7 @@ export default function CriticalPathIntEks({ title }: { title?: string }) {
               multiple
             />
           </Button>
-        </Box>
+        </Stack>
       }
     >
       <Stack width="100%" direction="row" justifyContent="center">
@@ -195,7 +180,7 @@ export default function CriticalPathIntEks({ title }: { title?: string }) {
           sx={{ position: "absolute", top: 10, right: 10, zIndex: 9999 }}
           onClick={() => setModalViewImageIntExt(false)}
         >
-          <IconFA name="circle-xmark" color="red" size={32} />
+          <Iconify name="mdi:close-circle" color="red" size={32} />
         </IconButton>
         <TransformWrapper
           centerOnInit

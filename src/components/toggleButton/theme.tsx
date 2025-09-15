@@ -14,6 +14,7 @@ import {
 import theme from "@/theme";
 import { green, grey, red, yellow } from "@mui/material/colors";
 import { IconFA } from "../icons/icon-fa";
+import Iconify from "../icons/iconify";
 
 export default function ThemeToggleButton({
   value,
@@ -124,7 +125,7 @@ export default function ThemeToggleButton({
             },
           }}
         >
-          <IconFA size={14} name="ellipsis" color="white" />
+          <Iconify size={14} name="mdi:dots-horizontal" color="white" />
         </IconButton>
         <Menu
           anchorEl={anchorEl}
@@ -161,7 +162,7 @@ export default function ThemeToggleButton({
         >
           <MenuItem onClick={handleEdit}>
             <ListItemIcon sx={{ minWidth: "0 !important" }}>
-              <IconFA size={14} name="pencil" />
+              <Iconify size={16} name="mdi:pencil" />
             </ListItemIcon>
             <ListItemText>
               <Typography fontSize={14}>Ubah</Typography>
@@ -178,7 +179,7 @@ export default function ThemeToggleButton({
             }}
           >
             <ListItemIcon sx={{ minWidth: "0 !important" }}>
-              <IconFA size={14} name="trash-alt" color={red[700]} />
+              <Iconify size={16} name="mdi:delete" color={red[700]} />
             </ListItemIcon>
             <ListItemText>
               <Typography fontSize={14}>Hapus</Typography>

@@ -16,6 +16,7 @@ import {
 import { MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
 import { IconEmptyImage } from "@/components/icons";
 import useCardLocationVM from "@/app/executive-summary/partials/tab2Profile/cardLocation/cardLocationVM";
+import Iconify from "../icons/iconify";
 
 const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
   const isAssistant = nodeData.isAssistant === true;
@@ -33,10 +34,10 @@ const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
           position="absolute"
           top="50%"
           left={8}
-          sx={{ transform: "translateY(-50%)" }}
+          sx={{ transform: "translateY(-50%)", lineHeight: 1 }}
         >
           {nodeData.children && nodeData.children.length > 0 && (
-            <IconFA name="circle-plus" size={14} color="White" />
+            <Iconify name="mdi:graph" size={20} color="White" />
           )}
         </Box>
         <Box

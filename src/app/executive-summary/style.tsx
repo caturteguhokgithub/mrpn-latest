@@ -47,6 +47,9 @@ export const styleTab = (params: SxParams) => {
       ".MuiTab-labelIcon": {
         whiteSpace: "nowrap",
       },
+      ".MuiTab-iconWrapper": {
+        margin: 0,
+      },
     },
     ".MuiTabs-scroller": {
       //   [theme.breakpoints.down("md")]: {

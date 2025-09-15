@@ -36,6 +36,8 @@ import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
+import AddButton from "@/components/buttonAdd";
+import Iconify from "@/components/icons/iconify";
 
 const dataBisnis = {
   header: ["2025", "2026", "2027", "2028", "2029"],
@@ -103,6 +105,24 @@ export default function CardRoadmap() {
       year={year}
       settingEditOutputClick={() => handleOpenModal(true, "OUTPUT")}
       settingEditBisnisClick={() => handleOpenModal(true, "BISNIS")}
+      addButton={
+        <Stack direction="row" spacing={1}>
+          <AddButton
+            noMargin
+            filled
+            title="Tambah Expected Output"
+            color="primary"
+            onclick={() => handleOpenModal(true, "OUTPUT")}
+          />
+          <AddButton
+            noMargin
+            filled
+            title="Tambah Proses Bisnis"
+            color="primary"
+            onclick={() => handleOpenModal(true, "BISNIS")}
+          />
+        </Stack>
+      }
     >
       <Box width="100%" textAlign="center">
         <BusinessTable
@@ -362,6 +382,7 @@ const BusinessTable = ({
                                           })
                                         }
                                         sx={{
+                                          p: 0,
                                           color: "white",
                                           bgcolor: red[600],
                                           width: 20,
@@ -372,7 +393,7 @@ const BusinessTable = ({
                                           },
                                         }}
                                       >
-                                        <IconFA name="trash-alt" size={10} />
+                                        <Iconify name="mdi:delete" size={12} />
                                       </IconButton>
                                     )}
                                   {/* <IconButton
@@ -554,6 +575,7 @@ const OutputTable = ({
                           setModalDelete({ isOpen: true, id: [itemOutput.id] })
                         }
                         sx={{
+                          p: 0,
                           color: "white",
                           bgcolor: red[600],
 
@@ -565,7 +587,7 @@ const OutputTable = ({
                           },
                         }}
                       >
-                        <IconFA name="trash-alt" size={10} />
+                        <Iconify name="mdi:delete" size={12} />
                       </IconButton>
                     )}
                     <IconButton
@@ -586,6 +608,7 @@ const OutputTable = ({
                       }}
                       // onClick={handleModalEdit}
                       sx={{
+                        p: 0,
                         color: "white",
                         bgcolor: blue[800],
                         width: 20,
@@ -596,7 +619,7 @@ const OutputTable = ({
                         },
                       }}
                     >
-                      <IconFA name="pencil" size={10} />
+                      <Iconify name="mdi:pencil" size={12} />
                     </IconButton>
                   </Stack>
                 </CardContent>

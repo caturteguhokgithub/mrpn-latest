@@ -1,17 +1,13 @@
-import React, { SetStateAction } from "react";
+import { SetStateAction } from "react";
 import {
   Button,
-  Checkbox,
   FormControl,
-  FormControlLabel,
   Grid,
   IconButton,
-  MenuItem,
   Stack,
   Typography,
 } from "@mui/material";
 import { TextareaStyled } from "@/components/textarea";
-import { grey, red } from "@mui/material/colors";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
 import HeaderIdentifikasi from "./header";
 import {
@@ -22,7 +18,6 @@ import { AutocompleteSelectSingle } from "@/components/autocomplete";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { IndikatorDto } from "@/app/misc/rkp/rkpServiceModel";
 import AddButton from "@/components/buttonAdd";
-import { IconFA } from "@/components/icons/icon-fa";
 import { GetTarget } from "@/lib/utils/common";
 import Iconify from "@/components/icons/iconify";
 
@@ -313,7 +308,7 @@ export default function FormTable({
                           }
                           sx={{ p: 0 }}
                         >
-                          <IconFA size={18} name="trash-can" />
+                          <Iconify size={22} name="mdi:delete" />
                         </IconButton>
                       </Stack>
                     )}
@@ -431,7 +426,7 @@ export default function FormTable({
                           }
                           sx={{ p: 0 }}
                         >
-                          <IconFA size={18} name="trash-can" />
+                          <Iconify size={22} name="mdi:delete" />
                         </IconButton>
                       </Stack>
                     )}

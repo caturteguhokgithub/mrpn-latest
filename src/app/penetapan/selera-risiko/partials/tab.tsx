@@ -16,6 +16,7 @@ import CardSegment from "@/app/executive-summary/partials/tab1Background/cardSeg
 import CardSwot from "@/app/executive-summary/partials/tab1Background/cardSwot/cardSwot";
 import CardInformation from "../cardInformation/cardInformation";
 import CriticalPathIntEks from "./critical-path";
+import Iconify from "@/components/icons/iconify";
 // import CardKategori from "./tab1Category/cardKategori";
 // import CardKemungkinan from "./tab2Possibility/cardKemungkinan";
 // import CardDampak from "./tab3Impact/cardDampak";
@@ -92,32 +93,32 @@ export default function TabInternalEksternal({}) {
             label="Latar Belakang"
             {...a11yProps(0)}
             iconPosition="start"
-            icon={<IconFA size={16} name="pen-to-square" />}
+            icon={<Iconify size={20} name="mdi:square-edit-outline" />}
           />
           <Tab
             label="Regulasi"
             {...a11yProps(1)}
             iconPosition="start"
-            icon={<IconFA size={16} name="gavel" />}
+            icon={<Iconify size={20} name="mdi:gavel" />}
           />
           <Tab
             label="Stakeholder"
             {...a11yProps(2)}
             iconPosition="start"
-            icon={<IconFA size={16} name="building" />}
+            icon={<Iconify size={20} name="mdi:office-building" />}
           />
           <Tab
             // label="Perencanaan Lintasan Kritis"
             label="Critical Path"
             {...a11yProps(3)}
             iconPosition="start"
-            icon={<IconFA size={16} name="exclamation-triangle" />}
+            icon={<Iconify size={20} name="mdi:alert" />}
           />
           <Tab
             label="Informasi Lain"
             {...a11yProps(4)}
             iconPosition="start"
-            icon={<IconFA size={16} name="ellipsis" />}
+            icon={<Iconify size={20} name="mdi:dots-horizontal" />}
           />
         </Tabs>
       </Box>

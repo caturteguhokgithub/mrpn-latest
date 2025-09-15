@@ -22,6 +22,8 @@ import { AutocompleteSelectMultiple } from "@/components/autocomplete";
 import ReactQuill from "react-quill";
 import { MiscMasterListProvinsiRes } from "@/app/misc/master/masterServiceModel";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import AddButton from "@/components/buttonAdd";
+import Iconify from "@/components/icons/iconify";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {
   forwardedRef: React.LegacyRef<ReactQuill>;
@@ -102,6 +104,27 @@ export default function CardLocation({ project }: { project: string }) {
         }
         setModal(true);
       }}
+      addButton={
+        <AddButton
+          noMargin
+          filled
+          title="Ubah"
+          color="primary"
+          startIcon={<Iconify name="mdi:pencil" size={14} />}
+          onclick={() => {
+            if (data.length > 0) {
+              const req: ExsumLocationUpdateDto = {
+                id: data[0].id,
+                exsum_id: data[0].exsum_id,
+                lokasi: data[0].provinsi ? data[0].provinsi : [],
+                keterangan: data[0].keterangan,
+              };
+              setRequest(req);
+            }
+            setModal(true);
+          }}
+        />
+      }
     >
       {data.length == 0 ? (
         <EmptyState

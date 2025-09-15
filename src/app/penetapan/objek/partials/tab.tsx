@@ -18,6 +18,7 @@ import {
 } from "@/lib/core/hooks/useHooks";
 import CollapsibleTableUpr from "./table-upr";
 import { dtoUraian } from "../pageModel";
+import Iconify from "@/components/icons/iconify";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -103,39 +104,39 @@ export default function TabObject({
   setModalApproval,
   isApproval,
 }: // setIsApproval,
-  {
-    setModalUpr: (value: boolean) => void;
-    useEffectObjectState: () => void;
-    getRanking: () => Promise<void>;
-    updateOrCreateLongList: any;
-    showSave: boolean;
-    setShowSave: (value: boolean) => void;
-    stateUpr: dtoUraian[];
-    handleUploadBuktiDukung?: () => void;
-    stateApproval: any;
-    setModalObjek: (value: boolean) => void;
-    handleModalDeleteObject: (id: number) => void;
-    handleModalEditEntitas?: () => void;
-    handleModalDeleteEntitas: (id: number) => void;
-    refreshBuktiDukungTable?: () => void;
-    gambar?: any;
-    modalDelete?: any;
-    setModalDelete?: any;
-    deleteNodin?: any;
-    // APPROVAL
-    modalConfirm?: any;
-    setModalConfirm?: any;
-    isReview?: any;
-    // setIsReview?: any;
-    modalReject?: any;
-    setModalReject?: any;
-    isReject?: any;
-    // setIsReject?: any;
-    modalApproval?: any;
-    setModalApproval?: any;
-    isApproval?: any;
-    // setIsApproval?: any;
-  }) {
+{
+  setModalUpr: (value: boolean) => void;
+  useEffectObjectState: () => void;
+  getRanking: () => Promise<void>;
+  updateOrCreateLongList: any;
+  showSave: boolean;
+  setShowSave: (value: boolean) => void;
+  stateUpr: dtoUraian[];
+  handleUploadBuktiDukung?: () => void;
+  stateApproval: any;
+  setModalObjek: (value: boolean) => void;
+  handleModalDeleteObject: (id: number) => void;
+  handleModalEditEntitas?: () => void;
+  handleModalDeleteEntitas: (id: number) => void;
+  refreshBuktiDukungTable?: () => void;
+  gambar?: any;
+  modalDelete?: any;
+  setModalDelete?: any;
+  deleteNodin?: any;
+  // APPROVAL
+  modalConfirm?: any;
+  setModalConfirm?: any;
+  isReview?: any;
+  // setIsReview?: any;
+  modalReject?: any;
+  setModalReject?: any;
+  isReject?: any;
+  // setIsReject?: any;
+  modalApproval?: any;
+  setModalApproval?: any;
+  isApproval?: any;
+  // setIsApproval?: any;
+}) {
   const { nota } = usePenetapanTopicContext((store) => store);
   const { rkp, year, rpjmn } = useRKPContext((state) => state);
 
@@ -184,7 +185,7 @@ export default function TabObject({
             //     sx={{ width: "auto" }}
             //   />
             // }
-            icon={<IconFA size={16} name="arrow-down-wide-short" />}
+            icon={<Iconify size={20} name="mdi:sort-ascending" />}
           />
           <Tab
             // label="Shortlist"
@@ -192,7 +193,7 @@ export default function TabObject({
             {...a11yProps(1)}
             iconPosition="start"
             // icon={<IconFA size={16} name="arrow-down-wide-short" />}
-            icon={<IconFA size={16} name="bullseye" />}
+            icon={<Iconify size={20} name="mdi:bullseye-arrow" />}
           />
           {/* <Tab
             label="Cascading Objek Terpilih"
@@ -205,14 +206,14 @@ export default function TabObject({
             label="UPR LS"
             {...a11yProps(2)}
             iconPosition="start"
-            icon={<IconFA size={16} name="scroll" />}
+            icon={<Iconify size={20} name="mdi:account-tie-hat" />}
           />
           <Tab
             // label="Pengesahan"
             label="Penetapan"
             {...a11yProps(3)}
             iconPosition="start"
-            icon={<IconFA size={16} name="newspaper" sx={{ width: "auto" }} />}
+            icon={<Iconify size={20} name="mdi:newspaper-variant-multiple" />}
           />
         </Tabs>
       </Box>
@@ -305,16 +306,16 @@ export default function TabObject({
         <CardItem
           // title="Nota Dinas Objek MRPN & UPR LS"
           title="Penetapan"
-        // addButton={
-        //   !editNotaDinas && (
-        //     <AddButton
-        //       title={`Ubah`}
-        //       filled
-        //       startIcon={<IconFA size={14} name="pencil" />}
-        //       onclick={() => setEditNotaDinas(true)}
-        //     />
-        //   )
-        // }
+          // addButton={
+          //   !editNotaDinas && (
+          //     <AddButton
+          //       title={`Ubah`}
+          //       filled
+          //       startIcon={<IconFA size={14} name="pencil" />}
+          //       onclick={() => setEditNotaDinas(true)}
+          //     />
+          //   )
+          // }
         >
           {/* {isDeveloping ? (
             <EmptyDevelopingState />
@@ -351,7 +352,7 @@ export default function TabObject({
                 modalApproval={modalApproval}
                 setModalApproval={setModalApproval}
                 isApproval={isApproval}
-              // setIsApproval={}
+                // setIsApproval={}
               />
             ) : (
               <EmptyState

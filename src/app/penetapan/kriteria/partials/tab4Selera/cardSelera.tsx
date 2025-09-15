@@ -15,6 +15,7 @@ import { red, green } from "@mui/material/colors";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { doReqSeleraApprovalDto } from "./hooks/model";
 import { max } from "lodash";
+import FormNote from "./partials/form-note";
 
 export default function CardSelera() {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
@@ -38,6 +39,8 @@ export default function CardSelera() {
     updateApproval,
     isEditSeleraRisiko,
     handleEditSeleraRisiko,
+    modalReject,
+    setModalReject,
   } = usePenetapanSelera();
 
   useEffect(() => {
@@ -99,14 +102,14 @@ export default function CardSelera() {
         title={
           <Stack direction="row" gap={1} alignItems="center">
             Selera Risiko
-            {user?.type == "NON BAPPENAS" ?
+            {user?.type == "NON BAPPENAS" ? (
               <Chip
                 color={
                   isStatus === "rejected"
                     ? "error"
                     : isStatus === "draft"
-                      ? "default"
-                      : "warning"
+                    ? "default"
+                    : "warning"
                 }
                 label={
                   <Typography
@@ -117,26 +120,28 @@ export default function CardSelera() {
                     {isStatus === "rejected"
                       ? "Rejected"
                       : isStatus === "draft"
-                        ? "Draft"
-                        : "Review"}
+                      ? "Draft"
+                      : "Review"}
                   </Typography>
                 }
                 sx={{ px: 1 }}
-              /> : ""}
-
+              />
+            ) : (
+              ""
+            )}
             {isStatus === "rejected" ? (
               <Typography fontSize={14} color={red[700]}>
                 Ditolak tanggal:{" "}
                 <Typography component="strong" fontWeight={600} fontSize={14}>
                   {stateApproval?.created_at
                     ? new Date(stateApproval.created_at).toLocaleDateString(
-                      "id-ID",
-                      {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      }
-                    )
+                        "id-ID",
+                        {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        }
+                      )
                     : "-"}
                 </Typography>
               </Typography>
@@ -146,13 +151,13 @@ export default function CardSelera() {
                 <Typography component="strong" fontWeight={600} fontSize={14}>
                   {stateApproval?.created_at
                     ? new Date(stateApproval.created_at).toLocaleDateString(
-                      "id-ID",
-                      {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      }
-                    )
+                        "id-ID",
+                        {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        }
+                      )
                     : "-"}
                 </Typography>
               </Typography>
@@ -162,7 +167,7 @@ export default function CardSelera() {
             {isStatus === "rejected" && (
               <Button
                 size="small"
-                color="primary"
+                color="error"
                 variant="contained"
                 startIcon={<Iconify name="mdi:pencil" />}
                 sx={{
@@ -170,7 +175,7 @@ export default function CardSelera() {
                   borderRadius: 50,
                   px: 2,
                 }}
-              // onClick={() => setOpenModal(true)}
+                onClick={() => setModalReject(true)}
               >
                 Catatan
               </Button>
@@ -254,7 +259,7 @@ export default function CardSelera() {
           dataSelera={stateSelera}
           levelDampak={
             Array.isArray(stateSelera?.referensi) &&
-              stateSelera.referensi.length > 0
+            stateSelera.referensi.length > 0
               ? stateSelera?.referensi[0].type_nilai.toLowerCase()
               : ""
           }
@@ -286,6 +291,43 @@ export default function CardSelera() {
         }
       >
         Apakah Anda yakin ingin mengajukan approval?
+      </DialogComponent>
+      <DialogComponent
+        width={480}
+        title="Catatan Penolakan"
+        dialogOpen={modalReject ?? false}
+        dialogClose={() => setModalReject?.(false)}
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button color="error" onClick={() => setModalReject?.(false)}>
+              Tidak
+            </Button>
+            <Button
+              color="error"
+              variant="contained"
+              type="submit"
+              onClick={async () => {
+                setModalReject?.(false);
+                await handleUpdateStatus("rejected", stateApproval?.message);
+              }}
+            >
+              Tolak
+            </Button>
+          </DialogActions>
+        }
+      >
+        <Stack gap={1}>
+          <Typography>
+            Apakah Anda yakin ingin <strong>MENOLAK PENGESAHAN</strong>?<br />
+            Tuliskan catatan penolakan
+          </Typography>
+
+          <FormNote
+            state={stateApproval}
+            // setState={setStateApproval}
+            mode="add"
+          />
+        </Stack>
       </DialogComponent>
     </Fragment>
   );

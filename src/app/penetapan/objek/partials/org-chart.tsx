@@ -26,6 +26,7 @@ import { SxParams } from "@/app/executive-summary/types";
 import { usePenetapanTopicContext } from "@/lib/core/hooks/useHooks";
 import usePenetapanObjectVM from "@/app/penetapan/objek/pageVM";
 import { FormatIDR } from "@/lib/utils/currency";
+import Iconify from "@/components/icons/iconify";
 
 const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
   const isAssistant = nodeData.isAssistant === true;
@@ -47,7 +48,7 @@ const NodeTemplate = ({ nodeData }: { nodeData: any }) => {
           sx={{ transform: "translateY(-50%)" }}
         >
           {nodeData.children && nodeData.children.length > 0 && (
-            <IconFA name="circle-plus" size={14} color="White" />
+            <Iconify name="mdi:plus-circle" size={16} color="White" />
           )}
         </Box>
         <Box
@@ -117,9 +118,9 @@ const ItemProP = ({
         sx={{ minWidth: 0, position: "relative", top: 5, width: 10 }}
       >
         {isKey ? (
-          <IconFA name="key" size={12} color={orange[800]} />
+          <Iconify name="mdi:key-variant" size={12} color={orange[800]} />
         ) : (
-          <IconFA name="circle" size={6} />
+          <Iconify name="mdi:circle" size={6} />
         )}
       </ListItemIcon>
       <Tooltip title={isKey ? "Intervensi Kunci" : null} followCursor>
@@ -339,7 +340,7 @@ export default function CascadingPenetapanObjectOrgChart() {
           <Button
             variant="contained"
             color="primary"
-            startIcon={<IconFA name="magnifying-glass-plus" size={14} />}
+            startIcon={<Iconify name="mdi:magnify-plus" size={18} />}
             sx={{ height: 45, px: 3, borderRadius: 2 }}
             onClick={handleModalImg}
           >
@@ -383,7 +384,7 @@ export default function CascadingPenetapanObjectOrgChart() {
           sx={{ position: "absolute", top: 10, right: 10, zIndex: 9999 }}
           onClick={handleModalClose}
         >
-          <IconFA name="circle-xmark" color="red" size={32} />
+          <Iconify name="mdi:close-circle" color="red" size={32} />
         </IconButton>
         <TransformWrapper
           //   centerOnInit
