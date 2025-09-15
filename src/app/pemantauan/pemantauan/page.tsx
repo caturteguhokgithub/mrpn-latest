@@ -39,6 +39,7 @@ import theme from "@/theme";
 import { dataSub } from "@/app/profil-risiko/analisis-evaluasi/setting";
 import { SortNumber } from "@/app/profil-risiko/perlakuan/partials/mrt-complete";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
+import Iconify from "@/components/icons/iconify";
 
 const CustomChip = ({ title, value }: { title: string; value: string }) => {
   return (
@@ -505,7 +506,10 @@ export default function PagePemantauan({}) {
               renderedCellValue === "Belum" ? (
                 <IconFA name="xmark" size={12} />
               ) : renderedCellValue === "Proses" ? (
-                <IconFA name="hourglass-start" size={12} />
+                <>
+                  {/* <IconFA name="hourglass-start" size={12} /> */}
+                  <Iconify name="mdi:hourglass-start" size={12} />
+                </>
               ) : (
                 <IconFA name="check" size={12} />
               )

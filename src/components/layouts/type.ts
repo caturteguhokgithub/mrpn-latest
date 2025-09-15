@@ -1,8 +1,15 @@
-type ILayout = {
+import { CSSProperties } from "react";
+
+export type ILayout = {
   children?: React.ReactNode;
 };
 
-type IMenu = {
+// Type for CSS with sub-properties support
+export type CSSWithSubProperties = CSSProperties & {
+  [key: string]: any;
+};
+
+export type IMenu = {
   label?: string | any;
   icon?: React.ReactNode;
   url?: string;
@@ -18,4 +25,5 @@ type IMenu = {
   clickOpenCollapse?: () => void;
   clickOutsideCollapse?: any;
   isOpen?: boolean;
+  sx?: CSSWithSubProperties;
 };

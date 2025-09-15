@@ -18,6 +18,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { blue } from "@mui/material/colors";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import { ILayout, IMenu } from "../type";
 import Iconify from "@/components/icons/iconify";
 
 export const MenuItem = ({
@@ -32,6 +33,7 @@ export const MenuItem = ({
   openSubmenu,
   clickOpenCollapse,
   clickOutsideCollapse,
+  sx,
 }: IMenu & ILayout) => {
   const pathname = usePathname();
 
@@ -78,6 +80,7 @@ export const MenuItem = ({
 
   const styles = {
     baseStyle: {
+      ...sx,
       px: "22px",
       gap: "6px",
       borderRadius: 0,
@@ -111,14 +114,14 @@ export const MenuItem = ({
         },
         "&.Mui-focusVisible, &:hover": {
           backgroundColor: theme.palette.primary.light,
-          ".MuiIcon-root, p": {
+          ".MuiIcon-root, p, .icon-chevron": {
             color: theme.palette.primary.main,
           },
         },
       },
       "&.Mui-focusVisible, &:hover": {
         backgroundColor: alpha(blue[900], 0.5),
-        ".MuiIcon-root, p": {
+        ".MuiIcon-root, p, .icon-chevron": {
           color: theme.palette.primary.light,
         },
       },
@@ -140,7 +143,7 @@ export const MenuItem = ({
         //   justifyContent: "normal",
         // },
 
-        ".MuiIcon-root, p": {
+        ".MuiIcon-root, p, .icon-chevron": {
           color: theme.palette.primary.light,
         },
         "&.Mui-selected, &.link-active": {
@@ -149,14 +152,14 @@ export const MenuItem = ({
           transition: "all 1s ease",
           "&.Mui-focusVisible, &:hover": {
             backgroundColor: alpha(whiteRGB, 0.2),
-            ".MuiIcon-root, p": {
+            ".MuiIcon-root, p, .icon-chevron": {
               color: theme.palette.primary.light,
             },
           },
         },
         "&.Mui-focusVisible, &:hover": {
           backgroundColor: alpha(blue[900], 0.5),
-          ".MuiIcon-root, p": {
+          ".MuiIcon-root, p, .icon-chevron": {
             color: theme.palette.primary.light,
           },
         },
@@ -167,7 +170,7 @@ export const MenuItem = ({
       borderRadius: "50px",
       mx: "16px",
       flexDirection: "row",
-      ".MuiIcon-root, p": {
+      ".MuiIcon-root, p, .icon-chevron": {
         color: theme.palette.primary.light,
       },
       "&.Mui-selected, &.link-active": {
@@ -176,13 +179,13 @@ export const MenuItem = ({
         transition: "all 1s ease",
         "&.Mui-focusVisible, &:hover": {
           backgroundColor: alpha(whiteRGB, 0.2),
-          ".MuiIcon-root, p": {
+          ".MuiIcon-root, p, .icon-chevron": {
             color: theme.palette.primary.light,
           },
         },
         "&.collapse-active": {
           "&.Mui-focusVisible, &:hover": {
-            ".MuiIcon-root, p": {
+            ".MuiIcon-root, p, .icon-chevron": {
               color: theme.palette.primary.main,
             },
           },
@@ -190,7 +193,7 @@ export const MenuItem = ({
       },
       "&.Mui-focusVisible, &:hover": {
         backgroundColor: alpha(blue[900], 0.5),
-        ".MuiIcon-root, p": {
+        ".MuiIcon-root, p, .icon-chevron": {
           color: theme.palette.primary.light,
         },
       },
@@ -204,11 +207,14 @@ export const MenuItem = ({
         display: "flex",
         flexDirection: "column",
         transition: "all 300ms ease",
-        ".MuiIcon-root": {
+        ".MuiIcon-root, .icon-chevron": {
           position: "absolute",
-          top: 15,
-          right: 10,
-          fontSize: 10,
+          // top: 15,
+          // right: 10,
+          // fontSize: 10,
+          top: 8,
+          right: 6,
+          width: "18px !important",
         },
       }),
     },
@@ -229,7 +235,7 @@ export const MenuItem = ({
       },
       "&.Mui-focusVisible, &:hover": {
         backgroundColor: alpha(blue[900], 0.5),
-        ".MuiIcon-root": {
+        ".MuiIcon-root, .icon-chevron": {
           color: theme.palette.primary.light,
         },
         p: {
@@ -244,13 +250,13 @@ export const MenuItem = ({
         "&.link-active": {
           backgroundColor: theme.palette.primary.light,
           cursor: "pointer",
-          ".MuiIcon-root": {
+          ".MuiIcon-root, .icon-chevron": {
             color: theme.palette.primary.main,
             transition: "all 1s ease",
           },
           "&.Mui-focusVisible, &:hover": {
             backgroundColor: theme.palette.primary.light,
-            ".MuiIcon-root": {
+            ".MuiIcon-root, .icon-chevron": {
               color: theme.palette.primary.main,
             },
           },
@@ -280,7 +286,7 @@ export const MenuItem = ({
   const ListButtonText = (
     <Fragment>
       {MenuIconText}
-      <Icon
+      {/* <Icon
         baseClassName="fas"
         // className={`fa-chevron-${
         //  openSubmenu || activeSubmenuCollapse ? "down" : "right"
@@ -303,9 +309,10 @@ export const MenuItem = ({
                 transform: "rotate(-90deg)",
               }),
         }}
-      />
-      {/* <Iconify
+      /> */}
+      <Iconify
         name="mdi:chevron-down"
+        className="icon-chevron"
         size={24}
         sx={{
           width: "auto",
@@ -323,7 +330,7 @@ export const MenuItem = ({
                 transform: "rotate(-90deg)",
               }),
         }}
-      /> */}
+      />
     </Fragment>
   );
 

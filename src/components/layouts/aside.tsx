@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Box, Stack, Collapse } from "@mui/material";
+import { Typography, Box, Stack, Collapse, alpha } from "@mui/material";
 import Image from "next/image";
 import { MenuItem } from "./partials/menu";
 import { MenuGroup } from "./partials/menu-group";
@@ -10,6 +10,7 @@ import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { Menu } from "@/lib/core/context/authContext";
 import Iconify from "@/icons/iconify";
 import useLayoutVM from "./hooks";
+import { red } from "@mui/material/colors";
 
 const getIcon = (icon: string) => {
   switch (icon) {
@@ -258,7 +259,10 @@ export default function Aside({
         icon={<IconKeluar />}
         url={"/"}
         onclick={() => doLogout()}
-        // sx={{ color: "red" }}
+        sx={{
+          backgroundColor: alpha(red[500], 0.4),
+          "&:hover": { backgroundColor: `${alpha(red[800], 0.9)} !important` },
+        }}
       />
     </Stack>
   );
