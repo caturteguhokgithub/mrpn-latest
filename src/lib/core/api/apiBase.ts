@@ -86,12 +86,14 @@ const fetchAPI = async (param: APIParam) => {
     fetchParam = {
       method: param.method,
       headers,
+      credentials: "include"
     };
   } else {
     fetchParam = {
       method: param.method,
       body: IS_ENCRYPT ? encryptValue(stringBody) : stringBody,
       headers,
+      credentials: "include"
     };
   }
 
@@ -100,7 +102,7 @@ const fetchAPI = async (param: APIParam) => {
     fetchParam
   );
 
-  if (response.status == 503){
+  if (response.status == 503) {
     if (param.errorModalContext != undefined) {
       param.errorModalContext.showModal(MODAL_TYPES.ERROR_MODAL, {
         code: 503,
@@ -111,7 +113,7 @@ const fetchAPI = async (param: APIParam) => {
     return null;
   }
 
-  if (!response.ok && response.status != 400 && response.status != 401){
+  if (!response.ok && response.status != 400 && response.status != 401) {
     if (param.loadingContext != undefined) param.loadingContext.setLoading(false);
     return null
   }
@@ -198,14 +200,14 @@ const fetchAPI = async (param: APIParam) => {
 export async function mappingResponse(response: Response): Promise<ResponseBaseDto> {
   let decrypted = null;
   let responseText = await response.text();
-  
+
   if (IS_ENCRYPT) {
     try {
       decrypted = decryptValue(responseText);
     } catch (error) {
       decrypted = responseText;
     }
-    return Object.assign(new ResponseBaseDto(), JSON.parse(decrypted)); 
+    return Object.assign(new ResponseBaseDto(), JSON.parse(decrypted));
   }
-  return Object.assign(new ResponseBaseDto(), JSON.parse(responseText)); 
+  return Object.assign(new ResponseBaseDto(), JSON.parse(responseText));
 }

@@ -9,6 +9,7 @@ export class ResponseBaseDto {
   pageInfo?: any;
   messageError?: string;
   codeSystem?: string;
+  redirect_url?: string;
 }
 
 export type BaseAPIServiceParam = {

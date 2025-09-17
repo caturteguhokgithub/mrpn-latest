@@ -23,6 +23,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Iconify from "@/icons/iconify";
 import ModulePopup from "./partials/module";
+import useModuleVM from "./partials/module-vm";
 
 gsap.registerPlugin(useGSAP);
 
@@ -38,10 +39,11 @@ const sliderContent = [
 
 const textStyles = ["abbreviation", "full-form"];
 
-export default function Header({}) {
+export default function Header({ }) {
   const { user } = useAuthContext((state) => state);
   const { rpjmn, setYear, year, setRkpState } = useRKPContext((state) => state);
   const { doLogout } = useAuthorizationVM();
+  const { dataListApp, switchApp } = useModuleVM();
 
   const optionsYear = () => {
     if (rpjmn !== undefined) {
@@ -574,7 +576,12 @@ export default function Header({}) {
       >
         <Aside isExpanded={true} isMobile />
       </Drawer>
-      <ModulePopup emonevModal={emonevModal} setEmonevModal={setEmonevModal} />
+      <ModulePopup
+        emonevModal={emonevModal}
+        setEmonevModal={setEmonevModal}
+        dataListApp={dataListApp}
+        switchApp={switchApp}
+      />
     </Box>
   );
 }
