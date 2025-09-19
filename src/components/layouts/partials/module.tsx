@@ -19,6 +19,8 @@ import DialogComponent from "../../dialog";
 import { bgColorTh } from "@/utils/color";
 import SelectCustomTheme from "../../select";
 import { DtoSwitchApp, ModuleResDto } from "./module-model";
+import EmptyState from "@/components/empty";
+import { IconEmptyPage } from "@/components/icons/empty-page";
 
 export default function ModulePopup({
   emonevModal,
@@ -39,9 +41,10 @@ export default function ModulePopup({
   };
 
   // Function currying untuk type-safe event handler
-  const handleSelectChange = (appid: string) => (e: SelectChangeEvent<string>) => {
-    handleChangeYear(appid, e.target.value);
-  };
+  const handleSelectChange =
+    (appid: string) => (e: SelectChangeEvent<string>) => {
+      handleChangeYear(appid, e.target.value);
+    };
 
   const handleSwitchApp = (appid: string) => {
     const year = selectedYear[appid];
@@ -60,17 +63,19 @@ export default function ModulePopup({
       dialogOpen={emonevModal}
       dialogClose={() => setEmonevModal(false)}
     >
-      <Box px={3} pb={1}>
-        <Typography>
-          Silahkan pilih{" "}
-          <Typography component="strong" fontWeight={600}>
-            modul
-          </Typography>{" "}
-          dan tahun anggaran yang ingin Anda akses
-        </Typography>
-      </Box>
+      {dataListApp[0].appid !== "" && (
+        <Box px={3} pb={1}>
+          <Typography>
+            Silahkan pilih{" "}
+            <Typography component="strong" fontWeight={600}>
+              modul
+            </Typography>{" "}
+            dan tahun anggaran yang ingin Anda akses
+          </Typography>
+        </Box>
+      )}
 
-      {dataListApp[0].appid !== "" ?
+      {dataListApp[0].appid !== "" ? (
         <TableContainer component={Paper} elevation={0} variant="outlined">
           <Table
             sx={{
@@ -89,10 +94,16 @@ export default function ModulePopup({
           >
             <TableHead sx={{ bgcolor: bgColorTh }}>
               <TableRow>
-                <TableCell width={70} align="center">No.</TableCell>
+                <TableCell width={70} align="center">
+                  No.
+                </TableCell>
                 <TableCell align="center">Modul/Subsistem</TableCell>
-                <TableCell align="center" width={100}>Tahun</TableCell>
-                <TableCell align="center" width={100}>Aksi</TableCell>
+                <TableCell align="center" width={100}>
+                  Tahun
+                </TableCell>
+                <TableCell align="center" width={100}>
+                  Aksi
+                </TableCell>
               </TableRow>
             </TableHead>
 
@@ -145,8 +156,14 @@ export default function ModulePopup({
             </TableBody>
           </Table>
         </TableContainer>
-        : "Data tidak tersedia"}
-
+      ) : (
+        <Box bgcolor={grey[100]}>
+          <EmptyState
+            icon={<IconEmptyPage />}
+            title="Tidak ada data yang ditampilkan"
+          />
+        </Box>
+      )}
     </DialogComponent>
   );
 }
