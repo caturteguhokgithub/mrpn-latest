@@ -75,7 +75,7 @@ export default function ModulePopup({
         </Box>
       )}
 
-      {dataListApp[0].appid === "" ? (
+      {dataListApp[0].appid !== "" ? (
         <TableContainer component={Paper} elevation={0} variant="outlined">
           <Table
             sx={{
