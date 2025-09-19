@@ -70,80 +70,83 @@ export default function ModulePopup({
         </Typography>
       </Box>
 
-      <TableContainer component={Paper} elevation={0} variant="outlined">
-        <Table
-          sx={{
-            minWidth: 650,
-            "tbody, thead": {
-              "td, th": {
-                borderRight: `1px solid ${grey[300]} !important`,
-                "&:last-of-type": { borderRight: "0 !important" },
+      {dataListApp[0].appid !== "" ?
+        <TableContainer component={Paper} elevation={0} variant="outlined">
+          <Table
+            sx={{
+              minWidth: 650,
+              "tbody, thead": {
+                "td, th": {
+                  borderRight: `1px solid ${grey[300]} !important`,
+                  "&:last-of-type": { borderRight: "0 !important" },
+                },
               },
-            },
-            tbody: {
-              "tr:nth-child(odd) > td": { backgroundColor: grey[100] },
-            },
-          }}
-          size="small"
-        >
-          <TableHead sx={{ bgcolor: bgColorTh }}>
-            <TableRow>
-              <TableCell width={70} align="center">No.</TableCell>
-              <TableCell align="center">Modul/Subsistem</TableCell>
-              <TableCell align="center" width={100}>Tahun</TableCell>
-              <TableCell align="center" width={100}>Aksi</TableCell>
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {dataListApp.map((item, index) => (
-              <TableRow key={item.appid}>
-                <TableCell align="center">{index + 1}</TableCell>
-                <TableCell>
-                  <Typography textTransform="uppercase">
-                    <Typography component="strong" fontWeight={600}>
-                      {item.label}
-                    </Typography>{" "}
-                    <Typography component="span">- {item.nmapp}</Typography>
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <SelectCustomTheme
-                    value={selectedYear[item.appid] || ""}
-                    onChange={handleSelectChange(item.appid)}
-                  >
-                    <MenuItem value="" disabled>
-                      <Typography
-                        fontSize={14}
-                        fontStyle="italic"
-                        color={grey[600]}
-                        fontWeight={600}
-                      >
-                        Pilih tahun
-                      </Typography>
-                    </MenuItem>
-                    {item.year_access.map((yearItem) => (
-                      <MenuItem key={yearItem} value={yearItem}>
-                        {yearItem}
-                      </MenuItem>
-                    ))}
-                  </SelectCustomTheme>
-                </TableCell>
-                <TableCell align="center">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleSwitchApp(item.appid)}
-                    sx={{ aspectRatio: "1 / 1", minWidth: 0, padding: 1 }}
-                  >
-                    <Iconify name="mdi:link-variant" />
-                  </Button>
-                </TableCell>
+              tbody: {
+                "tr:nth-child(odd) > td": { backgroundColor: grey[100] },
+              },
+            }}
+            size="small"
+          >
+            <TableHead sx={{ bgcolor: bgColorTh }}>
+              <TableRow>
+                <TableCell width={70} align="center">No.</TableCell>
+                <TableCell align="center">Modul/Subsistem</TableCell>
+                <TableCell align="center" width={100}>Tahun</TableCell>
+                <TableCell align="center" width={100}>Aksi</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+
+            <TableBody>
+              {dataListApp.map((item, index) => (
+                <TableRow key={item.appid}>
+                  <TableCell align="center">{index + 1}</TableCell>
+                  <TableCell>
+                    <Typography textTransform="uppercase">
+                      <Typography component="strong" fontWeight={600}>
+                        {item.label}
+                      </Typography>{" "}
+                      <Typography component="span">- {item.nmapp}</Typography>
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <SelectCustomTheme
+                      value={selectedYear[item.appid] || ""}
+                      onChange={handleSelectChange(item.appid)}
+                    >
+                      <MenuItem value="" disabled>
+                        <Typography
+                          fontSize={14}
+                          fontStyle="italic"
+                          color={grey[600]}
+                          fontWeight={600}
+                        >
+                          Pilih tahun
+                        </Typography>
+                      </MenuItem>
+                      {item.year_access.map((yearItem) => (
+                        <MenuItem key={yearItem} value={yearItem}>
+                          {yearItem}
+                        </MenuItem>
+                      ))}
+                    </SelectCustomTheme>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleSwitchApp(item.appid)}
+                      sx={{ aspectRatio: "1 / 1", minWidth: 0, padding: 1 }}
+                    >
+                      <Iconify name="mdi:link-variant" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        : "Data tidak tersedia"}
+
     </DialogComponent>
   );
 }

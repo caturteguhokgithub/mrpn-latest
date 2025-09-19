@@ -14,6 +14,11 @@ export interface DtoSwitchApp {
     tahun: string
 }
 
+export interface DtoSwitchAppReq {
+    url_redirect: string
+    ticket: string
+}
+
 export const initModuleResDto: ModuleResDto = {
     appid: "",
     kdapp: "",
