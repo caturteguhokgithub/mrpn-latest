@@ -96,6 +96,7 @@ export default function TableNotaDinasViewOnly({
 }) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalViewImage, setModalViewImage] = React.useState(false);
+  const [modalOpenNoteReject, setModalOpenNoteReject] = React.useState(false);
   const [thisGambar, setThisGambar] = React.useState("");
   const [deleteID, setDeleteID] = useState(0);
 
@@ -316,21 +317,7 @@ export default function TableNotaDinasViewOnly({
           textTransform: "uppercase",
         }}
       />
-      {!pageApproval && (
-        <Typography color={red[800]} fontSize={14}>
-          Ditolak tanggal{" "}
-          <strong>
-            {stateApproval
-              ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })
-              : "-"}
-          </strong>
-        </Typography>
-      )}
-      {hasPrivilege(permission, "/penetapan/objectUpr", "approve") ? (
+      {/* {hasPrivilege(permission, "/penetapan/objectUpr", "approve") ? (
         <>
           {!pageApproval && (
             <AddButton
@@ -345,7 +332,7 @@ export default function TableNotaDinasViewOnly({
         </>
       ) : (
         ""
-      )}
+      )} */}
     </Fragment>
   );
 
@@ -362,20 +349,6 @@ export default function TableNotaDinasViewOnly({
           textTransform: "uppercase",
         }}
       />
-      {!pageApproval && (
-        <Typography color={green[800]} fontSize={14}>
-          Disahkan tanggal{" "}
-          <strong>
-            {stateApproval
-              ? new Date(stateApproval.created_at).toLocaleDateString("id-ID", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })
-              : "-"}
-          </strong>
-        </Typography>
-      )}
     </Fragment>
   );
 
@@ -392,14 +365,14 @@ export default function TableNotaDinasViewOnly({
           textTransform: "uppercase",
         }}
       />
-      <AddButton
+      {/* <AddButton
         color="success"
         title="Ajukan Pengesahan"
         filled
         noMargin
         startIcon={<Iconify name="mdi:check-circle" size={16} />}
         onclick={() => setModalConfirm?.(true)}
-      />
+      /> */}
     </Fragment>
   );
 
@@ -417,7 +390,7 @@ export default function TableNotaDinasViewOnly({
             textTransform: "uppercase",
           }}
         />
-        {hasPrivilege(permission, "/penetapan/objectUpr", "approve") ? (
+        {/* {hasPrivilege(permission, "/penetapan/objectUpr", "approve") ? (
           <>
             {!pageApproval && (
               <AddButton
@@ -432,7 +405,7 @@ export default function TableNotaDinasViewOnly({
           </>
         ) : (
           ""
-        )}
+        )} */}
       </Fragment>
     ) : stateApproval?.status === "review" ? (
       statusReviewMApproval
@@ -502,6 +475,86 @@ export default function TableNotaDinasViewOnly({
                     {/* )} */}
                   </TableCell>
                 </TableRow>
+                {stateApproval?.status == "rejected" && (
+                  <TableRow>
+                    <TableCell>
+                      <Typography color={grey[600]}>
+                        Tanggal Penolakan
+                      </Typography>
+                    </TableCell>
+                    <TableCell width={2} sx={{ px: 0 }}>
+                      :
+                    </TableCell>
+                    <TableCell>
+                      <Stack direction="row" alignItems="center" gap={1}>
+                        {
+                          <Fragment>
+                            <Typography color={red[800]} fontSize={14}>
+                              Ditolak tanggal{" "}
+                              <strong>
+                                {stateApproval
+                                  ? new Date(
+                                      stateApproval.created_at
+                                    ).toLocaleDateString("id-ID", {
+                                      day: "numeric",
+                                      month: "long",
+                                      year: "numeric",
+                                    })
+                                  : "-"}
+                              </strong>
+                            </Typography>
+                            <AddButton
+                              color="error"
+                              title="Lihat Catatan"
+                              startIcon={
+                                <Iconify name="mdi:note-outline" size={16} />
+                              }
+                              noMargin
+                              onclick={() => setModalOpenNoteReject?.(true)}
+                              sx={{
+                                boxShadow:
+                                  "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
+                              }}
+                            />
+                          </Fragment>
+                        }
+                      </Stack>
+                      {/* )} */}
+                    </TableCell>
+                  </TableRow>
+                )}
+                {stateApproval?.status == "approved" && (
+                  <TableRow>
+                    <TableCell>
+                      <Typography color={grey[600]}>
+                        Tanggal Pengesahan
+                      </Typography>
+                    </TableCell>
+                    <TableCell width={2} sx={{ px: 0 }}>
+                      :
+                    </TableCell>
+                    <TableCell>
+                      <Stack direction="row" alignItems="center" gap={1}>
+                        {
+                          <Typography color={green[800]} fontSize={14}>
+                            Disahkan tanggal{" "}
+                            <strong>
+                              {stateApproval
+                                ? new Date(
+                                    stateApproval.created_at
+                                  ).toLocaleDateString("id-ID", {
+                                    day: "numeric",
+                                    month: "long",
+                                    year: "numeric",
+                                  })
+                                : "-"}
+                            </strong>
+                          </Typography>
+                        }
+                      </Stack>
+                    </TableCell>
+                  </TableRow>
+                )}
                 {/* <TableRow>
                   <TableCell sx={{ verticalAlign: "top" }}>
                     <Typography color={grey[600]}>
@@ -986,7 +1039,7 @@ export default function TableNotaDinasViewOnly({
         {/* {pageApproval && ( */}
         <Fragment>
           {/* Pengajuan Pengesahan */}
-          <Stack gap={1}>
+          {/* <Stack gap={1}>
             <Stack
               direction="row"
               gap={1}
@@ -994,8 +1047,12 @@ export default function TableNotaDinasViewOnly({
               justifyContent="space-between"
             >
               <Typography fontWeight={600}>Pengajuan Pengesahan</Typography>
-              {/* {pageApproval && ( */}
-              {/* <Fragment>
+            </Stack>
+            <Typography>{stateApproval?.message}</Typography>
+          </Stack> */}
+          {/* Typography fontWeight={600}>Pengajuan Pengesahan</Typography> */}
+          {/* {pageApproval && ( */}
+          {/* <Fragment>
                 {(stateApproval?.status === "rejected" ||
                   stateApproval?.status == "approved") && (
                   <AddButton
@@ -1003,14 +1060,21 @@ export default function TableNotaDinasViewOnly({
                     filled
                     noMargin
                     startIcon={<Iconify name="mdi:plus-circle" size={16} />}
-                    onclick={() => setModalOpenAdd(true)}
+                 <Stack gap={1}>
+            <Stack
+              direction="row"
+              gap={1}
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <   onclick={() => setModalOpenAdd(true)}
                   />
                 )}
               </Fragment> */}
-              {/* )} */}
-            </Stack>
-            <Typography>{stateApproval?.message}</Typography>
-            {/* <Box>
+          {/* )} */}
+          {/* </Stack>
+            <Typography>{stateApproval?.message}</Typography> */}
+          {/* <Box>
             <Button
               color="primary"
               variant="contained"
@@ -1019,7 +1083,7 @@ export default function TableNotaDinasViewOnly({
               Catatan
             </Button>
           </Box> */}
-          </Stack>
+          {/* </Stack> */}
           {/*<Typography fontWeight={600} mt={1}>*/}
           {/*  Usulan UPR Lintas Sektor*/}
           {/*</Typography>*/}
@@ -1307,6 +1371,29 @@ export default function TableNotaDinasViewOnly({
         dialogFooter={dialogActionFooter}
       >
         <FormNote mode="add" />
+      </DialogComponent>
+      <DialogComponent
+        width={480}
+        dialogOpen={modalOpenNoteReject}
+        dialogClose={() => setModalOpenNoteReject(false)}
+        title={
+          <Typography color={red[600]} fontWeight={600} fontSize="1.25rem">
+            Catatan Penolakan
+          </Typography>
+        }
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => setModalOpenNoteReject(false)}
+            >
+              Keluar
+            </Button>
+          </DialogActions>
+        }
+      >
+        <p>{stateApproval?.message}</p>
       </DialogComponent>
       <DialogComponent
         width="100%"
