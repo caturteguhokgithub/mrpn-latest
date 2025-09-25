@@ -85,7 +85,6 @@ function CustomTabPanel(props: TabPanelProps) {
 export default function PageOverviewView() {
   const { year, rpjmn } = useRKPContext((state) => state);
   const { user } = useAuthorizationVM();
-  console.log(user);
 
   const {
     dataRiskOverview,
@@ -110,7 +109,7 @@ export default function PageOverviewView() {
   const sxParams: SxParams = { variant: "default" };
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isEmpty = false;
-  const isStatus = stateApproval.status;
+
 
   useEffect(() => {
     getMasterListObject();
@@ -140,11 +139,10 @@ export default function PageOverviewView() {
   return (
     <Fragment>
       <ContentPage
-        title={`Overview Risiko ${
-          year == 0
-            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-            : "Tahun " + year
-        }`}
+        title={`Overview Risiko ${year == 0
+          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+          : "Tahun " + year
+          }`}
         withCard={objectState === undefined}
         chooseObject={
           year == 0 ? (
@@ -322,9 +320,10 @@ export default function PageOverviewView() {
                     <>
                       <CardItem
                         title="Overview Profil Risiko"
-                        addButton={
+                        setting
+                        downloadButton={
                           <Stack direction="row" gap={1} alignItems="center">
-                            {isStatus === "reject" ? (
+                            {stateApproval.status === "rejected" ? (
                               <Typography fontSize={14} color={red[700]}>
                                 Ditolak tanggal:{" "}
                                 <Typography
@@ -332,10 +331,18 @@ export default function PageOverviewView() {
                                   fontWeight={600}
                                   fontSize={14}
                                 >
-                                  {stateApproval.created_at}
+                                  {
+                                    new Date(
+                                      stateApproval.created_at
+                                    ).toLocaleDateString("id-ID", {
+                                      day: "numeric",
+                                      month: "long",
+                                      year: "numeric",
+                                    })
+                                  }
                                 </Typography>
                               </Typography>
-                            ) : isStatus === "approve" ? (
+                            ) : stateApproval.status === "approved" ? (
                               <Typography fontSize={14} color={green[700]}>
                                 Disetujui tanggal:{" "}
                                 <Typography
@@ -351,54 +358,67 @@ export default function PageOverviewView() {
                             )}
                             <Chip
                               color={
-                                isStatus === "reject"
+                                stateApproval.status === "rejected"
                                   ? "error"
-                                  : isStatus === "draft"
-                                  ? "default"
-                                  : "warning"
+                                  : stateApproval.status === "draft"
+                                    ? "default"
+                                    : "warning"
                               }
-                              variant="outlined"
+                              // variant="outlined"
                               label={
                                 <Typography
                                   fontWeight={600}
                                   fontSize={13}
                                   textTransform="uppercase"
                                 >
-                                  {isStatus === "reject"
-                                    ? "Reject"
-                                    : isStatus === "draft"
-                                    ? "Draft"
-                                    : "Review"}
+                                  {stateApproval.status === "rejected"
+                                    ? "Rejected"
+                                    : stateApproval.status === "draft"
+                                      ? "Draft"
+                                      : "Review"}
                                 </Typography>
                               }
                               icon={
                                 <Iconify
                                   name={
-                                    isStatus === "reject"
+                                    stateApproval.status === "rejected"
                                       ? "mdi:close"
-                                      : isStatus === "draft"
-                                      ? "mdi:invoice-text-edit"
-                                      : "mdi:magnify-expand"
+                                      : stateApproval.status === "draft"
+                                        ? "mdi:invoice-text-edit"
+                                        : "mdi:magnify-expand"
                                   }
                                 />
                               }
                               sx={{ px: 2 }}
                             />
-                            {isStatus === "reject" && (
-                              <Button
-                                size="small"
-                                color="primary"
-                                variant="contained"
-                                startIcon={<Iconify name="mdi:pencil" />}
+                            {stateApproval.status === "rejected" && (
+                              <AddButton
+                                color="error"
+                                title="Lihat Catatan"
+                                startIcon={
+                                  <Iconify name="mdi:note-outline" size={16} />
+                                }
+                                noMargin
+                                onclick={() => setOpenModal(true)}
                                 sx={{
-                                  whiteSpace: "nowrap",
-                                  borderRadius: 50,
-                                  px: 2,
+                                  boxShadow:
+                                    "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
                                 }}
-                                onClick={() => setOpenModal(true)}
-                              >
-                                Catatan
-                              </Button>
+                              />
+                              // <Button
+                              //   size="small"
+                              //   color="primary"
+                              //   variant="contained"
+                              //   startIcon={<Iconify name="mdi:pencil" />}
+                              //   sx={{
+                              //     whiteSpace: "nowrap",
+                              //     borderRadius: 50,
+                              //     px: 2,
+                              //   }}
+                              //   onClick={() => setOpenModal(true)}
+                              // >
+                              //   Catatan
+                              // </Button>
                             )}
                           </Stack>
                         }
@@ -439,23 +459,23 @@ export default function PageOverviewView() {
                         <Stack direction="row" alignItems="center" gap={1}>
                           Selera Risiko
                           {Array.isArray(stateSelera?.seleraRisiko) &&
-                          stateSelera.seleraRisiko.length > 0 &&
-                          stateSelera.seleraRisiko[0].type_nilai !== "" ? (
+                            stateSelera.seleraRisiko.length > 0 &&
+                            stateSelera.seleraRisiko[0].type_nilai !== "" ? (
                             <Chip
                               label={
                                 stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() ===
-                                "rendah"
+                                  "rendah"
                                   ? "Rendah"
                                   : stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() ===
                                     "konservatif"
-                                  ? "Konservatif"
-                                  : stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() ===
-                                    "moderat"
-                                  ? "Moderat"
-                                  : stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() ===
-                                    "tinggi"
-                                  ? "Tinggi"
-                                  : "-"
+                                    ? "Konservatif"
+                                    : stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() ===
+                                      "moderat"
+                                      ? "Moderat"
+                                      : stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() ===
+                                        "tinggi"
+                                        ? "Tinggi"
+                                        : "-"
                               }
                               color="primary"
                             />
@@ -464,8 +484,8 @@ export default function PageOverviewView() {
                       }
                     >
                       {Array.isArray(stateSelera?.seleraRisiko) &&
-                      stateSelera.seleraRisiko.length > 0 &&
-                      stateSelera.seleraRisiko[0].type_nilai !== "" ? (
+                        stateSelera.seleraRisiko.length > 0 &&
+                        stateSelera.seleraRisiko[0].type_nilai !== "" ? (
                         <Stack direction="column" gap={1}>
                           <Typography color={grey[600]}>
                             Pernyataan Selera Risiko:{" "}
@@ -475,7 +495,7 @@ export default function PageOverviewView() {
                               fontWeight={500}
                             >
                               {Array.isArray(stateSelera?.seleraRisiko) &&
-                              stateSelera.seleraRisiko.length > 0
+                                stateSelera.seleraRisiko.length > 0
                                 ? stateSelera?.seleraRisiko[0].pernyataan
                                 : ""}
                             </Typography>
@@ -484,7 +504,7 @@ export default function PageOverviewView() {
                             levelId={1}
                             levelDampak={
                               Array.isArray(stateSelera?.seleraRisiko) &&
-                              stateSelera.seleraRisiko.length > 0
+                                stateSelera.seleraRisiko.length > 0
                                 ? stateSelera?.seleraRisiko[0].type_nilai.toLowerCase()
                                 : ""
                             }
@@ -513,14 +533,15 @@ export default function PageOverviewView() {
         title="Catatan Penolakan"
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button onClick={() => setOpenModal(false)}>Batal</Button>
-            <Button variant="contained" type="submit">
+            <Button onClick={() => setOpenModal(false)}>Close</Button>
+            {/* <Button variant="contained" type="submit">
               Simpan
-            </Button>
+            </Button> */}
           </DialogActions>
         }
       >
-        <FormNote mode="add" />
+        {stateApproval.message}
+        {/* <FormNote mode="add" /> */}
       </DialogComponent>
       <DialogComponent
         width={360}

@@ -32,8 +32,6 @@ export default function PageApprovalNotaDinasView({ }) {
 
   const { objects, objectState, setObjectState, nota } = usePenetapanTopicContext((state) => state);
 
-  console.log(objectState);
-
   const {
     useEffectGenerateOption,
     useEffectObjectState,

@@ -59,8 +59,6 @@ export default function RiskContent({
   );
   const [userLevel, setUserLevel] = React.useState<string | null>(userLv);
 
-  console.log(state);
-
   const pernyataan =
     user?.type === "BAPPENAS"
       ? stateSelera?.referensi?.[0]?.pernyataan ?? ""
@@ -167,10 +165,10 @@ perencanaan pembangunan nasional"
                           valueTheme == "Rendah"
                             ? "Rendah"
                             : valueTheme == "Konservatif"
-                            ? "Konservatif"
-                            : valueTheme == "Moderat"
-                            ? "Moderat"
-                            : "Tinggi"
+                              ? "Konservatif"
+                              : valueTheme == "Moderat"
+                                ? "Moderat"
+                                : "Tinggi"
                         }
                         sx={{
                           fontSize: 14,
@@ -215,15 +213,15 @@ perencanaan pembangunan nasional"
                       }));
                   }}
                   placeholder={`Deskripsi `}
-                  // placeholder={`Deskripsi ${valueTheme == "Rendah"
-                  //   ? "Rendah"
-                  //   : valueTheme == "Konservatif"
-                  //     ? "Konservatif"
-                  //     : valueTheme == "Moderat"
-                  //       ? "Moderat"
-                  //       : "Tinggi"
-                  //   }`}
-                  // width="100%"
+                // placeholder={`Deskripsi ${valueTheme == "Rendah"
+                //   ? "Rendah"
+                //   : valueTheme == "Konservatif"
+                //     ? "Konservatif"
+                //     : valueTheme == "Moderat"
+                //       ? "Moderat"
+                //       : "Tinggi"
+                //   }`}
+                // width="100%"
                 />
               </>
             )}
