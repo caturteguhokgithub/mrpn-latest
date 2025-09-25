@@ -110,7 +110,6 @@ export default function PageOverviewView() {
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isEmpty = false;
 
-
   useEffect(() => {
     getMasterListObject();
   }, [year]);
@@ -139,10 +138,11 @@ export default function PageOverviewView() {
   return (
     <Fragment>
       <ContentPage
-        title={`Overview Risiko ${year == 0
-          ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
-          : "Tahun " + year
-          }`}
+        title={`Overview Risiko ${
+          year == 0
+            ? "RPJMN " + rpjmn?.start + "-" + rpjmn?.end
+            : "Tahun " + year
+        }`}
         withCard={objectState === undefined}
         chooseObject={
           year == 0 ? (
@@ -319,32 +319,68 @@ export default function PageOverviewView() {
                   ) : (
                     <>
                       <CardItem
-                        title="Overview Profil Risiko"
-                        setting
-                        downloadButton={
+                        title={
                           <Stack direction="row" gap={1} alignItems="center">
+                            <Typography fontWeight={500} fontSize="1rem">
+                              Overview Profil Risiko
+                            </Typography>
+                            <Chip
+                              size="small"
+                              variant="outlined"
+                              color={
+                                stateApproval.status === "rejected"
+                                  ? "error"
+                                  : stateApproval.status === "draft"
+                                  ? "default"
+                                  : "warning"
+                              }
+                              label={
+                                <Typography
+                                  fontWeight={600}
+                                  fontSize={13}
+                                  textTransform="uppercase"
+                                >
+                                  {stateApproval.status === "rejected"
+                                    ? "Rejected"
+                                    : stateApproval.status === "draft"
+                                    ? "Draft"
+                                    : "Review"}
+                                </Typography>
+                              }
+                              icon={
+                                <Iconify
+                                  size={14}
+                                  name={
+                                    stateApproval.status === "rejected"
+                                      ? "mdi:close"
+                                      : stateApproval.status === "draft"
+                                      ? "mdi:invoice-text-edit"
+                                      : "mdi:magnify-expand"
+                                  }
+                                />
+                              }
+                              sx={{ px: 1 }}
+                            />
                             {stateApproval.status === "rejected" ? (
                               <Typography fontSize={14} color={red[700]}>
-                                Ditolak tanggal:{" "}
+                                Ditolak tanggal{" "}
                                 <Typography
                                   component="strong"
                                   fontWeight={600}
                                   fontSize={14}
                                 >
-                                  {
-                                    new Date(
-                                      stateApproval.created_at
-                                    ).toLocaleDateString("id-ID", {
-                                      day: "numeric",
-                                      month: "long",
-                                      year: "numeric",
-                                    })
-                                  }
+                                  {new Date(
+                                    stateApproval.created_at
+                                  ).toLocaleDateString("id-ID", {
+                                    day: "numeric",
+                                    month: "long",
+                                    year: "numeric",
+                                  })}
                                 </Typography>
                               </Typography>
-                            ) : stateApproval.status === "approved" ? (
+                            ) : stateApproval.status === "approve" ? (
                               <Typography fontSize={14} color={green[700]}>
-                                Disetujui tanggal:{" "}
+                                Disetujui tanggal{" "}
                                 <Typography
                                   component="strong"
                                   fontWeight={600}
@@ -356,41 +392,11 @@ export default function PageOverviewView() {
                             ) : (
                               ""
                             )}
-                            <Chip
-                              color={
-                                stateApproval.status === "rejected"
-                                  ? "error"
-                                  : stateApproval.status === "draft"
-                                    ? "default"
-                                    : "warning"
-                              }
-                              // variant="outlined"
-                              label={
-                                <Typography
-                                  fontWeight={600}
-                                  fontSize={13}
-                                  textTransform="uppercase"
-                                >
-                                  {stateApproval.status === "rejected"
-                                    ? "Rejected"
-                                    : stateApproval.status === "draft"
-                                      ? "Draft"
-                                      : "Review"}
-                                </Typography>
-                              }
-                              icon={
-                                <Iconify
-                                  name={
-                                    stateApproval.status === "rejected"
-                                      ? "mdi:close"
-                                      : stateApproval.status === "draft"
-                                        ? "mdi:invoice-text-edit"
-                                        : "mdi:magnify-expand"
-                                  }
-                                />
-                              }
-                              sx={{ px: 2 }}
-                            />
+                          </Stack>
+                        }
+                        setting
+                        downloadButton={
+                          <Stack direction="row" gap={1} alignItems="center">
                             {stateApproval.status === "rejected" && (
                               <AddButton
                                 color="error"
@@ -459,23 +465,23 @@ export default function PageOverviewView() {
                         <Stack direction="row" alignItems="center" gap={1}>
                           Selera Risiko
                           {Array.isArray(stateSelera?.seleraRisiko) &&
-                            stateSelera.seleraRisiko.length > 0 &&
-                            stateSelera.seleraRisiko[0].type_nilai !== "" ? (
+                          stateSelera.seleraRisiko.length > 0 &&
+                          stateSelera.seleraRisiko[0].type_nilai !== "" ? (
                             <Chip
                               label={
                                 stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() ===
-                                  "rendah"
+                                "rendah"
                                   ? "Rendah"
                                   : stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() ===
                                     "konservatif"
-                                    ? "Konservatif"
-                                    : stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() ===
-                                      "moderat"
-                                      ? "Moderat"
-                                      : stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() ===
-                                        "tinggi"
-                                        ? "Tinggi"
-                                        : "-"
+                                  ? "Konservatif"
+                                  : stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() ===
+                                    "moderat"
+                                  ? "Moderat"
+                                  : stateSelera?.seleraRisiko[0].type_nilai?.toLowerCase() ===
+                                    "tinggi"
+                                  ? "Tinggi"
+                                  : "-"
                               }
                               color="primary"
                             />
@@ -484,8 +490,8 @@ export default function PageOverviewView() {
                       }
                     >
                       {Array.isArray(stateSelera?.seleraRisiko) &&
-                        stateSelera.seleraRisiko.length > 0 &&
-                        stateSelera.seleraRisiko[0].type_nilai !== "" ? (
+                      stateSelera.seleraRisiko.length > 0 &&
+                      stateSelera.seleraRisiko[0].type_nilai !== "" ? (
                         <Stack direction="column" gap={1}>
                           <Typography color={grey[600]}>
                             Pernyataan Selera Risiko:{" "}
@@ -495,7 +501,7 @@ export default function PageOverviewView() {
                               fontWeight={500}
                             >
                               {Array.isArray(stateSelera?.seleraRisiko) &&
-                                stateSelera.seleraRisiko.length > 0
+                              stateSelera.seleraRisiko.length > 0
                                 ? stateSelera?.seleraRisiko[0].pernyataan
                                 : ""}
                             </Typography>
@@ -504,7 +510,7 @@ export default function PageOverviewView() {
                             levelId={1}
                             levelDampak={
                               Array.isArray(stateSelera?.seleraRisiko) &&
-                                stateSelera.seleraRisiko.length > 0
+                              stateSelera.seleraRisiko.length > 0
                                 ? stateSelera?.seleraRisiko[0].type_nilai.toLowerCase()
                                 : ""
                             }
@@ -530,18 +536,24 @@ export default function PageOverviewView() {
         width={500}
         dialogOpen={openModal}
         dialogClose={() => setOpenModal(false)}
-        title="Catatan Penolakan"
+        title={
+          <Typography color={red[600]} fontWeight={600} fontSize="1.25rem">
+            Catatan Penolakan
+          </Typography>
+        }
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button onClick={() => setOpenModal(false)}>Close</Button>
-            {/* <Button variant="contained" type="submit">
-              Simpan
-            </Button> */}
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => setOpenModal(false)}
+            >
+              Keluar
+            </Button>
           </DialogActions>
         }
       >
         {stateApproval.message}
-        {/* <FormNote mode="add" /> */}
       </DialogComponent>
       <DialogComponent
         width={360}
