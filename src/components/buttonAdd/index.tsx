@@ -32,7 +32,13 @@ export default function AddButton({
   const buttonAdd = (
     <Button
       fullWidth={fullWidth}
-      color={errorColor ? "error" : color == "success" ? "success" : "primary"}
+      color={
+        errorColor || color == "error"
+          ? "error"
+          : color == "success"
+          ? "success"
+          : "primary"
+      }
       variant={filled ? "contained" : "outlined"}
       size={small ? "small" : "medium"}
       startIcon={
@@ -55,11 +61,12 @@ export default function AddButton({
         textTransform: "capitalize",
         transition: "all 300ms ease-in-out",
         "&:hover": {
-          bgcolor: errorColor
-            ? red[800]
-            : color == "success"
-            ? green[700]
-            : blue[800],
+          bgcolor:
+            errorColor || color == "error"
+              ? red[800]
+              : color == "success"
+              ? green[700]
+              : blue[800],
           color: "white",
         },
         ".MuiButton-icon": {

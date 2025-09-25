@@ -6,6 +6,9 @@ const nextConfig = {
   // basePath: "/fe",
   // assetPrefix: "https://mrpn.bappenas.go.id/fe",
 
+  // basePath: "/fe",
+  // assetPrefix: "https://private-mrpn.bappenas.go.id/fe",
+
   // basePath: "/fe-staging",
   // assetPrefix: "https://mrpn.bappenas.go.id/fe-staging",
 

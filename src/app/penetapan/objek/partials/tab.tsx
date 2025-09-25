@@ -15,7 +15,9 @@ import TableNotaDinasViewOnly from "@/app/approval/nota-dinas/partials/table-not
 import {
   usePenetapanTopicContext,
   useRKPContext,
+  useAuthContext,
 } from "@/lib/core/hooks/useHooks";
+import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import CollapsibleTableUpr from "./table-upr";
 import { dtoUraian } from "../pageModel";
 import Iconify from "@/components/icons/iconify";
@@ -94,6 +96,7 @@ export default function TabObject({
   deleteNodin,
   modalConfirm,
   setModalConfirm,
+  pageApproval,
   isReview,
   // setIsReview,
   modalReject,
@@ -126,6 +129,7 @@ export default function TabObject({
   // APPROVAL
   modalConfirm?: any;
   setModalConfirm?: any;
+  pageApproval?: boolean;
   isReview?: any;
   // setIsReview?: any;
   modalReject?: any;
@@ -147,6 +151,7 @@ export default function TabObject({
   useEffect(useEffectObjectState, [year, objectState]);
 
   const [value, setValue] = React.useState(0);
+  const { permission } = useAuthContext((state: any) => state);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -316,6 +321,27 @@ export default function TabObject({
           //     />
           //   )
           // }
+          addButton={
+            hasPrivilege(permission, "/penetapan/objectUpr", "approve") ? (
+              <>
+                {!pageApproval &&
+                  (stateApproval?.status == "" ||
+                    stateApproval?.status == "draft" ||
+                    stateApproval?.status == "rejected") && (
+                    <AddButton
+                      color="success"
+                      title="Ajukan Pengesahan"
+                      filled
+                      noMargin
+                      startIcon={<Iconify name="mdi:check-circle" size={16} />}
+                      onclick={() => setModalConfirm?.(true)}
+                    />
+                  )}
+              </>
+            ) : (
+              ""
+            )
+          }
         >
           {/* {isDeveloping ? (
             <EmptyDevelopingState />
