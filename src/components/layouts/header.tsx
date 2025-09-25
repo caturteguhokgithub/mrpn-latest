@@ -510,7 +510,7 @@ export default function Header({ }) {
           >
             <Avatar
               alt={user?.name ?? ""}
-              src="https://mrpn.bappenas.go.id/fe/mrpn/logo-emonev.png"
+              src="https://private-mrpn.bappenas.go.id/fe/mrpn/logo-emonev.png"
             />
             <ListItemText
               sx={{
