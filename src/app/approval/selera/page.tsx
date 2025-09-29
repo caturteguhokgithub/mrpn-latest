@@ -56,21 +56,40 @@ export default function PageApprovalSelera() {
     getMasterListObject();
   }, [year]);
 
+  // Prevent repeated fetching for the same object id
+  const lastSeleraObjectIdRef = React.useRef<number | undefined>(undefined);
   useEffect(() => {
-    getSelera();
+    const currentObjectId = objectState?.id;
+    if (currentObjectId && lastSeleraObjectIdRef.current !== currentObjectId) {
+      lastSeleraObjectIdRef.current = currentObjectId;
+      getSelera();
+    }
   }, [objectState?.id]);
 
+  // Only fetch approval once per selected selera id
+  const lastApprovalSeleraIdRef = React.useRef<number | undefined>(undefined);
   useEffect(() => {
-    getApprovalSelera();
-  }, [stateSelera?.seleraRisiko]);
+    const currentSeleraId = stateSelera?.seleraRisiko?.[0]?.id;
+    if (
+      currentSeleraId &&
+      lastApprovalSeleraIdRef.current !== currentSeleraId
+    ) {
+      lastApprovalSeleraIdRef.current = currentSeleraId;
+      getApprovalSelera();
+    }
+  }, [stateSelera?.seleraRisiko?.[0]?.id]);
 
   useEffect(() => {
-    if (stateApproval.status == "approved") {
-      setApprovalStamp(true);
-      setButtonStamp(false);
-    } else if (stateApproval.status == "rejected") {
-      setRejectStamp(true);
-      setButtonStamp(false);
+    const status = stateApproval?.status;
+    const isApproved = status === "approved";
+    const isRejected = status === "rejected";
+
+    // Ensure only one stamp is active at a time and button visibility is correct
+    setApprovalStamp(Boolean(isApproved));
+    setRejectStamp(Boolean(isRejected));
+    setButtonStamp(!(isApproved || isRejected));
+
+    if (isRejected) {
       setModalOpenAdd(false);
     }
   }, [stateApproval]);
@@ -105,6 +124,11 @@ export default function PageApprovalSelera() {
       localStorage.removeItem("kpPenetapan");
       setObjectState(undefined);
     } else {
+      // Reset stamps when switching to a different selection
+      setApprovalStamp(false);
+      setRejectStamp(false);
+      setButtonStamp(true);
+
       // Set to local storage
       localStorage.setItem("kpPenetapan", JSON.stringify(val));
       setObjectState(val);
