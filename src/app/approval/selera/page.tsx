@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   DialogActions,
+  FormControl,
   Paper,
   Stack,
   ToggleButtonGroup,
@@ -24,6 +25,9 @@ import usePenetapanSelera from "@/app/penetapan/kriteria/partials/tab4Selera/hoo
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { doReqSeleraApprovalDto } from "@/app/penetapan/kriteria/partials/tab4Selera/hooks/model";
 import Iconify from "@/components/icons/iconify";
+import { AutocompleteSelectSingle } from "@/components/autocomplete";
+import { MasterListObjectRes } from "@/app/misc/master/masterServiceModel";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
 
 export default function PageApprovalSelera() {
   usePermissionChecker("approval.seleraRisiko");
@@ -33,7 +37,9 @@ export default function PageApprovalSelera() {
   const [buttonStamp, setButtonStamp] = React.useState(true);
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const nilaiOptions = ["Rendah", "Konservatif", "Moderat", "Tinggi"];
-  const { objectState } = usePenetapanGlobalVM();
+  const { year, rpjmn } = useRKPContext((state) => state);
+  const { objectState, objects, setObjectState, getMasterListObject } =
+    usePenetapanGlobalVM();
 
   const {
     getApprovalSelera,
@@ -45,6 +51,10 @@ export default function PageApprovalSelera() {
     stateSelera,
     setRequestSelera,
   } = usePenetapanSelera();
+
+  useEffect(() => {
+    getMasterListObject();
+  }, [year]);
 
   useEffect(() => {
     getSelera();
@@ -86,6 +96,21 @@ export default function PageApprovalSelera() {
     setModalOpenAdd(false);
   };
 
+  const handleSetObjectState = (val: MasterListObjectRes | null) => {
+    if (val === null) {
+      // Reset stamps when clearing the selection
+      setApprovalStamp(false);
+      setRejectStamp(false);
+      setButtonStamp(true);
+      localStorage.removeItem("kpPenetapan");
+      setObjectState(undefined);
+    } else {
+      // Set to local storage
+      localStorage.setItem("kpPenetapan", JSON.stringify(val));
+      setObjectState(val);
+    }
+  };
+
   const dialogActionFooter = (
     <DialogActions sx={{ p: 2, px: 3 }}>
       <Button onClick={handleModalClose}>Batal</Button>
@@ -114,7 +139,25 @@ export default function PageApprovalSelera() {
               </p>
             </>
           }
-          chipKp
+          // chipKp
+          chooseObject={
+            year == 0 ? (
+              ""
+            ) : (
+              <FormControl size="small" sx={{ minWidth: "20vw" }}>
+                <AutocompleteSelectSingle
+                  rounded
+                  value={objectState}
+                  options={objects}
+                  getOptionLabel={(opt) => `${opt.rkp.code} - ${opt.rkp.value}`}
+                  handleChange={(val: MasterListObjectRes | null) =>
+                    handleSetObjectState(val)
+                  }
+                  placeHolder={"Pilih KP"}
+                />
+              </FormControl>
+            )
+          }
           addButton={
             buttonStamp ? (
               <Stack direction="row" gap={1}>

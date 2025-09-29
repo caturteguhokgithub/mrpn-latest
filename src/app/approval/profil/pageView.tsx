@@ -109,7 +109,7 @@ export default function PageApprovalProfilView() {
       }
       withCard={objectState === undefined}
       chooseObject={
-        <FormControl size="small" sx={{ width: "20vw" }}>
+        <FormControl size="small" sx={{ minWidth: "20vw" }}>
           <AutocompleteSelectSingle
             rounded
             value={objectState}
