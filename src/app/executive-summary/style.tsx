@@ -340,7 +340,7 @@ export const CustomTab = styled(Tab)(({ theme }) => ({
     content: '""',
     position: "absolute",
     zIndex: 1,
-    right: -33,
+    right: -32,
     top: "50%",
     transform: "translateY(-50%) rotate(270deg)",
     width: 0,

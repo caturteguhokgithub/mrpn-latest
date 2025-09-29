@@ -12,6 +12,9 @@ const nextConfig = {
   // basePath: "/fe-staging",
   // assetPrefix: "https://mrpn.bappenas.go.id/fe-staging",
 
+  // basePath: "/fe-staging",
+  // assetPrefix: "https://private-mrpn.bappenas.go.id/fe-staging",
+
   reactStrictMode: false,
   crossOrigin: "anonymous",
   images: {

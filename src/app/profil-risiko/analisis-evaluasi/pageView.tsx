@@ -419,7 +419,7 @@ export default function PageAnalisisEvaluasiView({}) {
           year == 0 ? (
             ""
           ) : (
-            <FormControl size="small" sx={{ width: "20vw" }}>
+            <FormControl size="small" sx={{ minWidth: "20vw" }}>
               <AutocompleteSelectSingle
                 rounded
                 value={objectState}
