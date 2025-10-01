@@ -203,9 +203,11 @@ export default function PageExecutiveSummary({}) {
         )
       }
       titleChild={
-        <Stack direction="row" alignItems="center" gap={1}>
-          {approvalStatus(exsum.approval)}
-        </Stack>
+        rkpState !== undefined && (
+          <Stack direction="row" alignItems="center" gap={1}>
+            {approvalStatus(exsum.approval)}
+          </Stack>
+        )
       }
       tabArrow={
         <Collapse in={btnShowTab}>
