@@ -19,7 +19,7 @@ import SelectCustomTheme from "@/components/select";
 import { listTahun } from "@/utils/data";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
 import { MiscMasterRPJMNRes } from "@/app/misc/master/masterServiceModel";
-import { ExsumRoadmapDto } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
+import { ExsumRoadmapDto, ExsumRoadmapResDto } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
 import { grey } from "@mui/material/colors";
 import { AutocompleteSelectMultiple } from "@/components/autocomplete";
 import ReactQuill from "react-quill";
@@ -53,7 +53,8 @@ export default function FormRoadmap({
   fieldTitle,
   modal,
   handleOpenModal,
-  updateData
+  updateData,
+  dataOutput
 }: {
   rpjmn: MiscMasterRPJMNRes;
   request: ExsumRoadmapDto;
@@ -62,6 +63,7 @@ export default function FormRoadmap({
   modal: any;
   handleOpenModal: any;
   updateData: any;
+  dataOutput: ExsumRoadmapResDto[];
 }) {
 
   const { year } = useRKPContext((state) => state);
@@ -101,6 +103,40 @@ export default function FormRoadmap({
     updateData(finalReq);
   }
 
+  const handleChangeYear = (newVal: number[]) => {
+    setRequest((prev: ExsumRoadmapDto) => ({
+      ...prev,
+      year: newVal,
+    }));
+
+    const selectedYear = newVal?.[0];
+
+    if (
+      fieldTitle === "Output" &&
+      selectedYear &&
+      selectedYear > 0 &&
+      Array.isArray(dataOutput) &&
+      dataOutput.length > 0
+    ) {
+      const foundOutput = dataOutput.find(
+        (d) => d.year === selectedYear && d.output
+      );
+
+      if (foundOutput) {
+        setRequest((prev: ExsumRoadmapDto) => ({
+          ...prev,
+          output: foundOutput.output,
+        }));
+      } else {
+        setRequest((prev: ExsumRoadmapDto) => ({
+          ...prev,
+          output: "",
+        }));
+      }
+    }
+  };
+
+
   return (
     <DialogComponent
       width={600}
@@ -133,16 +169,17 @@ export default function FormRoadmap({
               value={request.year}
               options={year > 0 ? [year] : listYearRPjmn()}
               getOptionLabel={(option) => option.toString()}
-              handleChange={(newVal: number[]) =>
-                handleChangeQuill().then(r => {
-                  setRequest((prev: ExsumRoadmapDto) => {
-                    return {
-                      ...prev,
-                      year: newVal,
-                    };
-                  })
-                })
-              }
+              handleChange={(newVal: number[]) => handleChangeYear(newVal)}
+              // handleChange={(newVal: number[]) =>
+              //   handleChangeQuill().then(r => {
+              //     setRequest((prev: ExsumRoadmapDto) => {
+              //       return {
+              //         ...prev,
+              //         year: newVal,
+              //       };
+              //     })
+              //   })
+              // }
               placeHolder={"Pilih tahun"}
               labelSelectAll={"Pilih semua tahun"}
             />

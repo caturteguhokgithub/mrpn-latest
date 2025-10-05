@@ -150,21 +150,21 @@ export default function TableIndication({
             )}
             {(hasPrivilege(permission, pathname, "update") ||
               hasPrivilege(permission, pathname, "delete")) && (
-              <TableCell
-                sx={{
-                  // position: "sticky",
-                  // right: 0,
-                  // boxShadow: "2px -6px 10px grey",
-                  // borderLeft: "1px solid #e0e0e0",
-                  bgcolor: bgColorTh,
-                  width: 100,
-                }}
-              >
-                <Typography variant="body1" fontWeight={600} textAlign="center">
-                  Aksi
-                </Typography>
-              </TableCell>
-            )}
+                <TableCell
+                  sx={{
+                    // position: "sticky",
+                    // right: 0,
+                    // boxShadow: "2px -6px 10px grey",
+                    // borderLeft: "1px solid #e0e0e0",
+                    bgcolor: bgColorTh,
+                    width: 100,
+                  }}
+                >
+                  <Typography variant="body1" fontWeight={600} textAlign="center">
+                    Aksi
+                  </Typography>
+                </TableCell>
+              )}
           </TableRow>
           <TableRow
             sx={{
@@ -241,7 +241,7 @@ export default function TableIndication({
                       <Typography
                         variant="body1"
                         color={
-                          row.perlakuan[0].ro?.type == "RO" ? "" : "#f97316"
+                          row.perlakuan[0].ro?.intervention == true ? "#f97316" : ""
                         }
                       >
                         {row.perlakuan[0].ro?.type == "RO"
@@ -316,26 +316,26 @@ export default function TableIndication({
 
                   {(hasPrivilege(permission, pathname, "update") ||
                     hasPrivilege(permission, pathname, "delete")) && (
-                    <TableCell
-                      rowSpan={
-                        (row.perlakuan.length == 0 ? 1 : row.perlakuan.length) +
-                        row.regulasi.length
-                      }
-                    >
-                      <ActionColumn
-                        editClick={
-                          hasPrivilege(permission, pathname, "update")
-                            ? () => handleEditData(row.id)
-                            : undefined
+                      <TableCell
+                        rowSpan={
+                          (row.perlakuan.length == 0 ? 1 : row.perlakuan.length) +
+                          row.regulasi.length
                         }
-                        deleteClick={
-                          hasPrivilege(permission, pathname, "delete")
-                            ? () => handleDeleteData(row.id)
-                            : undefined
-                        }
-                      />
-                    </TableCell>
-                  )}
+                      >
+                        <ActionColumn
+                          editClick={
+                            hasPrivilege(permission, pathname, "update")
+                              ? () => handleEditData(row.id)
+                              : undefined
+                          }
+                          deleteClick={
+                            hasPrivilege(permission, pathname, "delete")
+                              ? () => handleDeleteData(row.id)
+                              : undefined
+                          }
+                        />
+                      </TableCell>
+                    )}
                 </TableRow>
 
                 {row.perlakuan.slice(1).map((perlakuan, i) => (
@@ -416,15 +416,15 @@ export default function TableIndication({
                       <ul>
                         {Array.isArray(regulation.perpres)
                           ? regulation.perpres.map((y, index2) => (
-                              <li>
-                                <Typography
-                                  key={`perpres-${index2}`}
-                                  color={y.flag != null ? "#EA6228" : undefined}
-                                >
-                                  {`${y.title}`}
-                                </Typography>
-                              </li>
-                            ))
+                            <li>
+                              <Typography
+                                key={`perpres-${index2}`}
+                                color={y.flag != null ? "#EA6228" : undefined}
+                              >
+                                {`${y.title}`}
+                              </Typography>
+                            </li>
+                          ))
                           : ""}
                       </ul>
                     </TableCell>

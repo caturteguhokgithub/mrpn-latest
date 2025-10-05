@@ -18,6 +18,9 @@ export default function FormStakeholder({
   selectedStakeholder: MiscMasterListStakeholderRes[];
   setSelectedStakeholder: (item: number[]) => void;
 }) {
+
+  const isSingleSelect = (title === "Kementerian Koordinator" || title === "Entitas Sektor Utama") ? true : false;
+
   return (
     <Grid item xs={12}>
       <Paper
@@ -37,8 +40,8 @@ export default function FormStakeholder({
                   title === "Entitas Sektor Utama"
                     ? "Kementerian negara atau lembaga yang mempunyai tanggung jawab utama dalam mengelola risiko pada program, kegiatan, proyek, prioritas pembangunan, dan/atau jenis risiko tertentu yang bersifat lintas sektor"
                     : title === "Entitas Pendukung"
-                    ? "Entitas MRPN Pendukung adalah K/L/P/BU/BL yang turut mendukung pelaksanaan Objek MRPN Lintas Sektor termasuk yang menjadi penanggung jawab atas suatu perlakuan risiko"
-                    : null
+                      ? "Entitas MRPN Pendukung adalah K/L/P/BU/BL yang turut mendukung pelaksanaan Objek MRPN Lintas Sektor termasuk yang menjadi penanggung jawab atas suatu perlakuan risiko"
+                      : null
                 }
               />
             )}
@@ -50,13 +53,24 @@ export default function FormStakeholder({
               options={listStakeholder}
               getOptionLabel={(opt) => opt.value}
               handleChange={(newVal: MiscMasterListStakeholderRes[]) => {
-                const selectedIds: number[] = newVal.reduce<number[]>(
-                  (acc, b) => {
-                    return [...acc, b.id];
-                  },
-                  []
-                );
+
+                let finalSelection = newVal;
+
+                // jika Kementerian Koordinator, batasi hanya 1 item
+                if (isSingleSelect && newVal.length > 1) {
+                  finalSelection = [newVal[newVal.length - 1]];
+                }
+
+                const selectedIds = finalSelection.map((item) => item.id);
                 setSelectedStakeholder(selectedIds);
+
+                // const selectedIds: number[] = newVal.reduce<number[]>(
+                //   (acc, b) => {
+                //     return [...acc, b.id];
+                //   },
+                //   []
+                // );
+                // setSelectedStakeholder(selectedIds);
               }}
               placeHolder={"Pilih K/L"}
               labelSelectAll={"Pilih semua K/L"}
