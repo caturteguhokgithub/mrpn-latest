@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   DialogActions,
+  FormControl,
   Paper,
   Stack,
   ToggleButtonGroup,
@@ -24,6 +25,9 @@ import usePenetapanSelera from "@/app/penetapan/kriteria/partials/tab4Selera/hoo
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { doReqSeleraApprovalDto } from "@/app/penetapan/kriteria/partials/tab4Selera/hooks/model";
 import Iconify from "@/components/icons/iconify";
+import { AutocompleteSelectSingle } from "@/components/autocomplete";
+import { MasterListObjectRes } from "@/app/misc/master/masterServiceModel";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
 
 export default function PageApprovalSelera() {
   usePermissionChecker("approval.seleraRisiko");
@@ -33,7 +37,9 @@ export default function PageApprovalSelera() {
   const [buttonStamp, setButtonStamp] = React.useState(true);
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const nilaiOptions = ["Rendah", "Konservatif", "Moderat", "Tinggi"];
-  const { objectState } = usePenetapanGlobalVM();
+  const { year, rpjmn } = useRKPContext((state) => state);
+  const { objectState, objects, setObjectState, getMasterListObject } =
+    usePenetapanGlobalVM();
 
   const {
     getApprovalSelera,
@@ -47,20 +53,43 @@ export default function PageApprovalSelera() {
   } = usePenetapanSelera();
 
   useEffect(() => {
-    getSelera();
+    getMasterListObject();
+  }, [year]);
+
+  // Prevent repeated fetching for the same object id
+  const lastSeleraObjectIdRef = React.useRef<number | undefined>(undefined);
+  useEffect(() => {
+    const currentObjectId = objectState?.id;
+    if (currentObjectId && lastSeleraObjectIdRef.current !== currentObjectId) {
+      lastSeleraObjectIdRef.current = currentObjectId;
+      getSelera();
+    }
   }, [objectState?.id]);
 
+  // Only fetch approval once per selected selera id
+  const lastApprovalSeleraIdRef = React.useRef<number | undefined>(undefined);
   useEffect(() => {
-    getApprovalSelera();
-  }, [stateSelera?.seleraRisiko]);
+    const currentSeleraId = stateSelera?.seleraRisiko?.[0]?.id;
+    if (
+      currentSeleraId &&
+      lastApprovalSeleraIdRef.current !== currentSeleraId
+    ) {
+      lastApprovalSeleraIdRef.current = currentSeleraId;
+      getApprovalSelera();
+    }
+  }, [stateSelera?.seleraRisiko?.[0]?.id]);
 
   useEffect(() => {
-    if (stateApproval.status == "approved") {
-      setApprovalStamp(true);
-      setButtonStamp(false);
-    } else if (stateApproval.status == "rejected") {
-      setRejectStamp(true);
-      setButtonStamp(false);
+    const status = stateApproval?.status;
+    const isApproved = status === "approved";
+    const isRejected = status === "rejected";
+
+    // Ensure only one stamp is active at a time and button visibility is correct
+    setApprovalStamp(Boolean(isApproved));
+    setRejectStamp(Boolean(isRejected));
+    setButtonStamp(!(isApproved || isRejected));
+
+    if (isRejected) {
       setModalOpenAdd(false);
     }
   }, [stateApproval]);
@@ -84,6 +113,26 @@ export default function PageApprovalSelera() {
 
   const handleModalClose = () => {
     setModalOpenAdd(false);
+  };
+
+  const handleSetObjectState = (val: MasterListObjectRes | null) => {
+    if (val === null) {
+      // Reset stamps when clearing the selection
+      setApprovalStamp(false);
+      setRejectStamp(false);
+      setButtonStamp(true);
+      localStorage.removeItem("kpPenetapan");
+      setObjectState(undefined);
+    } else {
+      // Reset stamps when switching to a different selection
+      setApprovalStamp(false);
+      setRejectStamp(false);
+      setButtonStamp(true);
+
+      // Set to local storage
+      localStorage.setItem("kpPenetapan", JSON.stringify(val));
+      setObjectState(val);
+    }
   };
 
   const dialogActionFooter = (
@@ -114,7 +163,25 @@ export default function PageApprovalSelera() {
               </p>
             </>
           }
-          chipKp
+          // chipKp
+          chooseObject={
+            year == 0 ? (
+              ""
+            ) : (
+              <FormControl size="small" sx={{ minWidth: "20vw" }}>
+                <AutocompleteSelectSingle
+                  rounded
+                  value={objectState}
+                  options={objects}
+                  getOptionLabel={(opt) => `${opt.rkp.code} - ${opt.rkp.value}`}
+                  handleChange={(val: MasterListObjectRes | null) =>
+                    handleSetObjectState(val)
+                  }
+                  placeHolder={"Pilih KP"}
+                />
+              </FormControl>
+            )
+          }
           addButton={
             buttonStamp ? (
               <Stack direction="row" gap={1}>

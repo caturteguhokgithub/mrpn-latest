@@ -331,7 +331,7 @@ export default function PageIdentifikasiView({}) {
           year == 0 ? (
             ""
           ) : (
-            <FormControl size="small">
+            <FormControl size="small" sx={{ minWidth: "20vw" }}>
               <AutocompleteSelectSingle
                 rounded
                 value={objectState}

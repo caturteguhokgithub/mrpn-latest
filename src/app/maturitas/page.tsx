@@ -1,7 +1,7 @@
 "use client";
 
 import ContentPage from "@/components/contents";
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import DashboardLayout from "@/components/layouts/layout";
 import EmptyState from "@/components/empty";
 import { IconEmptyPage } from "@/components/icons";
@@ -14,6 +14,7 @@ import {
   SelectChangeEvent,
   Alert,
   AlertTitle,
+  FormControl,
 } from "@mui/material";
 import {
   useMaterialReactTable,
@@ -23,6 +24,10 @@ import DialogComponent from "@/components/dialog";
 import FormTable from "./partials/form-table";
 import { data } from "./setting";
 import { usePermissionChecker } from "@/lib/core/helpers/authHelpers";
+import { AutocompleteSelectSingle } from "@/components/autocomplete";
+import { MasterListObjectRes } from "@/app/misc/master/masterServiceModel";
+import { useRKPContext } from "@/lib/core/hooks/useHooks";
+import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 
 export default function PageMaturitas({}) {
   usePermissionChecker("maturitas");
@@ -31,6 +36,10 @@ export default function PageMaturitas({}) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
   const [modalOpenEdit, setModalOpenEdit] = React.useState(false);
   const [modalOpenDelete, setModalOpenDelete] = React.useState(false);
+
+  const { year, rpjmn } = useRKPContext((state) => state);
+  const { objectState, objects, setObjectState, getMasterListObject } =
+    usePenetapanGlobalVM();
 
   const handleModalOpenView = () => {
     setModalOpenView(true);
@@ -51,6 +60,20 @@ export default function PageMaturitas({}) {
     setModalOpenAdd(false);
     setModalOpenEdit(false);
   };
+
+  const handleSetObjectState = (val: MasterListObjectRes | null) => {
+    if (val === null) {
+      localStorage.removeItem("kpPenetapan");
+      setObjectState(undefined);
+    } else {
+      localStorage.setItem("kpPenetapan", JSON.stringify(val));
+      setObjectState(val);
+    }
+  };
+
+  useEffect(() => {
+    getMasterListObject();
+  }, [year, getMasterListObject]);
 
   const columns = useMemo(
     () => [
@@ -179,6 +202,24 @@ export default function PageMaturitas({}) {
           infoToolTip="Tingkat kematangan manajemen risiko yang menggambarkan kapabilitas, kualitas, dan efektivitas
 penerapan MRPN di lingkup entitas MRPN yang diperoleh dari pemenuhan parameter tertentu"
           chooseProject
+          // chooseObject={
+          //   // year == 0 ? (
+          //   //   ""
+          //   // ) : (
+          //   <FormControl size="small" sx={{ minWidth: "20vw" }}>
+          //     <AutocompleteSelectSingle
+          //       rounded
+          //       value={objectState}
+          //       options={objects}
+          //       getOptionLabel={(opt) => `${opt.rkp.code} - ${opt.rkp.value}`}
+          //       handleChange={(val: MasterListObjectRes | null) =>
+          //         handleSetObjectState(val)
+          //       }
+          //       placeHolder={"Pilih KP"}
+          //     />
+          //   </FormControl>
+          //   // )
+          // }
         >
           <MaterialReactTable table={table} />
         </ContentPage>

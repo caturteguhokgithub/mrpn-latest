@@ -9,6 +9,7 @@ import {
   Paper,
   TextField,
   Tooltip,
+  Grow,
 } from "@mui/material";
 import {
   SxAutocomplete,
@@ -192,14 +193,20 @@ export function AutocompleteSelectSingle<T>({
         ((props, option) => <li {...props}>{getOptionLabel(option)}</li>)
       }
       renderInput={(params) => (
-        <TextField
-          {...params}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          placeholder={placeHolder}
-          sx={SxAutocompleteTextField(paramVariantDefault)}
-        />
+        <Tooltip
+          title={value ? getOptionLabel(value) : ""}
+          followCursor
+          TransitionComponent={Grow}
+        >
+          <TextField
+            {...params}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            placeholder={placeHolder}
+            sx={SxAutocompleteTextField(paramVariantDefault)}
+          />
+        </Tooltip>
       )}
       PaperComponent={(paperProps) => {
         const { children, ...restPaperProps } = paperProps;

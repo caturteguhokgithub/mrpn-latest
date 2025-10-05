@@ -25,12 +25,13 @@ import TableStatus from "./partials/table-status";
 import useNotaDinasVM from "./notaDinasVM";
 import FormNote from "./partials/form-note";
 
-export default function PageApprovalNotaDinasView({ }) {
+export default function PageApprovalNotaDinasView({}) {
   const [modalOpenAdd, setModalOpenAdd] = React.useState(false);
 
   const { year } = useRKPContext((state) => state);
 
-  const { objects, objectState, setObjectState, nota } = usePenetapanTopicContext((state) => state);
+  const { objects, objectState, setObjectState, nota } =
+    usePenetapanTopicContext((state) => state);
 
   const {
     useEffectGenerateOption,
@@ -89,7 +90,7 @@ export default function PageApprovalNotaDinasView({ }) {
             >
               Status Topik
             </Button>
-            <FormControl size="small" sx={{ width: "20vw" }}>
+            <FormControl size="small" sx={{ minWidth: "20vw" }}>
               <AutocompleteSelectSingle
                 rounded
                 value={objectState}
