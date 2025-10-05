@@ -197,7 +197,9 @@ export default function CardIndication({ project }: { project: string }) {
         width={"80%"}
         dialogOpen={modalOpen.action && modalOpen.type == "update"}
         // dialogClose={() => handleModalOpen(0, false, "")}
-        title="Form Indikasi Risiko Objek MRPN 5 Tahunan"
+        title={`Form Indikasi Risiko Objek MRPN ${
+          year == 0 ? "5 Tahunan" : year
+        }`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button
