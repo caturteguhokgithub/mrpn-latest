@@ -101,21 +101,21 @@ export default function FormPerlakuanRisiko({
   };
 
   const selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes> =
-    {
-      value: state.non_rincian_output.kementrian,
-      options: listStakeholder,
-      getOptionLabel: (opt) => opt.value,
-      handleChange: (value: MiscMasterListStakeholderRes) =>
-        setState((prev) => {
-          const nonRO = state.non_rincian_output;
-          nonRO.kementrian = value;
-          return {
-            ...prev,
-            non_rincian_output: nonRO,
-          };
-        }),
-      placeHolder: "Pilih Penanggungjawab",
-    };
+  {
+    value: state.non_rincian_output.kementrian,
+    options: listStakeholder,
+    getOptionLabel: (opt) => opt.value,
+    handleChange: (value: MiscMasterListStakeholderRes) =>
+      setState((prev) => {
+        const nonRO = state.non_rincian_output;
+        nonRO.kementrian = value;
+        return {
+          ...prev,
+          non_rincian_output: nonRO,
+        };
+      }),
+    placeHolder: "Pilih Penanggungjawab",
+  };
 
   const handleListProject = (years: number[]) => {
     setState((prevState) => {
@@ -306,7 +306,7 @@ export default function FormPerlakuanRisiko({
                     disabled={state.type == "NON_RO" && year == 0}
                     checked={
                       state.type == "NON_RO" && year == 0
-                        ? true
+                        ? state.intervention
                         : state.intervention
                     }
                     onChange={(checked) =>

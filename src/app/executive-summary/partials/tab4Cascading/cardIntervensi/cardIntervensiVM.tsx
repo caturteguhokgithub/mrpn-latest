@@ -1,8 +1,8 @@
-import {useExsumContext, useGlobalModalContext, useLoading, useRKPContext} from "@/lib/core/hooks/useHooks";
-import {useEffect, useState} from "react";
-import {ProPDto, RODataTable, RoDto} from "@/app/misc/rkp/rkpServiceModel";
-import {doGetPROP, doGetRO} from "@/app/misc/rkp/rkpService";
-import {API_CODE} from "@/lib/core/api/apiModel";
+import { useExsumContext, useGlobalModalContext, useLoading, useRKPContext } from "@/lib/core/hooks/useHooks";
+import { useEffect, useState } from "react";
+import { ProPDto, RODataTable, RoDto } from "@/app/misc/rkp/rkpServiceModel";
+import { doGetPROP, doGetRO } from "@/app/misc/rkp/rkpService";
+import { API_CODE } from "@/lib/core/api/apiModel";
 import {
   ExsumInterventionProjectReqDto,
   ExsumInterventionState, initExsumInterventionState, ProjectTargetAnggaranDto, UpdateById, UpdateV2ExsumIntervention
@@ -23,23 +23,23 @@ import {
   doCreateIntervention, doDeleteInterventionOnlyRO,
   doGetIntervention, doUpdateInterventionOnlyRO
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiService";
-import {GenerateProjectData} from "@/lib/utils/common";
+import { GenerateProjectData } from "@/lib/utils/common";
 
 const useCardIntervensiVM = () => {
 
   const loadingContext = useLoading();
   const errorModalContext = useGlobalModalContext();
-  const {exsum} = useExsumContext()
-  const {year,rpjmn, setRpjmn} = useRKPContext(state => state)
+  const { exsum } = useExsumContext()
+  const { year, rpjmn, setRpjmn } = useRKPContext(state => state)
 
   const [listLocation, setListLocation] = useState<MiscMasterListProvinsiRes[]>([]);
   const [listProP, setListProP] = useState<ProPDto[]>([])
   const [listSof, setListSof] = useState<MiscMasterListSumberPendanaanRes[]>([])
   const [listStakeholder, setListStakeholder] = useState<MiscMasterListStakeholderRes[]>([])
-  const [modal, setModal] = useState<{ action: boolean, type: string }>({action: false, type: ""})
+  const [modal, setModal] = useState<{ action: boolean, type: string }>({ action: false, type: "" })
   const [modalDelete, setModalDelete] = useState(false);
 
-  const [state, setState] = useState<ExsumInterventionState>({...initExsumInterventionState})
+  const [state, setState] = useState<ExsumInterventionState>({ ...initExsumInterventionState })
   const [data, setData] = useState<RoDto[]>([])
   const [dataTable, setDataTable] = useState<RODataTable[]>([])
 
@@ -70,7 +70,7 @@ const useCardIntervensiVM = () => {
   }
 
   async function getListProP() {
-    if (exsum.id == 0){
+    if (exsum.id == 0) {
       setListProP([])
       return
     }
@@ -140,7 +140,7 @@ const useCardIntervensiVM = () => {
 
   async function getData() {
     const response = await doGetIntervention({
-      body: {exsum_id: exsum.id},
+      body: { exsum_id: exsum.id },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
     })
@@ -167,39 +167,39 @@ const useCardIntervensiVM = () => {
       return
     }
 
-    let lokasi:any[] = []
+    let lokasi: any[] = []
     state.location.map(x => {
       lokasi.push({
-        src_provinsi_id:x.id
+        src_provinsi_id: x.id
       })
     })
 
-    if (modal.type == "NON_RO_UPDATE"){
-     const req:UpdateV2ExsumIntervention = {
-       body: {
-         id: state.id,
-         prop: state.prop?.id ?? 0,
-         code: state.code,
-         nomenklatur: state.nomenklatur,
-         kementrian_id: state.kementrian?.id ?? 0,
-         indikator: state.indikator,
-         target: state.list[0].target,
-         satuan: state.list[0].satuan,
-         anggaran: state.list[0].anggaran,
-         sumber_anggaran: state.list[0].sumber_anggaran,
-         type: modal.type,
-         intervention: year == 0 ? true : state.intervensi,
-         lokasi: lokasi,
-         list: state.list,
-         tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year
-       },
-       loadingContext: loadingContext,
-       errorModalContext: errorModalContext,
-     }
+    if (modal.type == "NON_RO_UPDATE") {
+      const req: UpdateV2ExsumIntervention = {
+        body: {
+          id: state.id,
+          prop: state.prop?.id ?? 0,
+          code: state.code,
+          nomenklatur: state.nomenklatur,
+          kementrian_id: state.kementrian?.id ?? 0,
+          indikator: state.indikator,
+          target: state.list[0].target,
+          satuan: state.list[0].satuan,
+          anggaran: state.list[0].anggaran,
+          sumber_anggaran: state.list[0].sumber_anggaran,
+          type: modal.type,
+          intervention: year == 0 ? true : state.intervensi,
+          lokasi: lokasi,
+          list: state.list,
+          tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year
+        },
+        loadingContext: loadingContext,
+        errorModalContext: errorModalContext,
+      }
       const response = await doUpdateInterventionOnlyRO(req)
       if (response?.code == API_CODE.success) {
         await getData()
-        setModal({action:false,type:""})
+        setModal({ action: false, type: "" })
       }
       return
     }
@@ -216,8 +216,8 @@ const useCardIntervensiVM = () => {
       list: state.list,
       list_ro: state.ro,
       intervention: year == 0 ? true : state.intervensi,
-      lokasi:lokasi,
-      tahun: year == 0 ? rpjmn?.start+"-"+rpjmn?.end : year
+      lokasi: lokasi,
+      tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year
     }
     const response = await doCreateIntervention({
       body: request,
@@ -225,14 +225,14 @@ const useCardIntervensiVM = () => {
       errorModalContext: errorModalContext,
     })
     if (response?.code == API_CODE.success) {
-      await getData()
-      setModal({action:false,type:""})
+      getData()
+      setModal({ action: false, type: "" })
     }
   }
 
   const handleModalDelete = async () => {
     const response = await doDeleteInterventionOnlyRO({
-      body: {id : state.id},
+      body: { id: state.id },
       loadingContext: loadingContext,
       errorModalContext: errorModalContext,
     })

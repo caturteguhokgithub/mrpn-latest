@@ -681,7 +681,8 @@ const useCardIndicationVM = () => {
           indikator: nonRO.indikator,
           list: nonRO.list,
           list_ro: nonRO.ro,
-          intervention: year == 0 ? true : nonRO.intervensi,
+          // intervention: year == 0 ? true : nonRO.intervensi,
+          intervention: nonRO.intervensi,
           lokasi: lokasi,
           tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
         };
@@ -710,7 +711,8 @@ const useCardIndicationVM = () => {
             anggaran: nonRO.list[0].anggaran,
             sumber_anggaran: nonRO.list[0].sumber_anggaran,
             type: stateValue.type,
-            intervention: year == 0 ? true : nonRO.intervensi,
+            // intervention: year == 0 ? true : nonRO.intervensi,
+            intervention: nonRO.intervensi,
             lokasi: lokasi,
             list: nonRO.list,
             tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
@@ -729,7 +731,7 @@ const useCardIndicationVM = () => {
         thisState.non_rincian_output = nonRO;
 
         if (thisState.type == "NON_RO") {
-          thisState.intervention = true;
+          thisState.intervention = nonRO.intervensi;
         }
         let values = prevState.values;
         if (modalOutput.index > -1) {
