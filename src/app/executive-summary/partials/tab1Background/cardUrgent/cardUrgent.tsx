@@ -118,18 +118,18 @@ export default function CardUrgent({
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
       setting={penetapan ? false : true}
-      addButton={
-        <>
-          {penetapan && (
-            <AddButton
-              filled
-              startIcon={<Iconify name="mdi:pencil" />}
-              title="Ubah Urgensi"
-              onclick={() => setModal(true)}
-            />
-          )}
-        </>
-      }
+    // addButton={
+    //   <>
+    //     {penetapan && (
+    //       <AddButton
+    //         filled
+    //         startIcon={<Iconify name="mdi:pencil" />}
+    //         title="Ubah Urgensi"
+    //         onclick={() => setModal(true)}
+    //       />
+    //     )}
+    //   </>
+    // }
     >
       {penetapan ? (
         <Fragment>

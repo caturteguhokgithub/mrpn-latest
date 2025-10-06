@@ -6,11 +6,11 @@ import CardSegment from "./tab1Background/cardSegment/cardSegment";
 import CardUrgent from "./tab1Background/cardUrgent/cardUrgent";
 
 export default function Tab1Background({ project }: { project: string }) {
- return (
-  <Stack gap={1}>
-   <CardUrgent project={project} />
-   <CardSegment project={project} />
-   <CardSwot project={project} />
-  </Stack>
- );
+    return (
+        <Stack gap={1}>
+            <CardUrgent project={project} />
+            <CardSegment project={project} />
+            <CardSwot project={project} activeSetting={true} />
+        </Stack>
+    );
 }

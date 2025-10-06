@@ -98,18 +98,18 @@ export default function CardSegment({
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
       setting={penetapan ? false : true}
-      addButton={
-        <>
-          {penetapan && (
-            <AddButton
-              filled
-              startIcon={<Iconify name="mdi:pencil" />}
-              title="Ubah Segmen"
-              onclick={() => setModal(true)}
-            />
-          )}
-        </>
-      }
+    // addButton={
+    //   <>
+    //     {penetapan && (
+    //       <AddButton
+    //         filled
+    //         startIcon={<Iconify name="mdi:pencil" />}
+    //         title="Ubah Segmen"
+    //         onclick={() => setModal(true)}
+    //       />
+    //     )}
+    //   </>
+    // }
     >
       {penetapan ? (
         <Fragment>
