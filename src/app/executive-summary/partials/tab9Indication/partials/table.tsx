@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  alpha,
   Box,
   Chip,
   Paper,
@@ -11,15 +10,14 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
-import theme from "@/theme";
-import { grey } from "@mui/material/colors";
+import { grey, orange } from "@mui/material/colors";
 import { ExsumIndicationResDto } from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
 import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
-import { InfoTooltip } from "@/components/InfoTooltip";
 import ActionColumn from "@/components/actions/action";
 import { bgColorTh } from "@/utils/color";
 
@@ -73,7 +71,6 @@ export default function TableIndication({
       }}
     >
       <Table
-        // style={{ tableLayout: "fixed", width: 1600 }}
         size="small"
         stickyHeader
         sx={{
@@ -85,7 +82,7 @@ export default function TableIndication({
             "td, th": {
               borderRight: `1px solid ${grey[300]} !important`,
               "&:last-of-type": {
-                borderRight: `0 !important`,
+                // borderRight: `0 !important`,
               },
             },
           },
@@ -150,21 +147,21 @@ export default function TableIndication({
             )}
             {(hasPrivilege(permission, pathname, "update") ||
               hasPrivilege(permission, pathname, "delete")) && (
-                <TableCell
-                  sx={{
-                    // position: "sticky",
-                    // right: 0,
-                    // boxShadow: "2px -6px 10px grey",
-                    // borderLeft: "1px solid #e0e0e0",
-                    bgcolor: bgColorTh,
-                    width: 100,
-                  }}
-                >
-                  <Typography variant="body1" fontWeight={600} textAlign="center">
-                    Aksi
-                  </Typography>
-                </TableCell>
-              )}
+              <TableCell
+                sx={{
+                  // position: "sticky",
+                  // right: 0,
+                  // boxShadow: "2px -6px 10px grey",
+                  // borderLeft: "1px solid #e0e0e0",
+                  bgcolor: bgColorTh,
+                  width: 100,
+                }}
+              >
+                <Typography variant="body1" fontWeight={600} textAlign="center">
+                  Aksi
+                </Typography>
+              </TableCell>
+            )}
           </TableRow>
           <TableRow
             sx={{
@@ -173,7 +170,17 @@ export default function TableIndication({
               },
             }}
           >
-            {[...new Array(year == 0 ? 8 : 7)].map((_, i) => (
+            {[
+              ...new Array(
+                year == 0
+                  ? 8
+                  : year == 0 &&
+                    (hasPrivilege(permission, pathname, "update") ||
+                      hasPrivilege(permission, pathname, "delete"))
+                  ? 7
+                  : 7
+              ),
+            ].map((_, i) => (
               <TableCell sx={{ bgcolor: grey[100] }}>
                 <Typography
                   color={`${grey[500]} !important`}
@@ -238,18 +245,44 @@ export default function TableIndication({
 
                   <TableCell sx={{ verticalAlign: "top" }}>
                     {row.perlakuan.length > 0 && (
-                      <Typography
-                        variant="body1"
-                        color={
-                          row.perlakuan[0].ro?.intervention == true ? "#f97316" : ""
-                        }
-                      >
-                        {row.perlakuan[0].ro?.type == "RO"
-                          ? row.perlakuan[0].ro?.value
-                          : row.perlakuan[0].ro?.value + " (NON RO)"}
-                      </Typography>
+                      <>
+                        {row.perlakuan[0].ro?.intervention == true ? (
+                          <Tooltip title="Intervensi Kunci" followCursor>
+                            <Typography
+                              variant="body1"
+                              color={`${orange[800]} !important`}
+                              sx={{
+                                cursor: "pointer",
+                              }}
+                            >
+                              {row.perlakuan[0].ro?.type == "RO"
+                                ? row.perlakuan[0].ro?.value
+                                : row.perlakuan[0].ro?.value + " (NON RO)"}
+                            </Typography>
+                          </Tooltip>
+                        ) : (
+                          <Typography variant="body1">
+                            {row.perlakuan[0].ro?.type == "RO"
+                              ? row.perlakuan[0].ro?.value
+                              : row.perlakuan[0].ro?.value + " (NON RO)"}
+                          </Typography>
+                        )}
+                        {/* <Typography
+                          variant="body1"
+                          color={
+                            row.perlakuan[0].ro?.intervention == true
+                              ? "#f97316"
+                              : ""
+                          }
+                        >
+                          {row.perlakuan[0].ro?.type == "RO"
+                            ? row.perlakuan[0].ro?.value
+                            : row.perlakuan[0].ro?.value + " (NON RO)"}
+                        </Typography> */}
+                      </>
                     )}
                   </TableCell>
+
                   <TableCell sx={{ verticalAlign: "top" }}>
                     {row.perlakuan.length > 0 && (
                       <Box>
@@ -316,26 +349,27 @@ export default function TableIndication({
 
                   {(hasPrivilege(permission, pathname, "update") ||
                     hasPrivilege(permission, pathname, "delete")) && (
-                      <TableCell
-                        rowSpan={
-                          (row.perlakuan.length == 0 ? 1 : row.perlakuan.length) +
-                          row.regulasi.length
+                    <TableCell
+                      sx={{ verticalAlign: "top" }}
+                      rowSpan={
+                        (row.perlakuan.length == 0 ? 1 : row.perlakuan.length) +
+                        row.regulasi.length
+                      }
+                    >
+                      <ActionColumn
+                        editClick={
+                          hasPrivilege(permission, pathname, "update")
+                            ? () => handleEditData(row.id)
+                            : undefined
                         }
-                      >
-                        <ActionColumn
-                          editClick={
-                            hasPrivilege(permission, pathname, "update")
-                              ? () => handleEditData(row.id)
-                              : undefined
-                          }
-                          deleteClick={
-                            hasPrivilege(permission, pathname, "delete")
-                              ? () => handleDeleteData(row.id)
-                              : undefined
-                          }
-                        />
-                      </TableCell>
-                    )}
+                        deleteClick={
+                          hasPrivilege(permission, pathname, "delete")
+                            ? () => handleDeleteData(row.id)
+                            : undefined
+                        }
+                      />
+                    </TableCell>
+                  )}
                 </TableRow>
 
                 {row.perlakuan.slice(1).map((perlakuan, i) => (
@@ -343,7 +377,11 @@ export default function TableIndication({
                     <TableCell sx={{ verticalAlign: "top" }}>
                       <Typography
                         variant="body1"
-                        color={perlakuan.ro?.intervention == true ? "#f97316" : ""}
+                        color={
+                          perlakuan.ro?.intervention == true
+                            ? `${orange[800]} !important`
+                            : ""
+                        }
                       >
                         {perlakuan.ro?.type == "RO"
                           ? perlakuan.ro?.value
@@ -416,15 +454,19 @@ export default function TableIndication({
                       <ul>
                         {Array.isArray(regulation.perpres)
                           ? regulation.perpres.map((y, index2) => (
-                            <li>
-                              <Typography
-                                key={`perpres-${index2}`}
-                                color={y.flag != null ? "#EA6228" : undefined}
-                              >
-                                {`${y.title}`}
-                              </Typography>
-                            </li>
-                          ))
+                              <li>
+                                <Typography
+                                  key={`perpres-${index2}`}
+                                  color={
+                                    y.flag != null
+                                      ? `${orange[800]} !important`
+                                      : undefined
+                                  }
+                                >
+                                  {`${y.title}`}
+                                </Typography>
+                              </li>
+                            ))
                           : ""}
                       </ul>
                     </TableCell>

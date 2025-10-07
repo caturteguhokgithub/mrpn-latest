@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
 import {
   Button,
   DialogActions,
   FormControl,
   Grid,
-  Icon,
   Stack,
   useMediaQuery,
 } from "@mui/material";
@@ -22,12 +20,11 @@ import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 import DialogDelete from "@/components/dialogDelete";
 import FormPerlakuanRisiko from "@/app/executive-summary/partials/tab9Indication/partials/formPerlakuanRisiko";
 import FormRegulation from "@/app/executive-summary/partials/tab9Indication/partials/formRegulation";
-import { ExsumIndicationStateValue } from "./cardIndicationModel";
 import { TextareaStyled } from "@/components/textarea";
 import theme from "@/theme";
 import { API_CONSTANT } from "@/lib/core/api/apiModel";
-import useCardLocationVM from "../tab2Profile/cardLocation/cardLocationVM";
 import Iconify from "@/components/icons/iconify";
+import FormNomenklatur from "./partials/form-nomenklatur";
 
 export default function CardIndication({ project }: { project: string }) {
   const { year, rpjmn } = useRKPContext((store) => store);
@@ -68,6 +65,8 @@ export default function CardIndication({ project }: { project: string }) {
     exsum,
     conditionEditing,
     conditionEditingPointerEvent,
+    modalNomenklatur,
+    setModalNomenklatur,
   } = useCardIndicationVM();
 
   const { permission } = useAuthContext((state) => state);
@@ -78,8 +77,9 @@ export default function CardIndication({ project }: { project: string }) {
     <>
       <Stack gap={1}>
         <CardItem
-          title={`Indikasi Profil Risiko ${year == 0 ? "Objek MRPN LS" : "RKP Tahun " + year
-            }`}
+          title={`Indikasi Profil Risiko ${
+            year == 0 ? "Objek MRPN LS" : "RKP Tahun " + year
+          }`}
           infoTooltip={
             <Stack spacing={2}>
               <div>
@@ -196,8 +196,9 @@ export default function CardIndication({ project }: { project: string }) {
         width={"80%"}
         dialogOpen={modalOpen.action && modalOpen.type == "update"}
         // dialogClose={() => handleModalOpen(0, false, "")}
-        title={`Form Indikasi Risiko Objek MRPN ${year == 0 ? "5 Tahunan" : year
-          }`}
+        title={`Form Indikasi Risiko Objek MRPN ${
+          year == 0 ? "5 Tahunan" : year
+        }`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button
@@ -228,11 +229,13 @@ export default function CardIndication({ project }: { project: string }) {
 
       <DialogComponent
         tableMode
-        width={"80%"}
+        width={year == 0 ? "80%" : 860}
+        // width={"80%"}
         dialogOpen={modalOutput.type != "delete" && modalOutput.action}
         dialogClose={() => handleModalOutputOpen(-1, false, "")}
-        title={`Tambah ${modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
-          }`}
+        title={`Tambah ${
+          modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
+        }`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button
@@ -258,6 +261,7 @@ export default function CardIndication({ project }: { project: string }) {
           listLocation={listLocation}
           listProP={listProP}
           listStakeholder={optionStakeholder}
+          handleAddNomenklatur={() => setModalNomenklatur(true)}
         />
       </DialogComponent>
 
@@ -349,6 +353,27 @@ export default function CardIndication({ project }: { project: string }) {
             </FormControl>
           </Grid>
         </Grid>
+      </DialogComponent>
+
+      <DialogComponent
+        width={520}
+        dialogOpen={modalNomenklatur}
+        dialogClose={() => setModalNomenklatur(false)}
+        title="Tambah Nomenklatur Non-RO/Project"
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button onClick={() => setModalNomenklatur(false)}>Batal</Button>
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => setModalNomenklatur(false)}
+            >
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <FormNomenklatur />
       </DialogComponent>
       <DialogDelete
         title="Hapus Data"

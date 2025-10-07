@@ -40,7 +40,7 @@ import { ProPDto } from "@/app/misc/rkp/rkpServiceModel";
 import theme from "@/theme";
 import { FormatCurrency } from "@/lib/utils/currency";
 
-export default function FromProject({
+export default function FormProject({
   selectLocation,
   selectProP,
   selectStakeholder,
@@ -55,7 +55,7 @@ export default function FromProject({
 }) {
   return (
     <>
-      <Grid item xs={12} md={5}>
+      {/* <Grid item xs={12} md={5}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Format Kode" />
           <TextField
@@ -104,7 +104,7 @@ export default function FromProject({
             getOptionLabel={selectStakeholder.getOptionLabel}
           />
         </FormControl>
-      </Grid>
+      </Grid> */}
       {/*<Grid item xs={12} md={7}>*/}
       {/*  <FormControl fullWidth>*/}
       {/*    <FieldLabelInfo title="Nomenklatur RO/Project"/>*/}
@@ -129,7 +129,7 @@ export default function FromProject({
       {/*    />*/}
       {/*  </FormControl>*/}
       {/*</Grid>*/}
-      <Grid item xs={12} md={7}>
+      {/* <Grid item xs={12} md={7}>
         <FormControl fullWidth>
           <FieldLabelInfo title="Lokasi" />
           <AutocompleteSelectMultiple
@@ -141,7 +141,7 @@ export default function FromProject({
             labelSelectAll={selectLocation.labelSelectAll}
           />
         </FormControl>
-      </Grid>
+      </Grid> */}
 
       {/*<Grid item xs={12}>*/}
       {/*  <FormControl fullWidth>*/}
@@ -171,22 +171,22 @@ export default function FromProject({
             <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
               <TableRow>
                 <TableCell>
-                  <Typography variant="body1" fontWeight={600}>
+                  <Typography variant="body2" fontWeight={600}>
                     Tahun
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="body1" fontWeight={600}>
+                  <Typography variant="body2" fontWeight={600}>
                     Target
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="body1" fontWeight={600}>
+                  <Typography variant="body2" fontWeight={600}>
                     Pembiayaan
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="body1" fontWeight={600}>
+                  <Typography variant="body2" fontWeight={600}>
                     Sumber Pembiayaan
                   </Typography>
                 </TableCell>
@@ -290,9 +290,13 @@ function GetTableRow({
           InputLabelProps={{
             shrink: true,
           }}
-          sx={{ input: { textAlign: "right" }, px:0 }}
+          sx={{ input: { textAlign: "right" }, px: 0 }}
           InputProps={{
-            endAdornment: <InputAdornment position="end" sx={{px:0, marginLeft:0}}>.000,00</InputAdornment>,
+            endAdornment: (
+              <InputAdornment position="end" sx={{ px: 0, marginLeft: 0 }}>
+                .000,00
+              </InputAdornment>
+            ),
           }}
         />
       </TableCell>

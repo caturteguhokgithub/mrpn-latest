@@ -92,6 +92,7 @@ const useCardIndicationVM = () => {
   const [listPerpres, setListPerpres] = useState<MiscMasterListPerpresRes[]>(
     []
   );
+  const [modalNomenklatur, setModalNomenklatur] = useState(false);
 
   // STATE
   const initState: ExsumIndicationState = JSON.parse(
@@ -454,9 +455,9 @@ const useCardIndicationVM = () => {
               : undefined,
           perpres: Array.isArray(rg.perpres)
             ? rg.perpres.reduce<{ id: number }[]>(
-              (a, b) => [...a, { id: b.id }],
-              []
-            )
+                (a, b) => [...a, { id: b.id }],
+                []
+              )
             : [],
           stakeholder: rg.entitas,
           stakeholder_id: rg.entitas.reduce<number[]>((a, b) => {
@@ -883,6 +884,8 @@ const useCardIndicationVM = () => {
     exsum,
     conditionEditing,
     conditionEditingPointerEvent,
+    modalNomenklatur,
+    setModalNomenklatur,
   };
 };
 

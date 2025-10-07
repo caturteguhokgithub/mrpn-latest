@@ -20,12 +20,15 @@ import { AutocompleteSelectSingle } from "@/components/autocomplete";
 import { ExsumIndicationState } from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
 import { TextareaStyled } from "@/components/textarea";
 import AddButton from "@/components/buttonAdd";
-import { green, red } from "@mui/material/colors";
+import { green, grey, red } from "@mui/material/colors";
 import { ExsumTWOSDto } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import theme from "@/theme";
 import { IconFA } from "@/components/icons/icon-fa";
 import ActionColumn from "@/components/actions/action";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
+import Iconify from "@/components/icons/iconify";
 
 function GenerateTableProject(
   state: ExsumIndicationState,
@@ -33,76 +36,117 @@ function GenerateTableProject(
   type: string
 ) {
   return (
-    <TableContainer component={Paper} elevation={0} variant="outlined">
-      <Table sx={{ minWidth: 650 }} size="small">
-        <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
-          <TableRow>
-            <TableCell width={"10%"}>Aksi</TableCell>
-            <TableCell width={"10%"}>Tahun</TableCell>
-            <TableCell width={"15%"}>Intervensi Kunci</TableCell>
-            <TableCell>Output</TableCell>
-            <TableCell width={"25%"}>PJ Perlakuan</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {state.values.length == 0 && (
-            <TableRow>
-              <TableCell colSpan={5} align={"center"}>
-                Data belum tersedia
-              </TableCell>
-            </TableRow>
-          )}
-
-          {state.values.map(
-            (val, iVal) =>
-              val.type == type && (
-                <TableRow>
-                  <TableCell sx={{ verticalAlign: "top" }}>
-                    <ActionColumn
-                      editClick={() => handleModalOutputOpen(iVal, true, "RO")}
-                      deleteClick={() =>
-                        handleModalOutputOpen(iVal, true, "delete")
-                      }
-                    />
-                  </TableCell>
-                  <TableCell
-                    align={"left"}
-                    sx={{ verticalAlign: "top", paddingY: "13px" }}
-                  >
-                    {val.tahun.join(", ")}
-                  </TableCell>
-                  <TableCell
-                    align={"left"}
-                    sx={{ verticalAlign: "top", paddingY: "13px" }}
-                  >
-                    {val.intervention ? (
-                      <IconFA name="check" size={14} color={green[800]} />
-                    ) : (
-                      <IconFA name="times" size={14} color={red[800]} />
-                    )}
-                  </TableCell>
-                  <TableCell
-                    align={"left"}
-                    sx={{ verticalAlign: "top", paddingY: "13px" }}
-                  >
-                    {type == "RO"
-                      ? val.rincian_output?.value ?? "-"
-                      : val.non_rincian_output.nomenklatur}
-                  </TableCell>
-                  <TableCell
-                    align={"left"}
-                    sx={{ verticalAlign: "top", paddingY: "13px" }}
-                  >
-                    {type == "RO"
-                      ? val.rincian_output?.kementrian?.value ?? "-"
-                      : val.non_rincian_output.kementrian?.value ?? "-"}
-                  </TableCell>
-                </TableRow>
-              )
-          )}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      {state.values.filter((val) => val.type === type).length === 0 ? (
+        <Paper elevation={0} variant="outlined">
+          <EmptyState
+            dense
+            icon={<IconEmptyData width={100} />}
+            title={
+              type === "RO"
+                ? "Data rincian output belum tersedia"
+                : "Data non-rincian output belum tersedia"
+            }
+          />
+        </Paper>
+      ) : (
+        <TableContainer component={Paper} elevation={0} variant="outlined">
+          <Table
+            sx={{
+              minWidth: 650,
+              "tbody, thead": {
+                "td, th": {
+                  borderRight: `1px solid ${grey[300]} !important`,
+                  "&:last-of-type": {
+                    borderRight: `0 !important`,
+                  },
+                },
+              },
+            }}
+            size="small"
+          >
+            <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
+              <TableRow>
+                <TableCell align={"center"} width={"12%"}>
+                  Tahun
+                </TableCell>
+                <TableCell align={"center"} width={"10%"}>
+                  Intervensi Kunci
+                </TableCell>
+                <TableCell align={"center"}>Output</TableCell>
+                <TableCell align={"center"} width={"25%"}>
+                  PJ Perlakuan
+                </TableCell>
+                <TableCell align={"center"} width={100}>
+                  Aksi
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {state.values.map(
+                (val, iVal) =>
+                  val.type == type && (
+                    <TableRow>
+                      <TableCell
+                        align={"left"}
+                        sx={{ verticalAlign: "top", paddingY: "13px" }}
+                      >
+                        {val.tahun.join(", ")}
+                      </TableCell>
+                      <TableCell
+                        align={"center"}
+                        sx={{ verticalAlign: "top", paddingY: "13px" }}
+                      >
+                        {val.intervention ? (
+                          <Iconify
+                            name="mdi:check-circle"
+                            size={24}
+                            color={green[800]}
+                          />
+                        ) : (
+                          <Iconify
+                            name="mdi:close-circle"
+                            size={24}
+                            color={red[800]}
+                          />
+                        )}
+                      </TableCell>
+                      <TableCell
+                        align={"left"}
+                        sx={{ verticalAlign: "top", paddingY: "13px" }}
+                      >
+                        {type == "RO"
+                          ? val.rincian_output?.value ?? "-"
+                          : val.non_rincian_output.nomenklatur}
+                      </TableCell>
+                      <TableCell
+                        align={"left"}
+                        sx={{ verticalAlign: "top", paddingY: "13px" }}
+                      >
+                        {type == "RO"
+                          ? val.rincian_output?.kementrian?.value ?? "-"
+                          : val.non_rincian_output.kementrian?.value ?? "-"}
+                      </TableCell>
+                      <TableCell sx={{ verticalAlign: "top" }}>
+                        <ActionColumn
+                          center
+                          size="sm"
+                          editClick={() =>
+                            handleModalOutputOpen(iVal, true, "RO")
+                          }
+                          deleteClick={() =>
+                            handleModalOutputOpen(iVal, true, "delete")
+                          }
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </>
   );
 }
 
@@ -138,8 +182,8 @@ export default function FormIndication({
     <Box
       // maxHeight="90vh"
       // overflow="auto"
-      pb={0.5}
-      px={1.5}
+      // pb={0.5}
+      // px={1.5}
       sx={{
         "&::-webkit-scrollbar": {
           width: "3px",
@@ -320,89 +364,115 @@ export default function FormIndication({
         </Grid>
 
         <Grid item xs={12}>
-          <TableContainer component={Paper} elevation={0} variant="outlined">
-            <Table size="small">
-              <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
-                <TableRow>
-                  <TableCell width={"5%"}>Aksi</TableCell>
-                  <TableCell width={"5%"}>Tahun</TableCell>
-                  <TableCell width={"20%"}>Entitas</TableCell>
-                  <TableCell width={"30%"}>Peraturan Terkait</TableCell>
-                  <TableCell>Amanat Peraturan yang Terkait</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {state.regulation.length == 0 && (
+          {state.regulation.length == 0 ? (
+            <Paper elevation={0} variant="outlined">
+              <EmptyState
+                dense
+                icon={<IconEmptyData width={100} />}
+                title="Data regulasi/kelembagaan belum tersedia"
+              />
+            </Paper>
+          ) : (
+            <TableContainer component={Paper} elevation={0} variant="outlined">
+              <Table
+                size="small"
+                sx={{
+                  "tbody, thead": {
+                    "td, th": {
+                      borderRight: `1px solid ${grey[300]} !important`,
+                      "&:last-of-type": {
+                        borderRight: `0 !important`,
+                      },
+                    },
+                  },
+                }}
+              >
+                <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
                   <TableRow>
-                    <TableCell colSpan={5} align={"center"}>
-                      Data belum tersedia
+                    <TableCell align={"center"} width={"12%"}>
+                      Tahun
+                    </TableCell>
+                    <TableCell align={"center"} width={"20%"}>
+                      Entitas
+                    </TableCell>
+                    <TableCell align={"center"} width={"30%"}>
+                      Peraturan Terkait
+                    </TableCell>
+                    <TableCell align={"center"}>
+                      Amanat Peraturan yang Terkait
+                    </TableCell>
+                    <TableCell align={"center"} width={"5%"}>
+                      Aksi
                     </TableCell>
                   </TableRow>
-                )}
-
-                {state.regulation.map((row, iRow) => (
-                  <>
-                    <TableRow
-                      key={row.id}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell align={"center"} sx={{ verticalAlign: "top" }}>
-                        <ActionColumn
-                          deleteClick={() =>
-                            handleModalRegulationOpen(iRow, true, "delete")
-                          }
-                        />
-                      </TableCell>
-                      <TableCell sx={{ verticalAlign: "top" }}>
-                        <Stack
-                          display={"flex"}
-                          justifyContent={"left"}
-                          direction={"column"}
+                </TableHead>
+                <TableBody>
+                  {state.regulation.map((row, iRow) => (
+                    <>
+                      <TableRow
+                        key={row.id}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell sx={{ verticalAlign: "top" }}>
+                          {/* {row.tahun.map((t) => (
+                            <Typography>{t.join(", ")}</Typography>
+                          ))} */}
+                          <Typography>{row.tahun.join(", ")}</Typography>
+                        </TableCell>
+                        <TableCell sx={{ verticalAlign: "top" }}>
+                          <Stack
+                            display="inline-flex"
+                            alignItems="center"
+                            direction="row"
+                            gap={0.5}
+                            flexWrap="wrap"
+                          >
+                            {row.stakeholder.map((e) => (
+                              <Box component="span">
+                                <Chip
+                                  key={e.id}
+                                  label={e.value}
+                                  size="small"
+                                  sx={{
+                                    height: "auto",
+                                    ".MuiChip-label": {
+                                      whiteSpace: "wrap",
+                                      lineHeight: 1.2,
+                                      py: 0.6,
+                                    },
+                                  }}
+                                />
+                              </Box>
+                            ))}
+                          </Stack>
+                        </TableCell>
+                        <TableCell sx={{ verticalAlign: "top" }}>
+                          {row.perpres_state?.title ?? ""}
+                        </TableCell>
+                        <TableCell sx={{ verticalAlign: "top" }}>
+                          {row.amanat}
+                        </TableCell>
+                        <TableCell
+                          align={"center"}
+                          sx={{ verticalAlign: "top" }}
                         >
-                          {row.tahun.map((t) => (
-                            <Typography>{t}</Typography>
-                          ))}
-                        </Stack>
-                      </TableCell>
-                      <TableCell sx={{ verticalAlign: "top" }}>
-                        <Stack
-                          display="inline-flex"
-                          alignItems="center"
-                          direction="row"
-                          gap={0.5}
-                          flexWrap="wrap"
-                        >
-                          {row.stakeholder.map((e) => (
-                            <Box component="span">
-                              <Chip
-                                key={e.id}
-                                label={e.value}
-                                size="small"
-                                sx={{
-                                  height: "auto",
-                                  ".MuiChip-label": {
-                                    whiteSpace: "wrap",
-                                    lineHeight: 1.2,
-                                    py: 0.6,
-                                  },
-                                }}
-                              />
-                            </Box>
-                          ))}
-                        </Stack>
-                      </TableCell>
-                      <TableCell sx={{ verticalAlign: "top" }}>
-                        {row.perpres_state?.title ?? ""}
-                      </TableCell>
-                      <TableCell sx={{ verticalAlign: "top" }}>
-                        {row.amanat}
-                      </TableCell>
-                    </TableRow>
-                  </>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                          <ActionColumn
+                            center
+                            size="sm"
+                            deleteClick={() =>
+                              handleModalRegulationOpen(iRow, true, "delete")
+                            }
+                          />
+                        </TableCell>
+                      </TableRow>
+                    </>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </Grid>
       </Grid>
     </Box>

@@ -260,8 +260,8 @@ export default function Aside({
         url={"/"}
         onclick={() => doLogout()}
         sx={{
-          backgroundColor: alpha(red[500], 0.4),
-          "&:hover": { backgroundColor: `${alpha(red[800], 0.9)} !important` },
+          backgroundColor: red[900],
+          "&:hover": { backgroundColor: `${alpha(red[600], 0.9)} !important` },
         }}
       />
     </Stack>

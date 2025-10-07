@@ -46,12 +46,11 @@ export const ActionIcon = ({
           onClick={onclick}
           disabled={disabled}
         >
-          <Iconify name={`mdi:${icon}`} size={size == "sm" ? 16 : 18} />
-          {/* <IconFA
-            size={size == "sm" ? 12 : 14}
-            name={icon}
-            sx={{ width: "auto" }}
-          /> */}
+          <Iconify
+            name={`mdi:${icon}`}
+            size={size == "sm" ? 16 : 18}
+            color="white"
+          />
         </IconButton>
       ) : (
         <IconButton
@@ -60,12 +59,11 @@ export const ActionIcon = ({
           sx={iconStyle}
           disabled={disabled}
         >
-          <Iconify name={`mdi:${icon}`} size={size == "sm" ? 16 : 18} />
-          {/* <IconFA
-            size={size == "sm" ? 12 : 14}
-            name={icon}
-            sx={{ width: "auto" }}
-          /> */}
+          <Iconify
+            name={`mdi:${icon}`}
+            size={size == "sm" ? 16 : 18}
+            color="white"
+          />
         </IconButton>
       )}
     </Fragment>

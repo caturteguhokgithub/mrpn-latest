@@ -1,23 +1,23 @@
 import {
   Box,
+  Button,
   Checkbox,
+  Chip,
   FormControl,
   FormControlLabel,
   Grid,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
-  ToggleButton,
-  ToggleButtonGroup,
   Typography,
 } from "@mui/material";
 import theme from "@/theme";
-import React, { SetStateAction, useEffect } from "react";
+import { SetStateAction, useEffect } from "react";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { ProPDto, RODataTable } from "@/app/misc/rkp/rkpServiceModel";
@@ -30,14 +30,13 @@ import {
   AutocompleteSelectSingle,
   AutoCompleteSingleProp,
 } from "@/components/autocomplete";
-import { TextareaStyled } from "@/components/textarea";
-import { blue, red } from "@mui/material/colors";
-import FromProject from "@/app/executive-summary/partials/tab9Indication/partials/formProject";
+import { blue, orange, red } from "@mui/material/colors";
+import FormProject from "@/app/executive-summary/partials/tab9Indication/partials/formProject";
 import {
   MiscMasterListProvinsiRes,
   MiscMasterListStakeholderRes,
-  MiscMasterListSumberPendanaanRes,
 } from "@/app/misc/master/masterServiceModel";
+import Iconify from "@/components/icons/iconify";
 
 export default function FormPerlakuanRisiko({
   optionRO,
@@ -46,6 +45,7 @@ export default function FormPerlakuanRisiko({
   listStakeholder,
   state,
   setState,
+  handleAddNomenklatur,
 }: {
   optionRO: RODataTable[];
   listLocation: MiscMasterListProvinsiRes[];
@@ -53,6 +53,7 @@ export default function FormPerlakuanRisiko({
   listStakeholder: MiscMasterListStakeholderRes[];
   state: ExsumIndicationStateValue;
   setState: (value: SetStateAction<ExsumIndicationStateValue>) => void;
+  handleAddNomenklatur: () => void;
 }) {
   const { year, rpjmn } = useRKPContext((store) => store);
 
@@ -107,21 +108,21 @@ export default function FormPerlakuanRisiko({
   };
 
   const selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes> =
-  {
-    value: state.non_rincian_output.kementrian,
-    options: listStakeholder,
-    getOptionLabel: (opt) => opt.value,
-    handleChange: (value: MiscMasterListStakeholderRes) =>
-      setState((prev) => {
-        const nonRO = state.non_rincian_output;
-        nonRO.kementrian = value;
-        return {
-          ...prev,
-          non_rincian_output: nonRO,
-        };
-      }),
-    placeHolder: "Pilih Penanggungjawab",
-  };
+    {
+      value: state.non_rincian_output.kementrian,
+      options: listStakeholder,
+      getOptionLabel: (opt) => opt.value,
+      handleChange: (value: MiscMasterListStakeholderRes) =>
+        setState((prev) => {
+          const nonRO = state.non_rincian_output;
+          nonRO.kementrian = value;
+          return {
+            ...prev,
+            non_rincian_output: nonRO,
+          };
+        }),
+      placeHolder: "Pilih Penanggungjawab",
+    };
 
   const handleListProject = (years: number[]) => {
     setState((prevState) => {
@@ -166,20 +167,26 @@ export default function FormPerlakuanRisiko({
     });
   };
 
+  const optionsNomenklatur = [
+    "nomenklatur-1",
+    "nomenklatur-2",
+    "nomenklatur-3",
+  ];
+
   return (
     <Box
       maxHeight="90vh"
       overflow="auto"
-      pb={0.5}
-      px={3}
+      // pb={0.5}
+      // px={3}
       sx={{
         "&::-webkit-scrollbar": {
           width: "3px",
         },
       }}
     >
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+      <Grid container spacing={2} p={3} pt={0}>
+        <Grid item xs={12} md={year == 0 ? 6 : 4}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Tahun" titleField />
             {year == 0 ? (
@@ -193,15 +200,36 @@ export default function FormPerlakuanRisiko({
                 labelSelectAll={"Pilih semua tahun"}
               />
             ) : (
-              <TextareaStyled value={state.tahun.join(",")} disabled />
+              <Typography>{state.tahun.join(",")}</Typography>
             )}
+            {/* <TextareaStyled value={state.tahun.join(",")} disabled /> */}
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={year == 0 ? 3 : 4}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Jenis Output" />
-            <ToggleButtonGroup
+            <Stack direction="column" justifyContent="center" height={40}>
+              <Box>
+                <Chip
+                  label={
+                    state.type == "RO"
+                      ? "RO"
+                      : state.type == "NON_RO"
+                      ? "NON-RO"
+                      : "Pilih jenis output"
+                  }
+                  sx={{
+                    px: 1,
+                    fontWeight: 600,
+                    bgcolor: state.type == "RO" ? blue[800] : orange[800],
+                    textTransform: "uppercase",
+                    color: "white",
+                  }}
+                />
+              </Box>
+            </Stack>
+            {/* <ToggleButtonGroup
               disabled={true}
               color="primary"
               value={state.type}
@@ -248,61 +276,12 @@ export default function FormPerlakuanRisiko({
               >
                 NON RO
               </ToggleButton>
-            </ToggleButtonGroup>
+            </ToggleButtonGroup> */}
           </FormControl>
         </Grid>
 
-        {state.type == "RO" && (
-          <Grid item xs={12} md={8}>
-            <FormControl fullWidth>
-              <FieldLabelInfo title="Rincian Output" titleField />
-              <AutocompleteSelectSingle
-                value={state.rincian_output}
-                options={optionRO}
-                getOptionLabel={(opt) => opt.value}
-                handleChange={(e: RODataTable) => {
-                  setState((prevState) => {
-                    return {
-                      ...prevState,
-                      rincian_output: e,
-                    };
-                  });
-                }}
-                placeHolder={"Pilih rincian output"}
-              />
-            </FormControl>
-          </Grid>
-        )}
-
-        {state.type == "NON_RO" && (
-          <Grid item xs={12} md={8}>
-            <FormControl fullWidth>
-              <FieldLabelInfo title="Output" titleField />
-              <TextField
-                value={state.non_rincian_output.nomenklatur}
-                onChange={(e) =>
-                  setState((prev) => {
-                    const nonR0 = prev.non_rincian_output;
-                    nonR0.nomenklatur = e.target.value;
-                    return {
-                      ...prev,
-                      non_rincian_output: nonR0,
-                    };
-                  })
-                }
-                variant="outlined"
-                size="small"
-                placeholder="Nomenklatur RO/Project"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </FormControl>
-          </Grid>
-        )}
-
         {state.type != "" && (
-          <Grid item xs={6} md={4}>
+          <Grid item xs={6} md={year == 0 ? 3 : 4}>
             <FormControl fullWidth>
               <FieldLabelInfo title="Intervensi Kunci" />
               <FormControlLabel
@@ -335,81 +314,85 @@ export default function FormPerlakuanRisiko({
           </Grid>
         )}
 
-        {state.type == "RO" && state.rincian_output != undefined && (
-          <Grid item xs={12}>
-            <TableContainer
-              component={Paper}
-              elevation={0}
-              variant="outlined"
-              sx={{
-                "td, th": {
-                  "&.MuiTableCell-root": {
-                    border: "1px solid rgb(224, 224, 224)",
-                  },
-                  "&:first-of-type": {
-                    borderLeft: 0,
-                  },
-                },
-              }}
-            >
-              <Table sx={{ minWidth: 650 }} size="small">
-                <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
-                  <TableRow>
-                    <TableCell rowSpan={2}>Format Kode</TableCell>
-                    <TableCell rowSpan={2}>Penanggungjawab</TableCell>
-                    {multiyear.map((y, iY) => (
-                      <TableCell colSpan={4} align={"center"}>
-                        {y}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                  <TableRow>
-                    {multiyear.map((y, iY) => (
-                      <>
-                        <TableCell>Target</TableCell>
-                        <TableCell>Satuan</TableCell>
-                        <TableCell>Pembiayaan</TableCell>
-                        <TableCell>Sumber Pembiayaan</TableCell>
-                      </>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>{state.rincian_output.code}</TableCell>
-                    <TableCell>
-                      {state.rincian_output?.kementrian?.value ?? "-"}
-                    </TableCell>
-                    {multiyear.map((y, iY) => (
-                      <>
-                        <TableCell>
-                          {getRowData(`target_${iY}`, state.rincian_output)}
-                        </TableCell>
-                        <TableCell>
-                          {getRowData(`satuan_${iY}`, state.rincian_output)}
-                        </TableCell>
-                        <TableCell align={"right"}>
-                          {FormatIDR(
-                            getRowData(`anggaran_${iY}`, state.rincian_output)
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          {getRowData(
-                            `sumber_anggaran_${iY}`,
-                            state.rincian_output
-                          )}
-                        </TableCell>
-                      </>
-                    ))}
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
+        {state.type == "RO" && (
+          <Grid item xs={12} md={year == 0 ? 12 : 12}>
+            <FormControl fullWidth>
+              <FieldLabelInfo title="Rincian Output" titleField />
+              <AutocompleteSelectSingle
+                value={state.rincian_output}
+                options={optionRO}
+                getOptionLabel={(opt) => opt.value}
+                handleChange={(e: RODataTable) => {
+                  setState((prevState) => {
+                    return {
+                      ...prevState,
+                      rincian_output: e,
+                    };
+                  });
+                }}
+                placeHolder={"Pilih rincian output"}
+              />
+            </FormControl>
           </Grid>
         )}
 
         {state.type == "NON_RO" && (
-          <FromProject
+          <Grid item xs={12} md={year == 0 ? 12 : 12}>
+            <FormControl fullWidth>
+              <FieldLabelInfo title="Output" titleField />
+              {/* <TextField
+                value={state.non_rincian_output.nomenklatur}
+                onChange={(e) =>
+                  setState((prev) => {
+                    const nonR0 = prev.non_rincian_output;
+                    nonR0.nomenklatur = e.target.value;
+                    return {
+                      ...prev,
+                      non_rincian_output: nonR0,
+                    };
+                  })
+                }
+                variant="outlined"
+                size="small"
+                placeholder="Nomenklatur RO/Project"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              /> */}
+              <AutocompleteSelectSingle
+                key={state.non_rincian_output.nomenklatur}
+                value={state.non_rincian_output.nomenklatur}
+                options={optionsNomenklatur}
+                getOptionLabel={(opt) => opt}
+                handleChange={(e: string) =>
+                  setState((prevState) => {
+                    const nonRO = prevState.non_rincian_output;
+                    nonRO.nomenklatur = e;
+                    return {
+                      ...prevState,
+                      non_rincian_output: nonRO,
+                    };
+                  })
+                }
+                placeHolder={"Pilih nomenklatur RO/project"}
+                actionButton={
+                  <Box onMouseDown={(e) => e.preventDefault()}>
+                    <Button
+                      startIcon={<Iconify name="mdi:plus-circle" size={16} />}
+                      fullWidth
+                      onClick={handleAddNomenklatur}
+                    >
+                      Tambah Nomenklatur RO/Project
+                    </Button>
+                  </Box>
+                }
+              />
+            </FormControl>
+          </Grid>
+        )}
+
+        {state.type == "NON_RO" && (
+          <FormProject
             state={state}
             setState={setState}
             selectStakeholder={selectStakeholder}
@@ -418,6 +401,79 @@ export default function FormPerlakuanRisiko({
           />
         )}
       </Grid>
+
+      {state.type == "RO" && state.rincian_output != undefined && (
+        <TableContainer
+          component={Paper}
+          elevation={0}
+          sx={{
+            "td, th": {
+              "&.MuiTableCell-root": {
+                border: "1px solid rgb(224, 224, 224)",
+              },
+              "&:first-of-type": {
+                borderLeft: 0,
+              },
+            },
+            "&::-webkit-scrollbar": {
+              height: "6px",
+            },
+          }}
+        >
+          <Table sx={{ minWidth: 650 }} size="small">
+            <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
+              <TableRow>
+                <TableCell rowSpan={2}>Format Kode</TableCell>
+                <TableCell rowSpan={2}>Penanggungjawab</TableCell>
+                {multiyear.map((y, iY) => (
+                  <TableCell colSpan={4} align={"center"}>
+                    {y}
+                  </TableCell>
+                ))}
+              </TableRow>
+              <TableRow>
+                {multiyear.map((y, iY) => (
+                  <>
+                    <TableCell>Target</TableCell>
+                    <TableCell>Satuan</TableCell>
+                    <TableCell>Pembiayaan</TableCell>
+                    <TableCell>Sumber Pembiayaan</TableCell>
+                  </>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>{state.rincian_output.code}</TableCell>
+                <TableCell>
+                  {state.rincian_output?.kementrian?.value ?? "-"}
+                </TableCell>
+                {multiyear.map((y, iY) => (
+                  <>
+                    <TableCell>
+                      {getRowData(`target_${iY}`, state.rincian_output)}
+                    </TableCell>
+                    <TableCell>
+                      {getRowData(`satuan_${iY}`, state.rincian_output)}
+                    </TableCell>
+                    <TableCell align={"right"}>
+                      {FormatIDR(
+                        getRowData(`anggaran_${iY}`, state.rincian_output)
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {getRowData(
+                        `sumber_anggaran_${iY}`,
+                        state.rincian_output
+                      )}
+                    </TableCell>
+                  </>
+                ))}
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
     </Box>
   );
 }
