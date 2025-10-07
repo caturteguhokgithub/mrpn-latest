@@ -343,7 +343,7 @@ export default function TableIndication({
                     <TableCell sx={{ verticalAlign: "top" }}>
                       <Typography
                         variant="body1"
-                        color={perlakuan.ro?.type == "RO" ? "" : "#f97316"}
+                        color={perlakuan.ro?.intervention == true ? "#f97316" : ""}
                       >
                         {perlakuan.ro?.type == "RO"
                           ? perlakuan.ro?.value

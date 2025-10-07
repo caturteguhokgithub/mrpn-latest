@@ -17,7 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "@/theme";
-import React, { SetStateAction } from "react";
+import React, { SetStateAction, useEffect } from "react";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import { GenerateRpjmnYear } from "@/lib/utils/common";
 import { ProPDto, RODataTable } from "@/app/misc/rkp/rkpServiceModel";
@@ -55,6 +55,12 @@ export default function FormPerlakuanRisiko({
   setState: (value: SetStateAction<ExsumIndicationStateValue>) => void;
 }) {
   const { year, rpjmn } = useRKPContext((store) => store);
+
+  useEffect(() => {
+    if (state.type == "NON_RO" && year > 0) {
+      handleListProject([year]);
+    }
+  }, [state.type, year]);
 
   let multiyear: number[] = [year];
   if (year == 0) {
