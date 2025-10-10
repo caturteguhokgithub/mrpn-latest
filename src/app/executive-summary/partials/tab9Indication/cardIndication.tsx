@@ -134,7 +134,7 @@ export default function CardIndication({ project }: { project: string }) {
             </Stack>
           }
           addButton={
-            <Stack direction="row" alignItems="center" gap={0.5}>
+            <Stack direction="row" alignItems="center">
               {/* {project == "all" && ( */}
               {/* <AddButton
                 fullWidth={onlySmallScreen}
@@ -165,6 +165,7 @@ export default function CardIndication({ project }: { project: string }) {
               {/* )} */}
               {hasPrivilege(permission, pathname, "add") && (
                 <AddButton
+                  noMargin
                   filled
                   small
                   title="Tambah Indikasi"

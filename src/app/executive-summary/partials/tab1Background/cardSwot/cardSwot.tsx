@@ -1,15 +1,11 @@
-import React, { Fragment } from "react";
 import {
   alpha,
-  Autocomplete,
   Box,
   Button,
   Card,
   CardContent,
-  Chip,
   DialogActions,
   Grid,
-  Icon,
   IconButton,
   Paper,
   Stack,
@@ -19,7 +15,7 @@ import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
 import theme from "@/theme";
-import { grey, red } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import DialogComponent from "@/components/dialog";
 import useCardSWOTVM from "./cardSwotVM";
 import {
@@ -32,10 +28,10 @@ import AddButton from "@/components/buttonAdd";
 import { IconFA } from "@/components/icons/icon-fa";
 import DialogDelete from "@/components/dialogDelete";
 import { InfoTooltip } from "@/components/InfoTooltip";
-import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 import useUrgensiVM from "@/app/penetapan/internal-eksternal/pageVM";
 import { doRequestSwotDto } from "@/app/penetapan/internal-eksternal/pageModel";
 import { DividerIntExt } from "../cardUrgent/cardUrgent";
+import Iconify from "@/components/icons/iconify";
 
 export default function CardSwot({
   project,
@@ -88,6 +84,27 @@ export default function CardSwot({
         settingDeleteOnclick={handleModalDelete}
         settingEditOnclick={() => setModal(true)}
         setting={activeSetting}
+        actionButton={
+          <Stack direction="row" alignItems="center" gap={1}>
+            <AddButton
+              filled
+              small
+              noMargin
+              startIcon={<Iconify name="mdi:pencil" />}
+              title="Ubah"
+              onclick={() => setModal(true)}
+            />
+            <AddButton
+              filled
+              small
+              noMargin
+              errorColor
+              startIcon={<Iconify name="mdi:trash" />}
+              title="Hapus"
+              onclick={() => handleModalDelete}
+            />
+          </Stack>
+        }
       >
         {penetapan ? (
           <Stack direction="column" gap={2}>

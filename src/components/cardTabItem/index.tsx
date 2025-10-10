@@ -56,6 +56,7 @@ export default function CardItem({
   settingAddOnclickOnly,
   infoTooltip,
   sxCardContent,
+  actionButton,
 }: {
   title?: React.ReactNode;
   children: React.ReactNode;
@@ -73,6 +74,7 @@ export default function CardItem({
   settingAddOnclickOnly?: () => void;
   infoTooltip?: React.ReactNode;
   sxCardContent?: React.CSSProperties | any;
+  actionButton?: React.ReactNode;
 }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -85,7 +87,6 @@ export default function CardItem({
 
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
-
 
   switch (pathname) {
     case "/penetapan/konteks-strategis":
@@ -155,8 +156,8 @@ export default function CardItem({
         anchorOrigin={{ horizontal: "right", vertical: "top" }}
       >
         {multiEdit &&
-          (hasPrivilege(permission, pathname, "add") ||
-            hasPrivilege(permission, pathname, "update")) ? (
+        (hasPrivilege(permission, pathname, "add") ||
+          hasPrivilege(permission, pathname, "update")) ? (
           <>
             <MenuItem onClick={settingEditBisnisClick}>
               <ListItemDropdownMenu label="Tambah Proses Bisnis" />
@@ -265,17 +266,17 @@ export default function CardItem({
             <>
               <Stack direction="row" alignItems="center" gap={0.5}>
                 {downloadButton}
-                {addButton
+                {addButton || actionButton
                   ? hasPrivilege(permission, pathname, "add")
-                    ? addButton
+                    ? addButton || actionButton
                     : null
-                  : setting
-                    ? hasPrivilege(permission, pathname, "add") ||
-                      hasPrivilege(permission, pathname, "update") ||
-                      hasPrivilege(permission, pathname, "delete")
-                      ? settingButton
-                      : null
-                    : null}
+                  : setting || actionButton
+                  ? hasPrivilege(permission, pathname, "add") ||
+                    hasPrivilege(permission, pathname, "update") ||
+                    hasPrivilege(permission, pathname, "delete")
+                    ? settingButton || actionButton
+                    : null
+                  : null}
                 {/* {addButton ? addButton : setting ? settingButton : null} */}
                 {/* {addButton} */}
                 {/* {setting && settingButton} */}

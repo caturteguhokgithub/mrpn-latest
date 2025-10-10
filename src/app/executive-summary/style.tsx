@@ -1,7 +1,7 @@
 import theme from "@/theme";
 import { Tab, alpha } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { margin, styled } from "@mui/system";
+import { styled } from "@mui/system";
 import { SxParams } from "./types";
 
 export const styleTabPanel = (params: SxParams) => {

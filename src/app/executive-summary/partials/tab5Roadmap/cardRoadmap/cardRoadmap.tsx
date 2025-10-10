@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Typography,
   Stack,
@@ -15,14 +15,13 @@ import {
   TableBody,
   TableRow,
   TableContainer,
-  Divider,
   Chip,
 } from "@mui/material";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
 import DialogComponent from "@/components/dialog";
-import { blue, grey, orange, red } from "@mui/material/colors";
+import { blue, grey, red } from "@mui/material/colors";
 import theme from "@/theme";
 import FormRoadmap from "./form-roadmap";
 import useCardRoadmapVM from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapVM";
@@ -30,12 +29,10 @@ import {
   ExsumRoadmapDto,
   ExsumRoadmapResDto,
 } from "@/app/executive-summary/partials/tab5Roadmap/cardRoadmap/cardRoadmapModel";
-import { IconFA } from "@/components/icons/icon-fa";
 import { InfoTooltip } from "@/components/InfoTooltip";
 import { useAuthContext } from "@/lib/core/hooks/useHooks";
 import { usePathname } from "next/navigation";
 import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
-import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 import AddButton from "@/components/buttonAdd";
 import Iconify from "@/components/icons/iconify";
 
@@ -109,6 +106,7 @@ export default function CardRoadmap() {
         <Stack direction="row" spacing={1}>
           <AddButton
             noMargin
+            small
             filled
             title="Tambah Expected Output"
             color="primary"
@@ -116,6 +114,7 @@ export default function CardRoadmap() {
           />
           <AddButton
             noMargin
+            small
             filled
             title="Tambah Proses Bisnis"
             color="primary"
@@ -533,16 +532,16 @@ const OutputTable = ({
                       index === 0
                         ? alpha(theme.palette.primary.main, 1)
                         : index === 1
-                          ? alpha(theme.palette.primary.main, 0.9)
-                          : index === 2
-                            ? alpha(theme.palette.primary.main, 0.8)
-                            : index === 3
-                              ? alpha(theme.palette.primary.main, 0.7)
-                              : index === 4
-                                ? alpha(theme.palette.primary.main, 0.6)
-                                : index === 5
-                                  ? alpha(theme.palette.primary.main, 0.5)
-                                  : alpha(theme.palette.primary.main, 0.4),
+                        ? alpha(theme.palette.primary.main, 0.9)
+                        : index === 2
+                        ? alpha(theme.palette.primary.main, 0.8)
+                        : index === 3
+                        ? alpha(theme.palette.primary.main, 0.7)
+                        : index === 4
+                        ? alpha(theme.palette.primary.main, 0.6)
+                        : index === 5
+                        ? alpha(theme.palette.primary.main, 0.5)
+                        : alpha(theme.palette.primary.main, 0.4),
                     color: "white",
                     borderRadius: "10px 10px 0 0",
                     py: 1,
