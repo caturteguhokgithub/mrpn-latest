@@ -60,6 +60,9 @@ export default function AddButton({
         whiteSpace: "nowrap",
         textTransform: "capitalize",
         transition: "all 300ms ease-in-out",
+        "& > span": {
+          marginRight: "4px",
+        },
         "&:hover": {
           bgcolor:
             errorColor || color == "error"

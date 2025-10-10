@@ -145,6 +145,7 @@ export default function CardCritical({
         addButton={
           <Stack direction="row" spacing={1}>
             <AddButton
+              small
               noMargin
               title="Ubah"
               color="primary"
@@ -152,9 +153,10 @@ export default function CardCritical({
               onclick={handleModalOpen}
             />
             <AddButton
+              small
               noMargin
               filled
-              title="Tambah CP"
+              title="Tambah"
               color="primary"
               onclick={handleModalAdd}
             />

@@ -1,4 +1,4 @@
-import React, { SetStateAction } from "react";
+import { SetStateAction } from "react";
 import {
   Button,
   DialogActions,
@@ -25,9 +25,7 @@ import {
 } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
 import AddButton from "@/components/buttonAdd";
 import { AutocompleteSelectMultiple } from "@/components/autocomplete";
-import useCardLocationVM from "../../tab2Profile/cardLocation/cardLocationVM";
 import Iconify from "@/components/icons/iconify";
-import { blue } from "@mui/material/colors";
 
 export default function CardTows({ project }: { project: string }) {
   const useCardSWOT = useCardSWOTVM();
@@ -62,6 +60,7 @@ export default function CardTows({ project }: { project: string }) {
         addButton={
           <AddButton
             noMargin
+            small
             filled
             title="Ubah"
             color="primary"

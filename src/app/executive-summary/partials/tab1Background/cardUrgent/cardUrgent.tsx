@@ -1,5 +1,12 @@
 import React, { Fragment } from "react";
-import { Box, Button, Chip, DialogActions, Divider } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  DialogActions,
+  Divider,
+  Stack,
+} from "@mui/material";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import CardItem from "@/components/cardTabItem";
@@ -118,18 +125,39 @@ export default function CardUrgent({
       settingDeleteOnclick={handleModalDelete}
       settingEditOnclick={() => setModal(true)}
       setting={penetapan ? false : true}
-    // addButton={
-    //   <>
-    //     {penetapan && (
-    //       <AddButton
-    //         filled
-    //         startIcon={<Iconify name="mdi:pencil" />}
-    //         title="Ubah Urgensi"
-    //         onclick={() => setModal(true)}
-    //       />
-    //     )}
-    //   </>
-    // }
+      // addButton={
+      //   <>
+      //     {penetapan && (
+      //       <AddButton
+      //         filled
+      //         startIcon={<Iconify name="mdi:pencil" />}
+      //         title="Ubah Urgensi"
+      //         onclick={() => setModal(true)}
+      //       />
+      //     )}
+      //   </>
+      // }
+      actionButton={
+        <Stack direction="row" alignItems="center" gap={1}>
+          <AddButton
+            filled
+            small
+            noMargin
+            startIcon={<Iconify name="mdi:pencil" />}
+            title="Ubah"
+            onclick={() => setModal(true)}
+          />
+          <AddButton
+            filled
+            small
+            noMargin
+            errorColor
+            startIcon={<Iconify name="mdi:trash" />}
+            title="Hapus"
+            onclick={() => handleModalDelete}
+          />
+        </Stack>
+      }
     >
       {penetapan ? (
         <Fragment>

@@ -10,6 +10,7 @@ import {
   Collapse,
   DialogActions,
   Grow,
+  Icon,
   Stack,
   Tabs,
   Tooltip,
@@ -248,13 +249,15 @@ export default function PageExecutiveSummary({}) {
                 <CustomTab
                   label={
                     <Stack direction="row" alignItems="center" gap={0.5}>
+                      {/* <Iconify name="mdi:lock" /> */}
                       <Typography>RPJMN</Typography>
                       <InfoTooltip
                         title={
                           <Stack spacing={2}>
                             <div>
                               <strong>
-                                Rencana Pembangunan Jangka Menengah (RPJMN)
+                                Rencana Pembangunan Jangka Menengah Nasional
+                                (RPJMN)
                               </strong>
                               <p>
                                 Dokumen perencanaan Pembangunan Nasional untuk
@@ -274,6 +277,7 @@ export default function PageExecutiveSummary({}) {
                       <CustomTab
                         label={
                           <Stack direction="row" alignItems="center" gap={0.5}>
+                            {/* <Iconify name="mdi:lock" /> */}
                             <Typography>RKP {r}</Typography>
                             {i == 1 && (
                               <InfoTooltip

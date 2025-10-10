@@ -62,6 +62,7 @@ export default function ModulePopup({
       title="Modul E-Monev"
       dialogOpen={emonevModal}
       dialogClose={() => setEmonevModal(false)}
+      closeButton
     >
       {dataListApp[0].appid !== "" && (
         <Box px={3} pb={1}>
