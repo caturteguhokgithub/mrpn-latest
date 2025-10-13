@@ -1,7 +1,7 @@
 "use client";
 
 import ContentPage from "@/components/contents";
-import React, { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import {
   Box,
   Button,

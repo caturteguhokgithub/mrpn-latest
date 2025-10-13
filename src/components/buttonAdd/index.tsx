@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Icon } from "@mui/material";
+import { Button } from "@mui/material";
 import { blue, green, red } from "@mui/material/colors";
 import Link from "next/link";
 import Iconify from "@/icons/iconify";
@@ -16,6 +16,7 @@ export default function AddButton({
   fullWidth,
   errorColor,
   color,
+  disabled,
 }: {
   title?: React.ReactNode;
   url?: string;
@@ -28,6 +29,7 @@ export default function AddButton({
   fullWidth?: boolean;
   errorColor?: boolean | any;
   color?: string;
+  disabled?: boolean;
 }) {
   const buttonAdd = (
     <Button
@@ -77,6 +79,7 @@ export default function AddButton({
         },
       }}
       onClick={onclick}
+      disabled={disabled}
     >
       {/* <Icon
         baseClassName="fas"

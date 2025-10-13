@@ -448,24 +448,26 @@ export default function Header({}) {
               )}
             </MenuItem>
           ))}
-          <MenuItem
-            onClick={() => setLockModal(true)}
-            sx={{
-              bgcolor: grey[200],
-            }}
-          >
-            <ListItemText>
-              <Stack
-                component="span"
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Typography component="span">Atur Penguncian</Typography>
-                <Iconify name="mdi:cog-outline" size={20} />
-              </Stack>
-            </ListItemText>
-          </MenuItem>
+          {user?.role?.name === "Super Admin" && (
+            <MenuItem
+              onClick={() => setLockModal(true)}
+              sx={{
+                bgcolor: grey[200],
+              }}
+            >
+              <ListItemText>
+                <Stack
+                  component="span"
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Typography component="span">Atur Penguncian</Typography>
+                  <Iconify name="mdi:cog-outline" size={20} />
+                </Stack>
+              </ListItemText>
+            </MenuItem>
+          )}
         </Menu>
         <Menu
           anchorEl={anchorEl}

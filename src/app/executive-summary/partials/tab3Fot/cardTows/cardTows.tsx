@@ -26,9 +26,14 @@ import {
 import AddButton from "@/components/buttonAdd";
 import { AutocompleteSelectMultiple } from "@/components/autocomplete";
 import Iconify from "@/components/icons/iconify";
+import { useLockContext, useRKPContext } from "@/lib/core/hooks/useHooks";
 
 export default function CardTows({ project }: { project: string }) {
   const useCardSWOT = useCardSWOTVM();
+  const { year } = useRKPContext((state) => state);
+  const { isLocked } = useLockContext((state) => ({
+    isLocked: state.isLocked,
+  }));
 
   const {
     options,
@@ -51,6 +56,17 @@ export default function CardTows({ project }: { project: string }) {
     setModalOpen(false);
   };
 
+  // Determine if current context is locked
+  const getCurrentContext = () => {
+    if (year === 0) {
+      return "RPJMN";
+    } else {
+      return "RKP ${year}";
+    }
+  };
+
+  const isCurrentContextLocked = isLocked(getCurrentContext());
+
   return (
     <>
       <CardItem
@@ -66,6 +82,7 @@ export default function CardTows({ project }: { project: string }) {
             color="primary"
             startIcon={<Iconify name="mdi:pencil" size={14} />}
             onclick={handleModalOpen}
+            disabled={isCurrentContextLocked}
           />
         }
       >

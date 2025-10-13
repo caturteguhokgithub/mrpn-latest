@@ -323,39 +323,45 @@ export const styleOrgChart2 = [
   },
 ];
 
-export const CustomTab = styled(Tab)(({ theme }) => ({
-  paddingInline: 40,
-  backgroundColor: theme.palette.grey[300],
-  color: theme.palette.grey[700],
-  overflow: "inherit",
-  position: "relative",
-  "&.Mui-selected": {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
-    "&::after": {
-      borderTopColor: theme.palette.primary.main,
+export const CustomTab = styled(Tab)<{ isLocked?: boolean }>(
+  ({ theme, isLocked }) => ({
+    paddingInline: 40,
+    backgroundColor: theme.palette.grey[300],
+    color: theme.palette.grey[700],
+    overflow: "inherit",
+    position: "relative",
+    "&.Mui-selected": {
+      backgroundColor: isLocked
+        ? theme.palette.error.main
+        : theme.palette.primary.main,
+      color: theme.palette.common.white,
+      "&::after": {
+        borderTopColor: isLocked
+          ? theme.palette.error.main
+          : theme.palette.primary.main,
+      },
     },
-  },
-  "&::after": {
-    content: '""',
-    position: "absolute",
-    zIndex: 1,
-    right: -32,
-    top: "50%",
-    transform: "translateY(-50%) rotate(270deg)",
-    width: 0,
-    height: 0,
-    borderLeft: "25px solid transparent",
-    borderRight: "25px solid transparent",
-    borderTop: `16px solid ${theme.palette.grey[300]}`,
-    filter: "drop-shadow(0px 2px 1px rgba(0, 0, 0, 0.15))",
-  },
-  "&:last-of-type": {
     "&::after": {
-      content: "none",
+      content: '""',
+      position: "absolute",
+      zIndex: 1,
+      right: -32,
+      top: "50%",
+      transform: "translateY(-50%) rotate(270deg)",
+      width: 0,
+      height: 0,
+      borderLeft: "25px solid transparent",
+      borderRight: "25px solid transparent",
+      borderTop: `16px solid ${theme.palette.grey[300]}`,
+      filter: "drop-shadow(0px 2px 1px rgba(0, 0, 0, 0.15))",
     },
-  },
-  "&:not(:first-of-type)": {
-    paddingLeft: 50,
-  },
-}));
+    "&:last-of-type": {
+      "&::after": {
+        content: "none",
+      },
+    },
+    "&:not(:first-of-type)": {
+      paddingLeft: 50,
+    },
+  })
+);

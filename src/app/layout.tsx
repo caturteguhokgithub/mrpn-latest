@@ -18,7 +18,8 @@ import { defaultPenetapanState } from "@/lib/core/context/penetapanContext";
 import { PenetapanProvider } from "@/lib/core/provider/penetapanProvider";
 import { ToastProvider } from "@/lib/core/context/toastContext";
 import Toast from "../components/snackbar/snackbar";
-// import Head from "next/head";
+import { LockProvider } from "@/lib/core/provider/lockProvider";
+import { defaultInitLockState } from "@/lib/core/context/lockContext";
 
 export const metadata: Metadata = {
   title: "MRPN 2024",
@@ -42,21 +43,23 @@ export default function RootLayout(props: any) {
   return (
     <AuthProvider state={defaultInitAuthState}>
       <RKPProvider state={defaultInitRkpState}>
-        <html lang="en">
-          <body>
-            <ToastProvider>
-              <AppRouterCacheProvider>
-                <ThemeProvider theme={theme}>
-                  <CssBaseline />
-                  <PenetapanProvider state={defaultPenetapanState}>
-                    {props.children}
-                    <Toast />
-                  </PenetapanProvider>
-                </ThemeProvider>
-              </AppRouterCacheProvider>
-            </ToastProvider>
-          </body>
-        </html>
+        <LockProvider state={defaultInitLockState}>
+          <html lang="en">
+            <body>
+              <ToastProvider>
+                <AppRouterCacheProvider>
+                  <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <PenetapanProvider state={defaultPenetapanState}>
+                      {props.children}
+                      <Toast />
+                    </PenetapanProvider>
+                  </ThemeProvider>
+                </AppRouterCacheProvider>
+              </ToastProvider>
+            </body>
+          </html>
+        </LockProvider>
       </RKPProvider>
     </AuthProvider>
   );
