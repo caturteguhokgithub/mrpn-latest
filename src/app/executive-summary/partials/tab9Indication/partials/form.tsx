@@ -24,7 +24,6 @@ import { green, grey, red } from "@mui/material/colors";
 import { ExsumTWOSDto } from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsModel";
 import { useRKPContext } from "@/lib/core/hooks/useHooks";
 import theme from "@/theme";
-import { IconFA } from "@/components/icons/icon-fa";
 import ActionColumn from "@/components/actions/action";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
@@ -194,21 +193,27 @@ export default function FormIndication({
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Analisis TOWS" />
-            <AutocompleteSelectSingle
-              key={state.tows?.id ?? 0}
-              value={state.tows}
-              options={optionTOWS}
-              getOptionLabel={(option) => option.type + " - " + option.value}
-              handleChange={(val: ExsumTWOSDto) =>
-                setState((prevState) => {
-                  return {
-                    ...prevState,
-                    tows: val,
-                  };
-                })
-              }
-              placeHolder={"Pilih analisis TOWS"}
-            />
+            {state.id > 0 ? (
+              <Typography variant="body1">
+                {state.tows ? state.tows.type + " - " + state.tows.value : "-"}
+              </Typography>
+            ) : (
+              <AutocompleteSelectSingle
+                key={state.tows?.id ?? 0}
+                value={state.tows}
+                options={optionTOWS}
+                getOptionLabel={(option) => option.type + " - " + option.value}
+                handleChange={(val: ExsumTWOSDto) =>
+                  setState((prevState) => {
+                    return {
+                      ...prevState,
+                      tows: val,
+                    };
+                  })
+                }
+                placeHolder={"Pilih analisis TOWS"}
+              />
+            )}
           </FormControl>
         </Grid>
 

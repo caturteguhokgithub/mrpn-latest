@@ -11,10 +11,11 @@ import {
   Box,
 } from "@mui/material";
 import { grey, red, blue } from "@mui/material/colors";
-import React, { useState } from "react";
+import React from "react";
 import DialogComponent from "../../dialog";
 import { bgColorTh } from "@/utils/color";
 import Iconify from "@/components/icons/iconify";
+import { useLockContext } from "@/lib/core/hooks/useHooks";
 
 export default function LockSetting({
   lockModal,
@@ -23,9 +24,10 @@ export default function LockSetting({
   lockModal: boolean;
   setLockModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [lockedItems, setLockedItems] = useState<{ [key: string]: boolean }>(
-    {}
-  );
+  const { lockedItems, toggleLock } = useLockContext((state) => ({
+    lockedItems: state.lockedItems,
+    toggleLock: state.toggleLock,
+  }));
 
   const data = [
     "RPJMN",
@@ -37,10 +39,7 @@ export default function LockSetting({
   ];
 
   const handleToggleLock = (item: string) => {
-    setLockedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+    toggleLock(item);
   };
 
   return (

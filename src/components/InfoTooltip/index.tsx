@@ -9,11 +9,13 @@ export const InfoTooltip = ({
   titleSection,
   titleField,
   color,
+  icon,
 }: {
   title: React.ReactNode;
   titleSection?: boolean;
   titleField?: boolean;
   color?: string;
+  icon?: React.ReactNode;
 }) => {
   const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -45,11 +47,13 @@ export const InfoTooltip = ({
           },
         }}
       >
-        <Iconify
-          name="mdi:information-slab-circle"
-          size={18}
-          sx={{ cursor: "help", color: color, position: "relative", top: 1 }}
-        />
+        {icon || (
+          <Iconify
+            name="mdi:information-slab-circle"
+            size={18}
+            sx={{ cursor: "help", color: color, position: "relative", top: 1 }}
+          />
+        )}
       </Typography>
     </HtmlTooltip>
   );
