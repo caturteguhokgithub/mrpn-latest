@@ -12,7 +12,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { blue, orange, red } from "@mui/material/colors";
+import { blue, grey, orange, red } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
 import { IconKeluar } from "../icons";
 import Aside from "./aside";
@@ -24,6 +24,7 @@ import { useGSAP } from "@gsap/react";
 import Iconify from "@/icons/iconify";
 import ModulePopup from "./partials/module";
 import useModuleVM from "./partials/module-vm";
+import LockSetting from "./partials/lock";
 
 gsap.registerPlugin(useGSAP);
 
@@ -39,7 +40,7 @@ const sliderContent = [
 
 const textStyles = ["abbreviation", "full-form"];
 
-export default function Header({ }) {
+export default function Header({}) {
   const { user } = useAuthContext((state) => state);
   const { rpjmn, setYear, year, setRkpState } = useRKPContext((state) => state);
   const { doLogout } = useAuthorizationVM();
@@ -94,6 +95,7 @@ export default function Header({ }) {
   //  Slide-up Text
   const [sliderCounter, setSliderCounter] = useState(0);
   const [currentPhrase, setCurrentPhrase] = useState("");
+  const [lockModal, setLockModal] = useState(false);
 
   useEffect(() => {
     const phrase = sliderContent[sliderCounter];
@@ -446,6 +448,26 @@ export default function Header({ }) {
               )}
             </MenuItem>
           ))}
+          {user?.role?.name === "Super Admin" && (
+            <MenuItem
+              onClick={() => setLockModal(true)}
+              sx={{
+                bgcolor: grey[200],
+              }}
+            >
+              <ListItemText>
+                <Stack
+                  component="span"
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Typography component="span">Atur Penguncian</Typography>
+                  <Iconify name="mdi:cog-outline" size={20} />
+                </Stack>
+              </ListItemText>
+            </MenuItem>
+          )}
         </Menu>
         <Menu
           anchorEl={anchorEl}
@@ -582,6 +604,7 @@ export default function Header({ }) {
         dataListApp={dataListApp}
         switchApp={switchApp}
       />
+      <LockSetting lockModal={lockModal} setLockModal={setLockModal} />
     </Box>
   );
 }

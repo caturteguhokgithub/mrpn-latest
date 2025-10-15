@@ -18,9 +18,12 @@ import {
   useTheme,
 } from "@mui/material";
 import theme from "@/theme";
-import { IconFA } from "@/components/icons/icon-fa";
 import { CustomTab, styleDownload } from "./style";
-import { useAuthContext, useRKPContext } from "@/lib/core/hooks/useHooks";
+import {
+  useAuthContext,
+  useLockContext,
+  useRKPContext,
+} from "@/lib/core/hooks/useHooks";
 import PageExecutiveSummaryContent from "@/app/executive-summary/pageViewContent";
 import DialogComponent from "@/components/dialog";
 import useApprovalVM from "@/app/executive-summary/approvalVM";
@@ -39,6 +42,10 @@ export default function PageExecutiveSummary({}) {
   const { rkpState, rpjmn, setYear, year, setRkpState } = useRKPContext(
     (state) => state
   );
+
+  const { isLocked } = useLockContext((state) => ({
+    isLocked: state.isLocked,
+  }));
 
   const {
     exsum,
@@ -243,18 +250,37 @@ export default function PageExecutiveSummary({}) {
                 variant="fullWidth"
                 value={valueTab}
                 onChange={handleChangeTab}
-                sx={{ borderRadius: 2.5 }}
+                sx={{
+                  borderRadius: 2.5,
+                  "& .MuiTabs-indicator": {
+                    backgroundColor: "transparent",
+                  },
+                }}
               >
                 <CustomTab
                   label={
                     <Stack direction="row" alignItems="center" gap={0.5}>
+                      {isLocked("RPJMN") && (
+                        <InfoTooltip
+                          icon={<Iconify name="mdi:lock" />}
+                          title={
+                            <Stack spacing={2}>
+                              <div>
+                                <strong>RPJMN sedang dikunci</strong>
+                                <p>Silahkan hubungi administrator</p>
+                              </div>
+                            </Stack>
+                          }
+                        />
+                      )}
                       <Typography>RPJMN</Typography>
                       <InfoTooltip
                         title={
                           <Stack spacing={2}>
                             <div>
                               <strong>
-                                Rencana Pembangunan Jangka Menengah (RPJMN)
+                                Rencana Pembangunan Jangka Menengah Nasional
+                                (RPJMN)
                               </strong>
                               <p>
                                 Dokumen perencanaan Pembangunan Nasional untuk
@@ -267,6 +293,7 @@ export default function PageExecutiveSummary({}) {
                     </Stack>
                   }
                   value={0}
+                  isLocked={isLocked("RPJMN")}
                 />
                 {rpjmnState.map(
                   (r, i) =>
@@ -274,6 +301,21 @@ export default function PageExecutiveSummary({}) {
                       <CustomTab
                         label={
                           <Stack direction="row" alignItems="center" gap={0.5}>
+                            {isLocked(`RKP ${r}`) && (
+                              <InfoTooltip
+                                icon={<Iconify name="mdi:lock" />}
+                                title={
+                                  <Stack spacing={2}>
+                                    <div>
+                                      <strong>
+                                        {`RKP ${r}`} sedang dikunci
+                                      </strong>
+                                      <p>Silahkan hubungi administrator</p>
+                                    </div>
+                                  </Stack>
+                                }
+                              />
+                            )}
                             <Typography>RKP {r}</Typography>
                             {i == 1 && (
                               <InfoTooltip
@@ -299,6 +341,7 @@ export default function PageExecutiveSummary({}) {
                         }
                         value={r}
                         key={i}
+                        isLocked={isLocked(`RKP ${r}`)}
                       />
                     )
                 )}

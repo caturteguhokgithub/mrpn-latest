@@ -15,7 +15,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { blue, green, grey, orange, red } from "@mui/material/colors";
+import { green, grey, orange, red } from "@mui/material/colors";
 import Image from "next/image";
 import { PenetapanObjectNotaDto } from "@/lib/core/context/penetapanTopicContext";
 import { bgColorTh } from "@/utils/color";
@@ -23,8 +23,6 @@ import Iconify from "@/components/icons/iconify";
 import DialogComponent from "@/components/dialog";
 import FormNote from "./form-note";
 import AddButton from "@/components/buttonAdd";
-import { VisuallyHiddenInput } from "@/utils/constant";
-import { IconFA } from "@/components/icons/icon-fa";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import DraggableScroll from "@/components/cardStakeholder/draggableScroll";
 import { styleOrgChart } from "@/app/executive-summary/style";
@@ -37,7 +35,6 @@ import { IconEmptyData } from "@/components/icons";
 import DialogDelete from "@/components/dialogDelete";
 import { useToast } from "@/lib/core/context/toastContext";
 import { dtoGetApproval } from "@/app/penetapan/objek/pageModel";
-import { hasPrivilege } from "@/lib/core/helpers/authHelpers";
 
 type Row = {
   object: string;

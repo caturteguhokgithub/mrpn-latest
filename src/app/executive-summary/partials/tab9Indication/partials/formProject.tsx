@@ -1,7 +1,4 @@
 import {
-  Checkbox,
-  FormControl,
-  FormControlLabel,
   Grid,
   InputAdornment,
   Table,
@@ -12,26 +9,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import FieldLabelInfo from "@/components/fieldLabelInfo";
 import {
   AutoCompleteMultipleProp,
-  AutocompleteSelectMultiple,
-  AutocompleteSelectSingle,
   AutoCompleteSingleProp,
 } from "@/components/autocomplete";
-import { red } from "@mui/material/colors";
-import { TextareaStyled } from "@/components/textarea";
-import TableAnggaran from "@/app/executive-summary/partials/tab4Cascading/table-anggaran";
-import React, { SetStateAction } from "react";
-import {
-  ExsumIndicationState,
-  ExsumIndicationStateValue,
-} from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
-import {
-  ExsumInterventionProjectReqDto,
-  ExsumInterventionState,
-  ProjectTargetAnggaranDto,
-} from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
+import { SetStateAction } from "react";
+import { ExsumIndicationStateValue } from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
+import { ProjectTargetAnggaranDto } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
 import {
   MiscMasterListProvinsiRes,
   MiscMasterListStakeholderRes,
