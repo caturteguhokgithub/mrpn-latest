@@ -1,9 +1,9 @@
-import {ProPDto, RODataTable, RoDto} from "@/app/misc/rkp/rkpServiceModel";
-import {MiscMasterListProvinsiRes, MiscMasterListStakeholderRes} from "@/app/misc/master/masterServiceModel";
-import {BaseAPIServiceParam} from "@/lib/core/api/apiModel";
+import { ProPDto, RODataTable, RoDto } from "@/app/misc/rkp/rkpServiceModel";
+import { MiscMasterListProvinsiRes, MiscMasterListStakeholderRes } from "@/app/misc/master/masterServiceModel";
+import { BaseAPIServiceParam } from "@/lib/core/api/apiModel";
 
 export interface ProjectTargetAnggaranDto {
-  tahun: number|string
+  tahun: number | string
   target: string
   satuan: string
   anggaran: number
@@ -22,9 +22,24 @@ export interface ExsumInterventionProjectReqDto {
   indikator: string
   intervention: boolean
   list: ProjectTargetAnggaranDto[]
-  list_ro:RoDto[]
-  tahun:number|string
-  lokasi:any[]
+  list_ro: RoDto[]
+  tahun: number | string
+  lokasi: any[]
+  src_rincian_output_id: number
+}
+
+export interface ProjectReqDto {
+  tahun: number | string,
+  exsum_id: number
+  type: string
+  code: string
+  prop: number
+  kementrian_id: number
+  nomenklatur: string
+  indikator: string
+  lokasi: {
+    src_provinsi_id: number;
+  }[];
 }
 
 export interface ExsumInterventionState {
@@ -37,10 +52,11 @@ export interface ExsumInterventionState {
   indikator: string
   list: ProjectTargetAnggaranDto[]
   intervensi: boolean,
-  prop: ProPDto|undefined
+  prop: ProPDto | undefined
   ro: RODataTable[]
-  tahun:number|string
-  location:MiscMasterListProvinsiRes[]
+  tahun: number | string
+  location: MiscMasterListProvinsiRes[]
+  src_rincian_output_id: number
 }
 
 export const initExsumInterventionState: ExsumInterventionState = {
@@ -56,7 +72,20 @@ export const initExsumInterventionState: ExsumInterventionState = {
   prop: undefined,
   ro: [],
   location: [],
-  tahun: ""
+  tahun: "",
+  src_rincian_output_id: 0
+}
+
+export const initProjectReqDto: ProjectReqDto = {
+  tahun: "",
+  exsum_id: 0,
+  type: "",
+  code: "",
+  prop: 0,
+  kementrian_id: 0,
+  nomenklatur: "",
+  indikator: "",
+  lokasi: []
 }
 
 export interface GetByExsumId {
@@ -71,8 +100,12 @@ export type UpdateExsumInterventionByExsumIdServiceModel = BaseAPIServiceParam &
   body: ExsumInterventionProjectReqDto;
 };
 
+export type CreateNonRoServiceModel = BaseAPIServiceParam & {
+  body: ProjectReqDto;
+};
+
 export type UpdateById = BaseAPIServiceParam & {
-  body: { id:number };
+  body: { id: number };
 };
 
 export type UpdateV2ExsumIntervention = BaseAPIServiceParam & {
@@ -89,8 +122,8 @@ export type UpdateV2ExsumIntervention = BaseAPIServiceParam & {
     sumber_anggaran: string;
     type: string;
     intervention: boolean;
-    lokasi:any[]
-    tahun:number|string
+    lokasi: any[]
+    tahun: number | string
     list: ProjectTargetAnggaranDto[]
   }
 }

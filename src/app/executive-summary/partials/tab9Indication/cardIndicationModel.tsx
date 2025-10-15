@@ -69,7 +69,7 @@ export interface ExsumIndicationValueRes {
   tahun: number[];
   perlakuan_risiko: string;
   ro: RoDto | undefined;
-  nonro: NonRoDto | undefined;
+  nonro: RoDto | undefined;
   stakeholder: StakeholderResDto[];
   groupStakeholder: StakeholderResGroupDto;
 }
@@ -100,7 +100,8 @@ export interface ExsumIndicationStateValue {
   type: string;
   // perlakuan_risiko:string
   rincian_output: RODataTable | undefined;
-  non_rincian_output: ExsumInterventionState;
+  non_rincian_output: RODataTable | undefined;
+  // non_rincian_output: ExsumInterventionState;
   intervention: boolean;
   // stakeholderMultiple:MiscMasterListStakeholderRes[]
   // stakeholder:{
@@ -114,21 +115,22 @@ export const initStateExsumIndicationValue: ExsumIndicationStateValue = {
   id: 0,
   tahun: [],
   rincian_output: undefined,
-  non_rincian_output: {
-    id: 0,
-    exsum_id: 0,
-    type: "",
-    code: "",
-    kementrian: undefined,
-    nomenklatur: "",
-    indikator: "",
-    list: [],
-    intervensi: false,
-    prop: undefined,
-    ro: [],
-    tahun: "",
-    location: [],
-  },
+  non_rincian_output: undefined,
+  // non_rincian_output: {
+  //   id: 0,
+  //   exsum_id: 0,
+  //   type: "",
+  //   code: "",
+  //   kementrian: undefined,
+  //   nomenklatur: "",
+  //   indikator: "",
+  //   list: [],
+  //   intervensi: false,
+  //   prop: undefined,
+  //   ro: [],
+  //   tahun: "",
+  //   location: [],
+  // },
   intervention: false,
   type: "",
 };

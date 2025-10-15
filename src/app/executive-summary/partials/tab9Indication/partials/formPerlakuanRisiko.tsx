@@ -37,20 +37,17 @@ import {
   MiscMasterListStakeholderRes,
 } from "@/app/misc/master/masterServiceModel";
 import Iconify from "@/components/icons/iconify";
+import { ProjectReqDto } from "../../tab4Cascading/cardIntervensi/cardIntervensiModel";
 
 export default function FormPerlakuanRisiko({
   optionRO,
-  listLocation,
-  listProP,
-  listStakeholder,
+  optionNonRO,
   state,
   setState,
   handleAddNomenklatur,
 }: {
   optionRO: RODataTable[];
-  listLocation: MiscMasterListProvinsiRes[];
-  listProP: ProPDto[];
-  listStakeholder: MiscMasterListStakeholderRes[];
+  optionNonRO: RODataTable[];
   state: ExsumIndicationStateValue;
   setState: (value: SetStateAction<ExsumIndicationStateValue>) => void;
   handleAddNomenklatur: () => void;
@@ -74,90 +71,42 @@ export default function FormPerlakuanRisiko({
     return obj[key];
   };
 
-  const selectLocation: AutoCompleteMultipleProp<MiscMasterListProvinsiRes> = {
-    value: state.non_rincian_output.location,
-    options: listLocation,
-    getOptionLabel: (opt) => opt.name,
-    handleChange: (value: MiscMasterListProvinsiRes[]) =>
-      setState((prev) => {
-        const nonRO = state.non_rincian_output;
-        nonRO.location = value;
-        return {
-          ...prev,
-          non_rincian_output: nonRO,
-        };
-      }),
-    placeHolder: "Pilih Lokasi",
-    labelSelectAll: "Pilih semua lokasi",
-  };
-
-  const selectProP: AutoCompleteSingleProp<ProPDto> = {
-    value: state.non_rincian_output.prop,
-    options: listProP,
-    getOptionLabel: (opt) => opt.code + " - " + opt.value,
-    handleChange: (value: ProPDto) =>
-      setState((prevState) => {
-        const nonRO = state.non_rincian_output;
-        nonRO.prop = value;
-        return {
-          ...prevState,
-          non_rincian_output: nonRO,
-        };
-      }),
-    placeHolder: "Pilih tagging ProP",
-  };
-
-  const selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes> =
-    {
-      value: state.non_rincian_output.kementrian,
-      options: listStakeholder,
-      getOptionLabel: (opt) => opt.value,
-      handleChange: (value: MiscMasterListStakeholderRes) =>
-        setState((prev) => {
-          const nonRO = state.non_rincian_output;
-          nonRO.kementrian = value;
-          return {
-            ...prev,
-            non_rincian_output: nonRO,
-          };
-        }),
-      placeHolder: "Pilih Penanggungjawab",
-    };
-
   const handleListProject = (years: number[]) => {
     setState((prevState) => {
       const nonRO = prevState.non_rincian_output;
 
       years.sort((a, b) => a - b);
 
-      nonRO.list.map((l, iL) => {
-        const checkIndex = years.findIndex((x) => x == l.tahun);
-        if (checkIndex == -1) {
-          nonRO.list.splice(iL, 1);
-        }
-      });
+      if (nonRO != undefined) {
+        nonRO.detail.map((l, iL) => {
+          const checkIndex = years.findIndex((x) => x == l.tahun);
+          if (checkIndex == -1) {
+            nonRO.detail.splice(iL, 1);
+          }
+        });
 
-      years.map((y) => {
-        const getIndexList = nonRO.list.findIndex((x) => x.tahun == y);
-        if (getIndexList == -1) {
-          nonRO.list.push({
-            tahun: y,
-            target: "",
-            satuan: "",
-            anggaranString: "",
-            anggaran: 0,
-            sumber_anggaran: "",
-          });
-        }
-      });
+        years.map((y) => {
+          const getIndexList = nonRO.detail.findIndex((x) => x.tahun == y);
+          if (getIndexList == -1) {
+            nonRO.detail.push({
+              tahun: y,
+              target: "",
+              satuan: "",
+              anggaranString: "",
+              anggaran: 0,
+              sumber_anggaran: "",
+            });
+          }
+        });
 
-      nonRO.list.sort((a, b) => {
-        let aYear: number =
-          typeof a.tahun === "number" ? a.tahun : parseInt(a.tahun);
-        let bYear: number =
-          typeof b.tahun === "number" ? b.tahun : parseInt(b.tahun);
-        return aYear - bYear;
-      });
+        nonRO.detail.sort((a, b) => {
+          let aYear: number =
+            typeof a.tahun === "number" ? a.tahun : parseInt(a.tahun);
+          let bYear: number =
+            typeof b.tahun === "number" ? b.tahun : parseInt(b.tahun);
+          return aYear - bYear;
+        });
+      }
 
       return {
         ...prevState,
@@ -166,12 +115,6 @@ export default function FormPerlakuanRisiko({
       };
     });
   };
-
-  const optionsNomenklatur = [
-    "nomenklatur-1",
-    "nomenklatur-2",
-    "nomenklatur-3",
-  ];
 
   return (
     <Box
@@ -216,8 +159,8 @@ export default function FormPerlakuanRisiko({
                     state.type == "RO"
                       ? "RO"
                       : state.type == "NON_RO"
-                      ? "NON-RO"
-                      : "Pilih jenis output"
+                        ? "NON-RO"
+                        : "Pilih jenis output"
                   }
                   sx={{
                     px: 1,
@@ -288,7 +231,7 @@ export default function FormPerlakuanRisiko({
                 control={
                   <Checkbox
                     key={year}
-                    disabled={state.type == "NON_RO" && year == 0}
+                    // disabled={state.type == "NON_RO" && year == 0}
                     checked={
                       state.type == "NON_RO" && year == 0
                         ? state.intervention
@@ -360,20 +303,31 @@ export default function FormPerlakuanRisiko({
                 }}
               /> */}
               <AutocompleteSelectSingle
-                key={state.non_rincian_output.nomenklatur}
-                value={state.non_rincian_output.nomenklatur}
-                options={optionsNomenklatur}
-                getOptionLabel={(opt) => opt}
-                handleChange={(e: string) =>
+                value={state.non_rincian_output}
+                options={optionNonRO}
+                getOptionLabel={(opt) => opt.value}
+                handleChange={(e: RODataTable) => {
+                  console.log(e);
+
                   setState((prevState) => {
-                    const nonRO = prevState.non_rincian_output;
-                    nonRO.nomenklatur = e;
                     return {
                       ...prevState,
-                      non_rincian_output: nonRO,
+                      non_rincian_output: e,
                     };
-                  })
-                }
+                  });
+
+                  handleListProject(state.tahun)
+                }}
+                // handleChange={(e: string) =>
+                //   setState((prevState) => {
+                //     const nonRO = prevState.non_rincian_output;
+                //     nonRO.nomenklatur = e;
+                //     return {
+                //       ...prevState,
+                //       non_rincian_output: nonRO,
+                //     };
+                //   })
+                // }
                 placeHolder={"Pilih nomenklatur RO/project"}
                 actionButton={
                   <Box onMouseDown={(e) => e.preventDefault()}>
@@ -395,9 +349,6 @@ export default function FormPerlakuanRisiko({
           <FormProject
             state={state}
             setState={setState}
-            selectStakeholder={selectStakeholder}
-            selectLocation={selectLocation}
-            selectProP={selectProP}
           />
         )}
       </Grid>

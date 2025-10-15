@@ -30,7 +30,7 @@ import {
 } from "@/app/executive-summary/partials/tab9Indication/cardIndicationService";
 import { API_CODE } from "@/lib/core/api/apiModel";
 import { ProPDto, RODataTable, RoDto } from "@/app/misc/rkp/rkpServiceModel";
-import { doGetPROP, doGetRO } from "@/app/misc/rkp/rkpService";
+import { doGetNonRO, doGetPROP, doGetRO } from "@/app/misc/rkp/rkpService";
 import { doGetSystemParamByModuleAndName } from "@/app/misc/sysparams/sysParamService";
 import useCardTOWSVM from "@/app/executive-summary/partials/tab3Fot/cardTows/cardTowsVM";
 import {
@@ -57,10 +57,13 @@ import {
 import {
   ExsumInterventionProjectReqDto,
   ExsumInterventionState,
+  initProjectReqDto,
+  ProjectReqDto,
   UpdateV2ExsumIntervention,
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
 import {
   doCreateIntervention,
+  doCreateInterventionNonRo,
   doDeleteInterventionOnlyRO,
   doUpdateInterventionOnlyRO,
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiService";
@@ -75,9 +78,14 @@ const useCardIndicationVM = () => {
   // DATA
   const [data, setData] = useState<ExsumIndicationResDto[]>([]);
 
+  // Non RO
+  const [reqNonRo, setReqNonRo] = useState<ProjectReqDto>({ ...initProjectReqDto })
+
   // OPTION
   const [optionRiskType, setOptionRiskType] = useState<string[]>([]);
   const [optionRO, setOptionRO] = useState<RoDto[]>([]);
+  const [optionNonRO, setOptionNonRO] = useState<RoDto[]>([]);
+  const [dataTableNonRO, setDataTableNonRO] = useState<RODataTable[]>([]);
   const [dataTable, setDataTable] = useState<RODataTable[]>([]);
   const [optionStakeholder, setOptionStakeholder] = useState<
     MiscMasterListStakeholderRes[]
@@ -171,6 +179,7 @@ const useCardIndicationVM = () => {
 
     if (response?.code == API_CODE.success) {
       let result: RoDto[] = response.result;
+      console.log(result);
 
       setOptionRO(result);
 
@@ -268,6 +277,8 @@ const useCardIndicationVM = () => {
       let result: ExsumIndicationResDto[] =
         response.result == null ? [] : response.result;
 
+      console.log(result);
+
       if (result.length > 0) {
         result.map((res, index) => {
           res.perlakuan.map((prl, indexPrl) => {
@@ -302,9 +313,9 @@ const useCardIndicationVM = () => {
   }
 
   async function deleteRONonROForm(value: ExsumIndicationStateValue) {
-    if (value.type == "NON_RO" && value.non_rincian_output.id != 0) {
+    if (value.type == "NON_RO" && value.non_rincian_output?.id != 0) {
       const response = await doDeleteInterventionOnlyRO({
-        body: { id: value.non_rincian_output.id },
+        body: { id: value.non_rincian_output?.id ?? 0 },
         loadingContext: loadingContext,
         errorModalContext: errorModalContext,
       });
@@ -331,7 +342,9 @@ const useCardIndicationVM = () => {
         list_ro: [ro],
         tahun: "",
         lokasi: [],
+        src_rincian_output_id: 0
       };
+
       const response = await doCreateIntervention({
         body: request,
         loadingContext: loadingContext,
@@ -340,6 +353,26 @@ const useCardIndicationVM = () => {
       if (response?.code !== API_CODE.success) {
         return;
       }
+    }
+  }
+
+  async function getListNonRO() {
+    const response = await doGetNonRO({
+      body: {
+        by: exsum.level,
+        id: [exsum.ref_id],
+        tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
+      },
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+
+    if (response?.code == API_CODE.success) {
+      let result: RoDto[] = response.result;
+      setOptionNonRO(result);
+
+      const dataTable = GenerateProjectData(result, year, rpjmn);
+      setDataTableNonRO(dataTable);
     }
   }
 
@@ -361,71 +394,79 @@ const useCardIndicationVM = () => {
 
       let values: ExsumIndicationStateValue[] = [];
       dataByIndex.perlakuan.map((prl) => {
+
         let rincian_output: RODataTable | undefined = undefined;
         const roID: number = prl.ro?.id ?? 0;
+
         if (roID > 0 && prl.ro?.type == "RO") {
           const getIndexOptRO = dataTable.findIndex((x) => x.id == roID);
-          rincian_output =
-            getIndexOptRO > -1 ? dataTable[getIndexOptRO] : undefined;
+          rincian_output = getIndexOptRO > -1 ? dataTable[getIndexOptRO] : undefined;
         }
 
-        let non_rincian_output: ExsumInterventionState = {
-          id: 0,
-          exsum_id: 0,
-          type: "",
-          code: "",
-          kementrian: undefined,
-          nomenklatur: "",
-          indikator: "",
-          list: [],
-          intervensi: false,
-          prop: undefined,
-          ro: [],
-          tahun: "",
-          location: [],
-        };
-        if (roID > 0 && prl.ro?.type == "NON_RO") {
-          const getIndexOptRO = optionRO.findIndex((x) => x.id == roID);
-          if (getIndexOptRO > -1) {
-            const thisData = optionRO[getIndexOptRO];
-
-            let propData = undefined;
-            const getPropIndex = listProP.findIndex(
-              (y) => y.id == thisData.src_rkp_prop_id
-            );
-            if (getPropIndex > -1) {
-              propData = listProP[getPropIndex];
-            }
-
-            non_rincian_output = {
-              id: thisData.id,
-              exsum_id: 0,
-              type: thisData.type,
-              code: thisData.code,
-              kementrian: thisData.kementrian,
-              nomenklatur: thisData.value,
-              indikator: thisData.pkkr,
-              list: [],
-              intervensi: thisData.intervention,
-              prop: propData,
-              ro: [],
-              location: thisData.lokasi,
-              tahun: year,
-            };
-
-            thisData.detail.map((d, i) => {
-              const listItem = {
-                tahun: d.tahun,
-                target: d.target,
-                satuan: d.satuan,
-                anggaran: d.anggaran,
-                anggaranString: d.anggaran.toString(),
-                sumber_anggaran: d.sumber_anggaran,
-              };
-              non_rincian_output.list.push(listItem);
-            });
-          }
+        let non_rincian_output: RODataTable | undefined = undefined;
+        const nonRoID: number = prl.ro?.id ?? 0;
+        if (nonRoID > 0 && prl.ro?.type == "NON_RO") {
+          const getIndexOptRO = dataTableNonRO.findIndex((x) => x.id == nonRoID);
+          non_rincian_output = getIndexOptRO > -1 ? dataTableNonRO[getIndexOptRO] : undefined;
         }
+
+        // let non_rincian_output: ExsumInterventionState = {
+        //   id: 0,
+        //   exsum_id: 0,
+        //   type: "",
+        //   code: "",
+        //   kementrian: undefined,
+        //   nomenklatur: "",
+        //   indikator: "",
+        //   list: [],
+        //   intervensi: false,
+        //   prop: undefined,
+        //   ro: [],
+        //   tahun: "",
+        //   location: [],
+        // };
+        // if (roID > 0 && prl.ro?.type == "NON_RO") {
+        //   const getIndexOptRO = optionRO.findIndex((x) => x.id == roID);
+        //   if (getIndexOptRO > -1) {
+        //     const thisData = optionRO[getIndexOptRO];
+
+        //     let propData = undefined;
+        //     const getPropIndex = listProP.findIndex(
+        //       (y) => y.id == thisData.src_rkp_prop_id
+        //     );
+        //     if (getPropIndex > -1) {
+        //       propData = listProP[getPropIndex];
+        //     }
+
+        //     non_rincian_output = {
+        //       id: thisData.id,
+        //       exsum_id: 0,
+        //       type: thisData.type,
+        //       code: thisData.code,
+        //       kementrian: thisData.kementrian,
+        //       nomenklatur: thisData.value,
+        //       indikator: thisData.pkkr,
+        //       list: [],
+        //       intervensi: thisData.intervention,
+        //       prop: propData,
+        //       ro: [],
+        //       location: thisData.lokasi,
+        //       tahun: year,
+        //     };
+
+        //     thisData.detail.map((d, i) => {
+        //       const listItem = {
+        //         tahun: d.tahun,
+        //         target: d.target,
+        //         satuan: d.satuan,
+        //         anggaran: d.anggaran,
+        //         anggaranString: d.anggaran.toString(),
+        //         sumber_anggaran: d.sumber_anggaran,
+        //       };
+        //       non_rincian_output.list.push(listItem);
+        //     });
+        //   }
+        // }
 
         const val: ExsumIndicationStateValue = {
           id: prl.id,
@@ -437,6 +478,9 @@ const useCardIndicationVM = () => {
         };
         values.push(val);
       });
+
+      console.log(values);
+
 
       let regulationState: ExsumRegulationDto[] = [];
       dataByIndex.regulasi.map((rg) => {
@@ -455,9 +499,9 @@ const useCardIndicationVM = () => {
               : undefined,
           perpres: Array.isArray(rg.perpres)
             ? rg.perpres.reduce<{ id: number }[]>(
-                (a, b) => [...a, { id: b.id }],
-                []
-              )
+              (a, b) => [...a, { id: b.id }],
+              []
+            )
             : [],
           stakeholder: rg.entitas,
           stakeholder_id: rg.entitas.reduce<number[]>((a, b) => {
@@ -490,6 +534,7 @@ const useCardIndicationVM = () => {
       // || state.values.length == 0
       // || state.regulation.length == 0
     ) {
+      alert("tows, indikasi, kategori risiko, perlakuan risiko wajib diisi!")
       return;
     }
 
@@ -498,7 +543,7 @@ const useCardIndicationVM = () => {
       let roID: number =
         value.type == "RO"
           ? value.rincian_output?.id ?? 0
-          : value.non_rincian_output.id;
+          : value.non_rincian_output?.id ?? 0;
 
       const val: ExsumIndicationValueReqDto = {
         tahun: value.tahun,
@@ -598,155 +643,217 @@ const useCardIndicationVM = () => {
       return;
     }
 
-    if (stateValue.type == "RO") {
-      if (stateValue.rincian_output == undefined) return;
 
-      let ro = stateValue.rincian_output;
-      ro.intervention = stateValue.intervention;
+    // ________________________________________________
+    let ro = stateValue.rincian_output;
+    let nonro = stateValue.non_rincian_output;
 
-      const request: ExsumInterventionProjectReqDto = {
-        id: 0,
-        intervention: stateValue.intervention,
-        exsum_id: exsum.id,
-        type: "RO",
-        code: "",
-        prop: 0,
-        kementrian_id: 0,
-        nomenklatur: "",
-        indikator: "",
-        list: [],
-        list_ro: [ro],
-        tahun: "",
-        lokasi: [],
-      };
-      const response = await doCreateIntervention({
-        body: request,
-        loadingContext: loadingContext,
-        errorModalContext: errorModalContext,
-      });
-      if (response?.code !== API_CODE.success) {
-        return;
-      }
+    const request: ExsumInterventionProjectReqDto = {
+      id: 0,
+      intervention: stateValue.intervention,
+      exsum_id: exsum.id,
+      type: stateValue.type,
+      code: "",
+      prop: 0,
+      kementrian_id: 0,
+      nomenklatur: "",
+      indikator: "",
+      list: [],
+      tahun: year > 0 ? year : rpjmn?.start + "-" + rpjmn?.end,
+      lokasi: [],
+      src_rincian_output_id: 0,
+      list_ro: [],
+    };
 
-      setState((prevState) => {
-        let thisState = { ...stateValue };
-        if (thisState.type == "NON_RO") {
-          thisState.intervention = true;
-        }
-        let values = prevState.values;
-        if (modalOutput.index > -1) {
-          values[modalOutput.index] = thisState;
-        } else {
-          values.push(thisState);
-        }
-
-        return {
-          ...prevState,
-          values: values,
-        };
-      });
+    if (stateValue.type == "RO" && ro != undefined) {
+      request.src_rincian_output_id = ro.id;
+      request.id = ro.id;
+    } else if (stateValue.type == "NON_RO" && nonro != undefined) {
+      request.src_rincian_output_id = nonro.id ?? 0;
+      request.id = nonro.id;
+    } else {
+      return;
     }
 
-    if (stateValue.type == "NON_RO") {
-      if (
-        stateValue.non_rincian_output.nomenklatur == "" ||
-        stateValue.non_rincian_output.code == "" ||
-        stateValue.non_rincian_output.prop == undefined ||
-        stateValue.non_rincian_output.kementrian == undefined ||
-        stateValue.non_rincian_output.location.length == 0
-        // || stateValue.non_rincian_output.indikator == ""
-      ) {
-        return;
+    const response = await doCreateIntervention({
+      body: request,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+    if (response?.code !== API_CODE.success) {
+      return;
+    }
+
+    setState((prevState) => {
+      let thisState = { ...stateValue };
+      if (thisState.type == "NON_RO") {
+        thisState.intervention = true;
       }
-
-      const nonRO: ExsumInterventionState = JSON.parse(
-        JSON.stringify(stateValue.non_rincian_output)
-      );
-
-      let lokasi: any[] = [];
-      nonRO.location.map((x) => {
-        lokasi.push({
-          src_provinsi_id: x.id,
-        });
-      });
-
-      if (nonRO.id == 0) {
-        const request: ExsumInterventionProjectReqDto = {
-          id: nonRO.id,
-          exsum_id: exsum.id,
-          type: stateValue.type,
-          code: nonRO.code,
-          prop: nonRO.prop?.id ?? 0,
-          kementrian_id: nonRO.kementrian?.id ?? 0,
-          nomenklatur: nonRO.nomenklatur,
-          indikator: nonRO.indikator,
-          list: nonRO.list,
-          list_ro: nonRO.ro,
-          // intervention: year == 0 ? true : nonRO.intervensi,
-          intervention: nonRO.intervensi,
-          lokasi: lokasi,
-          tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
-        };
-        const response = await doCreateIntervention({
-          body: request,
-          loadingContext: loadingContext,
-          errorModalContext: errorModalContext,
-        });
-        if (response?.code !== API_CODE.success) {
-          return;
-        }
-
-        const res: RoDto = response?.result;
-        nonRO.id = res.id;
+      let values = prevState.values;
+      if (modalOutput.index > -1) {
+        values[modalOutput.index] = thisState;
       } else {
-        const req: UpdateV2ExsumIntervention = {
-          body: {
-            id: nonRO.id,
-            prop: nonRO.prop?.id ?? 0,
-            code: nonRO.code,
-            nomenklatur: nonRO.nomenklatur,
-            kementrian_id: nonRO.kementrian?.id ?? 0,
-            indikator: nonRO.indikator,
-            target: nonRO.list[0].target,
-            satuan: nonRO.list[0].satuan,
-            anggaran: nonRO.list[0].anggaran,
-            sumber_anggaran: nonRO.list[0].sumber_anggaran,
-            type: stateValue.type,
-            // intervention: year == 0 ? true : nonRO.intervensi,
-            intervention: nonRO.intervensi,
-            lokasi: lokasi,
-            list: nonRO.list,
-            tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
-          },
-          loadingContext: loadingContext,
-          errorModalContext: errorModalContext,
-        };
-        const response = await doUpdateInterventionOnlyRO(req);
-        if (response?.code !== API_CODE.success) {
-          return;
-        }
+        values.push(thisState);
       }
 
-      setState((prevState) => {
-        let thisState = { ...stateValue };
-        thisState.non_rincian_output = nonRO;
+      return {
+        ...prevState,
+        values: values,
+      };
+    });
+    // ________________________________________________
 
-        if (thisState.type == "NON_RO") {
-          thisState.intervention = nonRO.intervensi;
-        }
-        let values = prevState.values;
-        if (modalOutput.index > -1) {
-          values[modalOutput.index] = thisState;
-        } else {
-          values.push(thisState);
-        }
 
-        return {
-          ...prevState,
-          values: values,
-        };
-      });
-    }
+    // if (stateValue.type == "RO") {
+    //   if (stateValue.rincian_output == undefined) return;
+
+    //   let ro = stateValue.rincian_output;
+    //   ro.intervention = stateValue.intervention;
+
+    //   const request: ExsumInterventionProjectReqDto = {
+    //     id: 0,
+    //     intervention: stateValue.intervention,
+    //     exsum_id: exsum.id,
+    //     type: "RO",
+    //     code: "",
+    //     prop: 0,
+    //     kementrian_id: 0,
+    //     nomenklatur: "",
+    //     indikator: "",
+    //     list: [],
+    //     list_ro: [ro],
+    //     tahun: "",
+    //     lokasi: [],
+    //     src_rincian_output_id: 0
+    //   };
+    //   const response = await doCreateIntervention({
+    //     body: request,
+    //     loadingContext: loadingContext,
+    //     errorModalContext: errorModalContext,
+    //   });
+    //   if (response?.code !== API_CODE.success) {
+    //     return;
+    //   }
+
+    //   setState((prevState) => {
+    //     let thisState = { ...stateValue };
+    //     if (thisState.type == "NON_RO") {
+    //       thisState.intervention = true;
+    //     }
+    //     let values = prevState.values;
+    //     if (modalOutput.index > -1) {
+    //       values[modalOutput.index] = thisState;
+    //     } else {
+    //       values.push(thisState);
+    //     }
+
+    //     return {
+    //       ...prevState,
+    //       values: values,
+    //     };
+    //   });
+    // }
+
+    // if (stateValue.type == "NON_RO") {
+    //   if (
+    //     stateValue.non_rincian_output?.value == "" ||
+    //     stateValue.non_rincian_output?.code == "" ||
+    //     stateValue.non_rincian_output?.src_rkp_prop_id == undefined ||
+    //     stateValue.non_rincian_output?.kementrian == undefined ||
+    //     stateValue.non_rincian_output?.location.length == 0
+    //     // || stateValue.non_rincian_output.indikator == ""
+    //   ) {
+    //     return;
+    //   }
+
+    //   const nonRO: ExsumInterventionState = JSON.parse(
+    //     JSON.stringify(stateValue.non_rincian_output)
+    //   );
+
+    //   let lokasi: any[] = [];
+    //   nonRO.location.map((x) => {
+    //     lokasi.push({
+    //       src_provinsi_id: x.id,
+    //     });
+    //   });
+
+    //   if (nonRO.id == 0) {
+    //     const request: ExsumInterventionProjectReqDto = {
+    //       id: nonRO.id,
+    //       exsum_id: exsum.id,
+    //       type: stateValue.type,
+    //       code: nonRO.code,
+    //       prop: nonRO.prop?.id ?? 0,
+    //       kementrian_id: nonRO.kementrian?.id ?? 0,
+    //       nomenklatur: nonRO.nomenklatur,
+    //       indikator: nonRO.indikator,
+    //       list: nonRO.list,
+    //       list_ro: nonRO.ro,
+    //       // intervention: year == 0 ? true : nonRO.intervensi,
+    //       intervention: nonRO.intervensi,
+    //       lokasi: lokasi,
+    //       tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
+    //     };
+    //     const response = await doCreateIntervention({
+    //       body: request,
+    //       loadingContext: loadingContext,
+    //       errorModalContext: errorModalContext,
+    //     });
+    //     if (response?.code !== API_CODE.success) {
+    //       return;
+    //     }
+
+    //     const res: RoDto = response?.result;
+    //     nonRO.id = res.id;
+    //   } else {
+    //     const req: UpdateV2ExsumIntervention = {
+    //       body: {
+    //         id: nonRO.id,
+    //         prop: nonRO.prop?.id ?? 0,
+    //         code: nonRO.code,
+    //         nomenklatur: nonRO.nomenklatur,
+    //         kementrian_id: nonRO.kementrian?.id ?? 0,
+    //         indikator: nonRO.indikator,
+    //         target: nonRO.list[0].target,
+    //         satuan: nonRO.list[0].satuan,
+    //         anggaran: nonRO.list[0].anggaran,
+    //         sumber_anggaran: nonRO.list[0].sumber_anggaran,
+    //         type: stateValue.type,
+    //         // intervention: year == 0 ? true : nonRO.intervensi,
+    //         intervention: nonRO.intervensi,
+    //         lokasi: lokasi,
+    //         list: nonRO.list,
+    //         tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
+    //       },
+    //       loadingContext: loadingContext,
+    //       errorModalContext: errorModalContext,
+    //     };
+    //     const response = await doUpdateInterventionOnlyRO(req);
+    //     if (response?.code !== API_CODE.success) {
+    //       return;
+    //     }
+    //   }
+
+    //   setState((prevState) => {
+    //     let thisState = { ...stateValue };
+    //     thisState.non_rincian_output = nonRO;
+
+    //     if (thisState.type == "NON_RO") {
+    //       thisState.intervention = nonRO.intervensi;
+    //     }
+    //     let values = prevState.values;
+    //     if (modalOutput.index > -1) {
+    //       values[modalOutput.index] = thisState;
+    //     } else {
+    //       values.push(thisState);
+    //     }
+
+    //     return {
+    //       ...prevState,
+    //       values: values,
+    //     };
+    //   });
+    // }
 
     handleModalOutputOpen(-1, false, "");
   };
@@ -829,6 +936,59 @@ const useCardIndicationVM = () => {
     }
   };
 
+  const handleModalAddNonRoSubmit = async () => {
+    if (
+      reqNonRo.nomenklatur == "" ||
+      reqNonRo.code == "" ||
+      reqNonRo.prop == undefined ||
+      reqNonRo.kementrian_id == undefined ||
+      reqNonRo.lokasi.length == 0
+    ) {
+      return;
+    }
+
+    const payload: ProjectReqDto = {
+      ...reqNonRo,
+      tahun: year > 0 ? year : rpjmn?.start + "-" + rpjmn?.end,
+      exsum_id: exsum.id,
+      type: "NON_RO"
+    };
+
+    const response = await doCreateInterventionNonRo({
+      body: payload,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+    if (response?.code == API_CODE.success) {
+      getListNonRO();
+    }
+
+    // const res: RoDto = response?.result;
+    // nonRO.id = res.id;
+
+    // setState((prevState) => {
+    //   let thisState = { ...stateValue };
+    //   thisState.non_rincian_output = nonRO;
+
+    //   if (thisState.type == "NON_RO") {
+    //     thisState.intervention = nonRO.intervensi;
+    //   }
+    //   let values = prevState.values;
+    //   if (modalOutput.index > -1) {
+    //     values[modalOutput.index] = thisState;
+    //   } else {
+    //     values.push(thisState);
+    //   }
+
+    //   return {
+    //     ...prevState,
+    //     values: values,
+    //   };
+    // });
+
+    setModalNomenklatur(false)
+  };
+
   useEffect(() => {
     if (optionRiskType.length == 0) getOptionRiskType();
     if (optionStakeholder.length == 0) getOptionStakeholder();
@@ -838,6 +998,7 @@ const useCardIndicationVM = () => {
 
     if (exsum.id > 0) {
       getOptionRO();
+      getListNonRO();
       getListProP();
       getData();
     }
@@ -886,6 +1047,11 @@ const useCardIndicationVM = () => {
     conditionEditingPointerEvent,
     modalNomenklatur,
     setModalNomenklatur,
+    reqNonRo,
+    setReqNonRo,
+    handleModalAddNonRoSubmit,
+    optionNonRO,
+    dataTableNonRO,
   };
 };
 

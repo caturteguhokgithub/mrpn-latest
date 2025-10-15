@@ -142,19 +142,19 @@ export default function CardIntervensi({
   };
 
   const selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes> =
-    {
-      value: state.kementrian,
-      options: listStakeholder,
-      getOptionLabel: (opt) => opt.value,
-      handleChange: (value: MiscMasterListStakeholderRes) =>
-        setState((prev) => {
-          return {
-            ...prev,
-            kementrian: value,
-          };
-        }),
-      placeHolder: "Pilih Penanggungjawab",
-    };
+  {
+    value: state.kementrian,
+    options: listStakeholder,
+    getOptionLabel: (opt) => opt.value,
+    handleChange: (value: MiscMasterListStakeholderRes) =>
+      setState((prev) => {
+        return {
+          ...prev,
+          kementrian: value,
+        };
+      }),
+    placeHolder: "Pilih Penanggungjawab",
+  };
 
   return (
     <CardItem
@@ -244,6 +244,7 @@ export default function CardIntervensi({
                 ro: [],
                 location: thisData.lokasi,
                 tahun: year,
+                src_rincian_output_id: thisData.src_rkp_prop_id
               };
 
               thisData.detail.map((d, i) => {

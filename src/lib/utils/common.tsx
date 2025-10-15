@@ -1,27 +1,27 @@
-import {IndikatorDto, RODataTable, RoDetailDto, RoDto} from "@/app/misc/rkp/rkpServiceModel";
-import {MiscMasterRPJMNRes} from "@/app/misc/master/masterServiceModel";
+import { IndikatorDto, RODataTable, RoDetailDto, RoDto } from "@/app/misc/rkp/rkpServiceModel";
+import { MiscMasterRPJMNRes } from "@/app/misc/master/masterServiceModel";
 
-export const GenerateProjectData = (data: RoDto[], year:number, rpjmn:MiscMasterRPJMNRes|undefined) => {
+export const GenerateProjectData = (data: RoDto[], year: number, rpjmn: MiscMasterRPJMNRes | undefined) => {
 
   interface DetailInterface {
     [key: string]: string | number;
   }
 
-  let multiyear:number[] = [year]
-  if (year == 0){
+  let multiyear: number[] = [year]
+  if (year == 0) {
     multiyear = GenerateRpjmnYear(rpjmn)
   }
 
-  let result:RODataTable[] = []
+  let result: RODataTable[] = []
   data.map(x => {
-    let rowData:RODataTable = JSON.parse(JSON.stringify(x))
-    const interfaceDetail:DetailInterface = {}
-    multiyear.map((y,i) => {
-      const detail:RoDetailDto = generateTargetROFromDetail(y,x.detail)
-      interfaceDetail["target_"+i] = detail.target
-      interfaceDetail["satuan_"+i] = detail.satuan
-      interfaceDetail["anggaran_"+i] = detail.anggaran
-      interfaceDetail["sumber_anggaran_"+i] = detail.sumber_anggaran
+    let rowData: RODataTable = JSON.parse(JSON.stringify(x))
+    const interfaceDetail: DetailInterface = {}
+    multiyear.map((y, i) => {
+      const detail: RoDetailDto = generateTargetROFromDetail(y, x.detail)
+      interfaceDetail["target_" + i] = detail.target
+      interfaceDetail["satuan_" + i] = detail.satuan
+      interfaceDetail["anggaran_" + i] = detail.anggaran
+      interfaceDetail["sumber_anggaran_" + i] = detail.sumber_anggaran
     })
 
     const rowDataFinal = Object.assign(rowData, interfaceDetail)
@@ -32,32 +32,33 @@ export const GenerateProjectData = (data: RoDto[], year:number, rpjmn:MiscMaster
 
 }
 
-export const generateTargetROFromDetail = (year:number, roDetail:RoDetailDto[]) => {
-  let result:RoDetailDto = {
+export const generateTargetROFromDetail = (year: number, roDetail: RoDetailDto[]) => {
+  let result: RoDetailDto = {
     tahun: 0,
     target: "",
     satuan: "",
     anggaran: 0,
-    sumber_anggaran: ""
+    sumber_anggaran: "",
+    anggaranString: ""
   }
   const index = roDetail.findIndex(x => x.tahun == year)
-  if (index > -1){
+  if (index > -1) {
     result = roDetail[index]
   }
   return result
 }
 
-export const GenerateRpjmnYear = (rpjmn: MiscMasterRPJMNRes|undefined) => {
-  let result:number[] = []
-  if (rpjmn){
+export const GenerateRpjmnYear = (rpjmn: MiscMasterRPJMNRes | undefined) => {
+  let result: number[] = []
+  if (rpjmn) {
     for (let i = rpjmn.start; i <= rpjmn.end; i++) {
-        result.push(i)
+      result.push(i)
     }
   }
   return result
 }
 
-export const GetTarget = (rpjmn: MiscMasterRPJMNRes|undefined, year: number, indikator: IndikatorDto) => {
+export const GetTarget = (rpjmn: MiscMasterRPJMNRes | undefined, year: number, indikator: IndikatorDto) => {
   let index = 0;
 
   if (rpjmn != undefined) {
@@ -93,7 +94,7 @@ export const GetTarget = (rpjmn: MiscMasterRPJMNRes|undefined, year: number, ind
   return target;
 };
 
-export const GenerateMonthFromInteger = (int:number) => {
+export const GenerateMonthFromInteger = (int: number) => {
   const monthList = [
     "Januari",
     "Februari",
@@ -109,9 +110,9 @@ export const GenerateMonthFromInteger = (int:number) => {
     "Desember",
   ];
 
-  if (int < 1 || int > 12){
+  if (int < 1 || int > 12) {
     return "";
   }
 
-  return monthList[(int-1)];
+  return monthList[(int - 1)];
 }

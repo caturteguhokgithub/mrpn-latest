@@ -45,6 +45,14 @@ export async function doGetRO(params: GetRkpROServiceModel) {
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
 
+export async function doGetNonRO(params: GetRkpROServiceModel) {
+  const resp = await post({
+    ...params,
+    url: "misc/rkp/getNonRO",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
 export async function doGetPROP(params: GetRkpPROPServiceModel) {
   const resp = await post({
     ...params,

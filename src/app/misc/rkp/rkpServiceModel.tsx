@@ -70,6 +70,7 @@ export type RoDetailDto = {
     satuan: string;
     anggaran: number;
     sumber_anggaran: string;
+    anggaranString: string;
 }
 
 export interface RoDto {

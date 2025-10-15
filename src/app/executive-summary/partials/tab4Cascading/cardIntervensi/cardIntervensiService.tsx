@@ -1,7 +1,7 @@
-import {post} from "@/lib/core/api/apiBase";
-import {ResponseBaseDto} from "@/lib/core/api/apiModel";
+import { post } from "@/lib/core/api/apiBase";
+import { ResponseBaseDto } from "@/lib/core/api/apiModel";
 import {
-  ExsumInterventionProjectReqDto,
+  CreateNonRoServiceModel,
   GetExsumInterventionByExsumIdServiceModel,
   UpdateById,
   UpdateExsumInterventionByExsumIdServiceModel,
@@ -20,6 +20,14 @@ export async function doCreateIntervention(param: UpdateExsumInterventionByExsum
   const resp = await post({
     ...param,
     url: "exsum/intervensi/add",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+export async function doCreateInterventionNonRo(param: CreateNonRoServiceModel) {
+  const resp = await post({
+    ...param,
+    url: "exsum/intervensi/addNonRO",
   });
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }

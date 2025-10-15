@@ -174,6 +174,7 @@ const useCardIntervensiVM = () => {
       })
     })
 
+    // BENTAR
     if (modal.type == "NON_RO_UPDATE") {
       const req: UpdateV2ExsumIntervention = {
         body: {
@@ -217,7 +218,8 @@ const useCardIntervensiVM = () => {
       list_ro: state.ro,
       intervention: year == 0 ? true : state.intervensi,
       lokasi: lokasi,
-      tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year
+      tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
+      src_rincian_output_id: state.src_rincian_output_id
     }
     const response = await doCreateIntervention({
       body: request,

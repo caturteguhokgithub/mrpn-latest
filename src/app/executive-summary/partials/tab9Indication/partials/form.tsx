@@ -35,6 +35,7 @@ function GenerateTableProject(
   handleModalOutputOpen: any,
   type: string
 ) {
+
   return (
     <>
       {state.values.filter((val) => val.type === type).length === 0 ? (
@@ -117,7 +118,7 @@ function GenerateTableProject(
                       >
                         {type == "RO"
                           ? val.rincian_output?.value ?? "-"
-                          : val.non_rincian_output.nomenklatur}
+                          : val.non_rincian_output?.value}
                       </TableCell>
                       <TableCell
                         align={"left"}
@@ -125,7 +126,7 @@ function GenerateTableProject(
                       >
                         {type == "RO"
                           ? val.rincian_output?.kementrian?.value ?? "-"
-                          : val.non_rincian_output.kementrian?.value ?? "-"}
+                          : val.non_rincian_output?.kementrian?.value ?? "-"}
                       </TableCell>
                       <TableCell sx={{ verticalAlign: "top" }}>
                         <ActionColumn

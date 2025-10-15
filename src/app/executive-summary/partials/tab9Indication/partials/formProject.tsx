@@ -41,131 +41,15 @@ import theme from "@/theme";
 import { FormatCurrency } from "@/lib/utils/currency";
 
 export default function FormProject({
-  selectLocation,
-  selectProP,
-  selectStakeholder,
   state,
   setState,
 }: {
-  selectLocation: AutoCompleteMultipleProp<MiscMasterListProvinsiRes>;
-  selectProP: AutoCompleteSingleProp<ProPDto>;
-  selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes>;
   state: ExsumIndicationStateValue;
   setState: (value: SetStateAction<ExsumIndicationStateValue>) => void;
 }) {
   return (
     <>
-      {/* <Grid item xs={12} md={5}>
-        <FormControl fullWidth>
-          <FieldLabelInfo title="Format Kode" />
-          <TextField
-            value={state.non_rincian_output.code}
-            onChange={(e) =>
-              setState((prev) => {
-                const nonR0 = prev.non_rincian_output;
-                nonR0.code = e.target.value;
-                return {
-                  ...prev,
-                  non_rincian_output: nonR0,
-                };
-              })
-            }
-            variant="outlined"
-            size="small"
-            placeholder="Format Kode"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-        </FormControl>
-      </Grid>
-      <Grid item xs={12} md={7}>
-        <FormControl fullWidth>
-          <FieldLabelInfo title="Tagging ProP" />
-          <AutocompleteSelectSingle
-            key={state.non_rincian_output.prop?.id}
-            value={selectProP.value}
-            options={selectProP.options}
-            getOptionLabel={selectProP.getOptionLabel}
-            handleChange={selectProP.handleChange}
-            placeHolder={selectProP.placeHolder}
-          />
-        </FormControl>
-      </Grid>
-      <Grid item xs={12} md={5}>
-        <FormControl fullWidth>
-          <FieldLabelInfo title="Penanggungjawab" />
-          <AutocompleteSelectSingle
-            key={state.non_rincian_output.id}
-            value={selectStakeholder.value}
-            options={selectStakeholder.options}
-            handleChange={selectStakeholder.handleChange}
-            placeHolder={selectStakeholder.placeHolder}
-            getOptionLabel={selectStakeholder.getOptionLabel}
-          />
-        </FormControl>
-      </Grid> */}
-      {/*<Grid item xs={12} md={7}>*/}
-      {/*  <FormControl fullWidth>*/}
-      {/*    <FieldLabelInfo title="Nomenklatur RO/Project"/>*/}
-      {/*    <TextField*/}
-      {/*      value={state.non_rincian_output.nomenklatur}*/}
-      {/*      onChange={(e) =>*/}
-      {/*        setState((prev) => {*/}
-      {/*          const nonR0 = prev.non_rincian_output*/}
-      {/*          nonR0.nomenklatur = e.target.value*/}
-      {/*          return {*/}
-      {/*            ...prev,*/}
-      {/*            non_rincian_output: nonR0,*/}
-      {/*          };*/}
-      {/*        })*/}
-      {/*      }*/}
-      {/*      variant="outlined"*/}
-      {/*      size="small"*/}
-      {/*      placeholder="Nomenklatur RO/Project"*/}
-      {/*      InputLabelProps={{*/}
-      {/*        shrink: true,*/}
-      {/*      }}*/}
-      {/*    />*/}
-      {/*  </FormControl>*/}
-      {/*</Grid>*/}
-      {/* <Grid item xs={12} md={7}>
-        <FormControl fullWidth>
-          <FieldLabelInfo title="Lokasi" />
-          <AutocompleteSelectMultiple
-            value={selectLocation.value}
-            options={selectLocation.options}
-            getOptionLabel={selectLocation.getOptionLabel}
-            handleChange={selectLocation.handleChange}
-            placeHolder={selectLocation.placeHolder}
-            labelSelectAll={selectLocation.labelSelectAll}
-          />
-        </FormControl>
-      </Grid> */}
-
-      {/*<Grid item xs={12}>*/}
-      {/*  <FormControl fullWidth>*/}
-      {/*    <FieldLabelInfo title="Indikator Project" />*/}
-      {/*    <TextareaStyled*/}
-      {/*      value={state.non_rincian_output.indikator}*/}
-      {/*      onChange={(e) =>*/}
-      {/*        setState((prev) => {*/}
-      {/*          const nonR0 = prev.non_rincian_output;*/}
-      {/*          nonR0.indikator = e.target.value;*/}
-      {/*          return {*/}
-      {/*            ...prev,*/}
-      {/*            non_rincian_output: nonR0,*/}
-      {/*          };*/}
-      {/*        })*/}
-      {/*      }*/}
-      {/*      aria-label="Tuliskan Indikator Project"*/}
-      {/*      placeholder="Tuliskan Indikator Project"*/}
-      {/*      minRows={3}*/}
-      {/*    />*/}
-      {/*  </FormControl>*/}
-      {/*</Grid>*/}
-
-      {state.non_rincian_output.list.length > 0 && (
+      {state.non_rincian_output?.detail && state.non_rincian_output?.detail.length > 0 && (
         <Grid item xs={12}>
           <Table sx={{ minWidth: 650 }} size="small">
             <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
@@ -193,7 +77,7 @@ export default function FormProject({
               </TableRow>
             </TableHead>
             <TableBody>
-              {state.non_rincian_output.list.map((row, index) => (
+              {state.non_rincian_output.detail.map((row, index) => (
                 <GetTableRow
                   key={index}
                   tahun={row.tahun}
@@ -218,37 +102,43 @@ function GetTableRow({
   state: ExsumIndicationStateValue;
   setState: (value: SetStateAction<ExsumIndicationStateValue>) => void;
 }) {
-  const data = state.non_rincian_output.list.find((x) => x.tahun == tahun);
+  const data = state.non_rincian_output?.detail.find((x) => x.tahun == tahun);
+
   const handleStateChange = (
     value: string,
     type: keyof ProjectTargetAnggaranDto
   ) => {
     setState((prevState) => {
-      let prevSt = { ...prevState };
-      let prev = prevSt.non_rincian_output;
-      const indexData = prev.list.findIndex((x) => x.tahun == tahun);
-      if (indexData > -1) {
-        if (type == "target") {
-          prev.list[indexData].target = value;
+      if (!prevState.non_rincian_output) return prevState;
+
+      const prev = structuredClone(prevState);
+      const detailList = prev.non_rincian_output?.detail ?? [];
+      const indexData = detailList.findIndex((x) => x.tahun == tahun);
+
+      if (indexData !== -1) {
+        const updated = { ...detailList[indexData] };
+
+        if (type === "target") updated.target = value;
+        if (type === "satuan") updated.satuan = value;
+        if (type === "anggaranString") {
+          updated.anggaranString = FormatCurrency(value);
+          updated.anggaran = parseInt(value.replace(/[^,\d]/g, "")) || 0;
         }
-        if (type == "satuan") {
-          prev.list[indexData].satuan = value;
-        }
-        if (type == "anggaranString") {
-          prev.list[indexData].anggaranString = FormatCurrency(value);
-          prev.list[indexData].anggaran = parseInt(
-            value.replace(/[^,\d]/g, "").toString()
-          );
-        }
-        if (type == "sumber_anggaran") {
-          prev.list[indexData].sumber_anggaran = value;
-        }
+        if (type === "sumber_anggaran") updated.sumber_anggaran = value;
+
+        detailList[indexData] = updated;
       }
-      return prevSt;
+
+      if (prev.non_rincian_output != undefined) {
+        prev.non_rincian_output.detail = detailList;
+      }
+      return prev;
     });
   };
 
-  return data == undefined ? null : (
+  if (!data) return null;
+
+  return (
     <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
       <TableCell>{tahun}</TableCell>
       <TableCell>
@@ -260,9 +150,7 @@ function GetTableRow({
               variant="outlined"
               size="small"
               placeholder="Nilai"
-              InputLabelProps={{
-                shrink: true,
-              }}
+              InputLabelProps={{ shrink: true }}
             />
           </Grid>
           <Grid item xs={8}>
@@ -273,9 +161,7 @@ function GetTableRow({
               variant="outlined"
               size="small"
               placeholder="Satuan"
-              InputLabelProps={{
-                shrink: true,
-              }}
+              InputLabelProps={{ shrink: true }}
             />
           </Grid>
         </Grid>
@@ -287,9 +173,7 @@ function GetTableRow({
           variant="outlined"
           size="small"
           placeholder="0"
-          InputLabelProps={{
-            shrink: true,
-          }}
+          InputLabelProps={{ shrink: true }}
           sx={{ input: { textAlign: "right" }, px: 0 }}
           InputProps={{
             endAdornment: (
@@ -303,13 +187,13 @@ function GetTableRow({
       <TableCell>
         <TextField
           value={data.sumber_anggaran}
-          onChange={(e) => handleStateChange(e.target.value, "sumber_anggaran")}
+          onChange={(e) =>
+            handleStateChange(e.target.value, "sumber_anggaran")
+          }
           variant="outlined"
           size="small"
           placeholder="Sumber Pembiayaan"
-          InputLabelProps={{
-            shrink: true,
-          }}
+          InputLabelProps={{ shrink: true }}
         />
       </TableCell>
     </TableRow>
