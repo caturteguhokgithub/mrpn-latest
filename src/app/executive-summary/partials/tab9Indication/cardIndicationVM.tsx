@@ -179,7 +179,6 @@ const useCardIndicationVM = () => {
 
     if (response?.code == API_CODE.success) {
       let result: RoDto[] = response.result;
-      console.log(result);
 
       setOptionRO(result);
 
@@ -276,8 +275,6 @@ const useCardIndicationVM = () => {
     if (response?.code == API_CODE.success) {
       let result: ExsumIndicationResDto[] =
         response.result == null ? [] : response.result;
-
-      console.log(result);
 
       if (result.length > 0) {
         result.map((res, index) => {
@@ -479,9 +476,6 @@ const useCardIndicationVM = () => {
         values.push(val);
       });
 
-      console.log(values);
-
-
       let regulationState: ExsumRegulationDto[] = [];
       dataByIndex.regulasi.map((rg) => {
         const row: ExsumRegulationDto = {
@@ -527,14 +521,14 @@ const useCardIndicationVM = () => {
 
   const handleModalOpenSubmit = async () => {
     if (
-      state.tows == undefined ||
+      // state.tows == undefined ||
       state.indikasi_risiko == "" ||
       state.kategori_risiko == "" ||
       state.perlakuan_risiko == ""
       // || state.values.length == 0
       // || state.regulation.length == 0
     ) {
-      alert("tows, indikasi, kategori risiko, perlakuan risiko wajib diisi!")
+      alert("indikasi, kategori risiko, perlakuan risiko wajib diisi!")
       return;
     }
 
@@ -650,7 +644,7 @@ const useCardIndicationVM = () => {
 
     const request: ExsumInterventionProjectReqDto = {
       id: 0,
-      intervention: stateValue.intervention,
+      intervention: stateValue.intervention ?? false,
       exsum_id: exsum.id,
       type: stateValue.type,
       code: "",
@@ -686,9 +680,9 @@ const useCardIndicationVM = () => {
 
     setState((prevState) => {
       let thisState = { ...stateValue };
-      if (thisState.type == "NON_RO") {
-        thisState.intervention = true;
-      }
+      // if (thisState.type == "NON_RO") {
+      //   thisState.intervention = true;
+      // }
       let values = prevState.values;
       if (modalOutput.index > -1) {
         values[modalOutput.index] = thisState;
