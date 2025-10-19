@@ -34,7 +34,6 @@ function GenerateTableProject(
   handleModalOutputOpen: any,
   type: string
 ) {
-
   return (
     <>
       {state.values.filter((val) => val.type === type).length === 0 ? (
@@ -315,6 +314,7 @@ export default function FormIndication({
               gap={1}
             >
               <AddButton
+                filled
                 title="Tambah RO"
                 noMargin
                 onclick={() => handleModalOutputOpen(-1, true, "RO")}
@@ -341,6 +341,7 @@ export default function FormIndication({
               gap={1}
             >
               <AddButton
+                filled
                 title="Tambah Project"
                 noMargin
                 onclick={() => handleModalOutputOpen(-1, true, "NON_RO")}
@@ -362,6 +363,7 @@ export default function FormIndication({
           >
             <FieldLabelInfo titleSection title="Regulasi/Kelembagaan" />
             <AddButton
+              filled
               title="Tambah regulasi"
               noMargin
               onclick={() => handleModalRegulationOpen(-1, true, "update")}

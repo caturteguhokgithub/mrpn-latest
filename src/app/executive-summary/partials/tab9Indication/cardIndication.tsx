@@ -4,6 +4,7 @@ import {
   FormControl,
   Grid,
   Stack,
+  Typography,
   useMediaQuery,
 } from "@mui/material";
 import EmptyState from "@/components/empty";
@@ -25,6 +26,8 @@ import theme from "@/theme";
 import { API_CONSTANT } from "@/lib/core/api/apiModel";
 import Iconify from "@/components/icons/iconify";
 import FormNomenklatur from "./partials/form-nomenklatur";
+import { Add, Star } from "@mui/icons-material";
+import TableReference from "./partials/table-reference";
 
 export default function CardIndication({ project }: { project: string }) {
   const { year, rpjmn } = useRKPContext((store) => store);
@@ -72,6 +75,8 @@ export default function CardIndication({ project }: { project: string }) {
     handleModalAddNonRoSubmit,
     optionNonRO,
     dataTableNonRO,
+    modalReference,
+    setModalReference,
   } = useCardIndicationVM();
 
   const { permission } = useAuthContext((state) => state);
@@ -82,8 +87,9 @@ export default function CardIndication({ project }: { project: string }) {
     <>
       <Stack gap={1}>
         <CardItem
-          title={`Indikasi Profil Risiko ${year == 0 ? "Objek MRPN LS" : "RKP Tahun " + year
-            }`}
+          title={`Indikasi Profil Risiko ${
+            year == 0 ? "Objek MRPN LS" : "RKP Tahun " + year
+          }`}
           infoTooltip={
             <Stack spacing={2}>
               <div>
@@ -201,8 +207,24 @@ export default function CardIndication({ project }: { project: string }) {
         width={"80%"}
         dialogOpen={modalOpen.action && modalOpen.type == "update"}
         // dialogClose={() => handleModalOpen(0, false, "")}
-        title={`Form Indikasi Risiko Objek MRPN ${year == 0 ? "5 Tahunan" : year
-          }`}
+        title={
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            spacing={1}
+            width="100%"
+          >
+            <Typography fontSize={20} fontWeight={500}>
+              Form Indikasi Risiko Objek MRPN {year == 0 ? "5 Tahunan" : year}
+            </Typography>
+            <AddButton
+              title="Referensi"
+              onclick={() => setModalReference(true)}
+              startIcon={<Iconify name="mdi:book-search-outline" />}
+            />
+          </Stack>
+        }
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button
@@ -237,8 +259,9 @@ export default function CardIndication({ project }: { project: string }) {
         // width={"80%"}
         dialogOpen={modalOutput.type != "delete" && modalOutput.action}
         dialogClose={() => handleModalOutputOpen(-1, false, "")}
-        title={`Tambah ${modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
-          }`}
+        title={`Tambah ${
+          modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
+        }`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button
@@ -391,6 +414,17 @@ export default function CardIndication({ project }: { project: string }) {
         }
         handleDelete={() => deleteData()}
       />
+
+      <DialogComponent
+        tableMode
+        width={920}
+        dialogOpen={modalReference}
+        dialogClose={() => setModalReference(false)}
+        title="Referensi"
+        closeButton
+      >
+        <TableReference />
+      </DialogComponent>
     </>
   );
 }

@@ -79,7 +79,9 @@ const useCardIndicationVM = () => {
   const [data, setData] = useState<ExsumIndicationResDto[]>([]);
 
   // Non RO
-  const [reqNonRo, setReqNonRo] = useState<ProjectReqDto>({ ...initProjectReqDto })
+  const [reqNonRo, setReqNonRo] = useState<ProjectReqDto>({
+    ...initProjectReqDto,
+  });
 
   // OPTION
   const [optionRiskType, setOptionRiskType] = useState<string[]>([]);
@@ -101,6 +103,7 @@ const useCardIndicationVM = () => {
     []
   );
   const [modalNomenklatur, setModalNomenklatur] = useState(false);
+  const [modalReference, setModalReference] = useState(false);
 
   // STATE
   const initState: ExsumIndicationState = JSON.parse(
@@ -339,7 +342,7 @@ const useCardIndicationVM = () => {
         list_ro: [ro],
         tahun: "",
         lokasi: [],
-        src_rincian_output_id: 0
+        src_rincian_output_id: 0,
       };
 
       const response = await doCreateIntervention({
@@ -391,20 +394,23 @@ const useCardIndicationVM = () => {
 
       let values: ExsumIndicationStateValue[] = [];
       dataByIndex.perlakuan.map((prl) => {
-
         let rincian_output: RODataTable | undefined = undefined;
         const roID: number = prl.ro?.id ?? 0;
 
         if (roID > 0 && prl.ro?.type == "RO") {
           const getIndexOptRO = dataTable.findIndex((x) => x.id == roID);
-          rincian_output = getIndexOptRO > -1 ? dataTable[getIndexOptRO] : undefined;
+          rincian_output =
+            getIndexOptRO > -1 ? dataTable[getIndexOptRO] : undefined;
         }
 
         let non_rincian_output: RODataTable | undefined = undefined;
         const nonRoID: number = prl.ro?.id ?? 0;
         if (nonRoID > 0 && prl.ro?.type == "NON_RO") {
-          const getIndexOptRO = dataTableNonRO.findIndex((x) => x.id == nonRoID);
-          non_rincian_output = getIndexOptRO > -1 ? dataTableNonRO[getIndexOptRO] : undefined;
+          const getIndexOptRO = dataTableNonRO.findIndex(
+            (x) => x.id == nonRoID
+          );
+          non_rincian_output =
+            getIndexOptRO > -1 ? dataTableNonRO[getIndexOptRO] : undefined;
         }
 
         // let non_rincian_output: ExsumInterventionState = {
@@ -493,9 +499,9 @@ const useCardIndicationVM = () => {
               : undefined,
           perpres: Array.isArray(rg.perpres)
             ? rg.perpres.reduce<{ id: number }[]>(
-              (a, b) => [...a, { id: b.id }],
-              []
-            )
+                (a, b) => [...a, { id: b.id }],
+                []
+              )
             : [],
           stakeholder: rg.entitas,
           stakeholder_id: rg.entitas.reduce<number[]>((a, b) => {
@@ -528,7 +534,7 @@ const useCardIndicationVM = () => {
       // || state.values.length == 0
       // || state.regulation.length == 0
     ) {
-      alert("indikasi, kategori risiko, perlakuan risiko wajib diisi!")
+      alert("indikasi, kategori risiko, perlakuan risiko wajib diisi!");
       return;
     }
 
@@ -637,7 +643,6 @@ const useCardIndicationVM = () => {
       return;
     }
 
-
     // ________________________________________________
     let ro = stateValue.rincian_output;
     let nonro = stateValue.non_rincian_output;
@@ -696,7 +701,6 @@ const useCardIndicationVM = () => {
       };
     });
     // ________________________________________________
-
 
     // if (stateValue.type == "RO") {
     //   if (stateValue.rincian_output == undefined) return;
@@ -945,7 +949,7 @@ const useCardIndicationVM = () => {
       ...reqNonRo,
       tahun: year > 0 ? year : rpjmn?.start + "-" + rpjmn?.end,
       exsum_id: exsum.id,
-      type: "NON_RO"
+      type: "NON_RO",
     };
 
     const response = await doCreateInterventionNonRo({
@@ -980,7 +984,7 @@ const useCardIndicationVM = () => {
     //   };
     // });
 
-    setModalNomenklatur(false)
+    setModalNomenklatur(false);
   };
 
   useEffect(() => {
@@ -1046,6 +1050,8 @@ const useCardIndicationVM = () => {
     handleModalAddNonRoSubmit,
     optionNonRO,
     dataTableNonRO,
+    modalReference,
+    setModalReference,
   };
 };
 
