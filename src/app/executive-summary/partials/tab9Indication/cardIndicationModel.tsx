@@ -155,6 +155,13 @@ export const initStateExsumIndication: ExsumIndicationState = {
   regulation: [],
 };
 
+export interface ExsumProfilRisikoOverview {
+  kategori_risiko: string;
+  peristiwa_risiko: string;
+  keputusan: string;
+  deskripsi_keterangan_risiko: string[]
+}
+
 export interface GetByExsumId {
   exsum_id: number;
 }

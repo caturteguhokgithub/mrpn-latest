@@ -11,8 +11,15 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { bgColorTh } from "@/utils/color";
+import { ExsumProfilRisikoOverview } from "../cardIndicationModel";
 
-export default function TableReference({}: {}) {
+export default function TableReference({
+  data,
+}: {
+  data?: ExsumProfilRisikoOverview[];
+}) {
+  console.log(data);
+
   return (
     <TableContainer
       className="table-overflow-x-indication"
@@ -89,27 +96,40 @@ export default function TableReference({}: {}) {
           </TableRow> */}
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell sx={{ verticalAlign: "top" }}>Risiko Sosial</TableCell>
-            <TableCell sx={{ verticalAlign: "top" }}>
-              Partisipasi pihak swasta masih rendah dalam pengelolaan sampah
-            </TableCell>
-            <TableCell sx={{ verticalAlign: "top" }}>
-              Mengurangi kemungkinan terjadinya risiko
-            </TableCell>
-            <TableCell sx={{ verticalAlign: "top", pl: 4 }}>
-              <ul>
-                <li>
-                  Menyusun aturan pengangkutan sampah organik dan anorganik di
-                  rumah tangga AAA 186
-                </li>
-                <li>
-                  Sosialisasi berkelanjutan yang melibatkan penyuluh dan tokoh
-                  informal dalam pemilahan sampah di tingkat RT RW BBB 185
-                </li>
-              </ul>
-            </TableCell>
-          </TableRow>
+          {data && data.length > 0 ? (
+            data.map((row, index) => (
+              <TableRow key={index}>
+                <TableCell sx={{ verticalAlign: "top" }}>
+                  {row.kategori_risiko}
+                </TableCell>
+                <TableCell sx={{ verticalAlign: "top" }}>
+                  {row.peristiwa_risiko}
+                </TableCell>
+                <TableCell sx={{ verticalAlign: "top" }}>
+                  {row.keputusan}
+                </TableCell>
+                <TableCell sx={{ verticalAlign: "top", pl: 4 }}>
+                  {row.deskripsi_keterangan_risiko && Array.isArray(row.deskripsi_keterangan_risiko) ? (
+                    <ul style={{ margin: 0, paddingLeft: 20 }}>
+                      {row.deskripsi_keterangan_risiko.map((desc, i) => (
+                        <li key={i}>{desc}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    row.deskripsi_keterangan_risiko
+                  )}
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={4} align="center">
+                <Typography color="text.secondary" fontStyle="italic">
+                  Tidak ada data referensi risiko
+                </Typography>
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </TableContainer>

@@ -12,6 +12,7 @@ import {
   ExsumIndicationState,
   ExsumIndicationStateValue,
   ExsumIndicationValueReqDto,
+  ExsumProfilRisikoOverview,
   IndicationReqDto,
   initStateExsumIndication,
   initStateExsumIndicationValue,
@@ -26,6 +27,7 @@ import {
   doCreateIndication,
   doDeleteIndication,
   doGetIndication,
+  doGetRefIndication,
   doUpdateIndication,
 } from "@/app/executive-summary/partials/tab9Indication/cardIndicationService";
 import { API_CODE } from "@/lib/core/api/apiModel";
@@ -77,6 +79,7 @@ const useCardIndicationVM = () => {
 
   // DATA
   const [data, setData] = useState<ExsumIndicationResDto[]>([]);
+  const [dataProfilOverview, setDataProfilOverview] = useState<ExsumProfilRisikoOverview[]>([]);
 
   // Non RO
   const [reqNonRo, setReqNonRo] = useState<ProjectReqDto>({
@@ -300,6 +303,22 @@ const useCardIndicationVM = () => {
     }
   }
 
+  async function getDataRef() {
+    const response = await doGetRefIndication({
+      body: {
+        exsum_id: exsum.id,
+      },
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+
+    if (response?.code == API_CODE.success) {
+      let result: ExsumProfilRisikoOverview[] = response.result == null ? [] : response.result;
+
+      setDataProfilOverview(result);
+    }
+  }
+
   async function deleteData() {
     const response = await doDeleteIndication({
       body: { id: state.id },
@@ -499,9 +518,9 @@ const useCardIndicationVM = () => {
               : undefined,
           perpres: Array.isArray(rg.perpres)
             ? rg.perpres.reduce<{ id: number }[]>(
-                (a, b) => [...a, { id: b.id }],
-                []
-              )
+              (a, b) => [...a, { id: b.id }],
+              []
+            )
             : [],
           stakeholder: rg.entitas,
           stakeholder_id: rg.entitas.reduce<number[]>((a, b) => {
@@ -999,6 +1018,7 @@ const useCardIndicationVM = () => {
       getListNonRO();
       getListProP();
       getData();
+      getDataRef();
     }
   }, [exsum]);
 
@@ -1052,6 +1072,7 @@ const useCardIndicationVM = () => {
     dataTableNonRO,
     modalReference,
     setModalReference,
+    dataProfilOverview,
   };
 };
 
