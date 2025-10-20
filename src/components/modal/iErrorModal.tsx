@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import {
   useAuthContext,
@@ -10,7 +10,6 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
   Slide,
   Stack,
   Typography,
@@ -18,7 +17,7 @@ import {
 import { TransitionProps } from "@mui/material/transitions";
 import { API_CONSTANT } from "@/lib/core/api/apiModel";
 import { IconErrorBadRequest, IconTimeout } from "../icons";
-import { grey, red } from "@mui/material/colors";
+import { red } from "@mui/material/colors";
 
 const ErrorModal = ({
   icon,
@@ -101,7 +100,8 @@ export const IErrorModal = () => {
         {code == 400 ? (
           <ErrorModal
             icon={<IconErrorBadRequest />}
-            title="Error 400 Bad Request"
+            // title="Error 400 Bad Request"
+            title="Perhatian! Ada Kesalahan!"
             message={
               message == "The uraian penetapan object id field is required." ? (
                 <Typography color={red[600]}>
@@ -117,7 +117,12 @@ export const IErrorModal = () => {
         ) : (
           <ErrorModal
             icon={<IconTimeout />}
-            title={code == 503 ? "Service Offline" : "Session Timeout"}
+            // title={code == 503 ? "Service Offline" : "Session Timeout"}
+            title={
+              code == 503
+                ? "Perhatian! Ada Kesalahan!"
+                : "Perhatian! Ada Kesalahan!"
+            }
             message={
               code == 503
                 ? "Saat ini service sedang tidak tersedia. harap coba beberapa saat lagi."

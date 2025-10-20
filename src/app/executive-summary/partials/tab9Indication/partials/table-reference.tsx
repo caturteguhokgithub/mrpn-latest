@@ -1,6 +1,5 @@
 import {
   Paper,
-  Stack,
   Table,
   TableBody,
   TableCell,
@@ -12,6 +11,8 @@ import {
 import { grey } from "@mui/material/colors";
 import { bgColorTh } from "@/utils/color";
 import { ExsumProfilRisikoOverview } from "../cardIndicationModel";
+import EmptyState from "@/components/empty";
+import { IconEmptyData } from "@/components/icons";
 
 export default function TableReference({
   data,
@@ -109,7 +110,8 @@ export default function TableReference({
                   {row.keputusan}
                 </TableCell>
                 <TableCell sx={{ verticalAlign: "top", pl: 4 }}>
-                  {row.deskripsi_keterangan_risiko && Array.isArray(row.deskripsi_keterangan_risiko) ? (
+                  {row.deskripsi_keterangan_risiko &&
+                  Array.isArray(row.deskripsi_keterangan_risiko) ? (
                     <ul style={{ margin: 0, paddingLeft: 20 }}>
                       {row.deskripsi_keterangan_risiko.map((desc, i) => (
                         <li key={i}>{desc}</li>
@@ -124,9 +126,10 @@ export default function TableReference({
           ) : (
             <TableRow>
               <TableCell colSpan={4} align="center">
-                <Typography color="text.secondary" fontStyle="italic">
-                  Tidak ada data referensi risiko
-                </Typography>
+                <EmptyState
+                  icon={<IconEmptyData width={100} />}
+                  title={`Data Referensi Risiko Kosong`}
+                />
               </TableCell>
             </TableRow>
           )}
