@@ -313,7 +313,7 @@ const useCardIndicationVM = () => {
     });
 
     if (response?.code == API_CODE.success) {
-      let result: ExsumProfilRisikoOverview[] = response.result == null ? [] : response.result;
+      let result: ExsumProfilRisikoOverview[] = response.result.ringkasan == null ? [] : response.result.ringkasan;
 
       setDataProfilOverview(result);
     }
