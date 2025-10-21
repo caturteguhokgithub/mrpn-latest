@@ -74,7 +74,7 @@ export interface RiskTreatmentReqDto {
   src_matriks_risiko_id: number
   src_matriks_risiko: MasterRiskMatrixRes | undefined
   keputusan: string
-  perlakuan: Perlakuan[]
+  perlakuan: Perlakuan[] | string
 }
 
 export interface Perlakuan {

@@ -193,18 +193,23 @@ const useTreatmentRiskVM = () => {
     //   return
     // }
 
+    const request: RiskTreatmentReqDto = {
+      ...state,
+      perlakuan: JSON.stringify(state.perlakuan),
+    };
+
     let response
     if (modal.action !== "delete") {
 
       if (state.id == 0) {
         response = await doCreateRiskTreatment({
-          body: state,
+          body: request,
           loadingContext: loadingContext,
           errorModalContext: errorModalContext
         })
       } else {
         response = await doUpdateRiskTreatment({
-          body: state,
+          body: request,
           loadingContext: loadingContext,
           errorModalContext: errorModalContext
         })
