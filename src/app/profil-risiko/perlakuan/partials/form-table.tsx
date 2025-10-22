@@ -302,18 +302,23 @@ export default function FormTable({
 
       const updatedItem = updated.find((item) => item.id === id)!;
 
-      setState((prev) => ({
-        ...prev,
-        perlakuan: prev.perlakuan.map((item) =>
-          item.id === id
-            ? {
-              ...item,
-              [field]: value,
-              ro: [...updatedItem.ro],
-            }
-            : item
-        ),
-      }));
+      setState((prev) => {
+        if (!Array.isArray(prev.perlakuan)) return prev;
+
+        return {
+          ...prev,
+          perlakuan: prev.perlakuan.map((item) =>
+            item.id === id
+              ? {
+                ...item,
+                [field]: value,
+                ro: [...updatedItem.ro],
+              }
+              : item
+          ),
+        };
+      });
+
 
       // console.log(updated);
       return updated;
@@ -323,6 +328,8 @@ export default function FormTable({
   const [modal, setModal] = useState<boolean>(false);
 
   useEffect(() => {
+    if (!Array.isArray(state.perlakuan)) return;
+
     if (
       state.perlakuan &&
       state.perlakuan.length > 0 &&
@@ -379,7 +386,7 @@ export default function FormTable({
   }, [items]);
 
   const perlakuanAdd = () => {
-    if (items.length >= 10) return;
+    if (items.length >= 15) return;
 
     const newItem = {
       id: Math.floor(Math.random() * 1000),
