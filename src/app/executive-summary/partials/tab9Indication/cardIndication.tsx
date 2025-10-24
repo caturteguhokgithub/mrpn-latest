@@ -6,6 +6,7 @@ import {
   Stack,
   Typography,
   useMediaQuery,
+  TextField,
 } from "@mui/material";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
@@ -26,8 +27,8 @@ import theme from "@/theme";
 import { API_CONSTANT } from "@/lib/core/api/apiModel";
 import Iconify from "@/components/icons/iconify";
 import FormNomenklatur from "./partials/form-nomenklatur";
-import { Add, Star } from "@mui/icons-material";
 import TableReference from "./partials/table-reference";
+import { AutocompleteSelectSingle } from "@/components/autocomplete";
 
 export default function CardIndication({ project }: { project: string }) {
   const { year, rpjmn } = useRKPContext((store) => store);
@@ -36,7 +37,6 @@ export default function CardIndication({ project }: { project: string }) {
     data,
     state,
     setState,
-    optionRO,
     dataTable,
     optionRiskType,
     optionStakeholder,
@@ -60,7 +60,6 @@ export default function CardIndication({ project }: { project: string }) {
     stateNewRegulation,
     setStateNewRegulation,
     listLocation,
-    listSof,
     listProP,
     stateRegulation,
     setStateRegulation,
@@ -73,23 +72,48 @@ export default function CardIndication({ project }: { project: string }) {
     reqNonRo,
     setReqNonRo,
     handleModalAddNonRoSubmit,
-    optionNonRO,
     dataTableNonRO,
     modalReference,
     setModalReference,
     dataProfilOverview,
+    modalEntitas,
+    handleModalEntitasOpen,
   } = useCardIndicationVM();
 
   const { permission } = useAuthContext((state) => state);
   const pathname = usePathname();
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const optionTypeEntity = [
+    {
+      id: 1,
+      name: "BUMN",
+    },
+    {
+      id: 2,
+      name: "BUMD",
+    },
+    {
+      id: 3,
+      name: "BLUD",
+    },
+    {
+      id: 4,
+      name: "Swasta",
+    },
+    {
+      id: 5,
+      name: "Lembaga",
+    },
+  ];
+
   return (
     <>
       <Stack gap={1}>
         <CardItem
-          title={`Indikasi Profil Risiko ${year == 0 ? "Objek MRPN LS" : "RKP Tahun " + year
-            }`}
+          title={`Indikasi Profil Risiko ${
+            year == 0 ? "Objek MRPN LS" : "RKP Tahun " + year
+          }`}
           infoTooltip={
             <Stack spacing={2}>
               <div>
@@ -259,8 +283,9 @@ export default function CardIndication({ project }: { project: string }) {
         // width={"80%"}
         dialogOpen={modalOutput.type != "delete" && modalOutput.action}
         dialogClose={() => handleModalOutputOpen(-1, false, "")}
-        title={`Tambah ${modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
-          }`}
+        title={`Tambah ${
+          modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
+        }`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button
@@ -314,6 +339,7 @@ export default function CardIndication({ project }: { project: string }) {
           options={listPerpres}
           optionStakeholder={optionStakeholder}
           setModalPeraturan={handleModalNewRegulationOpen}
+          setModalEntitas={handleModalEntitasOpen}
         />
       </DialogComponent>
 
@@ -402,6 +428,7 @@ export default function CardIndication({ project }: { project: string }) {
           selectLocation={listLocation}
           listProP={listProP}
           listStakeholder={optionStakeholder}
+          setModalEntitas={handleModalEntitasOpen}
         />
       </DialogComponent>
 
@@ -415,8 +442,69 @@ export default function CardIndication({ project }: { project: string }) {
       />
 
       <DialogComponent
+        width={480}
+        dialogOpen={modalEntitas.action && modalEntitas.type == "update"}
+        dialogClose={() => handleModalEntitasOpen(-1, false, "")}
+        title={
+          modalEntitas.source === "nomenklatur"
+            ? "Tambah Penanggungjawab"
+            : "Tambah Entitas"
+        }
+        dialogFooter={
+          <DialogActions sx={{ p: 2, px: 3 }}>
+            <Button onClick={() => handleModalEntitasOpen(-1, false, "")}>
+              Batal
+            </Button>
+            <Button
+              variant="contained"
+              type="submit"
+              color="primary"
+              // onClick={() => handleModalEntitasSubmit()}
+            >
+              Simpan
+            </Button>
+          </DialogActions>
+        }
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <TextField
+                variant="outlined"
+                size="small"
+                placeholder={
+                  modalEntitas.source === "nomenklatur"
+                    ? "Nama Penanggungjawab"
+                    : "Nama Entitas"
+                }
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <AutocompleteSelectSingle
+                key={optionTypeEntity.length}
+                value={undefined}
+                options={optionTypeEntity}
+                getOptionLabel={(option) => option.name}
+                handleChange={() => {}}
+                placeHolder={
+                  modalEntitas.source === "nomenklatur"
+                    ? "Pilih tipe penanggungjawab"
+                    : "Pilih tipe entitas"
+                }
+              />
+            </FormControl>
+          </Grid>
+        </Grid>
+      </DialogComponent>
+
+      <DialogComponent
         tableMode
-        width={920}
+        width="70%"
         dialogOpen={modalReference}
         dialogClose={() => setModalReference(false)}
         title="Referensi"

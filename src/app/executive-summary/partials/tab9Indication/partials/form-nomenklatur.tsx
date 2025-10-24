@@ -1,8 +1,4 @@
-import {
-  FormControl,
-  Grid,
-  TextField,
-} from "@mui/material";
+import { Box, Button, FormControl, Grid, TextField } from "@mui/material";
 import FieldLabelInfo from "@/components/fieldLabelInfo";
 import { TextareaStyled } from "@/components/textarea";
 import { ProjectReqDto } from "../../tab4Cascading/cardIntervensi/cardIntervensiModel";
@@ -17,6 +13,7 @@ import {
   MiscMasterListStakeholderRes,
 } from "@/app/misc/master/masterServiceModel";
 import { ProPDto } from "@/app/misc/rkp/rkpServiceModel";
+import { IconFA } from "@/components/icons/icon-fa";
 
 export default function FormNomenklatur({
   selectLocation = [],
@@ -24,24 +21,33 @@ export default function FormNomenklatur({
   listStakeholder,
   reqNonRo,
   setReqNonRo,
+  setModalEntitas,
 }: {
   selectLocation?: MiscMasterListProvinsiRes[];
   listProP?: ProPDto[];
   listStakeholder?: MiscMasterListStakeholderRes[];
   reqNonRo?: ProjectReqDto;
   setReqNonRo?: (value: SetStateAction<ProjectReqDto>) => void;
+  setModalEntitas?: (
+    id: number,
+    action: boolean,
+    type: string,
+    source?: string
+  ) => void;
 }) {
   const selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes> =
-  {
-    // value: reqNonRo?.kementrian_id,
-    value: (listStakeholder ?? []).find((p) => p.id === reqNonRo?.kementrian_id) ?? undefined,
-    options: listStakeholder ?? [],
-    getOptionLabel: (opt) => opt.value,
-    handleChange: (value: MiscMasterListStakeholderRes | undefined) => {
-      handleChange("kementrian_id", value ? value.id : 0)
-    },
-    placeHolder: "Pilih Penanggungjawab",
-  };
+    {
+      // value: reqNonRo?.kementrian_id,
+      value:
+        (listStakeholder ?? []).find((p) => p.id === reqNonRo?.kementrian_id) ??
+        undefined,
+      options: listStakeholder ?? [],
+      getOptionLabel: (opt) => opt.value,
+      handleChange: (value: MiscMasterListStakeholderRes | undefined) => {
+        handleChange("kementrian_id", value ? value.id : 0);
+      },
+      placeHolder: "Pilih Penanggungjawab",
+    };
 
   const handleChange = (field: keyof ProjectReqDto, value: any) => {
     setReqNonRo?.((prev) => ({
@@ -66,12 +72,10 @@ export default function FormNomenklatur({
   const selectedLokasiObjects: MiscMasterListProvinsiRes[] =
     (reqNonRo?.lokasi && Array.isArray(reqNonRo.lokasi)
       ? reqNonRo.lokasi
-        .map((l) =>
-          (selectLocation ?? []).find(
-            (prov) => prov.id === l.src_provinsi_id
+          .map((l) =>
+            (selectLocation ?? []).find((prov) => prov.id === l.src_provinsi_id)
           )
-        )
-        .filter((x): x is MiscMasterListProvinsiRes => Boolean(x))
+          .filter((x): x is MiscMasterListProvinsiRes => Boolean(x))
       : []) || [];
 
   return (
@@ -111,7 +115,9 @@ export default function FormNomenklatur({
         <FormControl fullWidth>
           <FieldLabelInfo title="Tagging ProP" />
           <AutocompleteSelectSingle<ProPDto>
-            value={(listProP ?? []).find((p) => p.id === reqNonRo?.prop) ?? undefined}
+            value={
+              (listProP ?? []).find((p) => p.id === reqNonRo?.prop) ?? undefined
+            }
             options={listProP ?? []}
             getOptionLabel={(opt) => opt.code + " - " + opt.value}
             handleChange={(value: ProPDto | undefined) => {
@@ -127,13 +133,31 @@ export default function FormNomenklatur({
         <FormControl fullWidth>
           <FieldLabelInfo title="Penanggungjawab" />
           <AutocompleteSelectSingle<MiscMasterListStakeholderRes>
-            value={(listStakeholder ?? []).find((p) => p.id === reqNonRo?.kementrian_id) ?? undefined}
+            value={
+              (listStakeholder ?? []).find(
+                (p) => p.id === reqNonRo?.kementrian_id
+              ) ?? undefined
+            }
             options={listStakeholder ?? []}
             getOptionLabel={(opt) => opt.value}
             handleChange={(value: MiscMasterListStakeholderRes | undefined) => {
               handleChange("kementrian_id", value ? value.id : 0);
             }}
             placeHolder="Pilih Penanggungjawab"
+            actionButton={
+              <Box onMouseDown={(e: any) => e.preventDefault()}>
+                <Button
+                  startIcon={<IconFA name="circle-plus" size={14} />}
+                  fullWidth
+                  onClick={(e: any) => {
+                    e.preventDefault();
+                    setModalEntitas?.(-1, true, "update", "nomenklatur");
+                  }}
+                >
+                  Tambah Penanggungjawab
+                </Button>
+              </Box>
+            }
           />
         </FormControl>
       </Grid>

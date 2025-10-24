@@ -28,7 +28,7 @@ export default function TableReference({
       elevation={0}
       variant="outlined"
       sx={{
-        maxHeight: "calc(100vh - 520px)",
+        maxHeight: "calc(100vh - 320px)",
         "&::-webkit-scrollbar": {
           width: "6px",
           height: "6px",
@@ -70,7 +70,10 @@ export default function TableReference({
                 Keputusan
               </Typography>
             </TableCell>
-            <TableCell sx={{ bgcolor: bgColorTh, whiteSpace: "nowrap" }}>
+            <TableCell
+              width="40%"
+              sx={{ bgcolor: bgColorTh, whiteSpace: "nowrap" }}
+            >
               <Typography variant="body1" fontWeight={600} textAlign="center">
                 Deskripsi
               </Typography>
@@ -112,11 +115,11 @@ export default function TableReference({
                 <TableCell sx={{ verticalAlign: "top", pl: 4 }}>
                   {row.deskripsi_keterangan_risiko &&
                   Array.isArray(row.deskripsi_keterangan_risiko) ? (
-                    <ul style={{ margin: 0, paddingLeft: 20 }}>
+                    <ol type="1" style={{ margin: 0, paddingLeft: 0 }}>
                       {row.deskripsi_keterangan_risiko.map((desc, i) => (
                         <li key={i}>{desc}</li>
                       ))}
-                    </ul>
+                    </ol>
                   ) : (
                     row.deskripsi_keterangan_risiko
                   )}
