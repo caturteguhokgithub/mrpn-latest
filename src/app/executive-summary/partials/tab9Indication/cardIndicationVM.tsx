@@ -4,23 +4,17 @@ import {
   useLoading,
   useRKPContext,
 } from "@/lib/core/hooks/useHooks";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  COORDINATOR,
   ExsumIndicationReqDto,
   ExsumIndicationResDto,
   ExsumIndicationState,
   ExsumIndicationStateValue,
   ExsumIndicationValueReqDto,
   ExsumProfilRisikoOverview,
-  IndicationReqDto,
   initStateExsumIndication,
   initStateExsumIndicationValue,
-  MAIN,
   ModalDto,
-  OthersEntityState,
-  StakeholderReqDto,
-  StakeholderResDto,
   StakeholderResGroupDto,
 } from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
 import {
@@ -51,23 +45,20 @@ import {
   doGetMasterListSumberPendanaan,
 } from "@/app/misc/master/masterService";
 import { GetSysParamsServiceResModel } from "@/app/misc/sysparams/sysParamServiceModel";
-import { GenerateProjectData, GenerateRpjmnYear } from "@/lib/utils/common";
+import { GenerateProjectData } from "@/lib/utils/common";
 import {
   ExsumRegulationDto,
   initExsumRegulationDto,
 } from "@/app/executive-summary/partials/tab7Regulation/cardRegulation/cardRegulationModel";
 import {
   ExsumInterventionProjectReqDto,
-  ExsumInterventionState,
   initProjectReqDto,
   ProjectReqDto,
-  UpdateV2ExsumIntervention,
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
 import {
   doCreateIntervention,
   doCreateInterventionNonRo,
   doDeleteInterventionOnlyRO,
-  doUpdateInterventionOnlyRO,
 } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiService";
 import { grey } from "@mui/material/colors";
 
@@ -79,7 +70,9 @@ const useCardIndicationVM = () => {
 
   // DATA
   const [data, setData] = useState<ExsumIndicationResDto[]>([]);
-  const [dataProfilOverview, setDataProfilOverview] = useState<ExsumProfilRisikoOverview[]>([]);
+  const [dataProfilOverview, setDataProfilOverview] = useState<
+    ExsumProfilRisikoOverview[]
+  >([]);
 
   // Non RO
   const [reqNonRo, setReqNonRo] = useState<ProjectReqDto>({
@@ -151,6 +144,14 @@ const useCardIndicationVM = () => {
     index: -1,
     action: false,
     type: "",
+  });
+  const [modalEntitas, setModalEntitas] = useState<
+    ModalDto & { source?: string }
+  >({
+    index: -1,
+    action: false,
+    type: "",
+    source: "",
   });
 
   const tows = useCardTOWSVM();
@@ -313,7 +314,8 @@ const useCardIndicationVM = () => {
     });
 
     if (response?.code == API_CODE.success) {
-      let result: ExsumProfilRisikoOverview[] = response.result == null ? [] : response.result.ringkasan;
+      let result: ExsumProfilRisikoOverview[] =
+        response.result == null ? [] : response.result.ringkasan;
 
       setDataProfilOverview(result);
     }
@@ -518,9 +520,9 @@ const useCardIndicationVM = () => {
               : undefined,
           perpres: Array.isArray(rg.perpres)
             ? rg.perpres.reduce<{ id: number }[]>(
-              (a, b) => [...a, { id: b.id }],
-              []
-            )
+                (a, b) => [...a, { id: b.id }],
+                []
+              )
             : [],
           stakeholder: rg.entitas,
           stakeholder_id: rg.entitas.reduce<number[]>((a, b) => {
@@ -937,6 +939,15 @@ const useCardIndicationVM = () => {
     setModalNewRegulation({ index: -1, action: action, type: type });
   };
 
+  const handleModalEntitasOpen = (
+    index: number,
+    action: boolean,
+    type: string,
+    source?: string
+  ) => {
+    setModalEntitas({ index: -1, action: action, type: type, source: source });
+  };
+
   const handleModalNewRegulationSubmit = async () => {
     if (stateNewRegulation.value == "" || stateNewRegulation.title == "") {
       return;
@@ -1073,6 +1084,9 @@ const useCardIndicationVM = () => {
     modalReference,
     setModalReference,
     dataProfilOverview,
+    modalEntitas,
+    setModalEntitas,
+    handleModalEntitasOpen,
   };
 };
 
