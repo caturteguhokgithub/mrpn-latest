@@ -162,6 +162,16 @@ export interface ExsumProfilRisikoOverview {
   deskripsi_keterangan_risiko: string[]
 }
 
+export interface AddStakeholderState {
+  value: string
+  type: string
+}
+
+export const initStateAddStakeholderState: AddStakeholderState = {
+  value: "",
+  type: ""
+};
+
 export interface GetByExsumId {
   exsum_id: number;
 }
@@ -176,4 +186,8 @@ export type UpdateIndicationByIdServiceModel = BaseAPIServiceParam & {
 
 export type DeleteIndicationByIdServiceModel = BaseAPIServiceParam & {
   body: { id: number };
+};
+
+export type AddStakeholderServiceModel = BaseAPIServiceParam & {
+  body: AddStakeholderState;
 };

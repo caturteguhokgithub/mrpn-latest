@@ -78,6 +78,9 @@ export default function CardIndication({ project }: { project: string }) {
     dataProfilOverview,
     modalEntitas,
     handleModalEntitasOpen,
+    handleModalAddStakeholder,
+    stateAddStakeholder,
+    setStateAddStakeholder,
   } = useCardIndicationVM();
 
   const { permission } = useAuthContext((state) => state);
@@ -85,35 +88,19 @@ export default function CardIndication({ project }: { project: string }) {
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const optionTypeEntity = [
-    {
-      id: 1,
-      name: "BUMN",
-    },
-    {
-      id: 2,
-      name: "BUMD",
-    },
-    {
-      id: 3,
-      name: "BLUD",
-    },
-    {
-      id: 4,
-      name: "Swasta",
-    },
-    {
-      id: 5,
-      name: "Lembaga",
-    },
+    "BUMN",
+    "BUMD",
+    "BLUD",
+    "Swasta",
+    "Lembaga",
   ];
 
   return (
     <>
       <Stack gap={1}>
         <CardItem
-          title={`Indikasi Profil Risiko ${
-            year == 0 ? "Objek MRPN LS" : "RKP Tahun " + year
-          }`}
+          title={`Indikasi Profil Risiko ${year == 0 ? "Objek MRPN LS" : "RKP Tahun " + year
+            }`}
           infoTooltip={
             <Stack spacing={2}>
               <div>
@@ -283,9 +270,8 @@ export default function CardIndication({ project }: { project: string }) {
         // width={"80%"}
         dialogOpen={modalOutput.type != "delete" && modalOutput.action}
         dialogClose={() => handleModalOutputOpen(-1, false, "")}
-        title={`Tambah ${
-          modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
-        }`}
+        title={`Tambah ${modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
+          }`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button
@@ -459,7 +445,7 @@ export default function CardIndication({ project }: { project: string }) {
               variant="contained"
               type="submit"
               color="primary"
-              // onClick={() => handleModalEntitasSubmit()}
+              onClick={() => handleModalAddStakeholder()}
             >
               Simpan
             </Button>
@@ -472,6 +458,7 @@ export default function CardIndication({ project }: { project: string }) {
               <TextField
                 variant="outlined"
                 size="small"
+                value={stateAddStakeholder.value}
                 placeholder={
                   modalEntitas.source === "nomenklatur"
                     ? "Nama Penanggungjawab"
@@ -480,17 +467,27 @@ export default function CardIndication({ project }: { project: string }) {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                onChange={(e) =>
+                  setStateAddStakeholder((prevState) => ({
+                    ...prevState,
+                    value: e.target.value,
+                  }))
+                }
               />
             </FormControl>
           </Grid>
           <Grid item xs={12}>
             <FormControl fullWidth>
               <AutocompleteSelectSingle
-                key={optionTypeEntity.length}
-                value={undefined}
+                value={stateAddStakeholder.type}
                 options={optionTypeEntity}
-                getOptionLabel={(option) => option.name}
-                handleChange={() => {}}
+                getOptionLabel={(opt) => `${opt}`}
+                handleChange={(val: string) => {
+                  setStateAddStakeholder((prevState) => ({
+                    ...prevState,
+                    type: val || "",
+                  }));
+                }}
                 placeHolder={
                   modalEntitas.source === "nomenklatur"
                     ? "Pilih tipe penanggungjawab"

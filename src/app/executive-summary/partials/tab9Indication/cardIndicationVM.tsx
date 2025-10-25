@@ -6,18 +6,21 @@ import {
 } from "@/lib/core/hooks/useHooks";
 import { useEffect, useState } from "react";
 import {
+  AddStakeholderState,
   ExsumIndicationReqDto,
   ExsumIndicationResDto,
   ExsumIndicationState,
   ExsumIndicationStateValue,
   ExsumIndicationValueReqDto,
   ExsumProfilRisikoOverview,
+  initStateAddStakeholderState,
   initStateExsumIndication,
   initStateExsumIndicationValue,
   ModalDto,
   StakeholderResGroupDto,
 } from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
 import {
+  doAddStakeholder,
   doCreateIndication,
   doDeleteIndication,
   doGetIndication,
@@ -70,14 +73,10 @@ const useCardIndicationVM = () => {
 
   // DATA
   const [data, setData] = useState<ExsumIndicationResDto[]>([]);
-  const [dataProfilOverview, setDataProfilOverview] = useState<
-    ExsumProfilRisikoOverview[]
-  >([]);
+  const [dataProfilOverview, setDataProfilOverview] = useState<ExsumProfilRisikoOverview[]>([]);
 
   // Non RO
-  const [reqNonRo, setReqNonRo] = useState<ProjectReqDto>({
-    ...initProjectReqDto,
-  });
+  const [reqNonRo, setReqNonRo] = useState<ProjectReqDto>({ ...initProjectReqDto, });
 
   // OPTION
   const [optionRiskType, setOptionRiskType] = useState<string[]>([]);
@@ -85,44 +84,25 @@ const useCardIndicationVM = () => {
   const [optionNonRO, setOptionNonRO] = useState<RoDto[]>([]);
   const [dataTableNonRO, setDataTableNonRO] = useState<RODataTable[]>([]);
   const [dataTable, setDataTable] = useState<RODataTable[]>([]);
-  const [optionStakeholder, setOptionStakeholder] = useState<
-    MiscMasterListStakeholderRes[]
-  >([]);
-  const [listLocation, setListLocation] = useState<MiscMasterListProvinsiRes[]>(
-    []
-  );
+  const [optionStakeholder, setOptionStakeholder] = useState<MiscMasterListStakeholderRes[]>([]);
+  const [listLocation, setListLocation] = useState<MiscMasterListProvinsiRes[]>([]);
   const [listProP, setListProP] = useState<ProPDto[]>([]);
-  const [listSof, setListSof] = useState<MiscMasterListSumberPendanaanRes[]>(
-    []
-  );
-  const [listPerpres, setListPerpres] = useState<MiscMasterListPerpresRes[]>(
-    []
-  );
+  const [listSof, setListSof] = useState<MiscMasterListSumberPendanaanRes[]>([]);
+  const [listPerpres, setListPerpres] = useState<MiscMasterListPerpresRes[]>([]);
   const [modalNomenklatur, setModalNomenklatur] = useState(false);
   const [modalReference, setModalReference] = useState(false);
 
   // STATE
-  const initState: ExsumIndicationState = JSON.parse(
-    JSON.stringify(initStateExsumIndication)
-  );
+  const initState: ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication));
   const [state, setState] = useState<ExsumIndicationState>(initState);
-  const initStateValue: ExsumIndicationStateValue = JSON.parse(
-    JSON.stringify(initStateExsumIndicationValue)
-  );
-  const [stateValue, setStateValue] =
-    useState<ExsumIndicationStateValue>(initStateValue);
-  const initStateRegulation: ExsumRegulationDto = JSON.parse(
-    JSON.stringify(initExsumRegulationDto)
-  );
-  const [stateRegulation, setStateRegulation] =
-    useState<ExsumRegulationDto>(initStateRegulation);
-  const initStatePerpres = JSON.parse(
-    JSON.stringify(initMiscMasterListPerpres)
-  );
-  const [stateNewRegulation, setStateNewRegulation] =
-    useState<MiscMasterListPerpresCreateReq>(initStatePerpres);
-
+  const initStateValue: ExsumIndicationStateValue = JSON.parse(JSON.stringify(initStateExsumIndicationValue));
+  const [stateValue, setStateValue] = useState<ExsumIndicationStateValue>(initStateValue);
+  const initStateRegulation: ExsumRegulationDto = JSON.parse(JSON.stringify(initExsumRegulationDto));
+  const [stateRegulation, setStateRegulation] = useState<ExsumRegulationDto>(initStateRegulation);
+  const initStatePerpres = JSON.parse(JSON.stringify(initMiscMasterListPerpres));
+  const [stateNewRegulation, setStateNewRegulation] = useState<MiscMasterListPerpresCreateReq>(initStatePerpres);
   const [edited, setEdited] = useState(false);
+  const [stateAddStakeholder, setStateAddStakeholder] = useState<AddStakeholderState>({ ...initStateAddStakeholderState });
 
   // MODAL
   const [modalOpen, setModalOpen] = useState<ModalDto>({
@@ -520,9 +500,9 @@ const useCardIndicationVM = () => {
               : undefined,
           perpres: Array.isArray(rg.perpres)
             ? rg.perpres.reduce<{ id: number }[]>(
-                (a, b) => [...a, { id: b.id }],
-                []
-              )
+              (a, b) => [...a, { id: b.id }],
+              []
+            )
             : [],
           stakeholder: rg.entitas,
           stakeholder_id: rg.entitas.reduce<number[]>((a, b) => {
@@ -1017,6 +997,27 @@ const useCardIndicationVM = () => {
     setModalNomenklatur(false);
   };
 
+  const handleModalAddStakeholder = async () => {
+    if (
+      stateAddStakeholder.value == "" ||
+      stateAddStakeholder.type == ""
+    ) {
+      return;
+    }
+
+    const response = await doAddStakeholder({
+      body: stateAddStakeholder,
+      loadingContext: loadingContext,
+      errorModalContext: errorModalContext,
+    });
+    if (response?.code == API_CODE.success) {
+      setStateAddStakeholder({ ...initStateAddStakeholderState })
+      getOptionStakeholder();
+    }
+
+    handleModalEntitasOpen(-1, false, "")
+  };
+
   useEffect(() => {
     if (optionRiskType.length == 0) getOptionRiskType();
     if (optionStakeholder.length == 0) getOptionStakeholder();
@@ -1087,6 +1088,9 @@ const useCardIndicationVM = () => {
     modalEntitas,
     setModalEntitas,
     handleModalEntitasOpen,
+    handleModalAddStakeholder,
+    stateAddStakeholder,
+    setStateAddStakeholder,
   };
 };
 

@@ -1,6 +1,7 @@
 import { post } from "@/lib/core/api/apiBase";
 import { ResponseBaseDto } from "@/lib/core/api/apiModel";
 import {
+  AddStakeholderServiceModel,
   DeleteIndicationByIdServiceModel,
   GetIndicationByExsumIdServiceModel,
   UpdateIndicationByIdServiceModel
@@ -42,6 +43,14 @@ export async function doGetRefIndication(param: GetIndicationByExsumIdServiceMod
   const resp = await post({
     ...param,
     url: "exsum/profilrisiko/overview",
+  });
+  if (resp) return Object.assign(new ResponseBaseDto(), resp);
+}
+
+export async function doAddStakeholder(param: AddStakeholderServiceModel) {
+  const resp = await post({
+    ...param,
+    url: "misc/master/addStakeholder",
   });
   if (resp) return Object.assign(new ResponseBaseDto(), resp);
 }
