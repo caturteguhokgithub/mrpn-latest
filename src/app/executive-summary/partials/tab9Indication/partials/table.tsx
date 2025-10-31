@@ -90,6 +90,11 @@ export default function TableIndication({
       >
         <TableHead sx={{ bgcolor: bgColorTh }}>
           <TableRow>
+            <TableCell sx={{ bgcolor: bgColorTh, width: 50 }}>
+              <Typography variant="body1" fontWeight={600} textAlign="center">
+                No.
+              </Typography>
+            </TableCell>
             <TableCell sx={{ bgcolor: bgColorTh, width: 240 }}>
               <Typography variant="body1" fontWeight={600} textAlign="center">
                 Analisis TOWS
@@ -173,12 +178,12 @@ export default function TableIndication({
             {[
               ...new Array(
                 year == 0
-                  ? 8
+                  ? 9
                   : year == 0 &&
                     (hasPrivilege(permission, pathname, "update") ||
                       hasPrivilege(permission, pathname, "delete"))
-                  ? 7
-                  : 7
+                  ? 8
+                  : 8
               ),
             ].map((_, i) => (
               <TableCell sx={{ bgcolor: grey[100] }}>
@@ -198,6 +203,15 @@ export default function TableIndication({
             data.map((row, index) => (
               <React.Fragment key={row + "-" + index}>
                 <TableRow>
+                  <TableCell
+                    sx={{ verticalAlign: "top" }}
+                    rowSpan={
+                      (row.perlakuan.length == 0 ? 1 : row.perlakuan.length) +
+                      row.regulasi.length
+                    }
+                  >
+                    <Typography variant="body1">{index + 1}.</Typography>
+                  </TableCell>
                   <TableCell
                     rowSpan={
                       (row.perlakuan.length == 0 ? 1 : row.perlakuan.length) +

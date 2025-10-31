@@ -7,14 +7,11 @@ import RiskContent from "@/app/penetapan/selera-risiko/partials/risk";
 import AddButton from "@/components/buttonAdd";
 import Iconify from "@/components/icons/iconify";
 import SeleraMatriks from "./matriks";
-import EmptyDevelopingState from "@/components/empty/developing";
-import { isDeveloping } from "@/components/layouts/layout";
 import useAuthorizationVM from "@/app/authorizationVM";
 import usePenetapanSelera from "./hooks/vm";
 import { red, green } from "@mui/material/colors";
 import usePenetapanGlobalVM from "@/app/penetapan/penetapanGlobalVM";
 import { doReqSeleraApprovalDto } from "./hooks/model";
-import { max } from "lodash";
 import FormNote from "./partials/form-note";
 
 export default function CardSelera() {

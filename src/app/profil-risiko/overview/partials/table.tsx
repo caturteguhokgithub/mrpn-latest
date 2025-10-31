@@ -115,6 +115,13 @@ export default function TableOverview({ data }: { data: RiskOverviewData[] }) {
       >
         <TableHead sx={{ bgcolor: bgColorTh }}>
           <TableRow>
+            <TableCell
+              align="center"
+              rowSpan={2}
+              sx={{ bgcolor: bgColorTh, width: 60 }}
+            >
+              No.
+            </TableCell>
             <TableCell align="center" colSpan={4} sx={{ bgcolor: bgColorTh }}>
               Identifikasi Risiko
             </TableCell>
@@ -176,7 +183,7 @@ export default function TableOverview({ data }: { data: RiskOverviewData[] }) {
               },
             }}
           >
-            {[...new Array(12)].map((_, i) => (
+            {[...new Array(13)].map((_, i) => (
               <TableCell sx={{ bgcolor: grey[100] }}>
                 <Typography
                   color={`${grey[500]} !important`}
@@ -191,11 +198,17 @@ export default function TableOverview({ data }: { data: RiskOverviewData[] }) {
         </TableHead>
         <TableBody>
           {data.length > 0
-            ? data.map((risk) =>
+            ? data.map((risk, riskIndex) =>
                 risk.perlakuan_data.map((perlakuan, index) => (
                   <TableRow key={`${risk.id}-${index}`}>
                     {index === 0 && (
                       <>
+                        <TableCell
+                          rowSpan={risk.perlakuan_data.length}
+                          sx={{ verticalAlign: "top" }}
+                        >
+                          {riskIndex + 1}.
+                        </TableCell>
                         <TableCell
                           rowSpan={risk.perlakuan_data.length}
                           sx={{ verticalAlign: "top" }}

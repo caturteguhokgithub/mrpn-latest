@@ -36,6 +36,7 @@ import { blue, grey, red } from "@mui/material/colors";
 import { InfoTooltip } from "@/components/InfoTooltip";
 import { SortNumber } from "../perlakuan/partials/mrt-complete";
 import FormPeristiwa from "./partials/form-peristiwa";
+import { BorderRight } from "@mui/icons-material";
 
 export default function PageIdentifikasiView({}) {
   const { permission } = useAuthContext((state) => state);
@@ -80,7 +81,53 @@ export default function PageIdentifikasiView({}) {
     if (objectState !== undefined) getIdentificationRiskData();
   }, [objectState]);
 
+  // Helper function to highlight search text
+  const highlightText = (
+    text: string | number | null | undefined,
+    searchTerm: string
+  ) => {
+    if (!searchTerm || !text) return text;
+    const textStr = String(text);
+    const escapedSearch = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const regex = new RegExp(`(${escapedSearch})`, "gi");
+    const parts = textStr.split(regex);
+    return parts.map((part, index) => {
+      const testRegex = new RegExp(`^${escapedSearch}$`, "i");
+      return testRegex.test(part) ? (
+        <span
+          key={index}
+          style={{ backgroundColor: "yellow", fontWeight: 600 }}
+        >
+          {part}
+        </span>
+      ) : (
+        part
+      );
+    });
+  };
+
   const columns = [
+    {
+      accessorKey: "no",
+      header: "No.",
+      size: 50,
+      enableColumnActions: false,
+      Header: ({ column }: any) => (
+        <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      ),
+      Cell: ({ row }: any) => (
+        <Typography variant="body1" sx={{ textAlign: "left" }}>
+          {row.index + 1}.
+        </Typography>
+      ),
+      muiTableBodyCellProps: {
+        sx: {
+          verticalAlign: "top",
+          alignItems: "flex-start",
+          borderRight: `1px solid ${grey[200]}`,
+        },
+      },
+    },
     {
       accessorKey: "peristiwa_risiko",
       header: "Peristiwa Risiko Strategis MRPN LS",
@@ -89,18 +136,32 @@ export default function PageIdentifikasiView({}) {
       Header: ({ column }: any) => (
         <SortNumber column={column} numberSort={column.getIndex() + 1} />
       ),
-      Cell: (item: any) => (
-        <Stack flexDirection="row" alignItems="center" gap={1}>
-          <Typography
-            color={item.row.original.insidentil ? red[600] : "inherit"}
-          >
-            {item.row.original.peristiwa_risiko}
-          </Typography>
-          {item.row.original.insidentil && (
-            <InfoTooltip title="Insidentil" color={red[600]} />
-          )}
-        </Stack>
-      ),
+      Cell: (item: any) => {
+        const searchTerm = item.table.getState().globalFilter || "";
+        return (
+          <Stack flexDirection="row" alignItems="center" gap={1}>
+            <Typography
+              color={item.row.original.insidentil ? red[600] : "inherit"}
+              component="span"
+            >
+              {highlightText(
+                item.row.original.peristiwa_risiko || "",
+                searchTerm
+              )}
+            </Typography>
+            {item.row.original.insidentil && (
+              <InfoTooltip title="Insidentil" color={red[600]} />
+            )}
+          </Stack>
+        );
+      },
+      muiTableBodyCellProps: {
+        sx: {
+          verticalAlign: "top",
+          alignItems: "flex-start",
+          borderRight: `1px solid ${grey[200]}`,
+        },
+      },
     },
     {
       accessorKey: "kategori_risiko",
@@ -110,6 +171,18 @@ export default function PageIdentifikasiView({}) {
       Header: ({ column }: any) => (
         <SortNumber column={column} numberSort={column.getIndex() + 1} />
       ),
+      Cell: ({ cell, table }: any) => {
+        const searchTerm = table.getState().globalFilter || "";
+        const value = cell.getValue() || "";
+        return highlightText(value, searchTerm);
+      },
+      muiTableBodyCellProps: {
+        sx: {
+          verticalAlign: "top",
+          alignItems: "flex-start",
+          borderRight: `1px solid ${grey[200]}`,
+        },
+      },
     },
     {
       accessorKey: "penyebab_dampak",
@@ -118,49 +191,70 @@ export default function PageIdentifikasiView({}) {
       Header: ({ column }: any) => (
         <SortNumber column={column} numberSort={column.getIndex() + 1} />
       ),
-      Cell: ({ cell }: { cell: any }) => (
-        <Paper
-          elevation={0}
-          sx={{
-            overflow: "auto",
-            maxHeight: 160,
-            backgroundColor: "transparent",
-            "&::-webkit-scrollbar": {
-              width: "3px",
-            },
-          }}
-        >
-          <Stack gap={1}>
-            {cell.getValue().penyebab.map(
-              (itemDesc: any, index: any) =>
-                itemDesc && (
-                  <Chip
-                    key={index}
-                    sx={{
-                      height: "auto",
-                      py: 1,
-                      "& .MuiChip-label": {
-                        overflow: "unset",
-                        whiteSpace: "wrap",
-                      },
-                    }}
-                    label={itemDesc}
-                  />
-                )
-            )}
-          </Stack>
-        </Paper>
-      ),
+      Cell: ({ cell, table }: { cell: any; table: any }) => {
+        const searchTerm = table.getState().globalFilter || "";
+        return (
+          <Paper
+            elevation={0}
+            sx={{
+              overflow: "auto",
+              maxHeight: 160,
+              backgroundColor: "transparent",
+              "&::-webkit-scrollbar": {
+                width: "3px",
+              },
+            }}
+          >
+            <Stack gap={1}>
+              {cell.getValue().penyebab.map(
+                (itemDesc: any, index: any) =>
+                  itemDesc && (
+                    <Chip
+                      key={index}
+                      sx={{
+                        height: "auto",
+                        py: 1,
+                        "& .MuiChip-label": {
+                          overflow: "unset",
+                          whiteSpace: "wrap",
+                        },
+                      }}
+                      label={<span>{highlightText(itemDesc, searchTerm)}</span>}
+                    />
+                  )
+              )}
+            </Stack>
+          </Paper>
+        );
+      },
+      muiTableBodyCellProps: {
+        sx: {
+          verticalAlign: "top",
+          alignItems: "flex-start",
+          borderRight: `1px solid ${grey[200]}`,
+        },
+      },
     },
     {
       accessorKey: "area_dampak",
       header: "Area Dampak",
-      size: 150,
+      size: 120,
       enableColumnActions: false,
       Header: ({ column }: any) => (
         <SortNumber column={column} numberSort={column.getIndex() + 1} />
       ),
-      // Cell: ({ cell }: { cell: any }) => cell.getValue()?.area_dampak ?? "-",
+      Cell: ({ cell, table }: any) => {
+        const searchTerm = table.getState().globalFilter || "";
+        const value = cell.getValue() ?? "-";
+        return highlightText(String(value), searchTerm);
+      },
+      muiTableBodyCellProps: {
+        sx: {
+          verticalAlign: "top",
+          alignItems: "flex-start",
+          borderRight: `1px solid ${grey[200]}`,
+        },
+      },
     },
     {
       accessorKey: "penyebab_dampak",
@@ -169,44 +263,54 @@ export default function PageIdentifikasiView({}) {
       Header: ({ column }: any) => (
         <SortNumber column={column} numberSort={column.getIndex() + 1} />
       ),
-      Cell: ({ cell }: { cell: any }) => (
-        <Paper
-          elevation={0}
-          sx={{
-            overflow: "auto",
-            maxHeight: 160,
-            backgroundColor: "transparent",
-            "&::-webkit-scrollbar": {
-              width: "3px",
-            },
-          }}
-        >
-          <Stack gap={1}>
-            {cell.getValue().dampak.map(
-              (itemDesc: any, index: any) =>
-                itemDesc && (
-                  <Chip
-                    key={index}
-                    sx={{
-                      height: "auto",
-                      py: 1,
-                      "& .MuiChip-label": {
-                        overflow: "unset",
-                        whiteSpace: "wrap",
-                      },
-                    }}
-                    label={itemDesc}
-                  />
-                )
-            )}
-          </Stack>
-        </Paper>
-      ),
+      Cell: ({ cell, table }: { cell: any; table: any }) => {
+        const searchTerm = table.getState().globalFilter || "";
+        return (
+          <Paper
+            elevation={0}
+            sx={{
+              overflow: "auto",
+              maxHeight: 160,
+              backgroundColor: "transparent",
+              "&::-webkit-scrollbar": {
+                width: "3px",
+              },
+            }}
+          >
+            <Stack gap={1}>
+              {cell.getValue().dampak.map(
+                (itemDesc: any, index: any) =>
+                  itemDesc && (
+                    <Chip
+                      key={index}
+                      sx={{
+                        height: "auto",
+                        py: 1,
+                        "& .MuiChip-label": {
+                          overflow: "unset",
+                          whiteSpace: "wrap",
+                        },
+                      }}
+                      label={<span>{highlightText(itemDesc, searchTerm)}</span>}
+                    />
+                  )
+              )}
+            </Stack>
+          </Paper>
+        );
+      },
+      muiTableBodyCellProps: {
+        sx: {
+          verticalAlign: "top",
+          alignItems: "flex-start",
+          borderRight: `1px solid ${grey[200]}`,
+        },
+      },
     },
     {
       accessorKey: "kategori_risiko",
       header: "Aksi",
-      size: 100,
+      size: 90,
       enableColumnActions: false,
       Header: ({ column }: any) => (
         <SortNumber column={column} numberSort={column.getIndex() + 5} />
@@ -214,6 +318,7 @@ export default function PageIdentifikasiView({}) {
       Cell: (item: any) => (
         <ActionColumn
           center
+          size="small"
           viewClick={
             hasPrivilege(permission, pathname, "list")
               ? () => actionModal(true, "read", item.cell.row.original.id)
@@ -240,6 +345,7 @@ export default function PageIdentifikasiView({}) {
     data,
     ...advancedTable,
     enableRowActions: false,
+    enableStickyHeader: true,
     // displayColumnDefOptions: {
     //   "mrt-row-actions": {
     //     header: "",
@@ -279,6 +385,15 @@ export default function PageIdentifikasiView({}) {
     muiTableBodyCellProps: {
       sx: {
         borderRight: `1px solid ${grey[300]}`,
+      },
+    },
+    muiTableContainerProps: {
+      sx: {
+        maxHeight: "55vh",
+        overflow: "auto",
+        "&::-webkit-scrollbar": {
+          width: "5px",
+        },
       },
     },
     initialState: {

@@ -56,9 +56,9 @@ function Row(props: { row: PerlakuanData; index?: number }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        {/* <TableCell width={300} sx={{ verticalAlign: "top" }}>
-          {row.keputusan}
-        </TableCell> */}
+        <TableCell width={50} align="center" sx={{ verticalAlign: "top" }}>
+          <Typography variant="body1">{(index ?? 0) + 1}.</Typography>
+        </TableCell>
         <TableCell sx={{ verticalAlign: "top" }}>
           {row.keterangan_risiko}
         </TableCell>
@@ -104,7 +104,7 @@ function Row(props: { row: PerlakuanData; index?: number }) {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell colSpan={6} sx={{ p: 0 }}>
+        <TableCell colSpan={7} sx={{ p: 0 }}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ p: 1, bgcolor: grey[200], pl: 10 }}>
               <TableContainer
@@ -134,6 +134,13 @@ function Row(props: { row: PerlakuanData; index?: number }) {
                         align="center"
                         sx={{ bgcolor: green[50], width: 30 }}
                       >
+                        No.
+                      </TableCell>
+                      <TableCell
+                        rowSpan={2}
+                        align="center"
+                        sx={{ bgcolor: green[50], width: 30 }}
+                      >
                         Kode PKKR
                       </TableCell>
                       <TableCell
@@ -154,27 +161,31 @@ function Row(props: { row: PerlakuanData; index?: number }) {
                       ))}
                     </TableRow>
                     <TableRow>
-                      <TableCell
-                        align="center"
-                        style={{ top: "37px" }}
-                        sx={{ bgcolor: green[50] }}
-                      >
-                        Target
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ top: "37px" }}
-                        sx={{ bgcolor: green[50] }}
-                      >
-                        Satuan
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ top: "37px" }}
-                        sx={{ bgcolor: green[50] }}
-                      >
-                        Pembiayaan (Juta)
-                      </TableCell>
+                      {multiyear.map((y, iY) => (
+                        <React.Fragment key={iY}>
+                          <TableCell
+                            align="center"
+                            style={{ top: "37px" }}
+                            sx={{ bgcolor: green[50] }}
+                          >
+                            Target
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            style={{ top: "37px" }}
+                            sx={{ bgcolor: green[50] }}
+                          >
+                            Satuan
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            style={{ top: "37px" }}
+                            sx={{ bgcolor: green[50] }}
+                          >
+                            Pembiayaan (Juta)
+                          </TableCell>
+                        </React.Fragment>
+                      ))}
                       {/* <TableCell
                         width={150}
                         align="center"
@@ -187,8 +198,13 @@ function Row(props: { row: PerlakuanData; index?: number }) {
                   </TableHead>
                   <TableBody>
                     {row?.rincian_output
-                      ? row.rincian_output.map((rowItem) => (
+                      ? row.rincian_output.map((rowItem, itemIndex) => (
                           <TableRow key={rowItem.id}>
+                            <TableCell align="center">
+                              <Typography variant="body2">
+                                {itemIndex + 1}.
+                              </Typography>
+                            </TableCell>
                             <TableCell align="center">
                               {rowItem.pkkr ?? "-"}
                             </TableCell>
@@ -232,41 +248,6 @@ function Row(props: { row: PerlakuanData; index?: number }) {
   );
 }
 
-// const rows = [
-//   createData(
-//     1,
-//     "Mengurangi kemungkinan terjadinya risiko",
-//     "Perbaikan struktur dan mekanisme manajemen produksi pangan dengan memaksimalkan peran petani dan keluarga petani sebagai tulang punggung produsen di lahan KSPP",
-//     "",
-//     "Oct 2024 sd Oct 2024",
-//     "KEMENTERIAN PEKERJAAN UMUM"
-//   ),
-//   createData(
-//     2,
-//     "Mengurangi kemungkinan terjadinya risiko",
-//     "Perbaikan struktur dan mekanisme manajemen produksi pangan dengan memaksimalkan peran petani dan keluarga petani sebagai tulang punggung produsen di lahan KSPP",
-//     "",
-//     "Oct 2024 sd Oct 2024",
-//     "PEMERINTAH PROVINSI KALIMANTAN TENGAH"
-//   ),
-//   createData(
-//     3,
-//     "Mengurangi dampak risiko",
-//     "Pelibatan aspirasi masyarakat dalam perencanaan pengembangan food estate Relokasi Area of Interest (AOI)",
-//     "",
-//     "Oct 2024 sd Oct 2024",
-//     "KEMENTERIAN PERTANIAN"
-//   ),
-//   createData(
-//     4,
-//     "Mengurangi dampak risiko",
-//     "Praktik pertanian presisi sesuai dengan kebutuhan lahan",
-//     "",
-//     "Oct 2024 sd Oct 2024",
-//     "KEMENTERIAN PERTANIAN"
-//   ),
-// ];
-
 export default function CollapsibleTable({
   rowData,
 }: {
@@ -308,9 +289,11 @@ export default function CollapsibleTable({
           <TableHead>
             <TableRow>
               <TableCell sx={{ bgcolor: orange[50] }} />
-              {/* <TableCell align="center" sx={{ bgcolor: orange[50] }}>
-                Keputusan Perlakuan Risiko
-              </TableCell> */}
+              <TableCell align="center" width={50} sx={{ bgcolor: orange[50] }}>
+                <Typography variant="body2" fontWeight={600}>
+                  No.
+                </Typography>
+              </TableCell>
               <TableCell align="center" sx={{ bgcolor: orange[50] }}>
                 Deskripsi Perlakuan Risiko
               </TableCell>
@@ -338,8 +321,8 @@ export default function CollapsibleTable({
             </TableRow>
           </TableHead>
           <TableBody>
-            {rowData.map((row) => (
-              <Row key={row.id} row={row} />
+            {rowData.map((row, index) => (
+              <Row key={row.id} row={row} index={index} />
             ))}
           </TableBody>
         </Table>
