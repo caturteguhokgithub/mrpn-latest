@@ -87,20 +87,23 @@ export default function CardIndication({ project }: { project: string }) {
   const pathname = usePathname();
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const optionTypeEntity = [
-    "BUMN",
-    "BUMD",
-    "BLUD",
-    "Swasta",
-    "Lembaga",
-  ];
+  const optionTypeEntity = ["BUMN", "BUMD", "BLUD", "Swasta", "Lembaga"];
+
+  const optionTypeEntityMapping = {
+    BUMN: "BUMN",
+    BUMD: "BUMD",
+    BLUD: "BLUD",
+    Swasta: "Swasta",
+    Lembaga: "L",
+  };
 
   return (
     <>
       <Stack gap={1}>
         <CardItem
-          title={`Indikasi Profil Risiko ${year == 0 ? "Objek MRPN LS" : "RKP Tahun " + year
-            }`}
+          title={`Indikasi Profil Risiko ${
+            year == 0 ? "Objek MRPN LS" : "RKP Tahun " + year
+          }`}
           infoTooltip={
             <Stack spacing={2}>
               <div>
@@ -270,8 +273,9 @@ export default function CardIndication({ project }: { project: string }) {
         // width={"80%"}
         dialogOpen={modalOutput.type != "delete" && modalOutput.action}
         dialogClose={() => handleModalOutputOpen(-1, false, "")}
-        title={`Tambah ${modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
-          }`}
+        title={`Tambah ${
+          modalOutput.type == "NON_RO" ? "Project" : "Rincian Output"
+        }`}
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
             <Button
@@ -479,13 +483,28 @@ export default function CardIndication({ project }: { project: string }) {
           <Grid item xs={12}>
             <FormControl fullWidth>
               <AutocompleteSelectSingle
-                value={stateAddStakeholder.type}
+                value={(() => {
+                  // Find the display value for the stored value
+                  const reverseMapping = Object.entries(
+                    optionTypeEntityMapping
+                  ).find(
+                    ([_, mappedValue]) =>
+                      mappedValue === stateAddStakeholder.type
+                  );
+                  return reverseMapping
+                    ? reverseMapping[0]
+                    : stateAddStakeholder.type;
+                })()}
                 options={optionTypeEntity}
                 getOptionLabel={(opt) => `${opt}`}
                 handleChange={(val: string) => {
+                  const mappedValue =
+                    optionTypeEntityMapping[
+                      val as keyof typeof optionTypeEntityMapping
+                    ] || val;
                   setStateAddStakeholder((prevState) => ({
                     ...prevState,
-                    type: val || "",
+                    type: mappedValue || "",
                   }));
                 }}
                 placeHolder={

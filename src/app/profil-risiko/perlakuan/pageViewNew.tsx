@@ -186,6 +186,33 @@ export default function PagePerlakuanViewNew({}) {
             header: "Identifikasi Risiko",
             columns: [
               {
+                accessorKey: "no",
+                header: "No.",
+                size: 30,
+                enableColumnActions: false,
+                muiTableHeadCellProps: {
+                  align: "center",
+                },
+                muiTableBodyCellProps: {
+                  sx: {
+                    borderLeft: `1px solid ${grey[300]}`,
+                    borderRight: `1px solid ${grey[300]}`,
+                    alignItems: "flex-start",
+                  },
+                },
+                Header: ({ column }) => (
+                  <SortNumber
+                    column={column}
+                    numberSort={column.getIndex() + 1}
+                  />
+                ),
+                Cell: ({ row }: any) => (
+                  <Typography variant="body1" sx={{ textAlign: "left" }}>
+                    {row.index + 1}.
+                  </Typography>
+                ),
+              },
+              {
                 accessorKey: "peristiwa",
                 header: "Peristiwa Risiko",
                 enableColumnActions: false,

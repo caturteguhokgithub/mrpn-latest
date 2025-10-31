@@ -9,6 +9,7 @@ import {
   DialogActions,
   FormControl,
   Stack,
+  Typography,
 } from "@mui/material";
 import DialogComponent from "@/components/dialog";
 import FormTable from "./partials/form-table";
@@ -108,6 +109,26 @@ export default function PageAnalisisEvaluasiView({}) {
 
   const columns: MRT_ColumnDef<RiskOverviewData>[] = [
     {
+      accessorKey: "no",
+      header: "No.",
+      size: 70,
+      enableColumnActions: false,
+      muiTableHeadCellProps: {
+        align: "center",
+      },
+      muiTableBodyCellProps: {
+        align: "left",
+      },
+      Header: ({ column }) => (
+        <SortNumber column={column} numberSort={column.getIndex() + 1} />
+      ),
+      Cell: ({ row }: any) => (
+        <Typography variant="body1" sx={{ textAlign: "left" }}>
+          {row.index + 1}.
+        </Typography>
+      ),
+    },
+    {
       id: "penilaian_risiko",
       header: "Penilaian Risiko",
       columns: [
@@ -190,6 +211,7 @@ export default function PageAnalisisEvaluasiView({}) {
               accessorKey: "analisis_br",
               header: "BR",
               enableColumnActions: false,
+              enableSorting: false,
               size: 120,
               muiTableHeadCellProps: {
                 align: "center",
@@ -310,14 +332,9 @@ export default function PageAnalisisEvaluasiView({}) {
     data,
     ...renderTopToolbar,
     ...advancedTable,
+    enableStickyHeader: true,
     initialState: {
       showGlobalFilter: true,
-      sorting: [
-        {
-          id: "row-br",
-          desc: true,
-        },
-      ],
     },
     muiTableHeadCellProps: {
       sx: {
@@ -329,6 +346,15 @@ export default function PageAnalisisEvaluasiView({}) {
     muiTableBodyCellProps: {
       sx: {
         borderRight: `1px solid ${grey[300]}`,
+      },
+    },
+    muiTableContainerProps: {
+      sx: {
+        maxHeight: "58vh",
+        overflow: "auto",
+        "&::-webkit-scrollbar": {
+          width: "5px",
+        },
       },
     },
     muiTableHeadRowProps: {
