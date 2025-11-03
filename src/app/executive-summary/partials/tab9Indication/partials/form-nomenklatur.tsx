@@ -86,7 +86,7 @@ export default function FormNomenklatur({
           <FieldLabelInfo title="Nomenklatur Non-RO/Project" />
           <TextareaStyled
             aria-label="Nomenklatur Non-RO/Project"
-            placeholder="Nomenklatur Non-RO/Project"
+            placeholder="Nomenklatur non-RO/project"
             value={reqNonRo?.nomenklatur || ""}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               handleChange("nomenklatur", e.target.value)
@@ -103,7 +103,7 @@ export default function FormNomenklatur({
           <TextField
             variant="outlined"
             size="small"
-            placeholder="Format Kode"
+            placeholder="Format kode"
             value={reqNonRo?.code || ""}
             onChange={(e) => handleChange("code", e.target.value)}
           />
@@ -143,7 +143,7 @@ export default function FormNomenklatur({
             handleChange={(value: MiscMasterListStakeholderRes | undefined) => {
               handleChange("kementrian_id", value ? value.id : 0);
             }}
-            placeHolder="Pilih Penanggungjawab"
+            placeHolder="Pilih penanggungjawab"
             actionButton={
               <Box onMouseDown={(e: any) => e.preventDefault()}>
                 <Button
@@ -171,8 +171,8 @@ export default function FormNomenklatur({
             options={selectLocation ?? []}
             getOptionLabel={(option) => option.name}
             handleChange={handleLokasiChange}
-            placeHolder="Pilih Lokasi Provinsi"
-            labelSelectAll="Pilih semua Provinsi"
+            placeHolder="Pilih lokasi"
+            labelSelectAll="Pilih semua"
           />
         </FormControl>
       </Grid>
