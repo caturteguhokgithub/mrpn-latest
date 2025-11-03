@@ -70,7 +70,7 @@ export type GetRiskTreatmentServiceModel = BaseAPIServiceParam & {
 export interface RiskTreatmentReqDto {
   id: number
   profil_risiko_id: number
-  profil_risiko: RiskAnalysisDto | undefined
+  profil_risiko: RiskAnalysisDto | undefined | string
   src_matriks_risiko_id: number
   src_matriks_risiko: MasterRiskMatrixRes | undefined
   keputusan: string

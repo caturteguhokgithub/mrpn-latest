@@ -195,6 +195,7 @@ const useTreatmentRiskVM = () => {
 
     const request: RiskTreatmentReqDto = {
       ...state,
+      profil_risiko: JSON.stringify(state.profil_risiko),
       perlakuan: JSON.stringify(state.perlakuan),
     };
 
