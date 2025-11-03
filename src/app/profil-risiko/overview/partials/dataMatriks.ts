@@ -25,12 +25,12 @@ export const dataMatriks = [
         colors: ["blue", "green", "yellow", "orange", "red"],
       },
       {
-        frequency: "Jarang Terjadi",
+        frequency: "Kadang Terjadi",
         values: [3, 8, 13, 18, 23],
         colors: ["blue", "green", "yellow", "orange", "red"],
       },
       {
-        frequency: "Kadang Terjadi",
+        frequency: "Jarang Terjadi",
         values: [2, 6, 11, 16, 21],
         colors: ["blue", "green", "yellow", "orange", "red"],
       },
