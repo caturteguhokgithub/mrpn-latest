@@ -457,8 +457,8 @@ export default function FormTable({
             />
             {mode !== "read" && mode !== "update" ? (
               <AutocompleteSelectSingle
-                key={state.profil_risiko?.id ?? 0}
-                value={state.profil_risiko}
+                key={state.profil_risiko && typeof state.profil_risiko !== "string" ? state.profil_risiko.id : 0}
+                value={state.profil_risiko && typeof state.profil_risiko !== "string" ? state.profil_risiko : undefined}
                 options={optionsRiskProfile}
                 getOptionLabel={(opt) => opt.peristiwa_risiko}
                 handleChange={(e: RiskAnalysisDto) => {
@@ -485,7 +485,7 @@ export default function FormTable({
               />
             ) : (
               <Typography fontWeight={600}>
-                {state.profil_risiko?.peristiwa_risiko ?? "-"}
+                {state.profil_risiko && typeof state.profil_risiko !== "string" ? state.profil_risiko?.peristiwa_risiko : "-"}
               </Typography>
             )}
           </FormControl>
@@ -511,7 +511,7 @@ export default function FormTable({
               }
             />
             <Typography fontWeight={600}>
-              {state.profil_risiko?.kategori_risiko ?? "-"}
+              {state.profil_risiko && typeof state.profil_risiko !== "string" ? state.profil_risiko?.kategori_risiko : "-"}
             </Typography>
           </FormControl>
         </Grid>
@@ -522,7 +522,7 @@ export default function FormTable({
           <FormControl fullWidth>
             <FieldLabelInfo title="Level Dampak (LD)" />
             <Typography fontWeight={600}>
-              {state.profil_risiko?.analisis.matriks.dampak ?? "-"}
+              {state.profil_risiko && typeof state.profil_risiko !== "string" ? state.profil_risiko?.analisis.matriks.dampak : "-"}
             </Typography>
           </FormControl>
         </Grid>
@@ -530,7 +530,7 @@ export default function FormTable({
           <FormControl fullWidth>
             <FieldLabelInfo title="Level Kemungkinan (LK)" />
             <Typography fontWeight={600}>
-              {state.profil_risiko?.analisis.matriks.kemungkinan ?? "-"}
+              {state.profil_risiko && typeof state.profil_risiko !== "string" ? state.profil_risiko?.analisis.matriks.kemungkinan : "-"}
             </Typography>
           </FormControl>
         </Grid>
@@ -538,7 +538,7 @@ export default function FormTable({
           <FormControl fullWidth>
             <FieldLabelInfo title="Besaran Risiko (BR)" />
             <Typography fontWeight={600}>
-              {state.profil_risiko?.analisis.matriks.nilai ?? "-"}
+              {state.profil_risiko && typeof state.profil_risiko !== "string" ? state.profil_risiko?.analisis.matriks.nilai : "-"}
             </Typography>
           </FormControl>
         </Grid>
@@ -565,7 +565,7 @@ export default function FormTable({
             {/*  />*/}
             {/*</Box>*/}
             <Typography fontWeight={600}>
-              {state.profil_risiko?.analisis.matriks.level ?? "-"}
+              {state.profil_risiko && typeof state.profil_risiko !== "string" ? state.profil_risiko?.analisis.matriks.level : "-"}
             </Typography>
           </FormControl>
         </Grid>
@@ -573,7 +573,7 @@ export default function FormTable({
           <FormControl fullWidth>
             <FieldLabelInfo title="Prioritas Risiko" />
             <Typography fontWeight={600}>
-              {state.profil_risiko
+              {state.profil_risiko && typeof state.profil_risiko !== "string"
                 ? state.profil_risiko.analisis.matriks.level.replace(/\D/g, "")
                 : "-"}
             </Typography>
