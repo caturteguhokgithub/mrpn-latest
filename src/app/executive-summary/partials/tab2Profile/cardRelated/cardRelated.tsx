@@ -78,16 +78,16 @@ export default function CardRelated({ project }: { project: string }) {
     <CardItem
       title={`Keterkaitan Kegiatan Prioritas`}
       addButton={
-        year <= 0 ? (
-          <AddButton
-            filled
-            small
-            title="Tambah Kebijakan"
-            onclick={() => handleUpdateOrDelete(-1, "update")}
-          />
-        ) : (
-          ""
-        )
+        // year <= 0 ? (
+        <AddButton
+          filled
+          small
+          title="Tambah Kebijakan"
+          onclick={() => handleUpdateOrDelete(-1, "update")}
+        />
+        // ) : (
+        //   ""
+        // )
       }
     >
       {data.length == 0 ? (
