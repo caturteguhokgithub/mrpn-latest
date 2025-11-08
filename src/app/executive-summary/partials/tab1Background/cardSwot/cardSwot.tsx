@@ -44,6 +44,7 @@ export default function CardSwot({
 }) {
   const {
     data,
+    getData,
     modal,
     setModal,
     updateData,
@@ -193,7 +194,10 @@ export default function CardSwot({
         title="Kondisi Saat Ini/Latar Belakang Proyek (SWOT)"
         dialogFooter={
           <DialogActions sx={{ p: 2, px: 3 }}>
-            <Button variant="outlined" onClick={() => setModal(false)}>
+            <Button variant="outlined" onClick={() => {
+              setModal(false)
+              getData()
+            }}>
               Batal
             </Button>
             <Button
@@ -452,7 +456,7 @@ const GetGrid = ({
     setRequest((prev: ExsumSWOTRequestDto | doRequestSwotDto) => {
       const values = [...prev.values];
 
-      deleteDataRow(values[index].id);
+      // deleteDataRow(values[index].id);
 
       values.splice(index, 1);
       return {

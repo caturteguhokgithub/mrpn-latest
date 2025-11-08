@@ -35,19 +35,21 @@ export default function FormNomenklatur({
     source?: string
   ) => void;
 }) {
+  console.log(reqNonRo);
+
   const selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes> =
-    {
-      // value: reqNonRo?.kementrian_id,
-      value:
-        (listStakeholder ?? []).find((p) => p.id === reqNonRo?.kementrian_id) ??
-        undefined,
-      options: listStakeholder ?? [],
-      getOptionLabel: (opt) => opt.value,
-      handleChange: (value: MiscMasterListStakeholderRes | undefined) => {
-        handleChange("kementrian_id", value ? value.id : 0);
-      },
-      placeHolder: "Pilih Penanggungjawab",
-    };
+  {
+    // value: reqNonRo?.kementrian_id,
+    value:
+      (listStakeholder ?? []).find((p) => p.id === reqNonRo?.kementrian_id) ??
+      undefined,
+    options: listStakeholder ?? [],
+    getOptionLabel: (opt) => opt.value,
+    handleChange: (value: MiscMasterListStakeholderRes | undefined) => {
+      handleChange("kementrian_id", value ? value.id : 0);
+    },
+    placeHolder: "Pilih Penanggungjawab",
+  };
 
   const handleChange = (field: keyof ProjectReqDto, value: any) => {
     setReqNonRo?.((prev) => ({
@@ -72,10 +74,10 @@ export default function FormNomenklatur({
   const selectedLokasiObjects: MiscMasterListProvinsiRes[] =
     (reqNonRo?.lokasi && Array.isArray(reqNonRo.lokasi)
       ? reqNonRo.lokasi
-          .map((l) =>
-            (selectLocation ?? []).find((prov) => prov.id === l.src_provinsi_id)
-          )
-          .filter((x): x is MiscMasterListProvinsiRes => Boolean(x))
+        .map((l) =>
+          (selectLocation ?? []).find((prov) => prov.id === l.src_provinsi_id)
+        )
+        .filter((x): x is MiscMasterListProvinsiRes => Boolean(x))
       : []) || [];
 
   return (
@@ -116,14 +118,17 @@ export default function FormNomenklatur({
           <FieldLabelInfo title="Tagging ProP" />
           <AutocompleteSelectSingle<ProPDto>
             value={
-              (listProP ?? []).find((p) => p.id === reqNonRo?.prop) ?? undefined
+              reqNonRo?.prop && reqNonRo.prop !== 0
+                ? listProP?.find((p) => p.id === reqNonRo.prop)
+                : undefined
             }
             options={listProP ?? []}
-            getOptionLabel={(opt) => opt.code + " - " + opt.value}
+            getOptionLabel={(opt) => `${opt.code} - ${opt.value}`}
             handleChange={(value: ProPDto | undefined) => {
-              handleChange("prop", value ? value.id : 0);
+              handleChange("prop", value?.id ?? 0);
             }}
             placeHolder="Pilih tagging ProP"
+            key={reqNonRo?.prop ?? "empty"}
           />
         </FormControl>
       </Grid>
@@ -133,10 +138,11 @@ export default function FormNomenklatur({
         <FormControl fullWidth>
           <FieldLabelInfo title="Penanggungjawab" />
           <AutocompleteSelectSingle<MiscMasterListStakeholderRes>
+            key={reqNonRo?.kementrian_id ?? "empty"}
             value={
-              (listStakeholder ?? []).find(
-                (p) => p.id === reqNonRo?.kementrian_id
-              ) ?? undefined
+              reqNonRo?.kementrian_id && reqNonRo?.kementrian_id != 0
+                ? (listStakeholder ?? []).find((p) => p.id === reqNonRo.kementrian_id)
+                : undefined
             }
             options={listStakeholder ?? []}
             getOptionLabel={(opt) => opt.value}

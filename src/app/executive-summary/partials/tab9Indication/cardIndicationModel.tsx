@@ -47,7 +47,7 @@ export interface ExsumIndicationReqDto {
   indikasi_risiko: string;
   kategori_risiko: string;
   indikasi_perlakuan_risiko: string;
-  values: ExsumIndicationValueReqDto[];
+  values: ExsumIndicationValueReqDto[] | string;
   regulasi: ExsumRegulationDto[];
 }
 

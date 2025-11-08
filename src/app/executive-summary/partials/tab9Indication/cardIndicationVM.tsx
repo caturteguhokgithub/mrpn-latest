@@ -566,7 +566,7 @@ const useCardIndicationVM = () => {
       indikasi_risiko: state.indikasi_risiko,
       kategori_risiko: state.kategori_risiko,
       indikasi_perlakuan_risiko: state.perlakuan_risiko,
-      values: values,
+      values: JSON.stringify(values),
       regulasi: state.regulation,
     };
 
@@ -675,14 +675,14 @@ const useCardIndicationVM = () => {
       return;
     }
 
-    const response = await doCreateIntervention({
-      body: request,
-      loadingContext: loadingContext,
-      errorModalContext: errorModalContext,
-    });
-    if (response?.code !== API_CODE.success) {
-      return;
-    }
+    // const response = await doCreateIntervention({
+    //   body: request,
+    //   loadingContext: loadingContext,
+    //   errorModalContext: errorModalContext,
+    // });
+    // if (response?.code !== API_CODE.success) {
+    //   return;
+    // }
 
     setState((prevState) => {
       let thisState = { ...stateValue };
@@ -701,158 +701,6 @@ const useCardIndicationVM = () => {
         values: values,
       };
     });
-    // ________________________________________________
-
-    // if (stateValue.type == "RO") {
-    //   if (stateValue.rincian_output == undefined) return;
-
-    //   let ro = stateValue.rincian_output;
-    //   ro.intervention = stateValue.intervention;
-
-    //   const request: ExsumInterventionProjectReqDto = {
-    //     id: 0,
-    //     intervention: stateValue.intervention,
-    //     exsum_id: exsum.id,
-    //     type: "RO",
-    //     code: "",
-    //     prop: 0,
-    //     kementrian_id: 0,
-    //     nomenklatur: "",
-    //     indikator: "",
-    //     list: [],
-    //     list_ro: [ro],
-    //     tahun: "",
-    //     lokasi: [],
-    //     src_rincian_output_id: 0
-    //   };
-    //   const response = await doCreateIntervention({
-    //     body: request,
-    //     loadingContext: loadingContext,
-    //     errorModalContext: errorModalContext,
-    //   });
-    //   if (response?.code !== API_CODE.success) {
-    //     return;
-    //   }
-
-    //   setState((prevState) => {
-    //     let thisState = { ...stateValue };
-    //     if (thisState.type == "NON_RO") {
-    //       thisState.intervention = true;
-    //     }
-    //     let values = prevState.values;
-    //     if (modalOutput.index > -1) {
-    //       values[modalOutput.index] = thisState;
-    //     } else {
-    //       values.push(thisState);
-    //     }
-
-    //     return {
-    //       ...prevState,
-    //       values: values,
-    //     };
-    //   });
-    // }
-
-    // if (stateValue.type == "NON_RO") {
-    //   if (
-    //     stateValue.non_rincian_output?.value == "" ||
-    //     stateValue.non_rincian_output?.code == "" ||
-    //     stateValue.non_rincian_output?.src_rkp_prop_id == undefined ||
-    //     stateValue.non_rincian_output?.kementrian == undefined ||
-    //     stateValue.non_rincian_output?.location.length == 0
-    //     // || stateValue.non_rincian_output.indikator == ""
-    //   ) {
-    //     return;
-    //   }
-
-    //   const nonRO: ExsumInterventionState = JSON.parse(
-    //     JSON.stringify(stateValue.non_rincian_output)
-    //   );
-
-    //   let lokasi: any[] = [];
-    //   nonRO.location.map((x) => {
-    //     lokasi.push({
-    //       src_provinsi_id: x.id,
-    //     });
-    //   });
-
-    //   if (nonRO.id == 0) {
-    //     const request: ExsumInterventionProjectReqDto = {
-    //       id: nonRO.id,
-    //       exsum_id: exsum.id,
-    //       type: stateValue.type,
-    //       code: nonRO.code,
-    //       prop: nonRO.prop?.id ?? 0,
-    //       kementrian_id: nonRO.kementrian?.id ?? 0,
-    //       nomenklatur: nonRO.nomenklatur,
-    //       indikator: nonRO.indikator,
-    //       list: nonRO.list,
-    //       list_ro: nonRO.ro,
-    //       // intervention: year == 0 ? true : nonRO.intervensi,
-    //       intervention: nonRO.intervensi,
-    //       lokasi: lokasi,
-    //       tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
-    //     };
-    //     const response = await doCreateIntervention({
-    //       body: request,
-    //       loadingContext: loadingContext,
-    //       errorModalContext: errorModalContext,
-    //     });
-    //     if (response?.code !== API_CODE.success) {
-    //       return;
-    //     }
-
-    //     const res: RoDto = response?.result;
-    //     nonRO.id = res.id;
-    //   } else {
-    //     const req: UpdateV2ExsumIntervention = {
-    //       body: {
-    //         id: nonRO.id,
-    //         prop: nonRO.prop?.id ?? 0,
-    //         code: nonRO.code,
-    //         nomenklatur: nonRO.nomenklatur,
-    //         kementrian_id: nonRO.kementrian?.id ?? 0,
-    //         indikator: nonRO.indikator,
-    //         target: nonRO.list[0].target,
-    //         satuan: nonRO.list[0].satuan,
-    //         anggaran: nonRO.list[0].anggaran,
-    //         sumber_anggaran: nonRO.list[0].sumber_anggaran,
-    //         type: stateValue.type,
-    //         // intervention: year == 0 ? true : nonRO.intervensi,
-    //         intervention: nonRO.intervensi,
-    //         lokasi: lokasi,
-    //         list: nonRO.list,
-    //         tahun: year == 0 ? rpjmn?.start + "-" + rpjmn?.end : year,
-    //       },
-    //       loadingContext: loadingContext,
-    //       errorModalContext: errorModalContext,
-    //     };
-    //     const response = await doUpdateInterventionOnlyRO(req);
-    //     if (response?.code !== API_CODE.success) {
-    //       return;
-    //     }
-    //   }
-
-    //   setState((prevState) => {
-    //     let thisState = { ...stateValue };
-    //     thisState.non_rincian_output = nonRO;
-
-    //     if (thisState.type == "NON_RO") {
-    //       thisState.intervention = nonRO.intervensi;
-    //     }
-    //     let values = prevState.values;
-    //     if (modalOutput.index > -1) {
-    //       values[modalOutput.index] = thisState;
-    //     } else {
-    //       values.push(thisState);
-    //     }
-
-    //     return {
-    //       ...prevState,
-    //       values: values,
-    //     };
-    //   });
-    // }
 
     handleModalOutputOpen(-1, false, "");
   };
@@ -968,6 +816,7 @@ const useCardIndicationVM = () => {
       errorModalContext: errorModalContext,
     });
     if (response?.code == API_CODE.success) {
+      setReqNonRo({ ...initProjectReqDto })
       getListNonRO();
     }
 
