@@ -193,9 +193,9 @@ export default function FormIndication({
         <Grid item xs={12}>
           <FormControl fullWidth>
             <FieldLabelInfo title="Analisis TOWS" />
-            {state.id > 0 ? (
+            {state.id > 0 && state.tows ? (
               <Typography variant="body1">
-                {state.tows ? state.tows.type + " - " + state.tows.value : "-"}
+                {state.tows.type + " - " + state.tows.value}
               </Typography>
             ) : (
               <AutocompleteSelectSingle
