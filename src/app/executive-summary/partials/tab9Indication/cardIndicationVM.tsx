@@ -603,9 +603,9 @@ const useCardIndicationVM = () => {
     type: string
   ) => {
     if (type == "delete") {
-      const value = state.values[index];
+      // const value = state.values[index];
 
-      await deleteRONonROForm(value);
+      // await deleteRONonROForm(value);
 
       setState((prevState) => {
         let values = prevState.values;
