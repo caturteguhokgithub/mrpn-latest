@@ -560,9 +560,6 @@ const useCardIndicationVM = () => {
       }
     });
 
-    console.log(values);
-    return;
-
     const requestDto: ExsumIndicationReqDto = {
       id: state.id,
       exsum_id: exsum.id,
