@@ -37,6 +37,7 @@ export interface ExsumIndicationValueReqDto {
   tahun: number[];
   perlakuan_risiko: string;
   rincian_output_id: number;
+  intervention: boolean;
   value: string;
   stakeholder: StakeholderReqDto[];
 }

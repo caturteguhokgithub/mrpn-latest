@@ -549,15 +549,19 @@ const useCardIndicationVM = () => {
       const val: ExsumIndicationValueReqDto = {
         tahun: value.tahun,
         rincian_output_id: roID,
-        perlakuan_risiko: "", // remove
-        value: "", // remove
+        perlakuan_risiko: "",
+        value: "",
         stakeholder: [],
+        intervention: value.intervention
       };
 
       if (val.tahun.length > 0) {
         values.push(val);
       }
     });
+
+    console.log(values);
+    return;
 
     const requestDto: ExsumIndicationReqDto = {
       id: state.id,

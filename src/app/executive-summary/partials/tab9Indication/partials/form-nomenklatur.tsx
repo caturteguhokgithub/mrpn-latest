@@ -35,7 +35,6 @@ export default function FormNomenklatur({
     source?: string
   ) => void;
 }) {
-  console.log(reqNonRo);
 
   const selectStakeholder: AutoCompleteSingleProp<MiscMasterListStakeholderRes> =
   {
