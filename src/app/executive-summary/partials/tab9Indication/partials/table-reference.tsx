@@ -1,4 +1,5 @@
 import {
+  Button,
   Paper,
   Table,
   TableBody,
@@ -77,6 +78,11 @@ export default function TableReference({
                 Deskripsi
               </Typography>
             </TableCell>
+            <TableCell sx={{ bgcolor: bgColorTh, whiteSpace: "nowrap" }}>
+              <Typography variant="body1" fontWeight={600} textAlign="center">
+                Aksi
+              </Typography>
+            </TableCell>
           </TableRow>
           {/* <TableRow
             sx={{
@@ -123,11 +129,14 @@ export default function TableReference({
                     row.deskripsi_keterangan_risiko
                   )}
                 </TableCell>
+                <TableCell sx={{ verticalAlign: "top" }}>
+                  <Button>Gunakan Data</Button>
+                </TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={4} align="center">
+              <TableCell colSpan={5} align="center">
                 <EmptyState
                   icon={<IconEmptyData width={100} />}
                   title={`Data Referensi Risiko Kosong`}
