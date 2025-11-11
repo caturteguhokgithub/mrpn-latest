@@ -1,6 +1,7 @@
-import { SetStateAction } from "react";
+import { SetStateAction, useState, useEffect } from "react";
 import {
   Box,
+  Button,
   Chip,
   Divider,
   FormControl,
@@ -165,6 +166,15 @@ export default function FormIndication({
   optionTOWS: ExsumTWOSDto[];
 }) {
   const { year, rpjmn } = useRKPContext((store) => store);
+  const [showTowsDropdown, setShowTowsDropdown] = useState(!state.tows);
+
+  useEffect(() => {
+    if (state.id === 0 && state.tows) {
+      setShowTowsDropdown(false);
+    } else if (!state.tows) {
+      setShowTowsDropdown(true);
+    }
+  }, [state.tows, state.id]);
 
   const optionsYear = () => {
     if (rpjmn !== undefined) {
@@ -192,27 +202,45 @@ export default function FormIndication({
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <FieldLabelInfo title="Analisis TOWS" />
-            {state.id > 0 && state.tows ? (
-              <Typography variant="body1">
-                {state.tows.type + " - " + state.tows.value}
-              </Typography>
-            ) : (
+            <FieldLabelInfo
+              title={
+                state.tows && !showTowsDropdown ? (
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <Typography fontSize={14}>Analisis TOWS</Typography>
+                    <AddButton
+                      small
+                      startIcon={<Iconify name="mdi:pencil" size={14} />}
+                      title="Ubah Analisis Tows"
+                      noMargin
+                      onclick={() => setShowTowsDropdown(true)}
+                    />
+                  </Stack>
+                ) : (
+                  "Analisis TOWS"
+                )
+              }
+            />
+            {showTowsDropdown || !state.tows ? (
               <AutocompleteSelectSingle
                 key={state.tows?.id ?? 0}
                 value={state.tows}
                 options={optionTOWS}
                 getOptionLabel={(option) => option.type + " - " + option.value}
-                handleChange={(val: ExsumTWOSDto) =>
+                handleChange={(val: ExsumTWOSDto) => {
                   setState((prevState) => {
                     return {
                       ...prevState,
                       tows: val,
                     };
-                  })
-                }
+                  });
+                  setShowTowsDropdown(false);
+                }}
                 placeHolder={"Pilih analisis TOWS"}
               />
+            ) : (
+              <Typography variant="body1">
+                {state.tows.type + " - " + state.tows.value}
+              </Typography>
             )}
           </FormControl>
         </Grid>
