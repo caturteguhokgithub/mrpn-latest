@@ -9,18 +9,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import {
-  AutoCompleteMultipleProp,
-  AutoCompleteSingleProp,
-} from "@/components/autocomplete";
 import { SetStateAction } from "react";
 import { ExsumIndicationStateValue } from "@/app/executive-summary/partials/tab9Indication/cardIndicationModel";
 import { ProjectTargetAnggaranDto } from "@/app/executive-summary/partials/tab4Cascading/cardIntervensi/cardIntervensiModel";
-import {
-  MiscMasterListProvinsiRes,
-  MiscMasterListStakeholderRes,
-} from "@/app/misc/master/masterServiceModel";
-import { ProPDto } from "@/app/misc/rkp/rkpServiceModel";
 import theme from "@/theme";
 import { FormatCurrency } from "@/lib/utils/currency";
 
@@ -33,46 +24,47 @@ export default function FormProject({
 }) {
   return (
     <>
-      {state.non_rincian_output?.detail && state.non_rincian_output?.detail.length > 0 && (
-        <Grid item xs={12}>
-          <Table sx={{ minWidth: 650 }} size="small">
-            <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
-              <TableRow>
-                <TableCell>
-                  <Typography variant="body2" fontWeight={600}>
-                    Tahun
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body2" fontWeight={600}>
-                    Target
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body2" fontWeight={600}>
-                    Pembiayaan
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body2" fontWeight={600}>
-                    Sumber Pembiayaan
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {state.non_rincian_output.detail.map((row, index) => (
-                <GetTableRow
-                  key={index}
-                  tahun={row.tahun}
-                  state={state}
-                  setState={setState}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </Grid>
-      )}
+      {state.non_rincian_output?.detail &&
+        state.non_rincian_output?.detail.length > 0 && (
+          <Grid item xs={12}>
+            <Table sx={{ minWidth: 650 }} size="small">
+              <TableHead sx={{ bgcolor: theme.palette.primary.light }}>
+                <TableRow>
+                  <TableCell>
+                    <Typography variant="body2" fontWeight={600}>
+                      Tahun
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2" fontWeight={600}>
+                      Target
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2" fontWeight={600}>
+                      Pembiayaan
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2" fontWeight={600}>
+                      Sumber Pembiayaan
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {state.non_rincian_output.detail.map((row, index) => (
+                  <GetTableRow
+                    key={index}
+                    tahun={row.tahun}
+                    state={state}
+                    setState={setState}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </Grid>
+        )}
     </>
   );
 }
@@ -171,9 +163,7 @@ function GetTableRow({
       <TableCell>
         <TextField
           value={data.sumber_anggaran}
-          onChange={(e) =>
-            handleStateChange(e.target.value, "sumber_anggaran")
-          }
+          onChange={(e) => handleStateChange(e.target.value, "sumber_anggaran")}
           variant="outlined"
           size="small"
           placeholder="Sumber Pembiayaan"

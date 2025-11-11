@@ -47,15 +47,12 @@ export default function TableTagging({
       <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
         <TableHead sx={{ bgcolor: bgColorTh }}>
           <TableRow>
-            {(hasPrivilege(permission, pathname, "add") ||
-              hasPrivilege(permission, pathname, "delete") ||
-              hasPrivilege(permission, pathname, "update")) && (
+            <TableCell sx={{ bgcolor: bgColorTh }}>Kebijakan</TableCell>
+            {hasPrivilege(permission, pathname, "add") && (
+              // || hasPrivilege(permission, pathname, "delete") ||
+              //   hasPrivilege(permission, pathname, "update"))
               <TableCell sx={{ width: 80, bgcolor: bgColorTh }}>Aksi</TableCell>
             )}
-            <TableCell sx={{ bgcolor: bgColorTh }}>Kebijakan</TableCell>
-            {/* <TableCell sx={{ width: "50%", bgcolor: bgColorTh }}>
-              Keterangan
-            </TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -65,38 +62,6 @@ export default function TableTagging({
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                {(hasPrivilege(permission, pathname, "add") ||
-                  hasPrivilege(permission, pathname, "delete") ||
-                  hasPrivilege(permission, pathname, "update")) && (
-                  <TableCell sx={{ textAlign: "center", verticalAlign: "top" }}>
-                    <Stack
-                      marginTop={1}
-                      display="flex"
-                      alignItems="center"
-                      direction="row"
-                      gap={0.5}
-                    >
-                      {hasPrivilege(permission, pathname, "update") && (
-                        <ActionColumn
-                          center
-                          disabled={year > 0}
-                          editClick={() =>
-                            handleUpdateOrDelete(index, "update")
-                          }
-                        />
-                      )}
-                      {hasPrivilege(permission, pathname, "delete") && (
-                        <ActionColumn
-                          center
-                          disabled={year > 0}
-                          deleteClick={() =>
-                            handleUpdateOrDelete(index, "delete")
-                          }
-                        />
-                      )}
-                    </Stack>
-                  </TableCell>
-                )}
                 <TableCell>
                   <Stack flexDirection="column" gap={1}>
                     {x.kebijakan.map((y, index2) => (
@@ -132,7 +97,41 @@ export default function TableTagging({
                     ))}
                   </Stack>
                 </TableCell>
-                {/* <TableCell>{x.value}</TableCell> */}
+                {hasPrivilege(permission, pathname, "add") && (
+                  // ||
+                  //   hasPrivilege(permission, pathname, "delete") ||
+                  //   hasPrivilege(permission, pathname, "update")) && (
+                  <TableCell sx={{ textAlign: "center", verticalAlign: "top" }}>
+                    <Stack
+                      marginTop={1}
+                      display="flex"
+                      alignItems="center"
+                      direction="row"
+                      gap={0.5}
+                    >
+                      {hasPrivilege(permission, pathname, "update") && (
+                        <ActionColumn
+                          size="sm"
+                          center
+                          // disabled={year > 0}
+                          editClick={() =>
+                            handleUpdateOrDelete(index, "update")
+                          }
+                        />
+                      )}
+                      {hasPrivilege(permission, pathname, "delete") && (
+                        <ActionColumn
+                          size="sm"
+                          center
+                          // disabled={year > 0}
+                          deleteClick={() =>
+                            handleUpdateOrDelete(index, "delete")
+                          }
+                        />
+                      )}
+                    </Stack>
+                  </TableCell>
+                )}
               </TableRow>
             </>
           ))}
