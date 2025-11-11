@@ -135,8 +135,6 @@ export default function ProjectTable({
         0
       );
 
-      console.log("Total for group:", total);
-
       // Add the block cell
       cells.push(
         <BlockCell
@@ -351,29 +349,29 @@ export default function ProjectTable({
               </TableCell>
               {year === 0
                 ? [2025, 2026, 2027, 2028, 2029].map((year) => (
-                    <TableCell
-                      key={year}
-                      align="center"
-                      sx={{
-                        bgcolor: bgColorTh,
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      {year}
-                    </TableCell>
-                  ))
+                  <TableCell
+                    key={year}
+                    align="center"
+                    sx={{
+                      bgcolor: bgColorTh,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {year}
+                  </TableCell>
+                ))
                 : months.map((month) => (
-                    <TableCell
-                      key={month}
-                      align="center"
-                      sx={{
-                        bgcolor: bgColorTh,
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      {month}
-                    </TableCell>
-                  ))}
+                  <TableCell
+                    key={month}
+                    align="center"
+                    sx={{
+                      bgcolor: bgColorTh,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {month}
+                  </TableCell>
+                ))}
               {year > 0 && (
                 <TableCell
                   sx={{
@@ -511,12 +509,12 @@ export default function ProjectTable({
                             parent.kategori_proyek_id === 1
                               ? "#C63C51"
                               : parent.kategori_proyek_id === 2
-                              ? "#8C3061"
-                              : parent.kategori_proyek_id === 3
-                              ? "#FFD35A"
-                              : parent.kategori_proyek_id === 3
-                              ? "#FFA823"
-                              : "#DC0083",
+                                ? "#8C3061"
+                                : parent.kategori_proyek_id === 3
+                                  ? "#FFD35A"
+                                  : parent.kategori_proyek_id === 3
+                                    ? "#FFA823"
+                                    : "#DC0083",
                         }}
                       />
                     </Stack>

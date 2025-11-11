@@ -136,8 +136,6 @@ export default function TableNotaDinasViewOnly({
   };
 
   const handleBtnDelete = async (id: number) => {
-    // console.log(id);
-
     setDeleteID(id);
     setModalDelete(true);
   };
@@ -418,10 +416,10 @@ export default function TableNotaDinasViewOnly({
     stateApproval?.status === "review" || isReview
       ? statusReviewM
       : stateApproval?.status == "rejected" || isReject
-      ? statusRejectM
-      : stateApproval?.status == "approved" || isApproval
-      ? statusApprovalM
-      : statusDraftM;
+        ? statusRejectM
+        : stateApproval?.status == "approved" || isApproval
+          ? statusApprovalM
+          : statusDraftM;
 
   const conditionDraftReject =
     stateApproval?.status === "draft" || stateApproval?.status === "rejected";
@@ -491,12 +489,12 @@ export default function TableNotaDinasViewOnly({
                               <strong>
                                 {stateApproval
                                   ? new Date(
-                                      stateApproval.created_at
-                                    ).toLocaleDateString("id-ID", {
-                                      day: "numeric",
-                                      month: "long",
-                                      year: "numeric",
-                                    })
+                                    stateApproval.created_at
+                                  ).toLocaleDateString("id-ID", {
+                                    day: "numeric",
+                                    month: "long",
+                                    year: "numeric",
+                                  })
                                   : "-"}
                               </strong>
                             </Typography>
@@ -538,12 +536,12 @@ export default function TableNotaDinasViewOnly({
                             <strong>
                               {stateApproval
                                 ? new Date(
-                                    stateApproval.created_at
-                                  ).toLocaleDateString("id-ID", {
-                                    day: "numeric",
-                                    month: "long",
-                                    year: "numeric",
-                                  })
+                                  stateApproval.created_at
+                                ).toLocaleDateString("id-ID", {
+                                  day: "numeric",
+                                  month: "long",
+                                  year: "numeric",
+                                })
                                 : "-"}
                             </strong>
                           </Typography>
@@ -944,7 +942,7 @@ export default function TableNotaDinasViewOnly({
                     {[
                       ...new Array(
                         stateApproval &&
-                        !["approved", "review"].includes(stateApproval?.status)
+                          !["approved", "review"].includes(stateApproval?.status)
                           ? 3
                           : 2
                       ),
@@ -1182,7 +1180,7 @@ export default function TableNotaDinasViewOnly({
           {/*</Paper>*/}
           <Paper elevation={0} variant="outlined">
             {stateApproval?.status == "approved" ||
-            (stateApproval && stateApproval.status == "rejected") ? (
+              (stateApproval && stateApproval.status == "rejected") ? (
               <TableContainer sx={{ py: 1 }}>
                 <Table sx={{ minWidth: 650, td: { border: 0 } }} size="small">
                   <TableBody>
@@ -1203,8 +1201,8 @@ export default function TableNotaDinasViewOnly({
                           {stateApproval?.status == "approved"
                             ? "Disetujui oleh,"
                             : stateApproval?.status == "rejected"
-                            ? "Ditolak oleh,"
-                            : ""}
+                              ? "Ditolak oleh,"
+                              : ""}
                         </Typography>
                       </TableCell>
                     </TableRow>

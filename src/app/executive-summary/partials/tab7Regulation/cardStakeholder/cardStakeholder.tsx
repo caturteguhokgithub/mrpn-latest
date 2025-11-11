@@ -102,7 +102,7 @@ export default function CardStakeholder({
       iconPath: stakeholderSelected?.icon ?? "",
       icon: "",
     };
-    // console.log(x);
+
     setLogoState(x);
     setModalLogo(true);
   };
@@ -294,15 +294,15 @@ export default function CardStakeholder({
               <Stack direction="row" gap={1}>
                 {(hasPrivilege(permission, pathname, "add") ||
                   hasPrivilege(permission, pathname, "update")) && (
-                  <AddButton
-                    noMargin
-                    small
-                    title="Ubah Logo"
-                    startIcon={<Iconify name="mdi:pencil" size={14} />}
-                    sx={{ paddingInline: 2 }}
-                    onclick={() => setModalListLogo(true)}
-                  />
-                )}
+                    <AddButton
+                      noMargin
+                      small
+                      title="Ubah Logo"
+                      startIcon={<Iconify name="mdi:pencil" size={14} />}
+                      sx={{ paddingInline: 2 }}
+                      onclick={() => setModalListLogo(true)}
+                    />
+                  )}
 
                 <Button
                   component="label"
@@ -438,7 +438,7 @@ export default function CardStakeholder({
                 src={
                   logoState.icon == ""
                     ? process.env.NEXT_PUBLIC_BASE_URL_FILES +
-                      logoState.iconPath
+                    logoState.iconPath
                     : ""
                 }
                 width={0}

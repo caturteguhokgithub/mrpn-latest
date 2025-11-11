@@ -121,7 +121,6 @@ const CustomTaskListTable = ({
               padding: 10,
               paddingLeft: isProject ? 10 : 40,
             }}
-            // onClick={() => console.log(item)}
           >
             <Stack
               m={0}
@@ -233,9 +232,9 @@ export default function GanttChart({ tasks }: { tasks: Task[] }) {
         "._1nBOt": {
           "& > div": {
             "&:nth-of-type(2),&:nth-of-type(3),&:nth-of-type(4),&:nth-of-type(5)":
-              {
-                display: "none",
-              },
+            {
+              display: "none",
+            },
           },
         },
         "._34SS0": {

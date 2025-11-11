@@ -604,18 +604,15 @@ const useCardIndicationVM = () => {
     type: string
   ) => {
     if (type == "delete") {
-      // const value = state.values[index];
+      const value = state.values[index];
+
+      setState((prevState) => ({
+        ...prevState,
+        values: prevState.values.filter((_, i) => i !== index),
+      }));
+
 
       // await deleteRONonROForm(value);
-
-      setState((prevState) => {
-        let values = prevState.values;
-        values.splice(modalOutput.index, 1);
-        return {
-          ...prevState,
-          values: values,
-        };
-      });
       return;
     }
 

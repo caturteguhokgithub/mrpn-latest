@@ -19,7 +19,6 @@ export default function TableReference({
 }: {
   data?: ExsumProfilRisikoOverview[];
 }) {
-  console.log(data);
 
   return (
     <TableContainer
@@ -114,7 +113,7 @@ export default function TableReference({
                 </TableCell>
                 <TableCell sx={{ verticalAlign: "top", pl: 4 }}>
                   {row.deskripsi_keterangan_risiko &&
-                  Array.isArray(row.deskripsi_keterangan_risiko) ? (
+                    Array.isArray(row.deskripsi_keterangan_risiko) ? (
                     <ol type="1" style={{ margin: 0, paddingLeft: 0 }}>
                       {row.deskripsi_keterangan_risiko.map((desc, i) => (
                         <li key={i}>{desc}</li>

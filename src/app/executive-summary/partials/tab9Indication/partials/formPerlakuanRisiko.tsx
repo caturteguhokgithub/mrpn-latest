@@ -52,6 +52,7 @@ export default function FormPerlakuanRisiko({
   setState: (value: SetStateAction<ExsumIndicationStateValue>) => void;
   handleAddNomenklatur: () => void;
 }) {
+
   const { year, rpjmn } = useRKPContext((store) => store);
 
   useEffect(() => {
@@ -231,19 +232,12 @@ export default function FormPerlakuanRisiko({
                 control={
                   <Checkbox
                     key={year}
-                    // disabled={state.type == "NON_RO" && year == 0}
-                    checked={
-                      state.type == "NON_RO" && year == 0
-                        ? state.intervention
-                        : state.intervention
-                    }
+                    checked={state.intervention}
                     onChange={(checked) =>
-                      setState((prevState) => {
-                        return {
-                          ...prevState,
-                          intervention: checked.target.checked,
-                        };
-                      })
+                      setState((prevState) => ({
+                        ...prevState,
+                        intervention: checked.target.checked,
+                      }))
                     }
                   />
                 }
@@ -265,15 +259,24 @@ export default function FormPerlakuanRisiko({
                 value={state.rincian_output}
                 options={optionRO}
                 getOptionLabel={(opt) => opt.value}
+                renderOption={(props, opt) => (
+                  <li {...props} key={opt.id}>
+                    <Typography
+                      color={opt.intervention ? "gold" : "inherit"}
+                      fontWeight={opt.intervention ? 700 : 400}
+                    >
+                      {opt.value}
+                    </Typography>
+                  </li>
+                )}
                 handleChange={(e: RODataTable) => {
-                  setState((prevState) => {
-                    return {
-                      ...prevState,
-                      rincian_output: e,
-                    };
-                  });
+                  setState((prevState) => ({
+                    ...prevState,
+                    rincian_output: e,
+                    intervention: e?.intervention === true,
+                  }));
                 }}
-                placeHolder={"Pilih rincian output"}
+                placeHolder="Pilih rincian output"
               />
             </FormControl>
           </Grid>
@@ -306,29 +309,26 @@ export default function FormPerlakuanRisiko({
                 value={state.non_rincian_output}
                 options={optionNonRO}
                 getOptionLabel={(opt) => opt.value}
+                renderOption={(props, opt) => (
+                  <li {...props} key={opt.id}>
+                    <Typography
+                      color={opt.intervention ? "gold" : "inherit"}
+                      fontWeight={opt.intervention ? 700 : 400}
+                    >
+                      {opt.value}
+                    </Typography>
+                  </li>
+                )}
                 handleChange={(e: RODataTable) => {
-                  console.log(e);
-
-                  setState((prevState) => {
-                    return {
-                      ...prevState,
-                      non_rincian_output: e,
-                    };
-                  });
-
-                  handleListProject(state.tahun)
+                  setState((prevState) => ({
+                    ...prevState,
+                    non_rincian_output: e,
+                    // Auto-check jika intervention true
+                    intervention: e?.intervention === true,
+                  }));
+                  handleListProject(state.tahun);
                 }}
-                // handleChange={(e: string) =>
-                //   setState((prevState) => {
-                //     const nonRO = prevState.non_rincian_output;
-                //     nonRO.nomenklatur = e;
-                //     return {
-                //       ...prevState,
-                //       non_rincian_output: nonRO,
-                //     };
-                //   })
-                // }
-                placeHolder={"Pilih nomenklatur RO/project"}
+                placeHolder="Pilih nomenklatur RO/project"
                 actionButton={
                   <Box onMouseDown={(e) => e.preventDefault()}>
                     <Button

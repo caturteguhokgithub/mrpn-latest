@@ -110,7 +110,6 @@ const useCardCriticalVM = () => {
 
     if (response?.code == API_CODE.success) {
       const result: ExsumCriticalData[] = response.result;
-      // console.log(result);
 
       const mappedDataCP: DataCPType[] = result.map((item) => ({
         id: item.id.toString(),
@@ -180,7 +179,6 @@ const useCardCriticalVM = () => {
 
     if (response?.code == API_CODE.success) {
       const result: DataRoKunci = response.result;
-      // console.log(result);
 
       setDataROKunci(result);
     }
