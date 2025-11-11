@@ -14,6 +14,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import theme from "@/theme";
@@ -52,7 +53,6 @@ export default function FormPerlakuanRisiko({
   setState: (value: SetStateAction<ExsumIndicationStateValue>) => void;
   handleAddNomenklatur: () => void;
 }) {
-
   const { year, rpjmn } = useRKPContext((store) => store);
 
   useEffect(() => {
@@ -160,8 +160,8 @@ export default function FormPerlakuanRisiko({
                     state.type == "RO"
                       ? "RO"
                       : state.type == "NON_RO"
-                        ? "NON-RO"
-                        : "Pilih jenis output"
+                      ? "NON-RO"
+                      : "Pilih jenis output"
                   }
                   sx={{
                     px: 1,
@@ -261,12 +261,13 @@ export default function FormPerlakuanRisiko({
                 getOptionLabel={(opt) => opt.value}
                 renderOption={(props, opt) => (
                   <li {...props} key={opt.id}>
-                    <Typography
-                      color={opt.intervention ? "gold" : "inherit"}
-                      fontWeight={opt.intervention ? 700 : 400}
-                    >
-                      {opt.value}
-                    </Typography>
+                    {opt.intervention ? (
+                      <Tooltip title="Intervensi Kunci" followCursor>
+                        <Typography color={orange[800]}>{opt.value}</Typography>
+                      </Tooltip>
+                    ) : (
+                      <Typography>{opt.value}</Typography>
+                    )}
                   </li>
                 )}
                 handleChange={(e: RODataTable) => {
@@ -311,12 +312,13 @@ export default function FormPerlakuanRisiko({
                 getOptionLabel={(opt) => opt.value}
                 renderOption={(props, opt) => (
                   <li {...props} key={opt.id}>
-                    <Typography
-                      color={opt.intervention ? "gold" : "inherit"}
-                      fontWeight={opt.intervention ? 700 : 400}
-                    >
-                      {opt.value}
-                    </Typography>
+                    {opt.intervention ? (
+                      <Tooltip title="Intervensi Kunci" followCursor>
+                        <Typography color={orange[800]}>{opt.value}</Typography>
+                      </Tooltip>
+                    ) : (
+                      <Typography>{opt.value}</Typography>
+                    )}
                   </li>
                 )}
                 handleChange={(e: RODataTable) => {
@@ -346,10 +348,7 @@ export default function FormPerlakuanRisiko({
         )}
 
         {state.type == "NON_RO" && (
-          <FormProject
-            state={state}
-            setState={setState}
-          />
+          <FormProject state={state} setState={setState} />
         )}
       </Grid>
 

@@ -468,6 +468,7 @@ const OutputTable = ({
   const { permission } = useAuthContext((state) => state);
   let pathname = usePathname();
   const canDelete = hasPrivilege(permission, pathname, "delete");
+  const canEdit = hasPrivilege(permission, pathname, "update");
 
   return (
     <>
@@ -590,37 +591,39 @@ const OutputTable = ({
                         <Iconify name="mdi:delete" size={12} />
                       </IconButton>
                     )}
-                    <IconButton
-                      onClick={() => {
-                        setRequest((prev) => {
-                          return {
-                            ...prev,
-                            id: itemOutput.id,
-                            exsum_id: itemOutput.exsum_id,
-                            year: [itemOutput.year],
-                            output: itemOutput.output,
-                          };
-                        });
+                    {canEdit && (
+                      <IconButton
+                        onClick={() => {
+                          setRequest((prev) => {
+                            return {
+                              ...prev,
+                              id: itemOutput.id,
+                              exsum_id: itemOutput.exsum_id,
+                              year: [itemOutput.year],
+                              output: itemOutput.output,
+                            };
+                          });
 
-                        if (handleModalEdit) {
-                          handleModalEdit();
-                        }
-                      }}
-                      // onClick={handleModalEdit}
-                      sx={{
-                        p: 0,
-                        color: "white",
-                        bgcolor: blue[800],
-                        width: 20,
-                        height: 20,
-                        transition: "all 500ms",
-                        "&:hover": {
-                          bgcolor: blue[700],
-                        },
-                      }}
-                    >
-                      <Iconify name="mdi:pencil" size={12} />
-                    </IconButton>
+                          if (handleModalEdit) {
+                            handleModalEdit();
+                          }
+                        }}
+                        // onClick={handleModalEdit}
+                        sx={{
+                          p: 0,
+                          color: "white",
+                          bgcolor: blue[800],
+                          width: 20,
+                          height: 20,
+                          transition: "all 500ms",
+                          "&:hover": {
+                            bgcolor: blue[700],
+                          },
+                        }}
+                      >
+                        <Iconify name="mdi:pencil" size={12} />
+                      </IconButton>
+                    )}
                   </Stack>
                 </CardContent>
                 <CardContent>
