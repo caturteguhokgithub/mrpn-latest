@@ -94,9 +94,9 @@ const useCardIndicationVM = () => {
 
   // STATE
   const initState: ExsumIndicationState = JSON.parse(JSON.stringify(initStateExsumIndication));
-  const [state, setState] = useState<ExsumIndicationState>(initState);
+  const [state, setState] = useState<ExsumIndicationState>({ ...initState });
   const initStateValue: ExsumIndicationStateValue = JSON.parse(JSON.stringify(initStateExsumIndicationValue));
-  const [stateValue, setStateValue] = useState<ExsumIndicationStateValue>(initStateValue);
+  const [stateValue, setStateValue] = useState<ExsumIndicationStateValue>({ ...initStateValue });
   const initStateRegulation: ExsumRegulationDto = JSON.parse(JSON.stringify(initExsumRegulationDto));
   const [stateRegulation, setStateRegulation] = useState<ExsumRegulationDto>(initStateRegulation);
   const initStatePerpres = JSON.parse(JSON.stringify(initMiscMasterListPerpres));

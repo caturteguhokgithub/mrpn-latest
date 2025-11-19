@@ -11,15 +11,37 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { bgColorTh } from "@/utils/color";
-import { ExsumProfilRisikoOverview } from "../cardIndicationModel";
+import { ExsumIndicationState, ExsumProfilRisikoOverview } from "../cardIndicationModel";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
+import { SetStateAction } from "react";
 
 export default function TableReference({
   data,
+  setModalReference,
+  state,
+  setState,
 }: {
   data?: ExsumProfilRisikoOverview[];
+  setModalReference: any;
+  state: ExsumIndicationState;
+  setState: (value: SetStateAction<ExsumIndicationState>) => void;
 }) {
+
+  const handleListProject = (item: ExsumProfilRisikoOverview) => {
+    setState(prevState => ({
+      ...prevState,
+      kategori_risiko: item.kategori_risiko,
+      indikasi_risiko: item.peristiwa_risiko,
+      perlakuan_risiko: Array.isArray(item.deskripsi_keterangan_risiko)
+        ? item.deskripsi_keterangan_risiko.join(', ')
+        : item.deskripsi_keterangan_risiko
+    }));
+
+    setModalReference(false)
+  };
+
+
   return (
     <TableContainer
       className="table-overflow-x-indication"
@@ -118,7 +140,7 @@ export default function TableReference({
                 </TableCell>
                 <TableCell sx={{ verticalAlign: "top", pl: 4 }}>
                   {row.deskripsi_keterangan_risiko &&
-                  Array.isArray(row.deskripsi_keterangan_risiko) ? (
+                    Array.isArray(row.deskripsi_keterangan_risiko) ? (
                     <ol type="1" style={{ margin: 0, paddingLeft: 0 }}>
                       {row.deskripsi_keterangan_risiko.map((desc, i) => (
                         <li key={i}>{desc}</li>
@@ -133,6 +155,7 @@ export default function TableReference({
                     variant="contained"
                     size="small"
                     sx={{ whiteSpace: "nowrap", borderRadius: "100px" }}
+                    onClick={() => handleListProject(row)}
                   >
                     Gunakan Data
                   </Button>
