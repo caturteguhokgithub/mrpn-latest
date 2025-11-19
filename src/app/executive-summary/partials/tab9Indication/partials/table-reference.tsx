@@ -11,7 +11,10 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { bgColorTh } from "@/utils/color";
-import { ExsumIndicationState, ExsumProfilRisikoOverview } from "../cardIndicationModel";
+import {
+  ExsumIndicationState,
+  ExsumProfilRisikoOverview,
+} from "../cardIndicationModel";
 import EmptyState from "@/components/empty";
 import { IconEmptyData } from "@/components/icons";
 import { SetStateAction } from "react";
@@ -27,20 +30,18 @@ export default function TableReference({
   state: ExsumIndicationState;
   setState: (value: SetStateAction<ExsumIndicationState>) => void;
 }) {
-
   const handleListProject = (item: ExsumProfilRisikoOverview) => {
-    setState(prevState => ({
+    setState((prevState) => ({
       ...prevState,
       kategori_risiko: item.kategori_risiko,
       indikasi_risiko: item.peristiwa_risiko,
       perlakuan_risiko: Array.isArray(item.deskripsi_keterangan_risiko)
-        ? item.deskripsi_keterangan_risiko.join(', ')
-        : item.deskripsi_keterangan_risiko
+        ? item.deskripsi_keterangan_risiko.join(", ")
+        : item.deskripsi_keterangan_risiko,
     }));
 
-    setModalReference(false)
+    setModalReference(false);
   };
-
 
   return (
     <TableContainer
@@ -88,7 +89,7 @@ export default function TableReference({
             </TableCell>
             <TableCell sx={{ bgcolor: bgColorTh }}>
               <Typography variant="body1" fontWeight={600} textAlign="center">
-                Keputusan
+                Keputusan Perlakuan Risiko
               </Typography>
             </TableCell>
             <TableCell
@@ -96,7 +97,7 @@ export default function TableReference({
               sx={{ bgcolor: bgColorTh, whiteSpace: "nowrap" }}
             >
               <Typography variant="body1" fontWeight={600} textAlign="center">
-                Deskripsi
+                Perlakuan Risiko
               </Typography>
             </TableCell>
             <TableCell sx={{ bgcolor: bgColorTh, whiteSpace: "nowrap" }}>
@@ -140,7 +141,7 @@ export default function TableReference({
                 </TableCell>
                 <TableCell sx={{ verticalAlign: "top", pl: 4 }}>
                   {row.deskripsi_keterangan_risiko &&
-                    Array.isArray(row.deskripsi_keterangan_risiko) ? (
+                  Array.isArray(row.deskripsi_keterangan_risiko) ? (
                     <ol type="1" style={{ margin: 0, paddingLeft: 0 }}>
                       {row.deskripsi_keterangan_risiko.map((desc, i) => (
                         <li key={i}>{desc}</li>
@@ -164,7 +165,7 @@ export default function TableReference({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={5} align="center">
+              <TableCell colSpan={4} align="center">
                 <EmptyState
                   icon={<IconEmptyData width={100} />}
                   title={`Data Referensi Risiko Kosong`}
