@@ -34,7 +34,9 @@ export default function TableReference({
       kategori_risiko: item.kategori_risiko,
       indikasi_risiko: item.peristiwa_risiko,
       perlakuan_risiko: Array.isArray(item.deskripsi_keterangan_risiko)
-        ? item.deskripsi_keterangan_risiko.join(', ')
+        ? item.deskripsi_keterangan_risiko
+          .map((v, i) => `${i + 1}. ${v}`)
+          .join('\n')
         : item.deskripsi_keterangan_risiko
     }));
 
