@@ -37,9 +37,9 @@ export default function TableReference({
       indikasi_risiko: item.peristiwa_risiko,
       perlakuan_risiko: Array.isArray(item.deskripsi_keterangan_risiko)
         ? item.deskripsi_keterangan_risiko
-          .map((v, i) => `${i + 1}. ${v}`)
-          .join('\n')
-        : item.deskripsi_keterangan_risiko
+            .map((v, i) => `${i + 1}. ${v}`)
+            .join("\n")
+        : item.deskripsi_keterangan_risiko,
     }));
 
     setModalReference(false);
@@ -79,6 +79,13 @@ export default function TableReference({
       >
         <TableHead sx={{ bgcolor: bgColorTh }}>
           <TableRow>
+            <TableCell
+              sx={{ bgcolor: bgColorTh, whiteSpace: "nowrap", width: "40px" }}
+            >
+              <Typography variant="body1" fontWeight={600} textAlign="center">
+                No
+              </Typography>
+            </TableCell>
             <TableCell sx={{ bgcolor: bgColorTh, whiteSpace: "nowrap" }}>
               <Typography variant="body1" fontWeight={600} textAlign="center">
                 Kategori Risiko
@@ -133,6 +140,9 @@ export default function TableReference({
             data.map((row, index) => (
               <TableRow key={index}>
                 <TableCell sx={{ verticalAlign: "top" }}>
+                  {index + 1}.
+                </TableCell>
+                <TableCell sx={{ verticalAlign: "top" }}>
                   {row.kategori_risiko}
                 </TableCell>
                 <TableCell sx={{ verticalAlign: "top" }}>
@@ -143,7 +153,7 @@ export default function TableReference({
                 </TableCell>
                 <TableCell sx={{ verticalAlign: "top", pl: 4 }}>
                   {row.deskripsi_keterangan_risiko &&
-                    Array.isArray(row.deskripsi_keterangan_risiko) ? (
+                  Array.isArray(row.deskripsi_keterangan_risiko) ? (
                     <ol type="1" style={{ margin: 0, paddingLeft: 0 }}>
                       {row.deskripsi_keterangan_risiko.map((desc, i) => (
                         <li key={i}>{desc}</li>
