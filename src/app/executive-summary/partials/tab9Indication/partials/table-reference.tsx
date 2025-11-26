@@ -33,6 +33,8 @@ export default function TableReference({
   const handleListProject = (item: ExsumProfilRisikoOverview) => {
     setState((prevState) => ({
       ...prevState,
+      use_ref: true,
+      profil_id: item.profil_id,
       kategori_risiko: item.kategori_risiko,
       indikasi_risiko: item.peristiwa_risiko,
       perlakuan_risiko: Array.isArray(item.deskripsi_keterangan_risiko)
@@ -159,6 +161,7 @@ export default function TableReference({
                     size="small"
                     sx={{ whiteSpace: "nowrap", borderRadius: "100px" }}
                     onClick={() => handleListProject(row)}
+                    disabled={row.isUsed}
                   >
                     Gunakan Data
                   </Button>

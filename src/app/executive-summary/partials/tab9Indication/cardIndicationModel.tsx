@@ -44,6 +44,8 @@ export interface ExsumIndicationValueReqDto {
 export interface ExsumIndicationReqDto {
   id: number;
   exsum_id: number;
+  use_ref: boolean;
+  profil_id: number;
   swot_id: number;
   indikasi_risiko: string;
   kategori_risiko: string;
@@ -81,6 +83,8 @@ export interface ExsumIndicationResDto {
   indikasi_risiko: string;
   kategori_risiko: string;
   indikasi_perlakuan_risiko: string;
+  use_ref: boolean;
+  profil_id?: number;
   perlakuan: ExsumIndicationValueRes[];
   tows?: ExsumTWOSDto;
   regulasi: ExsumRegulationResDto[];
@@ -138,6 +142,8 @@ export const initStateExsumIndicationValue: ExsumIndicationStateValue = {
 
 export interface ExsumIndicationState {
   id: number;
+  use_ref: boolean;
+  profil_id: number;
   tows: ExsumTWOSDto | undefined;
   indikasi_risiko: string;
   kategori_risiko: string;
@@ -149,6 +155,8 @@ export interface ExsumIndicationState {
 export const initStateExsumIndication: ExsumIndicationState = {
   id: 0,
   tows: undefined,
+  use_ref: false,
+  profil_id: 0,
   indikasi_risiko: "",
   kategori_risiko: "",
   perlakuan_risiko: "",
@@ -157,9 +165,11 @@ export const initStateExsumIndication: ExsumIndicationState = {
 };
 
 export interface ExsumProfilRisikoOverview {
+  profil_id: number;
   kategori_risiko: string;
   peristiwa_risiko: string;
   keputusan: string;
+  isUsed: boolean;
   deskripsi_keterangan_risiko: string[]
 }
 

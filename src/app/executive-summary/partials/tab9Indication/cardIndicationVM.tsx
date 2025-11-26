@@ -515,6 +515,8 @@ const useCardIndicationVM = () => {
       const stateData: ExsumIndicationState = {
         id: idData,
         tows: dataByIndex.tows,
+        use_ref: dataByIndex.use_ref,
+        profil_id: dataByIndex.profil_id ?? 0,
         indikasi_risiko: dataByIndex.indikasi_risiko,
         kategori_risiko: dataByIndex.kategori_risiko,
         perlakuan_risiko: dataByIndex.indikasi_perlakuan_risiko,
@@ -563,6 +565,8 @@ const useCardIndicationVM = () => {
     const requestDto: ExsumIndicationReqDto = {
       id: state.id,
       exsum_id: exsum.id,
+      use_ref: state.use_ref,
+      profil_id: state.profil_id,
       swot_id: state.tows?.id ?? 0,
       indikasi_risiko: state.indikasi_risiko,
       kategori_risiko: state.kategori_risiko,
@@ -594,6 +598,7 @@ const useCardIndicationVM = () => {
       setState(initState);
 
       await getOptionRO();
+      await getDataRef();
       setModalOpen({ index: -1, action: false, type: "" });
     }
   };
