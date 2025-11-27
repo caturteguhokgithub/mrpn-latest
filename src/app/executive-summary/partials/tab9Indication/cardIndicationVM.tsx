@@ -309,6 +309,7 @@ const useCardIndicationVM = () => {
     });
     if (response?.code == API_CODE.success) {
       getData();
+      getDataRef();
       setModalOpen({ index: -1, action: false, type: "" });
     }
   }
