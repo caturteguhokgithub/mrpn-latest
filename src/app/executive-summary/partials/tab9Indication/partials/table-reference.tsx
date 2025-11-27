@@ -39,8 +39,8 @@ export default function TableReference({
       indikasi_risiko: item.peristiwa_risiko,
       perlakuan_risiko: Array.isArray(item.deskripsi_keterangan_risiko)
         ? item.deskripsi_keterangan_risiko
-            .map((v, i) => `${i + 1}. ${v}`)
-            .join("\n")
+          .map((v, i) => `${i + 1}. ${v}`)
+          .join("\n")
         : item.deskripsi_keterangan_risiko,
     }));
 
@@ -140,7 +140,10 @@ export default function TableReference({
         <TableBody>
           {data && data.length > 0 ? (
             data.map((row, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} sx={{
+                backgroundColor:
+                  state.profil_id === row.profil_id ? "yellow" : "inherit",
+              }}>
                 <TableCell sx={{ verticalAlign: "top" }}>
                   {index + 1}.
                 </TableCell>
@@ -155,7 +158,7 @@ export default function TableReference({
                 </TableCell>
                 <TableCell sx={{ verticalAlign: "top", pl: 4 }}>
                   {row.deskripsi_keterangan_risiko &&
-                  Array.isArray(row.deskripsi_keterangan_risiko) ? (
+                    Array.isArray(row.deskripsi_keterangan_risiko) ? (
                     <ol type="1" style={{ margin: 0, paddingLeft: 0 }}>
                       {row.deskripsi_keterangan_risiko.map((desc, i) => (
                         <li key={i}>{desc}</li>
